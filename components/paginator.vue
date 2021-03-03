@@ -15,21 +15,19 @@
       </p>
     </div>
     <div class="flex-1 flex justify-between sm:justify-end">
-      <a
+      <button
         v-show="page > 0"
-        href="#"
         class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
         @click="$emit('prev')"
       >
         Previous
-      </a>
-      <a
-        href="#"
+      </button>
+      <button
         class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
         @click="$emit('next')"
       >
         Next
-      </a>
+      </button>
     </div>
   </nav>
 </template>
