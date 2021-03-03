@@ -118,13 +118,20 @@ export default Vue.extend({
       title: 'Work Items',
     }
   },
+  watch: {
+    // We want to re-trigger the query if the route query changes,
+    // E.g. changing page or browser navigation
+    '$route.query': '$fetch',
+  },
   methods: {
     changePage(newPage: number): void {
       this.page = newPage
-      this.$fetch()
+      const newQuery = Object.assign({}, this.$route.query, {
+        page: newPage.toString(),
+      })
       this.$router.push({
         path: this.$route.path,
-        query: { page: newPage.toString() },
+        query: newQuery,
       })
     },
   },

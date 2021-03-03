@@ -5,6 +5,14 @@
       <div v-for="item in masterrecords" :key="item.id">
         {{ item }}
       </div>
+      <paginator
+        class="bg-white border-t border-gray-200"
+        :page="page"
+        :size="size"
+        :total="total"
+        @next="changePage(page + 1)"
+        @prev="changePage(page - 1)"
+      />
     </div>
     <div v-else>Start a search to view records</div>
   </div>
@@ -36,8 +44,7 @@ export default Vue.extend({
   },
   async fetch() {
     this.search = this.$route.query.search as string[]
-    console.log(this.search)
-    if (this.search.length > 0) {
+    if (this.search && this.search.length > 0) {
       // Set the search string
       this.searchString = this.buildSearchStringFromQueryArray()
       // Build our query string from search terms and page info
@@ -46,7 +53,6 @@ export default Vue.extend({
       }&size=${this.size}`
       // Fetch the search results from our API server
       const res: MasterRecordPage = await this.$axios.$get(path)
-      console.log(res)
       this.masterrecords = res.items
       this.total = res.total
       this.page = res.page
@@ -64,6 +70,16 @@ export default Vue.extend({
     '$route.query': '$fetch',
   },
   methods: {
+    changePage(newPage: number): void {
+      this.page = newPage
+      const newQuery = Object.assign({}, this.$route.query, {
+        page: newPage.toString(),
+      })
+      this.$router.push({
+        path: this.$route.path,
+        query: newQuery,
+      })
+    },
     searchSubmit(): void {
       // Build a search query from our search string
       this.search = this.buildQueryArrayFromSearchString()
