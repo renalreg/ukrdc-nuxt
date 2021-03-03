@@ -42,14 +42,11 @@
           href="#"
           class="group flex items-center px-2 py-2 text-base font-medium rounded-md"
           :class="[
-            active == item.url
+            $route.path == item.url
               ? ['bg-gray-100', 'text-gray-900']
               : ['text-gray-600', 'hover:bg-gray-50', 'hover:text-gray-900'],
           ]"
-          @click.native="
-            $emit('toggle')
-            active = item.url
-          "
+          @click.native="$emit('toggle')"
         >
           <!-- Current: "text-gray-500", Default: "text-gray-400 group-hover:text-gray-500" -->
           <!-- Heroicon name: outline/home -->
@@ -77,7 +74,7 @@
       v-if="showProfile"
       class="flex-shrink-0 flex border-t border-gray-200 p-4"
     >
-      <ProfileBadge @click="active = '/profile'" />
+      <ProfileBadge />
     </div>
   </div>
 </template>
