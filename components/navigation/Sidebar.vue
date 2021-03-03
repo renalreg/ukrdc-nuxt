@@ -35,38 +35,45 @@
       <nav class="mt-5 px-2 space-y-1">
         <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
 
-        <NuxtLink
-          v-for="item in pages"
-          :key="item.url"
-          :to="item.url"
-          href="#"
-          class="group flex items-center px-2 py-2 text-base font-medium rounded-md"
-          :class="[
-            $route.path == item.url
-              ? ['bg-gray-100', 'text-gray-900']
-              : ['text-gray-600', 'hover:bg-gray-50', 'hover:text-gray-900'],
-          ]"
-          @click.native="$emit('toggle')"
-        >
-          <!-- Current: "text-gray-500", Default: "text-gray-400 group-hover:text-gray-500" -->
-          <!-- Heroicon name: outline/home -->
-          <svg
-            class="text-gray-500 mr-4 h-6 w-6"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
+        <div v-for="item in pages" :key="item.url">
+          <h3
+            v-if="item.sectionHeading"
+            :id="item.sectionHeading + 'Heading'"
+            class="px-3 mt-5 mb-3 text-xs font-semibold text-gray-500 uppercase tracking-wider"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              :d="item.svg"
-            />
-          </svg>
-          {{ item.title }}
-        </NuxtLink>
+            {{ item.sectionHeading }}
+          </h3>
+          <NuxtLink
+            :to="item.url"
+            href="#"
+            class="group flex items-center px-2 py-2 text-base font-medium rounded-md"
+            :class="[
+              $route.path == item.url
+                ? ['bg-gray-100', 'text-gray-900']
+                : ['text-gray-600', 'hover:bg-gray-50', 'hover:text-gray-900'],
+            ]"
+            @click.native="$emit('toggle')"
+          >
+            <!-- Current: "text-gray-500", Default: "text-gray-400 group-hover:text-gray-500" -->
+            <!-- Heroicon name: outline/home -->
+            <svg
+              class="text-gray-500 mr-4 h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                :d="item.svg"
+              />
+            </svg>
+            {{ item.title }}
+          </NuxtLink>
+        </div>
       </nav>
     </div>
 
@@ -84,6 +91,7 @@ import Vue from 'vue'
 
 interface NavItem {
   title: string
+  sectionHeading: string
   url: string
   svg: string
 }
@@ -113,9 +121,16 @@ export default Vue.extend({
         },
         {
           title: 'Work Items',
+          sectionHeading: 'EMPI',
           url: '/workitems',
           svg:
             'M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1',
+        },
+        {
+          title: 'Records',
+          url: '/masterrecords',
+          svg:
+            'M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4',
         },
       ] as NavItem[],
     }
