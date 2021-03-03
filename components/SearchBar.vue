@@ -59,7 +59,6 @@ export default Vue.extend({
     return {}
   },
   mounted() {
-    console.log('mounted')
     if (this.focus) {
       const el = this.$refs.searchBoxRef as HTMLFormElement
       el.focus()

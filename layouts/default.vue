@@ -124,7 +124,6 @@ export default Vue.extend({
   methods: {
     toggle() {
       this.sbOpen = !this.sbOpen
-      console.log(this.sbOpen)
     },
   },
 })

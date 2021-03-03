@@ -107,7 +107,6 @@ export default Vue.extend({
     const res: WorkItemPage = await this.$axios.$get(
       `/empi/workitems?page=${this.page}&size=${this.size}`
     )
-    console.log(res)
     this.workitems = res.items
     this.total = res.total
     this.page = res.page
