@@ -1,6 +1,12 @@
 <template>
   <div>
     <SearchBar v-model="searchString" :focus="true" @submit="searchSubmit" />
+    <div v-if="masterrecords.length > 0">
+      <div v-for="item in masterrecords" :key="item.id">
+        {{ item }}
+      </div>
+    </div>
+    <div v-else>Start a search to view records</div>
   </div>
 </template>
 
@@ -29,7 +35,9 @@ export default Vue.extend({
     }
   },
   async fetch() {
-    if (this.search !== []) {
+    this.search = this.$route.query.search as string[]
+    console.log(this.search)
+    if (this.search.length > 0) {
       // Set the search string
       this.searchString = this.buildSearchStringFromQueryArray()
       // Build our query string from search terms and page info
@@ -50,10 +58,16 @@ export default Vue.extend({
       title: 'Master Records',
     }
   },
+  watch: {
+    // We want to re-trigger a search if the route query changes,
+    // E.g. a user navigates back in their browser without refreshing
+    '$route.query': '$fetch',
+  },
   methods: {
     searchSubmit(): void {
+      // Build a search query from our search string
       this.search = this.buildQueryArrayFromSearchString()
-      this.$fetch()
+      // Navigate to the search query path
       this.$router.push({
         path: this.$route.path,
         query: { search: this.search },
@@ -70,20 +84,28 @@ export default Vue.extend({
     buildSearchStringFromQueryArray(): string {
       // Builds a search bar string from an array of strings.
       // e.g. ['john', '1949-03-01'] becomes john & 1949-03-01
-      let q = ''
-      for (const term of this.search) {
-        q = q.concat(`${term} & `)
+      if (Array.isArray(this.search)) {
+        let q = ''
+        for (const term of this.search) {
+          q = q.concat(`${term} & `)
+        }
+        return q.slice(0, -3) // Remove trailing ' & '
+      } else {
+        return this.search
       }
-      return q.slice(0, -3) // Remove trailing ' & '
     },
     buildQueryStringFromArray(): string {
       // Builds a query string from an array of strings.
       // e.g. ['john', '1949-03-01'] becomes search=john&search=1949-03-01
-      let q = ''
-      for (const term of this.search) {
-        q = q.concat(`search=${term}&`)
+      if (Array.isArray(this.search)) {
+        let q = ''
+        for (const term of this.search) {
+          q = q.concat(`search=${term}&`)
+        }
+        return q.slice(0, -1) // Remove trailing '&'
+      } else {
+        return `search=${this.search}`
       }
-      return q.slice(0, -1) // Remove trailing '&'
     },
   },
 })
