@@ -21,6 +21,7 @@
           />
         </ul>
         <paginator
+          v-if="!$fetchState.pending"
           class="bg-white border-t border-gray-200"
           :page="page"
           :size="size"
