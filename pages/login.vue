@@ -1,21 +1,16 @@
 <template>
-  <div>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-      <h1 class="text-2xl font-semibold text-gray-900">Login</h1>
-    </div>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-      <div class="py-4">
-        <p>Content</p>
-        <div>
-          <button
-            type="submit"
-            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            @click="$auth.loginWith('auth0')"
-          >
-            Sign in
-          </button>
-        </div>
-      </div>
+  <div class="justify-center text-center max-w-7xl">
+    <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+      Sign in to your account
+    </h2>
+    <div class="max-w-lg mx-auto px-4 py-8 sm:px-6 md:px-8">
+      <button
+        type="submit"
+        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        @click="$auth.loginWith('auth0')"
+      >
+        Sign in
+      </button>
     </div>
   </div>
 </template>
