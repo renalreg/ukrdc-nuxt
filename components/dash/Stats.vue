@@ -3,25 +3,32 @@
     <dl
       class="mt-5 grid grid-cols-1 rounded-lg bg-white overflow-hidden shadow divide-y divide-gray-200 md:grid-cols-2 md:divide-y-0 md:divide-x"
     >
-      <dashStatBlock
-        :value="workitems.day"
-        :previous-value="workitems.prev"
-        :invert="true"
-        title="New Workitems"
-      />
+      <NuxtLink to="/workitems">
+        <dashStatBlock
+          :value="workitems.day"
+          :previous-value="workitems.prev"
+          :invert="true"
+          title="New Workitems"
+        />
+      </NuxtLink>
 
-      <dashStatBlock :value="workitems.total" title="Total Workitems" />
+      <NuxtLink to="/workitems"
+        ><dashStatBlock :value="workitems.total" title="Total Workitems"
+      /></NuxtLink>
     </dl>
     <dl
       class="mt-5 grid grid-cols-1 rounded-lg bg-white overflow-hidden shadow divide-y divide-gray-200 md:grid-cols-2 md:divide-y-0 md:divide-x"
     >
-      <dashStatBlock
-        :value="ukrdcrecords.day"
-        :previous-value="ukrdcrecords.prev"
-        title="New UKRDC Records"
-      />
+      <NuxtLink to="/masterrecords">
+        <dashStatBlock
+          :value="ukrdcrecords.day"
+          :previous-value="ukrdcrecords.prev"
+          title="New UKRDC Records"
+      /></NuxtLink>
 
-      <dashStatBlock :value="ukrdcrecords.total" title="Total UKRDC Records" />
+      <NuxtLink to="/masterrecords"
+        ><dashStatBlock :value="ukrdcrecords.total" title="Total UKRDC Records"
+      /></NuxtLink>
     </dl>
   </div>
 </template>
