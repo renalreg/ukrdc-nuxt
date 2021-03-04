@@ -8,7 +8,9 @@
         Showing
         <span class="font-medium">{{ page * size + 1 }}</span>
         to
-        <span class="font-medium">{{ (page + 1) * size }}</span>
+        <span class="font-medium">{{
+          Math.min((page + 1) * size, total)
+        }}</span>
         of
         <span class="font-medium">{{ total }}</span>
         results
