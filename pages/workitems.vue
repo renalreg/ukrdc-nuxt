@@ -4,78 +4,22 @@
       <h1 class="text-2xl font-semibold text-gray-900">Work Items</h1>
     </div>
 
-    <div class="py-2 align-middle inline-block w-full">
-      <!-- Rounded container -->
-      <div
-        class="shadow overflow-hidden border-b border-gray-200 rounded-md sm:rounded-lg max-w-7xl"
-      >
-        <!-- Activity list (up to large breakpoint) -->
-        <div class="shadow lg:hidden">
-          <ul v-if="$fetchState.pending" class="divide-y divide-gray-200">
-            <workitemsListItemPlaceholder v-for="n in 10" :key="n" />
-          </ul>
-          <ul v-else class="divide-y divide-gray-200 overflow-hidden shadow">
-            <workitemsListItem
-              v-for="item in workitems"
-              :key="item.id"
-              :item="item"
-            >
-            </workitemsListItem>
-          </ul>
-        </div>
-
-        <!-- Activity table (large breakopoint and up) -->
-        <table
-          class="hidden lg:table table-auto w-full divide-y divide-gray-200"
-        >
-          <thead class="bg-gray-50">
-            <tr>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                ID
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Description
-              </th>
-              <th
-                scope="col"
-                class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Records
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Updated
-              </th>
-              <th scope="col" class="relative px-6 py-3">
-                <span class="sr-only">Edit</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            v-if="$fetchState.pending"
-            class="bg-white divide-y divide-gray-200"
-          >
-            <workitemsTableItemPlaceholder v-for="n in 20" :key="n" />
-          </tbody>
-          <tbody v-else class="bg-white divide-y divide-gray-200">
-            <workitemsTableItem
-              v-for="item in workitems"
-              :key="item.id"
-              :item="item"
-            >
-            </workitemsTableItem>
-          </tbody>
-        </table>
-
+    <div v-if="workitems.length > 0">
+      <div class="bg-white shadow overflow-hidden rounded-md">
+        <!-- Skeleton results -->
+        <ul v-if="$fetchState.pending" class="divide-y divide-gray-200">
+          <workitemsListItemPlaceholder v-for="n in 10" :key="n" />
+        </ul>
+        <!-- Real results -->
+        <ul v-else class="divide-y divide-gray-200">
+          <workitemsListItem
+            v-for="item in workitems"
+            :key="item.id"
+            :item="item"
+          />
+        </ul>
         <paginator
+          v-if="!$fetchState.pending"
           class="bg-white border-t border-gray-200"
           :page="page"
           :size="size"

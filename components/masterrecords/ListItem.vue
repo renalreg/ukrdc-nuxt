@@ -36,7 +36,7 @@
             <!-- Details (large breakpoint only) -->
             <div class="hidden lg:block">
               <p class="text-sm text-gray-500">Last updated</p>
-              <p class="text-sm text-gray-500">
+              <p class="mt-2 text-sm text-gray-500">
                 {{ formatDate(item.lastUpdated) }}
               </p>
             </div>
