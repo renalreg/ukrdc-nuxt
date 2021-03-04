@@ -1,20 +1,38 @@
 <template>
-  <div>
-    <SearchBar v-model="searchString" :focus="true" @submit="searchSubmit" />
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
+    <SearchBar
+      v-model="searchString"
+      class="mb-4"
+      :focus="true"
+      @submit="searchSubmit"
+    />
     <div v-if="masterrecords.length > 0">
-      <div v-for="item in masterrecords" :key="item.id">
-        {{ item }}
+      <div class="bg-white shadow overflow-hidden rounded-md">
+        <!-- Skeleton results -->
+        <ul v-if="$fetchState.pending" class="divide-y divide-gray-200">
+          <masterrecordsListItemPlaceholder v-for="n in 10" :key="n" />
+        </ul>
+        <!-- Real results -->
+        <ul v-else class="divide-y divide-gray-200">
+          <masterrecordsListItem
+            v-for="item in masterrecords"
+            :key="item.id"
+            :item="item"
+          />
+        </ul>
+        <paginator
+          class="bg-white border-t border-gray-200"
+          :page="page"
+          :size="size"
+          :total="total"
+          @next="changePage(page + 1)"
+          @prev="changePage(page - 1)"
+        />
       </div>
-      <paginator
-        class="bg-white border-t border-gray-200"
-        :page="page"
-        :size="size"
-        :total="total"
-        @next="changePage(page + 1)"
-        @prev="changePage(page - 1)"
-      />
     </div>
-    <div v-else>Start a search to view records</div>
+    <div v-else class="mt-2 text-sm text-gray-500 text-center">
+      Start a search to view records
+    </div>
   </div>
 </template>
 
@@ -83,6 +101,8 @@ export default Vue.extend({
     searchSubmit(): void {
       // Build a search query from our search string
       this.search = this.buildQueryArrayFromSearchString()
+      // Reset page
+      this.page = 0
       // Navigate to the search query path
       this.$router.push({
         path: this.$route.path,

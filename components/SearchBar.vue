@@ -1,6 +1,6 @@
 <template>
-  <div class="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-6">
-    <div class="flex items-center px-6 py-4 md:max-w-l md:mx-auto lg:max-w-2xl">
+  <div class="min-w-0 flex-1 xl:col-span-6">
+    <div class="flex items-center py-4 md:mx-auto">
       <div class="w-full">
         <label for="search" class="sr-only">Search</label>
         <div class="relative">

@@ -1,9 +1,16 @@
 export default {
   methods: {
-    formatDate(rawDate: string): string {
-      const d: number = Date.parse(rawDate)
-      const newDate = new Date(d)
-      return newDate.toLocaleString()
+    formatDate(rawDate: string, t: boolean = true): string {
+      const options: Intl.DateTimeFormatOptions = {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+      }
+      if (t === true) {
+        options.hour = '2-digit'
+        options.minute = '2-digit'
+      }
+      return new Date(Date.parse(rawDate)).toLocaleString([], options)
     },
   },
 }

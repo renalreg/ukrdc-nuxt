@@ -11,7 +11,10 @@
       >
         <!-- Activity list (up to large breakpoint) -->
         <div class="shadow lg:hidden">
-          <ul class="divide-y divide-gray-200 overflow-hidden shadow">
+          <ul v-if="$fetchState.pending" class="divide-y divide-gray-200">
+            <workitemsListItemPlaceholder v-for="n in 10" :key="n" />
+          </ul>
+          <ul v-else class="divide-y divide-gray-200 overflow-hidden shadow">
             <workitemsListItem
               v-for="item in workitems"
               :key="item.id"
@@ -56,7 +59,13 @@
               </th>
             </tr>
           </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
+          <tbody
+            v-if="$fetchState.pending"
+            class="bg-white divide-y divide-gray-200"
+          >
+            <workitemsTableItemPlaceholder v-for="n in 20" :key="n" />
+          </tbody>
+          <tbody v-else class="bg-white divide-y divide-gray-200">
             <workitemsTableItem
               v-for="item in workitems"
               :key="item.id"
