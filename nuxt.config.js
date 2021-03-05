@@ -57,14 +57,20 @@ export default {
   publicRuntimeConfig: {
     axios: {
       // Base URL when calling from a users browser
-      browserBaseURL: process.env.API_ROOT || 'http://localhost:8000',
+      browserBaseURL:
+        process.env.PUBLIC_API_ROOT ||
+        process.env.API_ROOT ||
+        'http://localhost:8000',
     },
   },
 
   privateRuntimeConfig: {
     axios: {
       // Base URL when calling from the rendering server
-      baseURL: process.env.API_ROOT || 'http://localhost:8000',
+      baseURL:
+        process.env.LOCAL_API_ROOT ||
+        process.env.API_ROOT ||
+        'http://localhost:8000',
     },
   },
 }
