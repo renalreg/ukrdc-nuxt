@@ -18,3 +18,11 @@ $ yarn generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+## Developer tools
+
+### Build ARCHITECTURE.md
+
+* Install `pipx`
+* `pipx install archmd`
+* `archmd . --out "ARCHITECTURE.md" --title="UKRDC-Nuxt Architecture"`
