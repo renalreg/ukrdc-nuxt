@@ -1,18 +1,24 @@
 # UKRDC-Nuxt Architecture
 
-  * [MIDDLEWARE](#middleware)
-  * [MIXINS](#mixins)
-  * [PLUGINS](#plugins)
-  * [COMPONENTS](#components)
-    * [DASH](#components-dash)
-  * [LAYOUTS](#layouts)
-  * [STATIC](#static)
-  * [ASSETS](#assets)
-  * [PAGES](#pages)
-  * [INTERFACES](#interfaces)
-  * [STORE](#store)
+  - [MIDDLEWARE](#middleware)
+  - [MIXINS](#mixins)
+  - [PLUGINS](#plugins)
+  - [COMPONENTS](#components)
+    - [MASTERRECORDS](#components-masterrecords)
+    - [WORKITEMS](#components-workitems)
+    - [NAVIGATION](#components-navigation)
+    - [PROFILE](#components-profile)
+    - [DASH](#components-dash)
+    - [MODAL](#components-modal)
+  - [LAYOUTS](#layouts)
+  - [STATIC](#static)
+  - [ASSETS](#assets)
+  - [PAGES](#pages)
+  - [INTERFACES](#interfaces)
+  - [STORE](#store)
 
 <a name="middleware"></a>
+
 ## MIDDLEWARE
 
 **This directory is not required, you can delete it if you don't want to use it.**
@@ -23,11 +29,13 @@ Middleware let you define custom functions that can be run before rendering eith
 More information about the usage of this directory in [the documentation](https://nuxtjs.org/guide/routing#middleware).
 
 <a name="mixins"></a>
+
 ## MIXINS
 
 This directory contains some Vue mixins providing functions common to many components.
 
 <a name="plugins"></a>
+
 ## PLUGINS
 
 **This directory is not required, you can delete it if you don't want to use it.**
@@ -37,6 +45,7 @@ This directory contains Javascript plugins that you want to run before mounting 
 More information about the usage of this directory in [the documentation](https://nuxtjs.org/guide/plugins).
 
 <a name="components"></a>
+
 ## COMPONENTS
 
 The components directory contains your Vue.js Components.
@@ -54,12 +63,54 @@ components/
 
 will be auto-imported as `<BaseFooButton />`
 
+### Top-level components
+
+#### Paginator.vue
+
+A reusable component for paginated lists. Provides props and events for navigating through a list.
+
+#### SearchBar.vue
+
+A reusable search bar component. Provides props and events for binding search strings and handling submissions.
+
+<a name="components-masterrecords"></a>
+
+### MASTERRECORDS
+
+This folder contains components used in the master record viewer. Specifically, components unique to the master record list (i.e. excluding generic components used in the masterrecords view, such as the search bar).
+
+<a name="components-workitems"></a>
+
+### WORKITEMS
+
+This folder contains components used in the workitems viewer. Specifically, components unique to the workitems list (i.e. excluding generic components used in the workitems view, such as the pagination footer).
+
+<a name="components-navigation"></a>
+
+### NAVIGATION
+
+Contains reusable components related to site navitgation, such as the meu sidebar.
+
+<a name="components-profile"></a>
+
+### PROFILE
+
+Contains reusable components related to the user profile, such as the profile badge seen in the sidebar (or header on mobile).
+
 <a name="components-dash"></a>
+
 ### DASH
 
 This folder contains components used in the application dashboard.
 
+<a name="components-modal"></a>
+
+### MODAL
+
+Contains reusable components for generating modal dialog boxes, such as popup confirmations, warnings etc.
+
 <a name="layouts"></a>
+
 ## LAYOUTS
 
 This directory contains your Application Layouts.
@@ -67,9 +118,8 @@ This directory contains your Application Layouts.
 More information about the usage of this directory in [the documentation](https://nuxtjs.org/guide/views#layouts).
 
 <a name="static"></a>
-## STATIC
 
-**This directory is not required, you can delete it if you don't want to use it.**
+## STATIC
 
 This directory contains your static files.
 Each file inside this directory is mapped to `/`.
@@ -80,15 +130,15 @@ Example: `/static/robots.txt` is mapped as `/robots.txt`.
 More information about the usage of this directory in [the documentation](https://nuxtjs.org/guide/assets#static).
 
 <a name="assets"></a>
-## ASSETS
 
-**This directory is not required, you can delete it if you don't want to use it.**
+## ASSETS
 
 This directory contains your un-compiled assets such as LESS, SASS, or JavaScript.
 
 More information about the usage of this directory in [the documentation](https://nuxtjs.org/guide/assets#webpacked).
 
 <a name="pages"></a>
+
 ## PAGES
 
 This directory contains your Application Views and Routes.
@@ -97,11 +147,13 @@ The framework reads all the `*.vue` files inside this directory and creates the 
 More information about the usage of this directory in [the documentation](https://nuxtjs.org/guide/routing).
 
 <a name="interfaces"></a>
+
 ## INTERFACES
 
 This directory contains our TypeScript interfaces used in multiple pages or components.
 
 <a name="store"></a>
+
 ## STORE
 
 **This directory is not required, you can delete it if you don't want to use it.**
