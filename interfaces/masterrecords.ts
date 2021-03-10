@@ -1,3 +1,11 @@
+interface MasterRecordLinks {
+  self: string
+  related: string
+  persons: string
+  workitems: string
+  patientrecords: string
+}
+
 export interface MasterRecord {
   id: number
   nationalid: string
@@ -9,4 +17,5 @@ export interface MasterRecord {
   surname: string
   status: number
   effectiveDate: string
+  links: MasterRecordLinks
 }

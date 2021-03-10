@@ -1,6 +1,6 @@
 <template>
   <li>
-    <a href="#" class="block hover:bg-gray-50">
+    <NuxtLink :to="`/masterrecords/${item.id}`" class="block hover:bg-gray-50">
       <div class="flex items-center px-4 py-4 sm:px-6">
         <div class="min-w-0 flex-1 flex items-center">
           <div class="min-w-0 grid grid-cols-2 lg:grid-cols-3 md:gap-4 w-full">
@@ -24,12 +24,10 @@
               <p class="text-sm text-gray-900">
                 {{ item.nationalid.trim() }}
               </p>
-              <span
-                class="inline-flex mt-2 items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
-                :class="TagClass(item.nationalidType)"
-              >
-                {{ item.nationalidType.trim() }}
-              </span>
+              <masterrecordsNationalIdTypeTag
+                class="mt-2"
+                :nationalid-type="item.nationalidType"
+              />
             </div>
             <!-- Details (large breakpoint only) -->
             <div class="hidden lg:block">
@@ -57,7 +55,7 @@
           </svg>
         </div>
       </div>
-    </a>
+    </NuxtLink>
   </li>
 </template>
 

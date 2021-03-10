@@ -1,3 +1,5 @@
+import { MasterRecord } from '@/interfaces/masterrecords'
+import { Person } from '@/interfaces/persons'
 export interface WorkItemSummary {
   id: number
   personId: number
@@ -12,4 +14,9 @@ export interface WorkItemShort extends WorkItemSummary {
   updatedBy: string
   updateDescription: string
   attributes: object
+}
+
+export interface WorkItem extends WorkItemShort {
+  masterRecord: MasterRecord
+  person: Person
 }
