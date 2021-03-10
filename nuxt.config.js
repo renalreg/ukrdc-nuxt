@@ -38,6 +38,10 @@ export default {
         domain: 'renalreg.eu.auth0.com',
         clientId: 'SQCWWXi1rbZ4GY7aqjYXDBe0pyeJ7f7X',
         audience: 'https://app.ukrdc.org/api',
+        scope: ['openid', 'profile', 'email', 'offline_access'],
+        responseType: 'code',
+        grantType: 'authorization_code',
+        codeChallengeMethod: 'S256',
       },
     },
     redirect: {
