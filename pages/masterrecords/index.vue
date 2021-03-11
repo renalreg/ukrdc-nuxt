@@ -32,7 +32,11 @@
       </div>
     </div>
     <div v-else class="mt-2 text-sm text-gray-500 text-center">
-      {{ search ? 'No results found' : 'Start a search to view records' }}
+      {{
+        search && !$fetchState.pending
+          ? 'No results found'
+          : 'Start a search to view records'
+      }}
     </div>
   </div>
 </template>
