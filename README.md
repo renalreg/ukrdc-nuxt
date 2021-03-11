@@ -1,5 +1,9 @@
 # ukrdc-nuxt
 
+## Project Status
+
+This rewrite of the UKRDC client is currently in development, and is not yet being used in production.
+
 ## Build Setup
 
 ```bash
