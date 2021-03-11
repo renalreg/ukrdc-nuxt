@@ -18,14 +18,14 @@
     </div>
     <div class="flex-1 flex justify-between sm:justify-end">
       <button
-        v-show="page > 0"
+        :class="{ invisible: page <= 0 }"
         class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
         @click="prev()"
       >
         Previous
       </button>
       <button
-        v-show="(page + 1) * size < total"
+        :class="{ invisible: (page + 1) * size >= total }"
         class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
         @click="next()"
       >

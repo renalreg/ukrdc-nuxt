@@ -32,7 +32,7 @@
       </div>
     </div>
     <div v-else class="mt-2 text-sm text-gray-500 text-center">
-      Start a search to view records
+      {{ search ? 'No results found' : 'Start a search to view records' }}
     </div>
   </div>
 </template>
