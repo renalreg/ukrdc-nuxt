@@ -58,12 +58,17 @@
           >
             No valid person record found
           </div>
-          <masterrecordsRecordCard
+          <NuxtLink
             v-if="record.masterRecord"
-            class="border-2 border-indigo-500"
-            :record="record.masterRecord"
-            label="Master Record"
-          />
+            :to="`/masterrecords/${record.masterRecord.id}`"
+          >
+            <masterrecordsRecordCard
+              class="border-2 border-indigo-500"
+              :record="record.masterRecord"
+              label="Master Record"
+            />
+          </NuxtLink>
+
           <div
             v-else
             class="rounded-md bg-red-50 text-sm font-medium text-red-800 p-4"
