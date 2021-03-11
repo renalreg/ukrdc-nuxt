@@ -49,10 +49,10 @@ export default {
       },
     },
     redirect: {
-      login: '/login',
-      logout: '/',
-      callback: '/login',
-      home: '/',
+      login: (process.env.APP_BASE || '/') + 'login',
+      logout: process.env.APP_BASE || '/',
+      callback: (process.env.APP_BASE || '/') + 'login',
+      home: process.env.APP_BASE || '/',
     },
   },
 
