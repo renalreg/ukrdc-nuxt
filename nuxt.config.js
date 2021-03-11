@@ -59,7 +59,7 @@ export default {
   // Router and middleware configuration
   router: {
     middleware: ['auth'],
-    base: process.env.ROOT_PATH || '/',
+    base: process.env.APP_BASE || '/',
   },
 
   // Runtime configuration variables
@@ -67,8 +67,8 @@ export default {
     axios: {
       // Base URL when calling from a users browser
       browserBaseURL:
-        process.env.PUBLIC_API_ROOT ||
-        process.env.API_ROOT ||
+        process.env.PUBLIC_API_BASE ||
+        process.env.API_BASE ||
         'http://localhost:8000',
     },
   },
@@ -77,8 +77,8 @@ export default {
     axios: {
       // Base URL when calling from the rendering server
       baseURL:
-        process.env.LOCAL_API_ROOT ||
-        process.env.API_ROOT ||
+        process.env.LOCAL_API_BASE ||
+        process.env.API_BASE ||
         'http://localhost:8000',
     },
   },
