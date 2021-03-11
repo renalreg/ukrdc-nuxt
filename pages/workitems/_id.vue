@@ -161,7 +161,13 @@ export default Vue.extend({
     const relatedPersonsRes: Person[] = await this.$axios.$get(
       this.record.masterRecord.links.persons
     )
-    this.relatedPersons = relatedPersonsRes
+    // Exclude the WorkItems Person record from our related Persons array
+    this.relatedPersons = []
+    for (const relatedPerson of relatedPersonsRes) {
+      if (relatedPerson.id !== this.record.personId) {
+        this.relatedPersons.push(relatedPerson)
+      }
+    }
   },
   head() {
     return {
