@@ -1,5 +1,7 @@
 FROM node:15-slim
 
+ENV HOST="0.0.0.0"
+
 WORKDIR /app
 
 COPY package.json ./
