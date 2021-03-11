@@ -59,6 +59,7 @@ export default {
   // Router and middleware configuration
   router: {
     middleware: ['auth'],
+    base: process.env.ROOT_PATH || '/',
   },
 
   // Runtime configuration variables
