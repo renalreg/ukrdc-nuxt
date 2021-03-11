@@ -48,12 +48,6 @@ export default {
         codeChallengeMethod: 'S256',
       },
     },
-    redirect: {
-      login: '/login',
-      logout: '/',
-      callback: '/login',
-      home: '/',
-    },
   },
 
   // Router and middleware configuration
