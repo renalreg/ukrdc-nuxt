@@ -37,6 +37,8 @@ export default {
 
   // Auth Configuration: https://auth.nuxtjs.org/api/options
   auth: {
+    // We need this plugin for https://github.com/nuxt-community/auth-module/issues/1070
+    plugins: ['~/plugins/auth.js'],
     strategies: {
       auth0: {
         domain: 'renalreg.eu.auth0.com',
@@ -47,6 +49,12 @@ export default {
         grantType: 'authorization_code',
         codeChallengeMethod: 'S256',
       },
+    },
+    redirect: {
+      login: '/login',
+      logout: '/',
+      callback: '/login',
+      home: '/',
     },
   },
 
