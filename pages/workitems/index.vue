@@ -58,7 +58,7 @@ export default Vue.extend({
   async fetch() {
     // Fetch the dashboard response from our API server
     const res: WorkItemPage = await this.$axios.$get(
-      `/empi/workitems?page=${this.page}&size=${this.size}`
+      `/api/empi/workitems?page=${this.page}&size=${this.size}`
     )
     this.workitems = res.items
     this.total = res.total

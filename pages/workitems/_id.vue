@@ -85,10 +85,17 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <personsRecordCard
+            v-if="record.person"
             class="border-2 border-red-500"
             :record="record.person"
             label="Incoming"
           />
+          <div
+            v-else
+            class="rounded-md bg-red-50 text-sm font-medium text-red-800 p-4"
+          >
+            No valid person record found
+          </div>
           <personsRecordCard
             :record="relatedPersons[relatedIndex]"
             :label="`Related record ${relatedIndex + 1} of ${
@@ -153,7 +160,7 @@ export default Vue.extend({
   },
   async fetch() {
     // Get the main record data
-    const path = `/empi/workitems/${this.$route.params.id}`
+    const path = `/api/empi/workitems/${this.$route.params.id}`
     const res: WorkItem = await this.$axios.$get(path)
     this.record = res
 
