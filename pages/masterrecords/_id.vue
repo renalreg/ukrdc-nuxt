@@ -95,7 +95,7 @@ export default Vue.extend({
   },
   async fetch() {
     // Get the main record data
-    const path = `/empi/masterrecords/${this.$route.params.id}/`
+    const path = `/empi/masterrecords/${this.$route.params.id}`
     const res: MasterRecord = await this.$axios.$get(path)
     this.record = res
 

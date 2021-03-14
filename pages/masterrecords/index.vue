@@ -73,7 +73,7 @@ export default Vue.extend({
       // Build our query string from search terms and page info
       const path = `/empi/search/masterrecords?${this.buildQueryStringFromArray()}&page=${
         this.page
-      }&size=${this.size}/`
+      }&size=${this.size}`
       // Fetch the search results from our API server
       const res: MasterRecordPage = await this.$axios.$get(path)
       this.masterrecords = res.items

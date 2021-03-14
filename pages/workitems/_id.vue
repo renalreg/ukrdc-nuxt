@@ -153,7 +153,7 @@ export default Vue.extend({
   },
   async fetch() {
     // Get the main record data
-    const path = `/empi/workitems/${this.$route.params.id}/`
+    const path = `/empi/workitems/${this.$route.params.id}`
     const res: WorkItem = await this.$axios.$get(path)
     this.record = res
 
