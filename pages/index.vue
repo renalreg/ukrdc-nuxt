@@ -55,7 +55,7 @@ export default Vue.extend({
   },
   async fetch() {
     // Fetch the dashboard response from our API server
-    const res: DashResponse = await this.$axios.$get('/dash')
+    const res: DashResponse = await this.$axios.$get('/dash/')
     this.response = res
     this.message = res.message
   },
