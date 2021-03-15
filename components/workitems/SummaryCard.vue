@@ -2,7 +2,7 @@
   <div class="bg-white shadow overflow-hidden rounded-md">
     <div class="px-4 py-5 sm:px-6">
       <h3 class="text-lg leading-6 font-medium text-gray-900">
-        Work Item {{ item.id }}
+        Work Item {{ item.id }} {{statusString}}
       </h3>
       <p class="mt-1 max-w-2xl text-sm text-gray-500">
         {{ item.description }}
@@ -47,6 +47,20 @@ export default Vue.extend({
       type: Object as () => WorkItem,
       required: true,
     },
+  },
+  computed: {
+    statusString(): string {
+      if (this.item.status === 1) {
+        return ""
+      } else if (this.item.status === 2) {
+        return "(WIP)"
+      } else if (this.item.status === 3) {
+        return "(Closed)"
+      }
+      else {
+        return "(Unknown status)"
+      }
+    }
   },
 })
 </script>
