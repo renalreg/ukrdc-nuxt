@@ -3,41 +3,27 @@
     <div v-if="$fetchState.pending">Loading...</div>
     <div v-else>
       <!-- Header card  -->
-      <div class="bg-white shadow overflow-hidden rounded-md mb-8">
-        <div class="px-4 py-5 sm:px-6">
+      <workitemsSummaryCard class="mb-8" :item="record" />
+
+      <!-- Related WorkItems  -->
+      <div
+        v-if="relatedRecords.length > 0"
+        class="bg-white shadow overflow-hidden rounded-md mb-8"
+      >
+        <!-- Card header -->
+        <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
           <h3 class="text-lg leading-6 font-medium text-gray-900">
-            Work Item {{ record.id }}
+            Related Work Items
           </h3>
-          <p class="mt-1 max-w-2xl text-sm text-gray-500">
-            {{ record.description }}
-          </p>
         </div>
-        <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
-          <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-            <div class="sm:col-span-1">
-              <dt class="text-sm font-medium text-gray-500">Last Updated</dt>
-              <dd class="mt-1 text-sm text-gray-900">
-                {{
-                  record.lastUpdated ? formatDate(record.lastUpdated) : 'Never'
-                }}
-              </dd>
-            </div>
-            <div class="sm:col-span-1">
-              <dt class="text-sm font-medium text-gray-500">Last Updated By</dt>
-              <dd class="mt-1 text-sm text-gray-900">
-                {{ record.updatedBy ? record.updatedBy : 'N/A' }}
-              </dd>
-            </div>
-            <div class="sm:col-span-2">
-              <dt class="text-sm font-medium text-gray-500">Comments</dt>
-              <dd class="mt-1 text-sm text-gray-900">
-                {{
-                  record.updateDescription ? record.updateDescription : 'None'
-                }}
-              </dd>
-            </div>
-          </dl>
-        </div>
+        <!-- Results list -->
+        <ul class="divide-y divide-gray-200">
+          <workitemsListItem
+            v-for="item in relatedRecords"
+            :key="item.id"
+            :item="item"
+          />
+        </ul>
       </div>
 
       <div class="mb-8">
@@ -154,6 +140,7 @@ export default Vue.extend({
   data() {
     return {
       record: {} as WorkItem,
+      relatedRecords: [] as WorkItem[],
       relatedPersons: [] as Person[],
       relatedIndex: 0,
     }
@@ -165,9 +152,13 @@ export default Vue.extend({
     this.record = res
 
     // Use the record links to load related data concurrently
-    const relatedPersonsRes: Person[] = await this.$axios.$get(
-      this.record.masterRecord.links.persons
-    )
+    const [relatedRecordsRes, relatedPersonsRes] = await Promise.all([
+      this.$axios.$get(this.record.links.related),
+      this.$axios.$get(this.record.masterRecord.links.persons),
+    ])
+
+    this.relatedRecords = relatedRecordsRes
+
     // Exclude the WorkItems Person record from our related Persons array
     this.relatedPersons = []
     for (const relatedPerson of relatedPersonsRes) {
