@@ -32,7 +32,6 @@
 
     <div class="max-w-7xl mx-auto">
       <dashStats
-        v-if="response.workitems && response.ukrdcrecords"
         :workitems="response.workitems"
         :ukrdcrecords="response.ukrdcrecords"
       />
