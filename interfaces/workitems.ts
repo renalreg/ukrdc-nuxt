@@ -1,5 +1,12 @@
 import { MasterRecord } from '@/interfaces/masterrecords'
 import { Person } from '@/interfaces/persons'
+
+interface WorkItemLinks {
+  self: string
+  related: string
+  merge: string
+  close: string
+}
 export interface WorkItemSummary {
   id: number
   personId: number
@@ -14,6 +21,8 @@ export interface WorkItemShort extends WorkItemSummary {
   updatedBy: string
   updateDescription: string
   attributes: object
+
+  links: WorkItemLinks
 }
 
 export interface WorkItem extends WorkItemShort {
