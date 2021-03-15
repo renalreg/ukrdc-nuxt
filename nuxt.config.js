@@ -64,7 +64,7 @@ export default {
     base: process.env.APP_BASE || '/app',
   },
 
-    // Basic axios configuration
+  // Basic axios configuration
   axios: {
     baseURL: 'http://localhost:8000', // Used as fallback if no runtime config is provided
   },
@@ -72,13 +72,13 @@ export default {
   // Runtime configuration variables
   publicRuntimeConfig: {
     axios: {
-      browserBaseURL: process.env.BROWSER_BASE_URL
-    }
+      browserBaseURL: process.env.BROWSER_BASE_URL,
+    },
   },
 
   privateRuntimeConfig: {
     axios: {
-      baseURL: process.env.BASE_URL
-    }
+      baseURL: process.env.BASE_URL,
+    },
   },
 }
