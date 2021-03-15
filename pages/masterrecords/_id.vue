@@ -1,7 +1,6 @@
 <template>
   <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
-    <div v-if="$fetchState.pending">Loading...</div>
-    <div v-else>
+    <div>
       <!-- Work items alert -->
       <div v-if="workItems.length > 0" class="rounded-md bg-yellow-50 p-4 mb-4">
         <div class="flex">
@@ -29,7 +28,8 @@
         </div>
       </div>
 
-      <masterrecordsRecordCard :record="record" />
+      <masterrecordsRecordCardPlaceholder v-if="$fetchState.pending" />
+      <masterrecordsRecordCard v-else :record="record" />
 
       <div
         v-if="workItems.length > 0"
