@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
     <SearchBar
-      v-model="searchString"
+      v-model="searchboxString"
       class="mb-4"
       :focus="true"
       @submit="searchSubmit"
@@ -62,18 +62,23 @@ export default Vue.extend({
       page: (this.$route.query.page || 0) as number,
       size: 20,
       search: (this.$route.query.search || []) as string[],
-      searchString: '',
+      numberType: (this.$route.query.number_type || ['UKRDC']) as string[],
+      searchboxString: '',
     }
   },
   async fetch() {
     this.search = this.$route.query.search as string[]
     if (this.search && this.search.length > 0) {
       // Set the search string
-      this.searchString = this.buildSearchStringFromQueryArray()
+      this.searchboxString = this.buildSearchStringFromQueryArray()
       // Build our query string from search terms and page info
-      const path = `/api/empi/search/masterrecords?${this.buildQueryStringFromArray()}&page=${
-        this.page
-      }&size=${this.size}`
+      const path = `/api/empi/search/masterrecords?${this.buildQueryStringFromArray(
+        this.search,
+        'search'
+      )}&${this.buildQueryStringFromArray(
+        this.numberType,
+        'number_type'
+      )}&page=${this.page}&size=${this.size}`
       // Fetch the search results from our API server
       const res: MasterRecordPage = await this.$axios.$get(path)
       this.masterrecords = res.items
@@ -111,13 +116,13 @@ export default Vue.extend({
       // Navigate to the search query path
       this.$router.push({
         path: this.$route.path,
-        query: { search: this.search },
+        query: { search: this.search, number_type: this.numberType },
       })
     },
     buildQueryArrayFromSearchString(): string[] {
       // Builds an array of strings from a search bar string.
       // e.g. 'john & 1970-03-01' becomes ['john', '1949-03-01']
-      const sections: string[] = this.searchString.split('&')
+      const sections: string[] = this.searchboxString.split('&')
       return sections.map(function (s: string) {
         return s.trim()
       })
@@ -135,17 +140,20 @@ export default Vue.extend({
         return this.search
       }
     },
-    buildQueryStringFromArray(): string {
+    buildQueryStringFromArray(
+      input: string[] | string,
+      queryName: string
+    ): string {
       // Builds a query string from an array of strings.
       // e.g. ['john', '1949-03-01'] becomes search=john&search=1949-03-01
-      if (Array.isArray(this.search)) {
+      if (Array.isArray(input)) {
         let q = ''
-        for (const term of this.search) {
-          q = q.concat(`search=${term}&`)
+        for (const term of input) {
+          q = q.concat(`${queryName}=${term}&`)
         }
         return q.slice(0, -1) // Remove trailing '&'
       } else {
-        return `search=${this.search}`
+        return `${queryName}=${input}`
       }
     },
   },
