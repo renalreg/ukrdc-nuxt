@@ -46,11 +46,13 @@ export default Vue.extend({
   props: {
     workitems: {
       type: Object as () => DashStatistics,
-      required: true,
+      required: false,
+      default: null,
     },
     ukrdcrecords: {
       type: Object as () => DashStatistics,
-      required: true,
+      required: false,
+      default: null,
     },
   },
   data() {
