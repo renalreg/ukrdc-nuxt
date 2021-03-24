@@ -18,13 +18,14 @@
           <button
             v-for="tab in tabs"
             :key="tab"
+            role="tab"
             class="px-3 py-2 font-medium text-sm rounded-md"
             :class="
               currentTab === tab
                 ? 'bg-indigo-100 text-indigo-700 '
                 : 'text-gray-500 hover:text-gray-700'
             "
-            aria-current="page"
+            :aria-selected="currentTab === tab"
             @click="currentTab = tab"
           >
             {{ tab }}
