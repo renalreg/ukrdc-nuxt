@@ -10,7 +10,8 @@ export interface DashUser {
 }
 
 export interface DashResponse {
-  message: string
+  messages: string[]
+  warnings: string[]
   user: DashUser
   ukrdcrecords: DashStatistics
   workitems: DashStatistics
