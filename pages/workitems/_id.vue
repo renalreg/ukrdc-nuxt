@@ -1,126 +1,128 @@
 <template>
   <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
-    <div v-if="$fetchState.pending">Loading...</div>
-    <div v-else>
-      <!-- Header card  -->
-      <workitemsSummaryCard class="mb-8" :item="record" />
+    <!-- Header card  -->
+    <workitemsSummaryCardPlaceholder
+      v-if="isEmptyObject(record)"
+      class="mb-8"
+      :item="record"
+    />
+    <workitemsSummaryCard v-else class="mb-8" :item="record" />
 
-      <!-- Related WorkItems  -->
-      <div
-        v-if="relatedRecords.length > 0"
-        class="bg-white shadow overflow-hidden rounded-md mb-8"
-      >
-        <!-- Card header -->
-        <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
-          <h3 class="text-lg leading-6 font-medium text-gray-900">
-            Related Work Items
-          </h3>
-        </div>
-        <!-- Results list -->
-        <ul class="divide-y divide-gray-200">
-          <workitemsListItem
-            v-for="item in relatedRecords"
-            :key="item.id"
-            :item="item"
-          />
-        </ul>
-      </div>
-
-      <div class="mb-8">
-        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
-          Proposed Link
+    <!-- Related WorkItems  -->
+    <div
+      v-if="relatedRecords.length > 0"
+      class="bg-white shadow overflow-hidden rounded-md mb-8"
+    >
+      <!-- Card header -->
+      <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
+        <h3 class="text-lg leading-6 font-medium text-gray-900">
+          Related Work Items
         </h3>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-          <personsRecordCard
-            v-if="record.person"
-            class="border-2 border-red-500"
-            :record="record.person"
-            label="Incoming"
-          />
-          <div
-            v-else
-            class="rounded-md bg-red-50 text-sm font-medium text-red-800 p-4"
-          >
-            No valid person record found
-          </div>
-          <NuxtLink
-            v-if="record.masterRecord"
-            :to="`/masterrecords/${record.masterRecord.id}`"
-          >
-            <masterrecordsRecordCard
-              class="border-2 border-indigo-500"
-              :record="record.masterRecord"
-              label="Master Record"
-            />
-          </NuxtLink>
-
-          <div
-            v-else
-            class="rounded-md bg-red-50 text-sm font-medium text-red-800 p-4"
-          >
-            No valid master record found
-          </div>
-        </div>
       </div>
+      <!-- Results list -->
+      <ul class="divide-y divide-gray-200">
+        <workitemsListItem
+          v-for="item in relatedRecords"
+          :key="item.id"
+          :item="item"
+        />
+      </ul>
+    </div>
 
-      <div v-if="relatedPersons.length > 0" class="mb-8">
-        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
-          Compare Records
-        </h3>
+    <div class="mb-8">
+      <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
+        Proposed Link
+      </h3>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <personsRecordCard
-            v-if="record.person"
-            class="border-2 border-red-500"
-            :record="record.person"
-            label="Incoming"
-          />
-          <div
-            v-else
-            class="rounded-md bg-red-50 text-sm font-medium text-red-800 p-4"
-          >
-            No valid person record found
-          </div>
-          <personsRecordCard
-            :record="relatedPersons[relatedIndex]"
-            :label="`Related record ${relatedIndex + 1} of ${
-              relatedPersons.length
-            }`"
-          />
-        </div>
-
-        <nav
-          v-if="relatedPersons.length > 1"
-          class="bg-white shadow overflow-hidden rounded-md flex items-center justify-between px-2 py-2 mt-2"
-          aria-label="Pagination"
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <personsRecordCard
+          v-if="record.person"
+          class="border-2 border-red-500"
+          :record="record.person"
+          label="Incoming"
+        />
+        <div
+          v-else
+          class="rounded-md bg-red-50 text-sm font-medium text-red-800 p-4"
         >
-          <div class="hidden sm:block">
-            <p class="text-sm text-gray-700 ml-2">
-              Record
-              <span class="font-medium">{{ relatedIndex + 1 }}</span>
-              of
-              <span class="font-medium">{{ relatedPersons.length }}</span>
-            </p>
-          </div>
-          <div class="flex-1 flex justify-between sm:justify-end">
-            <button
-              :class="{ invisible: relatedIndex <= 0 }"
-              class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
-              @click="relatedIndex = relatedIndex - 1"
-            >
-              Previous
-            </button>
-            <button
-              :class="{ invisible: relatedIndex >= relatedPersons.length - 1 }"
-              class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 sm:ml-2"
-              @click="relatedIndex = relatedIndex + 1"
-            >
-              Next
-            </button>
-          </div>
-        </nav>
+          No valid person record found
+        </div>
+        <NuxtLink
+          v-if="record.masterRecord"
+          :to="`/masterrecords/${record.masterRecord.id}`"
+        >
+          <masterrecordsRecordCard
+            class="border-2 border-indigo-500"
+            :record="record.masterRecord"
+            label="Master Record"
+          />
+        </NuxtLink>
+
+        <div
+          v-else
+          class="rounded-md bg-red-50 text-sm font-medium text-red-800 p-4"
+        >
+          No valid master record found
+        </div>
       </div>
+    </div>
+
+    <div v-if="relatedPersons.length > 0" class="mb-8">
+      <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
+        Compare Records
+      </h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <personsRecordCard
+          v-if="record.person"
+          class="border-2 border-red-500"
+          :record="record.person"
+          label="Incoming"
+        />
+        <div
+          v-else
+          class="rounded-md bg-red-50 text-sm font-medium text-red-800 p-4"
+        >
+          No valid person record found
+        </div>
+        <personsRecordCard
+          :record="relatedPersons[relatedIndex]"
+          :label="`Related record ${relatedIndex + 1} of ${
+            relatedPersons.length
+          }`"
+        />
+      </div>
+
+      <nav
+        v-if="relatedPersons.length > 1"
+        class="bg-white shadow overflow-hidden rounded-md flex items-center justify-between px-2 py-2 mt-2"
+        aria-label="Pagination"
+      >
+        <div class="hidden sm:block">
+          <p class="text-sm text-gray-700 ml-2">
+            Record
+            <span class="font-medium">{{ relatedIndex + 1 }}</span>
+            of
+            <span class="font-medium">{{ relatedPersons.length }}</span>
+          </p>
+        </div>
+        <div class="flex-1 flex justify-between sm:justify-end">
+          <button
+            :class="{ invisible: relatedIndex <= 0 }"
+            class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
+            @click="relatedIndex = relatedIndex - 1"
+          >
+            Previous
+          </button>
+          <button
+            :class="{ invisible: relatedIndex >= relatedPersons.length - 1 }"
+            class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 sm:ml-2"
+            @click="relatedIndex = relatedIndex + 1"
+          >
+            Next
+          </button>
+        </div>
+      </nav>
     </div>
   </div>
 </template>
@@ -133,9 +135,10 @@ import { Person } from '@/interfaces/persons'
 
 import dateUtilsMixin from '@/mixins/dateutils'
 import codeUtilsMixin from '@/mixins/coddeutils'
+import objectUtilsMixin from '@/mixins/objectutils'
 
 export default Vue.extend({
-  mixins: [dateUtilsMixin, codeUtilsMixin],
+  mixins: [dateUtilsMixin, codeUtilsMixin, objectUtilsMixin],
 
   data() {
     return {

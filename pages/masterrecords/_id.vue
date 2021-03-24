@@ -28,7 +28,7 @@
         </div>
       </div>
 
-      <masterrecordsRecordCardPlaceholder v-if="$fetchState.pending" />
+      <masterrecordsRecordCardPlaceholder v-if="isEmptyObject(record)" />
       <masterrecordsRecordCard v-else :record="record" />
 
       <div
@@ -81,9 +81,10 @@ import { PatientRecordShort } from '@/interfaces/patientrecords'
 
 import dateUtilsMixin from '@/mixins/dateutils'
 import codeUtilsMixin from '@/mixins/coddeutils'
+import objectUtilsMixin from '@/mixins/objectutils'
 
 export default Vue.extend({
-  mixins: [dateUtilsMixin, codeUtilsMixin],
+  mixins: [dateUtilsMixin, codeUtilsMixin, objectUtilsMixin],
 
   data() {
     return {
