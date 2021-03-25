@@ -185,7 +185,9 @@
           :api-path="record.links.medications"
         />
       </div>
-      <div v-if="currentTab === 'Lab Orders'">WIP lab orders component</div>
+      <div v-if="currentTab === 'Lab Orders'">
+        <PatientrecordsSectionsLabOrders :api-path="record.links.laborders" />
+      </div>
       <div v-if="currentTab === 'Observations'">WIP observations component</div>
       <div v-if="currentTab === 'Surveys'">WIP surveys component</div>
     </div>

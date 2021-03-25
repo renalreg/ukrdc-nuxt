@@ -9,8 +9,8 @@
         class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4"
       >
         <li
-          v-for="item in activeMedications"
-          :key="item.drugProductGeneric + item.fromTime"
+          v-for="(item, index) of activeMedications"
+          :key="index"
           class="col-span-1 shadow-sm border border-gray-200 bg-white rounded-md"
         >
           <medicationsCard :item="item" />
@@ -27,8 +27,8 @@
         class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4"
       >
         <li
-          v-for="item in inactiveMedications"
-          :key="item.drugProductGeneric + item.fromTime"
+          v-for="(item, index) of inactiveMedications"
+          :key="index"
           class="col-span-1 shadow-sm border border-gray-200 bg-white rounded-md"
         >
           <medicationsCard :item="item" />
