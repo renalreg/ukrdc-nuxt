@@ -93,13 +93,12 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import { MasterRecord } from '@/interfaces/masterrecords'
-import { WorkItem } from '@/interfaces/workitems'
-import { PatientRecordShort } from '@/interfaces/patientrecords'
-
 import dateUtilsMixin from '@/mixins/dateutils'
 import codeUtilsMixin from '@/mixins/coddeutils'
 import objectUtilsMixin from '@/mixins/objectutils'
+import { MasterRecord } from '~/interfaces/masterrecord'
+import { WorkItem } from '~/interfaces/workitem'
+import { PatientRecordShort } from '~/interfaces/patientrecord'
 
 export default Vue.extend({
   mixins: [dateUtilsMixin, codeUtilsMixin, objectUtilsMixin],

@@ -52,10 +52,9 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import { MasterRecord } from '@/interfaces/masterrecords'
-
 import dateUtilsMixin from '@/mixins/dateutils'
 import codeUtilsMixin from '@/mixins/coddeutils'
+import { MasterRecord } from '~/interfaces/masterrecord'
 
 export default Vue.extend({
   mixins: [dateUtilsMixin, codeUtilsMixin],

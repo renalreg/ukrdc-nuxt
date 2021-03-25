@@ -58,8 +58,8 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import { PatientRecordShort } from '@/interfaces/patientrecords'
 import dateUtilsMixin from '@/mixins/dateutils'
+import { PatientRecordShort } from '~/interfaces/patientrecord'
 
 export default Vue.extend({
   mixins: [dateUtilsMixin],

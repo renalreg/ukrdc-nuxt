@@ -130,12 +130,12 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import { WorkItem } from '@/interfaces/workitems'
 import { Person } from '@/interfaces/persons'
 
 import dateUtilsMixin from '@/mixins/dateutils'
 import codeUtilsMixin from '@/mixins/coddeutils'
 import objectUtilsMixin from '@/mixins/objectutils'
+import { WorkItem } from '~/interfaces/workitem'
 
 export default Vue.extend({
   mixins: [dateUtilsMixin, codeUtilsMixin, objectUtilsMixin],

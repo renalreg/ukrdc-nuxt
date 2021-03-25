@@ -5,9 +5,9 @@
         <label for="tabs" class="sr-only">Select a tab</label>
         <select
           id="tabs"
-          v-model="currentTab"
           name="tabs"
           class="block w-full focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+          @change="setTab($event.target.value)"
         >
           <option v-for="tab in tabs" :key="tab">{{ tab }}</option>
         </select>
@@ -26,7 +26,7 @@
                 : 'text-gray-500 hover:text-gray-700'
             "
             :aria-selected="currentTab === tab"
-            @click="currentTab = tab"
+            @click="setTab(tab)"
           >
             {{ tab }}
           </button>
@@ -180,7 +180,11 @@
         :record="record"
         :header-only="true"
       />
-      <div v-if="currentTab === 'Medications'">WIP medications component</div>
+      <div v-if="currentTab === 'Medications'">
+        <PatientrecordsSectionsMedications
+          :api-path="record.links.medications"
+        />
+      </div>
       <div v-if="currentTab === 'Lab Orders'">WIP lab orders component</div>
       <div v-if="currentTab === 'Observations'">WIP observations component</div>
       <div v-if="currentTab === 'Surveys'">WIP surveys component</div>
@@ -191,11 +195,10 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import { PatientRecord } from '@/interfaces/patientrecords'
-
 import dateUtilsMixin from '@/mixins/dateutils'
 import codeUtilsMixin from '@/mixins/coddeutils'
 import objectUtilsMixin from '@/mixins/objectutils'
+import { PatientRecord } from '~/interfaces/patientrecord'
 
 export default Vue.extend({
   mixins: [dateUtilsMixin, codeUtilsMixin, objectUtilsMixin],
@@ -203,7 +206,6 @@ export default Vue.extend({
   data() {
     return {
       record: {} as PatientRecord,
-      currentTab: 'Overview',
       tabs: [
         'Overview',
         'Medications',
@@ -223,6 +225,18 @@ export default Vue.extend({
     return {
       title: 'Patient Record',
     }
+  },
+  computed: {
+    currentTab(): string {
+      return this.$route.hash.slice(1) || 'Overview'
+    },
+  },
+  methods: {
+    setTab(newTab: string): void {
+      this.$router.push({
+        hash: newTab,
+      })
+    },
   },
 })
 </script>
