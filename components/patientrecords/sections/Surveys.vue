@@ -1,5 +1,5 @@
 <template>
-  <div>Unavailable</div>
+  <div class="mt-6 text-center">Not yet implemented</div>
 </template>
 
 <script lang="ts">
