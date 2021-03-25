@@ -8,7 +8,7 @@
         autocomplete="country"
         class="block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
       >
-        <option value="">All</option>
+        <option value="">All Observations</option>
         <option v-for="item in filterOptions" :key="item">{{ item }}</option>
       </select>
     </div>
@@ -16,7 +16,7 @@
     <!-- This example requires Tailwind CSS v2.0+ -->
     <div class="flex flex-col">
       <div class="-my-2 -mx-4 sm:-mx-6 md:-mx-8 overflow-x-auto ">
-        <div class="py-2 px-4 sm:px-6 md:px-8 align-middle inline-block min-w-full  shadow overflow-hidden border-b border-gray-200 rounded-lg">
+        <div class="py-2 px-4 sm:px-6 md:px-8 align-middle inline-block min-w-full overflow-hidden">
           <div
             class="shadow overflow-hidden border-b border-gray-200 rounded-lg"
           >
@@ -27,7 +27,7 @@
                     scope="col"
                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Description
+                    Type
                   </th>
                   <th
                     scope="col"
