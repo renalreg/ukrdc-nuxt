@@ -193,7 +193,9 @@
           :api-path="record.links.observations"
         />
       </div>
-      <div v-if="currentTab === 'Surveys'">WIP surveys component</div>
+      <div v-if="currentTab === 'Surveys'">
+        <PatientrecordsSectionsSurveys :api-path="record.links.surveys" />
+      </div>
     </div>
   </div>
 </template>
