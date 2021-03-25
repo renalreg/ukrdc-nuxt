@@ -188,7 +188,11 @@
       <div v-if="currentTab === 'Lab Orders'">
         <PatientrecordsSectionsLabOrders :api-path="record.links.laborders" />
       </div>
-      <div v-if="currentTab === 'Observations'">WIP observations component</div>
+      <div v-if="currentTab === 'Observations'">
+        <PatientrecordsSectionsObservations
+          :api-path="record.links.observations"
+        />
+      </div>
       <div v-if="currentTab === 'Surveys'">WIP surveys component</div>
     </div>
   </div>
@@ -230,7 +234,7 @@ export default Vue.extend({
   },
   computed: {
     currentTab(): string {
-      return this.$route.hash.slice(1) || 'Overview'
+      return decodeURIComponent(this.$route.hash).slice(1) || 'Overview'
     },
   },
   methods: {
