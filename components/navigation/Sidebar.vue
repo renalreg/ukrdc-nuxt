@@ -127,10 +127,16 @@ export default Vue.extend({
         },
         {
           title: 'Work Items',
-          sectionHeading: 'EMPI',
+          sectionHeading: 'Administration',
           url: '/workitems',
           svg:
             'M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1',
+        },
+        {
+          title: 'Errors',
+          url: '/errors',
+          svg:
+            'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z',
         },
       ] as NavItem[],
     }
