@@ -35,8 +35,8 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import { WorkItemShort } from 'interfaces/workitems'
 import dateUtilsMixin from '@/mixins/dateutils'
+import { WorkItemShort } from '~/interfaces/workitem'
 
 interface WorkItemPage {
   items: WorkItemShort[]

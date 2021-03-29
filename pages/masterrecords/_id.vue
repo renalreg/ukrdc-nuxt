@@ -56,6 +56,24 @@
         <!-- Card header -->
         <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
           <h3 class="text-lg leading-6 font-medium text-gray-900">
+            Patient Records
+          </h3>
+        </div>
+        <!-- Real results -->
+        <ul class="divide-y divide-gray-200">
+          <patientrecordsListItem
+            v-for="item in patientRecords"
+            :key="item.pid"
+            :item="item"
+          />
+        </ul>
+      </div>
+
+      <!-- Related Records card -->
+      <div class="bg-white shadow overflow-hidden rounded-md mt-4">
+        <!-- Card header -->
+        <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
+          <h3 class="text-lg leading-6 font-medium text-gray-900">
             Linked Master Records
           </h3>
         </div>
@@ -75,13 +93,12 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import { MasterRecord } from '@/interfaces/masterrecords'
-import { WorkItem } from '@/interfaces/workitems'
-import { PatientRecordShort } from '@/interfaces/patientrecords'
-
 import dateUtilsMixin from '@/mixins/dateutils'
 import codeUtilsMixin from '@/mixins/coddeutils'
 import objectUtilsMixin from '@/mixins/objectutils'
+import { MasterRecord } from '~/interfaces/masterrecord'
+import { WorkItem } from '~/interfaces/workitem'
+import { PatientRecordShort } from '~/interfaces/patientrecord'
 
 export default Vue.extend({
   mixins: [dateUtilsMixin, codeUtilsMixin, objectUtilsMixin],

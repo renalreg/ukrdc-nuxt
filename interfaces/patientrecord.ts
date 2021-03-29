@@ -1,3 +1,11 @@
+import { Patient } from '@/interfaces/patient'
+
+interface ProgramMembership {
+  programName: string
+  fromTime: string
+  toTime: string
+}
+
 interface PatientRecordLinks {
   self: string
   laborders: string
@@ -16,4 +24,9 @@ export interface PatientRecordShort {
   repositoryUpdateDate: string
 
   links: PatientRecordLinks
+}
+
+export interface PatientRecord extends PatientRecordShort {
+  programMemberships: ProgramMembership[]
+  patient: Patient
 }

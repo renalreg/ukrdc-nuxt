@@ -61,8 +61,8 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import { WorkItemShort } from '@/interfaces/workitems'
 import dateUtilsMixin from '@/mixins/dateutils'
+import { WorkItemShort } from '~/interfaces/workitem'
 
 export default Vue.extend({
   mixins: [dateUtilsMixin],

@@ -2,7 +2,7 @@
   <div class="bg-white shadow overflow-hidden rounded-md">
     <div class="px-4 py-5 sm:px-6">
       <h3 class="text-lg leading-6 font-medium text-gray-900">
-        Work Item {{ item.id }} {{statusString}}
+        Work Item {{ item.id }} {{ statusString }}
       </h3>
       <p class="mt-1 max-w-2xl text-sm text-gray-500">
         {{ item.description }}
@@ -36,9 +36,8 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import { WorkItem } from '@/interfaces/workitems'
-
 import dateUtilsMixin from '@/mixins/dateutils'
+import { WorkItem } from '~/interfaces/workitem'
 
 export default Vue.extend({
   mixins: [dateUtilsMixin],
@@ -51,16 +50,15 @@ export default Vue.extend({
   computed: {
     statusString(): string {
       if (this.item.status === 1) {
-        return ""
+        return ''
       } else if (this.item.status === 2) {
-        return "(WIP)"
+        return '(WIP)'
       } else if (this.item.status === 3) {
-        return "(Closed)"
+        return '(Closed)'
+      } else {
+        return '(Unknown status)'
       }
-      else {
-        return "(Unknown status)"
-      }
-    }
+    },
   },
 })
 </script>

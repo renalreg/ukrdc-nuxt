@@ -1,6 +1,9 @@
 <template>
   <li>
-    <NuxtLink :to="`/masterrecords/${item.id}`" class="block hover:bg-gray-50">
+    <NuxtLink
+      :to="`/patientrecords/${item.pid}`"
+      class="block hover:bg-gray-50"
+    >
       <div class="flex items-center px-4 py-4 sm:px-6">
         <div class="min-w-0 flex-1 flex items-center">
           <div class="min-w-0 grid grid-cols-2 lg:grid-cols-3 md:gap-4 w-full">
@@ -9,31 +12,24 @@
               <p
                 class="text-sm font-medium text-indigo-600 capitalize truncate"
               >
-                {{ item.givenname.toLowerCase() }}
-                {{ item.surname.toLowerCase() }}
+                {{ item.sendingfacility }}
               </p>
               <p class="mt-2 flex items-center text-sm text-gray-500">
-                <span class="truncate"
-                  >{{ formatDate(item.dateOfBirth, (t = false)) }}
-                  <b>{{ genderChar }}</b></span
-                >
+                via {{ item.sendingextract }}
               </p>
             </div>
             <!-- National ID -->
             <div class="text-right sm:text-left">
-              <p class="text-sm text-gray-900">
-                {{ item.nationalid.trim() }}
+              <p class="text-sm text-gray-500">Local ID</p>
+              <p class="mt-2 text-sm text-gray-500">
+                {{ item.localpatientid }}
               </p>
-              <masterrecordsNationalIdTypeTag
-                class="mt-2"
-                :nationalid-type="item.nationalidType"
-              />
             </div>
             <!-- Details (large breakpoint only) -->
             <div class="hidden lg:block">
               <p class="text-sm text-gray-500">Last updated</p>
               <p class="mt-2 text-sm text-gray-500">
-                {{ formatDate(item.lastUpdated) }}
+                {{ formatDate(item.repositoryUpdateDate) }}
               </p>
             </div>
           </div>
@@ -63,40 +59,14 @@
 import Vue from 'vue'
 
 import dateUtilsMixin from '@/mixins/dateutils'
-import { MasterRecord } from '~/interfaces/masterrecord'
+import { PatientRecordShort } from '~/interfaces/patientrecord'
 
 export default Vue.extend({
   mixins: [dateUtilsMixin],
   props: {
     item: {
-      type: Object as () => MasterRecord,
+      type: Object as () => PatientRecordShort,
       required: true,
-    },
-  },
-  computed: {
-    genderChar(): string {
-      if (this.item.gender === '1') {
-        return '♂'
-      } else if (this.item.gender === '2') {
-        return '♀'
-      } else {
-        return ''
-      }
-    },
-  },
-  methods: {
-    TagClass(nationalidType: string): string[] {
-      if (nationalidType.trim() === 'UKRDC') {
-        return ['bg-red-100', 'text-red-800']
-      } else if (nationalidType.trim() === 'NHS') {
-        return ['bg-blue-100', 'text-blue-800']
-      } else if (nationalidType.trim() === 'CHI') {
-        return ['bg-purple-100', 'text-purple-800']
-      } else if (nationalidType.trim() === 'HSC') {
-        return ['bg-green-100', 'text-green-800']
-      } else {
-        return ['bg-gray-100', 'text-gray-800']
-      }
     },
   },
 })

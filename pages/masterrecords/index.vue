@@ -44,7 +44,7 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import { MasterRecord } from '@/interfaces/masterrecords'
+import { MasterRecord } from '~/interfaces/masterrecord'
 
 interface MasterRecordPage {
   items: MasterRecord[]
