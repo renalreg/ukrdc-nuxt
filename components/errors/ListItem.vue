@@ -1,7 +1,7 @@
 <template>
   <li>
     <NuxtLink
-      :to="`/messages/${item.messageId}`"
+      :to="`/mirth/messages/${item.channelId}/${item.messageId}`"
       class="block hover:bg-gray-50"
     >
       <div class="flex items-center px-4 py-4 sm:px-6">
