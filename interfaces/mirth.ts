@@ -13,7 +13,8 @@ export interface ConnectorMessageData {
 }
 
 export interface ConnectorMessage {
-  chainId: string
+  chainId: number
+  orderId: number
   serverId: string
   channelId: string
   channelName: string

@@ -2,8 +2,8 @@
   <div class="mt-4">
     <div class="mt-1 sm:mt-0 sm:col-span-2 mb-4">
       <select
-        v-model="appliedFilter"
         id="country"
+        v-model="appliedFilter"
         name="country"
         autocomplete="country"
         class="block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -15,8 +15,10 @@
 
     <!-- This example requires Tailwind CSS v2.0+ -->
     <div class="flex flex-col">
-      <div class="-my-2 -mx-4 sm:-mx-6 md:-mx-8 overflow-x-auto ">
-        <div class="py-2 px-4 sm:px-6 md:px-8 align-middle inline-block min-w-full overflow-hidden">
+      <div class="-my-2 -mx-4 sm:-mx-6 md:-mx-8 overflow-x-auto">
+        <div
+          class="py-2 px-4 sm:px-6 md:px-8 align-middle inline-block min-w-full overflow-hidden"
+        >
           <div
             class="shadow overflow-hidden border-b border-gray-200 rounded-lg"
           >
@@ -63,7 +65,8 @@
                     {{ item.observationValue }} {{ item.observationUnits }}
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <p>{{ item.enteredAt }}</p> <p>{{ item.enteredAtDescription }}</p>
+                    <p>{{ item.enteredAt }}</p>
+                    <p>{{ item.enteredAtDescription }}</p>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {{ formatDate(item.observationTime) }}
@@ -108,7 +111,7 @@ export default Vue.extend({
   },
   computed: {
     filterOptions(): string[] {
-      let options: string[] = []
+      const options: string[] = []
       for (const item of this.observations) {
         if (!options.includes(item.observationDesc)) {
           options.push(item.observationDesc)

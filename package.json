@@ -16,7 +16,8 @@
     "core-js": "^3.8.3",
     "nuxt": "^2.15.3",
     "object-hash": "^2.1.1",
-    "url-join": "^4.0.1"
+    "url-join": "^4.0.1",
+    "xml-formatter": "^2.4.0"
   },
   "devDependencies": {
     "@nuxt/types": "^2.15.3",
