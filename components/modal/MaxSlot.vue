@@ -78,7 +78,7 @@ export default Vue.extend({
 
 <style scoped>
 .vibrancy {
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(20px);
 }
 </style>

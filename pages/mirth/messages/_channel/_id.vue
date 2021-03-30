@@ -1,18 +1,50 @@
 <template>
   <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
+    <!-- XML viewer modal -->
     <messagesViewer
       ref="messageViewerModal"
       class="max-h-full"
       :message-data="openMessage"
     />
-    <div v-if="isEmptyObject(message)">Loading...</div>
+    <div v-if="isEmptyObject(message)"><messagesSummaryCardPlaceholder /></div>
+
     <div v-else>
-      <h1>{{ channelName }}</h1>
-      <p>Channel ID: {{ message.channelId }}</p>
-      <p>Message ID: {{ message.messageId }}</p>
-      <p>
-        {{ message.connectorMessages.length }} items in connectorMessage chain:
-      </p>
+      <!-- Header card -->
+      <div class="bg-white shadow overflow-hidden rounded-md mb-8">
+        <div class="px-4 py-5 sm:px-6">
+          <h3 class="text-lg leading-6 font-medium text-gray-900">
+            {{ channelName }}
+          </h3>
+          <p class="mt-1 max-w-2xl text-sm text-gray-500">
+            {{ message.channelId }}
+          </p>
+        </div>
+        <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+          <dl class="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
+            <div class="sm:col-span-1">
+              <dt class="text-sm font-medium text-gray-500">Message ID</dt>
+              <dd class="mt-1 text-sm text-gray-900">
+                {{ message.messageId }}
+              </dd>
+            </div>
+            <div class="sm:col-span-1">
+              <dt class="text-sm font-medium text-gray-500">Processed</dt>
+              <dd class="mt-1 text-sm text-gray-900">
+                {{ message.processed ? 'Yes' : 'No' }}
+                {{ hasErrors ? '(with errors)' : '' }}
+              </dd>
+            </div>
+            <div class="sm:col-span-2">
+              <dt class="text-sm font-medium text-gray-500">
+                {{ message.connectorMessages.length }} messages across
+                {{ Object.keys(chain).length }} chain links
+              </dt>
+            </div>
+          </dl>
+        </div>
+      </div>
+
+      <!-- Chain grid -->
       <div v-for="(messages, index) in chain" :key="index">
         <div
           class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4 justify-center"
@@ -92,6 +124,14 @@ export default Vue.extend({
         }
       }
       return name.substring(1)
+    },
+    hasErrors(): boolean {
+      for (const msg of this.message.connectorMessages) {
+        if (msg.errorCode !== 0) {
+          return true
+        }
+      }
+      return false
     },
   },
   methods: {
