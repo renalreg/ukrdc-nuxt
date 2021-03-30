@@ -21,7 +21,7 @@ export interface ConnectorMessage {
   connectorName: string
 
   messageId: string
-  errorCode: string
+  errorCode: number
   sendAttempts: number
 
   raw: ConnectorMessageData
