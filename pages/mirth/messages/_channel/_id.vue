@@ -1,36 +1,10 @@
 <template>
   <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
-    <modalMaxSlot ref="messageViewerModal" class="max-h-full">
-      <div
-        v-if="!isEmptyObject(openMessage)"
-        class="h-full box-border flex flex-col pt-4"
-      >
-        <div class="pl-8 pb-3 border-b border-gray-200">
-          <Toggle
-            v-if="openMessage.dataType === 'XML'"
-            v-model="formatMessage"
-            label="Format XML"
-          />
-          <p v-else>
-            {{ openMessage.dataType }}
-          </p>
-        </div>
-
-        <div
-          class="font-mono text-xs text-left overflow-scroll w-full h-full px-4 box-border"
-        >
-          <pre>
-            <code
-              v-for="(line, index) in formattedMessageArray"
-              :key="'code' + index"
-              class="whitespace-pre"
-              >{{ line }}</code
-            >
-          </pre>
-        </div>
-      </div>
-      <div v-else>No message data available</div>
-    </modalMaxSlot>
+    <messagesViewer
+      ref="messageViewerModal"
+      class="max-h-full"
+      :message-data="openMessage"
+    />
     <div v-if="isEmptyObject(message)">Loading...</div>
     <div v-else>
       <h1>{{ channelName }}</h1>
@@ -43,38 +17,15 @@
         <div
           class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4 justify-center"
         >
-          <div
+          <messagesConnectorMessageCard
             v-for="item in messages"
             :key="item.channelName + item.connectorName"
-            class="col-span-1 flex items-center justify-between border border-gray-200 bg-white truncate shadow-sm rounded-md"
-          >
-            <div class="flex-1 px-4 py-2 text-sm truncate">
-              <p class="text-gray-900 font-medium hover:text-gray-600">
-                {{ item.connectorName }}
-              </p>
-              <p class="text-gray-500">{{ item.sendAttempts }} send attempts</p>
-              <span
-                v-if="item.errorCode === 0"
-                class="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-sm mt-2"
-                >Success</span
-              >
-              <span
-                v-else
-                class="flex-shrink-0 inline-block px-2 py-0.5 text-red-800 text-xs font-medium bg-red-100 rounded-sm mt-2"
-                >Error code {{ item.errorCode }}</span
-              >
-              <button
-                type="button"
-                class="inline-flex items-center px-2 py-0.5 border border-gray-300 shadow-sm text-xs font-medium rounded-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mt-2 float-right"
-                @click="
-                  openMessage = item.encoded ? item.encoded : item.raw
-                  $refs.messageViewerModal.show()
-                "
-              >
-                View message
-              </button>
-            </div>
-          </div>
+            :message="item"
+            @viewClick="
+              openMessage = item.encoded ? item.encoded : item.raw
+              $refs.messageViewerModal.show()
+            "
+          />
         </div>
 
         <div v-if="index < Object.keys(chain).length - 1" class="align-center">
@@ -110,8 +61,6 @@ import {
   ConnectorMessageData,
 } from '@/interfaces/mirth'
 
-import formatXml from 'xml-formatter'
-
 interface ChainMap {
   [key: number]: ConnectorMessage[]
 }
@@ -144,16 +93,6 @@ export default Vue.extend({
       }
       return name.substring(1)
     },
-    formattedMessage(): string {
-      if (!this.formatMessage) {
-        return this.openMessage.content
-      } else {
-        return formatXml(this.openMessage.content)
-      }
-    },
-    formattedMessageArray(): string[] {
-      return this.formattedMessage.split('\n')
-    },
   },
   methods: {
     parseChain(): void {
@@ -174,22 +113,3 @@ export default Vue.extend({
   },
 })
 </script>
-
-<style scoped>
-pre {
-  counter-reset: line;
-}
-code {
-  counter-increment: line;
-  display: block;
-}
-code:before {
-  content: counter(line);
-  user-select: none;
-  -webkit-user-select: none;
-  display: inline-block;
-  width: 6ex;
-  border-width: 0 1px 0 0;
-  margin-right: 4px;
-}
-</style>
