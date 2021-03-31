@@ -4,30 +4,24 @@
       <h1 class="text-2xl font-semibold text-gray-900">Errors</h1>
     </div>
 
-    <div v-if="messages.length > 0">
-      <div class="bg-white shadow overflow-hidden rounded-md">
-        <!-- Skeleton results -->
-        <ul v-if="$fetchState.pending" class="divide-y divide-gray-200">
-          <workitemsListItemPlaceholder v-for="n in 10" :key="n" />
-        </ul>
-        <!-- Real results -->
-        <ul v-else class="divide-y divide-gray-200">
-          <errorsListItem
-            v-for="item in messages"
-            :key="item.id"
-            :item="item"
-          />
-        </ul>
-        <paginator
-          v-if="!$fetchState.pending"
-          class="bg-white border-t border-gray-200"
-          :page="page"
-          :size="size"
-          :total="total"
-          @next="changePage(page + 1)"
-          @prev="changePage(page - 1)"
-        />
-      </div>
+    <div class="bg-white shadow overflow-hidden rounded-md">
+      <!-- Skeleton results -->
+      <ul v-if="$fetchState.pending" class="divide-y divide-gray-200">
+        <workitemsListItemPlaceholder v-for="n in 10" :key="n" />
+      </ul>
+      <!-- Real results -->
+      <ul v-else class="divide-y divide-gray-200">
+        <errorsListItem v-for="item in messages" :key="item.id" :item="item" />
+      </ul>
+      <paginator
+        v-if="!$fetchState.pending"
+        class="bg-white border-t border-gray-200"
+        :page="page"
+        :size="size"
+        :total="total"
+        @next="changePage(page + 1)"
+        @prev="changePage(page - 1)"
+      />
     </div>
   </div>
 </template>
