@@ -13,7 +13,7 @@
       Entered by {{ item.enteringOrganizationCode }}
     </p>
     <p v-if="item.enteringOrganizationDescription" class="text-gray-500">
-      Entered by {{ item.enteringOrganizationDescription }}
+      {{ item.enteringOrganizationDescription }}
     </p>
     <p v-if="item.fromTime" class="text-gray-500">
       Since {{ formatDate(item.fromTime, (t = false)) }}
