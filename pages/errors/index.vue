@@ -17,7 +17,7 @@
               <input
                 type="text"
                 :value="inputValue.start"
-                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 w-full sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
                 v-on="inputEvents.start"
               />
               <svg
@@ -36,7 +36,7 @@
               <input
                 type="text"
                 :value="inputValue.end"
-                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 w-full sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
                 v-on="inputEvents.end"
               />
             </div>
