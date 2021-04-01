@@ -1,5 +1,7 @@
 <template>
-  <div class="items-center justify-between px-4 py-2 text-sm">
+  <div
+    class="items-center justify-between px-4 py-2 text-sm shadow-sm border border-gray-200 bg-white rounded-md"
+  >
     <div class="h-16 mb-2">
       <p class="text-gray-900 font-medium hover:text-gray-600 line-clamp-2">
         {{ item.drugProductGeneric }}

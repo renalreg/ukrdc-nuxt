@@ -11,7 +11,7 @@
         <li
           v-for="(item, index) of activeMedications"
           :key="index"
-          class="col-span-1 shadow-sm border border-gray-200 bg-white rounded-md"
+          class="col-span-1"
         >
           <medicationsCard :item="item" />
         </li>
@@ -29,7 +29,7 @@
         <li
           v-for="(item, index) of inactiveMedications"
           :key="index"
-          class="col-span-1 shadow-sm border border-gray-200 bg-white rounded-md"
+          class="col-span-1"
         >
           <medicationsCard :item="item" />
         </li>
