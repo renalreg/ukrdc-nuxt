@@ -5,13 +5,44 @@
     </div>
 
     <div class="mb-4">
-      <TDatePicker
-        v-model="dateRange"
-        :range="true"
-        :close-on-select="false"
-        :clearable="false"
-        :max-date="today"
-      />
+      <client-only>
+        <v-date-picker
+          v-model="range"
+          :model-config="modelConfig"
+          color="indigo"
+          is-range
+        >
+          <template #default="{ inputValue, inputEvents }">
+            <div class="flex items-center">
+              <input
+                type="text"
+                :value="inputValue.start"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                v-on="inputEvents.start"
+              />
+              <svg
+                class="w-4 h-4 mx-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
+              <input
+                type="text"
+                :value="inputValue.end"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                v-on="inputEvents.end"
+              />
+            </div>
+          </template>
+        </v-date-picker>
+      </client-only>
     </div>
 
     <div class="bg-white shadow overflow-hidden rounded-md">
@@ -38,11 +69,15 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import TDatePicker from 'vue-tailwind/dist/t-datepicker'
 import { singleQuery } from '@/utilities/queryUtils'
 
 import dateUtilsMixin from '@/mixins/dateutils'
 import { Message } from '@/interfaces/errors'
+
+interface DateRange {
+  start: string
+  end: string
+}
 
 interface MessagePage {
   items: Message[]
@@ -60,7 +95,6 @@ function todayString(addDays: number = 0): string {
 }
 
 export default Vue.extend({
-  components: { TDatePicker },
   mixins: [dateUtilsMixin],
   data() {
     return {
@@ -71,6 +105,16 @@ export default Vue.extend({
       since: (singleQuery(this.$route.query.since) ||
         todayString(-7)) as string,
       until: (singleQuery(this.$route.query.until) || todayString(0)) as string,
+      modelConfig: {
+        start: {
+          type: 'string',
+          mask: 'YYYY-MM-DD',
+        },
+        end: {
+          type: 'string',
+          mask: 'YYYY-MM-DD',
+        },
+      },
     }
   },
   async fetch() {
@@ -109,6 +153,27 @@ export default Vue.extend({
       set(newRange: string[]) {
         this.since = newRange[0]
         this.until = newRange[1]
+
+        const newQuery = Object.assign({}, this.$route.query, {
+          since: this.since,
+          until: this.until,
+        })
+        this.$router.push({
+          path: this.$route.path,
+          query: newQuery,
+        })
+      },
+    },
+    range: {
+      get(): DateRange {
+        return {
+          start: this.since,
+          end: this.until,
+        }
+      },
+      set(newRange: DateRange) {
+        this.since = newRange.start
+        this.until = newRange.end
 
         const newQuery = Object.assign({}, this.$route.query, {
           since: this.since,
