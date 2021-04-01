@@ -33,7 +33,7 @@ export default {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
-    ['nuxt-tailvue', { all: true }],
+    ['nuxt-tailvue', { toast: true }],
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
