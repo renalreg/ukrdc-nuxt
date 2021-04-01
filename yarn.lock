@@ -6543,6 +6543,16 @@ num2fraction@^1.2.2:
   resolved "https://registry.yarnpkg.com/num2fraction/-/num2fraction-1.2.2.tgz#6f682b6a027a4e9ddfa4564cd2589d1d4e669ede"
   integrity sha1-b2gragJ6Tp3fpFZM0lidHU5mnt4=
 
+nuxt-tailvue@^1.0.82:
+  version "1.0.82"
+  resolved "https://registry.yarnpkg.com/nuxt-tailvue/-/nuxt-tailvue-1.0.82.tgz#0c1c4ed7d7115bdddcfa0f884c03c2c0471b90e5"
+  integrity sha512-DLXV3vvABUcFy8QZV9T/kM5PKd7ak9aceFYaM7opz4IXGTMEgIFCgLnDElePnsNZ68Rj/4zYCBhjm4QERZUKoQ==
+  dependencies:
+    tv-button "^1.0.7"
+    tv-icon "^1.0.6"
+    tv-modal "^1.0.3"
+    tv-toast "^1.2.4"
+
 nuxt@^2.15.3:
   version "2.15.3"
   resolved "https://registry.yarnpkg.com/nuxt/-/nuxt-2.15.3.tgz#6262707de8a824df0718fc88653c74a916aa5122"
@@ -9358,6 +9368,31 @@ tty-browserify@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/tty-browserify/-/tty-browserify-0.0.0.tgz#a157ba402da24e9bf957f9aa69d524eed42901a6"
   integrity sha1-oVe6QC2iTpv5V/mqadUk7tQpAaY=
+
+tv-button@^1.0.7:
+  version "1.0.21"
+  resolved "https://registry.yarnpkg.com/tv-button/-/tv-button-1.0.21.tgz#9122ad7deda95373edc5040d45e13443cdedab16"
+  integrity sha512-i//WUkW3ffBRpM0app/eUEy3sJMVkKjdPeQVe5BxsInYQ9wkCnsTl7CfqDEh3xjpHLuFclywSZkQL/lA4eCdNQ==
+
+tv-icon@^1.0.1, tv-icon@^1.0.6:
+  version "1.0.21"
+  resolved "https://registry.yarnpkg.com/tv-icon/-/tv-icon-1.0.21.tgz#2e7474dde015cde78aa449fded76a2e2401d4767"
+  integrity sha512-OFsOovz4gEDOU7Jeheew7Y9teC2YYCncQzXeceSKWIStMdYUlIjdCCXtqC2b4T+d08V+k3UwI1TiVO82ntFhlQ==
+
+tv-modal@^1.0.3:
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/tv-modal/-/tv-modal-1.0.20.tgz#d4cf842e87d800c9374d4f45ae1e80dd41ce9133"
+  integrity sha512-f64ZqyjeUUmAc8oo4N30dCjsoOMRRwXErkS6paKKT0M52O6VYhi2w0YchjFbCCk5RxhziPbY+yqpBrse5z4T9w==
+  dependencies:
+    tv-button "^1.0.7"
+    tv-icon "^1.0.1"
+
+tv-toast@^1.2.4:
+  version "1.2.28"
+  resolved "https://registry.yarnpkg.com/tv-toast/-/tv-toast-1.2.28.tgz#60b1f73c471717a16d8ac8881cb7dce73c636af8"
+  integrity sha512-ljRIx8AR5n7mkLdf2LGkOubPgcgXmljcpoWj20XRedGSM/6dIfM5gCzISyx2gu3l185skaIfEEc6JIkdMl3TNw==
+  dependencies:
+    tv-icon "^1.0.1"
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"

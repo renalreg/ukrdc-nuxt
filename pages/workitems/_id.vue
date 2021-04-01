@@ -1,12 +1,186 @@
 <template>
   <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
+    <ModalSlot ref="addCommentModal">
+      <div class="text-left">
+        <div class="mb-4">Add Work Item comment</div>
+        <textarea
+          v-model="customComment"
+          rows="3"
+          class="max-w-lg shadow-sm block w-full mb-4 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
+        ></textarea>
+      </div>
+
+      <div class="flex justify-end">
+        <button
+          type="button"
+          class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          @click="$refs.addCommentModal.hide()"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          @click="updateWorkItemComment()"
+        >
+          Save
+        </button>
+      </div>
+    </ModalSlot>
+
+    <ModalSlot ref="mergeModal">
+      <div class="text-left">
+        <div class="mb-4">Merge and close the Work Item</div>
+        <div>
+          <label
+            for="merge-comments"
+            class="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Comments
+          </label>
+          <textarea
+            id="merge-comments"
+            v-model="customComment"
+            name="merge-comments"
+            rows="3"
+            class="max-w-lg shadow-sm block w-full mb-4 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="flex justify-end">
+        <button
+          type="button"
+          class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          @click="$refs.mergeModal.hide()"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          @click="mergeWorkItem()"
+        >
+          Merge and Close
+        </button>
+      </div>
+    </ModalSlot>
+
+    <ModalSlot ref="unlinkModal">
+      <div class="text-left">
+        <div class="mb-4">Unlink and close the Work Item</div>
+        <div>
+          <label
+            for="unlink-comments"
+            class="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Comments
+          </label>
+          <textarea
+            id="unlink-comments"
+            v-model="customComment"
+            name="unlink-comments"
+            rows="3"
+            class="max-w-lg shadow-sm block w-full mb-4 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="flex justify-end">
+        <button
+          type="button"
+          class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          @click="$refs.unlinkModal.hide()"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+          @click="unlinkWorkItem()"
+        >
+          Unlink and Close
+        </button>
+      </div>
+    </ModalSlot>
+
     <!-- Header card  -->
     <workitemsSummaryCardPlaceholder
       v-if="isEmptyObject(record)"
-      class="mb-8"
+      class="mb-4"
       :item="record"
     />
-    <workitemsSummaryCard v-else class="mb-8" :item="record" />
+    <workitemsSummaryCard v-else class="mb-4" :item="record" />
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+      <div>
+        <button
+          type="button"
+          class="inline-flex items-center justify-center px-4 py-2 w-full border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          @click="$refs.addCommentModal.show()"
+        >
+          <!-- Heroicon name: solid/pencil -->
+          <svg
+            class="-ml-1 mr-2 h-5 w-5"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+            />
+          </svg>
+          Add Comment
+        </button>
+      </div>
+      <div>
+        <button
+          type="button"
+          class="inline-flex items-center justify-center px-4 py-2 w-full border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+          @click="$refs.mergeModal.show()"
+        >
+          <!-- Heroicon name: solid/link -->
+          <svg
+            class="-ml-1 mr-2 h-5 w-5"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          Merge and Close
+        </button>
+      </div>
+      <div>
+        <button
+          type="button"
+          class="inline-flex items-center justify-center px-4 py-2 w-full border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+          @click="$refs.unlinkModal.show()"
+        >
+          <!-- Heroicon name: solid/x-circle -->
+          <svg
+            class="-ml-1 mr-2 h-5 w-5"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          Unlink and Close
+        </button>
+      </div>
+    </div>
 
     <!-- Related WorkItems  -->
     <div
@@ -135,7 +309,9 @@ import { Person } from '@/interfaces/persons'
 import dateUtilsMixin from '@/mixins/dateutils'
 import codeUtilsMixin from '@/mixins/coddeutils'
 import objectUtilsMixin from '@/mixins/objectutils'
-import { WorkItem } from '~/interfaces/workitem'
+import { WorkItem } from '@/interfaces/workitem'
+import { modalInterface } from '@/interfaces/modal'
+import { MirthMessageResponse } from '@/interfaces/mirth'
 
 export default Vue.extend({
   mixins: [dateUtilsMixin, codeUtilsMixin, objectUtilsMixin],
@@ -146,6 +322,7 @@ export default Vue.extend({
       relatedRecords: [] as WorkItem[],
       relatedPersons: [] as Person[],
       relatedIndex: 0,
+      customComment: '',
     }
   },
   async fetch() {
@@ -153,6 +330,7 @@ export default Vue.extend({
     const path = `/api/empi/workitems/${this.$route.params.id}`
     const res: WorkItem = await this.$axios.$get(path)
     this.record = res
+    this.customComment = res.updateDescription
 
     // Use the record links to load related data concurrently
     const [relatedRecordsRes, relatedPersonsRes] = await Promise.all([
@@ -174,6 +352,63 @@ export default Vue.extend({
     return {
       title: 'Work Item',
     }
+  },
+  methods: {
+    async updateWorkItemComment() {
+      const path = `/api/empi/workitems/${this.$route.params.id}`
+      await this.$axios.$put(path, {
+        comment: this.customComment,
+      })
+
+      const el = this.$refs.addCommentModal as modalInterface
+      el.toggle()
+      this.$fetch()
+      this.$toast.show({
+        type: 'success',
+        title: 'Success',
+        message: 'Comment added',
+        classTimeout: 'bg-green-600',
+      })
+    },
+    mergeWorkItem() {
+      this.actionWorkItem(`/api/empi/workitems/${this.$route.params.id}/merge`)
+      const el = this.$refs.mergeModal as modalInterface
+      el.toggle()
+    },
+    unlinkWorkItem() {
+      this.actionWorkItem(`/api/empi/workitems/${this.$route.params.id}/unlink`)
+      const el = this.$refs.unlinkModal as modalInterface
+      el.toggle()
+    },
+    actionWorkItem(postPath: string) {
+      this.$axios
+        .$post(postPath)
+        .then((res: MirthMessageResponse) => {
+          if (res.status === 'success') {
+            this.$axios
+              .$post(`/api/empi/workitems/${this.$route.params.id}/close`, {
+                comment: this.customComment,
+              })
+              .catch((error) => {
+                // Re-throw error so parent .catch can handle it
+                throw error
+              })
+          }
+        })
+        .catch((error) => {
+          console.log(error.response.data.detail)
+          this.$toast.show({
+            type: 'danger',
+            title: 'Error',
+            message: error.response.data.detail,
+            timeout: 10,
+            classTimeout: 'bg-red-600',
+          })
+        })
+        .finally(() => {
+          this.$fetch()
+        })
+    },
   },
 })
 </script>

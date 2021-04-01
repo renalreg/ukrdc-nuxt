@@ -30,7 +30,11 @@ export default {
   buildModules: ['@nuxt/typescript-build', '@nuxtjs/tailwindcss'],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@nuxtjs/axios', '@nuxtjs/auth-next'],
+  modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
+    ['nuxt-tailvue', { all: true }],
+  ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},

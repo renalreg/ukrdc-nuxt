@@ -38,12 +38,7 @@ import Vue from 'vue'
 import formatXml from 'xml-formatter'
 import objectUtilsMixin from '@/mixins/objectutils'
 import { ConnectorMessageData } from '@/interfaces/mirth'
-
-interface modalMaxSlotInterface extends Vue {
-  show: () => void
-  hide: () => void
-  toggle: () => void
-}
+import { modalInterface } from '@/interfaces/modal'
 
 export default Vue.extend({
   mixins: [objectUtilsMixin],
@@ -72,15 +67,15 @@ export default Vue.extend({
   },
   methods: {
     show(): void {
-      const el = this.$refs.messageViewermodalMaxSlot as modalMaxSlotInterface
+      const el = this.$refs.messageViewermodalMaxSlot as modalInterface
       el.show()
     },
     hide(): void {
-      const el = this.$refs.messageViewermodalMaxSlot as modalMaxSlotInterface
+      const el = this.$refs.messageViewermodalMaxSlot as modalInterface
       el.hide()
     },
     toggle(): void {
-      const el = this.$refs.messageViewermodalMaxSlot as modalMaxSlotInterface
+      const el = this.$refs.messageViewermodalMaxSlot as modalInterface
       el.toggle()
     },
   },

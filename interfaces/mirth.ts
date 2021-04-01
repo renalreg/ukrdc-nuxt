@@ -38,3 +38,8 @@ export interface ChannelMessage {
 
   links: ChannelMessageLinks
 }
+
+export interface MirthMessageResponse {
+  status: string
+  message: string
+}
