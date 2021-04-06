@@ -4,19 +4,21 @@
       <h1 class="text-2xl font-semibold text-gray-900">New Today</h1>
     </div>
 
-    <alertsWarning
-      v-for="message in response.warnings"
-      :key="message"
-      :message="message"
-    >
-    </alertsWarning>
+    <div class="mb-8">
+      <alertsWarning
+        v-for="message in response.warnings"
+        :key="message"
+        :message="message"
+      >
+      </alertsWarning>
 
-    <alertsInfo
-      v-for="message in response.messages"
-      :key="message"
-      :message="message"
-    >
-    </alertsInfo>
+      <alertsInfo
+        v-for="message in response.messages"
+        :key="message"
+        :message="message"
+      >
+      </alertsInfo>
+    </div>
 
     <div class="max-w-7xl mx-auto mb-8">
       <dashStats
@@ -25,7 +27,7 @@
       />
     </div>
 
-    <div>
+    <div v-if="mirthStatistics.length > 0" class="max-w-7xl mx-auto mb-8">
       <h3 class="text-lg leading-6 font-medium text-gray-900">
         Mirth Channels
       </h3>
@@ -82,16 +84,17 @@ export default Vue.extend({
       mirthStatistics: [] as ChannelStatistics[],
     }
   },
-  async fetch() {
-    const [res, mirthStatistics] = await Promise.all([
-      this.$axios.$get('/api/dash'),
-      this.$axios.$get('/api/dash/mirth'),
-    ])
-    // Fetch the dashboard response from our API server
-    this.response = res
-    this.messages = res.messages
-    this.warnings = res.warnings
-    this.mirthStatistics = mirthStatistics
+  fetch() {
+    this.$axios.$get('/api/dash').then((res: DashResponse) => {
+      console.log(res)
+      this.response = res
+      this.messages = res.messages
+      this.warnings = res.warnings
+    })
+
+    this.$axios.$get('/api/dash/mirth').then((res: ChannelStatistics[]) => {
+      this.mirthStatistics = res
+    })
   },
   head() {
     return {
