@@ -1,6 +1,6 @@
 <template>
   <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
-    <ModalSlot ref="addCommentModal">
+    <ModalSlot v-if="$auth.hasScope('write:workitems')" ref="addCommentModal">
       <div class="text-left">
         <div class="mb-4">Add Work Item comment</div>
         <textarea
@@ -28,7 +28,7 @@
       </div>
     </ModalSlot>
 
-    <ModalSlot ref="mergeModal">
+    <ModalSlot v-if="$auth.hasScope('write:workitems')" ref="mergeModal">
       <div class="text-left">
         <div class="mb-4">Merge and close the Work Item</div>
         <div>
@@ -66,7 +66,7 @@
       </div>
     </ModalSlot>
 
-    <ModalSlot ref="unlinkModal">
+    <ModalSlot v-if="$auth.hasScope('write:workitems')" ref="unlinkModal">
       <div class="text-left">
         <div class="mb-4">Unlink and close the Work Item</div>
         <div>
@@ -112,7 +112,10 @@
     />
     <workitemsSummaryCard v-else class="mb-4" :item="record" />
 
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+    <div
+      v-if="$auth.hasScope('write:workitems')"
+      class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8"
+    >
       <div>
         <button
           type="button"

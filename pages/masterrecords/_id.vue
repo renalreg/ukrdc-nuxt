@@ -2,7 +2,10 @@
   <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
     <div>
       <!-- Work items alert -->
-      <div v-if="workItems.length > 0" class="rounded-md bg-yellow-50 p-4 mb-4">
+      <div
+        v-if="workItems && workItems.length > 0"
+        class="rounded-md bg-yellow-50 p-4 mb-4"
+      >
         <div class="flex">
           <div class="flex-shrink-0">
             <!-- Heroicon name: solid/exclamation -->
@@ -32,7 +35,7 @@
       <masterrecordsRecordCard v-else :record="record" />
 
       <div
-        v-if="workItems.length > 0"
+        v-if="workItems && workItems.length > 0"
         class="bg-white shadow overflow-hidden rounded-md mt-4"
       >
         <!-- Card header -->
@@ -120,7 +123,9 @@ export default Vue.extend({
     // Use the record links to load related data concurrently
     const [relatedRecords, workItems, patientRecords] = await Promise.all([
       this.$axios.$get(this.record.links.related),
-      this.$axios.$get(this.record.links.workitems),
+      this.$auth.hasScope('write:empi')
+        ? this.$axios.$get(this.record.links.workitems)
+        : null,
       this.$axios.$get(this.record.links.patientrecords),
     ])
 

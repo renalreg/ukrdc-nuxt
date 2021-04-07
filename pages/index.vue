@@ -27,7 +27,14 @@
       />
     </div>
 
-    <div v-if="mirthStatistics.length > 0" class="max-w-7xl mx-auto mb-8">
+    <div
+      v-if="
+        $auth.hasScope('read:mirth') &&
+        mirthStatistics &&
+        mirthStatistics.length > 0
+      "
+      class="max-w-7xl mx-auto mb-8"
+    >
       <h3 class="text-lg leading-6 font-medium text-gray-900">
         Mirth Channels
       </h3>
@@ -84,24 +91,25 @@ export default Vue.extend({
       mirthStatistics: [] as ChannelStatistics[],
     }
   },
-  fetch() {
-    this.$axios.$get('/api/dash').then((res: DashResponse) => {
-      console.log(res)
-      this.response = res
-      this.messages = res.messages
-      this.warnings = res.warnings
-    })
-
-    this.$axios.$get('/api/dash/mirth').then((res: ChannelStatistics[]) => {
-      this.mirthStatistics = res
-    })
+  async fetch() {
+    const [dash, mirthStatistics] = await Promise.all([
+      this.$axios.$get('/api/dash'),
+      // Only read Mirth stats if user has permission
+      this.$auth.hasScope('read:mirth')
+        ? this.$axios.$get('/api/dash/mirth')
+        : null,
+    ])
+    // Fetch the dashboard response from our API server
+    this.response = dash
+    this.messages = dash.messages
+    this.warnings = dash.warnings
+    this.mirthStatistics = mirthStatistics
   },
   head() {
     return {
       title: 'Dashboard',
     }
   },
-  methods: {},
 })
 </script>
 

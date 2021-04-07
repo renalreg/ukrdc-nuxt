@@ -35,6 +35,9 @@
               {{ $auth.user.email_verified ? '(Verified)' : '(Unverified)' }}
             </p>
           </div>
+          <div>
+            {{ $auth.user.scope }}
+          </div>
         </div>
         <div
           class="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 lg:mt-0 lg:flex-row lg:space-x-3"

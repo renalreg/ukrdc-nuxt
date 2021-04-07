@@ -1,6 +1,7 @@
 <template>
   <div>
     <dl
+      v-if="$auth.hasScope('read:workitems')"
       class="mt-5 grid grid-cols-1 rounded-lg bg-white overflow-hidden shadow divide-y divide-gray-200 md:grid-cols-2 md:divide-y-0 md:divide-x"
     >
       <NuxtLink v-if="workitems" to="/workitems">
@@ -19,6 +20,7 @@
       <DashStatBlockPlaceholder v-else />
     </dl>
     <dl
+      v-if="$auth.hasScope('read:patientrecords')"
       class="mt-5 grid grid-cols-1 rounded-lg bg-white overflow-hidden shadow divide-y divide-gray-200 md:grid-cols-2 md:divide-y-0 md:divide-x"
     >
       <NuxtLink v-if="ukrdcrecords" to="/masterrecords">
