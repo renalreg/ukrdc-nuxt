@@ -113,7 +113,7 @@
     <workitemsSummaryCard v-else class="mb-4" :item="record" />
 
     <div
-      v-if="$auth.hasScope('write:workitems')"
+      v-if="$auth.hasScope('write:workitems') && record.status !== 3"
       class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8"
     >
       <div>
