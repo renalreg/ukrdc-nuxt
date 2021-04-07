@@ -70,28 +70,16 @@
 <script lang="ts">
 import Vue from 'vue'
 import { singleQuery } from '@/utilities/queryUtils'
+import { todayString, DateRange } from '@/utilities/dateUtils'
 
 import dateUtilsMixin from '@/mixins/dateutils'
 import { Message } from '@/interfaces/errors'
-
-interface DateRange {
-  start: string
-  end: string
-}
 
 interface MessagePage {
   items: Message[]
   total: number
   page: number
   size: number
-}
-
-function todayString(addDays: number = 0): string {
-  const today = new Date()
-  today.setDate(today.getDate() + addDays)
-  return (
-    today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
-  )
 }
 
 export default Vue.extend({
@@ -145,24 +133,6 @@ export default Vue.extend({
   computed: {
     today(): string {
       return todayString(0)
-    },
-    dateRange: {
-      get(): string[] {
-        return [this.since, this.until]
-      },
-      set(newRange: string[]) {
-        this.since = newRange[0]
-        this.until = newRange[1]
-
-        const newQuery = Object.assign({}, this.$route.query, {
-          since: this.since,
-          until: this.until,
-        })
-        this.$router.push({
-          path: this.$route.path,
-          query: newQuery,
-        })
-      },
     },
     range: {
       get(): DateRange {
