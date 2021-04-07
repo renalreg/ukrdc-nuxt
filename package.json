@@ -16,6 +16,7 @@
     "core-js": "^3.8.3",
     "jwt-decode": "^3.1.2",
     "nuxt": "^2.15.3",
+    "nuxt-tailvue": "^1.0.82",
     "object-hash": "^2.1.1",
     "url-join": "^4.0.1",
     "xml-formatter": "^2.4.0"
@@ -34,7 +35,6 @@
     "eslint-plugin-nuxt": "^2.0.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.5.0",
-    "nuxt-tailvue": "^1.0.82",
     "postcss": "^8.2.8",
     "prettier": "^2.2.1",
     "v-calendar": "^2.3.0"

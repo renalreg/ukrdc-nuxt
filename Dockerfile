@@ -23,5 +23,7 @@ RUN yarn --production
 
 COPY --from=builder /app/.nuxt ./.nuxt/
 COPY --from=builder /app/static ./static/
+COPY --from=builder /app/schemes ./schemes/
+COPY --from=builder /app/utilities ./utilities/
 
 CMD [ "yarn", "start" ]
