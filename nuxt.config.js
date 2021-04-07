@@ -45,6 +45,7 @@ export default {
     plugins: ['~/plugins/auth.js'],
     strategies: {
       auth0: {
+        scheme: '~/schemes/auth0ExtendedScheme',
         domain: 'renalreg.eu.auth0.com',
         clientId: 'SQCWWXi1rbZ4GY7aqjYXDBe0pyeJ7f7X',
         audience: 'https://app.ukrdc.org/api',
@@ -57,6 +58,8 @@ export default {
           'write:patientrecords',
           'read:empi',
           'write:empi',
+          'read:workitems',
+          'write:workitems',
           'read:mirth',
           'write:mirth',
         ],
