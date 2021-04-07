@@ -12,7 +12,7 @@
         v-if="$auth.loggedIn"
         class="max-w-3xl lg:flex lg:items-center lg:justify-between lg:space-x-5 lg:max-w-7xl"
       >
-        <div class="flex items-center space-x-5">
+        <div class="flex items-center space-x-5 mb-4">
           <div class="flex-shrink-0">
             <div class="relative">
               <img
@@ -35,12 +35,9 @@
               {{ $auth.user.email_verified ? '(Verified)' : '(Unverified)' }}
             </p>
           </div>
-          <div>
-            {{ $auth.user.scope }}
-          </div>
         </div>
         <div
-          class="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 lg:mt-0 lg:flex-row lg:space-x-3"
+          class="mb-8 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 lg:mt-0 lg:flex-row lg:space-x-3"
         >
           <button
             type="button"
@@ -56,6 +53,20 @@
           >
             Sign out
           </button>
+        </div>
+        <div>
+          <h3 class="text-sm leading-6 font-medium text-gray-900 mb-2">
+            Permissions
+          </h3>
+          <div v-for="scope in $auth.user.scope" :key="scope" class="inline">
+            <span
+              v-if="showScopeBadge(scope)"
+              class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium capitalize mr-2 mb-2"
+              :class="classesForScope(scope)"
+            >
+              {{ renderScope(scope) }}
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -101,6 +112,25 @@ export default Vue.extend({
       this.$axios.$post(url, payload).then((res: string) => {
         console.log(res)
       })
+    },
+    classesForScope(scope: string): string[] {
+      if (scope.startsWith('read')) {
+        return ['bg-green-100', 'text-green-800']
+      } else if (scope.startsWith('write')) {
+        return ['bg-red-100', 'text-red-800']
+      } else {
+        return ['bg-indigo-100', 'text-indigo-800']
+      }
+    },
+    showScopeBadge(scope: string): boolean {
+      if (scope.startsWith('read') || scope.startsWith('write')) {
+        return true
+      }
+      return false
+    },
+    renderScope(scope: string): string {
+      const split = scope.split(':')
+      return split.join(' ')
     },
   },
 })
