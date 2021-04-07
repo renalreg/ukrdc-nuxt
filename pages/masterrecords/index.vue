@@ -32,11 +32,21 @@
       </div>
     </div>
     <div v-else class="mt-2 text-sm text-gray-500 text-center">
-      {{
-        search && !$fetchState.pending
-          ? 'No results found'
-          : 'Start a search to view records'
-      }}
+      <div v-if="search && !$fetchState.pending">No results found</div>
+      <div v-else>
+        <p class="mb-4">
+          Search by name, date of birth, national ID, or local ID
+        </p>
+        <p><b>Tip: </b>Refine your search by joining terms,</p>
+        <p>
+          For example,
+          <span
+            class="inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-800"
+          >
+            john && 1/12/1980
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </template>
