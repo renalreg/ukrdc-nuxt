@@ -5,45 +5,80 @@
     </div>
 
     <div class="mb-4">
-      <client-only>
-        <v-date-picker
-          v-model="range"
-          :model-config="modelConfig"
-          color="indigo"
-          is-range
+      <div class="mb-2 flex items-center">
+        <input
+          id="open"
+          v-model="statuses"
+          class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+          type="checkbox"
+          :value="1"
+        />
+        <label class="font-medium text-gray-500 mr-4 ml-2 text-sm" for="open"
+          >Open</label
         >
-          <template #default="{ inputValue, inputEvents }">
-            <div class="flex items-center">
-              <input
-                type="text"
-                :value="inputValue.start"
-                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 w-full sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-                v-on="inputEvents.start"
-              />
-              <svg
-                class="w-4 h-4 mx-2"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+
+        <input
+          id="wip"
+          v-model="statuses"
+          class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+          type="checkbox"
+          :value="2"
+        />
+        <label class="font-medium text-gray-500 mr-4 ml-2 text-sm" for="wip"
+          >WIP</label
+        >
+        <input
+          id="closed"
+          v-model="statuses"
+          class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+          type="checkbox"
+          :value="3"
+        />
+        <label class="font-medium text-gray-500 mr-4 ml-2 text-sm" for="closed"
+          >Closed</label
+        >
+      </div>
+      <div>
+        <client-only>
+          <v-date-picker
+            v-model="range"
+            :model-config="modelConfig"
+            color="indigo"
+            is-range
+          >
+            <template #default="{ inputValue, inputEvents }">
+              <div class="flex items-center">
+                <input
+                  type="text"
+                  :value="inputValue.start"
+                  class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 w-full sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                  v-on="inputEvents.start"
                 />
-              </svg>
-              <input
-                type="text"
-                :value="inputValue.end"
-                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 w-full sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-                v-on="inputEvents.end"
-              />
-            </div>
-          </template>
-        </v-date-picker>
-      </client-only>
-      <p v-if="!since" class="text-xs italic mt-1">Filter by date</p>
+                <svg
+                  class="w-4 h-4 mx-2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                  />
+                </svg>
+                <input
+                  type="text"
+                  :value="inputValue.end"
+                  class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 w-full sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                  v-on="inputEvents.end"
+                />
+              </div>
+            </template>
+          </v-date-picker>
+        </client-only>
+        <p v-if="!since" class="text-xs italic mt-1">Filter by date</p>
+      </div>
     </div>
 
     <div v-if="workitems.length > 0">
@@ -109,6 +144,7 @@ export default Vue.extend({
           mask: 'YYYY-MM-DD',
         },
       },
+      selectedStatuses: (this.$route.query.status || [1]) as number[],
     }
   },
   async fetch() {
@@ -124,6 +160,10 @@ export default Vue.extend({
       // If no `until` is given but a `since` is given, then a single date is selected
       // In this case we want to only show that one day, not a range
       path = path + `&until=${this.since}`
+    }
+    // Pass selected statuses to the API
+    for (const status of this.selectedStatuses) {
+      path = path + `&status=${status}`
     }
     const res: WorkItemPage = await this.$axios.$get(path)
     this.workitems = res.items
@@ -154,6 +194,22 @@ export default Vue.extend({
         const newQuery = Object.assign({}, this.$route.query, {
           since: this.since,
           until: this.until,
+        })
+        this.$router.push({
+          path: this.$route.path,
+          query: newQuery,
+        })
+      },
+    },
+    statuses: {
+      get(): number[] {
+        return this.selectedStatuses
+      },
+      set(newStatuses: number[]) {
+        this.selectedStatuses = newStatuses
+
+        const newQuery = Object.assign({}, this.$route.query, {
+          status: this.selectedStatuses,
         })
         this.$router.push({
           path: this.$route.path,
