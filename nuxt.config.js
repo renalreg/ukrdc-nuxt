@@ -79,7 +79,7 @@ export default {
   // Router and middleware configuration
   router: {
     middleware: ['auth'],
-    base: process.env.APP_BASE || '/app',
+    base: process.env.APP_BASE || '/',
   },
 
   // Basic axios configuration
