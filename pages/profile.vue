@@ -54,19 +54,19 @@
             Sign out
           </button>
         </div>
-        <div>
-          <h3 class="text-sm leading-6 font-medium text-gray-900 mb-2">
-            Permissions
-          </h3>
-          <div v-for="scope in $auth.user.scope" :key="scope" class="inline">
-            <span
-              v-if="showScopeBadge(scope)"
-              class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium capitalize mr-2 mb-2"
-              :class="classesForScope(scope)"
-            >
-              {{ renderScope(scope) }}
-            </span>
-          </div>
+      </div>
+      <div>
+        <h3 class="text-sm leading-6 font-medium text-gray-900 mb-2">
+          Permissions
+        </h3>
+        <div v-for="scope in $auth.user.scope" :key="scope" class="inline">
+          <span
+            v-if="showScopeBadge(scope)"
+            class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium capitalize mr-2 mb-2"
+            :class="classesForScope(scope)"
+          >
+            {{ renderScope(scope) }}
+          </span>
         </div>
       </div>
     </div>
