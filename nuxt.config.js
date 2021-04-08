@@ -89,6 +89,7 @@ export default {
 
   // Runtime configuration variables
   publicRuntimeConfig: {
+    apiBase: process.env.API_BASE || '/api',
     axios: {
       browserBaseURL: process.env.BROWSER_BASE_URL,
     },

@@ -330,7 +330,7 @@ export default Vue.extend({
   },
   async fetch() {
     // Get the main record data
-    const path = `/api/empi/workitems/${this.$route.params.id}`
+    const path = `${this.$config.apiBase}/empi/workitems/${this.$route.params.id}`
     const res: WorkItem = await this.$axios.$get(path)
     this.record = res
     this.customComment = res.updateDescription
@@ -358,7 +358,7 @@ export default Vue.extend({
   },
   methods: {
     async updateWorkItemComment() {
-      const path = `/api/empi/workitems/${this.$route.params.id}`
+      const path = `${this.$config.apiBase}/empi/workitems/${this.$route.params.id}`
       await this.$axios.$put(path, {
         comment: this.customComment,
       })
@@ -374,12 +374,16 @@ export default Vue.extend({
       })
     },
     mergeWorkItem() {
-      this.actionWorkItem(`/api/empi/workitems/${this.$route.params.id}/merge`)
+      this.actionWorkItem(
+        `${this.$config.apiBase}/empi/workitems/${this.$route.params.id}/merge`
+      )
       const el = this.$refs.mergeModal as modalInterface
       el.toggle()
     },
     unlinkWorkItem() {
-      this.actionWorkItem(`/api/empi/workitems/${this.$route.params.id}/unlink`)
+      this.actionWorkItem(
+        `${this.$config.apiBase}/empi/workitems/${this.$route.params.id}/unlink`
+      )
       const el = this.$refs.unlinkModal as modalInterface
       el.toggle()
     },
@@ -389,9 +393,12 @@ export default Vue.extend({
         .then((res: MirthMessageResponse) => {
           if (res.status === 'success') {
             this.$axios
-              .$post(`/api/empi/workitems/${this.$route.params.id}/close`, {
-                comment: this.customComment,
-              })
+              .$post(
+                `${this.$config.apiBase}/empi/workitems/${this.$route.params.id}/close`,
+                {
+                  comment: this.customComment,
+                }
+              )
               .catch((error) => {
                 // Re-throw error so parent .catch can handle it
                 throw error

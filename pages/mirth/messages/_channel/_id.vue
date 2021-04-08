@@ -110,7 +110,7 @@ export default Vue.extend({
   },
   async fetch() {
     // Get the main record data
-    const path = `/api/mirth/channels/${this.$route.params.channel}/messages/${this.$route.params.id}`
+    const path = `${this.$config.apiBase}/mirth/channels/${this.$route.params.channel}/messages/${this.$route.params.id}`
     const res: ChannelMessage = await this.$axios.$get(path)
     this.message = res
     this.parseChain()

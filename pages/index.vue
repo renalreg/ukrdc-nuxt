@@ -93,10 +93,10 @@ export default Vue.extend({
   },
   async fetch() {
     const [dash, mirthStatistics] = await Promise.all([
-      this.$axios.$get('/api/dash'),
+      this.$axios.$get(`${this.$config.apiBase}/dash`),
       // Only read Mirth stats if user has permission
       this.$auth.hasScope('read:mirth')
-        ? this.$axios.$get('/api/dash/mirth')
+        ? this.$axios.$get(`${this.$config.apiBase}/dash/mirth`)
         : null,
     ])
     // Fetch the dashboard response from our API server

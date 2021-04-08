@@ -82,7 +82,9 @@ export default Vue.extend({
       // Set the search string
       this.searchboxString = this.buildSearchStringFromQueryArray()
       // Build our query string from search terms and page info
-      const path = `/api/empi/search/masterrecords?${this.buildQueryStringFromArray(
+      const path = `${
+        this.$config.apiBase
+      }/empi/search/masterrecords?${this.buildQueryStringFromArray(
         this.search,
         'search'
       )}&${this.buildQueryStringFromArray(
