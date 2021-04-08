@@ -17,13 +17,9 @@ ENV HOST="0.0.0.0"
 WORKDIR /app
 
 COPY package.json ./
-COPY nuxt.config.js ./
-
 RUN yarn --production
 
+COPY . .
 COPY --from=builder /app/.nuxt ./.nuxt/
-COPY --from=builder /app/static ./static/
-COPY --from=builder /app/schemes ./schemes/
-COPY --from=builder /app/utilities ./utilities/
 
 CMD [ "yarn", "start" ]
