@@ -21,7 +21,10 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [{ ssr: false, src: '~/plugins/v-calendar.js' }],
+  plugins: [
+    { ssr: false, src: '~/plugins/v-calendar.js' },
+    '~/plugins/axios.js',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -33,11 +36,17 @@ export default {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
+    '@nuxtjs/sentry',
     ['nuxt-tailvue', { toast: true }],
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
+  // Sentry Configuration: https://sentry.nuxtjs.org/guide/setup
+  sentry: {
+    publishRelease: true,
+  },
 
   // Auth Configuration: https://auth.nuxtjs.org/api/options
   auth: {
@@ -92,6 +101,12 @@ export default {
     apiBase: process.env.API_BASE || '/api',
     axios: {
       browserBaseURL: process.env.BROWSER_BASE_URL,
+    },
+    sentry: {
+      dsn: process.env.SENTRY_DSN,
+      config: {
+        disabled: !process.env.SENTRY_DSN,
+      },
     },
   },
 
