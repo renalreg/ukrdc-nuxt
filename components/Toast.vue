@@ -19,69 +19,10 @@
         class="absolute left-0 bottom-0 right-0 h-1 rounded"
         :style="progressStyle"
       ></div>
-      <div
-        :class="classToastAll"
-        class="rounded-lg shadow-xs overflow-hidden z-100"
-      >
+      <div class="rounded-lg shadow-xs overflow-hidden z-100">
         <div class="p-4">
           <div class="flex items-start">
-            <div class="flex-shrink-0">
-              <div
-                v-if="type === 'success'"
-                class="border-2 border-green-200 rounded-full p-1"
-              >
-                <IconCheck
-                  class="w-3 h-3"
-                  primary="text-green-400"
-                  secondary="text-green-300"
-                ></IconCheck>
-              </div>
-              <div
-                v-if="type === 'info'"
-                class="border-2 border-blue-200 rounded-full p-1"
-              >
-                <IconInfo
-                  class="w-3 h-3"
-                  primary="text-blue-400"
-                  secondary="text-blue-300"
-                ></IconInfo>
-              </div>
-              <div
-                v-if="type === 'warning'"
-                class="border-2 border-yellow-200 rounded-full p-1"
-              >
-                <IconBang
-                  class="w-3 h-3"
-                  primary="text-yellow-400"
-                  secondary="text-yellow-300"
-                ></IconBang>
-              </div>
-              <div
-                v-if="type === 'danger'"
-                class="border-2 border-red-200 rounded-full p-1"
-              >
-                <IconBang
-                  class="w-3 h-3"
-                  primary="text-red-400"
-                  secondary="text-red-300"
-                ></IconBang>
-              </div>
-              <div v-if="type === 'denied'" class="rounded-full">
-                <IconDenied
-                  class="w-5 h-5"
-                  primary="text-red-400"
-                  secondary="text-red-300"
-                ></IconDenied>
-              </div>
-              <div v-if="icon !== false">
-                <component
-                  :is="icon"
-                  :primary="iconPrimary"
-                  :secondary="iconSecondary"
-                  class="w-6 h-6"
-                ></component>
-              </div>
-            </div>
+            <toastIcon class="flex-shrink-0" :type="type" :icon="icon" />
             <div class="ml-3 w-0 flex-1 pt-0.5">
               <p
                 v-if="title"
@@ -101,11 +42,21 @@
                 class="inline-flex text-gray-400 transition ease-in-out duration-150 focus:outline-none focus:text-gray-500"
                 @click="destroy"
               >
-                <IconTimes
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
                   class="h-4 w-4"
-                  :primary="classClose"
-                  :secondary="classClose"
-                ></IconTimes>
+                  :class="classClose"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
               </button>
             </div>
           </div>
@@ -124,63 +75,7 @@
       ></div>
       <div class="flex rounded-lg shadow-xs">
         <div class="w-0 flex-1 flex items-center p-4">
-          <div class="flex-shrink-0 mr-4">
-            <div
-              v-if="type === 'success'"
-              class="border-2 border-green-200 rounded-full p-1"
-            >
-              <IconCheck
-                class="w-3 h-3"
-                primary="text-green-400"
-                secondary="text-green-300"
-              ></IconCheck>
-            </div>
-            <div
-              v-if="type === 'info'"
-              class="border-2 border-blue-200 rounded-full p-1"
-            >
-              <IconInfo
-                class="w-3 h-3"
-                primary="text-blue-400"
-                secondary="text-blue-300"
-              ></IconInfo>
-            </div>
-            <div
-              v-if="type === 'warning'"
-              class="border-2 border-yellow-200 rounded-full p-1"
-            >
-              <IconBang
-                class="w-3 h-3"
-                primary="text-yellow-400"
-                secondary="text-yellow-300"
-              ></IconBang>
-            </div>
-            <div
-              v-if="type === 'danger'"
-              class="border-2 border-red-200 rounded-full p-1"
-            >
-              <IconBang
-                class="w-3 h-3"
-                primary="text-red-400"
-                secondary="text-red-300"
-              ></IconBang>
-            </div>
-            <div v-if="type === 'denied'" class="rounded-full">
-              <IconDenied
-                class="w-5 h-5"
-                primary="text-red-400"
-                secondary="text-red-300"
-              ></IconDenied>
-            </div>
-            <div v-if="icon !== false">
-              <component
-                :is="icon"
-                :primary="iconPrimary"
-                :secondary="iconSecondary"
-                class="w-6 h-6"
-              ></component>
-            </div>
-          </div>
+          <toastIcon class="flex-shrink-0 mr-4" :type="type" :icon="icon" />
           <div class="w-full">
             <p
               v-if="title"
@@ -231,63 +126,7 @@
       <div class="rounded-lg shadow-xs overflow-hidden">
         <div class="p-4">
           <div class="flex items-center">
-            <div class="flex-shrink-0 mr-4">
-              <div
-                v-if="type === 'success'"
-                class="border-2 border-green-200 rounded-full p-1"
-              >
-                <IconCheck
-                  class="w-3 h-3"
-                  primary="text-green-400"
-                  secondary="text-green-300"
-                ></IconCheck>
-              </div>
-              <div
-                v-if="type === 'info'"
-                class="border-2 border-blue-200 rounded-full p-1"
-              >
-                <IconInfo
-                  class="w-3 h-3"
-                  primary="text-blue-400"
-                  secondary="text-blue-300"
-                ></IconInfo>
-              </div>
-              <div
-                v-if="type === 'warning'"
-                class="border-2 border-yellow-200 rounded-full p-1"
-              >
-                <IconBang
-                  class="w-3 h-3"
-                  primary="text-yellow-400"
-                  secondary="text-yellow-300"
-                ></IconBang>
-              </div>
-              <div
-                v-if="type === 'danger'"
-                class="border-2 border-red-200 rounded-full p-1"
-              >
-                <IconBang
-                  class="w-3 h-3"
-                  primary="text-red-400"
-                  secondary="text-red-300"
-                ></IconBang>
-              </div>
-              <div v-if="type === 'denied'" class="rounded-full">
-                <IconDenied
-                  class="w-5 h-5"
-                  primary="text-red-400"
-                  secondary="text-red-300"
-                ></IconDenied>
-              </div>
-              <div v-if="icon !== false">
-                <component
-                  :is="icon"
-                  :primary="iconPrimary"
-                  :secondary="iconSecondary"
-                  class="w-6 h-6"
-                ></component>
-              </div>
-            </div>
+            <toastIcon class="flex-shrink-0 mr-4" :type="type" :icon="icon" />
             <div class="w-0 flex-1 flex justify-between">
               <p class="w-0 flex-1 text-sm leading-5" v-html="message"></p>
               <button
@@ -302,11 +141,21 @@
                 class="inline-flex text-gray-400 focus:outline-none focus:text-gray-500 transition ease-in-out duration-150"
                 @click="destroy"
               >
-                <IconTimes
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
                   class="h-4 w-4"
-                  :primary="classClose"
-                  :secondary="classClose"
-                ></IconTimes>
+                  :class="classClose"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
               </button>
             </div>
           </div>
@@ -317,10 +166,8 @@
 </template>
 
 <script>
-import { IconCheck, IconBang, IconTimes } from 'tv-icon'
 import { removeElement } from '@/utilities/domUtils'
 export default {
-  components: { IconCheck, IconBang, IconTimes },
   props: {
     title: {
       type: [Boolean, String],
@@ -350,16 +197,6 @@ export default {
       required: false,
       default: false,
     },
-    iconPrimary: {
-      type: String,
-      required: false,
-      default: '',
-    },
-    iconSecondary: {
-      type: String,
-      required: false,
-      default: '',
-    },
     timeout: {
       type: [Boolean, Number],
       required: false,
@@ -378,7 +215,7 @@ export default {
     classToast: {
       type: String,
       required: false,
-      default: 'bg-white',
+      default: 'bg-white border border-gray-300',
     },
     classTitle: {
       type: String,

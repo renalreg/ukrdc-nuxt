@@ -1,7 +1,12 @@
+/*
+Injects a $toast object into the Vue instance and context,
+allowing programatic toast creation.
+*/
+
 import { Plugin } from '@nuxt/types'
 import { spawn } from '@/utilities/domUtils'
-import Toast from '@/components/TvToast.vue'
 import Vue from 'vue'
+import Toast from '~/components/Toast.vue'
 
 const containerClasses = [
   'z-40',
@@ -59,11 +64,13 @@ declare module '@nuxt/types' {
 }
 
 const toastPlugin: Plugin = (_ctx, inject) => {
+  // Create a div to hold created toasts
   const toasts = document.createElement('div')
   containerClasses.forEach((c) => toasts.classList.add(c))
   toasts.setAttribute('id', 'toasts')
   document.body.appendChild(toasts)
 
+  // Inject toastProgrammatic into Vue
   inject('toast', toastProgrammatic)
 }
 
