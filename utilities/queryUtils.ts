@@ -1,11 +1,12 @@
-export function singleQuery(query: string | number | (string | number | null)[]): string | number | null {
+export function singleQuery(
+  query: string | number | (string | number | null)[]
+): string | number | null {
   // Return a single value form a query string
   // If multiple values are passed as an array,
   // only the zeroth value is returned
   if (Array.isArray(query)) {
     return query[0]
-  }
-  else {
+  } else {
     return query
   }
 }

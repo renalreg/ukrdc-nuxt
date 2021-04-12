@@ -1,8 +1,10 @@
 # UKRDC-Nuxt Architecture
 
   - [MIDDLEWARE](#middleware)
+  - [SCHEMES](#schemes)
   - [MIXINS](#mixins)
   - [PLUGINS](#plugins)
+  - [UTILITIES](#utilities)
   - [COMPONENTS](#components)
     - [MASTERRECORDS](#components-masterrecords)
     - [WORKITEMS](#components-workitems)
@@ -28,6 +30,14 @@ Middleware let you define custom functions that can be run before rendering eith
 
 More information about the usage of this directory in [the documentation](https://nuxtjs.org/guide/routing#middleware).
 
+<a name="schemes"></a>
+
+## SCHEMES
+
+This directory contains Javascript plugins defining custom authentication schemes for `nuxt-auth`.
+
+Currently used to customise the user info we obtain from Auth0.
+
 <a name="mixins"></a>
 
 ## MIXINS
@@ -43,6 +53,12 @@ This directory contains some Vue mixins providing functions common to many compo
 This directory contains Javascript plugins that you want to run before mounting the root Vue.js application.
 
 More information about the usage of this directory in [the documentation](https://nuxtjs.org/guide/plugins).
+
+<a name="utilities"></a>
+
+## UTILITIES
+
+This directory contains Javascript functions that are not bound to Vue components. For example, frequently-used functions for data parsing.
 
 <a name="components"></a>
 
