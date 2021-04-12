@@ -17,7 +17,6 @@
     "core-js": "^3.8.3",
     "jwt-decode": "^3.1.2",
     "nuxt": "^2.15.3",
-    "nuxt-tailvue": "^1.0.82",
     "object-hash": "^2.1.1",
     "url-join": "^4.0.1",
     "xml-formatter": "^2.4.0"

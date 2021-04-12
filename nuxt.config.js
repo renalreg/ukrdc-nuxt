@@ -23,7 +23,9 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { ssr: false, src: '~/plugins/v-calendar.js' },
-    '~/plugins/axios.js',
+    { ssr: false, src: '~/plugins/toast.ts' },
+    { ssr: false, src: '~/plugins/axios-toast.js' },
+    { ssr: true, src: '~/plugins/axios-sentry.js' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -33,12 +35,7 @@ export default {
   buildModules: ['@nuxt/typescript-build', '@nuxtjs/tailwindcss'],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-    '@nuxtjs/axios',
-    '@nuxtjs/auth-next',
-    '@nuxtjs/sentry',
-    ['nuxt-tailvue', { toast: true }],
-  ],
+  modules: ['@nuxtjs/axios', '@nuxtjs/auth-next', '@nuxtjs/sentry'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
