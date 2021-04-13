@@ -49,9 +49,7 @@
           :key="item.channelId"
           class="col-span-1"
         >
-          <div
-            class="items-center justify-between px-4 py-2 text-sm shadow-sm border border-gray-200 bg-white rounded-md"
-          >
+          <GenericCardMini class="px-4 py-2">
             <p
               class="text-gray-900 font-medium hover:text-gray-600 line-clamp-2"
             >
@@ -69,7 +67,7 @@
               class="inline-block px-2 py-0.5 text-red-800 text-xs font-medium bg-red-100 rounded-sm mt-2"
               >{{ item.error }} errors</span
             >
-          </div>
+          </GenericCardMini>
         </li>
       </ul>
     </div>

@@ -13,7 +13,7 @@
           :key="index"
           class="col-span-1"
         >
-          <medicationsCard :item="item" />
+          <patientrecordsMedicationCard :item="item" />
         </li>
       </ul>
     </div>
