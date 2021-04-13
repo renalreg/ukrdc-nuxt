@@ -5,19 +5,19 @@
     </div>
 
     <div class="mb-8">
-      <alertsWarning
+      <genericAlertWarning
         v-for="message in response.warnings"
         :key="message"
         :message="message"
       >
-      </alertsWarning>
+      </genericAlertWarning>
 
-      <alertsInfo
+      <genericAlertInfo
         v-for="message in response.messages"
         :key="message"
         :message="message"
       >
-      </alertsInfo>
+      </genericAlertInfo>
     </div>
 
     <div class="max-w-7xl mx-auto mb-8">

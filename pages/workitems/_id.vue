@@ -1,6 +1,9 @@
 <template>
   <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
-    <ModalSlot v-if="$auth.hasScope('write:workitems')" ref="addCommentModal">
+    <GenericModalSlot
+      v-if="$auth.hasScope('write:workitems')"
+      ref="addCommentModal"
+    >
       <div class="text-left">
         <div class="mb-4">Add Work Item comment</div>
         <textarea
@@ -11,24 +14,20 @@
       </div>
 
       <div class="flex justify-end">
-        <button
-          type="button"
-          class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          @click="$refs.addCommentModal.hide()"
+        <genericButton @click="$refs.addCommentModal.hide()"
+          >Cancel</genericButton
         >
-          Cancel
-        </button>
-        <button
+        <genericButtonPrimary
+          class="ml-2"
           type="submit"
-          class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           @click="updateWorkItemComment()"
         >
           Save
-        </button>
+        </genericButtonPrimary>
       </div>
-    </ModalSlot>
+    </GenericModalSlot>
 
-    <ModalSlot v-if="$auth.hasScope('write:workitems')" ref="mergeModal">
+    <GenericModalSlot v-if="$auth.hasScope('write:workitems')" ref="mergeModal">
       <div class="text-left">
         <div class="mb-4">Merge and close the Work Item</div>
         <div>
@@ -49,24 +48,21 @@
       </div>
 
       <div class="flex justify-end">
-        <button
-          type="button"
-          class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          @click="$refs.mergeModal.hide()"
-        >
-          Cancel
-        </button>
-        <button
+        <genericButton @click="$refs.mergeModal.hide()"> Cancel </genericButton>
+        <genericButtonPrimary
           type="submit"
-          class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          class="ml-2"
           @click="mergeWorkItem()"
         >
           Merge and Close
-        </button>
+        </genericButtonPrimary>
       </div>
-    </ModalSlot>
+    </GenericModalSlot>
 
-    <ModalSlot v-if="$auth.hasScope('write:workitems')" ref="unlinkModal">
+    <GenericModalSlot
+      v-if="$auth.hasScope('write:workitems')"
+      ref="unlinkModal"
+    >
       <div class="text-left">
         <div class="mb-4">Unlink and close the Work Item</div>
         <div>
@@ -87,22 +83,19 @@
       </div>
 
       <div class="flex justify-end">
-        <button
-          type="button"
-          class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          @click="$refs.unlinkModal.hide()"
-        >
+        <GenericButton @click="$refs.unlinkModal.hide()">
           Cancel
-        </button>
-        <button
+        </GenericButton>
+        <genericButtonPrimary
           type="submit"
-          class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+          class="ml-3"
+          colour="red"
           @click="unlinkWorkItem()"
         >
           Unlink and Close
-        </button>
+        </genericButtonPrimary>
       </div>
-    </ModalSlot>
+    </GenericModalSlot>
 
     <!-- Header card  -->
     <workitemsSummaryCardPlaceholder
@@ -117,9 +110,8 @@
       class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8"
     >
       <div>
-        <button
-          type="button"
-          class="inline-flex items-center justify-center px-4 py-2 w-full border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        <genericButtonPrimary
+          class="inline-flex items-center justify-center w-full"
           @click="$refs.addCommentModal.show()"
         >
           <!-- Heroicon name: solid/pencil -->
@@ -135,12 +127,12 @@
             />
           </svg>
           Comment
-        </button>
+        </genericButtonPrimary>
       </div>
       <div>
-        <button
-          type="button"
-          class="inline-flex items-center justify-center px-4 py-2 w-full border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+        <genericButtonPrimary
+          class="inline-flex items-center justify-center w-full"
+          colour="green"
           @click="$refs.mergeModal.show()"
         >
           <!-- Heroicon name: solid/link -->
@@ -158,12 +150,12 @@
             />
           </svg>
           Merge
-        </button>
+        </genericButtonPrimary>
       </div>
       <div>
-        <button
-          type="button"
-          class="inline-flex items-center justify-center px-4 py-2 w-full border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+        <genericButtonPrimary
+          class="inline-flex items-center justify-center w-full"
+          colour="red"
           @click="$refs.unlinkModal.show()"
         >
           <!-- Heroicon name: solid/x-circle -->
@@ -181,15 +173,12 @@
             />
           </svg>
           Unlink
-        </button>
+        </genericButtonPrimary>
       </div>
     </div>
 
     <!-- Related WorkItems  -->
-    <div
-      v-if="relatedRecords.length > 0"
-      class="bg-white shadow overflow-hidden rounded-md mb-8"
-    >
+    <GenericCard v-if="relatedRecords.length > 0" class="mb-8">
       <!-- Card header -->
       <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
         <h3 class="text-lg leading-6 font-medium text-gray-900">
@@ -204,7 +193,7 @@
           :item="item"
         />
       </ul>
-    </div>
+    </GenericCard>
 
     <div class="mb-8">
       <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">

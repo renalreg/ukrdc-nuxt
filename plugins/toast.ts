@@ -6,7 +6,7 @@ allowing programatic toast creation.
 import { Plugin } from '@nuxt/types'
 import { spawn } from '@/utilities/domUtils'
 import Vue from 'vue'
-import Toast from '~/components/Toast.vue'
+import Toast from '~/components/generic/Toast.vue'
 
 const containerClasses = [
   'z-40',

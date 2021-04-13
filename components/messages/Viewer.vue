@@ -1,11 +1,11 @@
 <template>
-  <modalMaxSlot ref="messageViewermodalMaxSlot">
+  <GenericModalMaxSlot ref="messageViewerGenericModalMaxSlot">
     <div
       v-if="!isEmptyObject(messageData)"
       class="h-full box-border flex flex-col pt-4"
     >
       <div class="pl-8 pb-3 border-b border-gray-200">
-        <Toggle
+        <GenericToggle
           v-if="messageData.dataType === 'XML'"
           v-model="formatMessage"
           label="Format XML"
@@ -29,7 +29,7 @@
       </div>
     </div>
     <div v-else class="pt-8">No message data available</div>
-  </modalMaxSlot>
+  </GenericModalMaxSlot>
 </template>
 
 <script lang="ts">
@@ -67,15 +67,15 @@ export default Vue.extend({
   },
   methods: {
     show(): void {
-      const el = this.$refs.messageViewermodalMaxSlot as modalInterface
+      const el = this.$refs.messageViewerGenericModalMaxSlot as modalInterface
       el.show()
     },
     hide(): void {
-      const el = this.$refs.messageViewermodalMaxSlot as modalInterface
+      const el = this.$refs.messageViewerGenericModalMaxSlot as modalInterface
       el.hide()
     },
     toggle(): void {
-      const el = this.$refs.messageViewermodalMaxSlot as modalInterface
+      const el = this.$refs.messageViewerGenericModalMaxSlot as modalInterface
       el.toggle()
     },
   },

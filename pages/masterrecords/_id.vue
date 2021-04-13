@@ -34,10 +34,7 @@
       <masterrecordsRecordCardPlaceholder v-if="isEmptyObject(record)" />
       <masterrecordsRecordCard v-else :record="record" />
 
-      <div
-        v-if="workItems && workItems.length > 0"
-        class="bg-white shadow overflow-hidden rounded-md mt-4"
-      >
+      <GenericCard v-if="workItems && workItems.length > 0" class="mt-4">
         <!-- Card header -->
         <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
           <h3 class="text-lg leading-6 font-medium text-gray-900">
@@ -52,10 +49,10 @@
             :item="item"
           />
         </ul>
-      </div>
+      </GenericCard>
 
       <!-- Related Records card -->
-      <div class="bg-white shadow overflow-hidden rounded-md mt-4">
+      <GenericCard class="mt-4">
         <!-- Card header -->
         <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
           <h3 class="text-lg leading-6 font-medium text-gray-900">
@@ -70,10 +67,10 @@
             :item="item"
           />
         </ul>
-      </div>
+      </GenericCard>
 
       <!-- Related Records card -->
-      <div class="bg-white shadow overflow-hidden rounded-md mt-4">
+      <GenericCard class="mt-4">
         <!-- Card header -->
         <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
           <h3 class="text-lg leading-6 font-medium text-gray-900">
@@ -88,7 +85,7 @@
             :item="item"
           />
         </ul>
-      </div>
+      </GenericCard>
     </div>
   </div>
 </template>

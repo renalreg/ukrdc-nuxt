@@ -83,29 +83,16 @@
               </div>
             </div>
             <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-              <button
-                type="button"
-                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                :class="
-                  danger
-                    ? ['bg-red-600', 'hover:bg-red-700', 'focus:ring-red-500']
-                    : [
-                        'bg-indigo-600',
-                        'hover:bg-indigo-700',
-                        'focus:ring-indigo-500',
-                      ]
-                "
+              <GenericButtonPrimary
+                class="ml-2"
+                :colour="danger ? 'red' : 'indigo'"
                 @click="confirm()"
               >
                 {{ confirmLabel }}
-              </button>
-              <button
-                type="button"
-                class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm"
-                @click="cancel()"
-              >
+              </GenericButtonPrimary>
+              <GenericButton @click="cancel()">
                 {{ cancelLabel }}
-              </button>
+              </GenericButton>
             </div>
           </div>
         </transition>

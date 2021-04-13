@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ModalConfirm
+    <GenericModalConfirm
       ref="resetPasswordAlert"
       title="Reset your password"
       message="Are you sure you want to reset your password? You will receieve an email shortly to start the reset."
@@ -39,20 +39,15 @@
         <div
           class="mb-8 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 lg:mt-0 lg:flex-row lg:space-x-3"
         >
-          <button
-            type="button"
-            class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+          <GenericButtonSecondary
+            colour="red"
             @click="showResetPasswordAlert()"
           >
             Reset Password
-          </button>
-          <button
-            type="button"
-            class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500"
-            @click="$auth.logout()"
-          >
+          </GenericButtonSecondary>
+          <GenericButtonPrimary @click="$auth.logout()">
             Sign out
-          </button>
+          </GenericButtonPrimary>
         </div>
       </div>
       <div>

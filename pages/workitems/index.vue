@@ -82,7 +82,7 @@
     </div>
 
     <div v-if="workitems.length > 0">
-      <div class="bg-white shadow overflow-hidden rounded-md">
+      <GenericCard>
         <!-- Skeleton results -->
         <ul v-if="$fetchState.pending" class="divide-y divide-gray-200">
           <workitemsListItemPlaceholder v-for="n in 10" :key="n" />
@@ -95,7 +95,7 @@
             :item="item"
           />
         </ul>
-        <paginator
+        <GenericPaginator
           v-if="!$fetchState.pending"
           class="bg-white border-t border-gray-200"
           :page="page"
@@ -104,7 +104,7 @@
           @next="changePage(page + 1)"
           @prev="changePage(page - 1)"
         />
-      </div>
+      </GenericCard>
     </div>
   </div>
 </template>
