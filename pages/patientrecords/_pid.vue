@@ -215,7 +215,7 @@ export default Vue.extend({
   },
   async fetch() {
     // Get the main record data
-    const path = `${this.$config.apiBase}/patientrecords/${this.$route.params.pid}`
+    const path = `${this.$config.apiBase}/patientrecords/${this.$route.params.pid}/`
     const res: PatientRecord = await this.$axios.$get(path)
     this.record = res
   },

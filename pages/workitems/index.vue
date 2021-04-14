@@ -121,7 +121,7 @@ export default Vue.extend({
   },
   async fetch() {
     // Fetch the dashboard response from our API server
-    let path = `${this.$config.apiBase}/empi/workitems?page=${this.page}&size=${this.size}`
+    let path = `${this.$config.apiBase}/empi/workitems/?page=${this.page}&size=${this.size}`
     if (this.since) {
       path = path + `&since=${this.since}`
     }

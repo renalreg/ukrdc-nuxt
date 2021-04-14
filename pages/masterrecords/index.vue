@@ -84,7 +84,7 @@ export default Vue.extend({
       // Build our query string from search terms and page info
       const path = `${
         this.$config.apiBase
-      }/empi/search/masterrecords?${this.buildQueryStringFromArray(
+      }/empi/search/masterrecords/?${this.buildQueryStringFromArray(
         this.search,
         'search'
       )}&${this.buildQueryStringFromArray(

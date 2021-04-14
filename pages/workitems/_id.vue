@@ -319,7 +319,7 @@ export default Vue.extend({
   },
   async fetch() {
     // Get the main record data
-    const path = `${this.$config.apiBase}/empi/workitems/${this.$route.params.id}`
+    const path = `${this.$config.apiBase}/empi/workitems/${this.$route.params.id}/`
     const res: WorkItem = await this.$axios.$get(path)
     this.record = res
     this.customComment = res.updateDescription
@@ -347,7 +347,7 @@ export default Vue.extend({
   },
   methods: {
     async updateWorkItemComment() {
-      const path = `${this.$config.apiBase}/empi/workitems/${this.$route.params.id}`
+      const path = `${this.$config.apiBase}/empi/workitems/${this.$route.params.id}/`
       await this.$axios.$put(path, {
         comment: this.customComment,
       })
