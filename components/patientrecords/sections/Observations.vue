@@ -1,17 +1,9 @@
 <template>
   <div class="mt-4">
-    <div class="mt-1 sm:mt-0 sm:col-span-2 mb-4">
-      <select
-        id="country"
-        v-model="appliedFilter"
-        name="country"
-        autocomplete="country"
-        class="block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-      >
-        <option value="">All Observations</option>
-        <option v-for="item in filterOptions" :key="item">{{ item }}</option>
-      </select>
-    </div>
+    <GenericSelect v-model="appliedFilter" class="mb-4">
+      <option value="">All Observations</option>
+      <option v-for="item in filterOptions" :key="item">{{ item }}</option>
+    </GenericSelect>
 
     <!-- This example requires Tailwind CSS v2.0+ -->
     <div class="flex flex-col">
@@ -120,10 +112,11 @@ export default Vue.extend({
       return options
     },
     displayedObservations(): Observation[] {
+      let filteredObservations
       if (this.appliedFilter === '') {
-        var filteredObservations = this.observations
+        filteredObservations = this.observations
       } else {
-        var filteredObservations = this.observations.filter(
+        filteredObservations = this.observations.filter(
           (value: Observation) => {
             return value.observationDesc === this.appliedFilter
           }

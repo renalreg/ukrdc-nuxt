@@ -8,10 +8,10 @@
         :key="item.id"
         class="col-span-1 flex shadow-sm rounded-md"
       >
-        <div
-          class="flex-1 flex items-center justify-between border border-gray-200 bg-white rounded-md truncate"
+        <GenericCardMini
+          class="w-full px-4 py-2 flex items-center justify-between"
         >
-          <div class="flex-1 px-4 py-2 text-sm truncate">
+          <div class="flex-1 truncate">
             <p class="text-gray-900 font-medium hover:text-gray-600 truncate">
               {{ item.id }}
             </p>
@@ -21,7 +21,7 @@
             </p>
             <p class="text-gray-500">{{ item.resultItems.length }} results</p>
           </div>
-          <div class="flex-shrink-0 pr-2">
+          <div class="flex-shrink-0">
             <span class="sr-only">Open options</span>
             <!-- Heroicon name: solid/chevron-right -->
             <svg
@@ -38,7 +38,7 @@
               />
             </svg>
           </div>
-        </div>
+        </GenericCardMini>
       </li>
     </ul>
   </div>

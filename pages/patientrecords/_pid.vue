@@ -49,23 +49,23 @@
           <li
             v-for="item in record.patient.numbers"
             :key="item.numbertype + item.organization + item.patientid"
-            class="col-span-1 flex shadow-sm rounded-md"
+            class="col-span-1 flex"
           >
-            <div
-              class="flex-shrink-0 flex items-center justify-center w-16 bg-indigo-600 text-white text-sm font-medium rounded-l-md"
-            >
-              {{ item.numbertype }}
-            </div>
-            <div
-              class="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white rounded-r-md truncate"
-            >
-              <div class="flex-1 px-4 py-2 text-sm truncate">
-                <p class="text-gray-900 font-medium hover:text-gray-600">
-                  {{ item.patientid }}
-                </p>
-                <p class="text-gray-500">{{ item.organization }}</p>
+            <GenericCardMini class="flex w-full">
+              <div
+                class="flex-shrink-0 flex items-center justify-center w-16 bg-indigo-600 text-white text-sm font-medium rounded-l-md"
+              >
+                {{ item.numbertype }}
               </div>
-            </div>
+              <div class="flex-1 flex items-center justify-between truncate">
+                <div class="flex-1 px-4 py-2 text-sm truncate">
+                  <p class="text-gray-900 font-medium hover:text-gray-600">
+                    {{ item.patientid }}
+                  </p>
+                  <p class="text-gray-500">{{ item.organization }}</p>
+                </div>
+              </div>
+            </GenericCardMini>
           </li>
         </ul>
       </div>
@@ -87,41 +87,36 @@
           <li
             v-for="item in record.patient.addresses"
             :key="item.street"
-            class="col-span-1 flex shadow-sm rounded-md"
+            class="col-span-1"
           >
-            <div
-              class="flex-1 flex items-center justify-between border border-gray-200 bg-white rounded-md truncate"
-            >
-              <div class="flex-1 px-4 py-2 text-sm truncate">
-                <p class="text-gray-900 font-medium hover:text-gray-600">
-                  {{ item.street }}
-                </p>
-                <p v-if="item.town" class="text-gray-500">{{ item.town }}</p>
-                <p v-if="item.county" class="text-gray-500">
-                  {{ item.county }}
-                </p>
-                <p v-if="item.postcode" class="text-gray-500">
-                  {{ item.postcode }}
-                </p>
-                <p v-if="item.countryDescription" class="text-gray-500">
-                  {{ item.countryDescription }}
-                </p>
-                <p v-if="item.fromTime" class="text-gray-500">
-                  Since {{ formatDate(item.fromTime, (t = false)) }}
-                </p>
-                <span
-                  v-if="!item.toTime"
-                  class="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-sm mt-2"
-                  >Active</span
-                >
-                <span
-                  v-else
-                  class="flex-shrink-0 inline-block px-2 py-0.5 text-red-800 text-xs font-medium bg-red-100 rounded-sm mt-2"
-                  >Inactive since
-                  {{ formatDate(item.toTime, (t = false)) }}</span
-                >
-              </div>
-            </div>
+            <GenericCardMini class="px-4 py-2 w-full">
+              <p class="text-gray-900 font-medium hover:text-gray-600">
+                {{ item.street }}
+              </p>
+              <p v-if="item.town" class="text-gray-500">{{ item.town }}</p>
+              <p v-if="item.county" class="text-gray-500">
+                {{ item.county }}
+              </p>
+              <p v-if="item.postcode" class="text-gray-500">
+                {{ item.postcode }}
+              </p>
+              <p v-if="item.countryDescription" class="text-gray-500">
+                {{ item.countryDescription }}
+              </p>
+              <p v-if="item.fromTime" class="text-gray-500">
+                Since {{ formatDate(item.fromTime, (t = false)) }}
+              </p>
+              <span
+                v-if="!item.toTime"
+                class="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-sm mt-2"
+                >Active</span
+              >
+              <span
+                v-else
+                class="flex-shrink-0 inline-block px-2 py-0.5 text-red-800 text-xs font-medium bg-red-100 rounded-sm mt-2"
+                >Inactive since {{ formatDate(item.toTime, (t = false)) }}</span
+              >
+            </GenericCardMini>
           </li>
         </ul>
       </div>
@@ -146,29 +141,24 @@
             :key="item.programName"
             class="col-span-1 flex shadow-sm rounded-md"
           >
-            <div
-              class="flex-1 flex items-center justify-between border border-gray-200 bg-white rounded-md truncate"
-            >
-              <div class="flex-1 px-4 py-2 text-sm truncate">
-                <p class="text-gray-900 font-medium hover:text-gray-600">
-                  {{ item.programName }}
-                </p>
-                <p v-if="item.fromTime" class="text-gray-500">
-                  Since {{ formatDate(item.fromTime, (t = false)) }}
-                </p>
-                <span
-                  v-if="!item.toTime"
-                  class="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-sm mt-2"
-                  >Active</span
-                >
-                <span
-                  v-else
-                  class="flex-shrink-0 inline-block px-2 py-0.5 text-red-800 text-xs font-medium bg-red-100 rounded-sm mt-2"
-                  >Inactive since
-                  {{ formatDate(item.toTime, (t = false)) }}</span
-                >
-              </div>
-            </div>
+            <GenericCardMini class="px-4 py-2 w-full">
+              <p class="text-gray-900 font-medium hover:text-gray-600">
+                {{ item.programName }}
+              </p>
+              <p v-if="item.fromTime" class="text-gray-500">
+                Since {{ formatDate(item.fromTime, (t = false)) }}
+              </p>
+              <span
+                v-if="!item.toTime"
+                class="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-sm mt-2"
+                >Active</span
+              >
+              <span
+                v-else
+                class="flex-shrink-0 inline-block px-2 py-0.5 text-red-800 text-xs font-medium bg-red-100 rounded-sm mt-2"
+                >Inactive since {{ formatDate(item.toTime, (t = false)) }}</span
+              >
+            </GenericCardMini>
           </li>
         </ul>
       </div>

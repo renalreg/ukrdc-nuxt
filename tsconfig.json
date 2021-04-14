@@ -21,7 +21,6 @@
       "@types/node",
       "@nuxtjs/auth-next",
       "@nuxtjs/sentry",
-      "nuxt-tailvue",
     ]
   },
   "exclude": ["node_modules", ".nuxt", "dist"]

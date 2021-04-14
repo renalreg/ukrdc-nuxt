@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white animate-pulse shadow overflow-hidden rounded-md">
+  <GenericCard class="animate-pulse">
     <div class="px-4 py-5 sm:px-6 space-y-1">
       <div class="h-6 bg-gray-200 rounded w-full"></div>
       <div class="h-4 bg-gray-200 rounded w-full"></div>
@@ -34,7 +34,7 @@
         </div>
       </dl>
     </div>
-  </div>
+  </GenericCard>
 </template>
 
 <script lang="ts">

@@ -6,37 +6,9 @@
 
     <div class="mb-4">
       <div class="mb-2 flex items-center">
-        <input
-          id="open"
-          v-model="statuses"
-          class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-          type="checkbox"
-          :value="1"
-        />
-        <label class="font-medium text-gray-500 mr-4 ml-2 text-sm" for="open"
-          >Open</label
-        >
-
-        <input
-          id="wip"
-          v-model="statuses"
-          class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-          type="checkbox"
-          :value="2"
-        />
-        <label class="font-medium text-gray-500 mr-4 ml-2 text-sm" for="wip"
-          >WIP</label
-        >
-        <input
-          id="closed"
-          v-model="statuses"
-          class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-          type="checkbox"
-          :value="3"
-        />
-        <label class="font-medium text-gray-500 mr-4 ml-2 text-sm" for="closed"
-          >Closed</label
-        >
+        <GenericCheckbox v-model="statuses" label="Open" :value="1" />
+        <GenericCheckbox v-model="statuses" label="WIP" :value="2" />
+        <GenericCheckbox v-model="statuses" label="Closed" :value="3" />
       </div>
       <div>
         <client-only>
@@ -82,7 +54,7 @@
     </div>
 
     <div v-if="workitems.length > 0">
-      <div class="bg-white shadow overflow-hidden rounded-md">
+      <GenericCard>
         <!-- Skeleton results -->
         <ul v-if="$fetchState.pending" class="divide-y divide-gray-200">
           <workitemsListItemPlaceholder v-for="n in 10" :key="n" />
@@ -95,7 +67,7 @@
             :item="item"
           />
         </ul>
-        <paginator
+        <GenericPaginator
           v-if="!$fetchState.pending"
           class="bg-white border-t border-gray-200"
           :page="page"
@@ -104,7 +76,7 @@
           @next="changePage(page + 1)"
           @prev="changePage(page - 1)"
         />
-      </div>
+      </GenericCard>
     </div>
   </div>
 </template>

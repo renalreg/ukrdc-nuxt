@@ -11,7 +11,7 @@
     - [NAVIGATION](#components-navigation)
     - [PROFILE](#components-profile)
     - [DASH](#components-dash)
-    - [MODAL](#components-modal)
+    - [GENERIC](#components-generic)
   - [LAYOUTS](#layouts)
   - [STATIC](#static)
   - [ASSETS](#assets)
@@ -119,11 +119,11 @@ Contains reusable components related to the user profile, such as the profile ba
 
 This folder contains components used in the application dashboard.
 
-<a name="components-modal"></a>
+<a name="components-generic"></a>
 
-### MODAL
+### GENERIC
 
-Contains reusable components for generating modal dialog boxes, such as popup confirmations, warnings etc.
+Contains generic reusable components, pre-styled, and with working Vue interactivity.
 
 <a name="layouts"></a>
 

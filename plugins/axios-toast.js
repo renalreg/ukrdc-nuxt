@@ -1,12 +1,14 @@
-export default function ({ $axios, $sentry, $toast }) {
+/*
+Automatically display Axios error toasts.
+*/
+
+export default function ({ app, $axios }) {
   $axios.onError((error) => {
-    $toast.show({
+    app.$toast.show({
       type: 'danger',
       title: 'Error Fetching Data',
       message: error.message,
       timeout: 5,
-      classTimeout: 'bg-red-600',
     })
-    $sentry.captureException(error)
   })
 }
