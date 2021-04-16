@@ -72,7 +72,7 @@ export default Vue.extend({
       page: (this.$route.query.page || 0) as number,
       size: 20,
       search: (this.$route.query.search || []) as string[],
-      numberType: (this.$route.query.number_type || ['UKRDC']) as string[],
+      numberType: (this.$route.query.number_type || []) as string[],
       searchboxString: '',
     }
   },
