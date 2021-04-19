@@ -4,7 +4,7 @@
     <messagesViewer
       ref="messageViewerModal"
       class="max-h-full"
-      :message-data="openMessage"
+      :message="openMessage"
     />
     <div v-if="isEmptyObject(message)"><messagesSummaryCardPlaceholder /></div>
 
@@ -47,14 +47,14 @@
       <!-- Chain grid -->
       <div v-for="(messages, index) in chain" :key="index">
         <div
-          class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4 justify-center"
+          class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-2 justify-center"
         >
           <messagesConnectorMessageCard
             v-for="item in messages"
             :key="item.channelName + item.connectorName"
             :message="item"
-            @viewClick="
-              openMessage = item.encoded ? item.encoded : item.raw
+            @viewSourceClick="
+              openMessage = item
               $refs.messageViewerModal.show()
             "
           />
@@ -87,11 +87,7 @@ import Vue from 'vue'
 import dateUtilsMixin from '@/mixins/dateutils'
 import codeUtilsMixin from '@/mixins/coddeutils'
 import objectUtilsMixin from '@/mixins/objectutils'
-import {
-  ChannelMessage,
-  ConnectorMessage,
-  ConnectorMessageData,
-} from '@/interfaces/mirth'
+import { ChannelMessage, ConnectorMessage } from '@/interfaces/mirth'
 
 interface ChainMap {
   [key: number]: ConnectorMessage[]
@@ -104,7 +100,7 @@ export default Vue.extend({
     return {
       message: {} as ChannelMessage,
       chain: {} as ChainMap,
-      openMessage: {} as ConnectorMessageData,
+      openMessage: {} as ConnectorMessage,
       formatMessage: true,
     }
   },
