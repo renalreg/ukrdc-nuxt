@@ -12,6 +12,10 @@ export interface ConnectorMessageData {
   messageDataId: string
 }
 
+export interface MetaDataMap {
+  [key: string]: string
+}
+
 export interface ConnectorMessage {
   chainId: number
   orderId: number
@@ -26,6 +30,10 @@ export interface ConnectorMessage {
 
   raw: ConnectorMessageData
   encoded: ConnectorMessageData
+  sent: ConnectorMessageData
+  response: ConnectorMessageData
+
+  metaDataMap: MetaDataMap
 }
 
 export interface ChannelMessage {
