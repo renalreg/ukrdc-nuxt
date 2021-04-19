@@ -1,40 +1,10 @@
 <template>
   <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
     <div class="mb-6">
-      <div class="sm:hidden">
-        <label for="tabs" class="sr-only">Select a tab</label>
-        <select
-          id="tabs"
-          name="tabs"
-          class="block w-full focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
-          @change="setTab($event.target.value)"
-        >
-          <option v-for="tab in tabs" :key="tab">{{ tab }}</option>
-        </select>
-      </div>
-      <div class="hidden sm:block">
-        <nav class="flex space-x-2" aria-label="Tabs">
-          <!-- Current: "bg-indigo-100 text-indigo-700", Default: "text-gray-500 hover:text-gray-700" -->
-          <button
-            v-for="tab in tabs"
-            :key="tab"
-            role="tab"
-            class="px-3 py-2 font-medium text-sm rounded-md"
-            :class="
-              currentTab === tab
-                ? 'bg-indigo-100 text-indigo-700 '
-                : 'text-gray-500 hover:text-gray-700'
-            "
-            :aria-selected="currentTab === tab"
-            @click="setTab(tab)"
-          >
-            {{ tab }}
-          </button>
-        </nav>
-      </div>
+      <genericTabs v-model="tabProxy" :tabs="tabs" />
     </div>
 
-    <div v-if="currentTab === 'Overview'">
+    <div v-if="tabProxy === 'Overview'">
       <patientrecordsRecordCard
         v-if="!isEmptyObject(record)"
         :record="record"
@@ -170,20 +140,20 @@
         :record="record"
         :header-only="true"
       />
-      <div v-if="currentTab === 'Medications'">
+      <div v-if="tabProxy === 'Medications'">
         <PatientrecordsSectionsMedications
           :api-path="record.links.medications"
         />
       </div>
-      <div v-if="currentTab === 'Lab Orders'">
+      <div v-if="tabProxy === 'Lab Orders'">
         <PatientrecordsSectionsLabOrders :api-path="record.links.laborders" />
       </div>
-      <div v-if="currentTab === 'Observations'">
+      <div v-if="tabProxy === 'Observations'">
         <PatientrecordsSectionsObservations
           :api-path="record.links.observations"
         />
       </div>
-      <div v-if="currentTab === 'Surveys'">
+      <div v-if="tabProxy === 'Surveys'">
         <PatientrecordsSectionsSurveys :api-path="record.links.surveys" />
       </div>
     </div>
@@ -225,15 +195,15 @@ export default Vue.extend({
     }
   },
   computed: {
-    currentTab(): string {
-      return decodeURIComponent(this.$route.hash).slice(1) || 'Overview'
-    },
-  },
-  methods: {
-    setTab(newTab: string): void {
-      this.$router.push({
-        hash: newTab,
-      })
+    tabProxy: {
+      get() {
+        return decodeURIComponent(this.$route.hash).slice(1) || 'Overview'
+      },
+      set(newTab: string) {
+        this.$router.push({
+          hash: newTab,
+        })
+      },
     },
   },
 })
