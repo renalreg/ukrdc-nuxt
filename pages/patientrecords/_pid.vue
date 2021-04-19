@@ -196,10 +196,10 @@ export default Vue.extend({
   },
   computed: {
     tabProxy: {
-      get() {
+      get(): string {
         return decodeURIComponent(this.$route.hash).slice(1) || 'Overview'
       },
-      set(newTab: string) {
+      set(newTab: string): void {
         this.$router.push({
           hash: newTab,
         })
