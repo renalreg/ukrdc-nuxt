@@ -102,9 +102,13 @@ export default Vue.extend({
       return this.formattedMessage.split('\n')
     },
     nonNullMetadata(): MetaDataMap {
-      return Object.fromEntries(
-        Object.entries(this.message.metaDataMap).filter(([_, v]) => v != null)
-      )
+      if (this.message.metaDataMap) {
+        return Object.fromEntries(
+          Object.entries(this.message.metaDataMap).filter(([_, v]) => v != null)
+        )
+      } else {
+        return {}
+      }
     },
   },
   methods: {
