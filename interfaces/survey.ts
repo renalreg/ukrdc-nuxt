@@ -2,6 +2,10 @@ export interface SurveyQuestion {
   id: string
   questiontypecode: string
   response: string
+
+  questionGroup: string
+  questionType: string
+  responseText: string
 }
 
 export interface SurveyScore {

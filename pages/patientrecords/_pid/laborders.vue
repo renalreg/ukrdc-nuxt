@@ -51,13 +51,14 @@ import dateUtilsMixin from '@/mixins/dateutils'
 import codeUtilsMixin from '@/mixins/coddeutils'
 
 import { LabOrder } from '@/interfaces/laborder'
+import { PatientRecord } from '@/interfaces/patientrecord'
 
 export default Vue.extend({
   mixins: [dateUtilsMixin, codeUtilsMixin],
 
   props: {
-    apiPath: {
-      type: String,
+    record: {
+      type: Object as () => PatientRecord,
       required: true,
     },
   },
@@ -70,6 +71,11 @@ export default Vue.extend({
   async fetch() {
     const res: LabOrder[] = await this.$axios.$get(this.apiPath)
     this.orders = res
+  },
+  computed: {
+    apiPath(): string {
+      return this.record.links.laborders
+    },
   },
 })
 </script>

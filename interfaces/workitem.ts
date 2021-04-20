@@ -1,5 +1,5 @@
 import { Person } from '@/interfaces/persons'
-import { MasterRecord } from '~/interfaces/masterrecord'
+import { MasterRecord } from '@/interfaces/masterrecord'
 
 interface WorkItemLinks {
   self: string

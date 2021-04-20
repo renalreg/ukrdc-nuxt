@@ -62,7 +62,7 @@
 import Vue from 'vue'
 
 import dateUtilsMixin from '@/mixins/dateutils'
-import { WorkItemShort } from '~/interfaces/workitem'
+import { WorkItemShort } from '@/interfaces/workitem'
 
 export default Vue.extend({
   mixins: [dateUtilsMixin],

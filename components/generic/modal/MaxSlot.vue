@@ -2,7 +2,7 @@
   <transition :duration="200">
     <div v-show="visible" class="fixed z-10 inset-0">
       <div
-        class="flex items-end justify-center h-screen w-screen pt-4 px-4 pb-20 sm:block sm:p-0"
+        class="items-end justify-center h-screen w-screen block p-0 mt-16 md:mt-0"
       >
         <!-- Modal panel, show/hide based on modal state. -->
         <transition
@@ -20,10 +20,10 @@
             aria-modal="true"
             aria-labelledby="modal-headline"
           >
-            <div class="hidden sm:block absolute top-0 right-0 pt-4 pr-4 z-50">
+            <div class="block absolute top-0 right-0 pt-4 pr-4 z-50">
               <button
                 type="button"
-                class="rounded-md text-gray-500 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                class="rounded-full text-gray-500 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 @click="hide()"
               >
                 <span class="sr-only">Close</span>

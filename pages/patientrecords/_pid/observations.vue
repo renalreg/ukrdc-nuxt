@@ -80,13 +80,14 @@ import dateUtilsMixin from '@/mixins/dateutils'
 import codeUtilsMixin from '@/mixins/coddeutils'
 
 import { Observation } from '@/interfaces/observation'
+import { PatientRecord } from '@/interfaces/patientrecord'
 
 export default Vue.extend({
   mixins: [dateUtilsMixin, codeUtilsMixin],
 
   props: {
-    apiPath: {
-      type: String,
+    record: {
+      type: Object as () => PatientRecord,
       required: true,
     },
   },
@@ -102,6 +103,9 @@ export default Vue.extend({
     this.observations = res
   },
   computed: {
+    apiPath(): string {
+      return this.record.links.observations
+    },
     filterOptions(): string[] {
       const options: string[] = []
       for (const item of this.observations) {

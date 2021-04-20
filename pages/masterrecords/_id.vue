@@ -96,9 +96,9 @@ import Vue from 'vue'
 import dateUtilsMixin from '@/mixins/dateutils'
 import codeUtilsMixin from '@/mixins/coddeutils'
 import objectUtilsMixin from '@/mixins/objectutils'
-import { MasterRecord } from '~/interfaces/masterrecord'
-import { WorkItem } from '~/interfaces/workitem'
-import { PatientRecordShort } from '~/interfaces/patientrecord'
+import { MasterRecord } from '@/interfaces/masterrecord'
+import { WorkItem } from '@/interfaces/workitem'
+import { PatientRecordShort } from '@/interfaces/patientrecord'
 
 export default Vue.extend({
   mixins: [dateUtilsMixin, codeUtilsMixin, objectUtilsMixin],

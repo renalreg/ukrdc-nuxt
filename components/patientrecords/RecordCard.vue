@@ -67,7 +67,7 @@ import { PatientName } from '@/interfaces/patient'
 
 import dateUtilsMixin from '@/mixins/dateutils'
 import codeUtilsMixin from '@/mixins/coddeutils'
-import { PatientRecord } from '~/interfaces/patientrecord'
+import { PatientRecord } from '@/interfaces/patientrecord'
 
 export default Vue.extend({
   mixins: [dateUtilsMixin, codeUtilsMixin],

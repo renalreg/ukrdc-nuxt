@@ -32,7 +32,7 @@
           :class="{ 'text-right': rightToLeft }"
           class="text-base font-medium text-gray-700 group-hover:text-gray-900"
         >
-          {{ $auth.loggedIn ? this.$auth.user.nickname : 'Signed out' }}
+          {{ $auth.loggedIn ? $auth.user.nickname : 'Signed out' }}
         </p>
         <p
           :class="{ 'text-right': rightToLeft }"

@@ -2,7 +2,7 @@
   <GenericModalMaxSlot ref="messageViewerGenericModalMaxSlot">
     <GenericTabs
       v-model="currentTab"
-      class="mx-auto px-4 py-4 border-b border-gray-200"
+      class="mx-auto px-4 py-2 border-b border-gray-200"
       :tabs="tabs"
     />
     <div
@@ -74,14 +74,9 @@ import { modalInterface } from '@/interfaces/modal'
 
 export default Vue.extend({
   mixins: [objectUtilsMixin],
-  props: {
-    message: {
-      type: Object as () => ConnectorMessage,
-      required: true,
-    },
-  },
   data() {
     return {
+      message: {} as ConnectorMessage,
       formatMessage: true,
       currentTab: 'Metadata',
       tabs: ['Metadata', 'Source'],
@@ -115,10 +110,6 @@ export default Vue.extend({
     },
   },
   methods: {
-    show(): void {
-      const el = this.$refs.messageViewerGenericModalMaxSlot as modalInterface
-      el.show()
-    },
     hide(): void {
       const el = this.$refs.messageViewerGenericModalMaxSlot as modalInterface
       el.hide()
@@ -126,6 +117,11 @@ export default Vue.extend({
     toggle(): void {
       const el = this.$refs.messageViewerGenericModalMaxSlot as modalInterface
       el.toggle()
+    },
+    show(message: ConnectorMessage): void {
+      this.message = message
+      const el = this.$refs.messageViewerGenericModalMaxSlot as modalInterface
+      el.show()
     },
   },
 })

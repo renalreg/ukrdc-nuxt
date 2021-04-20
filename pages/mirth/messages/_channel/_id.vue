@@ -1,11 +1,7 @@
 <template>
   <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
     <!-- XML viewer modal -->
-    <messagesViewer
-      ref="messageViewerModal"
-      class="max-h-full"
-      :message="openMessage"
-    />
+    <messagesViewer ref="messageViewerModal" class="max-h-full" />
     <div v-if="isEmptyObject(message)"><messagesSummaryCardPlaceholder /></div>
 
     <div v-else>
@@ -53,10 +49,7 @@
             v-for="item in messages"
             :key="item.channelName + item.connectorName"
             :message="item"
-            @viewSourceClick="
-              openMessage = item
-              $refs.messageViewerModal.show()
-            "
+            @viewSourceClick="$refs.messageViewerModal.show(item)"
           />
         </div>
 

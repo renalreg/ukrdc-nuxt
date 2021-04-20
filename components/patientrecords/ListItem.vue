@@ -59,7 +59,7 @@
 import Vue from 'vue'
 
 import dateUtilsMixin from '@/mixins/dateutils'
-import { PatientRecordShort } from '~/interfaces/patientrecord'
+import { PatientRecordShort } from '@/interfaces/patientrecord'
 
 export default Vue.extend({
   mixins: [dateUtilsMixin],

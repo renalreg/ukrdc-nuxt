@@ -87,7 +87,7 @@ import { singleQuery } from '@/utilities/queryUtils'
 import { todayString, DateRange } from '@/utilities/dateUtils'
 
 import dateUtilsMixin from '@/mixins/dateutils'
-import { WorkItemShort } from '~/interfaces/workitem'
+import { WorkItemShort } from '@/interfaces/workitem'
 
 interface WorkItemPage {
   items: WorkItemShort[]
