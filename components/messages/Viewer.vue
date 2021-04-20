@@ -92,6 +92,9 @@ export default Vue.extend({
       return this.message.encoded ? this.message.encoded : this.message.raw
     },
     formattedMessage(): string {
+      if (this.messageData.content === null) {
+        return ''
+      }
       if (!this.formatMessage) {
         return this.messageData.content
       } else {
