@@ -51,3 +51,27 @@ export interface MirthMessageResponse {
   status: string
   message: string
 }
+
+export interface ChannelStatistics {
+  received: number
+  sent: number
+  error: number
+  filtered: number
+  queued: number
+}
+
+export interface Channel {
+  id: string
+  name: string
+  description: string
+  revision: string
+  statistics: ChannelStatistics
+}
+
+export interface ChannelGroup {
+  id: string
+  name: string
+  description: string
+  revision: string
+  channels: Channel[]
+}
