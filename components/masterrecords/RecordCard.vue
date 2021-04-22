@@ -16,14 +16,12 @@
           <dd
             class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 align-middle"
           >
-            <span
-              class="inline-flex items-center h-5 px-2.5 py-0.5 mr-2 rounded-full text-xs font-medium bg-gray-100 text-gray-800"
-            >
+            <p>
               {{ record.nationalid }}
-            </span>
-            <masterrecordsNationalIdTypeTag
-              :nationalid-type="record.nationalidType"
-            />
+            </p>
+            <p>
+              {{ record.nationalidType }}
+            </p>
           </dd>
         </div>
         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -54,7 +52,7 @@ import Vue from 'vue'
 
 import dateUtilsMixin from '@/mixins/dateutils'
 import codeUtilsMixin from '@/mixins/coddeutils'
-import { MasterRecord } from '@/interfaces/masterrecord'
+import { MasterRecord } from '~/interfaces/masterrecord'
 
 export default Vue.extend({
   mixins: [dateUtilsMixin, codeUtilsMixin],
