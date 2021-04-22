@@ -8,7 +8,7 @@
     <div
       class="flex flex-col w-full h-full box-border overflow-y-scroll overflow-x-hidden"
     >
-      <div v-if="currentTab == 'Metadata'" id="viewerMetadata" class="p-4">
+      <div v-if="currentTab == 'metadata'" id="viewerMetadata" class="p-4">
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
           <GenericCardFlat
             v-for="(value, key) in nonNullMetadata"
@@ -27,26 +27,22 @@
         </div>
       </div>
 
-      <div v-if="currentTab == 'Source'" id="viewerCode">
+      <div v-for="(messageData, type) in availableMessageData" :key="type">
         <div
-          v-if="!isEmptyObject(messageData)"
-          class="h-full box-border flex flex-col pt-4 overflow-x-scroll"
+          v-if="currentTab == type"
+          class="h-full box-border flex flex-col overflow-x-scroll"
         >
-          <div class="pl-8 pb-3 border-b border-gray-200">
-            <GenericToggle
-              v-if="messageData.dataType === 'XML'"
-              v-model="formatMessage"
-              label="Format XML"
-            />
-            <p v-else>
-              {{ messageData.dataType }}
-            </p>
+          <div
+            v-if="messageData.dataType === 'XML'"
+            class="pl-8 pb-3 pt-3 border-b border-gray-200"
+          >
+            <GenericToggle v-model="formatMessage" label="Format XML" />
           </div>
 
           <div class="font-mono text-xs text-left px-4 box-border">
             <pre>
             <code
-              v-for="(line, index) in formattedMessageArray"
+              v-for="(line, index) in formatMessageToXMLArray(messageData)"
               :key="'code' + index"
               class="whitespace-pre"
               >{{ line }}</code
@@ -54,7 +50,6 @@
           </pre>
           </div>
         </div>
-        <div v-else class="pt-8">No message data available</div>
       </div>
     </div>
   </GenericModalMaxSlot>
@@ -72,32 +67,41 @@ import {
 } from '@/interfaces/mirth'
 import { modalInterface } from '@/interfaces/modal'
 
+interface ConnectorMessageDataTabs {
+  raw: ConnectorMessageData
+  encoded: ConnectorMessageData
+  sent: ConnectorMessageData
+  response: ConnectorMessageData
+}
+
 export default Vue.extend({
   mixins: [objectUtilsMixin],
   data() {
     return {
       message: {} as ConnectorMessage,
       formatMessage: true,
-      currentTab: 'Metadata',
-      tabs: ['Metadata', 'Source'],
+      currentTab: 'metadata',
     }
   },
   computed: {
-    messageData(): ConnectorMessageData {
-      return this.message.encoded ? this.message.encoded : this.message.raw
-    },
-    formattedMessage(): string {
-      if (this.messageData.content === null) {
-        return ''
+    availableMessageData(): ConnectorMessageDataTabs {
+      const tabs = {} as ConnectorMessageDataTabs
+      if (this.message.raw !== null) {
+        tabs.raw = this.message.raw
       }
-      if (!this.formatMessage) {
-        return this.messageData.content
-      } else {
-        return formatXml(this.messageData.content)
+      if (this.message.encoded !== null) {
+        tabs.encoded = this.message.encoded
       }
+      if (this.message.sent !== null) {
+        tabs.sent = this.message.sent
+      }
+      if (this.message.response !== null) {
+        tabs.response = this.message.response
+      }
+      return tabs
     },
-    formattedMessageArray(): string[] {
-      return this.formattedMessage.split('\n')
+    tabs(): string[] {
+      return ['metadata'].concat(Object.keys(this.availableMessageData))
     },
     nonNullMetadata(): MetaDataMap {
       if (this.message.metaDataMap) {
@@ -109,7 +113,27 @@ export default Vue.extend({
       }
     },
   },
+  watch: {
+    // Watch for changes in message. When message changes, reset to first tab.
+    // Otherwise, you could open a message with the viewer set to a tab that no longer exists
+    message() {
+      this.currentTab = this.tabs[0]
+    },
+  },
   methods: {
+    formatMessageToXML(messageData: ConnectorMessageData): string {
+      if (messageData.content === null) {
+        return ''
+      }
+      if (!this.formatMessage) {
+        return messageData.content
+      } else {
+        return formatXml(messageData.content)
+      }
+    },
+    formatMessageToXMLArray(messageData: ConnectorMessageData): string[] {
+      return this.formatMessageToXML(messageData).split('\n')
+    },
     hide(): void {
       const el = this.$refs.messageViewerGenericModalMaxSlot as modalInterface
       el.hide()
