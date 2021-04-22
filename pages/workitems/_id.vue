@@ -100,14 +100,13 @@
     <!-- Header card  -->
     <workitemsSummaryCardPlaceholder
       v-if="isEmptyObject(record)"
-      class="mb-4"
       :item="record"
     />
     <workitemsSummaryCard v-else class="mb-4" :item="record" />
 
     <div
       v-if="$auth.hasScope('write:workitems') && record.status !== 3"
-      class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8"
+      class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-8"
     >
       <div>
         <genericButtonPrimary
@@ -206,6 +205,7 @@
           class="border-2 border-red-500"
           :record="record.person"
           label="Incoming"
+          :highlight="Object.keys(record.attributes)"
         />
         <div
           v-else
@@ -254,6 +254,8 @@
           class="border-2 border-red-500"
           :record="record.person"
           label="Incoming"
+          :full="true"
+          :highlight="Object.keys(record.attributes)"
         />
         <div
           v-else
@@ -266,6 +268,8 @@
           :label="`Related record ${relatedRecordsIndex + 1} of ${
             relatedPersons.length
           }`"
+          :full="true"
+          :highlight="Object.keys(record.attributes)"
         />
       </div>
 
