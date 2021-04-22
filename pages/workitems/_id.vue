@@ -200,7 +200,7 @@
         Proposed Link
       </h3>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <personsRecordCard
           v-if="record.person"
           class="border-2 border-red-500"
@@ -214,13 +214,15 @@
           No valid person record found
         </div>
         <NuxtLink
-          v-if="record.masterRecord"
-          :to="`/masterrecords/${record.masterRecord.id}`"
+          v-if="allMasterRecords[relatedMasterRecordsIndex]"
+          :to="`/masterrecords/${allMasterRecords[relatedMasterRecordsIndex].id}`"
         >
           <masterrecordsRecordCard
             class="border-2 border-indigo-500"
-            :record="record.masterRecord"
-            label="Master Record"
+            :record="allMasterRecords[relatedMasterRecordsIndex]"
+            :label="`Master record ${relatedMasterRecordsIndex + 1} of ${
+              allMasterRecords.length
+            }`"
           />
         </NuxtLink>
 
@@ -231,6 +233,14 @@
           No valid master record found
         </div>
       </div>
+
+      <GenericItemPaginator
+        v-if="allMasterRecords.length > 1"
+        v-model="relatedMasterRecordsIndex"
+        class="bg-white shadow rounded-md pl-6 mt-2"
+        :total="allMasterRecords.length"
+        item-label="Master Record"
+      />
     </div>
 
     <div v-if="relatedPersons.length > 0" class="mb-8">
@@ -252,43 +262,20 @@
           No valid person record found
         </div>
         <personsRecordCard
-          :record="relatedPersons[relatedIndex]"
-          :label="`Related record ${relatedIndex + 1} of ${
+          :record="relatedPersons[relatedRecordsIndex]"
+          :label="`Related record ${relatedRecordsIndex + 1} of ${
             relatedPersons.length
           }`"
         />
       </div>
 
-      <nav
+      <GenericItemPaginator
         v-if="relatedPersons.length > 1"
-        class="bg-white shadow overflow-hidden rounded-md flex items-center justify-between px-2 py-2 mt-2"
-        aria-label="Pagination"
-      >
-        <div class="hidden sm:block">
-          <p class="text-sm text-gray-700 ml-2">
-            Record
-            <span class="font-medium">{{ relatedIndex + 1 }}</span>
-            of
-            <span class="font-medium">{{ relatedPersons.length }}</span>
-          </p>
-        </div>
-        <div class="flex-1 flex justify-between sm:justify-end">
-          <button
-            :class="{ invisible: relatedIndex <= 0 }"
-            class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
-            @click="relatedIndex = relatedIndex - 1"
-          >
-            Previous
-          </button>
-          <button
-            :class="{ invisible: relatedIndex >= relatedPersons.length - 1 }"
-            class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 sm:ml-2"
-            @click="relatedIndex = relatedIndex + 1"
-          >
-            Next
-          </button>
-        </div>
-      </nav>
+        v-model="relatedRecordsIndex"
+        class="bg-white shadow rounded-md pl-6 mt-2"
+        :total="relatedPersons.length"
+        item-label="Record"
+      />
     </div>
   </div>
 </template>
@@ -304,6 +291,7 @@ import objectUtilsMixin from '@/mixins/objectutils'
 import { WorkItem } from '@/interfaces/workitem'
 import { modalInterface } from '@/interfaces/modal'
 import { MirthMessageResponse } from '@/interfaces/mirth'
+import { MasterRecord } from '@/interfaces/masterrecord'
 
 export default Vue.extend({
   mixins: [dateUtilsMixin, codeUtilsMixin, objectUtilsMixin],
@@ -313,7 +301,9 @@ export default Vue.extend({
       record: {} as WorkItem,
       relatedRecords: [] as WorkItem[],
       relatedPersons: [] as Person[],
-      relatedIndex: 0,
+      relatedMasterRecords: [] as MasterRecord[],
+      relatedRecordsIndex: 0,
+      relatedMasterRecordsIndex: 0,
       customComment: '',
     }
   },
@@ -325,12 +315,18 @@ export default Vue.extend({
     this.customComment = res.updateDescription
 
     // Use the record links to load related data concurrently
-    const [relatedRecordsRes, relatedPersonsRes] = await Promise.all([
+    const [
+      relatedRecordsRes,
+      relatedPersonsRes,
+      relatedMasterRecordsRes,
+    ] = await Promise.all([
       this.$axios.$get(this.record.links.related),
       this.$axios.$get(this.record.masterRecord.links.persons),
+      this.$axios.$get(this.record.masterRecord.links.related),
     ])
 
     this.relatedRecords = relatedRecordsRes
+    this.relatedMasterRecords = relatedMasterRecordsRes
 
     // Exclude the WorkItems Person record from our related Persons array
     this.relatedPersons = []
@@ -344,6 +340,15 @@ export default Vue.extend({
     return {
       title: 'Work Item',
     }
+  },
+  computed: {
+    allMasterRecords(): MasterRecord[] {
+      if (this.record.masterRecord) {
+        return [this.record.masterRecord].concat(this.relatedMasterRecords)
+      } else {
+        return this.relatedMasterRecords
+      }
+    },
   },
   methods: {
     async updateWorkItemComment() {
