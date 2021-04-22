@@ -17,7 +17,7 @@
           v-for="tab in tabs"
           :key="tab"
           role="tab"
-          class="px-3 py-2 font-medium text-sm rounded-md"
+          class="px-3 py-2 font-medium text-sm rounded-md capitalize"
           :class="
             value === tab
               ? 'bg-indigo-100 text-indigo-700 '
