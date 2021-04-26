@@ -95,9 +95,8 @@ export default {
   publicRuntimeConfig: {
     // API root, used to construct API URLs within components
     apiBase: process.env.API_BASE || '/api',
-    // Access token key containing an array of permission group strings
-    accessTokenPermissionsKey:
-      process.env.ACCESS_TOKEN_PERMISSIONS_KEY || 'ukrdc',
+    // Nuxt-Auth user key containing an array of permission group strings
+    userPermissionKey: process.env.USER_PERMISSION_KEY || 'ukrdc',
     // Axios public runtime config
     axios: {
       browserBaseURL: process.env.BROWSER_BASE_URL,
