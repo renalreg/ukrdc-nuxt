@@ -66,7 +66,7 @@ export default {
         },
         responseType: 'code',
         grantType: 'authorization_code',
-        clientId: process.env.CLIENT_ID,
+        clientId: process.env.APP_CLIENT_ID,
         scope: ['openid', 'profile', 'email'],
         codeChallengeMethod: 'S256',
         autoLogout: true,
