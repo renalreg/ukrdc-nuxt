@@ -16,10 +16,27 @@
           <div class="flex-shrink-0">
             <div class="relative">
               <img
+                v-if="$auth.user.picture"
                 class="h-16 w-16 rounded-full"
                 :src="$auth.user.picture"
                 alt=""
               />
+              <span
+                v-else
+                class="inline-block h-16 w-16 rounded-full overflow-hidden"
+                :class="$auth.loggedIn ? 'bg-indigo-100' : 'bg-gray-100'"
+              >
+                <svg
+                  class="h-full w-full"
+                  :class="$auth.loggedIn ? 'text-indigo-300' : 'text-gray-300'"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"
+                  />
+                </svg>
+              </span>
               <span
                 class="absolute inset-0 shadow-inner rounded-full"
                 aria-hidden="true"
@@ -28,7 +45,7 @@
           </div>
           <div>
             <h1 class="text-2xl font-bold text-gray-900">
-              {{ $auth.user.nickname }}
+              {{ $auth.user.name }}
             </h1>
             <p class="text-sm font-medium text-gray-500">
               {{ $auth.user.email }}
@@ -54,13 +71,12 @@
         <h3 class="text-sm leading-6 font-medium text-gray-900 mb-2">
           Permissions
         </h3>
-        <div v-for="scope in $auth.user.scope" :key="scope" class="inline">
+        <div v-for="group in $auth.user.ukrdc" :key="group" class="inline">
           <span
-            v-if="showScopeBadge(scope)"
-            class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium capitalize mr-2 mb-2"
-            :class="classesForScope(scope)"
+            class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium mr-2 mb-2"
+            :class="classesForScope(group)"
           >
-            {{ renderScope(scope) }}
+            {{ group }}
           </span>
         </div>
       </div>
@@ -109,23 +125,13 @@ export default Vue.extend({
       })
     },
     classesForScope(scope: string): string[] {
-      if (scope.startsWith('read')) {
+      if (scope.includes('read')) {
         return ['bg-green-100', 'text-green-800']
-      } else if (scope.startsWith('write')) {
+      } else if (scope.includes('write')) {
         return ['bg-red-100', 'text-red-800']
       } else {
         return ['bg-indigo-100', 'text-indigo-800']
       }
-    },
-    showScopeBadge(scope: string): boolean {
-      if (scope.startsWith('read') || scope.startsWith('write')) {
-        return true
-      }
-      return false
-    },
-    renderScope(scope: string): string {
-      const split = scope.split(':')
-      return split.join(' ')
     },
   },
 })

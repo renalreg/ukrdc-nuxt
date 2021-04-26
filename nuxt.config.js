@@ -26,6 +26,7 @@ export default {
     { ssr: false, src: '~/plugins/toast.ts' },
     { ssr: false, src: '~/plugins/axios-toast.js' },
     { ssr: true, src: '~/plugins/axios-sentry.js' },
+    { ssr: true, src: '~/plugins/ukrdc-permissions.ts' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -48,30 +49,27 @@ export default {
   // Auth Configuration: https://auth.nuxtjs.org/api/options
   auth: {
     // We need this plugin for https://github.com/nuxt-community/auth-module/issues/1070
-    plugins: ['~/plugins/auth.js'],
+    plugins: ['~/plugins/auth-redirect.js'],
     strategies: {
-      auth0: {
-        scheme: '~/schemes/auth0ExtendedScheme',
-        domain: 'renalreg.eu.auth0.com',
-        clientId: 'SQCWWXi1rbZ4GY7aqjYXDBe0pyeJ7f7X',
-        audience: 'https://app.ukrdc.org/api',
-        scope: [
-          'openid',
-          'profile',
-          'email',
-          'offline_access',
-          'read:patientrecords',
-          'write:patientrecords',
-          'read:empi',
-          'write:empi',
-          'read:workitems',
-          'write:workitems',
-          'read:mirth',
-          'write:mirth',
-        ],
+      okta: {
+        scheme: 'oauth2',
+        endpoints: {
+          authorization: process.env.OAUTH_ISSUER + '/v1/authorize',
+          token: process.env.OAUTH_ISSUER + '/v1/token',
+          userInfo: process.env.OAUTH_ISSUER + '/v1/userinfo',
+          logout: process.env.OAUTH_ISSUER + '/v1/logout',
+        },
+        token: {
+          property: 'access_token',
+          type: 'Bearer',
+          maxAge: 1800,
+        },
         responseType: 'code',
         grantType: 'authorization_code',
+        clientId: process.env.CLIENT_ID,
+        scope: ['openid', 'profile', 'email'],
         codeChallengeMethod: 'S256',
+        autoLogout: true,
       },
     },
     redirect: {
