@@ -93,10 +93,16 @@ export default {
 
   // Runtime configuration variables
   publicRuntimeConfig: {
+    // API root, used to construct API URLs within components
     apiBase: process.env.API_BASE || '/api',
+    // Access token key containing an array of permission group strings
+    accessTokenPermissionsKey:
+      process.env.ACCESS_TOKEN_PERMISSIONS_KEY || 'ukrdc',
+    // Axios public runtime config
     axios: {
       browserBaseURL: process.env.BROWSER_BASE_URL,
     },
+    // Sentry public runtime config
     sentry: {
       dsn: process.env.SENTRY_DSN,
       config: {
@@ -106,6 +112,7 @@ export default {
   },
 
   privateRuntimeConfig: {
+    // Axios SSR-specific config
     axios: {
       baseURL: process.env.BASE_URL,
     },

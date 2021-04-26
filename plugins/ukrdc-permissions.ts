@@ -21,7 +21,11 @@ declare module '@nuxt/types' {
 const permissionsPlugin: Plugin = (ctx, inject) => {
   inject('hasPermission', (permission: string) => {
     if (ctx.$auth.loggedIn && ctx.$auth.user?.ukrdc) {
-      const permissions = ctx.$auth.user.ukrdc as string[]
+      // Obtain the access-token key containing the permissions array
+      const permissionsKey =
+        ctx.$config.accessTokenPermissionsKey || 'permissions'
+      // Fetch permissions array from the access token
+      const permissions = ctx.$auth.user[permissionsKey] as string[]
       if (permissions.includes(permission)) {
         return true
       }
