@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
     <GenericModalSlot
-      v-if="$auth.hasScope('write:workitems')"
+      v-if="$hasPermission('ukrdc:workitems:write')"
       ref="addCommentModal"
     >
       <div class="text-left">
@@ -27,7 +27,10 @@
       </div>
     </GenericModalSlot>
 
-    <GenericModalSlot v-if="$auth.hasScope('write:workitems')" ref="mergeModal">
+    <GenericModalSlot
+      v-if="$hasPermission('ukrdc:workitems:write')"
+      ref="mergeModal"
+    >
       <div class="text-left">
         <div class="mb-4">Merge and close the Work Item</div>
         <div>
@@ -60,7 +63,7 @@
     </GenericModalSlot>
 
     <GenericModalSlot
-      v-if="$auth.hasScope('write:workitems')"
+      v-if="$hasPermission('ukrdc:workitems:write')"
       ref="unlinkModal"
     >
       <div class="text-left">
@@ -105,7 +108,7 @@
     <workitemsSummaryCard v-else class="mb-4" :item="record" />
 
     <div
-      v-if="$auth.hasScope('write:workitems') && record.status !== 3"
+      v-if="$hasPermission('ukrdc:workitems:write') && record.status !== 3"
       class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-8"
     >
       <div>
@@ -234,13 +237,13 @@
         </div>
       </div>
 
-      <GenericItemPaginator
-        v-if="allMasterRecords.length > 1"
-        v-model="relatedMasterRecordsIndex"
-        class="bg-white shadow rounded-md pl-6 mt-2"
-        :total="allMasterRecords.length"
-        item-label="Master Record"
-      />
+      <GenericCard v-if="allMasterRecords.length > 1" class="pl-4 mt-2">
+        <GenericItemPaginator
+          v-model="relatedMasterRecordsIndex"
+          :total="allMasterRecords.length"
+          item-label="Master Record"
+        />
+      </GenericCard>
     </div>
 
     <div v-if="relatedPersons.length > 0" class="mb-8">
@@ -273,13 +276,12 @@
         />
       </div>
 
-      <GenericItemPaginator
-        v-if="relatedPersons.length > 1"
-        v-model="relatedRecordsIndex"
-        class="bg-white shadow rounded-md pl-6 mt-2"
-        :total="relatedPersons.length"
-        item-label="Record"
-      />
+      <GenericCard v-if="relatedPersons.length > 1" class="pl-4 mt-2">
+        <GenericItemPaginator
+          v-model="relatedRecordsIndex"
+          :total="relatedPersons.length"
+          item-label="Record"
+      /></GenericCard>
     </div>
   </div>
 </template>

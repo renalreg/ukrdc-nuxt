@@ -56,13 +56,14 @@
         <div
           class="mb-8 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 lg:mt-0 lg:flex-row lg:space-x-3"
         >
-          <GenericButtonSecondary
-            colour="red"
-            @click="showResetPasswordAlert()"
+          <a
+            :href="$config.oktaDomain + '/app/UserHome'"
+            target="blank"
+            type="button"
+            class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >Manage Account</a
           >
-            Reset Password
-          </GenericButtonSecondary>
-          <GenericButtonPrimary @click="$auth.logout()">
+          <GenericButtonPrimary @click="logout()">
             Sign out
           </GenericButtonPrimary>
         </div>
@@ -87,13 +88,6 @@
 <script lang="ts">
 import Vue from 'vue'
 
-interface ResetPasswordPayload {
-  // eslint-disable-next-line camelcase
-  client_id: string
-  email: string
-  connection: string
-}
-
 export default Vue.extend({
   data() {
     return {
@@ -107,22 +101,17 @@ export default Vue.extend({
   },
 
   methods: {
-    showResetPasswordAlert(): void {
-      this.$refs.resetPasswordAlert.show()
-    },
-    resetPasswordAuth0(): void {
-      const domain: string = this.$auth.strategies.auth0.options.domain
-      const clientId: string = this.$auth.strategies.auth0.options.clientId
-      const userEmail: string = this.$auth.user.email
-      const url: string = `https://${domain}/dbconnections/change_password`
-      const payload: ResetPasswordPayload = {
-        client_id: clientId,
-        email: userEmail,
-        connection: 'Username-Password-Authentication',
-      }
-      this.$axios.$post(url, payload).then((res: string) => {
-        console.log(res)
-      })
+    logout(): void {
+      // In principle we should be able to use nuxt-auth's $auth.logout function,
+      // however Okta requires an ID token when using the logout API, which nuxt-auth
+      // doesn't store. Instead we reset the auth state locally, then redirect to
+      // the user management logout page
+      this.$auth.reset()
+      const logoutUrl =
+        this.$config.oktaDomain +
+        '/login/signout?fromURI=' +
+        window.location.href
+      window.location.href = logoutUrl
     },
     classesForScope(scope: string): string[] {
       if (scope.includes('read')) {

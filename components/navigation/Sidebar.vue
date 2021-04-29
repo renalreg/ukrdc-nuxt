@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white">
+  <div class="bg-gray-50">
     <div v-if="showCloseButton" class="absolute top-0 right-0 -mr-12 pt-2">
       <button
         class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"

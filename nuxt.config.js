@@ -64,17 +64,21 @@ export default {
           type: 'Bearer',
           maxAge: 1800,
         },
+        refreshToken: {
+          property: 'refresh_token',
+          maxAge: 60 * 60 * 24 * 30,
+        },
         responseType: 'code',
         grantType: 'authorization_code',
         clientId: process.env.APP_CLIENT_ID,
-        scope: ['openid', 'profile', 'email'],
+        scope: ['openid', 'profile', 'email', 'offline_access'],
         codeChallengeMethod: 'S256',
-        autoLogout: true,
+        autoLogout: false,
       },
     },
     redirect: {
       login: '/login',
-      logout: '/',
+      logout: '/login',
       callback: '/login',
       home: '/',
     },
@@ -97,6 +101,8 @@ export default {
     apiBase: process.env.API_BASE || '/api',
     // Nuxt-Auth user key containing an array of permission group strings
     userPermissionKey: process.env.USER_PERMISSION_KEY || 'ukrdc',
+    // Okta domain
+    oktaDomain: process.env.OKTA_DOMAIN || 'https://dev-58161221.okta.com',
     // Axios public runtime config
     axios: {
       browserBaseURL: process.env.BROWSER_BASE_URL,

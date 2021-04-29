@@ -1,6 +1,15 @@
 <template>
   <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
-    <div class="mb-6"><GenericNavigationTabs :tabs="tabs" /></div>
+    <div v-if="record.patient" class="mb-2">
+      <h1 class="text-2xl font-bold text-gray-900">
+        {{ record.patient.names[0].given }} {{ record.patient.names[0].family }}
+      </h1>
+      <p class="text-sm font-medium text-gray-500">
+        From {{ record.sendingfacility }} via {{ record.sendingextract }}
+      </p>
+    </div>
+
+    <div class="mb-6"><GenericNavigationTabsLine :tabs="tabs" /></div>
 
     <NuxtChild :record="record" />
   </div>
@@ -14,13 +23,18 @@ import codeUtilsMixin from '@/mixins/coddeutils'
 import objectUtilsMixin from '@/mixins/objectutils'
 import { PatientRecord } from '@/interfaces/patientrecord'
 
+interface tabItem {
+  name: string
+  href: string
+}
+
 export default Vue.extend({
   mixins: [dateUtilsMixin, codeUtilsMixin, objectUtilsMixin],
 
   data() {
     return {
       record: {} as PatientRecord,
-      tabs: [
+      baseTabs: [
         {
           name: 'Overview',
           href: `/patientrecords/${this.$route.params.pid}`,
@@ -41,7 +55,7 @@ export default Vue.extend({
           name: 'Surveys',
           href: `/patientrecords/${this.$route.params.pid}/surveys`,
         },
-      ],
+      ] as tabItem[],
     }
   },
   async fetch() {
@@ -54,6 +68,21 @@ export default Vue.extend({
     return {
       title: 'Patient Record',
     }
+  },
+  computed: {
+    tabs(): tabItem[] {
+      return [
+        ...this.baseTabs,
+        ...(this.$hasPermission('ukrdc:mirth:write')
+          ? [
+              {
+                name: 'Export',
+                href: `/patientrecords/${this.$route.params.pid}/export`,
+              },
+            ]
+          : []),
+      ]
+    },
   },
 })
 </script>

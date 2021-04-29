@@ -52,7 +52,7 @@
             :key="item.channelId"
             class="col-span-1"
           >
-            <GenericCardMini class="px-4 py-2">
+            <GenericCardMini v-if="item.statistics" class="px-4 py-2">
               <p
                 class="text-gray-900 font-medium hover:text-gray-600 line-clamp-2"
               >

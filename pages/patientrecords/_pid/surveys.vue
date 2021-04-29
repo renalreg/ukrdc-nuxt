@@ -5,7 +5,9 @@
       class="w-full md:w-large"
     />
 
-    <patientrecordsRecordCard :record="record" :header-only="true" />
+    <div v-if="surveys.length <= 0" class="text-sm text-gray-500 text-center">
+      No surveys on record
+    </div>
 
     <div
       class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-2 justify-center"

@@ -1,6 +1,6 @@
 <template>
   <!-- This example requires Tailwind CSS v2.0+ -->
-  <div class="h-screen flex overflow-hidden bg-gray-50">
+  <div class="h-screen flex overflow-hidden bg-white">
     <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
 
     <transition :duration="300">

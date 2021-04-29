@@ -1,12 +1,60 @@
 <template>
   <div>
-    <patientrecordsRecordCard v-if="!isEmptyObject(record)" :record="record" />
+    <!-- Description list -->
+    <GenericCard class="my-8 p-6">
+      <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+        <div class="sm:col-span-1">
+          <dt class="text-sm font-medium text-gray-500">Local ID</dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            {{ record.localpatientid }}
+          </dd>
+        </div>
+
+        <div class="sm:col-span-1">
+          <dt class="text-sm font-medium text-gray-500">UKRDC ID</dt>
+          <dd class="mt-1 text-sm text-gray-900">{{ record.ukrdcid }}</dd>
+        </div>
+
+        <div class="sm:col-span-1">
+          <dt class="text-sm font-medium text-gray-500">Gender</dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            {{ record.patient ? formatGender(record.patient.gender) : '' }}
+          </dd>
+        </div>
+
+        <div class="sm:col-span-1">
+          <dt class="text-sm font-medium text-gray-500">Date of Birth</dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            {{
+              record.patient
+                ? formatDate(record.patient.birthTime, (t = false))
+                : ''
+            }}
+          </dd>
+        </div>
+
+        <div class="sm:col-span-1">
+          <dt class="text-sm font-medium text-gray-500">Last Updated</dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            {{ formatDate(record.repositoryUpdateDate) }}
+          </dd>
+        </div>
+
+        <div class="sm:col-span-1">
+          <dt class="text-sm font-medium text-gray-500">Created</dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            {{ formatDate(record.repositoryCreationDate) }}
+          </dd>
+        </div>
+      </dl>
+    </GenericCard>
+
     <div v-if="!isEmptyObject(record)" class="mt-4">
       <h2 class="text-gray-500 text-xs font-medium uppercase tracking-wide">
         Patient Numbers
       </h2>
       <ul
-        class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4"
+        class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3"
       >
         <li
           v-for="item in record.patient.numbers"
@@ -21,7 +69,9 @@
             </div>
             <div class="flex-1 flex items-center justify-between truncate">
               <div class="flex-1 px-4 py-2 text-sm truncate">
-                <p class="text-gray-900 font-medium hover:text-gray-600">
+                <p
+                  class="text-gray-900 font-medium hover:text-gray-600 truncate"
+                >
                   {{ item.patientid }}
                 </p>
                 <p class="text-gray-500">{{ item.organization }}</p>
@@ -44,7 +94,7 @@
       </h2>
 
       <ul
-        class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4"
+        class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3"
       >
         <li
           v-for="item in record.patient.addresses"
@@ -96,7 +146,7 @@
       </h2>
 
       <ul
-        class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4"
+        class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3"
       >
         <li
           v-for="item in record.programMemberships"

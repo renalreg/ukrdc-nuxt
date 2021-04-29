@@ -1,7 +1,11 @@
 <template>
   <div class="mt-4">
-    <patientrecordsRecordCard :record="record" :header-only="true" />
-
+    <div
+      v-if="medications.length <= 0"
+      class="text-sm text-gray-500 text-center"
+    >
+      No medications on record
+    </div>
     <div v-if="activeMedications.length > 0" class="mt-4">
       <h2 class="text-gray-500 text-xs font-medium uppercase tracking-wide">
         Active
