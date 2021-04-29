@@ -48,8 +48,6 @@ export default {
 
   // Auth Configuration: https://auth.nuxtjs.org/api/options
   auth: {
-    // We need this plugin for https://github.com/nuxt-community/auth-module/issues/1070
-    plugins: ['~/plugins/auth-redirect.js'],
     strategies: {
       okta: {
         scheme: '~/schemes/runtimeConfigurableScheme',
@@ -92,6 +90,7 @@ export default {
   publicRuntimeConfig: {
     // API root, used to construct API URLs within components
     apiBase: process.env.API_BASE || '/api',
+    appBase: process.env.APP_BASE || '/',
     // Nuxt-Auth user key containing an array of permission group strings
     userPermissionKey: process.env.USER_PERMISSION_KEY || 'ukrdc',
     // Okta domain
