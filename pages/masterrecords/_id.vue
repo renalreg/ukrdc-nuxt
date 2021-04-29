@@ -1,92 +1,123 @@
 <template>
   <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
-    <div>
-      <!-- Work items alert -->
-      <div
-        v-if="workItems && workItems.length > 0"
-        class="rounded-md bg-yellow-50 p-4 mb-4"
+    <div v-if="record" class="mb-6">
+      <h1
+        v-if="record.givenname"
+        class="text-2xl font-bold text-gray-900 capitalize"
       >
-        <div class="flex">
-          <div class="flex-shrink-0">
-            <!-- Heroicon name: solid/exclamation -->
-            <svg
-              class="h-5 w-5 text-yellow-400"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </div>
-          <div class="ml-3">
-            <h3 class="text-sm font-medium text-yellow-800">
-              {{ workItems.length }} open workitem(s) found
-            </h3>
-          </div>
-        </div>
-      </div>
-
-      <masterrecordsRecordCardPlaceholder v-if="isEmptyObject(record)" />
-      <masterrecordsRecordCard v-else :record="record" />
-
-      <GenericCard v-if="workItems && workItems.length > 0" class="mt-4">
-        <!-- Card header -->
-        <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
-          <h3 class="text-lg leading-6 font-medium text-gray-900">
-            Open Work Items
-          </h3>
-        </div>
-        <!-- Real results -->
-        <ul class="divide-y divide-gray-200">
-          <workitemsListItem
-            v-for="item in workItems"
-            :key="item.id"
-            :item="item"
-          />
-        </ul>
-      </GenericCard>
-
-      <!-- Related Records card -->
-      <GenericCard class="mt-4">
-        <!-- Card header -->
-        <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
-          <h3 class="text-lg leading-6 font-medium text-gray-900">
-            Patient Records
-          </h3>
-        </div>
-        <!-- Real results -->
-        <ul class="divide-y divide-gray-200">
-          <patientrecordsListItem
-            v-for="item in patientRecords"
-            :key="item.pid"
-            :item="item"
-          />
-        </ul>
-      </GenericCard>
-
-      <!-- Related Records card -->
-      <GenericCard class="mt-4">
-        <!-- Card header -->
-        <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
-          <h3 class="text-lg leading-6 font-medium text-gray-900">
-            Linked Master Records
-          </h3>
-        </div>
-        <!-- Real results -->
-        <ul class="divide-y divide-gray-200">
-          <masterrecordsListItem
-            v-for="item in relatedRecords"
-            :key="item.id"
-            :item="item"
-          />
-        </ul>
-      </GenericCard>
+        {{ record.givenname.toLowerCase() }}
+        {{ record.surname.toLowerCase() }}
+      </h1>
+      <p class="text-sm font-medium text-gray-500">
+        {{ record.nationalidType }} record
+      </p>
     </div>
+
+    <!-- Work items alert -->
+    <GenericAlertWarning
+      class="mb-4"
+      :message="`${workItems.length} open workitem(s) found`"
+    />
+
+    <!-- Description list -->
+    <GenericCard class="mb-8 p-6">
+      <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+        <div class="sm:col-span-1">
+          <dt class="text-sm font-medium text-gray-500">National ID</dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            {{ record.nationalid }}
+          </dd>
+        </div>
+
+        <div class="sm:col-span-1">
+          <dt class="text-sm font-medium text-gray-500">ID Type</dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            {{ record.nationalidType }}
+          </dd>
+        </div>
+
+        <div class="sm:col-span-1">
+          <dt class="text-sm font-medium text-gray-500">Gender</dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            {{ formatGender(record.gender) }}
+          </dd>
+        </div>
+
+        <div class="sm:col-span-1">
+          <dt class="text-sm font-medium text-gray-500">Date of Birth</dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            {{ formatDate(record.birthTime, (t = false)) }}
+          </dd>
+        </div>
+
+        <div class="sm:col-span-1">
+          <dt class="text-sm font-medium text-gray-500">Last Updated</dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            {{ formatDate(record.lastUpdated) }}
+          </dd>
+        </div>
+
+        <div class="sm:col-span-1">
+          <dt class="text-sm font-medium text-gray-500">Effective Date</dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            {{ formatDate(record.effectiveDate) }}
+          </dd>
+        </div>
+      </dl>
+    </GenericCard>
+
+    <GenericCard v-if="workItems && workItems.length > 0" class="mt-4">
+      <!-- Card header -->
+      <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
+        <h3 class="text-lg leading-6 font-medium text-gray-900">
+          Open Work Items
+        </h3>
+      </div>
+      <!-- Real results -->
+      <ul class="divide-y divide-gray-200">
+        <workitemsListItem
+          v-for="item in workItems"
+          :key="item.id"
+          :item="item"
+        />
+      </ul>
+    </GenericCard>
+
+    <!-- Related Records card -->
+    <GenericCard class="mt-4">
+      <!-- Card header -->
+      <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
+        <h3 class="text-lg leading-6 font-medium text-gray-900">
+          Patient Records
+        </h3>
+      </div>
+      <!-- Real results -->
+      <ul class="divide-y divide-gray-200">
+        <patientrecordsListItem
+          v-for="item in patientRecords"
+          :key="item.pid"
+          :item="item"
+        />
+      </ul>
+    </GenericCard>
+
+    <!-- Related Records card -->
+    <GenericCard class="mt-4">
+      <!-- Card header -->
+      <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
+        <h3 class="text-lg leading-6 font-medium text-gray-900">
+          Linked Master Records
+        </h3>
+      </div>
+      <!-- Real results -->
+      <ul class="divide-y divide-gray-200">
+        <masterrecordsListItem
+          v-for="item in relatedRecords"
+          :key="item.id"
+          :item="item"
+        />
+      </ul>
+    </GenericCard>
   </div>
 </template>
 
@@ -120,7 +151,7 @@ export default Vue.extend({
     // Use the record links to load related data concurrently
     const [relatedRecords, workItems, patientRecords] = await Promise.all([
       this.$axios.$get(this.record.links.related),
-      this.$auth.hasScope('write:empi')
+      this.$hasPermission('ukrdc:empi:write')
         ? this.$axios.$get(this.record.links.workitems)
         : null,
       this.$axios.$get(this.record.links.patientrecords),

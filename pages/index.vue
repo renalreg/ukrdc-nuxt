@@ -27,7 +27,10 @@
       />
     </div>
 
-    <div v-if="$auth.hasScope('read:mirth')" class="max-w-7xl mx-auto mb-8">
+    <div
+      v-if="$hasPermission('ukrdc:mirth:read')"
+      class="max-w-7xl mx-auto mb-8"
+    >
       <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
         Mirth Channels
       </h3>
@@ -49,7 +52,7 @@
             :key="item.channelId"
             class="col-span-1"
           >
-            <GenericCardMini class="px-4 py-2">
+            <GenericCardMini v-if="item.statistics" class="px-4 py-2">
               <p
                 class="text-gray-900 font-medium hover:text-gray-600 line-clamp-2"
               >
@@ -98,7 +101,7 @@ export default Vue.extend({
     const [dash, mirthGroups] = await Promise.all([
       this.$axios.$get(`${this.$config.apiBase}/dash/`),
       // Only read Mirth stats if user has permission
-      this.$auth.hasScope('read:mirth')
+      this.$auth.user.ukrdc.includes('ukrdc:mirth:read')
         ? this.$axios.$get(`${this.$config.apiBase}/mirth/groups/`)
         : null,
     ])

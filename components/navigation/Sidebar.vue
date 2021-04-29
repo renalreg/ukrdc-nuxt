@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white">
+  <div class="bg-gray-50">
     <div v-if="showCloseButton" class="absolute top-0 right-0 -mr-12 pt-2">
       <button
         class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
@@ -134,22 +134,22 @@ export default Vue.extend({
           url: '/masterrecords',
           svg:
             'M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4',
-          visible: this.$auth.hasScope('read:patientrecords'),
+          visible: this.$hasPermission('ukrdc:records:read'),
         },
         {
           title: 'Administration',
           visible:
-            this.$auth.hasScope('read:workitems') ||
-            this.$auth.hasScope('write:workitems') ||
-            this.$auth.hasScope('read:mirth') ||
-            this.$auth.hasScope('write:mirth'),
+            this.$hasPermission('ukrdc:workitems:read') ||
+            this.$hasPermission('ukrdc:workitems:write') ||
+            this.$hasPermission('ukrdc:mirth:read') ||
+            this.$hasPermission('ukrdc:mirth:write'),
         },
         {
           title: 'Work Items',
           url: '/workitems',
           svg:
             'M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1',
-          visible: this.$auth.hasScope('read:workitems'),
+          visible: this.$hasPermission('ukrdc:workitems:read'),
         },
         {
           title: 'Errors',
@@ -157,8 +157,8 @@ export default Vue.extend({
           svg:
             'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z',
           visible:
-            this.$auth.hasScope('read:mirth') ||
-            this.$auth.hasScope('write:mirth'),
+            this.$hasPermission('ukrdc:mirth:read') ||
+            this.$hasPermission('ukrdc:mirth:write'),
         },
       ] as NavItem[],
     }

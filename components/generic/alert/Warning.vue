@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-md bg-yellow-50 p-4">
+  <div class="rounded-md border border-yellow-400 bg-yellow-50 p-4">
     <div class="flex">
       <div class="flex-shrink-0">
         <!-- Heroicon name: solid/exclamation -->

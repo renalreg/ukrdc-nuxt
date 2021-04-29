@@ -4,13 +4,7 @@
       <dt class="text-base font-normal text-gray-900">{{ title }}</dt>
       <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
         <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
-          {{ value.toLocaleString() }}
-          <span
-            v-if="previousValue"
-            class="ml-2 text-sm font-medium text-gray-500"
-          >
-            from {{ previousValue.toLocaleString() }} yesterday
-          </span>
+          {{ value }}
         </div>
 
         <dashDeltaBadge v-if="delta" :delta="delta" :invert="invert" />

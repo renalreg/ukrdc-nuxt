@@ -7,17 +7,19 @@
     <div class="flex items-center" :class="{ 'flex-row-reverse': rightToLeft }">
       <div>
         <img
-          v-if="$auth.loggedIn"
+          v-if="$auth.loggedIn && $auth.user.picture"
           class="inline-block h-10 w-10 rounded-full"
           :src="$auth.user.picture"
           alt=""
         />
         <span
           v-else
-          class="inline-block h-10 w-10 rounded-full overflow-hidden bg-gray-100"
+          class="inline-block h-10 w-10 rounded-full overflow-hidden"
+          :class="$auth.loggedIn ? 'bg-indigo-100' : 'bg-gray-100'"
         >
           <svg
-            class="h-full w-full text-gray-300"
+            class="h-full w-full"
+            :class="$auth.loggedIn ? 'text-indigo-300' : 'text-gray-300'"
             fill="currentColor"
             viewBox="0 0 24 24"
           >
@@ -32,7 +34,7 @@
           :class="{ 'text-right': rightToLeft }"
           class="text-base font-medium text-gray-700 group-hover:text-gray-900"
         >
-          {{ $auth.loggedIn ? $auth.user.nickname : 'Signed out' }}
+          {{ $auth.loggedIn ? $auth.user.name : 'Signed out' }}
         </p>
         <p
           :class="{ 'text-right': rightToLeft }"

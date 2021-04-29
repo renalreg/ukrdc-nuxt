@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <dl
-      v-if="$auth.hasScope('read:workitems')"
-      class="mt-5 grid grid-cols-1 rounded-lg bg-white overflow-hidden shadow divide-y divide-gray-200 md:grid-cols-2 md:divide-y-0 md:divide-x"
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+    <GenericCard
+      v-if="$hasPermission('ukrdc:workitems:read')"
+      class="grid grid-cols-1 overflow-hidden divide-y divide-gray-200 md:grid-cols-2 md:divide-y-0 md:divide-x"
     >
       <NuxtLink v-if="workitems" to="/workitems">
         <dashStatBlock
@@ -18,10 +18,10 @@
         ><dashStatBlock :value="workitems.total" title="Total Workitems"
       /></NuxtLink>
       <DashStatBlockPlaceholder v-else />
-    </dl>
-    <dl
-      v-if="$auth.hasScope('read:patientrecords')"
-      class="mt-5 grid grid-cols-1 rounded-lg bg-white overflow-hidden shadow divide-y divide-gray-200 md:grid-cols-2 md:divide-y-0 md:divide-x"
+    </GenericCard>
+    <GenericCard
+      v-if="$hasPermission('ukrdc:records:read')"
+      class="grid grid-cols-1 overflow-hidden divide-y divide-gray-200 md:grid-cols-2 md:divide-y-0 md:divide-x"
     >
       <NuxtLink v-if="ukrdcrecords" to="/masterrecords">
         <dashStatBlock
@@ -35,7 +35,7 @@
         ><dashStatBlock :value="ukrdcrecords.total" title="Total UKRDC Records"
       /></NuxtLink>
       <DashStatBlockPlaceholder v-else />
-    </dl>
+    </GenericCard>
   </div>
 </template>
 

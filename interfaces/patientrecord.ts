@@ -12,6 +12,11 @@ interface PatientRecordLinks {
   observations: string
   medications: string
   surveys: string
+
+  exportPV: string
+  exportPVDocs: string
+  exportPVTests: string
+  exportRADAR: string
 }
 
 export interface PatientRecordShort {

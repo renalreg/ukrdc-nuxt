@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="overflow-hidden flex items-center justify-between px-2 py-2 mt-2"
+    class="overflow-hidden flex items-center justify-between px-2 py-2"
     aria-label="Pagination"
   >
     <div class="hidden sm:block">
