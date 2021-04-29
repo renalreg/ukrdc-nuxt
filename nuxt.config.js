@@ -52,13 +52,7 @@ export default {
     plugins: ['~/plugins/auth-redirect.js'],
     strategies: {
       okta: {
-        scheme: 'oauth2',
-        endpoints: {
-          authorization: process.env.OAUTH_ISSUER + '/v1/authorize',
-          token: process.env.OAUTH_ISSUER + '/v1/token',
-          userInfo: process.env.OAUTH_ISSUER + '/v1/userinfo',
-          logout: process.env.OAUTH_ISSUER + '/v1/logout',
-        },
+        scheme: '~/schemes/runtimeConfigurableScheme',
         token: {
           property: 'access_token',
           type: 'Bearer',
@@ -70,7 +64,6 @@ export default {
         },
         responseType: 'code',
         grantType: 'authorization_code',
-        clientId: process.env.APP_CLIENT_ID,
         scope: ['openid', 'profile', 'email', 'offline_access'],
         codeChallengeMethod: 'S256',
         autoLogout: false,
@@ -112,6 +105,20 @@ export default {
       dsn: process.env.SENTRY_DSN,
       config: {
         disabled: !process.env.SENTRY_DSN,
+      },
+    },
+    // Nuxt-Auth public runtime config
+    auth: {
+      strategies: {
+        okta: {
+          endpoints: {
+            authorization: process.env.OAUTH_ISSUER + '/v1/authorize',
+            token: process.env.OAUTH_ISSUER + '/v1/token',
+            userInfo: process.env.OAUTH_ISSUER + '/v1/userinfo',
+            logout: process.env.OAUTH_ISSUER + '/v1/logout',
+          },
+          clientId: process.env.APP_CLIENT_ID,
+        },
       },
     },
   },
