@@ -56,21 +56,12 @@ export default {
           type: 'Bearer',
           maxAge: 1800,
         },
-        refreshToken: {
-          required: false,
-        },
         responseType: 'code',
         grantType: 'authorization_code',
         scope: ['openid', 'profile', 'email'],
         codeChallengeMethod: 'S256',
-        autoLogout: false,
+        autoLogout: true,
       },
-    },
-    redirect: {
-      login: '/login',
-      logout: '/login',
-      callback: '/login',
-      home: '/',
     },
   },
 
