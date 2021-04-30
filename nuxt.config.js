@@ -51,17 +51,9 @@ export default {
     strategies: {
       okta: {
         scheme: '~/schemes/runtimeConfigurableScheme',
-        token: {
-          property: 'access_token',
-          type: 'Bearer',
-          maxAge: 1800,
-        },
-        refreshToken: {
-          property: 'refresh_token',
-          maxAge: 60 * 60 * 24 * 30,
-        },
         responseType: 'code',
         grantType: 'authorization_code',
+        accessType: 'offline',
         scope: ['openid', 'profile', 'email', 'offline_access'],
         codeChallengeMethod: 'S256',
         autoLogout: false,
