@@ -51,10 +51,17 @@ export default {
     strategies: {
       okta: {
         scheme: '~/schemes/runtimeConfigurableScheme',
+        token: {
+          property: 'access_token',
+          type: 'Bearer',
+          maxAge: 1800,
+        },
+        refreshToken: {
+          required: false,
+        },
         responseType: 'code',
         grantType: 'authorization_code',
-        accessType: 'offline',
-        scope: ['openid', 'profile', 'email', 'offline_access'],
+        scope: ['openid', 'profile', 'email'],
         codeChallengeMethod: 'S256',
         autoLogout: false,
       },
