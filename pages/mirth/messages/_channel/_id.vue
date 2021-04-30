@@ -2,43 +2,49 @@
   <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
     <!-- XML viewer modal -->
     <messagesViewer ref="messageViewerModal" class="max-h-full" />
-    <div v-if="isEmptyObject(message)"><messagesSummaryCardPlaceholder /></div>
 
-    <div v-else>
-      <div class="mb-6">
-        <TextH1> {{ channelName }} </TextH1>
-        <TextL1> Message {{ message.messageId }} </TextL1>
-      </div>
+    <div class="mb-6">
+      <TextH1 v-if="!isEmptyObject(message)"> {{ channelName }} </TextH1>
+      <SkeleText v-else class="h-8 w-1/4 mb-2" />
+      <TextL1 v-if="!isEmptyObject(message)">
+        Message {{ message.messageId }}
+      </TextL1>
+      <SkeleText v-else class="h-4 w-1/2" />
+    </div>
 
-      <!-- Header card -->
-      <GenericCard class="mb-8">
-        <GenericCardContent>
-          <GenericDl>
-            <GenericDi>
-              <TextDt>Message ID</TextDt>
-              <TextDd>
-                {{ message.messageId }}
-              </TextDd>
-            </GenericDi>
-            <GenericDi>
-              <TextDt>Processed</TextDt>
-              <TextDd>
-                {{ message.processed ? 'Yes' : 'No' }}
-                {{ hasErrors ? '(with errors)' : '' }}
-              </TextDd>
-            </GenericDi>
-            <GenericDi>
-              <TextDt>Chain</TextDt>
-              <TextDd>
-                {{ message.connectorMessages.length }} messages across
-                {{ Object.keys(chain).length }} chain links
-              </TextDd>
-            </GenericDi>
-          </GenericDl>
-        </GenericCardContent>
-      </GenericCard>
+    <!-- Header card -->
+    <GenericCard class="mb-8">
+      <GenericCardContent>
+        <GenericDl>
+          <GenericDi>
+            <TextDt>Message ID</TextDt>
+            <TextDd v-if="!isEmptyObject(message)">
+              {{ message.messageId }}
+            </TextDd>
+            <SkeleText v-else class="h-6 w-full" />
+          </GenericDi>
+          <GenericDi>
+            <TextDt>Processed</TextDt>
+            <TextDd v-if="!isEmptyObject(message)">
+              {{ message.processed ? 'Yes' : 'No' }}
+              {{ hasErrors ? '(with errors)' : '' }}
+            </TextDd>
+            <SkeleText v-else class="h-6 w-full" />
+          </GenericDi>
+          <GenericDi>
+            <TextDt>Chain</TextDt>
+            <TextDd v-if="!isEmptyObject(message)">
+              {{ message.connectorMessages.length }} messages across
+              {{ Object.keys(chain).length }} chain links
+            </TextDd>
+            <SkeleText v-else class="h-6 w-full" />
+          </GenericDi>
+        </GenericDl>
+      </GenericCardContent>
+    </GenericCard>
 
-      <!-- Chain grid -->
+    <!-- Chain grid -->
+    <div v-if="!isEmptyObject(message)">
       <div v-for="(messages, index) in chain" :key="index">
         <div
           class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-2 justify-center"

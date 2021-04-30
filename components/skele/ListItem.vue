@@ -1,13 +1,13 @@
 <template>
   <li>
-    <div class="block hover:bg-gray-50">
+    <div class="block hover:bg-gray-50 h-20">
       <div class="animate-pulse flex items-center px-4 py-4 sm:px-6">
         <div class="min-w-0 flex-1 flex items-center">
-          <div class="min-w-0 grid grid-cols-2 lg:grid-cols-3 md:gap-4 w-full">
+          <div class="min-w-0 grid grid-cols-3 lg:grid-cols-4 md:gap-4 w-full">
             <!-- Name, DoB, gender -->
-            <div class="space-y-1">
-              <div class="h-4 bg-gray-200 rounded w-3/4"></div>
-              <div class="h-4 bg-gray-200 rounded w-1/4"></div>
+            <div class="col-span-2 space-y-1">
+              <div class="h-4 bg-gray-200 rounded w-1/2"></div>
+              <div class="h-4 bg-gray-200 rounded w-full"></div>
             </div>
             <!-- National ID -->
             <div class="space-y-1">
@@ -28,9 +28,3 @@
     </div>
   </li>
 </template>
-
-<script lang="ts">
-import Vue from 'vue'
-
-export default Vue.extend({})
-</script>

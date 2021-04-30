@@ -10,11 +10,11 @@
       <GenericCard>
         <!-- Skeleton results -->
         <ul v-if="$fetchState.pending" class="divide-y divide-gray-200">
-          <masterrecordsListItemPlaceholder v-for="n in 10" :key="n" />
+          <SkeleListItem v-for="n in 10" :key="n" />
         </ul>
         <!-- Real results -->
         <ul v-else class="divide-y divide-gray-200">
-          <masterrecordsListItem
+          <MasterrecordsListItem
             v-for="item in masterrecords"
             :key="item.id"
             :item="item"

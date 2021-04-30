@@ -78,18 +78,46 @@
     </GenericModalSlot>
 
     <!-- Header -->
-    <div v-if="!isEmptyObject(record)" class="mb-6">
-      <TextH1> Work Item {{ record.id }} {{ statusString }} </TextH1>
-      <TextL1>
+    <div class="mb-6">
+      <TextH1 v-if="!isEmptyObject(record)">
+        Work Item {{ record.id }} {{ statusString }}
+      </TextH1>
+      <SkeleText v-else class="h-8 w-1/4 mb-2" />
+      <TextL1 v-if="!isEmptyObject(record)">
         {{ record.description }}
       </TextL1>
+      <SkeleText v-else class="h-4 w-1/2" />
     </div>
 
-    <workitemsSummaryCardPlaceholder
-      v-if="isEmptyObject(record)"
-      :item="record"
-    />
-    <workitemsSummaryCard v-else class="mb-4" :item="record" />
+    <GenericCard>
+      <GenericCardContent>
+        <GenericDl>
+          <GenericDi>
+            <TextDt>Last Updated</TextDt>
+            <TextDd v-if="!isEmptyObject(record)">
+              {{
+                record.lastUpdated ? formatDate(record.lastUpdated) : 'Never'
+              }}
+            </TextDd>
+            <SkeleText v-else class="h-6 w-full" />
+          </GenericDi>
+          <GenericDi>
+            <TextDt>Last Updated By</TextDt>
+            <TextDd v-if="!isEmptyObject(record)">
+              {{ record.updatedBy ? record.updatedBy : 'N/A' }}
+            </TextDd>
+            <SkeleText v-else class="h-6 w-full" />
+          </GenericDi>
+          <GenericDi class="sm:col-span-2">
+            <TextDt>Comments</TextDt>
+            <TextDd v-if="!isEmptyObject(record)">
+              {{ record.updateDescription ? record.updateDescription : 'None' }}
+            </TextDd>
+            <SkeleText v-else class="h-6 w-full" />
+          </GenericDi>
+        </GenericDl>
+      </GenericCardContent>
+    </GenericCard>
 
     <div
       v-if="$hasPermission('ukrdc:workitems:write') && record.status !== 3"
