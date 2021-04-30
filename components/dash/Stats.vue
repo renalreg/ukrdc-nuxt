@@ -4,37 +4,37 @@
       v-if="$hasPermission('ukrdc:workitems:read')"
       class="grid grid-cols-1 overflow-hidden divide-y divide-gray-200 md:grid-cols-2 md:divide-y-0 md:divide-x"
     >
-      <NuxtLink v-if="workitems" to="/workitems">
+      <NuxtLink to="/workitems">
         <dashStatBlock
-          :value="workitems.day"
-          :previous-value="workitems.prev"
+          :value="workitems ? workitems.day : undefined"
+          :previous-value="workitems ? workitems.prev : undefined"
           :invert="true"
           title="New Workitems"
         />
       </NuxtLink>
-      <DashStatBlockPlaceholder v-else />
 
-      <NuxtLink v-if="workitems" to="/workitems"
-        ><dashStatBlock :value="workitems.total" title="Total Workitems"
+      <NuxtLink to="/workitems"
+        ><dashStatBlock
+          :value="workitems ? workitems.total : undefined"
+          title="Total Workitems"
       /></NuxtLink>
-      <DashStatBlockPlaceholder v-else />
     </GenericCard>
     <GenericCard
       v-if="$hasPermission('ukrdc:records:read')"
       class="grid grid-cols-1 overflow-hidden divide-y divide-gray-200 md:grid-cols-2 md:divide-y-0 md:divide-x"
     >
-      <NuxtLink v-if="ukrdcrecords" to="/masterrecords">
+      <NuxtLink to="/masterrecords">
         <dashStatBlock
-          :value="ukrdcrecords.day"
-          :previous-value="ukrdcrecords.prev"
+          :value="ukrdcrecords ? ukrdcrecords.day : undefined"
+          :previous-value="ukrdcrecords ? ukrdcrecords.prev : undefined"
           title="New UKRDC Records"
       /></NuxtLink>
-      <DashStatBlockPlaceholder v-else />
 
-      <NuxtLink v-if="ukrdcrecords" to="/masterrecords"
-        ><dashStatBlock :value="ukrdcrecords.total" title="Total UKRDC Records"
+      <NuxtLink to="/masterrecords"
+        ><dashStatBlock
+          :value="ukrdcrecords ? ukrdcrecords.total : undefined"
+          title="Total UKRDC Records"
       /></NuxtLink>
-      <DashStatBlockPlaceholder v-else />
     </GenericCard>
   </div>
 </template>

@@ -1,11 +1,26 @@
 <template>
   <div>
     <div class="px-4 py-5 sm:p-6">
-      <dt class="text-base font-normal text-gray-900">{{ title }}</dt>
+      <dt class="text-base font-normal text-gray-900">
+        <div v-if="value">
+          {{ title }}
+        </div>
+        <div
+          v-else
+          class="h-4 animate-pulse bg-gray-200 rounded w-full sm:w-1/2"
+        ></div>
+      </dt>
       <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
-        <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
+        <div
+          v-if="value"
+          class="flex items-baseline text-2xl font-semibold text-indigo-600"
+        >
           {{ value }}
         </div>
+        <div
+          v-else
+          class="h-6 animate-pulse bg-gray-200 rounded w-full sm:w-1/4"
+        ></div>
 
         <dashDeltaBadge v-if="delta" :delta="delta" :invert="invert" />
       </dd>
@@ -24,7 +39,8 @@ export default Vue.extend({
     },
     value: {
       type: Number,
-      required: true,
+      required: false,
+      default: undefined,
     },
     previousValue: {
       type: Number,
