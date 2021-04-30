@@ -2,51 +2,51 @@
   <div>
     <!-- Description list -->
     <GenericCard class="my-8 p-6">
-      <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-        <div class="sm:col-span-1">
-          <dt class="text-sm font-medium text-gray-500">Local ID</dt>
-          <dd class="mt-1 text-sm text-gray-900">
+      <GenericDl>
+        <GenericDi>
+          <TextDt>Local ID</TextDt>
+          <TextDd>
             {{ record.localpatientid }}
-          </dd>
-        </div>
+          </TextDd>
+        </GenericDi>
 
-        <div class="sm:col-span-1">
-          <dt class="text-sm font-medium text-gray-500">UKRDC ID</dt>
-          <dd class="mt-1 text-sm text-gray-900">{{ record.ukrdcid }}</dd>
-        </div>
+        <GenericDi>
+          <TextDt>UKRDC ID</TextDt>
+          <TextDd>{{ record.ukrdcid }}</TextDd>
+        </GenericDi>
 
-        <div class="sm:col-span-1">
-          <dt class="text-sm font-medium text-gray-500">Gender</dt>
-          <dd class="mt-1 text-sm text-gray-900">
+        <GenericDi>
+          <TextDt>Gender</TextDt>
+          <TextDd>
             {{ record.patient ? formatGender(record.patient.gender) : '' }}
-          </dd>
-        </div>
+          </TextDd>
+        </GenericDi>
 
-        <div class="sm:col-span-1">
-          <dt class="text-sm font-medium text-gray-500">Date of Birth</dt>
-          <dd class="mt-1 text-sm text-gray-900">
+        <GenericDi>
+          <TextDt>Date of Birth</TextDt>
+          <TextDd>
             {{
               record.patient
                 ? formatDate(record.patient.birthTime, (t = false))
                 : ''
             }}
-          </dd>
-        </div>
+          </TextDd>
+        </GenericDi>
 
-        <div class="sm:col-span-1">
-          <dt class="text-sm font-medium text-gray-500">Last Updated</dt>
-          <dd class="mt-1 text-sm text-gray-900">
+        <GenericDi>
+          <TextDt>Last Updated</TextDt>
+          <TextDd>
             {{ formatDate(record.repositoryUpdateDate) }}
-          </dd>
-        </div>
+          </TextDd>
+        </GenericDi>
 
-        <div class="sm:col-span-1">
-          <dt class="text-sm font-medium text-gray-500">Created</dt>
-          <dd class="mt-1 text-sm text-gray-900">
+        <GenericDi>
+          <TextDt>Created</TextDt>
+          <TextDd>
             {{ formatDate(record.repositoryCreationDate) }}
-          </dd>
-        </div>
-      </dl>
+          </TextDd>
+        </GenericDi>
+      </GenericDl>
     </GenericCard>
 
     <div v-if="!isEmptyObject(record)" class="mt-4">

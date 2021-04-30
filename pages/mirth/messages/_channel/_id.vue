@@ -5,39 +5,37 @@
     <div v-if="isEmptyObject(message)"><messagesSummaryCardPlaceholder /></div>
 
     <div v-else>
+      <div class="mb-6">
+        <TextH1> {{ channelName }} </TextH1>
+        <TextL1> Message {{ message.messageId }} </TextL1>
+      </div>
+
       <!-- Header card -->
       <GenericCard class="mb-8">
-        <div class="px-4 py-5 sm:px-6">
-          <h3 class="text-lg leading-6 font-medium text-gray-900">
-            {{ channelName }}
-          </h3>
-          <p class="mt-1 max-w-2xl text-sm text-gray-500">
-            {{ message.channelId }}
-          </p>
-        </div>
-        <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
-          <dl class="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
-            <div class="sm:col-span-1">
-              <dt class="text-sm font-medium text-gray-500">Message ID</dt>
-              <dd class="mt-1 text-sm text-gray-900">
+        <GenericCardContent>
+          <GenericDl>
+            <GenericDi>
+              <TextDt>Message ID</TextDt>
+              <TextDd>
                 {{ message.messageId }}
-              </dd>
-            </div>
-            <div class="sm:col-span-1">
-              <dt class="text-sm font-medium text-gray-500">Processed</dt>
-              <dd class="mt-1 text-sm text-gray-900">
+              </TextDd>
+            </GenericDi>
+            <GenericDi>
+              <TextDt>Processed</TextDt>
+              <TextDd>
                 {{ message.processed ? 'Yes' : 'No' }}
                 {{ hasErrors ? '(with errors)' : '' }}
-              </dd>
-            </div>
-            <div class="sm:col-span-2">
-              <dt class="text-sm font-medium text-gray-500">
+              </TextDd>
+            </GenericDi>
+            <GenericDi>
+              <TextDt>Chain</TextDt>
+              <TextDd>
                 {{ message.connectorMessages.length }} messages across
                 {{ Object.keys(chain).length }} chain links
-              </dt>
-            </div>
-          </dl>
-        </div>
+              </TextDd>
+            </GenericDi>
+          </GenericDl>
+        </GenericCardContent>
       </GenericCard>
 
       <!-- Chain grid -->
@@ -54,20 +52,7 @@
         </div>
 
         <div v-if="index < Object.keys(chain).length - 1" class="align-center">
-          <svg
-            class="h-6 mx-auto my-2 text-gray-400"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M16 17l-4 4m0 0l-4-4m4 4V3"
-            />
-          </svg>
+          <IconArrowDown />
         </div>
       </div>
     </div>
