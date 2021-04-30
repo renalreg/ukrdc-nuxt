@@ -1,16 +1,11 @@
 <template>
   <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
     <div v-if="record" class="mb-6">
-      <h1
-        v-if="record.givenname"
-        class="text-2xl font-bold text-gray-900 capitalize"
-      >
+      <TextH1 v-if="record.givenname" class="capitalize">
         {{ record.givenname.toLowerCase() }}
         {{ record.surname.toLowerCase() }}
-      </h1>
-      <p class="text-sm font-medium text-gray-500">
-        {{ record.nationalidType }} record
-      </p>
+      </TextH1>
+      <TextL1> {{ record.nationalidType }} record </TextL1>
     </div>
 
     <!-- Work items alert -->
@@ -20,60 +15,48 @@
     />
 
     <!-- Description list -->
-    <GenericCard class="mb-8 p-6">
-      <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-        <div class="sm:col-span-1">
-          <dt class="text-sm font-medium text-gray-500">National ID</dt>
-          <dd class="mt-1 text-sm text-gray-900">
-            {{ record.nationalid }}
-          </dd>
-        </div>
+    <GenericCard>
+      <GenericCardContent>
+        <GenericDl>
+          <GenericDi>
+            <TextDt class="text-sm font-medium text-gray-500"
+              >National ID</TextDt
+            >
+            <TextDd>{{ record.nationalid }}</TextDd>
+          </GenericDi>
 
-        <div class="sm:col-span-1">
-          <dt class="text-sm font-medium text-gray-500">ID Type</dt>
-          <dd class="mt-1 text-sm text-gray-900">
-            {{ record.nationalidType }}
-          </dd>
-        </div>
+          <GenericDi>
+            <TextDt>ID Type</TextDt>
+            <TextDd>{{ record.nationalidType }} </TextDd>
+          </GenericDi>
 
-        <div class="sm:col-span-1">
-          <dt class="text-sm font-medium text-gray-500">Gender</dt>
-          <dd class="mt-1 text-sm text-gray-900">
-            {{ formatGender(record.gender) }}
-          </dd>
-        </div>
+          <GenericDi>
+            <TextDt>Gender</TextDt>
+            <TextDd>{{ formatGender(record.gender) }} </TextDd>
+          </GenericDi>
 
-        <div class="sm:col-span-1">
-          <dt class="text-sm font-medium text-gray-500">Date of Birth</dt>
-          <dd class="mt-1 text-sm text-gray-900">
-            {{ formatDate(record.birthTime, (t = false)) }}
-          </dd>
-        </div>
+          <GenericDi>
+            <TextDt>Date of Birth</TextDt>
+            <TextDd>{{ formatDate(record.dateOfBirth, (t = false)) }} </TextDd>
+          </GenericDi>
 
-        <div class="sm:col-span-1">
-          <dt class="text-sm font-medium text-gray-500">Last Updated</dt>
-          <dd class="mt-1 text-sm text-gray-900">
-            {{ formatDate(record.lastUpdated) }}
-          </dd>
-        </div>
+          <GenericDi>
+            <TextDt>Last Updated</TextDt>
+            <TextDd>{{ formatDate(record.lastUpdated) }} </TextDd>
+          </GenericDi>
 
-        <div class="sm:col-span-1">
-          <dt class="text-sm font-medium text-gray-500">Effective Date</dt>
-          <dd class="mt-1 text-sm text-gray-900">
-            {{ formatDate(record.effectiveDate) }}
-          </dd>
-        </div>
-      </dl>
+          <GenericDi>
+            <TextDt>Effective Date</TextDt>
+            <TextDd>{{ formatDate(record.effectiveDate) }} </TextDd>
+          </GenericDi>
+        </GenericDl>
+      </GenericCardContent>
     </GenericCard>
 
     <GenericCard v-if="workItems && workItems.length > 0" class="mt-4">
-      <!-- Card header -->
-      <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
-        <h3 class="text-lg leading-6 font-medium text-gray-900">
-          Open Work Items
-        </h3>
-      </div>
-      <!-- Real results -->
+      <GenericCardHeader>
+        <TextH2> Open Work Items </TextH2>
+      </GenericCardHeader>
       <ul class="divide-y divide-gray-200">
         <workitemsListItem
           v-for="item in workItems"
@@ -83,15 +66,11 @@
       </ul>
     </GenericCard>
 
-    <!-- Related Records card -->
+    <!-- Related Patient Records card -->
     <GenericCard class="mt-4">
-      <!-- Card header -->
-      <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
-        <h3 class="text-lg leading-6 font-medium text-gray-900">
-          Patient Records
-        </h3>
-      </div>
-      <!-- Real results -->
+      <GenericCardHeader>
+        <TextH2> Patient Records </TextH2>
+      </GenericCardHeader>
       <ul class="divide-y divide-gray-200">
         <patientrecordsListItem
           v-for="item in patientRecords"
@@ -101,15 +80,11 @@
       </ul>
     </GenericCard>
 
-    <!-- Related Records card -->
+    <!-- Related Master Records card -->
     <GenericCard class="mt-4">
-      <!-- Card header -->
-      <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
-        <h3 class="text-lg leading-6 font-medium text-gray-900">
-          Linked Master Records
-        </h3>
-      </div>
-      <!-- Real results -->
+      <GenericCardHeader>
+        <TextH2> Linked Master Records </TextH2>
+      </GenericCardHeader>
       <ul class="divide-y divide-gray-200">
         <masterrecordsListItem
           v-for="item in relatedRecords"

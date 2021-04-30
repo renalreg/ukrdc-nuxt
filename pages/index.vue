@@ -31,17 +31,15 @@
       v-if="$hasPermission('ukrdc:mirth:read')"
       class="max-w-7xl mx-auto mb-8"
     >
-      <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
-        Mirth Channels
-      </h3>
+      <TextH2> Mirth Channels </TextH2>
       <div v-for="group in mirthGroups" :key="group.id" class="mb-6">
         <div class="mb-4">
-          <h2 class="text-gray-600 text-xs font-medium uppercase tracking-wide">
+          <TextH4>
             {{ group.name }}
-          </h2>
-          <p class="text-gray-500 text-xs font-medium">
+          </TextH4>
+          <TextL2>
             {{ group.description }}
-          </p>
+          </TextL2>
         </div>
 
         <ul
@@ -53,15 +51,11 @@
             class="col-span-1"
           >
             <GenericCardMini v-if="item.statistics" class="px-4 py-2">
-              <p
-                class="text-gray-900 font-medium hover:text-gray-600 line-clamp-2"
-              >
+              <TextH3 class="line-clamp-2">
                 {{ item.name }}
-              </p>
+              </TextH3>
 
-              <p class="text-gray-500">
-                {{ item.statistics.received }} received
-              </p>
+              <TextP> {{ item.statistics.received }} received </TextP>
               <span
                 v-if="item.statistics.error === 0"
                 class="inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-sm mt-2"

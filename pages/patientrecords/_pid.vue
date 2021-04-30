@@ -1,12 +1,12 @@
 <template>
   <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
     <div v-if="record.patient" class="mb-2">
-      <h1 class="text-2xl font-bold text-gray-900">
+      <TextH1>
         {{ record.patient.names[0].given }} {{ record.patient.names[0].family }}
-      </h1>
-      <p class="text-sm font-medium text-gray-500">
+      </TextH1>
+      <TextL1>
         From {{ record.sendingfacility }} via {{ record.sendingextract }}
-      </p>
+      </TextL1>
     </div>
 
     <div class="mb-6"><GenericNavigationTabsLine :tabs="tabs" /></div>

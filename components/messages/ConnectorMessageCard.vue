@@ -3,10 +3,10 @@
     class="col-span-1 flex items-center justify-between truncate"
   >
     <div class="flex-1 px-4 py-2 text-sm truncate">
-      <p class="text-gray-900 font-medium hover:text-gray-600">
+      <TextH3>
         {{ message.connectorName }}
-      </p>
-      <p class="text-gray-500">{{ message.sendAttempts }} send attempts</p>
+      </TextH3>
+      <TextP>{{ message.sendAttempts }} send attempts</TextP>
 
       <div class="mt-2">
         <span
