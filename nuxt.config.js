@@ -61,6 +61,7 @@ export default {
         scope: ['openid', 'profile', 'email'],
         codeChallengeMethod: 'S256',
         autoLogout: true,
+        rewriteRedirects: true,
       },
     },
   },
