@@ -95,7 +95,7 @@ export default Vue.extend({
     const [dash, mirthGroups] = await Promise.all([
       this.$axios.$get(`${this.$config.apiBase}/dash/`),
       // Only read Mirth stats if user has permission
-      this.$auth.user.ukrdc.includes('ukrdc:mirth:read')
+      this.$hasPermission('ukrdc:mirth:read')
         ? this.$axios.$get(`${this.$config.apiBase}/mirth/groups/`)
         : null,
     ])

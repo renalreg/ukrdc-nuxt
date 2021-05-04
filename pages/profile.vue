@@ -72,7 +72,7 @@
         <h3 class="text-sm leading-6 font-medium text-gray-900 mb-2">
           Permissions
         </h3>
-        <div v-for="group in $auth.user.ukrdc" :key="group" class="inline">
+        <div v-for="group in perms" :key="group" class="inline">
           <span
             class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium mr-2 mb-2"
             :class="classesForScope(group)"
@@ -98,6 +98,11 @@ export default Vue.extend({
     return {
       title: 'Profile',
     }
+  },
+  computed: {
+    perms(): string[] {
+      return this.$getPermission()
+    },
   },
 
   methods: {
