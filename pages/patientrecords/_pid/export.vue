@@ -16,7 +16,6 @@
 <script lang="ts">
 import Vue from 'vue'
 import { PatientRecord } from '@/interfaces/patientrecord'
-import { MirthMessageResponse } from '@/interfaces/mirth'
 
 export default Vue.extend({
   props: {
