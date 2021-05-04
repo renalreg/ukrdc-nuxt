@@ -82,11 +82,14 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Component, Watch, mixins } from 'nuxt-property-decorator'
+
 import { singleQuery } from '@/utilities/queryUtils'
 import { todayString, DateRange } from '@/utilities/dateUtils'
 
-import dateUtilsMixin from '@/mixins/dateutils'
+import dateUtilsMixin from '@/mixins/dateUtilsClass'
+import pagionationMixin from '@/mixins/paginationClass'
+
 import { WorkItemShort } from '@/interfaces/workitem'
 
 interface WorkItemPage {
@@ -96,29 +99,29 @@ interface WorkItemPage {
   size: number
 }
 
-export default Vue.extend({
-  mixins: [dateUtilsMixin],
-  data() {
-    return {
-      workitems: [] as WorkItemShort[],
-      total: 0,
-      page: (singleQuery(this.$route.query.page) || 0) as number,
-      size: 20,
-      since: (singleQuery(this.$route.query.since) || null) as string,
-      until: (singleQuery(this.$route.query.until) || todayString(0)) as string,
-      modelConfig: {
-        start: {
-          type: 'string',
-          mask: 'YYYY-MM-DD',
-        },
-        end: {
-          type: 'string',
-          mask: 'YYYY-MM-DD',
-        },
-      },
-      selectedStatuses: (this.$route.query.status || [1]) as number[],
-    }
-  },
+@Component
+export default class WorkItemsNuxtPage extends mixins(
+  dateUtilsMixin,
+  pagionationMixin
+) {
+  // Data
+  workitems: WorkItemShort[] = []
+
+  since = (singleQuery(this.$route.query.since) || null) as string
+  until = (singleQuery(this.$route.query.until) || todayString(0)) as string
+  selectedStatuses: number[] = (this.$route.query.status || [1]) as number[]
+
+  modelConfig = {
+    start: {
+      type: 'string',
+      mask: 'YYYY-MM-DD',
+    },
+    end: {
+      type: 'string',
+      mask: 'YYYY-MM-DD',
+    },
+  }
+
   async fetch() {
     // Fetch the dashboard response from our API server
     let path = `${this.$config.apiBase}/empi/workitems/?page=${this.page}&size=${this.size}`
@@ -142,72 +145,60 @@ export default Vue.extend({
     this.total = res.total
     this.page = res.page
     this.size = res.size
-  },
+  }
+
   head() {
     return {
       title: 'Work Items',
     }
-  },
-  computed: {
-    today(): string {
-      return todayString(0)
-    },
-    range: {
-      get(): DateRange {
-        return {
-          start: this.since,
-          end: this.until,
-        }
-      },
-      set(newRange: DateRange) {
-        this.since = newRange.start
-        this.until = newRange.end
+  }
 
-        const newQuery = Object.assign({}, this.$route.query, {
-          since: this.since,
-          until: this.until,
-        })
-        this.$router.push({
-          path: this.$route.path,
-          query: newQuery,
-        })
-      },
-    },
-    statuses: {
-      get(): number[] {
-        return this.selectedStatuses
-      },
-      set(newStatuses: number[]) {
-        this.selectedStatuses = newStatuses
+  get today(): string {
+    return todayString(0)
+  }
 
-        const newQuery = Object.assign({}, this.$route.query, {
-          status: this.selectedStatuses,
-        })
-        this.$router.push({
-          path: this.$route.path,
-          query: newQuery,
-        })
-      },
-    },
-  },
-  watch: {
-    // We want to re-trigger the query if the route query changes,
-    // E.g. changing page or browser navigation
-    '$route.query': '$fetch',
-  },
-  methods: {
-    changePage(newPage: number): void {
-      this.page = newPage
-      const newQuery = Object.assign({}, this.$route.query, {
-        page: newPage.toString(),
-      })
-      this.$router.push({
-        path: this.$route.path,
-        query: newQuery,
-      })
-    },
-  },
-})
+  get range(): DateRange {
+    return {
+      start: this.since,
+      end: this.until,
+    }
+  }
+
+  set range(newRange: DateRange) {
+    this.since = newRange.start
+    this.until = newRange.end
+
+    const newQuery = Object.assign({}, this.$route.query, {
+      since: this.since,
+      until: this.until,
+    })
+    this.$router.push({
+      path: this.$route.path,
+      query: newQuery,
+    })
+  }
+
+  get statuses(): number[] {
+    return this.selectedStatuses
+  }
+
+  set statuses(newStatuses: number[]) {
+    this.selectedStatuses = newStatuses
+
+    const newQuery = Object.assign({}, this.$route.query, {
+      status: this.selectedStatuses,
+    })
+    this.$router.push({
+      path: this.$route.path,
+      query: newQuery,
+    })
+  }
+
+  @Watch('$route.query')
+  queryChanged() {
+    this.$fetch()
+  }
+}
 </script>
 
 <style></style>
