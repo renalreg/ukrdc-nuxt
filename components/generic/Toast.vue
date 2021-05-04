@@ -34,8 +34,9 @@
               <p
                 :class="[classMessage, { 'mt-1': title }]"
                 class="text-sm leading-5"
-                v-html="message"
-              ></p>
+              >
+                {{ message }}
+              </p>
             </div>
             <div class="ml-4 flex-shrink-0 flex">
               <button
@@ -87,8 +88,9 @@
             <p
               :class="[classMessage, { 'mt-1': title }]"
               class="text-sm leading-5"
-              v-html="message"
-            ></p>
+            >
+              {{ message }}
+            </p>
           </div>
         </div>
         <div class="flex border-l border-gray-200">
@@ -128,7 +130,7 @@
           <div class="flex items-center">
             <toastIcon class="flex-shrink-0 mr-4" :type="type" :icon="icon" />
             <div class="w-0 flex-1 flex justify-between">
-              <p class="w-0 flex-1 text-sm leading-5" v-html="message"></p>
+              <p class="w-0 flex-1 text-sm leading-5">{{ message }}</p>
               <button
                 class="ml-3 flex-shrink-0 text-sm leading-5 font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150"
                 @click="primaryAction"
