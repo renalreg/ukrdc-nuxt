@@ -2,7 +2,7 @@
   <div>
     <div class="px-4 py-5 sm:p-6">
       <dt class="text-base font-normal text-gray-900">
-        <div v-if="value">
+        <div v-if="value != undefined">
           {{ title }}
         </div>
         <div
@@ -12,7 +12,7 @@
       </dt>
       <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
         <div
-          v-if="value"
+          v-if="value != undefined"
           class="flex items-baseline text-2xl font-semibold text-indigo-600"
         >
           {{ value }}
@@ -22,7 +22,11 @@
           class="h-6 animate-pulse bg-gray-200 rounded w-full sm:w-1/4"
         ></div>
 
-        <dashDeltaBadge v-if="delta" :delta="delta" :invert="invert" />
+        <dashDeltaBadge
+          v-if="delta != undefined"
+          :delta="delta"
+          :invert="invert"
+        />
       </dd>
     </div>
   </div>
