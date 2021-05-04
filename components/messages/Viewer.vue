@@ -13,7 +13,7 @@
           <GenericCardFlat
             v-for="(value, key) in nonNullMetadata"
             :key="key"
-            class="relative rounded-lg px-4 py-4 flex items-center space-x-2"
+            class="relative px-4 py-4 flex items-center space-x-2"
             :class="key.includes('ERROR') ? 'border-2 border-red-500' : ''"
           >
             <div class="flex-1 min-w-0">
