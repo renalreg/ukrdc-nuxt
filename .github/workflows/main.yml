@@ -9,8 +9,29 @@ on:
   pull_request:
 
 jobs:
-  main:
+  test:
     runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          check-latest: true
+      
+      - name: Install with Yarn
+        run: yarn install
+
+      - name: Lint
+        run: yarn lint
+
+  publish:
+    runs-on: ubuntu-latest
+
+    if: github.event_name != 'pull_request'
+    needs: test
 
     steps:
       - name: Checkout
