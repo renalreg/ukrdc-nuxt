@@ -83,7 +83,8 @@ export default {
     apiBase: process.env.API_BASE || '/api',
     appBase: process.env.APP_BASE || '/',
     // Nuxt-Auth user key containing an array of permission group strings
-    userPermissionKey: process.env.USER_PERMISSION_KEY || 'ukrdc',
+    userPermissionKey:
+      process.env.USER_PERMISSION_KEY || 'org.ukrdc.permissions',
     // Okta domain
     oktaDomain: process.env.OKTA_DOMAIN || 'https://dev-58161221.okta.com',
     // Axios public runtime config
