@@ -10,9 +10,7 @@
       </div>
 
       <div class="flex justify-end">
-        <genericButton @click="$refs.addCommentModal.hide()"
-          >Cancel</genericButton
-        >
+        <genericButton @click="addCommentModal.hide()">Cancel</genericButton>
         <genericButtonPrimary
           class="ml-2"
           type="submit"
@@ -37,7 +35,7 @@
       </div>
 
       <div class="flex justify-end">
-        <genericButton @click="$refs.mergeModal.hide()"> Cancel </genericButton>
+        <genericButton @click="mergeModal.hide()"> Cancel </genericButton>
         <genericButtonPrimary
           type="submit"
           class="ml-2"
@@ -63,9 +61,7 @@
       </div>
 
       <div class="flex justify-end">
-        <GenericButton @click="$refs.unlinkModal.hide()">
-          Cancel
-        </GenericButton>
+        <GenericButton @click="unlinkModal.hide()"> Cancel </GenericButton>
         <genericButtonPrimary
           type="submit"
           class="ml-3"
@@ -126,7 +122,7 @@
       <div>
         <genericButtonPrimary
           class="inline-flex items-center justify-center w-full"
-          @click="$refs.addCommentModal.show()"
+          @click="addCommentModal.show()"
         >
           <IconPencil />
           Comment
@@ -136,7 +132,7 @@
         <genericButtonPrimary
           class="inline-flex items-center justify-center w-full"
           colour="green"
-          @click="$refs.mergeModal.show()"
+          @click="mergeModal.show()"
         >
           <IconLink />
           Merge
@@ -146,7 +142,7 @@
         <genericButtonPrimary
           class="inline-flex items-center justify-center w-full"
           colour="red"
-          @click="$refs.unlinkModal.show()"
+          @click="unlinkModal.show()"
         >
           <IconXCircle />
           Unlink
@@ -258,127 +254,137 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import {
+  defineComponent,
+  ref,
+  useRoute,
+  useFetch,
+  useContext,
+  computed,
+} from '@nuxtjs/composition-api'
+
+import { formatDate } from '@/utilities/dateUtils'
+import { formatGender } from '@/utilities/codeUtils'
+import { isEmptyObject } from '@/utilities/objectUtils'
 
 import { Person } from '@/interfaces/persons'
-
-import dateUtilsMixin from '@/mixins/dateutils'
-import codeUtilsMixin from '@/mixins/coddeutils'
-import objectUtilsMixin from '@/mixins/objectutils'
 import { WorkItem } from '@/interfaces/workitem'
 import { modalInterface } from '@/interfaces/modal'
 import { MirthMessageResponse } from '@/interfaces/mirth'
 import { MasterRecord } from '@/interfaces/masterrecord'
 
-export default Vue.extend({
-  mixins: [dateUtilsMixin, codeUtilsMixin, objectUtilsMixin],
+export default defineComponent({
+  setup() {
+    const route = useRoute()
+    const { $axios, $config, $toast } = useContext()
 
-  data() {
-    return {
-      record: {} as WorkItem,
-      relatedRecords: [] as WorkItem[],
-      relatedPersons: [] as Person[],
-      relatedMasterRecords: [] as MasterRecord[],
-      relatedRecordsIndex: 0,
-      relatedMasterRecordsIndex: 0,
-      customComment: '',
-    }
-  },
-  async fetch() {
-    // Get the main record data
-    const path = `${this.$config.apiBase}/empi/workitems/${this.$route.params.id}/`
-    const res: WorkItem = await this.$axios.$get(path)
-    this.record = res
-    this.customComment = res.updateDescription
+    const record = ref({} as WorkItem)
+    const relatedRecords = ref([] as WorkItem[])
+    const relatedPersons = ref([] as Person[])
 
-    // Use the record links to load related data concurrently
-    const [
-      relatedRecordsRes,
-      relatedPersonsRes,
-      relatedMasterRecordsRes,
-    ] = await Promise.all([
-      this.$axios.$get(this.record.links.related),
-      this.$axios.$get(this.record.masterRecord.links.persons),
-      this.$axios.$get(this.record.masterRecord.links.related),
-    ])
-
-    this.relatedRecords = relatedRecordsRes
-    this.relatedMasterRecords = relatedMasterRecordsRes
-
-    // Exclude the WorkItems Person record from our related Persons array
-    this.relatedPersons = []
-    for (const relatedPerson of relatedPersonsRes) {
-      if (relatedPerson.id !== this.record.personId) {
-        this.relatedPersons.push(relatedPerson)
-      }
-    }
-  },
-  head() {
-    return {
-      title: 'Work Item',
-    }
-  },
-  computed: {
-    allMasterRecords(): MasterRecord[] {
-      if (this.record.masterRecord) {
-        return [this.record.masterRecord].concat(this.relatedMasterRecords)
+    const relatedMasterRecords = ref([] as MasterRecord[])
+    const allMasterRecords = computed(() => {
+      if (record.value.masterRecord) {
+        return [record.value.masterRecord].concat(relatedMasterRecords.value)
       } else {
-        return this.relatedMasterRecords
+        return relatedMasterRecords.value
       }
-    },
-    statusString(): string {
-      if (this.record.status === 1) {
+    })
+
+    const relatedRecordsIndex = ref(0)
+    const relatedMasterRecordsIndex = ref(0)
+    const customComment = ref('')
+
+    const statusString = computed(() => {
+      if (record.value.status === 1) {
         return ''
-      } else if (this.record.status === 2) {
+      } else if (record.value.status === 2) {
         return '(WIP)'
-      } else if (this.record.status === 3) {
+      } else if (record.value.status === 3) {
         return '(Closed)'
       } else {
         return '(Unknown status)'
       }
-    },
-  },
-  methods: {
-    async updateWorkItemComment() {
-      const path = `${this.$config.apiBase}/empi/workitems/${this.$route.params.id}/`
-      await this.$axios.$put(path, {
-        comment: this.customComment,
+    })
+
+    // Template refs
+    const addCommentModal = ref<modalInterface>()
+    const mergeModal = ref<modalInterface>()
+    const unlinkModal = ref<modalInterface>()
+
+    const { fetch } = useFetch(async () => {
+      // Get the main record data
+      const path = `${$config.apiBase}/empi/workitems/${route.value.params.id}/`
+      const res: WorkItem = await $axios.$get(path)
+      record.value = res
+      customComment.value = res.updateDescription
+
+      // Use the record links to load related data concurrently
+      const [
+        relatedRecordsRes,
+        relatedPersonsRes,
+        relatedMasterRecordsRes,
+      ] = await Promise.all([
+        $axios.$get(record.value.links.related),
+        $axios.$get(record.value.masterRecord.links.persons),
+        $axios.$get(record.value.masterRecord.links.related),
+      ])
+
+      relatedRecords.value = relatedRecordsRes
+      relatedMasterRecords.value = relatedMasterRecordsRes
+
+      // Exclude the WorkItems Person record from our related Persons array
+      relatedPersons.value = []
+      for (const relatedPerson of relatedPersonsRes) {
+        if (relatedPerson.id !== record.value.personId) {
+          relatedPersons.value.push(relatedPerson)
+        }
+      }
+    })
+
+    async function updateWorkItemComment() {
+      const path = `${$config.apiBase}/empi/workitems/${route.value.params.id}/`
+      await $axios.$put(path, {
+        comment: customComment.value,
       })
 
-      const el = this.$refs.addCommentModal as modalInterface
+      const el = addCommentModal.value as modalInterface
       el.toggle()
-      this.$fetch()
-      this.$toast.show({
+      fetch()
+      $toast.show({
         type: 'success',
         title: 'Success',
         message: 'Comment added',
         classTimeout: 'bg-green-600',
       })
-    },
-    mergeWorkItem() {
-      this.actionWorkItem(
-        `${this.$config.apiBase}/empi/workitems/${this.$route.params.id}/merge`
+    }
+
+    function mergeWorkItem() {
+      actionWorkItem(
+        `${$config.apiBase}/empi/workitems/${route.value.params.id}/merge`
       )
-      const el = this.$refs.mergeModal as modalInterface
+      const el = mergeModal.value as modalInterface
       el.toggle()
-    },
-    unlinkWorkItem() {
-      this.actionWorkItem(
-        `${this.$config.apiBase}/empi/workitems/${this.$route.params.id}/unlink`
+    }
+
+    function unlinkWorkItem() {
+      actionWorkItem(
+        `${$config.apiBase}/empi/workitems/${route.value.params.id}/unlink`
       )
-      const el = this.$refs.unlinkModal as modalInterface
+      const el = unlinkModal.value as modalInterface
       el.toggle()
-    },
-    actionWorkItem(postPath: string) {
-      this.$axios
+    }
+
+    function actionWorkItem(postPath: string) {
+      $axios
         .$post(postPath)
         .then((res: MirthMessageResponse) => {
           if (res.status === 'success') {
-            this.$axios
+            $axios
               .$post(
-                `${this.$config.apiBase}/empi/workitems/${this.$route.params.id}/close`,
+                `${$config.apiBase}/empi/workitems/${route.value.params.id}/close`,
                 {
-                  comment: this.customComment,
+                  comment: customComment.value,
                 }
               )
               .catch((error) => {
@@ -389,7 +395,7 @@ export default Vue.extend({
         })
         .catch((error) => {
           console.log(error.response.data.detail)
-          this.$toast.show({
+          $toast.show({
             type: 'danger',
             title: 'Error',
             message: error.response.data.detail,
@@ -398,9 +404,32 @@ export default Vue.extend({
           })
         })
         .finally(() => {
-          this.$fetch()
+          fetch()
         })
-    },
+    }
+
+    return {
+      record,
+      relatedRecords,
+      relatedPersons,
+      formatDate,
+      formatGender,
+      isEmptyObject,
+      allMasterRecords,
+      relatedRecordsIndex,
+      relatedMasterRecordsIndex,
+      customComment,
+      statusString,
+      addCommentModal,
+      mergeModal,
+      unlinkModal,
+      updateWorkItemComment,
+      mergeWorkItem,
+      unlinkWorkItem,
+    }
+  },
+  head: {
+    title: 'Work Item',
   },
 })
 </script>
