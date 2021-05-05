@@ -50,17 +50,19 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import {
+  defineComponent,
+  ref,
+  useFetch,
+  useContext,
+} from '@nuxtjs/composition-api'
 
-import dateUtilsMixin from '@/mixins/dateutils'
-import codeUtilsMixin from '@/mixins/coddeutils'
+import { formatDate } from '@/utilities/dateUtils'
 
 import { Survey } from '@/interfaces/survey'
 import { PatientRecord } from '@/interfaces/patientrecord'
 
-export default Vue.extend({
-  mixins: [dateUtilsMixin, codeUtilsMixin],
-
+export default defineComponent({
   props: {
     record: {
       type: Object as () => PatientRecord,
@@ -68,20 +70,22 @@ export default Vue.extend({
     },
   },
 
-  data() {
+  setup(props) {
+    const { $axios } = useContext()
+
+    const surveys = ref([] as Survey[])
+    const openSurvey = ref({} as Survey)
+
+    useFetch(async () => {
+      const res: Survey[] = await $axios.$get(props.record.links.surveys)
+      surveys.value = res
+    })
+
     return {
-      surveys: [] as Survey[],
-      openSurvey: {} as Survey,
+      surveys,
+      openSurvey,
+      formatDate,
     }
-  },
-  async fetch() {
-    const res: Survey[] = await this.$axios.$get(this.apiPath)
-    this.surveys = res
-  },
-  computed: {
-    apiPath(): string {
-      return this.record.links.surveys
-    },
   },
 })
 </script>

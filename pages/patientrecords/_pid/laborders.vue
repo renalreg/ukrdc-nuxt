@@ -35,17 +35,19 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import {
+  defineComponent,
+  ref,
+  useFetch,
+  useContext,
+} from '@nuxtjs/composition-api'
 
-import dateUtilsMixin from '@/mixins/dateutils'
-import codeUtilsMixin from '@/mixins/coddeutils'
+import { formatDate } from '@/utilities/dateUtils'
 
 import { LabOrder } from '@/interfaces/laborder'
 import { PatientRecord } from '@/interfaces/patientrecord'
 
-export default Vue.extend({
-  mixins: [dateUtilsMixin, codeUtilsMixin],
-
+export default defineComponent({
   props: {
     record: {
       type: Object as () => PatientRecord,
@@ -53,19 +55,17 @@ export default Vue.extend({
     },
   },
 
-  data() {
-    return {
-      orders: [] as LabOrder[],
-    }
-  },
-  async fetch() {
-    const res: LabOrder[] = await this.$axios.$get(this.apiPath)
-    this.orders = res
-  },
-  computed: {
-    apiPath(): string {
-      return this.record.links.laborders
-    },
+  setup(props) {
+    const { $axios } = useContext()
+
+    const orders = ref([] as LabOrder[])
+
+    useFetch(async () => {
+      const res: LabOrder[] = await $axios.$get(props.record.links.laborders)
+      orders.value = res
+    })
+
+    return { orders, formatDate }
   },
 })
 </script>

@@ -178,21 +178,28 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent } from '@nuxtjs/composition-api'
 
-import dateUtilsMixin from '@/mixins/dateutils'
-import codeUtilsMixin from '@/mixins/coddeutils'
-import objectUtilsMixin from '@/mixins/objectutils'
+import { formatDate } from '@/utilities/dateUtils'
+import { formatGender } from '@/utilities/codeUtils'
+import { isEmptyObject } from '@/utilities/objectUtils'
+
 import { PatientRecord } from '@/interfaces/patientrecord'
 
-export default Vue.extend({
-  mixins: [dateUtilsMixin, codeUtilsMixin, objectUtilsMixin],
-
+export default defineComponent({
   props: {
     record: {
       type: Object as () => PatientRecord,
       required: true,
     },
+  },
+
+  setup() {
+    return {
+      formatDate,
+      formatGender,
+      isEmptyObject,
+    }
   },
 })
 </script>

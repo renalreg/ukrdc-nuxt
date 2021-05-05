@@ -1,6 +1,4 @@
-export function singleQuery(
-  query: string | number | (string | number | null)[]
-): string | number | null {
+export function singleQuery(query: string | (string | null)[]): string | null {
   // Return a single value form a query string
   // If multiple values are passed as an array,
   // only the zeroth value is returned
@@ -9,6 +7,14 @@ export function singleQuery(
   } else {
     return query
   }
+}
+
+export function integerQuery(query: string | (string | null)[]): number | null {
+  const queryString = singleQuery(query)
+  if (queryString) {
+    return parseInt(queryString)
+  }
+  return null
 }
 
 export function arrayQuery(

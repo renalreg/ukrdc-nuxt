@@ -45,18 +45,18 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-
-import dateUtilsMixin from '@/mixins/dateutils'
-import codeUtilsMixin from '@/mixins/coddeutils'
-import objectUtilsMixin from '@/mixins/objectutils'
+import {
+  defineComponent,
+  ref,
+  useFetch,
+  useContext,
+  computed,
+} from '@nuxtjs/composition-api'
 
 import { Medication } from '@/interfaces/medication'
 import { PatientRecord } from '@/interfaces/patientrecord'
 
-export default Vue.extend({
-  mixins: [dateUtilsMixin, codeUtilsMixin, objectUtilsMixin],
-
+export default defineComponent({
   props: {
     record: {
       type: Object as () => PatientRecord,
@@ -64,29 +64,34 @@ export default Vue.extend({
     },
   },
 
-  data() {
-    return {
-      medications: [] as Medication[],
-    }
-  },
-  async fetch() {
-    const res: Medication[] = await this.$axios.$get(this.apiPath)
-    this.medications = res
-  },
-  computed: {
-    apiPath(): string {
-      return this.record.links.medications
-    },
-    activeMedications(): Medication[] {
-      return this.medications.filter(function (item: Medication) {
+  setup(props) {
+    const { $axios } = useContext()
+
+    const medications = ref([] as Medication[])
+
+    useFetch(async () => {
+      const res: Medication[] = await $axios.$get(
+        props.record.links.medications
+      )
+      medications.value = res
+    })
+
+    const activeMedications = computed(() => {
+      return medications.value.filter(function (item: Medication) {
         return item.toTime === null
       })
-    },
-    inactiveMedications(): Medication[] {
-      return this.medications.filter(function (item: Medication) {
+    })
+    const inactiveMedications = computed(() => {
+      return medications.value.filter(function (item: Medication) {
         return item.toTime !== null
       })
-    },
+    })
+
+    return {
+      activeMedications,
+      inactiveMedications,
+      medications,
+    }
   },
 })
 </script>

@@ -14,10 +14,16 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import {
+  defineComponent,
+  ref,
+  useContext,
+  computed,
+} from '@nuxtjs/composition-api'
+
 import { PatientRecord } from '@/interfaces/patientrecord'
 
-export default Vue.extend({
+export default defineComponent({
   props: {
     record: {
       type: Object as () => PatientRecord,
@@ -25,33 +31,30 @@ export default Vue.extend({
     },
   },
 
-  data() {
-    return {
-      exportKey: 'exportPV',
-    }
-  },
-  computed: {
-    currentExportUrl(): string | undefined {
-      if (this.exportKey === 'exportPV') {
-        return this.record.links.exportPV
-      } else if (this.exportKey === 'exportPVDocs') {
-        return this.record.links.exportPVDocs
-      } else if (this.exportKey === 'exportPVTests') {
-        return this.record.links.exportPVTests
-      } else if (this.exportKey === 'exportRADAR') {
-        return this.record.links.exportRADAR
+  setup(props) {
+    const { $axios, $toast } = useContext()
+
+    const exportKey = ref('exportPV')
+    const currentExportUrl = computed(() => {
+      if (exportKey.value === 'exportPV') {
+        return props.record.links.exportPV
+      } else if (exportKey.value === 'exportPVDocs') {
+        return props.record.links.exportPVDocs
+      } else if (exportKey.value === 'exportPVTests') {
+        return props.record.links.exportPVTests
+      } else if (exportKey.value === 'exportRADAR') {
+        return props.record.links.exportRADAR
       } else {
         return undefined
       }
-    },
-  },
-  methods: {
-    actionExport() {
-      if (this.currentExportUrl) {
-        this.$axios
-          .$post(this.currentExportUrl)
+    })
+
+    function actionExport() {
+      if (currentExportUrl.value) {
+        $axios
+          .$post(currentExportUrl.value)
           .then(() => {
-            this.$toast.show({
+            $toast.show({
               type: 'success',
               title: 'Success',
               message: 'Export initiated',
@@ -60,7 +63,7 @@ export default Vue.extend({
           })
           .catch((error) => {
             console.log(error.response.data.detail)
-            this.$toast.show({
+            $toast.show({
               type: 'danger',
               title: 'Error',
               message: error.response.data.detail,
@@ -69,7 +72,12 @@ export default Vue.extend({
             })
           })
       }
-    },
+    }
+
+    return {
+      exportKey,
+      actionExport,
+    }
   },
 })
 </script>
