@@ -75,40 +75,55 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import {
+  defineComponent,
+  ref,
+  useFetch,
+  useContext,
+} from '@nuxtjs/composition-api'
 
 import { DashResponse, ChannelStatistics } from '@/interfaces/dash'
 import { ChannelGroup } from '@/interfaces/mirth'
 
-export default Vue.extend({
-  data() {
+export default defineComponent({
+  setup() {
+    const { $axios, $config, $hasPermission } = useContext()
+
+    const response = ref({} as DashResponse)
+    const messages = ref([] as string[])
+    const warnings = ref([] as string[])
+    const mirthStatistics = ref([] as ChannelStatistics[])
+    const mirthGroups = ref([] as ChannelGroup[])
+
+    const error = ref('')
+
+    useFetch(async () => {
+      const [dashResponse, mirthResponse] = await Promise.all([
+        $axios.$get(`${$config.apiBase}/dash/`),
+        // Only read Mirth stats if user has permission
+        $hasPermission('ukrdc:mirth:read')
+          ? $axios.$get(`${$config.apiBase}/mirth/groups/`)
+          : null,
+      ])
+      // Fetch the dashboard response from our API server
+      response.value = dashResponse
+      messages.value = dashResponse.messages
+      warnings.value = dashResponse.warnings
+      mirthGroups.value = mirthResponse
+    })
+
     return {
-      messages: [] as string[],
-      warnings: [] as string[],
-      error: '',
-      response: {} as DashResponse,
-      mirthStatistics: [] as ChannelStatistics[],
-      mirthGroups: [] as ChannelGroup[],
+      response,
+      messages,
+      warnings,
+      mirthStatistics,
+      mirthGroups,
+      error,
     }
   },
-  async fetch() {
-    const [dash, mirthGroups] = await Promise.all([
-      this.$axios.$get(`${this.$config.apiBase}/dash/`),
-      // Only read Mirth stats if user has permission
-      this.$hasPermission('ukrdc:mirth:read')
-        ? this.$axios.$get(`${this.$config.apiBase}/mirth/groups/`)
-        : null,
-    ])
-    // Fetch the dashboard response from our API server
-    this.response = dash
-    this.messages = dash.messages
-    this.warnings = dash.warnings
-    this.mirthGroups = mirthGroups
-  },
-  head() {
-    return {
-      title: 'Dashboard',
-    }
+
+  head: {
+    title: 'Dashboard',
   },
 })
 </script>
