@@ -86,39 +86,26 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent, useContext, computed } from '@nuxtjs/composition-api'
 
-export default Vue.extend({
-  data() {
-    return {
-      auth: this.$auth,
-    }
-  },
-  head() {
-    return {
-      title: 'Profile',
-    }
-  },
-  computed: {
-    perms(): string[] {
-      return this.$getPermission()
-    },
-  },
+export default defineComponent({
+  setup() {
+    const { $getPermission, $auth, $config } = useContext()
 
-  methods: {
-    logout(): void {
+    const perms = computed(() => $getPermission())
+
+    function logout(): void {
       // In principle we should be able to use nuxt-auth's $auth.logout function,
       // however Okta requires an ID token when using the logout API, which nuxt-auth
       // doesn't store. Instead we reset the auth state locally, then redirect to
       // the user management logout page
-      this.$auth.reset()
+      $auth.reset()
       const logoutUrl =
-        this.$config.oktaDomain +
-        '/login/signout?fromURI=' +
-        window.location.href
+        $config.oktaDomain + '/login/signout?fromURI=' + window.location.href
       window.location.href = logoutUrl
-    },
-    classesForScope(scope: string): string[] {
+    }
+
+    function classesForScope(scope: string): string[] {
       if (scope.includes('read')) {
         return ['bg-green-100', 'text-green-800']
       } else if (scope.includes('write')) {
@@ -126,7 +113,16 @@ export default Vue.extend({
       } else {
         return ['bg-indigo-100', 'text-indigo-800']
       }
-    },
+    }
+
+    return {
+      perms,
+      logout,
+      classesForScope,
+    }
+  },
+  head: {
+    title: 'Profile',
   },
 })
 </script>
