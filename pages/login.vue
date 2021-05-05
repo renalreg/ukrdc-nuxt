@@ -7,34 +7,43 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import {
+  defineComponent,
+  onMounted,
+  useRoute,
+  useContext,
+} from '@nuxtjs/composition-api'
 
-export default Vue.extend({
-  auth: false, // Override auth middleware. We handle redirects here ourselves in mounted()
-  head() {
-    return {
-      title: 'Login',
-    }
-  },
-  mounted() {
-    // If we're not logged in, either start logging in,
-    // or wait for login flow to finish before redirecting home.
-    if (!this.$auth.loggedIn) {
-      // If we're here with a code parameter,
-      // let the Auth module finish the PKCE flow without redirecting again.
-      // Otherwise, start the Okta login flow.
-      if (!this.$route.query.code) {
-        this.$auth.loginWith('okta')
+export default defineComponent({
+  auth: false,
+
+  setup() {
+    const route = useRoute()
+    const { $auth } = useContext()
+
+    onMounted(() => {
+      // If we're not logged in, either start logging in,
+      // or wait for login flow to finish before redirecting home.
+      if (!$auth.loggedIn) {
+        // If we're here with a code parameter,
+        // let the Auth module finish the PKCE flow without redirecting again.
+        // Otherwise, start the Okta login flow.
+        if (!route.value.query.code) {
+          $auth.loginWith('okta')
+        }
+        // If we are logged in and don't have a code parameter
+      } else if (!route.value.query.code) {
+        // Use $auth.redirect so rewriteRedirects works properly
+        // I.e. if we were sent to /login by another page because
+        // our token expired, we want to go back to that page, not
+        // home. $auth.redirect handles checking where we came from,
+        // so we know where to go. Something something cotton-eye Joe.
+        $auth.redirect('home')
       }
-      // If we are logged in and don't have a code parameter
-    } else if (!this.$route.query.code) {
-      // Use $auth.redirect so rewriteRedirects works properly
-      // I.e. if we were sent to /login by another page because
-      // our token expired, we want to go back to that page, not
-      // home. $auth.redirect handles checking where we came from,
-      // so we know where to go. Something something cotton-eye Joe.
-      this.$auth.redirect('home')
-    }
+    })
+  }, // Override auth middleware. We handle redirects here ourselves in mounted()
+  head: {
+    title: 'Login',
   },
 })
 </script>
