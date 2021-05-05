@@ -73,8 +73,8 @@
           :page="page"
           :size="size"
           :total="total"
-          @next="changePage(page + 1)"
-          @prev="changePage(page - 1)"
+          @next="page++"
+          @prev="page--"
         />
       </GenericCard>
     </div>
@@ -82,11 +82,22 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import {
+  defineComponent,
+  watch,
+  ref,
+  useRoute,
+  useRouter,
+  useFetch,
+  useContext,
+  computed,
+} from '@nuxtjs/composition-api'
+
+import usePagination from '@/mixins/usePagination'
+
 import { singleQuery } from '@/utilities/queryUtils'
 import { todayString, DateRange } from '@/utilities/dateUtils'
 
-import dateUtilsMixin from '@/mixins/dateutils'
 import { WorkItemShort } from '@/interfaces/workitem'
 
 interface WorkItemPage {
@@ -96,116 +107,114 @@ interface WorkItemPage {
   size: number
 }
 
-export default Vue.extend({
-  mixins: [dateUtilsMixin],
-  data() {
-    return {
-      workitems: [] as WorkItemShort[],
-      total: 0,
-      page: (singleQuery(this.$route.query.page) || 0) as number,
-      size: 20,
-      since: (singleQuery(this.$route.query.since) || null) as string,
-      until: (singleQuery(this.$route.query.until) || todayString(0)) as string,
-      modelConfig: {
-        start: {
-          type: 'string',
-          mask: 'YYYY-MM-DD',
-        },
-        end: {
-          type: 'string',
-          mask: 'YYYY-MM-DD',
-        },
+export default defineComponent({
+  setup() {
+    const route = useRoute()
+    const router = useRouter()
+
+    const { $axios, $config } = useContext()
+    const { page, total, size } = usePagination()
+
+    const workitems = ref([] as WorkItemShort[])
+
+    const selectedStatuses = ref((route.value.query.status || [1]) as number[])
+    const statuses = computed({
+      get: () => {
+        return selectedStatuses.value
       },
-      selectedStatuses: (this.$route.query.status || [1]) as number[],
-    }
-  },
-  async fetch() {
-    // Fetch the dashboard response from our API server
-    let path = `${this.$config.apiBase}/empi/workitems/?page=${this.page}&size=${this.size}`
-    if (this.since) {
-      path = path + `&since=${this.since}`
-    }
-    // Pass `until` to API if it's given
-    if (this.until) {
-      path = path + `&until=${this.until}`
-    } else if (this.since) {
-      // If no `until` is given but a `since` is given, then a single date is selected
-      // In this case we want to only show that one day, not a range
-      path = path + `&until=${this.since}`
-    }
-    // Pass selected statuses to the API
-    for (const status of this.selectedStatuses) {
-      path = path + `&status=${status}`
-    }
-    const res: WorkItemPage = await this.$axios.$get(path)
-    this.workitems = res.items
-    this.total = res.total
-    this.page = res.page
-    this.size = res.size
-  },
-  head() {
-    return {
-      title: 'Work Items',
-    }
-  },
-  computed: {
-    today(): string {
-      return todayString(0)
-    },
-    range: {
-      get(): DateRange {
+      set(newStatuses: number[]) {
+        selectedStatuses.value = newStatuses
+
+        const newQuery = Object.assign({}, route.value.query, {
+          status: selectedStatuses.value,
+        })
+        router.push({
+          path: route.value.path,
+          query: newQuery,
+        })
+      },
+    })
+
+    const since = ref((singleQuery(route.value.query.since) || null) as string)
+    const until = ref(
+      (singleQuery(route.value.query.until) || todayString(0)) as string
+    )
+    const range = computed({
+      get: () => {
         return {
-          start: this.since,
-          end: this.until,
+          start: since.value,
+          end: since.value,
         }
       },
       set(newRange: DateRange) {
-        this.since = newRange.start
-        this.until = newRange.end
+        since.value = newRange.start
+        until.value = newRange.end
 
-        const newQuery = Object.assign({}, this.$route.query, {
-          since: this.since,
-          until: this.until,
+        const newQuery = Object.assign({}, route.value.query, {
+          since: since.value,
+          until: until.value,
         })
-        this.$router.push({
-          path: this.$route.path,
+        router.push({
+          path: route.value.path,
           query: newQuery,
         })
       },
-    },
-    statuses: {
-      get(): number[] {
-        return this.selectedStatuses
-      },
-      set(newStatuses: number[]) {
-        this.selectedStatuses = newStatuses
+    })
 
-        const newQuery = Object.assign({}, this.$route.query, {
-          status: this.selectedStatuses,
-        })
-        this.$router.push({
-          path: this.$route.path,
-          query: newQuery,
-        })
+    const modelConfig = {
+      start: {
+        type: 'string',
+        mask: 'YYYY-MM-DD',
       },
-    },
+      end: {
+        type: 'string',
+        mask: 'YYYY-MM-DD',
+      },
+    }
+
+    const { fetch } = useFetch(async () => {
+      // Fetch the dashboard response from our API server
+      let path = `${$config.apiBase}/empi/workitems/?page=${page.value}&size=${size.value}`
+      if (since.value) {
+        path = path + `&since=${since.value}`
+      }
+      // Pass `until` to API if it's given
+      if (until.value) {
+        path = path + `&until=${until.value}`
+      } else if (since.value) {
+        // If no `until` is given but a `since` is given, then a single date is selected
+        // In this case we want to only show that one day, not a range
+        path = path + `&until=${since.value}`
+      }
+      // Pass selected statuses to the API
+      for (const status of selectedStatuses.value) {
+        path = path + `&status=${status}`
+      }
+      const res: WorkItemPage = await $axios.$get(path)
+      workitems.value = res.items
+      total.value = res.total
+      page.value = res.page
+      size.value = res.size
+    })
+
+    watch(route, () => {
+      fetch()
+    })
+
+    return {
+      page,
+      total,
+      size,
+      since,
+      until,
+      workitems,
+      statuses,
+      range,
+      modelConfig,
+    }
   },
-  watch: {
-    // We want to re-trigger the query if the route query changes,
-    // E.g. changing page or browser navigation
-    '$route.query': '$fetch',
-  },
-  methods: {
-    changePage(newPage: number): void {
-      this.page = newPage
-      const newQuery = Object.assign({}, this.$route.query, {
-        page: newPage.toString(),
-      })
-      this.$router.push({
-        path: this.$route.path,
-        query: newQuery,
-      })
-    },
+  head: {
+    title: 'Work Items',
   },
 })
 </script>
