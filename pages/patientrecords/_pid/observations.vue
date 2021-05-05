@@ -1,6 +1,6 @@
 <template>
   <div class="mt-4">
-    <GenericSelect v-model="selectedCode" class="mb-4">
+    <GenericSelect v-model="selectedCodeString" class="mb-4">
       <option :value="null">All Observations</option>
       <option v-for="item in availableCodes" :key="item">
         {{ item }}
@@ -10,13 +10,8 @@
     <!-- Small data card display -->
     <div class="lg:hidden">
       <GenericCardFlat
-        v-for="item in observations"
-        :key="
-          item.observationDesc +
-          item.observationTime +
-          item.observationValue +
-          '-card'
-        "
+        v-for="(item, index) in observations"
+        :key="`${item.observationCode}-${index}-card`"
         class="grid grid-cols-3 gap-2 mb-4 px-4 py-4"
       >
         <div
@@ -89,12 +84,8 @@
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
               <tr
-                v-for="item in observations"
-                :key="
-                  item.observationDesc +
-                  item.observationTime +
-                  item.observationValue
-                "
+                v-for="(item, index) in observations"
+                :key="`${item.observationCode}-${index}`"
               >
                 <td
                   class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
@@ -125,8 +116,8 @@
           :page="page"
           :size="size"
           :total="total"
-          @next="changePage(page + 1)"
-          @prev="changePage(page - 1)"
+          @next="page++"
+          @prev="page--"
         />
       </GenericCard>
     </div>
@@ -134,13 +125,21 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Watch, mixins } from 'nuxt-property-decorator'
+import {
+  defineComponent,
+  watch,
+  ref,
+  useRoute,
+  useRouter,
+  useFetch,
+  useContext,
+  computed,
+} from '@nuxtjs/composition-api'
+
+import usePagination from '@/mixins/usePagination'
 
 import { arrayQuery } from '@/utilities/queryUtils'
-
-import dateUtilsMixin from '@/mixins/dateUtilsClass'
-import codeUtilsMixin from '@/mixins/codeUtilsClass'
-import pagionationMixin from '@/mixins/paginationClass'
+import { formatDate } from '@/utilities/dateUtils'
 
 import { Observation } from '@/interfaces/observation'
 import { PatientRecord } from '@/interfaces/patientrecord'
@@ -152,69 +151,79 @@ interface ObservationPage {
   size: number
 }
 
-@Component
-export default class ObservationsNuxtPage extends mixins(
-  dateUtilsMixin, // Date parsing methods
-  codeUtilsMixin, // Result coding methods
-  pagionationMixin // Pagination data and methods
-) {
-  // Props
-  @Prop(Object) readonly record!: PatientRecord
+export default defineComponent({
+  props: {
+    record: {
+      type: Object as () => PatientRecord,
+      required: true,
+    },
+  },
 
-  // Data
-  observations: Observation[] = []
+  setup(props) {
+    const route = useRoute()
+    const router = useRouter()
+    const { $axios } = useContext()
+    const { page, total, size } = usePagination()
 
-  availableCodes: string[] = []
-  selectedCodes = (arrayQuery(this.$route.query.code) || [null]) as string[]
+    const observations = ref([] as Observation[])
 
-  // Lifecycle
-  async fetch() {
-    let path = `${this.apiPath}?page=${this.page}&size=${this.size}`
+    const availableCodes = ref([] as string[])
+    const selectedCodes = ref(
+      (arrayQuery(route.value.query.code) || []) as string[]
+    )
 
-    for (const code of this.selectedCodes) {
-      if (code) {
-        path = path + `&code=${code}`
+    const selectedCodeString = computed({
+      get: () => selectedCodes.value[0] || '',
+      set: (newCode: string) => {
+        selectedCodes.value = [newCode]
+
+        // Reset page when we change the filter
+        const newQuery = {
+          page: '0',
+          code: selectedCodes.value,
+        }
+        router.push({
+          path: route.value.path,
+          query: newQuery,
+        })
+      },
+    })
+
+    watch(route, () => {
+      fetch()
+    })
+
+    const { fetch } = useFetch(async () => {
+      const apiPath = props.record.links.observations
+      let path = `${apiPath}?page=${page.value}&size=${size.value}`
+
+      for (const code of selectedCodes.value) {
+        if (code) {
+          path = path + `&code=${code}`
+        }
       }
-    }
 
-    const res: ObservationPage = await this.$axios.$get(path)
-    this.observations = res.items
-    this.total = res.total
-    this.page = res.page
-    this.size = res.size
+      const res: ObservationPage = await $axios.$get(path)
+      observations.value = res.items
+      total.value = res.total
+      page.value = res.page
+      size.value = res.size
 
-    if (this.availableCodes.length === 0) {
-      const availableCodes: string[] = await this.$axios.$get(
-        `${this.apiPath}codes`
-      )
-      this.availableCodes = availableCodes
-    }
-  }
-
-  // Computed
-  get apiPath(): string {
-    return this.record.links.observations
-  }
-
-  get selectedCode(): string {
-    return this.selectedCodes[0]
-  }
-
-  set selectedCode(newCode: string) {
-    this.selectedCodes = [newCode]
-
-    const newQuery = Object.assign({}, this.$route.query, {
-      code: this.selectedCodes,
+      // If we don't already have a list of available codes, fetch one
+      if (availableCodes.value.length === 0) {
+        availableCodes.value = await $axios.$get(`${apiPath}codes`)
+      }
     })
-    this.$router.push({
-      path: this.$route.path,
-      query: newQuery,
-    })
-  }
 
-  @Watch('$route.query')
-  queryChanged() {
-    this.$fetch()
-  }
-}
+    return {
+      page,
+      size,
+      total,
+      observations,
+      availableCodes,
+      selectedCodeString,
+      formatDate,
+    }
+  },
+})
 </script>

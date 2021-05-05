@@ -36,8 +36,9 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-export default Vue.extend({
+import { defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({
   props: {
     page: {
       type: Number,
@@ -57,18 +58,24 @@ export default Vue.extend({
       default: 'main',
     },
   },
-  methods: {
-    next(): void {
-      this.$emit('next')
-      this.toTop()
-    },
-    prev(): void {
-      this.$emit('prev')
-      this.toTop()
-    },
-    toTop(): void {
-      document.getElementsByTagName(this.scrollTag)[0].scrollTop = 0
-    },
+
+  setup(props, { emit }) {
+    function next(): void {
+      emit('next')
+      toTop()
+    }
+    function prev(): void {
+      emit('prev')
+      toTop()
+    }
+    function toTop(): void {
+      document.getElementsByTagName(props.scrollTag)[0].scrollTop = 0
+    }
+
+    return {
+      next,
+      prev,
+    }
   },
 })
 </script>
