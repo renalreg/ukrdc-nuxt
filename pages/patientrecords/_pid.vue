@@ -16,11 +16,15 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import {
+  defineComponent,
+  ref,
+  useFetch,
+  useRoute,
+  useContext,
+  computed,
+} from '@nuxtjs/composition-api'
 
-import dateUtilsMixin from '@/mixins/dateutils'
-import codeUtilsMixin from '@/mixins/coddeutils'
-import objectUtilsMixin from '@/mixins/objectutils'
 import { PatientRecord } from '@/interfaces/patientrecord'
 
 interface tabItem {
@@ -28,61 +32,61 @@ interface tabItem {
   href: string
 }
 
-export default Vue.extend({
-  mixins: [dateUtilsMixin, codeUtilsMixin, objectUtilsMixin],
+export default defineComponent({
+  setup() {
+    const route = useRoute()
+    const { $axios, $config, $hasPermission } = useContext()
 
-  data() {
-    return {
-      record: {} as PatientRecord,
-      baseTabs: [
-        {
-          name: 'Overview',
-          href: `/patientrecords/${this.$route.params.pid}`,
-        },
-        {
-          name: 'Medications',
-          href: `/patientrecords/${this.$route.params.pid}/medications`,
-        },
-        {
-          name: 'Lab Orders',
-          href: `/patientrecords/${this.$route.params.pid}/laborders`,
-        },
-        {
-          name: 'Observations',
-          href: `/patientrecords/${this.$route.params.pid}/observations`,
-        },
-        {
-          name: 'Surveys',
-          href: `/patientrecords/${this.$route.params.pid}/surveys`,
-        },
-      ] as tabItem[],
-    }
-  },
-  async fetch() {
-    // Get the main record data
-    const path = `${this.$config.apiBase}/patientrecords/${this.$route.params.pid}/`
-    const res: PatientRecord = await this.$axios.$get(path)
-    this.record = res
-  },
-  head() {
-    return {
-      title: 'Patient Record',
-    }
-  },
-  computed: {
-    tabs(): tabItem[] {
+    const record = ref({} as PatientRecord)
+    const baseTabs = [
+      {
+        name: 'Overview',
+        href: `/patientrecords/${route.value.params.pid}`,
+      },
+      {
+        name: 'Medications',
+        href: `/patientrecords/${route.value.params.pid}/medications`,
+      },
+      {
+        name: 'Lab Orders',
+        href: `/patientrecords/${route.value.params.pid}/laborders`,
+      },
+      {
+        name: 'Observations',
+        href: `/patientrecords/${route.value.params.pid}/observations`,
+      },
+      {
+        name: 'Surveys',
+        href: `/patientrecords/${route.value.params.pid}/surveys`,
+      },
+    ] as tabItem[]
+    const tabs = computed(() => {
       return [
-        ...this.baseTabs,
-        ...(this.$hasPermission('ukrdc:mirth:write')
+        ...baseTabs,
+        ...($hasPermission('ukrdc:mirth:write')
           ? [
               {
                 name: 'Export',
-                href: `/patientrecords/${this.$route.params.pid}/export`,
+                href: `/patientrecords/${route.value.params.pid}/export`,
               },
             ]
           : []),
       ]
-    },
+    })
+
+    useFetch(async () => {
+      const path = `${$config.apiBase}/patientrecords/${route.value.params.pid}/`
+      const res: PatientRecord = await $axios.$get(path)
+      record.value = res
+    })
+
+    return {
+      record,
+      tabs,
+    }
+  },
+  head: {
+    title: 'Patient Record',
   },
 })
 </script>
