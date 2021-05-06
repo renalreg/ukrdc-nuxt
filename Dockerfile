@@ -1,25 +1,11 @@
-FROM node:16-alpine as builder
+FROM node:16-alpine
 
 WORKDIR /app
 
 COPY package.json ./
 RUN yarn
-
 COPY . .
-
 RUN yarn build
 
-
-FROM node:16-alpine
-
 ENV HOST="0.0.0.0"
-
-WORKDIR /app
-
-COPY package.json ./
-RUN yarn --production
-
-COPY . .
-COPY --from=builder /app/.nuxt ./.nuxt/
-
 CMD [ "yarn", "start" ]
