@@ -53,7 +53,7 @@
             v-for="item in messages"
             :key="item.channelName + item.connectorName"
             :message="item"
-            @viewSourceClick="$refs.messageViewerModal.show(item)"
+            @viewSourceClick="messageViewerModal.show(item)"
           />
         </div>
 
@@ -66,70 +66,86 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import {
+  defineComponent,
+  ref,
+  useRoute,
+  useFetch,
+  useContext,
+  computed,
+} from '@nuxtjs/composition-api'
 
-import dateUtilsMixin from '@/mixins/dateutils'
-import codeUtilsMixin from '@/mixins/coddeutils'
-import objectUtilsMixin from '@/mixins/objectutils'
+import { messageViewerModalInterface } from '@/interfaces/modal'
 import { ChannelMessage, ConnectorMessage } from '@/interfaces/mirth'
+
+import { isEmptyObject } from '@/utilities/objectUtils'
 
 interface ChainMap {
   [key: number]: ConnectorMessage[]
 }
 
-export default Vue.extend({
-  mixins: [dateUtilsMixin, codeUtilsMixin, objectUtilsMixin],
+export default defineComponent({
+  setup() {
+    const route = useRoute()
+    const { $axios, $config } = useContext()
 
-  data() {
-    return {
-      message: {} as ChannelMessage,
-      chain: {} as ChainMap,
-      openMessage: {} as ConnectorMessage,
-      formatMessage: true,
-    }
-  },
-  async fetch() {
-    // Get the main record data
-    const path = `${this.$config.apiBase}/mirth/channels/${this.$route.params.channel}/messages/${this.$route.params.id}/`
-    const res: ChannelMessage = await this.$axios.$get(path)
-    this.message = res
-    this.parseChain()
-  },
-  computed: {
-    channelName(): string {
+    const message = ref({} as ChannelMessage)
+    const chain = ref({} as ChainMap)
+
+    // Template refs
+    const messageViewerModal = ref<messageViewerModalInterface>()
+
+    const channelName = computed(() => {
       let name: string = ''
-      for (const msg of this.message.connectorMessages) {
+      for (const msg of message.value.connectorMessages) {
         if (!name.includes(msg.channelName)) {
           name = name + '/' + msg.channelName
         }
       }
       return name.substring(1)
-    },
-    hasErrors(): boolean {
-      for (const msg of this.message.connectorMessages) {
+    })
+
+    const hasErrors = computed(() => {
+      for (const msg of message.value.connectorMessages) {
         if (msg.errorCode !== 0) {
           return true
         }
       }
       return false
-    },
-  },
-  methods: {
-    parseChain(): void {
-      if (this.message.connectorMessages) {
-        for (const msg of this.message.connectorMessages) {
-          if (!(msg.chainId in this.chain)) {
-            this.chain[msg.chainId] = []
+    })
+
+    useFetch(async () => {
+      // Get the main record data
+      const path = `${$config.apiBase}/mirth/channels/${route.value.params.channel}/messages/${route.value.params.id}/`
+      const res: ChannelMessage = await $axios.$get(path)
+      message.value = res
+      parseChain()
+    })
+
+    function parseChain(): void {
+      if (message.value.connectorMessages) {
+        for (const msg of message.value.connectorMessages) {
+          if (!(msg.chainId in chain.value)) {
+            chain.value[msg.chainId] = []
           }
-          this.chain[msg.chainId].push(msg)
+          chain.value[msg.chainId].push(msg)
         }
-        for (const index in this.chain) {
-          this.chain[index].sort((a: ConnectorMessage, b: ConnectorMessage) =>
+        for (const index in chain.value) {
+          chain.value[index].sort((a: ConnectorMessage, b: ConnectorMessage) =>
             a.orderId > b.orderId ? 1 : -1
           )
         }
       }
-    },
+    }
+
+    return {
+      messageViewerModal,
+      message,
+      chain,
+      channelName,
+      hasErrors,
+      isEmptyObject,
+    }
   },
 })
 </script>
