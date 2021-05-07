@@ -10,47 +10,7 @@
         <GenericCheckbox v-model="statuses" label="WIP" :value="2" />
         <GenericCheckbox v-model="statuses" label="Closed" :value="3" />
       </div>
-      <div>
-        <client-only>
-          <v-date-picker
-            v-model="range"
-            :model-config="modelConfig"
-            color="indigo"
-            is-range
-          >
-            <template #default="{ inputValue, inputEvents }">
-              <div class="flex items-center">
-                <input
-                  type="text"
-                  :value="inputValue.start"
-                  class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 w-full sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-                  v-on="inputEvents.start"
-                />
-                <svg
-                  class="w-4 h-4 mx-2"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                  />
-                </svg>
-                <input
-                  type="text"
-                  :value="inputValue.end"
-                  class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 w-full sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-                  v-on="inputEvents.end"
-                />
-              </div>
-            </template>
-          </v-date-picker>
-        </client-only>
-        <p v-if="!since" class="text-xs italic mt-1">Filter by date</p>
-      </div>
+      <GenericDateRange v-model="range" />
     </div>
 
     <div v-if="workitems.length > 0">
@@ -94,9 +54,7 @@ import {
 } from '@nuxtjs/composition-api'
 
 import usePagination from '@/mixins/usePagination'
-
-import { singleQuery } from '@/utilities/queryUtils'
-import { todayString, DateRange } from '@/utilities/dateUtils'
+import useDateRange from '@/mixins/useDateRange'
 
 import { WorkItemShort } from '@/interfaces/workitem'
 
@@ -114,6 +72,7 @@ export default defineComponent({
 
     const { $axios, $config } = useContext()
     const { page, total, size } = usePagination()
+    const { range, since, until } = useDateRange()
 
     const workitems = ref([] as WorkItemShort[])
 
@@ -134,43 +93,6 @@ export default defineComponent({
         })
       },
     })
-
-    const since = ref((singleQuery(route.value.query.since) || null) as string)
-    const until = ref(
-      (singleQuery(route.value.query.until) || todayString(0)) as string
-    )
-    const range = computed({
-      get: () => {
-        return {
-          start: since.value,
-          end: since.value,
-        }
-      },
-      set(newRange: DateRange) {
-        since.value = newRange.start
-        until.value = newRange.end
-
-        const newQuery = Object.assign({}, route.value.query, {
-          since: since.value,
-          until: until.value,
-        })
-        router.push({
-          path: route.value.path,
-          query: newQuery,
-        })
-      },
-    })
-
-    const modelConfig = {
-      start: {
-        type: 'string',
-        mask: 'YYYY-MM-DD',
-      },
-      end: {
-        type: 'string',
-        mask: 'YYYY-MM-DD',
-      },
-    }
 
     const { fetch } = useFetch(async () => {
       // Fetch the dashboard response from our API server
@@ -205,12 +127,11 @@ export default defineComponent({
       page,
       total,
       size,
+      range,
       since,
       until,
       workitems,
       statuses,
-      range,
-      modelConfig,
     }
   },
   head: {
