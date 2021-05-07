@@ -88,10 +88,10 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
 
-import dateUtilsMixin from '@/mixins/dateutils'
-import objectUtilsMixin from '@/mixins/objectutils'
+import { formatDate } from '@/utilities/dateUtils'
+
 import { Survey, SurveyQuestion } from '@/interfaces/survey'
 import { modalInterface } from '@/interfaces/modal'
 
@@ -99,45 +99,48 @@ interface GroupedQuestions {
   [key: string]: SurveyQuestion[]
 }
 
-export default Vue.extend({
-  mixins: [dateUtilsMixin, objectUtilsMixin],
-  data() {
-    return {
-      survey: {} as Survey,
-    }
-  },
-  computed: {
-    availableToOpen(): boolean {
-      return !(Object.keys(this.survey).length === 0)
-    },
-    groupedQuestions(): object {
-      if (!this.survey.questions) {
+export default defineComponent({
+  setup() {
+    const survey = ref({} as Survey)
+    const availableToOpen = computed(() => {
+      return !(Object.keys(survey.value).length === 0)
+    })
+    const groupedQuestions = computed(() => {
+      if (!survey.value.questions) {
         return {}
       }
       const groups = {} as GroupedQuestions
-      for (const question of this.survey.questions) {
+      for (const question of survey.value.questions) {
         if (!(question.questionGroup in groups)) {
           groups[question.questionGroup] = []
         }
         groups[question.questionGroup].push(question)
       }
       return groups
-    },
-  },
-  methods: {
-    hide(): void {
-      const el = this.$refs.surveyViewerGenericModalMaxSlot as modalInterface
-      el.hide()
-    },
-    toggle(): void {
-      const el = this.$refs.surveyViewerGenericModalMaxSlot as modalInterface
-      el.toggle()
-    },
-    show(survey: Survey): void {
-      this.survey = survey
-      const el = this.$refs.surveyViewerGenericModalMaxSlot as modalInterface
-      el.show()
-    },
+    })
+
+    const surveyViewerGenericModalMaxSlot = ref<modalInterface>()
+    function hide(): void {
+      surveyViewerGenericModalMaxSlot.value?.hide()
+    }
+    function toggle(): void {
+      surveyViewerGenericModalMaxSlot.value?.toggle()
+    }
+    function show(surveyToShow: Survey): void {
+      survey.value = surveyToShow
+      surveyViewerGenericModalMaxSlot.value?.show()
+    }
+
+    return {
+      survey,
+      availableToOpen,
+      groupedQuestions,
+      surveyViewerGenericModalMaxSlot,
+      hide,
+      toggle,
+      show,
+      formatDate,
+    }
   },
 })
 </script>
