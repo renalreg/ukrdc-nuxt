@@ -97,49 +97,66 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import {
+  defineComponent,
+  ref,
+  useRoute,
+  useFetch,
+  useContext,
+} from '@nuxtjs/composition-api'
 
-import dateUtilsMixin from '@/mixins/dateutils'
-import codeUtilsMixin from '@/mixins/coddeutils'
-import objectUtilsMixin from '@/mixins/objectutils'
+import { formatDate } from '@/utilities/dateUtils'
+import { formatGender } from '@/utilities/codeUtils'
+
 import { MasterRecord } from '@/interfaces/masterrecord'
 import { WorkItem } from '@/interfaces/workitem'
 import { PatientRecordShort } from '@/interfaces/patientrecord'
 
-export default Vue.extend({
-  mixins: [dateUtilsMixin, codeUtilsMixin, objectUtilsMixin],
+export default defineComponent({
+  setup() {
+    const route = useRoute()
+    const { $axios, $config, $hasPermission } = useContext()
 
-  data() {
+    const record = ref({} as MasterRecord)
+    const relatedRecords = ref([] as MasterRecord[])
+    const workItems = ref([] as WorkItem[])
+    const patientRecords = ref([] as PatientRecordShort[])
+
+    useFetch(async () => {
+      // Get the main record data
+      const path = `${$config.apiBase}/empi/masterrecords/${route.value.params.id}/`
+      const res: MasterRecord = await $axios.$get(path)
+      record.value = res
+
+      // Use the record links to load related data concurrently
+      const [
+        relatedRecordsResponse,
+        workItemsResponse,
+        patientRecordsResponse,
+      ] = await Promise.all([
+        $axios.$get(record.value.links.related),
+        $hasPermission('ukrdc:empi:write')
+          ? $axios.$get(record.value.links.workitems)
+          : null,
+        $axios.$get(record.value.links.patientrecords),
+      ])
+
+      relatedRecords.value = relatedRecordsResponse
+      workItems.value = workItemsResponse
+      patientRecords.value = patientRecordsResponse
+    })
+
     return {
-      record: {} as MasterRecord,
-      relatedRecords: [] as MasterRecord[],
-      workItems: [] as WorkItem[],
-      patientRecords: [] as PatientRecordShort[],
+      record,
+      workItems,
+      patientRecords,
+      relatedRecords,
+      formatGender,
+      formatDate,
     }
   },
-  async fetch() {
-    // Get the main record data
-    const path = `${this.$config.apiBase}/empi/masterrecords/${this.$route.params.id}/`
-    const res: MasterRecord = await this.$axios.$get(path)
-    this.record = res
-
-    // Use the record links to load related data concurrently
-    const [relatedRecords, workItems, patientRecords] = await Promise.all([
-      this.$axios.$get(this.record.links.related),
-      this.$hasPermission('ukrdc:empi:write')
-        ? this.$axios.$get(this.record.links.workitems)
-        : null,
-      this.$axios.$get(this.record.links.patientrecords),
-    ])
-
-    this.relatedRecords = relatedRecords
-    this.workItems = workItems
-    this.patientRecords = patientRecords
-  },
-  head() {
-    return {
-      title: 'Master Records',
-    }
+  head: {
+    title: 'Master Records',
   },
 })
 </script>

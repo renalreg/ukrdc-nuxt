@@ -26,8 +26,8 @@
           :page="page"
           :size="size"
           :total="total"
-          @next="changePage(page + 1)"
-          @prev="changePage(page - 1)"
+          @next="page++"
+          @prev="page--"
         />
       </GenericCard>
     </div>
@@ -52,7 +52,17 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import {
+  defineComponent,
+  watch,
+  ref,
+  useRoute,
+  useRouter,
+  useFetch,
+  useContext,
+} from '@nuxtjs/composition-api'
+
+import usePagination from '@/mixins/usePagination'
 
 import { MasterRecord } from '@/interfaces/masterrecord'
 
@@ -63,96 +73,83 @@ interface MasterRecordPage {
   size: number
 }
 
-export default Vue.extend({
-  props: {},
-  data() {
-    return {
-      masterrecords: [] as MasterRecord[],
-      total: 0,
-      page: (this.$route.query.page || 0) as number,
-      size: 20,
-      search: (this.$route.query.search || []) as string[],
-      numberType: (this.$route.query.number_type || []) as string[],
-      searchboxString: '',
-    }
-  },
-  async fetch() {
-    this.search = this.$route.query.search as string[]
-    if (this.search && this.search.length > 0) {
-      // Set the search string
-      this.searchboxString = this.buildSearchStringFromQueryArray()
-      // Build our query string from search terms and page info
-      const path = `${
-        this.$config.apiBase
-      }/empi/search/masterrecords/?${this.buildQueryStringFromArray(
-        this.search,
-        'search'
-      )}&${this.buildQueryStringFromArray(
-        this.numberType,
-        'number_type'
-      )}&page=${this.page}&size=${this.size}`
-      // Fetch the search results from our API server
-      const res: MasterRecordPage = await this.$axios.$get(path)
-      this.masterrecords = res.items
-      this.total = res.total
-      this.page = res.page
-      this.size = res.size
-    }
-  },
-  head() {
-    return {
-      title: 'Master Records',
-    }
-  },
-  watch: {
-    // We want to re-trigger a search if the route query changes,
-    // E.g. a user navigates back in their browser without refreshing
-    '$route.query': '$fetch',
-  },
-  methods: {
-    changePage(newPage: number): void {
-      this.page = newPage
-      const newQuery = Object.assign({}, this.$route.query, {
-        page: newPage.toString(),
-      })
-      this.$router.push({
-        path: this.$route.path,
-        query: newQuery,
-      })
-    },
-    searchSubmit(): void {
+export default defineComponent({
+  setup() {
+    const route = useRoute()
+    const router = useRouter()
+
+    const { $axios, $config } = useContext()
+    const { page, total, size } = usePagination()
+
+    const masterrecords = ref([] as MasterRecord[])
+
+    const search = ref((route.value.query.search || []) as string[])
+    const numberType = ref((route.value.query.number_type || []) as string[])
+    const searchboxString = ref('')
+
+    const { fetch } = useFetch(async () => {
+      search.value = route.value.query.search as string[]
+      if (search.value && search.value.length > 0) {
+        // Set the search string
+        searchboxString.value = buildSearchStringFromQueryArray()
+        // Build our query string from search terms and page info
+        const path = `${
+          $config.apiBase
+        }/empi/search/masterrecords/?${buildQueryStringFromArray(
+          search.value,
+          'search'
+        )}&${buildQueryStringFromArray(numberType.value, 'number_type')}&page=${
+          page.value
+        }&size=${size.value}`
+        // Fetch the search results from our API server
+        const res: MasterRecordPage = await $axios.$get(path)
+        masterrecords.value = res.items
+        total.value = res.total
+        page.value = res.page
+        size.value = res.size
+      }
+    })
+
+    watch(route, () => {
+      fetch()
+    })
+
+    function searchSubmit(): void {
       // Build a search query from our search string
-      this.search = this.buildQueryArrayFromSearchString()
+      search.value = buildQueryArrayFromSearchString()
       // Reset page
-      this.page = 0
+      page.value = 0
       // Navigate to the search query path
-      this.$router.push({
-        path: this.$route.path,
-        query: { search: this.search, number_type: this.numberType },
+      router.push({
+        path: route.value.path,
+        query: { search: search.value, number_type: numberType.value },
       })
-    },
-    buildQueryArrayFromSearchString(): string[] {
+    }
+
+    function buildQueryArrayFromSearchString(): string[] {
       // Builds an array of strings from a search bar string.
       // e.g. 'john & 1970-03-01' becomes ['john', '1949-03-01']
-      const sections: string[] = this.searchboxString.split('&')
+      const sections: string[] = searchboxString.value.split('&')
       return sections.map(function (s: string) {
         return s.trim()
       })
-    },
-    buildSearchStringFromQueryArray(): string {
+    }
+
+    function buildSearchStringFromQueryArray(): string {
       // Builds a search bar string from an array of strings.
       // e.g. ['john', '1949-03-01'] becomes john & 1949-03-01
-      if (Array.isArray(this.search)) {
+      if (Array.isArray(search.value)) {
         let q = ''
-        for (const term of this.search) {
+        for (const term of search.value) {
           q = q.concat(`${term} & `)
         }
         return q.slice(0, -3) // Remove trailing ' & '
       } else {
-        return this.search
+        return search.value
       }
-    },
-    buildQueryStringFromArray(
+    }
+
+    function buildQueryStringFromArray(
       input: string[] | string,
       queryName: string
     ): string {
@@ -167,7 +164,20 @@ export default Vue.extend({
       } else {
         return `${queryName}=${input}`
       }
-    },
+    }
+
+    return {
+      masterrecords,
+      searchboxString,
+      searchSubmit,
+      search,
+      page,
+      size,
+      total,
+    }
+  },
+  head: {
+    title: 'Master Records',
   },
 })
 </script>
