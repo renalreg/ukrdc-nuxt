@@ -113,18 +113,17 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 
-export default Vue.extend({
-  data() {
-    return {
-      sbOpen: false,
+export default defineComponent({
+  setup() {
+    const sbOpen = ref(false)
+
+    function toggle() {
+      sbOpen.value = !sbOpen.value
     }
-  },
-  methods: {
-    toggle() {
-      this.sbOpen = !this.sbOpen
-    },
+
+    return { sbOpen, toggle }
   },
 })
 </script>
