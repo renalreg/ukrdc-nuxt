@@ -1,9 +1,7 @@
 # MIXINS
 
-This directory contains some Vue mixins providing functions common to many components.
+Technically not mixins in the Vue 2 Options API sense. 
 
-## Composition API 'use' modules
-
-As we migrate to the composition API, this folder will become only populated by modules beginning with the `use` prefix. These function kind of like abstract base classes to provide foundations for components to build on.
+Modules beginning with the `use` prefix, used by the composition API to augment component functionality. These function kind of like abstract base classes to provide foundations for components to build on.
 
 For example, `usePagination` creates basic functionality for pages that use URL query-based pagination.
