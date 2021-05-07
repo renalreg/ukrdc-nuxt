@@ -26,8 +26,7 @@
                 ></path>
               </svg>
               <input
-                class="flex-grow pl-8 pr-2 py-1 bg-gray-100 border rounded w-full"
-                :class="isDragging ? 'text-gray-600' : 'text-gray-900'"
+                :class="textBoxClasses"
                 :value="inputValue.start"
                 v-on="inputEvents.start"
               />
@@ -60,8 +59,7 @@
                 ></path>
               </svg>
               <input
-                class="flex-grow pl-8 pr-2 py-1 bg-gray-100 border rounded w-full"
-                :class="isDragging ? 'text-gray-600' : 'text-gray-900'"
+                :class="textBoxClasses"
                 :value="inputValue.end"
                 v-on="inputEvents.end"
               />
@@ -99,6 +97,11 @@ export default defineComponent({
       }),
     },
   },
-  setup() {},
+  setup() {
+    const textBoxClasses =
+      'flex-grow pl-8 pr-2 py-1 w-full bg-white border border-gray-300 rounded-md placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500'
+
+    return { textBoxClasses }
+  },
 })
 </script>
