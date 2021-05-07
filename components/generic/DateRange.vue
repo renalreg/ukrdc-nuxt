@@ -9,7 +9,7 @@
         is-range
         v-on="$listeners"
       >
-        <template #default="{ inputValue, inputEvents, isDragging }">
+        <template #default="{ inputValue, inputEvents }">
           <div class="flex flex-col sm:flex-row justify-start items-center">
             <div class="relative flex-grow">
               <svg
