@@ -56,17 +56,10 @@ export default {
     strategies: {
       okta: {
         scheme: '~/schemes/runtimeConfigurableScheme',
-        token: {
-          property: 'access_token',
-          type: 'Bearer',
-          maxAge: 1800,
-        },
         responseType: 'code',
         grantType: 'authorization_code',
-        scope: ['openid', 'profile', 'email'],
+        scope: ['openid', 'profile', 'email', 'offline_access'],
         codeChallengeMethod: 'S256',
-        autoLogout: true,
-        rewriteRedirects: true,
       },
     },
   },
