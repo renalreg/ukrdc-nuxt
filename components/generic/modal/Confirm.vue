@@ -102,9 +102,10 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent, computed } from '@nuxtjs/composition-api'
+import useModal from '@/mixins/useModal'
 
-export default Vue.extend({
+export default defineComponent({
   props: {
     title: {
       type: String,
@@ -135,40 +136,38 @@ export default Vue.extend({
       default: null,
     },
   },
-  data() {
-    return {
-      visible: false,
-    }
-  },
-  computed: {
-    modalIcon(): string {
-      if (this.icon !== null) {
-        return this.icon
-      } else if (this.danger) {
+
+  setup(props, { emit }) {
+    const { visible, show, hide, toggle } = useModal()
+
+    const modalIcon = computed(() => {
+      if (props.icon !== null) {
+        return props.icon
+      } else if (props.danger) {
         return 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z'
       } else {
         return 'M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
       }
-    },
-  },
-  methods: {
-    confirm(): void {
-      this.$emit('confirm')
-      this.hide()
-    },
-    cancel(): void {
-      this.$emit('cancel')
-      this.hide()
-    },
-    show(): void {
-      this.visible = true
-    },
-    hide(): void {
-      this.visible = false
-    },
-    toggle(): void {
-      this.visible = !this.visible
-    },
+    })
+
+    function confirm(): void {
+      emit('confirm')
+      hide()
+    }
+    function cancel(): void {
+      emit('cancel')
+      hide()
+    }
+
+    return {
+      visible,
+      modalIcon,
+      confirm,
+      cancel,
+      show,
+      hide,
+      toggle,
+    }
   },
 })
 </script>

@@ -45,32 +45,30 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-
-import dateUtilsMixin from '@/mixins/dateutils'
+import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { formatDate } from '@/utilities/dateUtils'
 import { MasterRecord } from '@/interfaces/masterrecord'
 
-export default Vue.extend({
-  mixins: [dateUtilsMixin],
+export default defineComponent({
   props: {
     item: {
       type: Object as () => MasterRecord,
       required: true,
     },
   },
-  computed: {
-    genderChar(): string {
-      if (this.item.gender === '1') {
+
+  setup(props) {
+    const genderChar = computed(() => {
+      if (props.item.gender === '1') {
         return '♂'
-      } else if (this.item.gender === '2') {
+      } else if (props.item.gender === '2') {
         return '♀'
       } else {
         return ''
       }
-    },
-  },
-  methods: {
-    TagClass(nationalidType: string): string[] {
+    })
+
+    function TagClass(nationalidType: string): string[] {
       if (nationalidType.trim() === 'UKRDC') {
         return ['bg-red-100', 'text-red-800']
       } else if (nationalidType.trim() === 'NHS') {
@@ -82,7 +80,9 @@ export default Vue.extend({
       } else {
         return ['bg-gray-100', 'text-gray-800']
       }
-    },
+    }
+
+    return { genderChar, TagClass, formatDate }
   },
 })
 </script>

@@ -34,9 +34,9 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent, computed } from '@nuxtjs/composition-api'
 
-export default Vue.extend({
+export default defineComponent({
   props: {
     delta: {
       type: Number,
@@ -48,24 +48,29 @@ export default Vue.extend({
       default: false,
     },
   },
-  computed: {
-    negative(): boolean {
-      if (Math.sign(this.delta) === -1) {
+
+  setup(props) {
+    const negative = computed(() => {
+      if (Math.sign(props.delta) === -1) {
         return true
       } else {
         return false
       }
-    },
-    styleNegative(): boolean {
-      if (this.invert) {
-        return !this.negative
-      } else {
-        return this.negative
-      }
-    },
-  },
+    })
 
-  methods: {},
+    const styleNegative = computed(() => {
+      if (props.invert) {
+        return !negative
+      } else {
+        return negative
+      }
+    })
+
+    return {
+      negative,
+      styleNegative,
+    }
+  },
 })
 </script>
 

@@ -8,8 +8,9 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-export default Vue.extend({
+import { defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({
   props: {
     colour: {
       type: String,
@@ -17,10 +18,15 @@ export default Vue.extend({
       default: 'gray',
     },
   },
-  methods: {
-    TagClass(): string[] {
-      return [`bg-${this.colour}-100`, `text-${this.colour}-800`]
-    },
+
+  setup(props) {
+    function TagClass(): string[] {
+      return [`bg-${props.colour}-100`, `text-${props.colour}-800`]
+    }
+
+    return {
+      TagClass,
+    }
   },
 })
 </script>

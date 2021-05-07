@@ -31,25 +31,28 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent, computed } from '@nuxtjs/composition-api'
 import { ConnectorMessage } from '@/interfaces/mirth'
 
-export default Vue.extend({
+export default defineComponent({
   props: {
     message: {
       type: Object as () => ConnectorMessage,
       required: true,
     },
   },
-  computed: {
-    errorMessage(): string | null {
-      if (this.message.metaDataMap?.ERROR) {
-        return this.message.metaDataMap.ERROR
-      } else if (this.message.errorCode !== 0) {
-        return `Error code ${this.message.errorCode}`
+
+  setup(props) {
+    const errorMessage = computed(() => {
+      if (props.message.metaDataMap?.ERROR) {
+        return props.message.metaDataMap.ERROR
+      } else if (props.message.errorCode !== 0) {
+        return `Error code ${props.message.errorCode}`
       }
       return null
-    },
+    })
+
+    return { errorMessage }
   },
 })
 </script>

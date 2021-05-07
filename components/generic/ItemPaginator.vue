@@ -31,8 +31,9 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-export default Vue.extend({
+import { defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({
   props: {
     value: {
       type: Number,
@@ -48,13 +49,17 @@ export default Vue.extend({
       default: 'Item',
     },
   },
-  methods: {
-    next(): void {
-      this.$emit('input', this.value + 1)
-    },
-    prev(): void {
-      this.$emit('input', this.value - 1)
-    },
+
+  setup(props, { emit }) {
+    function next(): void {
+      emit('input', props.value + 1)
+    }
+
+    function prev(): void {
+      emit('input', props.value - 1)
+    }
+
+    return { next, prev }
   },
 })
 </script>

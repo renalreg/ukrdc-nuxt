@@ -35,18 +35,19 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-
-import dateUtilsMixin from '@/mixins/dateutils'
+import { defineComponent } from '@nuxtjs/composition-api'
+import { formatDate } from '@/utilities/dateUtils'
 import { WorkItemShort } from '@/interfaces/workitem'
 
-export default Vue.extend({
-  mixins: [dateUtilsMixin],
+export default defineComponent({
   props: {
     item: {
       type: Object as () => WorkItemShort,
       required: true,
     },
+  },
+  setup() {
+    return { formatDate }
   },
 })
 </script>

@@ -33,9 +33,9 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent, computed } from '@nuxtjs/composition-api'
 
-export default Vue.extend({
+export default defineComponent({
   props: {
     title: {
       type: String,
@@ -57,20 +57,18 @@ export default Vue.extend({
       default: false,
     },
   },
-  data() {
-    return {}
-  },
-  computed: {
-    delta(): number | null {
-      if (this.previousValue) {
-        return this.value - this.previousValue
+
+  setup(props) {
+    const delta = computed(() => {
+      if (props.previousValue) {
+        return props.value - props.previousValue
       } else {
         return null
       }
-    },
-  },
+    })
 
-  methods: {},
+    return { delta }
+  },
 })
 </script>
 

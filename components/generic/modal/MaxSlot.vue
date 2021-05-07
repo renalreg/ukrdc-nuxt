@@ -54,24 +54,19 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent } from '@nuxtjs/composition-api'
+import useModal from '@/mixins/useModal'
 
-export default Vue.extend({
-  data() {
+export default defineComponent({
+  setup() {
+    const { visible, show, hide, toggle } = useModal()
+
     return {
-      visible: false,
+      visible,
+      show,
+      hide,
+      toggle,
     }
-  },
-  methods: {
-    show(): void {
-      this.visible = true
-    },
-    hide(): void {
-      this.visible = false
-    },
-    toggle(): void {
-      this.visible = !this.visible
-    },
   },
 })
 </script>

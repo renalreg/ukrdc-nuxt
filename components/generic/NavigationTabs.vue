@@ -41,14 +41,14 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent } from '@nuxtjs/composition-api'
 
 export interface Tabs {
   name: string
   href: string
 }
 
-export default Vue.extend({
+export default defineComponent({
   props: {
     tabs: {
       type: Array as () => Tabs[],

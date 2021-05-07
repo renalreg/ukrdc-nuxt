@@ -40,11 +40,11 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent } from '@nuxtjs/composition-api'
 
 import { DashStatistics } from 'interfaces/dash'
 
-export default Vue.extend({
+export default defineComponent({
   props: {
     workitems: {
       type: Object as () => DashStatistics,
@@ -57,10 +57,6 @@ export default Vue.extend({
       default: null,
     },
   },
-  data() {
-    return {}
-  },
-  methods: {},
 })
 </script>
 

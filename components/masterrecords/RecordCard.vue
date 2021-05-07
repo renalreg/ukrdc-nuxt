@@ -48,15 +48,13 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent } from '@nuxtjs/composition-api'
+import { formatDate } from '@/utilities/dateUtils'
+import { formatGender } from '@/utilities/codeUtils'
 
-import dateUtilsMixin from '@/mixins/dateutils'
-import codeUtilsMixin from '@/mixins/coddeutils'
 import { MasterRecord } from '~/interfaces/masterrecord'
 
-export default Vue.extend({
-  mixins: [dateUtilsMixin, codeUtilsMixin],
-
+export default defineComponent({
   props: {
     record: {
       type: Object as () => MasterRecord,
@@ -67,6 +65,9 @@ export default Vue.extend({
       required: false,
       default: null,
     },
+  },
+  setup() {
+    return { formatDate, formatGender }
   },
 })
 </script>

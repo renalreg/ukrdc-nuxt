@@ -36,18 +36,19 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-
-import dateUtilsMixin from '@/mixins/dateutils'
+import { defineComponent } from '@nuxtjs/composition-api'
+import { formatDate } from '@/utilities/dateUtils'
 import { Message } from '@/interfaces/errors'
 
-export default Vue.extend({
-  mixins: [dateUtilsMixin],
+export default defineComponent({
   props: {
     item: {
       type: Object as () => Message,
       required: true,
     },
+  },
+  setup() {
+    return { formatDate }
   },
 })
 </script>

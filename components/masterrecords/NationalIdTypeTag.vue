@@ -8,16 +8,18 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-export default Vue.extend({
+import { defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({
   props: {
     nationalidType: {
       type: String,
       required: true,
     },
   },
-  methods: {
-    TagClass(nationalidType: string): string[] {
+
+  setup() {
+    function TagClass(nationalidType: string): string[] {
       if (nationalidType.trim().endsWith('UKRDC')) {
         return ['bg-red-100', 'text-red-800']
       } else if (nationalidType.trim().endsWith('NHS')) {
@@ -29,7 +31,9 @@ export default Vue.extend({
       } else {
         return ['bg-gray-100', 'text-gray-800']
       }
-    },
+    }
+
+    return { TagClass }
   },
 })
 </script>

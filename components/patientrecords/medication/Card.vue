@@ -32,21 +32,22 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent } from '@nuxtjs/composition-api'
 
-import dateUtilsMixin from '@/mixins/dateutils'
-import codeUtilsMixin from '@/mixins/coddeutils'
+import { formatDate } from '@/utilities/dateUtils'
+import { formatGender } from '@/utilities/codeUtils'
 
 import { Medication } from '@/interfaces/medication'
 
-export default Vue.extend({
-  mixins: [dateUtilsMixin, codeUtilsMixin],
-
+export default defineComponent({
   props: {
     item: {
       type: Object as () => Medication,
       required: true,
     },
+  },
+  setup() {
+    return { formatDate, formatGender }
   },
 })
 </script>

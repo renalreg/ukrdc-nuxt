@@ -91,12 +91,11 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { formatDate } from '@/utilities/dateUtils'
+import { formatGender } from '@/utilities/codeUtils'
 
 import { Person } from '@/interfaces/persons'
-
-import dateUtilsMixin from '@/mixins/dateutils'
-import codeUtilsMixin from '@/mixins/coddeutils'
 
 interface realLocalId {
   localid: string
@@ -104,9 +103,7 @@ interface realLocalId {
   sendingFacility?: string
 }
 
-export default Vue.extend({
-  mixins: [dateUtilsMixin, codeUtilsMixin],
-
+export default defineComponent({
   props: {
     record: {
       type: Object as () => Person,
@@ -129,30 +126,26 @@ export default Vue.extend({
     },
   },
 
-  data() {
-    return {
-      highlightClasses: [
-        'bg-red-100',
-        'text-red-800',
-        'font-medium',
-        'rounded-md',
-        'pl-2',
-        '-ml-2',
-        'pr-2',
-        'mr-2',
-      ],
-    }
-  },
+  setup(props) {
+    const highlightClasses = [
+      'bg-red-100',
+      'text-red-800',
+      'font-medium',
+      'rounded-md',
+      'pl-2',
+      '-ml-2',
+      'pr-2',
+      'mr-2',
+    ]
 
-  computed: {
-    realLocalID(): realLocalId {
-      if (this.record.localidType !== 'CLPID') {
+    const realLocalID = computed<realLocalId>(() => {
+      if (props.record.localidType !== 'CLPID') {
         return {
-          localid: this.record.localid,
+          localid: props.record.localid,
         }
       }
-      for (const xref of this.record.xrefEntries) {
-        if (xref.pid === this.record.localid) {
+      for (const xref of props.record.xrefEntries) {
+        if (xref.pid === props.record.localid) {
           return {
             localid: xref.localid,
             sendingExtract: xref.sendingExtract,
@@ -161,9 +154,11 @@ export default Vue.extend({
         }
       }
       return {
-        localid: this.record.localid,
+        localid: props.record.localid,
       }
-    },
+    })
+
+    return { formatDate, formatGender, highlightClasses, realLocalID }
   },
 })
 </script>

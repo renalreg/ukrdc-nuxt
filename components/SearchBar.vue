@@ -41,9 +41,9 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
 
-export default Vue.extend({
+export default defineComponent({
   props: {
     value: {
       type: String,
@@ -55,15 +55,17 @@ export default Vue.extend({
       default: false,
     },
   },
-  data() {
-    return {}
+
+  setup(props) {
+    const searchBoxRef = ref<HTMLFormElement>()
+
+    onMounted(() => {
+      if (props.focus) {
+        searchBoxRef.value?.focus()
+      }
+    })
+
+    return { searchBoxRef }
   },
-  mounted() {
-    if (this.focus) {
-      const el = this.$refs.searchBoxRef as HTMLFormElement
-      el.focus()
-    }
-  },
-  methods: {},
 })
 </script>
