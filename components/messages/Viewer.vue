@@ -56,10 +56,9 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent, ref, computed, watch } from '@nuxtjs/composition-api'
 
 import formatXml from 'xml-formatter'
-import objectUtilsMixin from '@/mixins/objectutils'
 import {
   ConnectorMessageData,
   ConnectorMessage,
@@ -74,79 +73,97 @@ interface ConnectorMessageDataTabs {
   response: ConnectorMessageData
 }
 
-export default Vue.extend({
-  mixins: [objectUtilsMixin],
-  data() {
-    return {
-      message: {} as ConnectorMessage,
-      formatMessage: true,
-      currentTab: 'metadata',
-    }
-  },
-  computed: {
-    availableMessageData(): ConnectorMessageDataTabs {
+export default defineComponent({
+  setup() {
+    const message = ref({} as ConnectorMessage)
+    const formatMessage = ref(true)
+
+    // Manage viewer tabs
+    const currentTab = ref('metadata')
+
+    const tabs = computed(() => {
+      return ['metadata'].concat(Object.keys(availableMessageData.value))
+    })
+
+    watch(message, () => {
+      currentTab.value = tabs.value[0]
+    })
+
+    // Handle message and metadata
+    const availableMessageData = computed<ConnectorMessageDataTabs>(() => {
       const tabs = {} as ConnectorMessageDataTabs
-      if (this.message.raw !== null) {
-        tabs.raw = this.message.raw
+      if (message.value.raw !== null) {
+        tabs.raw = message.value.raw
       }
-      if (this.message.encoded !== null) {
-        tabs.encoded = this.message.encoded
+      if (message.value.encoded !== null) {
+        tabs.encoded = message.value.encoded
       }
-      if (this.message.sent !== null) {
-        tabs.sent = this.message.sent
+      if (message.value.sent !== null) {
+        tabs.sent = message.value.sent
       }
-      if (this.message.response !== null) {
-        tabs.response = this.message.response
+      if (message.value.response !== null) {
+        tabs.response = message.value.response
       }
       return tabs
-    },
-    tabs(): string[] {
-      return ['metadata'].concat(Object.keys(this.availableMessageData))
-    },
-    nonNullMetadata(): MetaDataMap {
-      if (this.message.metaDataMap) {
+    })
+
+    const nonNullMetadata = computed<MetaDataMap>(() => {
+      if (message.value.metaDataMap) {
         return Object.fromEntries(
-          Object.entries(this.message.metaDataMap).filter(([_, v]) => v != null)
+          Object.entries(message.value.metaDataMap).filter(
+            ([_, v]) => v != null
+          )
         )
       } else {
         return {}
       }
-    },
-  },
-  watch: {
-    // Watch for changes in message. When message changes, reset to first tab.
-    // Otherwise, you could open a message with the viewer set to a tab that no longer exists
-    message() {
-      this.currentTab = this.tabs[0]
-    },
-  },
-  methods: {
-    formatMessageToXML(messageData: ConnectorMessageData): string {
+    })
+
+    function formatMessageToXML(messageData: ConnectorMessageData): string {
       if (messageData.content === null) {
         return ''
       }
-      if (!this.formatMessage) {
+      if (!formatMessage.value) {
         return messageData.content
       } else {
         return formatXml(messageData.content)
       }
-    },
-    formatMessageToXMLArray(messageData: ConnectorMessageData): string[] {
-      return this.formatMessageToXML(messageData).split('\n')
-    },
-    hide(): void {
-      const el = this.$refs.messageViewerGenericModalMaxSlot as modalInterface
-      el.hide()
-    },
-    toggle(): void {
-      const el = this.$refs.messageViewerGenericModalMaxSlot as modalInterface
-      el.toggle()
-    },
-    show(message: ConnectorMessage): void {
-      this.message = message
-      const el = this.$refs.messageViewerGenericModalMaxSlot as modalInterface
-      el.show()
-    },
+    }
+
+    function formatMessageToXMLArray(
+      messageData: ConnectorMessageData
+    ): string[] {
+      return formatMessageToXML(messageData).split('\n')
+    }
+
+    // Modal visibility
+    const messageViewerGenericModalMaxSlot = ref<modalInterface>()
+
+    function hide(): void {
+      messageViewerGenericModalMaxSlot.value?.hide()
+    }
+
+    function toggle(): void {
+      messageViewerGenericModalMaxSlot.value?.toggle()
+    }
+
+    function show(messageToShow: ConnectorMessage): void {
+      message.value = messageToShow
+      messageViewerGenericModalMaxSlot.value?.show()
+    }
+
+    return {
+      currentTab,
+      tabs,
+      nonNullMetadata,
+      availableMessageData,
+      formatMessage,
+      formatMessageToXMLArray,
+      messageViewerGenericModalMaxSlot,
+      hide,
+      toggle,
+      show,
+    }
   },
 })
 </script>
