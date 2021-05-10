@@ -48,6 +48,7 @@ export default {
   // Sentry Configuration: https://sentry.nuxtjs.org/guide/setup
   sentry: {
     publishRelease: true,
+    tracing: true,
   },
 
   // Auth Configuration: https://auth.nuxtjs.org/api/options

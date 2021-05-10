@@ -4,7 +4,8 @@
       <v-date-picker
         :value="value"
         :model-config="modelConfig"
-        mode="date"
+        :is24hr="true"
+        mode="dateTime"
         color="indigo"
         is-range
         v-on="$listeners"
@@ -88,11 +89,11 @@ export default defineComponent({
       default: () => ({
         start: {
           type: 'string',
-          mask: 'YYYY-MM-DD',
+          mask: 'iso',
         },
         end: {
           type: 'string',
-          mask: 'YYYY-MM-DD',
+          mask: 'iso',
         },
       }),
     },
@@ -105,3 +106,9 @@ export default defineComponent({
   },
 })
 </script>
+
+<style scoped>
+/deep/ select {
+  background-image: none;
+}
+</style>

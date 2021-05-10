@@ -1,6 +1,6 @@
 import { ref, useRoute, useRouter, computed } from '@nuxtjs/composition-api'
 
-import { todayString, DateRange } from '@/utilities/dateUtils'
+import { nowString, DateRange } from '@/utilities/dateUtils'
 import { singleQuery } from '@/utilities/queryUtils'
 
 export default function () {
@@ -9,7 +9,7 @@ export default function () {
 
   const since = ref((singleQuery(route.value.query.since) || null) as string)
   const until = ref(
-    (singleQuery(route.value.query.until) || todayString(0)) as string
+    (singleQuery(route.value.query.until) || nowString(0)) as string
   )
   const range = computed({
     get: () => {

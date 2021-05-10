@@ -6,6 +6,12 @@ export function todayString(addDays: number = 0): string {
   )
 }
 
+export function nowString(addDays: number = 0): string {
+  const today = new Date()
+  today.setDate(today.getDate() + addDays)
+  return today.toISOString()
+}
+
 export function formatDate(rawDate: string, t: boolean = true): string {
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
