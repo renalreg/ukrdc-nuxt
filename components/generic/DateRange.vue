@@ -108,7 +108,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-/deep/ select {
+::v-deep select {
   background-image: none;
 }
 </style>
