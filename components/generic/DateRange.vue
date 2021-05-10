@@ -5,6 +5,7 @@
         :value="value"
         :model-config="modelConfig"
         :is24hr="true"
+        :popover="{ visibility: 'click' }"
         mode="dateTime"
         color="indigo"
         is-range
