@@ -40,6 +40,7 @@ import {
   watch,
   ref,
   useRoute,
+  useRouter,
   useFetch,
   useContext,
 } from '@nuxtjs/composition-api'
@@ -59,6 +60,7 @@ interface MessagePage {
 export default defineComponent({
   setup() {
     const route = useRoute()
+    const router = useRouter()
 
     const { $axios, $config } = useContext()
     const { page, total, size } = usePagination()
@@ -72,6 +74,7 @@ export default defineComponent({
     const { fetch } = useFetch(async () => {
       // Fetch the dashboard response from our API server
       let path = `${$config.apiBase}/errors/?status=ERROR&page=${page.value}&size=${size.value}`
+      // Filter by since if it exists
       if (since.value) {
         path = path + `&since=${since.value}`
       }
@@ -82,6 +85,10 @@ export default defineComponent({
         // If no `until` is given but a `since` is given, then a single date is selected
         // In this case we want to only show that one day, not a range
         path = path + `&until=${since.value}`
+      }
+      // Filter by facility if it exists
+      if (selectedFacility.value) {
+        path = path + `&facility=${selectedFacility.value}`
       }
       const res: MessagePage = await $axios.$get(path)
       messages.value = res.items
@@ -99,6 +106,16 @@ export default defineComponent({
 
     watch(route, () => {
       fetch()
+    })
+
+    watch(selectedFacility, () => {
+      const newQuery = Object.assign({}, route.value.query, {
+        facility: selectedFacility.value,
+      })
+      router.push({
+        path: route.value.path,
+        query: newQuery,
+      })
     })
 
     return {
