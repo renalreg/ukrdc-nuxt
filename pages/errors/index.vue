@@ -5,6 +5,12 @@
     </div>
 
     <GenericDateRange v-model="range" />
+    <GenericSearchableSelect
+      v-model="selectedFacility"
+      class="mb-4"
+      :options="facilities"
+      hint="Select a facility..."
+    />
 
     <GenericCard>
       <!-- Skeleton results -->
@@ -60,6 +66,9 @@ export default defineComponent({
 
     const messages = ref([] as Message[])
 
+    const facilities = ref([] as string[])
+    const selectedFacility = ref<string>()
+
     const { fetch } = useFetch(async () => {
       // Fetch the dashboard response from our API server
       let path = `${$config.apiBase}/errors/?status=ERROR&page=${page.value}&size=${size.value}`
@@ -79,6 +88,13 @@ export default defineComponent({
       total.value = res.total
       page.value = res.page
       size.value = res.size
+
+      // If we don't already have a list of available facilties, fetch one
+      if (facilities.value.length === 0) {
+        facilities.value = await $axios.$get(
+          `${$config.apiBase}/errors/facilities`
+        )
+      }
     })
 
     watch(route, () => {
@@ -93,6 +109,8 @@ export default defineComponent({
       since,
       until,
       messages,
+      facilities,
+      selectedFacility,
     }
   },
 
