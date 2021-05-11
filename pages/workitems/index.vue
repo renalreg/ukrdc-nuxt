@@ -6,9 +6,9 @@
 
     <div class="mb-4">
       <div class="mb-2 flex items-center">
-        <GenericCheckbox v-model="statuses" label="Open" :value="1" />
-        <GenericCheckbox v-model="statuses" label="WIP" :value="2" />
-        <GenericCheckbox v-model="statuses" label="Closed" :value="3" />
+        <FormCheckbox v-model="statuses" label="Open" :value="1" />
+        <FormCheckbox v-model="statuses" label="WIP" :value="2" />
+        <FormCheckbox v-model="statuses" label="Closed" :value="3" />
       </div>
       <GenericDateRange v-model="range" />
     </div>
