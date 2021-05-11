@@ -8,7 +8,7 @@
     <GenericSearchableSelect
       v-model="selectedFacility"
       class="mb-4"
-      :options="facilities"
+      :options="availableFacilities"
       hint="Select a facility..."
     />
 
@@ -49,6 +49,7 @@ import usePagination from '@/mixins/usePagination'
 import useDateRange from '@/mixins/useDateRange'
 
 import { Message } from '@/interfaces/errors'
+import useQuery from '~/mixins/useQuery'
 
 interface MessagePage {
   items: Message[]
@@ -65,11 +66,12 @@ export default defineComponent({
     const { $axios, $config } = useContext()
     const { page, total, size } = usePagination()
     const { range, since, until } = useDateRange()
+    const { stringQuery } = useQuery()
 
     const messages = ref([] as Message[])
 
-    const facilities = ref([] as string[])
-    const selectedFacility = ref<string>()
+    const availableFacilities = ref([] as string[])
+    const selectedFacility = stringQuery('facility')
 
     const { fetch } = useFetch(async () => {
       // Fetch the dashboard response from our API server
@@ -97,8 +99,8 @@ export default defineComponent({
       size.value = res.size
 
       // If we don't already have a list of available facilties, fetch one
-      if (facilities.value.length === 0) {
-        facilities.value = await $axios.$get(
+      if (availableFacilities.value.length === 0) {
+        availableFacilities.value = await $axios.$get(
           `${$config.apiBase}/errors/facilities`
         )
       }
@@ -106,16 +108,6 @@ export default defineComponent({
 
     watch(route, () => {
       fetch()
-    })
-
-    watch(selectedFacility, () => {
-      const newQuery = Object.assign({}, route.value.query, {
-        facility: selectedFacility.value,
-      })
-      router.push({
-        path: route.value.path,
-        query: newQuery,
-      })
     })
 
     return {
@@ -126,7 +118,7 @@ export default defineComponent({
       since,
       until,
       messages,
-      facilities,
+      availableFacilities,
       selectedFacility,
     }
   },
