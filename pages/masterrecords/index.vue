@@ -1,11 +1,21 @@
 <template>
   <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
-    <SearchBar
-      v-model="searchboxString"
-      class="mb-4"
-      :focus="true"
-      @submit="searchSubmit"
-    />
+    <div class="mb-4">
+      <SearchBar
+        v-model="searchboxString"
+        :focus="true"
+        @submit="searchSubmit"
+      />
+      <GenericCollapseHeader label="Advanced">
+        <div class="mt-2">
+          <FormCheckbox
+            v-model="showUKRDC"
+            label="Show internal UKRDC records"
+          />
+        </div>
+      </GenericCollapseHeader>
+    </div>
+
     <div v-if="masterrecords.length > 0">
       <GenericCard>
         <!-- Skeleton results -->
@@ -63,6 +73,7 @@ import {
 } from '@nuxtjs/composition-api'
 
 import usePagination from '@/mixins/usePagination'
+import useQuery from '@/mixins/useQuery'
 
 import { MasterRecord } from '@/interfaces/masterrecord'
 
@@ -80,12 +91,15 @@ export default defineComponent({
 
     const { $axios, $config } = useContext()
     const { page, total, size } = usePagination()
+    const { booleanQuery } = useQuery()
 
     const masterrecords = ref([] as MasterRecord[])
 
     const search = ref((route.value.query.search || []) as string[])
-    const numberType = ref((route.value.query.number_type || []) as string[])
     const searchboxString = ref('')
+
+    const numberType = ref((route.value.query.number_type || []) as string[])
+    const showUKRDC = booleanQuery('include_ukrdc')
 
     const { fetch } = useFetch(async () => {
       search.value = route.value.query.search as string[]
@@ -93,14 +107,15 @@ export default defineComponent({
         // Set the search string
         searchboxString.value = buildSearchStringFromQueryArray()
         // Build our query string from search terms and page info
-        const path = `${
-          $config.apiBase
-        }/empi/search/masterrecords/?${buildQueryStringFromArray(
+        let path = `${$config.apiBase}/empi/search/?${buildQueryStringFromArray(
           search.value,
           'search'
         )}&${buildQueryStringFromArray(numberType.value, 'number_type')}&page=${
           page.value
         }&size=${size.value}`
+        if (showUKRDC.value) {
+          path = path + '&include_ukrdc=true'
+        }
         // Fetch the search results from our API server
         const res: MasterRecordPage = await $axios.$get(path)
         masterrecords.value = res.items
@@ -120,9 +135,13 @@ export default defineComponent({
       // Reset page
       page.value = 0
       // Navigate to the search query path
+      const newQuery = Object.assign({}, route.value.query, {
+        search: search.value,
+        number_type: numberType.value,
+      })
       router.push({
         path: route.value.path,
-        query: { search: search.value, number_type: numberType.value },
+        query: newQuery,
       })
     }
 
@@ -169,6 +188,7 @@ export default defineComponent({
     return {
       masterrecords,
       searchboxString,
+      showUKRDC,
       searchSubmit,
       search,
       page,
