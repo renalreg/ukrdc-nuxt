@@ -40,7 +40,6 @@ import {
   watch,
   ref,
   useRoute,
-  useRouter,
   useFetch,
   useContext,
 } from '@nuxtjs/composition-api'
@@ -61,7 +60,6 @@ interface MessagePage {
 export default defineComponent({
   setup() {
     const route = useRoute()
-    const router = useRouter()
 
     const { $axios, $config } = useContext()
     const { page, total, size } = usePagination()
@@ -71,7 +69,7 @@ export default defineComponent({
     const messages = ref([] as Message[])
 
     const availableFacilities = ref([] as string[])
-    const selectedFacility = stringQuery('facility')
+    const selectedFacility = stringQuery('facility', true)
 
     const { fetch } = useFetch(async () => {
       // Fetch the dashboard response from our API server

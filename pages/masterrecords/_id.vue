@@ -53,6 +53,7 @@
       </GenericCardContent>
     </GenericCard>
 
+    <!-- Related Work Items card -->
     <GenericCard v-if="workItems && workItems.length > 0" class="mt-4">
       <GenericCardHeader>
         <TextH2> Open Work Items </TextH2>

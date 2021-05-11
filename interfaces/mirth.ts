@@ -75,3 +75,7 @@ export interface ChannelGroup {
   revision: string
   channels: Channel[]
 }
+
+export interface ChainMap {
+  [key: number]: ConnectorMessage[]
+}
