@@ -33,10 +33,17 @@ export default function () {
     })
   }
 
-  function arrayQuery(queryKey: string, resetPage: boolean = false) {
+  function arrayQuery(
+    queryKey: string,
+    defaultValue: (string | null)[] = [],
+    resetPage: boolean = false
+  ) {
     return computed({
       get: (): (string | null)[] => {
         const val = route.value.query[queryKey]
+        if (val === undefined) {
+          return defaultValue
+        }
         if (!Array.isArray(val)) {
           return [val]
         } else {
@@ -44,7 +51,16 @@ export default function () {
         }
       },
       set: (newValue: (string | null)[]) => {
-        pushNewQuery(queryKey, newValue, resetPage)
+        const newQuery = Object.assign({}, route.value.query, {
+          [queryKey]: newValue,
+        })
+        if (resetPage) {
+          newQuery.page = ['1']
+        }
+        router.push({
+          path: route.value.path,
+          query: newQuery,
+        })
       },
     })
   }

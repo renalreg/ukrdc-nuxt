@@ -47,16 +47,15 @@ import {
   watch,
   ref,
   useRoute,
-  useRouter,
   useFetch,
   useContext,
-  computed,
 } from '@nuxtjs/composition-api'
 
 import usePagination from '@/mixins/usePagination'
 import useDateRange from '@/mixins/useDateRange'
 
 import { WorkItemShort } from '@/interfaces/workitem'
+import useQuery from '~/mixins/useQuery'
 
 interface WorkItemPage {
   items: WorkItemShort[]
@@ -68,31 +67,15 @@ interface WorkItemPage {
 export default defineComponent({
   setup() {
     const route = useRoute()
-    const router = useRouter()
 
     const { $axios, $config } = useContext()
     const { page, total, size } = usePagination()
     const { range, since, until } = useDateRange()
+    const { arrayQuery } = useQuery()
 
     const workitems = ref([] as WorkItemShort[])
 
-    const selectedStatuses = ref((route.value.query.status || [1]) as number[])
-    const statuses = computed({
-      get: () => {
-        return selectedStatuses.value
-      },
-      set(newStatuses: number[]) {
-        selectedStatuses.value = newStatuses
-
-        const newQuery = Object.assign({}, route.value.query, {
-          status: selectedStatuses.value,
-        })
-        router.push({
-          path: route.value.path,
-          query: newQuery,
-        })
-      },
-    })
+    const statuses = arrayQuery('status', ['1'], true)
 
     const { fetch } = useFetch(async () => {
       // Fetch the dashboard response from our API server
@@ -109,7 +92,7 @@ export default defineComponent({
         path = path + `&until=${since.value}`
       }
       // Pass selected statuses to the API
-      for (const status of selectedStatuses.value) {
+      for (const status of statuses.value) {
         path = path + `&status=${status}`
       }
       const res: WorkItemPage = await $axios.$get(path)

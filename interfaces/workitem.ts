@@ -7,25 +7,23 @@ interface WorkItemLinks {
   merge: string
   close: string
 }
-export interface WorkItemSummary {
-  id: number
-  personId: number
-  masterId: number
-}
 
-export interface WorkItemShort extends WorkItemSummary {
+export interface WorkItemShort {
+  id: number
+
   type: number
   description: string
   status: number
   lastUpdated: string
   updatedBy: string
-  updateDescription: string
-  attributes: object
+
+  masterRecord: MasterRecord
+  person: Person
 
   links: WorkItemLinks
 }
 
 export interface WorkItem extends WorkItemShort {
-  masterRecord: MasterRecord
-  person: Person
+  updateDescription: string
+  attributes: object
 }

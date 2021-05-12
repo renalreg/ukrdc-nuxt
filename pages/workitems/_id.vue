@@ -336,7 +336,7 @@ export default defineComponent({
       // Exclude the WorkItems Person record from our related Persons array
       relatedPersons.value = []
       for (const relatedPerson of relatedPersonsRes) {
-        if (relatedPerson.id !== record.value.personId) {
+        if (relatedPerson.id !== record.value.person.id) {
           relatedPersons.value.push(relatedPerson)
         }
       }
