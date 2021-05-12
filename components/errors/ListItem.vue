@@ -9,7 +9,7 @@
             <!-- Heading -->
             <div class="col-span-2 lg:col-span-3">
               <TextL1c class="truncate">
-                {{ item.filename }}
+                {{ item.filename || 'No filename found' }}
               </TextL1c>
               <TextP class="mt-2 line-clamp-2">
                 {{ item.error ? item.error : 'No error message recorded' }}
