@@ -98,7 +98,6 @@ export default defineComponent({
     const search = ref((route.value.query.search || []) as string[])
     const searchboxString = ref('')
 
-    const numberType = ref((route.value.query.number_type || []) as string[])
     const showUKRDC = booleanQuery('include_ukrdc')
 
     const { fetch } = useFetch(async () => {
@@ -110,9 +109,7 @@ export default defineComponent({
         let path = `${$config.apiBase}/empi/search/?${buildQueryStringFromArray(
           search.value,
           'search'
-        )}&${buildQueryStringFromArray(numberType.value, 'number_type')}&page=${
-          page.value
-        }&size=${size.value}`
+        )}&page=${page.value}&size=${size.value}`
         if (showUKRDC.value) {
           path = path + '&include_ukrdc=true'
         }
@@ -137,7 +134,6 @@ export default defineComponent({
       // Navigate to the search query path
       const newQuery = Object.assign({}, route.value.query, {
         search: search.value,
-        number_type: numberType.value,
       })
       router.push({
         path: route.value.path,
