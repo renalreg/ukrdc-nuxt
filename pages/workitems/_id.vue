@@ -75,11 +75,11 @@
 
     <!-- Header -->
     <div class="mb-6">
-      <TextH1 v-if="!isEmptyObject(record)">
+      <TextH1 v-if="record">
         Work Item {{ record.id }} {{ statusString }}
       </TextH1>
       <SkeleText v-else class="h-8 w-1/4 mb-2" />
-      <TextL1 v-if="!isEmptyObject(record)">
+      <TextL1 v-if="record">
         {{ record.description }}
       </TextL1>
       <SkeleText v-else class="h-4 w-1/2" />
@@ -90,7 +90,7 @@
         <GenericDl>
           <GenericDi>
             <TextDt>Last Updated</TextDt>
-            <TextDd v-if="!isEmptyObject(record)">
+            <TextDd v-if="record">
               {{
                 record.lastUpdated ? formatDate(record.lastUpdated) : 'Never'
               }}
@@ -99,14 +99,14 @@
           </GenericDi>
           <GenericDi>
             <TextDt>Last Updated By</TextDt>
-            <TextDd v-if="!isEmptyObject(record)">
+            <TextDd v-if="record">
               {{ record.updatedBy ? record.updatedBy : 'N/A' }}
             </TextDd>
             <SkeleText v-else class="h-6 w-full" />
           </GenericDi>
           <GenericDi class="sm:col-span-2">
             <TextDt>Comments</TextDt>
-            <TextDd v-if="!isEmptyObject(record)">
+            <TextDd v-if="record">
               {{ record.updateDescription ? record.updateDescription : 'None' }}
             </TextDd>
             <SkeleText v-else class="h-6 w-full" />
@@ -116,7 +116,9 @@
     </GenericCard>
 
     <div
-      v-if="$hasPermission('ukrdc:workitems:write') && record.status !== 3"
+      v-if="
+        $hasPermission('ukrdc:workitems:write') && record && record.status !== 3
+      "
       class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-8"
     >
       <div>
@@ -191,10 +193,11 @@
       </ul>
     </GenericCard>
 
+    <!-- Proposed link cards -->
     <div class="mb-8">
       <TextH2 class="mb-4"> Proposed Link </TextH2>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div v-if="record" class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <personsRecordCard
           v-if="record.person"
           class="border-2 border-red-500"
@@ -228,6 +231,7 @@
       </div>
     </div>
 
+    <!-- Compare records cards -->
     <div v-if="relatedPersons.length > 0" class="mb-8">
       <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
         Compare Records
@@ -284,7 +288,6 @@ import {
 
 import { formatDate } from '@/utilities/dateUtils'
 import { formatGender } from '@/utilities/codeUtils'
-import { isEmptyObject } from '@/utilities/objectUtils'
 
 import { Person } from '@/interfaces/persons'
 import { WorkItem } from '@/interfaces/workitem'
@@ -299,7 +302,7 @@ export default defineComponent({
     const { $axios, $config, $toast } = useContext()
 
     // Work item record data
-    const record = ref({} as WorkItem)
+    const record = ref<WorkItem>()
 
     // Related errors data
     const relatedErrors = ref([] as Message[])
@@ -318,11 +321,11 @@ export default defineComponent({
     const customComment = ref('')
 
     const statusString = computed(() => {
-      if (record.value.status === 1) {
+      if (record.value?.status === 1) {
         return ''
-      } else if (record.value.status === 2) {
+      } else if (record.value?.status === 2) {
         return '(WIP)'
-      } else if (record.value.status === 3) {
+      } else if (record.value?.status === 3) {
         return '(Closed)'
       } else {
         return '(Unknown status)'
@@ -364,16 +367,18 @@ export default defineComponent({
     })
 
     async function updateRelatedErrors(): Promise<void> {
-      console.log('Updating related errors')
-      const res = await $axios.$get(
-        record.value.links.errors +
-          `?page=${relatedErrorsPage.value}&size=${relatedErrorsSize.value}`
-      )
-      // Set related errors
-      relatedErrors.value = res.items
-      relatedErrorsPage.value = res.page
-      relatedErrorsSize.value = res.size
-      relatedErrorsTotal.value = res.total
+      if (record.value) {
+        console.log('Updating related errors')
+        const res = await $axios.$get(
+          record.value.links.errors +
+            `?page=${relatedErrorsPage.value}&size=${relatedErrorsSize.value}`
+        )
+        // Set related errors
+        relatedErrors.value = res.items
+        relatedErrorsPage.value = res.page
+        relatedErrorsSize.value = res.size
+        relatedErrorsTotal.value = res.total
+      }
     }
 
     watch(relatedErrorsPage, () => {
@@ -457,7 +462,6 @@ export default defineComponent({
       relatedPersons,
       formatDate,
       formatGender,
-      isEmptyObject,
       relatedRecordsIndex,
       customComment,
       statusString,
