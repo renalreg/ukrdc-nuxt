@@ -150,6 +150,31 @@
       </div>
     </div>
 
+    <!-- Related errors card -->
+    <GenericCard
+      v-if="relatedErrors && relatedErrors.length > 0"
+      class="mt-4 mb-8"
+    >
+      <GenericCardHeader>
+        <TextH2> Related Errors </TextH2>
+      </GenericCardHeader>
+      <ul class="divide-y divide-gray-200">
+        <errorsListItem
+          v-for="item in relatedErrors"
+          :key="item.id"
+          :item="item"
+        />
+      </ul>
+      <GenericPaginator
+        class="bg-white border-t border-gray-200"
+        :page="relatedErrorsPage"
+        :size="relatedErrorsSize"
+        :total="relatedErrorsTotal"
+        @next="page++"
+        @prev="page--"
+      />
+    </GenericCard>
+
     <!-- Related WorkItems  -->
     <GenericCard v-if="relatedRecords.length > 0" class="mb-8">
       <!-- Card header -->
@@ -184,15 +209,13 @@
           No valid person record found
         </div>
         <NuxtLink
-          v-if="allMasterRecords[relatedMasterRecordsIndex]"
-          :to="`/masterrecords/${allMasterRecords[relatedMasterRecordsIndex].id}`"
+          v-if="record.masterRecord"
+          :to="`/masterrecords/${record.masterRecord.id}`"
         >
           <masterrecordsRecordCard
             class="border-2 border-indigo-500"
-            :record="allMasterRecords[relatedMasterRecordsIndex]"
-            :label="`Master record ${relatedMasterRecordsIndex + 1} of ${
-              allMasterRecords.length
-            }`"
+            :record="record.masterRecord"
+            label="Master record"
           />
         </NuxtLink>
 
@@ -203,14 +226,6 @@
           No valid master record found
         </div>
       </div>
-
-      <GenericCard v-if="allMasterRecords.length > 1" class="pl-4 mt-2">
-        <GenericItemPaginator
-          v-model="relatedMasterRecordsIndex"
-          :total="allMasterRecords.length"
-          item-label="Master Record"
-        />
-      </GenericCard>
     </div>
 
     <div v-if="relatedPersons.length > 0" class="mb-8">
@@ -218,7 +233,10 @@
         Compare Records
       </h3>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div
+        v-if="relatedPersons.length > 0"
+        class="grid grid-cols-1 md:grid-cols-2 gap-4"
+      >
         <personsRecordCard
           v-if="record.person"
           class="border-2 border-red-500"
@@ -261,6 +279,7 @@ import {
   useFetch,
   useContext,
   computed,
+  watch,
 } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/utilities/dateUtils'
@@ -271,28 +290,31 @@ import { Person } from '@/interfaces/persons'
 import { WorkItem } from '@/interfaces/workitem'
 import { modalInterface } from '@/interfaces/modal'
 import { MirthMessageResponse } from '@/interfaces/mirth'
-import { MasterRecord } from '@/interfaces/masterrecord'
+import { Message } from '@/interfaces/errors'
 
 export default defineComponent({
   setup() {
+    // Dependencies
     const route = useRoute()
     const { $axios, $config, $toast } = useContext()
 
+    // Work item record data
     const record = ref({} as WorkItem)
+
+    // Related errors data
+    const relatedErrors = ref([] as Message[])
+    const relatedErrorsPage = ref(0)
+    const relatedErrorsSize = ref(5)
+    const relatedErrorsTotal = ref(0)
+
+    // Related persons data
     const relatedRecords = ref([] as WorkItem[])
     const relatedPersons = ref([] as Person[])
 
-    const relatedMasterRecords = ref([] as MasterRecord[])
-    const allMasterRecords = computed(() => {
-      if (record.value.masterRecord) {
-        return [record.value.masterRecord].concat(relatedMasterRecords.value)
-      } else {
-        return relatedMasterRecords.value
-      }
-    })
-
+    // Related record paginator data
     const relatedRecordsIndex = ref(0)
-    const relatedMasterRecordsIndex = ref(0)
+
+    // Workitem status data
     const customComment = ref('')
 
     const statusString = computed(() => {
@@ -312,6 +334,7 @@ export default defineComponent({
     const mergeModal = ref<modalInterface>()
     const unlinkModal = ref<modalInterface>()
 
+    // Data fetching
     const { fetch } = useFetch(async () => {
       // Get the main record data
       const path = `${$config.apiBase}/empi/workitems/${route.value.params.id}/`
@@ -320,28 +343,44 @@ export default defineComponent({
       customComment.value = res.updateDescription
 
       // Use the record links to load related data concurrently
-      const [
-        relatedRecordsRes,
-        relatedPersonsRes,
-        relatedMasterRecordsRes,
-      ] = await Promise.all([
+      const [relatedRecordsRes, relatedPersonsRes] = await Promise.all([
         $axios.$get(record.value.links.related),
         $axios.$get(record.value.masterRecord.links.persons),
-        $axios.$get(record.value.masterRecord.links.related),
+        updateRelatedErrors(),
       ])
 
+      // Set related workitems
       relatedRecords.value = relatedRecordsRes
-      relatedMasterRecords.value = relatedMasterRecordsRes
 
       // Exclude the WorkItems Person record from our related Persons array
       relatedPersons.value = []
-      for (const relatedPerson of relatedPersonsRes) {
-        if (relatedPerson.id !== record.value.person.id) {
-          relatedPersons.value.push(relatedPerson)
+      if (record.value.person && relatedPersonsRes) {
+        for (const relatedPerson of relatedPersonsRes) {
+          if (relatedPerson.id !== record.value.person.id) {
+            relatedPersons.value.push(relatedPerson)
+          }
         }
       }
     })
 
+    async function updateRelatedErrors(): Promise<void> {
+      console.log('Updating related errors')
+      const res = await $axios.$get(
+        record.value.links.errors +
+          `?page=${relatedErrorsPage.value}&size=${relatedErrorsSize.value}`
+      )
+      // Set related errors
+      relatedErrors.value = res.items
+      relatedErrorsPage.value = res.page
+      relatedErrorsSize.value = res.size
+      relatedErrorsTotal.value = res.total
+    }
+
+    watch(relatedErrorsPage, () => {
+      updateRelatedErrors()
+    })
+
+    // Workitem actions
     async function updateWorkItemComment() {
       const path = `${$config.apiBase}/empi/workitems/${route.value.params.id}/`
       await $axios.$put(path, {
@@ -411,13 +450,15 @@ export default defineComponent({
     return {
       record,
       relatedRecords,
+      relatedErrors,
+      relatedErrorsPage,
+      relatedErrorsSize,
+      relatedErrorsTotal,
       relatedPersons,
       formatDate,
       formatGender,
       isEmptyObject,
-      allMasterRecords,
       relatedRecordsIndex,
-      relatedMasterRecordsIndex,
       customComment,
       statusString,
       addCommentModal,
