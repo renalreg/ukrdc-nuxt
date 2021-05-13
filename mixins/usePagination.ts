@@ -4,7 +4,7 @@ import useQuery from '@/mixins/useQuery'
 export default function () {
   const { integerQuery } = useQuery()
 
-  const page = integerQuery('page', 1)
+  const page = integerQuery('page', 0)
   const total = ref(0)
   const size = ref(20)
 

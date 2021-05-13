@@ -6,9 +6,11 @@
     <div class="hidden sm:block">
       <p class="text-sm text-gray-700">
         Showing
-        <span class="font-medium">{{ (page - 1) * size + 1 }}</span>
+        <span class="font-medium">{{ page * size + 1 }}</span>
         to
-        <span class="font-medium">{{ Math.min(page * size, total) }}</span>
+        <span class="font-medium">{{
+          Math.min((page + 1) * size, total)
+        }}</span>
         of
         <span class="font-medium">{{ total }}</span>
         results
@@ -16,14 +18,14 @@
     </div>
     <div class="flex-1 flex justify-between sm:justify-end">
       <button
-        :class="{ invisible: page <= 1 }"
+        :class="{ invisible: page <= 0 }"
         class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
         @click="prev()"
       >
         Previous
       </button>
       <button
-        :class="{ invisible: page * size >= total }"
+        :class="{ invisible: (page + 1) * size >= total }"
         class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
         @click="next()"
       >
