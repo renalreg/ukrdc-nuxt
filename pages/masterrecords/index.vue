@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
+  <div>
     <div class="mb-4">
       <SearchBar
         v-model="searchboxString"

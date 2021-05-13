@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-4">
+  <div>
     <GenericSelect v-model="selectedCodeString" class="mb-4">
       <option :value="null">All Observations</option>
       <option v-for="item in availableCodes" :key="item">

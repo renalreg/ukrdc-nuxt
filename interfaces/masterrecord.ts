@@ -1,9 +1,16 @@
 interface MasterRecordLinks {
   self: string
+  statistics: string
   related: string
+  errors: string
   persons: string
   workitems: string
   patientrecords: string
+}
+
+export interface MasterRecordStatistics {
+  workitems: number
+  errors: number
 }
 
 export interface MasterRecord {

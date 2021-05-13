@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-4">
+  <div>
     <TextP v-if="orders.length <= 0" class="text-center">
       No lab orders on record
     </TextP>

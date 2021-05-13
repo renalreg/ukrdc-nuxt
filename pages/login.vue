@@ -1,5 +1,5 @@
 <template>
-  <div class="justify-center text-center max-w-7xl">
+  <div class="justify-center text-center">
     <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
       Redirecting to login...
     </h2>

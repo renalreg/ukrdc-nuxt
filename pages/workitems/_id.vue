@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
+  <div>
     <GenericModalSlot
       v-if="$hasPermission('ukrdc:workitems:write')"
       ref="addCommentModal"
@@ -153,29 +153,11 @@
     </div>
 
     <!-- Related errors card -->
-    <GenericCard
-      v-if="relatedErrors && relatedErrors.length > 0"
+    <ErrorsMiniList
+      v-if="record"
       class="mt-4 mb-8"
-    >
-      <GenericCardHeader>
-        <TextH2> Related Errors </TextH2>
-      </GenericCardHeader>
-      <ul class="divide-y divide-gray-200">
-        <errorsListItem
-          v-for="item in relatedErrors"
-          :key="item.id"
-          :item="item"
-        />
-      </ul>
-      <GenericPaginator
-        class="bg-white border-t border-gray-200"
-        :page="relatedErrorsPage"
-        :size="relatedErrorsSize"
-        :total="relatedErrorsTotal"
-        @next="page++"
-        @prev="page--"
-      />
-    </GenericCard>
+      :errors-url="record.links.errors"
+    />
 
     <!-- Related WorkItems  -->
     <GenericCard v-if="relatedRecords.length > 0" class="mb-8">
@@ -283,7 +265,6 @@ import {
   useFetch,
   useContext,
   computed,
-  watch,
 } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/utilities/dateUtils'
@@ -293,7 +274,6 @@ import { Person } from '@/interfaces/persons'
 import { WorkItem } from '@/interfaces/workitem'
 import { modalInterface } from '@/interfaces/modal'
 import { MirthMessageResponse } from '@/interfaces/mirth'
-import { Message } from '@/interfaces/errors'
 
 export default defineComponent({
   setup() {
@@ -303,12 +283,6 @@ export default defineComponent({
 
     // Work item record data
     const record = ref<WorkItem>()
-
-    // Related errors data
-    const relatedErrors = ref([] as Message[])
-    const relatedErrorsPage = ref(0)
-    const relatedErrorsSize = ref(5)
-    const relatedErrorsTotal = ref(0)
 
     // Related persons data
     const relatedRecords = ref([] as WorkItem[])
@@ -349,7 +323,6 @@ export default defineComponent({
       const [relatedRecordsRes, relatedPersonsRes] = await Promise.all([
         $axios.$get(record.value.links.related),
         $axios.$get(record.value.masterRecord.links.persons),
-        updateRelatedErrors(),
       ])
 
       // Set related workitems
@@ -364,25 +337,6 @@ export default defineComponent({
           }
         }
       }
-    })
-
-    async function updateRelatedErrors(): Promise<void> {
-      if (record.value) {
-        console.log('Updating related errors')
-        const res = await $axios.$get(
-          record.value.links.errors +
-            `?page=${relatedErrorsPage.value}&size=${relatedErrorsSize.value}`
-        )
-        // Set related errors
-        relatedErrors.value = res.items
-        relatedErrorsPage.value = res.page
-        relatedErrorsSize.value = res.size
-        relatedErrorsTotal.value = res.total
-      }
-    }
-
-    watch(relatedErrorsPage, () => {
-      updateRelatedErrors()
     })
 
     // Workitem actions
@@ -454,14 +408,10 @@ export default defineComponent({
 
     return {
       record,
-      relatedRecords,
-      relatedErrors,
-      relatedErrorsPage,
-      relatedErrorsSize,
-      relatedErrorsTotal,
       relatedPersons,
       formatDate,
       formatGender,
+      relatedRecords,
       relatedRecordsIndex,
       customComment,
       statusString,

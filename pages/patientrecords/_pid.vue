@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
+  <div>
     <div v-if="record.patient" class="mb-2">
       <TextH1>
         {{ record.patient.names[0].given }} {{ record.patient.names[0].family }}
@@ -26,11 +26,7 @@ import {
 } from '@nuxtjs/composition-api'
 
 import { PatientRecord } from '@/interfaces/patientrecord'
-
-interface tabItem {
-  name: string
-  href: string
-}
+import { TabItem } from '@/interfaces/tabs'
 
 export default defineComponent({
   setup() {
@@ -59,7 +55,7 @@ export default defineComponent({
         name: 'Surveys',
         href: `/patientrecords/${route.value.params.pid}/surveys`,
       },
-    ] as tabItem[]
+    ] as TabItem[]
     const tabs = computed(() => {
       return [
         ...baseTabs,

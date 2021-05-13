@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-4">
+  <div>
     <patientrecordsSurveyViewer
       ref="surveyViewerModal"
       class="w-full md:w-large"

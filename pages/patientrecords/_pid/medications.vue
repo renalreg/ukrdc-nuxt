@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-4">
+  <div>
     <div
       v-if="medications.length <= 0"
       class="text-sm text-gray-500 text-center"

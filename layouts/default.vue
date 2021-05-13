@@ -106,7 +106,7 @@
         class="flex-1 relative z-0 overflow-y-auto focus:outline-none"
         tabindex="0"
       >
-        <Nuxt class="py-6" />
+        <Nuxt class="py-6 max-w-7xl mx-auto px-4 sm:px-6 md:px-8" />
       </main>
     </div>
   </div>
