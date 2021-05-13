@@ -4,8 +4,10 @@ import { MasterRecord } from '@/interfaces/masterrecord'
 interface WorkItemLinks {
   self: string
   related: string
+  errors: string
   merge: string
   close: string
+  unlink: string
 }
 
 export interface WorkItemShort {
