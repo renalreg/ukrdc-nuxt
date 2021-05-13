@@ -43,7 +43,14 @@ export default {
   modules: ['@nuxtjs/axios', '@nuxtjs/auth-next', '@nuxtjs/sentry'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    extend(config, { isDev, isClient }) {
+      // Extend only webpack config for client-bundle
+      if (isDev && isClient) {
+        config.devtool = 'source-map'
+      }
+    },
+  },
 
   // Sentry Configuration: https://sentry.nuxtjs.org/guide/setup
   sentry: {
