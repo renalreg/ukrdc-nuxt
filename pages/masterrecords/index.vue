@@ -130,7 +130,7 @@ export default defineComponent({
       // Build a search query from our search string
       search.value = buildQueryArrayFromSearchString()
       // Reset page
-      page.value = 1
+      page.value = 0
       // Navigate to the search query path
       const newQuery = Object.assign({}, route.value.query, {
         search: search.value,
