@@ -114,7 +114,7 @@ export default defineComponent({
 
     useFetch(async () => {
       // Get the main record data
-      const path = `${$config.apiBase}/errors/${route.value.params.id}/`
+      const path = `${$config.apiBase}/errors/messages/${route.value.params.id}/`
       const res: ExtendedError = await $axios.$get(path)
       error.value = res
 

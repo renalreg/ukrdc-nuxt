@@ -73,7 +73,7 @@ export default defineComponent({
 
     const { fetch } = useFetch(async () => {
       // Fetch the dashboard response from our API server
-      let path = `${$config.apiBase}/errors/?status=ERROR&page=${page.value}&size=${size.value}`
+      let path = `${$config.apiBase}/errors/messages/?status=ERROR&page=${page.value}&size=${size.value}`
       // Filter by since if it exists
       if (since.value) {
         path = path + `&since=${since.value}`
@@ -99,7 +99,7 @@ export default defineComponent({
       // If we don't already have a list of available facilties, fetch one
       if (availableFacilities.value.length === 0) {
         availableFacilities.value = await $axios.$get(
-          `${$config.apiBase}/errors/facilities`
+          `${$config.apiBase}/errors/messages/facilities`
         )
       }
     })
