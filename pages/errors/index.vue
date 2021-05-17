@@ -99,7 +99,7 @@ export default defineComponent({
       // If we don't already have a list of available facilties, fetch one
       if (availableFacilities.value.length === 0) {
         availableFacilities.value = await $axios.$get(
-          `${$config.apiBase}/errors/messages/facilities`
+          `${$config.apiBase}/errors/messages/facilities/`
         )
       }
     })
