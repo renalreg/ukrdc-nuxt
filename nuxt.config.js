@@ -101,6 +101,7 @@ export default {
       dsn: process.env.SENTRY_DSN,
       config: {
         disabled: !process.env.SENTRY_DSN,
+        environment: process.env.DEPLOYMENT_ENV || 'development',
       },
     },
     // Nuxt-Auth public runtime config
