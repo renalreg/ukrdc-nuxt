@@ -34,7 +34,7 @@
           @keydown.down.prevent="open"
           @keydown.space.prevent="open"
         >
-          <span v-if="value">{{ value }}</span>
+          <span v-if="value">{{ `${value} (${labelFor(value)})` }}</span>
           <span v-else class="text-grey-dark">{{ hint }}</span>
           <div class="float-right flex items-center pointer-events-none">
             <!-- Heroicon name: solid/selector -->
@@ -92,7 +92,11 @@
             ]"
             @click="select(i)"
           >
-            {{ option }}
+            {{
+              labels && labels.length === options.length
+                ? `${option} (${labelFor(option)})`
+                : option
+            }}
           </li>
         </ul>
         <div v-show="filteredOptions.length === 0" class="px-3 py-2 text-grey">
@@ -114,6 +118,11 @@ export default {
     options: {
       type: Array,
       required: true,
+    },
+    labels: {
+      type: Array,
+      required: false,
+      default: null,
     },
     hint: {
       type: String,
@@ -190,6 +199,15 @@ export default {
           ? 0
           : this.highlightedIndex + 1
       )
+    },
+    labelFor(value) {
+      if (this.labels) {
+        const index = this.options.indexOf(value)
+        if (index) {
+          return this.labels[index]
+        }
+      }
+      return value
     },
   },
 }
