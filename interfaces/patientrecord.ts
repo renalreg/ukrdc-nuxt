@@ -10,6 +10,7 @@ interface PatientRecordLinks {
   self: string
   laborders: string
   observations: string
+  results: string
   medications: string
   surveys: string
 
