@@ -96,7 +96,7 @@ export default defineComponent({
 
       const res: PatientRecord = await $axios.$get(path)
       record.value = res
-      const rel: PatientRecordShort[] = await $axios.$get(`${path}related`)
+      const rel: PatientRecordShort[] = await $axios.$get(`${path}related/`)
       related.value = rel
     })
 
