@@ -1,14 +1,11 @@
 <template>
   <div>
-    <div v-if="record && record.patient" class="flex items-center mb-2">
+    <div v-if="record && record.patient" class="md:flex items-center mb-2">
       <div class="flex-grow">
         <TextH1>
           {{ record.patient.names[0].given }}
           {{ record.patient.names[0].family }}
         </TextH1>
-        <TextL1>
-          {{ record.pid }}
-        </TextL1>
       </div>
       <div v-if="related">
         <GenericSelect v-model="selectedPid">
