@@ -10,7 +10,7 @@
       <div v-if="related">
         <GenericSelect v-model="selectedPid">
           <option
-            v-for="(item, index) in related"
+            v-for="(item, index) in relatedDataRecords"
             :key="index"
             :value="item.pid"
           >
@@ -41,6 +41,8 @@ import {
 import { PatientRecord, PatientRecordShort } from '@/interfaces/patientrecord'
 import { TabItem } from '@/interfaces/tabs'
 
+import { isMembership } from '@/utilities/recordUtils'
+
 export default defineComponent({
   setup() {
     const route = useRoute()
@@ -49,6 +51,12 @@ export default defineComponent({
 
     const record = ref<PatientRecord>()
     const related = ref<PatientRecordShort[]>()
+    const relatedDataRecords = computed<PatientRecordShort[]>(() => {
+      if (related.value) {
+        return related.value.filter((record) => !isMembership(record))
+      }
+      return []
+    })
 
     const selectedPid = ref(route.value.params.pid)
     watch(selectedPid, (value: string) => {
@@ -103,6 +111,7 @@ export default defineComponent({
     return {
       record,
       related,
+      relatedDataRecords,
       selectedPid,
       tabs,
     }
