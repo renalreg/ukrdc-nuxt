@@ -1,6 +1,13 @@
 <template>
   <div>
     <!-- Issues alert -->
+    <div v-if="stats && stats.ukrdcids > 1">
+      <GenericAlertError
+        class="mb-4"
+        :message="`${stats.ukrdcids} UKRDC IDs found for this patient. See Linked Master Records`"
+      />
+    </div>
+
     <div v-if="issueMessage">
       <NuxtLink :to="`/masterrecords/${record.id}/issues`">
         <GenericAlertWarning class="mb-4" :message="issueMessage" />

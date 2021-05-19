@@ -11,6 +11,7 @@ interface MasterRecordLinks {
 export interface MasterRecordStatistics {
   workitems: number
   errors: number
+  ukrdcids: number
 }
 
 export interface MasterRecord {
