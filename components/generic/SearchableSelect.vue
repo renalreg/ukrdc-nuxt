@@ -141,8 +141,15 @@ export default {
 
   computed: {
     filteredOptions() {
-      return this.options.filter((option) =>
-        option.toLowerCase().startsWith(this.search.toLowerCase())
+      if (!this.labels) {
+        return this.options.filter((option) =>
+          option.toLowerCase().startsWith(this.search.toLowerCase())
+        )
+      }
+      return this.options.filter(
+        (option, index) =>
+          option.toLowerCase().startsWith(this.search.toLowerCase()) ||
+          this.labels[index].toLowerCase().startsWith(this.search.toLowerCase())
       )
     },
   },
