@@ -44,13 +44,7 @@
       <GenericCardHeader>
         <TextH2> Patient Records </TextH2>
       </GenericCardHeader>
-      <ul class="divide-y divide-gray-200">
-        <patientrecordsListItem
-          v-for="item in patientRecords"
-          :key="item.pid"
-          :item="item"
-        />
-      </ul>
+      <PatientrecordsGroupedList :records="patientRecords" />
     </GenericCard>
 
     <!-- Related Master Records card -->
