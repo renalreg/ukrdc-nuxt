@@ -5,7 +5,7 @@
     </div>
     <patientrecordsListItem
       v-for="item in groupedRecords.data"
-      :key="item.pid"
+      :key="item.pid + '_data'"
       :item="item"
     />
 
@@ -14,7 +14,7 @@
     </div>
     <patientrecordsListItem
       v-for="item in groupedRecords.surveys"
-      :key="item.pid"
+      :key="item.pid + '_survey'"
       :item="item"
     />
 
@@ -23,7 +23,7 @@
     </div>
     <patientrecordsListItem
       v-for="item in groupedRecords.migrated"
-      :key="item.pid"
+      :key="item.pid + '_mig'"
       :item="item"
     />
 
@@ -35,7 +35,7 @@
     </div>
     <patientrecordsListItem
       v-for="item in groupedRecords.memberships"
-      :key="item.pid"
+      :key="item.pid + '_membership'"
       :item="item"
     />
   </ul>
