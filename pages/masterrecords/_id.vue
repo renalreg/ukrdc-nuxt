@@ -90,7 +90,7 @@ export default defineComponent({
         msg += errorMsg
       }
       if (workItemsMsg || errorMsg) {
-        msg += ' found on record'
+        msg += ' found on record. Click for details.'
       }
       return msg
     }
