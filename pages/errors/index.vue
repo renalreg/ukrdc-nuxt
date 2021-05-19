@@ -8,7 +8,8 @@
     <GenericSearchableSelect
       v-model="selectedFacility"
       class="mb-4"
-      :options="availableFacilities"
+      :options="facilityIds"
+      :labels="facilityLabels"
       hint="Select a facility..."
     />
 
@@ -48,7 +49,7 @@ import usePagination from '@/mixins/usePagination'
 import useDateRange from '@/mixins/useDateRange'
 
 import { Message } from '@/interfaces/errors'
-import useQuery from '~/mixins/useQuery'
+import useFacilities from '~/mixins/useFacilities'
 
 interface MessagePage {
   items: Message[]
@@ -64,12 +65,15 @@ export default defineComponent({
     const { $axios, $config } = useContext()
     const { page, total, size } = usePagination()
     const { range, since, until } = useDateRange()
-    const { stringQuery } = useQuery()
+    const {
+      facilities,
+      facilityIds,
+      facilityLabels,
+      selectedFacility,
+      fetchFacilities,
+    } = useFacilities()
 
     const messages = ref([] as Message[])
-
-    const availableFacilities = ref([] as string[])
-    const selectedFacility = stringQuery('facility', true)
 
     const { fetch } = useFetch(async () => {
       // Fetch the dashboard response from our API server
@@ -96,12 +100,7 @@ export default defineComponent({
       page.value = res.page
       size.value = res.size
 
-      // If we don't already have a list of available facilties, fetch one
-      if (availableFacilities.value.length === 0) {
-        availableFacilities.value = await $axios.$get(
-          `${$config.apiBase}/errors/messages/facilities/`
-        )
-      }
+      await fetchFacilities()
     })
 
     watch(route, () => {
@@ -116,7 +115,9 @@ export default defineComponent({
       since,
       until,
       messages,
-      availableFacilities,
+      facilities,
+      facilityIds,
+      facilityLabels,
       selectedFacility,
     }
   },

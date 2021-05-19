@@ -11,6 +11,13 @@
         <FormCheckbox v-model="statuses" label="Closed" :value="3" />
       </div>
       <GenericDateRange v-model="range" />
+      <GenericSearchableSelect
+        v-model="selectedFacility"
+        class="mb-4"
+        :options="facilityIds"
+        :labels="facilityLabels"
+        hint="Select a facility..."
+      />
     </div>
 
     <GenericCard>
@@ -54,6 +61,7 @@ import useDateRange from '@/mixins/useDateRange'
 
 import { WorkItemShort } from '@/interfaces/workitem'
 import useQuery from '~/mixins/useQuery'
+import useFacilities from '~/mixins/useFacilities'
 
 interface WorkItemPage {
   items: WorkItemShort[]
@@ -70,6 +78,13 @@ export default defineComponent({
     const { page, total, size } = usePagination()
     const { range, since, until } = useDateRange()
     const { arrayQuery } = useQuery()
+    const {
+      facilities,
+      facilityIds,
+      facilityLabels,
+      selectedFacility,
+      fetchFacilities,
+    } = useFacilities()
 
     const workitems = ref([] as WorkItemShort[])
 
@@ -93,11 +108,17 @@ export default defineComponent({
       for (const status of statuses.value) {
         path = path + `&status=${status}`
       }
+      // Filter by facility if it exists
+      if (selectedFacility.value) {
+        path = path + `&facility=${selectedFacility.value}`
+      }
       const res: WorkItemPage = await $axios.$get(path)
       workitems.value = res.items
       total.value = res.total
       page.value = res.page
       size.value = res.size
+
+      await fetchFacilities()
     })
 
     watch(route, () => {
@@ -113,6 +134,10 @@ export default defineComponent({
       until,
       workitems,
       statuses,
+      facilities,
+      facilityIds,
+      facilityLabels,
+      selectedFacility,
     }
   },
   head: {

@@ -1,0 +1,36 @@
+import { computed, ref, useContext } from '@nuxtjs/composition-api'
+import useQuery from '@/mixins/useQuery'
+
+interface Facility {
+  id: string
+  description: string
+}
+
+export default function () {
+  const { $axios, $config } = useContext()
+  const { stringQuery } = useQuery()
+
+  const facilities = ref([] as Facility[])
+  const facilityIds = computed(() => {
+    return facilities.value.map(({ id }) => id)
+  })
+  const facilityLabels = computed(() => {
+    return facilities.value.map(({ description }) => description)
+  })
+  const selectedFacility = stringQuery('facility', true)
+
+  async function fetchFacilities() {
+    // If we don't already have a list of available facilties, fetch one
+    if (facilities.value.length === 0) {
+      facilities.value = await $axios.$get(`${$config.apiBase}/facilities/`)
+    }
+  }
+
+  return {
+    facilities,
+    facilityIds,
+    facilityLabels,
+    selectedFacility,
+    fetchFacilities,
+  }
+}
