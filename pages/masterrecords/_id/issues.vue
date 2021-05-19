@@ -52,7 +52,8 @@ export default defineComponent({
     },
     stats: {
       type: Object as () => MasterRecordStatistics,
-      required: true,
+      required: false,
+      default: null,
     },
   },
   setup(props) {
