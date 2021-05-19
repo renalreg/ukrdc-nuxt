@@ -35,7 +35,6 @@ import {
   useRoute,
   useFetch,
   useContext,
-  computed,
 } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/utilities/dateUtils'
@@ -63,21 +62,21 @@ export default defineComponent({
     const record = ref<MasterRecord>()
     const stats = ref<MasterRecordStatistics>()
 
-    const issueMessage = computed(() => {
+    function buildErrorMessage(stats: MasterRecordStatistics): string {
       let msg = ''
       let workItemsMsg = ''
       let errorMsg = ''
-      if (stats.value) {
-        if (stats.value?.workitems > 0) {
-          workItemsMsg += `${stats.value?.workitems} workitem`
+      if (stats) {
+        if (stats?.workitems > 0) {
+          workItemsMsg += `${stats?.workitems} workitem`
         }
-        if (stats.value?.workitems > 1) {
+        if (stats?.workitems > 1) {
           workItemsMsg += 's'
         }
-        if (stats.value?.errors > 0) {
-          errorMsg += `${stats.value?.errors} error`
+        if (stats?.errors > 0) {
+          errorMsg += `${stats?.errors} error`
         }
-        if (stats.value?.errors > 1) {
+        if (stats?.errors > 1) {
           errorMsg += 's'
         }
       }
@@ -94,7 +93,9 @@ export default defineComponent({
         msg += ' found on record'
       }
       return msg
-    })
+    }
+
+    const issueMessage = ref<string>()
 
     useFetch(async () => {
       // Get the main record data
@@ -107,6 +108,7 @@ export default defineComponent({
         record.value.links.statistics
       )
       stats.value = statsRes
+      issueMessage.value = buildErrorMessage(stats.value)
     })
 
     return {
