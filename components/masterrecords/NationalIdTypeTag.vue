@@ -1,6 +1,15 @@
 <template>
   <span
-    class="inline-flex items-center h-5 px-2.5 py-0.5 rounded-full text-xs font-medium"
+    class="
+      inline-flex
+      items-center
+      h-5
+      px-2.5
+      py-0.5
+      rounded-full
+      text-xs
+      font-medium
+    "
     :class="TagClass(nationalidType)"
   >
     {{ nationalidType.trim() }}

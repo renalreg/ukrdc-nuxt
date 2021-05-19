@@ -10,7 +10,14 @@
     <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
       <div
         v-if="$auth.loggedIn"
-        class="max-w-3xl lg:flex lg:items-center lg:justify-between lg:space-x-5 lg:max-w-7xl"
+        class="
+          max-w-3xl
+          lg:flex
+          lg:items-center
+          lg:justify-between
+          lg:space-x-5
+          lg:max-w-7xl
+        "
       >
         <div class="flex items-center space-x-5 mb-4">
           <div class="flex-shrink-0">
@@ -54,13 +61,40 @@
           </div>
         </div>
         <div
-          class="mb-8 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 lg:mt-0 lg:flex-row lg:space-x-3"
+          class="
+            mb-8
+            flex flex-col-reverse
+            justify-stretch
+            space-y-4 space-y-reverse
+            sm:flex-row-reverse
+            sm:justify-end
+            sm:space-x-reverse sm:space-y-0 sm:space-x-3
+            lg:mt-0
+            lg:flex-row
+            lg:space-x-3
+          "
         >
           <a
             :href="$config.oktaDomain + '/app/UserHome'"
             target="blank"
             type="button"
-            class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            class="
+              inline-flex
+              items-center
+              px-3
+              py-2
+              border border-gray-300
+              shadow-sm
+              text-sm
+              leading-4
+              font-medium
+              rounded-md
+              text-gray-700
+              bg-white
+              hover:bg-gray-50
+              focus:outline-none
+              focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+            "
             >Manage Account</a
           >
           <GenericButtonPrimary @click="logout()">
@@ -74,7 +108,17 @@
         </h3>
         <div v-for="group in perms" :key="group" class="inline">
           <span
-            class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium mr-2 mb-2"
+            class="
+              inline-flex
+              items-center
+              px-3
+              py-0.5
+              rounded-full
+              text-sm
+              font-medium
+              mr-2
+              mb-2
+            "
             :class="classesForScope(group)"
           >
             {{ group }}

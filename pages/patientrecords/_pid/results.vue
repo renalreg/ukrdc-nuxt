@@ -29,7 +29,14 @@
         class="grid grid-cols-3 gap-2 mb-4 px-4 py-4"
       >
         <div
-          class="text-xs font-medium text-gray-500 uppercase tracking-wider col-span-1"
+          class="
+            text-xs
+            font-medium
+            text-gray-500
+            uppercase
+            tracking-wider
+            col-span-1
+          "
         >
           Type
         </div>
@@ -37,13 +44,27 @@
           >{{ item.serviceId }} ({{ item.serviceIdDescription }})</TextP
         >
         <div
-          class="text-xs font-medium text-gray-500 uppercase tracking-wider col-span-1"
+          class="
+            text-xs
+            font-medium
+            text-gray-500
+            uppercase
+            tracking-wider
+            col-span-1
+          "
         >
           Value
         </div>
         <TextP class="col-span-2">{{ item.value }} {{ item.valueUnits }}</TextP>
         <div
-          class="text-xs font-medium text-gray-500 uppercase tracking-wider col-span-1"
+          class="
+            text-xs
+            font-medium
+            text-gray-500
+            uppercase
+            tracking-wider
+            col-span-1
+          "
         >
           Order ID
         </div>
@@ -53,7 +74,14 @@
           </NuxtLink>
         </div>
         <div
-          class="text-xs font-medium text-gray-500 uppercase tracking-wider col-span-1"
+          class="
+            text-xs
+            font-medium
+            text-gray-500
+            uppercase
+            tracking-wider
+            col-span-1
+          "
         >
           Entered On
         </div>
@@ -66,25 +94,57 @@
         <tr>
           <th
             scope="col"
-            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            class="
+              px-6
+              py-3
+              text-left text-xs
+              font-medium
+              text-gray-500
+              uppercase
+              tracking-wider
+            "
           >
             Type
           </th>
           <th
             scope="col"
-            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            class="
+              px-6
+              py-3
+              text-left text-xs
+              font-medium
+              text-gray-500
+              uppercase
+              tracking-wider
+            "
           >
             Value
           </th>
           <th
             scope="col"
-            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            class="
+              px-6
+              py-3
+              text-left text-xs
+              font-medium
+              text-gray-500
+              uppercase
+              tracking-wider
+            "
           >
             Order ID
           </th>
           <th
             scope="col"
-            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            class="
+              px-6
+              py-3
+              text-left text-xs
+              font-medium
+              text-gray-500
+              uppercase
+              tracking-wider
+            "
           >
             Entered On
           </th>
@@ -93,7 +153,14 @@
       <tbody class="bg-white divide-y divide-gray-200">
         <tr v-for="(item, index) in results" :key="index">
           <td
-            class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+            class="
+              px-6
+              py-4
+              whitespace-nowrap
+              text-sm
+              font-medium
+              text-gray-900
+            "
           >
             {{ item.serviceId }} ({{ item.serviceIdDescription }})
           </td>
@@ -101,7 +168,14 @@
             {{ item.value }} {{ item.valueUnits }}
           </td>
           <td
-            class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 underline truncate"
+            class="
+              px-6
+              py-4
+              whitespace-nowrap
+              text-sm text-gray-500
+              underline
+              truncate
+            "
           >
             <NuxtLink :to="{ query: { order_id: item.orderId } }">
               {{ item.orderId }}

@@ -24,7 +24,17 @@
       <div class="flex w-full">
         <div
           ref="input"
-          class="block w-full border px-3 py-2 shadow-sm sm:text-sm border-gray-300 rounded-md"
+          class="
+            block
+            w-full
+            border
+            px-3
+            py-2
+            shadow-sm
+            sm:text-sm
+            border-gray-300
+            rounded-md
+          "
           :class="{
             invisible: isOpen,
           }"
@@ -62,7 +72,18 @@
 
       <div
         v-show="isOpen"
-        class="absolute top-0 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 pin-x p-2 z-50 w-full"
+        class="
+          absolute
+          top-0
+          bg-white
+          rounded-md
+          shadow-lg
+          ring-1 ring-black ring-opacity-5
+          pin-x
+          p-2
+          z-50
+          w-full
+        "
       >
         <input
           ref="search"

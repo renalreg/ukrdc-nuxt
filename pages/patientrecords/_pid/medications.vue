@@ -12,7 +12,14 @@
       </h2>
 
       <ul
-        class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4"
+        class="
+          mt-3
+          grid grid-cols-1
+          gap-5
+          sm:gap-6
+          sm:grid-cols-2
+          lg:grid-cols-4
+        "
       >
         <li
           v-for="(item, index) of activeMedications"
@@ -30,7 +37,14 @@
       </h2>
 
       <ul
-        class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4"
+        class="
+          mt-3
+          grid grid-cols-1
+          gap-5
+          sm:gap-6
+          sm:grid-cols-2
+          lg:grid-cols-4
+        "
       >
         <li
           v-for="(item, index) of inactiveMedications"

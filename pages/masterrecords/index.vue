@@ -51,7 +51,15 @@
         <p>
           For example,
           <span
-            class="inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-800"
+            class="
+              inline-flex
+              items-center
+              px-2
+              py-0.5
+              rounded
+              bg-gray-100
+              text-gray-800
+            "
           >
             john && 1/12/1980
           </span>

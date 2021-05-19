@@ -10,7 +10,15 @@
     </div>
 
     <div
-      class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-2 justify-center"
+      class="
+        mt-3
+        grid grid-cols-1
+        gap-5
+        sm:gap-6
+        sm:grid-cols-2
+        lg:grid-cols-2
+        justify-center
+      "
     >
       <genericCardMini
         v-for="item in surveys"
@@ -30,7 +38,16 @@
 
           <div class="mt-2">
             <span
-              class="flex-shrink-0 inline-block px-2 py-0.5 text-indigo-800 text-xs font-medium bg-indigo-100 rounded-sm"
+              class="
+                flex-shrink-0
+                inline-block
+                px-2
+                py-0.5
+                text-indigo-800 text-xs
+                font-medium
+                bg-indigo-100
+                rounded-sm
+              "
               >{{ item.questions.length }} questions</span
             >
             <genericButtonMini

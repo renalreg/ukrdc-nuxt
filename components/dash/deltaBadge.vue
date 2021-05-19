@@ -1,6 +1,18 @@
 <template>
   <div
-    class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-red-100 text-red-800 md:mt-2 lg:mt-0"
+    class="
+      inline-flex
+      items-baseline
+      px-2.5
+      py-0.5
+      rounded-full
+      text-sm
+      font-medium
+      bg-red-100
+      text-red-800
+      md:mt-2
+      lg:mt-0
+    "
     :class="[
       styleNegative
         ? ['bg-red-100', 'text-red-800']

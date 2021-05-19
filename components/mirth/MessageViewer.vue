@@ -6,7 +6,13 @@
       :tabs="tabs"
     />
     <div
-      class="flex flex-col w-full h-full box-border overflow-y-scroll overflow-x-hidden"
+      class="
+        flex flex-col
+        w-full
+        h-full
+        box-border
+        overflow-y-scroll overflow-x-hidden
+      "
     >
       <div v-if="currentTab == 'metadata'" id="viewerMetadata" class="p-4">
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">

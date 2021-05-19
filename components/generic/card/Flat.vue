@@ -1,6 +1,13 @@
 <template>
   <div
-    class="bg-white shadow-sm border border-gray-300 overflow-hidden rounded-md text-sm"
+    class="
+      bg-white
+      shadow-sm
+      border border-gray-300
+      overflow-hidden
+      rounded-md
+      text-sm
+    "
   >
     <slot />
   </div>

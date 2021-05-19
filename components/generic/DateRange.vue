@@ -15,7 +15,14 @@
           <div class="flex flex-col sm:flex-row justify-start items-center">
             <div class="relative flex-grow">
               <svg
-                class="text-gray-600 w-4 h-full mx-2 absolute pointer-events-none"
+                class="
+                  text-gray-600
+                  w-4
+                  h-full
+                  mx-2
+                  absolute
+                  pointer-events-none
+                "
                 fill="none"
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -48,7 +55,14 @@
             </span>
             <div class="relative flex-grow">
               <svg
-                class="text-gray-600 w-4 h-full mx-2 absolute pointer-events-none"
+                class="
+                  text-gray-600
+                  w-4
+                  h-full
+                  mx-2
+                  absolute
+                  pointer-events-none
+                "
                 fill="none"
                 stroke-linecap="round"
                 stroke-linejoin="round"

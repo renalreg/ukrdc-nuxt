@@ -2,7 +2,14 @@
   <GenericModalSlot ref="surveyViewerGenericModalMaxSlot">
     <div
       v-if="availableToOpen"
-      class="px-0 py-0 w-full h-full box-border overflow-y-scroll overflow-x-hidden"
+      class="
+        px-0
+        py-0
+        w-full
+        h-full
+        box-border
+        overflow-y-scroll overflow-x-hidden
+      "
     >
       <div class="overflow-hidden sm:rounded-lg">
         <div class="px-4 py-5">

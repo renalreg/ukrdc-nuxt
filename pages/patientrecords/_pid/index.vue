@@ -54,7 +54,14 @@
         Patient Numbers
       </h2>
       <ul
-        class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        class="
+          mt-3
+          grid grid-cols-1
+          gap-5
+          sm:gap-6
+          sm:grid-cols-2
+          lg:grid-cols-3
+        "
       >
         <li
           v-for="item in record.patient.numbers"
@@ -63,7 +70,16 @@
         >
           <GenericCardMini class="flex w-full">
             <div
-              class="flex-shrink-0 flex items-center justify-center w-16 bg-indigo-600 text-white text-sm font-medium rounded-l-md"
+              class="
+                flex-shrink-0 flex
+                items-center
+                justify-center
+                w-16
+                bg-indigo-600
+                text-white text-sm
+                font-medium
+                rounded-l-md
+              "
             >
               {{ item.numbertype }}
             </div>
@@ -94,7 +110,14 @@
       </h2>
 
       <ul
-        class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        class="
+          mt-3
+          grid grid-cols-1
+          gap-5
+          sm:gap-6
+          sm:grid-cols-2
+          lg:grid-cols-3
+        "
       >
         <li
           v-for="item in record.patient.addresses"
@@ -120,12 +143,32 @@
             </p>
             <span
               v-if="!item.toTime"
-              class="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-sm mt-2"
+              class="
+                flex-shrink-0
+                inline-block
+                px-2
+                py-0.5
+                text-green-800 text-xs
+                font-medium
+                bg-green-100
+                rounded-sm
+                mt-2
+              "
               >Active</span
             >
             <span
               v-else
-              class="flex-shrink-0 inline-block px-2 py-0.5 text-red-800 text-xs font-medium bg-red-100 rounded-sm mt-2"
+              class="
+                flex-shrink-0
+                inline-block
+                px-2
+                py-0.5
+                text-red-800 text-xs
+                font-medium
+                bg-red-100
+                rounded-sm
+                mt-2
+              "
               >Inactive since {{ formatDate(item.toTime, (t = false)) }}</span
             >
           </GenericCardMini>
@@ -146,7 +189,14 @@
       </h2>
 
       <ul
-        class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        class="
+          mt-3
+          grid grid-cols-1
+          gap-5
+          sm:gap-6
+          sm:grid-cols-2
+          lg:grid-cols-3
+        "
       >
         <li
           v-for="item in record.programMemberships"
@@ -162,12 +212,32 @@
             </p>
             <span
               v-if="!item.toTime"
-              class="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-sm mt-2"
+              class="
+                flex-shrink-0
+                inline-block
+                px-2
+                py-0.5
+                text-green-800 text-xs
+                font-medium
+                bg-green-100
+                rounded-sm
+                mt-2
+              "
               >Active</span
             >
             <span
               v-else
-              class="flex-shrink-0 inline-block px-2 py-0.5 text-red-800 text-xs font-medium bg-red-100 rounded-sm mt-2"
+              class="
+                flex-shrink-0
+                inline-block
+                px-2
+                py-0.5
+                text-red-800 text-xs
+                font-medium
+                bg-red-100
+                rounded-sm
+                mt-2
+              "
               >Inactive since {{ formatDate(item.toTime, (t = false)) }}</span
             >
           </GenericCardMini>

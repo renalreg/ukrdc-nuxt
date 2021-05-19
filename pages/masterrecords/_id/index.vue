@@ -98,13 +98,11 @@ export default defineComponent({
 
     useFetch(async () => {
       // Use the record links to load related data concurrently
-      const [
-        relatedRecordsResponse,
-        patientRecordsResponse,
-      ] = await Promise.all([
-        $axios.$get(props.record.links.related),
-        $axios.$get(props.record.links.patientrecords),
-      ])
+      const [relatedRecordsResponse, patientRecordsResponse] =
+        await Promise.all([
+          $axios.$get(props.record.links.related),
+          $axios.$get(props.record.links.patientrecords),
+        ])
 
       relatedRecords.value = relatedRecordsResponse
       patientRecords.value = patientRecordsResponse

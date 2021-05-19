@@ -11,12 +11,30 @@
       <div class="mt-2">
         <span
           v-if="errorMessage"
-          class="flex-shrink-0 inline-block px-2 py-0.5 text-red-800 text-xs font-medium bg-red-100 rounded-sm"
+          class="
+            flex-shrink-0
+            inline-block
+            px-2
+            py-0.5
+            text-red-800 text-xs
+            font-medium
+            bg-red-100
+            rounded-sm
+          "
           >Error</span
         >
         <span
           v-else
-          class="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-sm"
+          class="
+            flex-shrink-0
+            inline-block
+            px-2
+            py-0.5
+            text-green-800 text-xs
+            font-medium
+            bg-green-100
+            rounded-sm
+          "
           >Success</span
         >
         <genericButtonMini

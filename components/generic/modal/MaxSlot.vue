@@ -2,7 +2,16 @@
   <transition :duration="200">
     <div v-show="visible" class="fixed z-10 inset-0">
       <div
-        class="items-end justify-center h-screen w-screen block p-0 mt-16 md:mt-0"
+        class="
+          items-end
+          justify-center
+          h-screen
+          w-screen
+          block
+          p-0
+          mt-16
+          md:mt-0
+        "
       >
         <!-- Modal panel, show/hide based on modal state. -->
         <transition
@@ -15,7 +24,17 @@
         >
           <div
             v-show="visible"
-            class="inline-block align-bottom vibrancy shadow-xl transform transition-all sm:align-middle h-full w-full"
+            class="
+              inline-block
+              align-bottom
+              vibrancy
+              shadow-xl
+              transform
+              transition-all
+              sm:align-middle
+              h-full
+              w-full
+            "
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-headline"
@@ -23,7 +42,13 @@
             <div class="block absolute top-0 right-0 pt-4 pr-4 z-50">
               <button
                 type="button"
-                class="rounded-full text-gray-500 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                class="
+                  rounded-full
+                  text-gray-500
+                  hover:text-gray-600
+                  focus:outline-none
+                  focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+                "
                 @click="hide()"
               >
                 <span class="sr-only">Close</span>

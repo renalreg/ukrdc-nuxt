@@ -2,7 +2,17 @@
   <div class="bg-gray-50">
     <div v-if="showCloseButton" class="absolute top-0 right-0 -mr-12 pt-2">
       <button
-        class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+        class="
+          ml-1
+          flex
+          items-center
+          justify-center
+          h-10
+          w-10
+          rounded-full
+          focus:outline-none
+          focus:ring-2 focus:ring-inset focus:ring-white
+        "
         @click="$emit('toggle')"
       >
         <span class="sr-only">Close sidebar</span>
@@ -41,7 +51,16 @@
               <NuxtLink
                 :to="item.url"
                 href="#"
-                class="group flex items-center px-2 py-2 text-base font-medium rounded-md"
+                class="
+                  group
+                  flex
+                  items-center
+                  px-2
+                  py-2
+                  text-base
+                  font-medium
+                  rounded-md
+                "
                 :class="[
                   $route.path == item.url
                     ? ['bg-gray-100', 'text-gray-900']
@@ -76,7 +95,16 @@
             <div v-else>
               <h3
                 :id="item.title + '_Heading'"
-                class="px-3 mt-5 mb-3 text-xs font-semibold text-gray-500 uppercase tracking-wider"
+                class="
+                  px-3
+                  mt-5
+                  mb-3
+                  text-xs
+                  font-semibold
+                  text-gray-500
+                  uppercase
+                  tracking-wider
+                "
               >
                 {{ item.title }}
               </h3>
@@ -126,15 +154,13 @@ export default defineComponent({
       {
         title: 'Dashboard',
         url: '/',
-        svg:
-          'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6',
+        svg: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6',
         visible: true,
       },
       {
         title: 'Records',
         url: '/masterrecords',
-        svg:
-          'M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4',
+        svg: 'M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4',
         visible: $hasPermission('ukrdc:records:read'),
       },
       {
@@ -148,15 +174,13 @@ export default defineComponent({
       {
         title: 'Work Items',
         url: '/workitems',
-        svg:
-          'M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1',
+        svg: 'M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1',
         visible: $hasPermission('ukrdc:workitems:read'),
       },
       {
         title: 'Errors',
         url: '/errors',
-        svg:
-          'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z',
+        svg: 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z',
         visible:
           $hasPermission('ukrdc:mirth:read') ||
           $hasPermission('ukrdc:mirth:write'),
