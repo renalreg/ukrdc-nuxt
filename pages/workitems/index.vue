@@ -13,31 +13,29 @@
       <GenericDateRange v-model="range" />
     </div>
 
-    <div v-if="workitems.length > 0">
-      <GenericCard>
-        <!-- Skeleton results -->
-        <ul v-if="$fetchState.pending" class="divide-y divide-gray-200">
-          <SkeleListItem v-for="n in 10" :key="n" />
-        </ul>
-        <!-- Real results -->
-        <ul v-else class="divide-y divide-gray-200">
-          <workitemsListItem
-            v-for="item in workitems"
-            :key="item.id"
-            :item="item"
-          />
-        </ul>
-        <GenericPaginator
-          v-if="!$fetchState.pending"
-          class="bg-white border-t border-gray-200"
-          :page="page"
-          :size="size"
-          :total="total"
-          @next="page++"
-          @prev="page--"
+    <GenericCard>
+      <!-- Skeleton results -->
+      <ul v-if="$fetchState.pending" class="divide-y divide-gray-200">
+        <SkeleListItem v-for="n in 10" :key="n" />
+      </ul>
+      <!-- Real results -->
+      <ul v-else class="divide-y divide-gray-200">
+        <workitemsListItem
+          v-for="item in workitems"
+          :key="item.id"
+          :item="item"
         />
-      </GenericCard>
-    </div>
+      </ul>
+      <GenericPaginator
+        v-if="!$fetchState.pending"
+        class="bg-white border-t border-gray-200"
+        :page="page"
+        :size="size"
+        :total="total"
+        @next="page++"
+        @prev="page--"
+      />
+    </GenericCard>
   </div>
 </template>
 
