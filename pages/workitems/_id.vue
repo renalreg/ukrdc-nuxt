@@ -73,6 +73,34 @@
       </div>
     </GenericModalSlot>
 
+    <GenericModalSlot
+      v-if="$hasPermission('ukrdc:workitems:write')"
+      ref="closeModal"
+    >
+      <div class="text-left">
+        <div class="mb-4">Close the Work Item</div>
+
+        <div>
+          <FormLabel>
+            Comments
+            <FormTextArea v-model="customComment" rows="3"></FormTextArea>
+          </FormLabel>
+        </div>
+      </div>
+
+      <div class="flex justify-end">
+        <GenericButton @click="closeModal.hide()"> Cancel </GenericButton>
+        <genericButtonPrimary
+          type="submit"
+          class="ml-3"
+          colour="red"
+          @click="closeWorkItem()"
+        >
+          Close Work Item
+        </genericButtonPrimary>
+      </div>
+    </GenericModalSlot>
+
     <!-- Header -->
     <div class="mb-6">
       <TextH1 v-if="record">
@@ -119,37 +147,42 @@
       v-if="
         $hasPermission('ukrdc:workitems:write') && record && record.status !== 3
       "
-      class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-8"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 my-8"
     >
-      <div>
-        <genericButtonPrimary
-          class="inline-flex items-center justify-center w-full"
-          @click="addCommentModal.show()"
-        >
-          <IconPencil />
-          Comment
-        </genericButtonPrimary>
-      </div>
-      <div>
-        <genericButtonPrimary
-          class="inline-flex items-center justify-center w-full"
-          colour="green"
-          @click="mergeModal.show()"
-        >
-          <IconLink />
-          Merge
-        </genericButtonPrimary>
-      </div>
-      <div>
-        <genericButtonPrimary
-          class="inline-flex items-center justify-center w-full"
-          colour="red"
-          @click="unlinkModal.show()"
-        >
-          <IconXCircle />
-          Unlink
-        </genericButtonPrimary>
-      </div>
+      <genericButtonPrimary
+        class="inline-flex items-center justify-center w-full"
+        @click="addCommentModal.show()"
+      >
+        <IconPencil />
+        Comment
+      </genericButtonPrimary>
+
+      <genericButtonPrimary
+        class="inline-flex items-center justify-center w-full"
+        colour="green"
+        @click="closeModal.show()"
+      >
+        <IconCheckCircle />
+        Close
+      </genericButtonPrimary>
+
+      <genericButtonPrimary
+        class="inline-flex items-center justify-center w-full"
+        colour="yellow"
+        @click="mergeModal.show()"
+      >
+        <IconLink />
+        Merge
+      </genericButtonPrimary>
+
+      <genericButtonPrimary
+        class="inline-flex items-center justify-center w-full"
+        colour="red"
+        @click="unlinkModal.show()"
+      >
+        <IconXCircle />
+        Unlink
+      </genericButtonPrimary>
     </div>
 
     <!-- Related errors card -->
@@ -157,6 +190,7 @@
       v-if="record"
       class="mt-4 mb-8"
       :errors-url="record.links.errors"
+      :size="5"
     />
 
     <!-- Related WorkItems  -->
@@ -180,11 +214,18 @@
       <TextH2 class="mb-4"> Proposed Link </TextH2>
 
       <div v-if="record" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <personsRecordCard
+        <PersonsRecordCard
           v-if="record.person"
           class="border-2 border-red-500"
           :record="record.person"
           label="Incoming"
+          :highlight="Object.keys(record.attributes)"
+        />
+        <WorkitemsAttributeRecordCard
+          v-else-if="!isEmptyObject(record.attributes)"
+          class="border-2 border-red-500"
+          :record="record.attributes"
+          label="Incoming Attributes"
           :highlight="Object.keys(record.attributes)"
         />
         <div
@@ -269,6 +310,7 @@ import {
 
 import { formatDate } from '@/utilities/dateUtils'
 import { formatGender } from '@/utilities/codeUtils'
+import { isEmptyObject } from '@/utilities/objectUtils'
 
 import { Person } from '@/interfaces/persons'
 import { WorkItem } from '@/interfaces/workitem'
@@ -310,6 +352,7 @@ export default defineComponent({
     const addCommentModal = ref<modalInterface>()
     const mergeModal = ref<modalInterface>()
     const unlinkModal = ref<modalInterface>()
+    const closeModal = ref<modalInterface>()
 
     // Data fetching
     const { fetch } = useFetch(async () => {
@@ -373,6 +416,14 @@ export default defineComponent({
       el.toggle()
     }
 
+    function closeWorkItem() {
+      actionWorkItem(
+        `${$config.apiBase}/empi/workitems/${route.value.params.id}/close`
+      )
+      const el = closeModal.value as modalInterface
+      el.toggle()
+    }
+
     function actionWorkItem(postPath: string) {
       $axios
         .$post(postPath)
@@ -411,6 +462,7 @@ export default defineComponent({
       relatedPersons,
       formatDate,
       formatGender,
+      isEmptyObject,
       relatedRecords,
       relatedRecordsIndex,
       customComment,
@@ -418,9 +470,11 @@ export default defineComponent({
       addCommentModal,
       mergeModal,
       unlinkModal,
+      closeModal,
       updateWorkItemComment,
       mergeWorkItem,
       unlinkWorkItem,
+      closeWorkItem,
     }
   },
   head: {
