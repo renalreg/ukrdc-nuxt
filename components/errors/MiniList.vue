@@ -43,6 +43,11 @@ export default defineComponent({
       required: false,
       default: 'Related Errors',
     },
+    size: {
+      type: Number,
+      required: false,
+      default: 10,
+    },
   },
   setup(props) {
     // Dependencies
@@ -51,7 +56,7 @@ export default defineComponent({
     // Related errors data
     const relatedErrors = ref([] as Message[])
     const relatedErrorsPage = ref(0)
-    const relatedErrorsSize = ref(10)
+    const relatedErrorsSize = ref(props.size)
     const relatedErrorsTotal = ref(0)
 
     async function updateRelatedErrors(): Promise<void> {
