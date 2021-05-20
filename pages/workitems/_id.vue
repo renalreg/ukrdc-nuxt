@@ -185,30 +185,6 @@
       </genericButtonPrimary>
     </div>
 
-    <!-- Related errors card -->
-    <ErrorsMiniList
-      v-if="record"
-      class="mt-4 mb-8"
-      :errors-url="record.links.errors"
-      :size="5"
-    />
-
-    <!-- Related WorkItems  -->
-    <GenericCard v-if="relatedRecords.length > 0" class="mb-8">
-      <!-- Card header -->
-      <GenericCardHeader>
-        <TextH2> Related Work Items </TextH2>
-      </GenericCardHeader>
-      <!-- Results list -->
-      <ul class="divide-y divide-gray-200">
-        <workitemsListItem
-          v-for="item in relatedRecords"
-          :key="item.id"
-          :item="item"
-        />
-      </ul>
-    </GenericCard>
-
     <!-- Proposed link cards -->
     <div class="mb-8">
       <TextH2 class="mb-4"> Proposed Link </TextH2>
@@ -253,6 +229,30 @@
         </div>
       </div>
     </div>
+
+    <!-- Related errors card -->
+    <ErrorsMiniList
+      v-if="record"
+      class="mt-4 mb-8"
+      :errors-url="record.links.errors"
+      :size="5"
+    />
+
+    <!-- Related WorkItems  -->
+    <GenericCard v-if="relatedRecords.length > 0" class="mb-8">
+      <!-- Card header -->
+      <GenericCardHeader>
+        <TextH2> Related Work Items </TextH2>
+      </GenericCardHeader>
+      <!-- Results list -->
+      <ul class="divide-y divide-gray-200">
+        <workitemsListItem
+          v-for="item in relatedRecords"
+          :key="item.id"
+          :item="item"
+        />
+      </ul>
+    </GenericCard>
 
     <!-- Compare records cards -->
     <div v-if="relatedPersons.length > 0" class="mb-8">
