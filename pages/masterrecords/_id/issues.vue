@@ -63,7 +63,7 @@ export default defineComponent({
 
     useFetch(async () => {
       // Use the record links to load related data concurrently
-      if ($hasPermission('ukrdc:empi:read')) {
+      if ($hasPermission('ukrdc:records:read')) {
         workItems.value = await $axios.$get(props.record.links.workitems)
       }
     })
