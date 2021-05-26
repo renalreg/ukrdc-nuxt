@@ -29,13 +29,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  useRoute,
-  useFetch,
-  useContext,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, useRoute, useFetch, useContext } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/utilities/dateUtils'
 import { formatGender } from '@/utilities/codeUtils'
@@ -104,9 +98,7 @@ export default defineComponent({
       record.value = res
 
       // Get basic record statistics
-      const statsRes: MasterRecordStatistics = await $axios.$get(
-        record.value.links.statistics
-      )
+      const statsRes: MasterRecordStatistics = await $axios.$get(record.value.links.statistics)
       stats.value = statsRes
       issueMessage.value = buildErrorMessage(stats.value)
     })

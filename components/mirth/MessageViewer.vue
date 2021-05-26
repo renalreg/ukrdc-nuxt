@@ -1,19 +1,7 @@
 <template>
   <GenericModalMaxSlot ref="messageViewerGenericModalMaxSlot">
-    <GenericTabs
-      v-model="currentTab"
-      class="mx-auto px-4 py-2 border-b border-gray-200"
-      :tabs="tabs"
-    />
-    <div
-      class="
-        flex flex-col
-        w-full
-        h-full
-        box-border
-        overflow-y-scroll overflow-x-hidden
-      "
-    >
+    <GenericTabs v-model="currentTab" class="mx-auto px-4 py-2 border-b border-gray-200" :tabs="tabs" />
+    <div class="flex flex-col w-full h-full box-border overflow-y-scroll overflow-x-hidden">
       <div v-if="currentTab == 'metadata'" id="viewerMetadata" class="p-4">
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
           <GenericCardFlat
@@ -34,14 +22,8 @@
       </div>
 
       <div v-for="(messageData, type) in availableMessageData" :key="type">
-        <div
-          v-if="currentTab == type"
-          class="h-full box-border flex flex-col overflow-x-scroll"
-        >
-          <div
-            v-if="messageData.dataType === 'XML'"
-            class="pl-8 pb-3 pt-3 border-b border-gray-200"
-          >
+        <div v-if="currentTab == type" class="h-full box-border flex flex-col overflow-x-scroll">
+          <div v-if="messageData.dataType === 'XML'" class="pl-8 pb-3 pt-3 border-b border-gray-200">
             <GenericToggle v-model="formatMessage" label="Format XML" />
           </div>
 
@@ -65,11 +47,7 @@
 import { defineComponent, ref, computed, watch } from '@nuxtjs/composition-api'
 
 import formatXml from 'xml-formatter'
-import {
-  ConnectorMessageData,
-  ConnectorMessage,
-  MetaDataMap,
-} from '@/interfaces/mirth'
+import { ConnectorMessageData, ConnectorMessage, MetaDataMap } from '@/interfaces/mirth'
 import { modalInterface } from '@/interfaces/modal'
 
 interface ConnectorMessageDataTabs {
@@ -115,11 +93,7 @@ export default defineComponent({
 
     const nonNullMetadata = computed<MetaDataMap>(() => {
       if (message.value.metaDataMap) {
-        return Object.fromEntries(
-          Object.entries(message.value.metaDataMap).filter(
-            ([_, v]) => v != null
-          )
-        )
+        return Object.fromEntries(Object.entries(message.value.metaDataMap).filter(([_, v]) => v != null))
       } else {
         return {}
       }
@@ -136,9 +110,7 @@ export default defineComponent({
       }
     }
 
-    function formatMessageToXMLArray(
-      messageData: ConnectorMessageData
-    ): string[] {
+    function formatMessageToXMLArray(messageData: ConnectorMessageData): string[] {
       return formatMessageToXML(messageData).split('\n')
     }
 

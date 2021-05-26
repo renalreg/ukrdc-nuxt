@@ -33,11 +33,7 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [
-    '@nuxt/typescript-build',
-    '@nuxtjs/composition-api/module',
-    '@nuxtjs/tailwindcss',
-  ],
+  buildModules: ['@nuxt/typescript-build', '@nuxtjs/composition-api/module', '@nuxtjs/tailwindcss'],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: ['@nuxtjs/axios', '@nuxtjs/auth-next', '@nuxtjs/sentry'],
@@ -88,8 +84,7 @@ export default {
     apiBase: process.env.API_BASE || '/api',
     appBase: process.env.APP_BASE || '/',
     // Nuxt-Auth user key containing an array of permission group strings
-    userPermissionKey:
-      process.env.USER_PERMISSION_KEY || 'org.ukrdc.permissions',
+    userPermissionKey: process.env.USER_PERMISSION_KEY || 'org.ukrdc.permissions',
     // Okta domain
     oktaDomain: process.env.OKTA_DOMAIN || 'https://renalregistry.okta.com',
     // Axios public runtime config

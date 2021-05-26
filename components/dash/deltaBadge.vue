@@ -13,11 +13,7 @@
       md:mt-2
       lg:mt-0
     "
-    :class="[
-      styleNegative
-        ? ['bg-red-100', 'text-red-800']
-        : ['bg-green-100', 'text-green-800'],
-    ]"
+    :class="[styleNegative ? ['bg-red-100', 'text-red-800'] : ['bg-green-100', 'text-green-800']]"
   >
     <svg
       class="-ml-1 mr-0.5 flex-shrink-0 self-center h-5 w-5"

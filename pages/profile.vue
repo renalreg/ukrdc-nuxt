@@ -8,26 +8,11 @@
       @confirm="resetPasswordAuth0()"
     />
     <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
-      <div
-        v-if="$auth.loggedIn"
-        class="
-          max-w-3xl
-          lg:flex
-          lg:items-center
-          lg:justify-between
-          lg:space-x-5
-          lg:max-w-7xl
-        "
-      >
+      <div v-if="$auth.loggedIn" class="max-w-3xl lg:flex lg:items-center lg:justify-between lg:space-x-5 lg:max-w-7xl">
         <div class="flex items-center space-x-5 mb-4">
           <div class="flex-shrink-0">
             <div class="relative">
-              <img
-                v-if="$auth.user.picture"
-                class="h-16 w-16 rounded-full"
-                :src="$auth.user.picture"
-                alt=""
-              />
+              <img v-if="$auth.user.picture" class="h-16 w-16 rounded-full" :src="$auth.user.picture" alt="" />
               <span
                 v-else
                 class="inline-block h-16 w-16 rounded-full overflow-hidden"
@@ -44,10 +29,7 @@
                   />
                 </svg>
               </span>
-              <span
-                class="absolute inset-0 shadow-inner rounded-full"
-                aria-hidden="true"
-              ></span>
+              <span class="absolute inset-0 shadow-inner rounded-full" aria-hidden="true"></span>
             </div>
           </div>
           <div>
@@ -97,28 +79,14 @@
             "
             >Manage Account</a
           >
-          <GenericButtonPrimary @click="logout()">
-            Sign out
-          </GenericButtonPrimary>
+          <GenericButtonPrimary @click="logout()"> Sign out </GenericButtonPrimary>
         </div>
       </div>
       <div>
-        <h3 class="text-sm leading-6 font-medium text-gray-900 mb-2">
-          Permissions
-        </h3>
+        <h3 class="text-sm leading-6 font-medium text-gray-900 mb-2">Permissions</h3>
         <div v-for="group in perms" :key="group" class="inline">
           <span
-            class="
-              inline-flex
-              items-center
-              px-3
-              py-0.5
-              rounded-full
-              text-sm
-              font-medium
-              mr-2
-              mb-2
-            "
+            class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium mr-2 mb-2"
             :class="classesForScope(group)"
           >
             {{ group }}
@@ -144,8 +112,7 @@ export default defineComponent({
       // doesn't store. Instead we reset the auth state locally, then redirect to
       // the user management logout page
       $auth.reset()
-      const logoutUrl =
-        $config.oktaDomain + '/login/signout?fromURI=' + window.location.href
+      const logoutUrl = $config.oktaDomain + '/login/signout?fromURI=' + window.location.href
       window.location.href = logoutUrl
     }
 

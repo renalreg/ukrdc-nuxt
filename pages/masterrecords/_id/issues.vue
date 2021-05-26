@@ -1,9 +1,6 @@
 <template>
   <div>
-    <div
-      v-if="stats && stats.errors == 0 && stats.workitems == 0"
-      class="text-center"
-    >
+    <div v-if="stats && stats.errors == 0 && stats.workitems == 0" class="text-center">
       <TextP>No issues on record</TextP>
     </div>
     <!-- Related Work Items card -->
@@ -12,11 +9,7 @@
         <TextH2> Open Work Items </TextH2>
       </GenericCardHeader>
       <ul class="divide-y divide-gray-200">
-        <workitemsListItem
-          v-for="item in workItems"
-          :key="item.id"
-          :item="item"
-        />
+        <workitemsListItem v-for="item in workItems" :key="item.id" :item="item" />
       </ul>
     </GenericCard>
 
@@ -31,12 +24,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  useFetch,
-  useContext,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, useFetch, useContext } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/utilities/dateUtils'
 import { formatGender } from '@/utilities/codeUtils'

@@ -22,10 +22,7 @@
               <TextP>
                 {{ item.nationalid.trim() }}
               </TextP>
-              <masterrecordsNationalIdTypeTag
-                class="mt-2"
-                :nationalid-type="item.nationalidType"
-              />
+              <masterrecordsNationalIdTypeTag class="mt-2" :nationalid-type="item.nationalidType" />
             </div>
             <!-- Details (large breakpoint only) -->
             <div class="hidden lg:block">

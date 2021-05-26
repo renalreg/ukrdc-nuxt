@@ -1,16 +1,11 @@
 <template>
-  <nav
-    class="px-4 py-3 flex items-center justify-between sm:px-6"
-    aria-label="Pagination"
-  >
+  <nav class="px-4 py-3 flex items-center justify-between sm:px-6" aria-label="Pagination">
     <div class="hidden sm:block">
       <p class="text-sm text-gray-700">
         Showing
         <span class="font-medium">{{ page * size + 1 }}</span>
         to
-        <span class="font-medium">{{
-          Math.min((page + 1) * size, total)
-        }}</span>
+        <span class="font-medium">{{ Math.min((page + 1) * size, total) }}</span>
         of
         <span class="font-medium">{{ total }}</span>
         results

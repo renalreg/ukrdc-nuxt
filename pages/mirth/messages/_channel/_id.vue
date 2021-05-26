@@ -1,9 +1,7 @@
 <template>
   <div>
     <div class="mb-6">
-      <TextH1 v-if="!isEmptyObject(message)">
-        Message {{ message.messageId }}
-      </TextH1>
+      <TextH1 v-if="!isEmptyObject(message)"> Message {{ message.messageId }} </TextH1>
       <SkeleText v-else class="h-8 w-1/4 mb-2" />
     </div>
 
@@ -16,13 +14,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  useRoute,
-  useFetch,
-  useContext,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, useRoute, useFetch, useContext } from '@nuxtjs/composition-api'
 
 import { ChannelMessage } from '@/interfaces/mirth'
 

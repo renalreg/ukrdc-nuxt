@@ -1,9 +1,7 @@
 <template>
   <div>
     <div class="mb-6">
-      <TextH1 v-if="error">
-        Error {{ error.id }} from {{ error.facility }}
-      </TextH1>
+      <TextH1 v-if="error"> Error {{ error.id }} from {{ error.facility }} </TextH1>
       <SkeleText v-else class="h-8 w-1/4 mb-2" />
       <TextL1 v-if="error">
         {{ error.error }}
@@ -24,11 +22,7 @@
           </GenericDi>
           <GenericDi>
             <TextDt>Recieved</TextDt>
-            <TextDd v-if="error">
-              {{
-                error.received ? formatDate(error.received) : 'Unknown'
-              }}</TextDd
-            >
+            <TextDd v-if="error"> {{ error.received ? formatDate(error.received) : 'Unknown' }}</TextDd>
             <SkeleText v-else class="h-6 w-full" />
           </GenericDi>
           <GenericDi>
@@ -55,11 +49,7 @@
         <TextH2> Related Records </TextH2>
       </GenericCardHeader>
       <ul class="divide-y divide-gray-200">
-        <masterrecordsListItem
-          v-for="item in error.masterRecords"
-          :key="item.id"
-          :item="item"
-        />
+        <masterrecordsListItem v-for="item in error.masterRecords" :key="item.id" :item="item" />
       </ul>
     </GenericCard>
 
@@ -69,11 +59,7 @@
         <TextH2> Related Work Items </TextH2>
       </GenericCardHeader>
       <ul class="divide-y divide-gray-200">
-        <workitemsListItem
-          v-for="item in error.workItems"
-          :key="item.id"
-          :item="item"
-        />
+        <workitemsListItem v-for="item in error.workItems" :key="item.id" :item="item" />
       </ul>
     </GenericCard>
 
@@ -90,13 +76,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  useRoute,
-  useFetch,
-  useContext,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, useRoute, useFetch, useContext } from '@nuxtjs/composition-api'
 
 import { ExtendedError } from '@/interfaces/errors'
 import { ChannelMessage } from '@/interfaces/mirth'

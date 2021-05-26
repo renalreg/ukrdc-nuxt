@@ -10,10 +10,7 @@
                 {{ item.person.givenname.toLowerCase() }}
                 {{ item.person.surname.toLowerCase() }} →</TextL1
               >
-              <TextL1c
-                v-if="item.masterRecord"
-                class="capitalize truncate inline"
-              >
+              <TextL1c v-if="item.masterRecord" class="capitalize truncate inline">
                 {{ item.masterRecord.givenname.toLowerCase() }}
                 {{ item.masterRecord.surname.toLowerCase() }}
               </TextL1c>

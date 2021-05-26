@@ -1,17 +1,10 @@
 <template>
   <div>
     <div class="mb-4">
-      <SearchBar
-        v-model="searchboxString"
-        :focus="true"
-        @submit="searchSubmit"
-      />
+      <SearchBar v-model="searchboxString" :focus="true" @submit="searchSubmit" />
       <GenericCollapseHeader label="Advanced">
         <div class="mt-2">
-          <FormCheckbox
-            v-model="showUKRDC"
-            label="Show internal UKRDC records"
-          />
+          <FormCheckbox v-model="showUKRDC" label="Show internal UKRDC records" />
         </div>
       </GenericCollapseHeader>
     </div>
@@ -24,11 +17,7 @@
         </ul>
         <!-- Real results -->
         <ul v-else class="divide-y divide-gray-200">
-          <MasterrecordsListItem
-            v-for="item in masterrecords"
-            :key="item.id"
-            :item="item"
-          />
+          <MasterrecordsListItem v-for="item in masterrecords" :key="item.id" :item="item" />
         </ul>
         <GenericPaginator
           v-if="!$fetchState.pending"
@@ -44,23 +33,11 @@
     <div v-else class="mt-2 text-sm text-gray-500 text-center">
       <div v-if="search && !$fetchState.pending">No results found</div>
       <div v-else>
-        <p class="mb-4">
-          Search by name, date of birth, national ID, or local ID
-        </p>
+        <p class="mb-4">Search by name, date of birth, national ID, or local ID</p>
         <p><b>Tip: </b>Refine your search by joining terms,</p>
         <p>
           For example,
-          <span
-            class="
-              inline-flex
-              items-center
-              px-2
-              py-0.5
-              rounded
-              bg-gray-100
-              text-gray-800
-            "
-          >
+          <span class="inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-800">
             john && 1/12/1980
           </span>
         </p>
@@ -70,15 +47,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  watch,
-  ref,
-  useRoute,
-  useRouter,
-  useFetch,
-  useContext,
-} from '@nuxtjs/composition-api'
+import { defineComponent, watch, ref, useRoute, useRouter, useFetch, useContext } from '@nuxtjs/composition-api'
 
 import usePagination from '@/mixins/usePagination'
 import useQuery from '@/mixins/useQuery'
@@ -114,10 +83,9 @@ export default defineComponent({
         // Set the search string
         searchboxString.value = buildSearchStringFromQueryArray()
         // Build our query string from search terms and page info
-        let path = `${$config.apiBase}/empi/search/?${buildQueryStringFromArray(
-          search.value,
-          'search'
-        )}&page=${page.value}&size=${size.value}`
+        let path = `${$config.apiBase}/empi/search/?${buildQueryStringFromArray(search.value, 'search')}&page=${
+          page.value
+        }&size=${size.value}`
         if (showUKRDC.value) {
           path = path + '&include_ukrdc=true'
         }
@@ -172,10 +140,7 @@ export default defineComponent({
       }
     }
 
-    function buildQueryStringFromArray(
-      input: string[] | string,
-      queryName: string
-    ): string {
+    function buildQueryStringFromArray(input: string[] | string, queryName: string): string {
       // Builds a query string from an array of strings.
       // e.g. ['john', '1949-03-01'] becomes search=john&search=1949-03-01
       if (Array.isArray(input)) {

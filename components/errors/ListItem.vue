@@ -3,16 +3,7 @@
     <NuxtLink :to="`/errors/${item.id}`" class="block hover:bg-gray-50">
       <div class="flex items-center px-4 py-4 sm:px-6">
         <div class="min-w-0 flex-1 flex items-center">
-          <div
-            class="
-              min-w-0
-              grid grid-cols-2
-              sm:grid-cols-3
-              lg:grid-cols-4
-              md:gap-4
-              w-full
-            "
-          >
+          <div class="min-w-0 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 md:gap-4 w-full">
             <!-- Heading -->
             <div class="col-span-2 lg:col-span-3">
               <TextL1c class="truncate">

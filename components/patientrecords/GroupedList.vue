@@ -3,41 +3,22 @@
     <div v-if="groupedRecords.data.length > 0" class="bg-gray-50 pl-3 py-1">
       <TextH4>Data feeds</TextH4>
     </div>
-    <patientrecordsListItem
-      v-for="item in groupedRecords.data"
-      :key="item.pid + '_data'"
-      :item="item"
-    />
+    <patientrecordsListItem v-for="item in groupedRecords.data" :key="item.pid + '_data'" :item="item" />
 
     <div v-if="groupedRecords.surveys.length > 0" class="bg-gray-50 pl-3 py-1">
       <TextH4>Survey feeds</TextH4>
     </div>
-    <patientrecordsListItem
-      v-for="item in groupedRecords.surveys"
-      :key="item.pid + '_survey'"
-      :item="item"
-    />
+    <patientrecordsListItem v-for="item in groupedRecords.surveys" :key="item.pid + '_survey'" :item="item" />
 
     <div v-if="groupedRecords.migrated.length > 0" class="bg-gray-50 pl-3 py-1">
       <TextH4>Historic Migrated Data</TextH4>
     </div>
-    <patientrecordsListItem
-      v-for="item in groupedRecords.migrated"
-      :key="item.pid + '_mig'"
-      :item="item"
-    />
+    <patientrecordsListItem v-for="item in groupedRecords.migrated" :key="item.pid + '_mig'" :item="item" />
 
-    <div
-      v-if="groupedRecords.memberships.length > 0"
-      class="bg-gray-50 pl-3 py-1"
-    >
+    <div v-if="groupedRecords.memberships.length > 0" class="bg-gray-50 pl-3 py-1">
       <TextH4>Membership Records</TextH4>
     </div>
-    <patientrecordsListItem
-      v-for="item in groupedRecords.memberships"
-      :key="item.pid + '_membership'"
-      :item="item"
-    />
+    <patientrecordsListItem v-for="item in groupedRecords.memberships" :key="item.pid + '_membership'" :item="item" />
   </ul>
 </template>
 
@@ -46,12 +27,7 @@ import { computed, defineComponent } from '@nuxtjs/composition-api'
 
 import { PatientRecordShort } from '@/interfaces/patientrecord'
 
-import {
-  isData,
-  isSurvey,
-  isMigrated,
-  isMembership,
-} from '@/utilities/recordUtils'
+import { isData, isSurvey, isMigrated, isMembership } from '@/utilities/recordUtils'
 
 interface PRGroups {
   data: PatientRecordShort[]

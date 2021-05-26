@@ -25,11 +25,7 @@
         <GenericDi>
           <TextDt>Date of Birth</TextDt>
           <TextDd>
-            {{
-              record.patient
-                ? formatDate(record.patient.birthTime, (t = false))
-                : ''
-            }}
+            {{ record.patient ? formatDate(record.patient.birthTime, (t = false)) : '' }}
           </TextDd>
         </GenericDi>
 
@@ -50,19 +46,8 @@
     </GenericCard>
 
     <div v-if="!isEmptyObject(record)" class="mt-4">
-      <h2 class="text-gray-500 text-xs font-medium uppercase tracking-wide">
-        Patient Numbers
-      </h2>
-      <ul
-        class="
-          mt-3
-          grid grid-cols-1
-          gap-5
-          sm:gap-6
-          sm:grid-cols-2
-          lg:grid-cols-3
-        "
-      >
+      <h2 class="text-gray-500 text-xs font-medium uppercase tracking-wide">Patient Numbers</h2>
+      <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <li
           v-for="item in record.patient.numbers"
           :key="item.numbertype + item.organization + item.patientid"
@@ -85,9 +70,7 @@
             </div>
             <div class="flex-1 flex items-center justify-between truncate">
               <div class="flex-1 px-4 py-2 text-sm truncate">
-                <p
-                  class="text-gray-900 font-medium hover:text-gray-600 truncate"
-                >
+                <p class="text-gray-900 font-medium hover:text-gray-600 truncate">
                   {{ item.patientid }}
                 </p>
                 <p class="text-gray-500">{{ item.organization }}</p>
@@ -97,33 +80,11 @@
         </li>
       </ul>
     </div>
-    <div
-      v-if="
-        !isEmptyObject(record) &&
-        record.patient.addresses &&
-        record.patient.addresses.length > 0
-      "
-      class="mt-4"
-    >
-      <h2 class="text-gray-500 text-xs font-medium uppercase tracking-wide">
-        Addresses
-      </h2>
+    <div v-if="!isEmptyObject(record) && record.patient.addresses && record.patient.addresses.length > 0" class="mt-4">
+      <h2 class="text-gray-500 text-xs font-medium uppercase tracking-wide">Addresses</h2>
 
-      <ul
-        class="
-          mt-3
-          grid grid-cols-1
-          gap-5
-          sm:gap-6
-          sm:grid-cols-2
-          lg:grid-cols-3
-        "
-      >
-        <li
-          v-for="item in record.patient.addresses"
-          :key="item.street"
-          class="col-span-1"
-        >
+      <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <li v-for="item in record.patient.addresses" :key="item.street" class="col-span-1">
           <GenericCardMini class="px-4 py-2 w-full">
             <p class="text-gray-900 font-medium hover:text-gray-600">
               {{ item.street }}
@@ -138,9 +99,7 @@
             <p v-if="item.countryDescription" class="text-gray-500">
               {{ item.countryDescription }}
             </p>
-            <p v-if="item.fromTime" class="text-gray-500">
-              Since {{ formatDate(item.fromTime, (t = false)) }}
-            </p>
+            <p v-if="item.fromTime" class="text-gray-500">Since {{ formatDate(item.fromTime, (t = false)) }}</p>
             <span
               v-if="!item.toTime"
               class="
@@ -158,17 +117,7 @@
             >
             <span
               v-else
-              class="
-                flex-shrink-0
-                inline-block
-                px-2
-                py-0.5
-                text-red-800 text-xs
-                font-medium
-                bg-red-100
-                rounded-sm
-                mt-2
-              "
+              class="flex-shrink-0 inline-block px-2 py-0.5 text-red-800 text-xs font-medium bg-red-100 rounded-sm mt-2"
               >Inactive since {{ formatDate(item.toTime, (t = false)) }}</span
             >
           </GenericCardMini>
@@ -177,27 +126,12 @@
     </div>
 
     <div
-      v-if="
-        !isEmptyObject(record) &&
-        record.programMemberships &&
-        record.programMemberships.length > 0
-      "
+      v-if="!isEmptyObject(record) && record.programMemberships && record.programMemberships.length > 0"
       class="mt-4"
     >
-      <h2 class="text-gray-500 text-xs font-medium uppercase tracking-wide">
-        Program Memberships
-      </h2>
+      <h2 class="text-gray-500 text-xs font-medium uppercase tracking-wide">Program Memberships</h2>
 
-      <ul
-        class="
-          mt-3
-          grid grid-cols-1
-          gap-5
-          sm:gap-6
-          sm:grid-cols-2
-          lg:grid-cols-3
-        "
-      >
+      <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <li
           v-for="item in record.programMemberships"
           :key="item.programName"
@@ -207,9 +141,7 @@
             <p class="text-gray-900 font-medium hover:text-gray-600">
               {{ item.programName }}
             </p>
-            <p v-if="item.fromTime" class="text-gray-500">
-              Since {{ formatDate(item.fromTime, (t = false)) }}
-            </p>
+            <p v-if="item.fromTime" class="text-gray-500">Since {{ formatDate(item.fromTime, (t = false)) }}</p>
             <span
               v-if="!item.toTime"
               class="
@@ -227,17 +159,7 @@
             >
             <span
               v-else
-              class="
-                flex-shrink-0
-                inline-block
-                px-2
-                py-0.5
-                text-red-800 text-xs
-                font-medium
-                bg-red-100
-                rounded-sm
-                mt-2
-              "
+              class="flex-shrink-0 inline-block px-2 py-0.5 text-red-800 text-xs font-medium bg-red-100 rounded-sm mt-2"
               >Inactive since {{ formatDate(item.toTime, (t = false)) }}</span
             >
           </GenericCardMini>

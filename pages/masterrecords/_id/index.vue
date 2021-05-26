@@ -5,9 +5,7 @@
       <GenericCardContent>
         <GenericDl>
           <GenericDi>
-            <TextDt class="text-sm font-medium text-gray-500"
-              >National ID</TextDt
-            >
+            <TextDt class="text-sm font-medium text-gray-500">National ID</TextDt>
             <TextDd>{{ record.nationalid }}</TextDd>
           </GenericDi>
 
@@ -53,23 +51,14 @@
         <TextH2> Linked Master Records </TextH2>
       </GenericCardHeader>
       <ul class="divide-y divide-gray-200">
-        <masterrecordsListItem
-          v-for="item in relatedRecords"
-          :key="item.id"
-          :item="item"
-        />
+        <masterrecordsListItem v-for="item in relatedRecords" :key="item.id" :item="item" />
       </ul>
     </GenericCard>
   </div>
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  useFetch,
-  useContext,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, useFetch, useContext } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/utilities/dateUtils'
 import { formatGender } from '@/utilities/codeUtils'
@@ -98,11 +87,10 @@ export default defineComponent({
 
     useFetch(async () => {
       // Use the record links to load related data concurrently
-      const [relatedRecordsResponse, patientRecordsResponse] =
-        await Promise.all([
-          $axios.$get(props.record.links.related),
-          $axios.$get(props.record.links.patientrecords),
-        ])
+      const [relatedRecordsResponse, patientRecordsResponse] = await Promise.all([
+        $axios.$get(props.record.links.related),
+        $axios.$get(props.record.links.patientrecords),
+      ])
 
       relatedRecords.value = relatedRecordsResponse
       patientRecords.value = patientRecordsResponse

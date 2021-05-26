@@ -12,11 +12,7 @@
       <NuxtLink :to="'./laborders'">
         <GenericButton>View Orders</GenericButton>
       </NuxtLink>
-      <NuxtLink
-        v-if="selectedOrderId"
-        :to="{ query: { order_id: null } }"
-        class="ml-2"
-      >
+      <NuxtLink v-if="selectedOrderId" :to="{ query: { order_id: null } }" class="ml-2">
         <GenericButton>Show Results From All Orders</GenericButton>
       </NuxtLink>
     </div>
@@ -28,63 +24,19 @@
         :key="`${index}-card`"
         class="grid grid-cols-3 gap-2 mb-4 px-4 py-4"
       >
-        <div
-          class="
-            text-xs
-            font-medium
-            text-gray-500
-            uppercase
-            tracking-wider
-            col-span-1
-          "
-        >
-          Type
-        </div>
+        <div class="text-xs font-medium text-gray-500 uppercase tracking-wider col-span-1">Type</div>
         <TextP class="col-span-2 font-medium text-gray-900"
           >{{ item.serviceId }} ({{ item.serviceIdDescription }})</TextP
         >
-        <div
-          class="
-            text-xs
-            font-medium
-            text-gray-500
-            uppercase
-            tracking-wider
-            col-span-1
-          "
-        >
-          Value
-        </div>
+        <div class="text-xs font-medium text-gray-500 uppercase tracking-wider col-span-1">Value</div>
         <TextP class="col-span-2">{{ item.value }} {{ item.valueUnits }}</TextP>
-        <div
-          class="
-            text-xs
-            font-medium
-            text-gray-500
-            uppercase
-            tracking-wider
-            col-span-1
-          "
-        >
-          Order ID
-        </div>
+        <div class="text-xs font-medium text-gray-500 uppercase tracking-wider col-span-1">Order ID</div>
         <div class="col-span-2 truncate">
           <NuxtLink :to="{ query: { order_id: item.orderId } }">
             {{ item.orderId }}
           </NuxtLink>
         </div>
-        <div
-          class="
-            text-xs
-            font-medium
-            text-gray-500
-            uppercase
-            tracking-wider
-            col-span-1
-          "
-        >
-          Entered On
-        </div>
+        <div class="text-xs font-medium text-gray-500 uppercase tracking-wider col-span-1">Entered On</div>
         <TextP class="col-span-2">{{ formatDate(item.observationTime) }}</TextP>
       </GenericCardFlat>
     </div>
@@ -92,91 +44,27 @@
     <GenericTable class="hidden lg:block">
       <thead class="bg-gray-50">
         <tr>
-          <th
-            scope="col"
-            class="
-              px-6
-              py-3
-              text-left text-xs
-              font-medium
-              text-gray-500
-              uppercase
-              tracking-wider
-            "
-          >
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Type
           </th>
-          <th
-            scope="col"
-            class="
-              px-6
-              py-3
-              text-left text-xs
-              font-medium
-              text-gray-500
-              uppercase
-              tracking-wider
-            "
-          >
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Value
           </th>
-          <th
-            scope="col"
-            class="
-              px-6
-              py-3
-              text-left text-xs
-              font-medium
-              text-gray-500
-              uppercase
-              tracking-wider
-            "
-          >
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Order ID
           </th>
-          <th
-            scope="col"
-            class="
-              px-6
-              py-3
-              text-left text-xs
-              font-medium
-              text-gray-500
-              uppercase
-              tracking-wider
-            "
-          >
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Entered On
           </th>
         </tr>
       </thead>
       <tbody class="bg-white divide-y divide-gray-200">
         <tr v-for="(item, index) in results" :key="index">
-          <td
-            class="
-              px-6
-              py-4
-              whitespace-nowrap
-              text-sm
-              font-medium
-              text-gray-900
-            "
-          >
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
             {{ item.serviceId }} ({{ item.serviceIdDescription }})
           </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            {{ item.value }} {{ item.valueUnits }}
-          </td>
-          <td
-            class="
-              px-6
-              py-4
-              whitespace-nowrap
-              text-sm text-gray-500
-              underline
-              truncate
-            "
-          >
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item.value }} {{ item.valueUnits }}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 underline truncate">
             <NuxtLink :to="{ query: { order_id: item.orderId } }">
               {{ item.orderId }}
             </NuxtLink>
@@ -204,15 +92,7 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  ref,
-  useContext,
-  useFetch,
-  useRoute,
-  watch,
-} from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref, useContext, useFetch, useRoute, watch } from '@nuxtjs/composition-api'
 
 import { PatientRecord } from '@/interfaces/patientrecord'
 import { ResultItem } from '@/interfaces/laborder'

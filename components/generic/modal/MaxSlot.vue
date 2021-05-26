@@ -1,18 +1,7 @@
 <template>
   <transition :duration="200">
     <div v-show="visible" class="fixed z-10 inset-0">
-      <div
-        class="
-          items-end
-          justify-center
-          h-screen
-          w-screen
-          block
-          p-0
-          mt-16
-          md:mt-0
-        "
-      >
+      <div class="items-end justify-center h-screen w-screen block p-0 mt-16 md:mt-0">
         <!-- Modal panel, show/hide based on modal state. -->
         <transition
           enter-active-class="ease-out"
@@ -24,17 +13,7 @@
         >
           <div
             v-show="visible"
-            class="
-              inline-block
-              align-bottom
-              vibrancy
-              shadow-xl
-              transform
-              transition-all
-              sm:align-middle
-              h-full
-              w-full
-            "
+            class="inline-block align-bottom vibrancy shadow-xl transform transition-all sm:align-middle h-full w-full"
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-headline"
@@ -61,12 +40,7 @@
                   stroke="currentColor"
                   aria-hidden="true"
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>

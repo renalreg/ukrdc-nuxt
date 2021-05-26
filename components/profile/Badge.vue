@@ -1,9 +1,5 @@
 <template>
-  <NuxtLink
-    to="/profile"
-    class="flex-shrink-0 group block"
-    @click.native="$emit('click')"
-  >
+  <NuxtLink to="/profile" class="flex-shrink-0 group block" @click.native="$emit('click')">
     <div class="flex items-center" :class="{ 'flex-row-reverse': rightToLeft }">
       <div>
         <img
@@ -30,16 +26,10 @@
         </span>
       </div>
       <div :class="rightToLeft ? 'mr-3' : 'ml-3'">
-        <p
-          :class="{ 'text-right': rightToLeft }"
-          class="text-base font-medium text-gray-700 group-hover:text-gray-900"
-        >
+        <p :class="{ 'text-right': rightToLeft }" class="text-base font-medium text-gray-700 group-hover:text-gray-900">
           {{ $auth.loggedIn ? $auth.user.name : 'Signed out' }}
         </p>
-        <p
-          :class="{ 'text-right': rightToLeft }"
-          class="text-sm font-medium text-gray-500 group-hover:text-gray-700"
-        >
+        <p :class="{ 'text-right': rightToLeft }" class="text-sm font-medium text-gray-500 group-hover:text-gray-700">
           Manage account
         </p>
       </div>

@@ -2,13 +2,7 @@
   <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
     <GenericCard
       v-if="$hasPermission('ukrdc:workitems:read')"
-      class="
-        grid grid-cols-1
-        overflow-hidden
-        divide-y divide-gray-200
-        md:grid-cols-2
-        md:divide-y-0 md:divide-x
-      "
+      class="grid grid-cols-1 overflow-hidden divide-y divide-gray-200 md:grid-cols-2 md:divide-y-0 md:divide-x"
     >
       <NuxtLink to="/workitems">
         <dashStatBlock
@@ -20,20 +14,12 @@
       </NuxtLink>
 
       <NuxtLink to="/workitems"
-        ><dashStatBlock
-          :value="workitems ? workitems.total : undefined"
-          title="Total Workitems"
+        ><dashStatBlock :value="workitems ? workitems.total : undefined" title="Total Workitems"
       /></NuxtLink>
     </GenericCard>
     <GenericCard
       v-if="$hasPermission('ukrdc:records:read')"
-      class="
-        grid grid-cols-1
-        overflow-hidden
-        divide-y divide-gray-200
-        md:grid-cols-2
-        md:divide-y-0 md:divide-x
-      "
+      class="grid grid-cols-1 overflow-hidden divide-y divide-gray-200 md:grid-cols-2 md:divide-y-0 md:divide-x"
     >
       <NuxtLink to="/masterrecords">
         <dashStatBlock
@@ -43,9 +29,7 @@
       /></NuxtLink>
 
       <NuxtLink to="/masterrecords"
-        ><dashStatBlock
-          :value="ukrdcrecords ? ukrdcrecords.total : undefined"
-          title="Total UKRDC Records"
+        ><dashStatBlock :value="ukrdcrecords ? ukrdcrecords.total : undefined" title="Total UKRDC Records"
       /></NuxtLink>
     </GenericCard>
   </div>

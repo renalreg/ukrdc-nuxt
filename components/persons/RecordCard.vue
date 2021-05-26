@@ -13,43 +13,17 @@
       <dl class="sm:divide-y sm:divide-gray-200">
         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="text-sm font-medium text-gray-500">Local ID</dt>
-          <dd
-            class="
-              mt-1
-              text-sm text-gray-900
-              sm:mt-0
-              sm:col-span-2
-              align-middle
-            "
-          >
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 align-middle">
             <div :class="highlight.includes('localid') ? highlightClasses : []">
               {{ realLocalID.localid }}
             </div>
             <div>
-              <span
-                :class="
-                  highlight.includes('sendingFacility') ? highlightClasses : []
-                "
-                >{{
-                  `${
-                    realLocalID.sendingFacility
-                      ? realLocalID.sendingFacility
-                      : record.localidType
-                  }`
-                }}</span
-              >
-              <span
-                :class="
-                  highlight.includes('sendingExtract') ? highlightClasses : []
-                "
-                >{{
-                  `${
-                    realLocalID.sendingExtract
-                      ? 'via ' + realLocalID.sendingExtract
-                      : ''
-                  }`
-                }}</span
-              >
+              <span :class="highlight.includes('sendingFacility') ? highlightClasses : []">{{
+                `${realLocalID.sendingFacility ? realLocalID.sendingFacility : record.localidType}`
+              }}</span>
+              <span :class="highlight.includes('sendingExtract') ? highlightClasses : []">{{
+                `${realLocalID.sendingExtract ? 'via ' + realLocalID.sendingExtract : ''}`
+              }}</span>
             </div>
           </dd>
         </div>
@@ -62,20 +36,13 @@
             {{ formatDate(record.dateOfBirth, (t = false)) }}
           </dd>
         </div>
-        <div
-          v-if="record.dateOfDeath || full"
-          class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
-        >
+        <div v-if="record.dateOfDeath || full" class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="text-sm font-medium text-gray-500">Date of Death</dt>
           <dd
             class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"
             :class="highlight.includes('dateOfDeath') ? highlightClasses : []"
           >
-            {{
-              record.dateOfDeath
-                ? formatDate(record.dateOfDeath, (t = false))
-                : 'N/A'
-            }}
+            {{ record.dateOfDeath ? formatDate(record.dateOfDeath, (t = false)) : 'N/A' }}
           </dd>
         </div>
         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

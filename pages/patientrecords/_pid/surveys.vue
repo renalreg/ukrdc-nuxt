@@ -1,25 +1,10 @@
 <template>
   <div>
-    <patientrecordsSurveyViewer
-      ref="surveyViewerModal"
-      class="w-full md:w-large"
-    />
+    <patientrecordsSurveyViewer ref="surveyViewerModal" class="w-full md:w-large" />
 
-    <div v-if="surveys.length <= 0" class="text-sm text-gray-500 text-center">
-      No surveys on record
-    </div>
+    <div v-if="surveys.length <= 0" class="text-sm text-gray-500 text-center">No surveys on record</div>
 
-    <div
-      class="
-        mt-3
-        grid grid-cols-1
-        gap-5
-        sm:gap-6
-        sm:grid-cols-2
-        lg:grid-cols-2
-        justify-center
-      "
-    >
+    <div class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-2 justify-center">
       <genericCardMini
         v-for="item in surveys"
         :key="item.id"
@@ -67,12 +52,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  useFetch,
-  useContext,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, useFetch, useContext } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/utilities/dateUtils'
 

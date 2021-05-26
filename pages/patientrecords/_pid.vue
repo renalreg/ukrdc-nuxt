@@ -9,11 +9,7 @@
       </div>
       <div v-if="related">
         <GenericSelect v-model="selectedPid">
-          <option
-            v-for="(item, index) in relatedDataRecords"
-            :key="index"
-            :value="item.pid"
-          >
+          <option v-for="(item, index) in relatedDataRecords" :key="index" :value="item.pid">
             From {{ item.sendingfacility }} via {{ item.sendingextract }}
           </option>
         </GenericSelect>

@@ -1,9 +1,6 @@
 <template>
   <div>
-    <GenericModalSlot
-      v-if="$hasPermission('ukrdc:workitems:write')"
-      ref="addCommentModal"
-    >
+    <GenericModalSlot v-if="$hasPermission('ukrdc:workitems:write')" ref="addCommentModal">
       <div class="text-left">
         <div class="mb-4">Add Work Item comment</div>
         <FormTextArea v-model="customComment" rows="3"></FormTextArea>
@@ -11,20 +8,11 @@
 
       <div class="flex justify-end">
         <genericButton @click="addCommentModal.hide()">Cancel</genericButton>
-        <genericButtonPrimary
-          class="ml-2"
-          type="submit"
-          @click="updateWorkItemComment()"
-        >
-          Save
-        </genericButtonPrimary>
+        <genericButtonPrimary class="ml-2" type="submit" @click="updateWorkItemComment()"> Save </genericButtonPrimary>
       </div>
     </GenericModalSlot>
 
-    <GenericModalSlot
-      v-if="$hasPermission('ukrdc:workitems:write')"
-      ref="mergeModal"
-    >
+    <GenericModalSlot v-if="$hasPermission('ukrdc:workitems:write')" ref="mergeModal">
       <div class="text-left">
         <div class="mb-4">Merge and close the Work Item</div>
 
@@ -36,20 +24,13 @@
 
       <div class="flex justify-end">
         <genericButton @click="mergeModal.hide()"> Cancel </genericButton>
-        <genericButtonPrimary
-          type="submit"
-          class="ml-2"
-          @click="mergeWorkItem()"
-        >
+        <genericButtonPrimary type="submit" class="ml-2" @click="mergeWorkItem()">
           Merge and Close
         </genericButtonPrimary>
       </div>
     </GenericModalSlot>
 
-    <GenericModalSlot
-      v-if="$hasPermission('ukrdc:workitems:write')"
-      ref="unlinkModal"
-    >
+    <GenericModalSlot v-if="$hasPermission('ukrdc:workitems:write')" ref="unlinkModal">
       <div class="text-left">
         <div class="mb-4">Unlink and close the Work Item</div>
         <div>
@@ -62,21 +43,13 @@
 
       <div class="flex justify-end">
         <GenericButton @click="unlinkModal.hide()"> Cancel </GenericButton>
-        <genericButtonPrimary
-          type="submit"
-          class="ml-3"
-          colour="red"
-          @click="unlinkWorkItem()"
-        >
+        <genericButtonPrimary type="submit" class="ml-3" colour="red" @click="unlinkWorkItem()">
           Unlink and Close
         </genericButtonPrimary>
       </div>
     </GenericModalSlot>
 
-    <GenericModalSlot
-      v-if="$hasPermission('ukrdc:workitems:write')"
-      ref="closeModal"
-    >
+    <GenericModalSlot v-if="$hasPermission('ukrdc:workitems:write')" ref="closeModal">
       <div class="text-left">
         <div class="mb-4">Close the Work Item</div>
 
@@ -90,12 +63,7 @@
 
       <div class="flex justify-end">
         <GenericButton @click="closeModal.hide()"> Cancel </GenericButton>
-        <genericButtonPrimary
-          type="submit"
-          class="ml-3"
-          colour="red"
-          @click="closeWorkItem()"
-        >
+        <genericButtonPrimary type="submit" class="ml-3" colour="red" @click="closeWorkItem()">
           Close Work Item
         </genericButtonPrimary>
       </div>
@@ -103,9 +71,7 @@
 
     <!-- Header -->
     <div class="mb-6">
-      <TextH1 v-if="record">
-        Work Item {{ record.id }} {{ statusString }}
-      </TextH1>
+      <TextH1 v-if="record"> Work Item {{ record.id }} {{ statusString }} </TextH1>
       <SkeleText v-else class="h-8 w-1/4 mb-2" />
       <TextL1 v-if="record">
         {{ record.description }}
@@ -119,9 +85,7 @@
           <GenericDi>
             <TextDt>Last Updated</TextDt>
             <TextDd v-if="record">
-              {{
-                record.lastUpdated ? formatDate(record.lastUpdated) : 'Never'
-              }}
+              {{ record.lastUpdated ? formatDate(record.lastUpdated) : 'Never' }}
             </TextDd>
             <SkeleText v-else class="h-6 w-full" />
           </GenericDi>
@@ -144,15 +108,10 @@
     </GenericCard>
 
     <div
-      v-if="
-        $hasPermission('ukrdc:workitems:write') && record && record.status !== 3
-      "
+      v-if="$hasPermission('ukrdc:workitems:write') && record && record.status !== 3"
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 my-8"
     >
-      <genericButtonPrimary
-        class="inline-flex items-center justify-center w-full"
-        @click="addCommentModal.show()"
-      >
+      <genericButtonPrimary class="inline-flex items-center justify-center w-full" @click="addCommentModal.show()">
         <IconPencil />
         Comment
       </genericButtonPrimary>
@@ -204,16 +163,8 @@
           label="Incoming Attributes"
           :highlight="Object.keys(record.attributes)"
         />
-        <div
-          v-else
-          class="rounded-md bg-red-50 text-sm font-medium text-red-800 p-4"
-        >
-          No valid person record found
-        </div>
-        <NuxtLink
-          v-if="record.masterRecord"
-          :to="`/masterrecords/${record.masterRecord.id}`"
-        >
+        <div v-else class="rounded-md bg-red-50 text-sm font-medium text-red-800 p-4">No valid person record found</div>
+        <NuxtLink v-if="record.masterRecord" :to="`/masterrecords/${record.masterRecord.id}`">
           <masterrecordsRecordCard
             class="border-2 border-indigo-500"
             :record="record.masterRecord"
@@ -221,22 +172,12 @@
           />
         </NuxtLink>
 
-        <div
-          v-else
-          class="rounded-md bg-red-50 text-sm font-medium text-red-800 p-4"
-        >
-          No valid master record found
-        </div>
+        <div v-else class="rounded-md bg-red-50 text-sm font-medium text-red-800 p-4">No valid master record found</div>
       </div>
     </div>
 
     <!-- Related errors card -->
-    <ErrorsMiniList
-      v-if="record"
-      class="mt-4 mb-8"
-      :errors-url="record.links.errors"
-      :size="5"
-    />
+    <ErrorsMiniList v-if="record" class="mt-4 mb-8" :errors-url="record.links.errors" :size="5" />
 
     <!-- Related WorkItems  -->
     <GenericCard v-if="relatedRecords.length > 0" class="mb-8">
@@ -246,24 +187,15 @@
       </GenericCardHeader>
       <!-- Results list -->
       <ul class="divide-y divide-gray-200">
-        <workitemsListItem
-          v-for="item in relatedRecords"
-          :key="item.id"
-          :item="item"
-        />
+        <workitemsListItem v-for="item in relatedRecords" :key="item.id" :item="item" />
       </ul>
     </GenericCard>
 
     <!-- Compare records cards -->
     <div v-if="relatedPersons.length > 0" class="mb-8">
-      <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
-        Compare Records
-      </h3>
+      <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Compare Records</h3>
 
-      <div
-        v-if="relatedPersons.length > 0"
-        class="grid grid-cols-1 md:grid-cols-2 gap-4"
-      >
+      <div v-if="relatedPersons.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <personsRecordCard
           v-if="record.person"
           class="border-2 border-red-500"
@@ -272,41 +204,24 @@
           :full="true"
           :highlight="Object.keys(record.attributes)"
         />
-        <div
-          v-else
-          class="rounded-md bg-red-50 text-sm font-medium text-red-800 p-4"
-        >
-          No valid person record found
-        </div>
+        <div v-else class="rounded-md bg-red-50 text-sm font-medium text-red-800 p-4">No valid person record found</div>
         <personsRecordCard
           :record="relatedPersons[relatedRecordsIndex]"
-          :label="`Related record ${relatedRecordsIndex + 1} of ${
-            relatedPersons.length
-          }`"
+          :label="`Related record ${relatedRecordsIndex + 1} of ${relatedPersons.length}`"
           :full="true"
           :highlight="Object.keys(record.attributes)"
         />
       </div>
 
       <GenericCard v-if="relatedPersons.length > 1" class="pl-4 mt-2">
-        <GenericItemPaginator
-          v-model="relatedRecordsIndex"
-          :total="relatedPersons.length"
-          item-label="Record"
+        <GenericItemPaginator v-model="relatedRecordsIndex" :total="relatedPersons.length" item-label="Record"
       /></GenericCard>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  useRoute,
-  useFetch,
-  useContext,
-  computed,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, useRoute, useFetch, useContext, computed } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/utilities/dateUtils'
 import { formatGender } from '@/utilities/codeUtils'
@@ -401,25 +316,19 @@ export default defineComponent({
     }
 
     function mergeWorkItem() {
-      actionWorkItem(
-        `${$config.apiBase}/empi/workitems/${route.value.params.id}/merge`
-      )
+      actionWorkItem(`${$config.apiBase}/empi/workitems/${route.value.params.id}/merge`)
       const el = mergeModal.value as modalInterface
       el.toggle()
     }
 
     function unlinkWorkItem() {
-      actionWorkItem(
-        `${$config.apiBase}/empi/workitems/${route.value.params.id}/unlink`
-      )
+      actionWorkItem(`${$config.apiBase}/empi/workitems/${route.value.params.id}/unlink`)
       const el = unlinkModal.value as modalInterface
       el.toggle()
     }
 
     function closeWorkItem() {
-      actionWorkItem(
-        `${$config.apiBase}/empi/workitems/${route.value.params.id}/close`
-      )
+      actionWorkItem(`${$config.apiBase}/empi/workitems/${route.value.params.id}/close`)
       const el = closeModal.value as modalInterface
       el.toggle()
     }
@@ -430,12 +339,9 @@ export default defineComponent({
         .then((res: MirthMessageResponse) => {
           if (res.status === 'success') {
             $axios
-              .$post(
-                `${$config.apiBase}/empi/workitems/${route.value.params.id}/close`,
-                {
-                  comment: customComment.value,
-                }
-              )
+              .$post(`${$config.apiBase}/empi/workitems/${route.value.params.id}/close`, {
+                comment: customComment.value,
+              })
               .catch((error) => {
                 // Re-throw error so parent .catch can handle it
                 throw error

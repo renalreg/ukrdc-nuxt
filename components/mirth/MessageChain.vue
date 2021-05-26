@@ -6,17 +6,7 @@
     <!-- Chain grid -->
     <div>
       <div v-for="(messages, index) in chain" :key="index">
-        <div
-          class="
-            mt-3
-            grid grid-cols-1
-            gap-5
-            sm:gap-6
-            sm:grid-cols-2
-            lg:grid-cols-2
-            justify-center
-          "
-        >
+        <div class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-2 justify-center">
           <MirthConnectorMessageCard
             v-for="item in messages"
             :key="item.channelName + item.connectorName"
@@ -62,9 +52,7 @@ export default defineComponent({
           currentChain[msg.chainId].push(msg)
         }
         for (const index in currentChain) {
-          currentChain[index].sort((a: ConnectorMessage, b: ConnectorMessage) =>
-            a.orderId > b.orderId ? 1 : -1
-          )
+          currentChain[index].sort((a: ConnectorMessage, b: ConnectorMessage) => (a.orderId > b.orderId ? 1 : -1))
         }
       }
       return currentChain

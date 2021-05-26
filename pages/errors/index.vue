@@ -36,14 +36,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  watch,
-  ref,
-  useRoute,
-  useFetch,
-  useContext,
-} from '@nuxtjs/composition-api'
+import { defineComponent, watch, ref, useRoute, useFetch, useContext } from '@nuxtjs/composition-api'
 
 import usePagination from '@/mixins/usePagination'
 import useDateRange from '@/mixins/useDateRange'
@@ -65,13 +58,7 @@ export default defineComponent({
     const { $axios, $config } = useContext()
     const { page, total, size } = usePagination()
     const { range, since, until } = useDateRange()
-    const {
-      facilities,
-      facilityIds,
-      facilityLabels,
-      selectedFacility,
-      fetchFacilities,
-    } = useFacilities()
+    const { facilities, facilityIds, facilityLabels, selectedFacility, fetchFacilities } = useFacilities()
 
     const messages = ref([] as Message[])
 

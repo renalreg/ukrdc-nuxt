@@ -1,20 +1,7 @@
 <template>
   <transition :duration="200">
     <div v-show="visible" class="fixed z-10 inset-0 overflow-y-auto">
-      <div
-        class="
-          flex
-          items-end
-          justify-center
-          min-h-screen
-          pt-4
-          px-4
-          pb-20
-          text-center
-          sm:block
-          sm:p-0
-        "
-      >
+      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <!-- Background overlay, show/hide based on modal state. -->
         <transition
           enter-active-class="ease-out"
@@ -24,22 +11,13 @@
           leave-class="opacity-100"
           leave-to-class="opacity-0 scale-90"
         >
-          <div
-            v-if="visible"
-            class="fixed inset-0 transition-opacity"
-            aria-hidden="true"
-            @click="hide()"
-          >
+          <div v-if="visible" class="fixed inset-0 transition-opacity" aria-hidden="true" @click="hide()">
             <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
           </div>
         </transition>
 
         <!-- This element is to trick the browser into centering the modal contents. -->
-        <span
-          class="hidden sm:inline-block sm:align-middle sm:h-screen"
-          aria-hidden="true"
-          >&#8203;</span
-        >
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
         <!-- Modal panel, show/hide based on modal state. -->
         <transition
           enter-active-class="ease-out"
@@ -100,19 +78,11 @@
                   stroke="currentColor"
                   aria-hidden="true"
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    :d="modalIcon"
-                  />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="modalIcon" />
                 </svg>
               </div>
               <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                <h3
-                  id="modal-headline"
-                  class="text-lg leading-6 font-medium text-gray-900"
-                >
+                <h3 id="modal-headline" class="text-lg leading-6 font-medium text-gray-900">
                   {{ title }}
                 </h3>
                 <div class="mt-2">
@@ -123,11 +93,7 @@
               </div>
             </div>
             <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-              <GenericButtonPrimary
-                class="ml-2"
-                :colour="danger ? 'red' : 'indigo'"
-                @click="confirm()"
-              >
+              <GenericButtonPrimary class="ml-2" :colour="danger ? 'red' : 'indigo'" @click="confirm()">
                 {{ confirmLabel }}
               </GenericButtonPrimary>
               <GenericButton @click="cancel()">

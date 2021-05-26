@@ -16,10 +16,7 @@
             leave-to-class="opacity-0"
           >
             <div v-show="sbOpen" class="fixed inset-0">
-              <div
-                class="absolute inset-0 bg-gray-600 opacity-75"
-                @click="toggle()"
-              ></div>
+              <div class="absolute inset-0 bg-gray-600 opacity-75" @click="toggle()"></div>
             </div>
           </transition>
 
@@ -58,26 +55,14 @@
     <!-- Static sidebar for desktop -->
     <div class="hidden md:flex md:flex-shrink-0">
       <div class="flex flex-col w-64">
-        <NavigationSidebar
-          class="flex flex-col h-0 flex-1 border-r border-gray-200"
-        />
+        <NavigationSidebar class="flex flex-col h-0 flex-1 border-r border-gray-200" />
       </div>
     </div>
 
     <!-- Main page -->
     <div class="flex flex-col w-0 flex-1 overflow-hidden">
       <!-- Mobile menu bar -->
-      <div
-        class="
-          md:hidden
-          z-10
-          h-16
-          flex-shrink-0 flex
-          items-center
-          bg-white
-          border-b border-gray-200
-        "
-      >
+      <div class="md:hidden z-10 h-16 flex-shrink-0 flex items-center bg-white border-b border-gray-200">
         <!-- Sidebar menu button -->
         <div class="inline-flex items-center justify-left flex-grow">
           <button
@@ -107,12 +92,7 @@
               stroke="currentColor"
               aria-hidden="true"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
         </div>
@@ -123,10 +103,7 @@
       </div>
 
       <!-- Main page content -->
-      <main
-        class="flex-1 relative z-0 overflow-y-auto focus:outline-none"
-        tabindex="0"
-      >
+      <main class="flex-1 relative z-0 overflow-y-auto focus:outline-none" tabindex="0">
         <Nuxt class="py-6 max-w-7xl mx-auto px-4 sm:px-6 md:px-8" />
       </main>
     </div>

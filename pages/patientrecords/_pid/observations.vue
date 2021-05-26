@@ -19,60 +19,16 @@
     <GenericTable class="hidden lg:block">
       <thead class="bg-gray-50">
         <tr>
-          <th
-            scope="col"
-            class="
-              px-6
-              py-3
-              text-left text-xs
-              font-medium
-              text-gray-500
-              uppercase
-              tracking-wider
-            "
-          >
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Type
           </th>
-          <th
-            scope="col"
-            class="
-              px-6
-              py-3
-              text-left text-xs
-              font-medium
-              text-gray-500
-              uppercase
-              tracking-wider
-            "
-          >
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Value
           </th>
-          <th
-            scope="col"
-            class="
-              px-6
-              py-3
-              text-left text-xs
-              font-medium
-              text-gray-500
-              uppercase
-              tracking-wider
-            "
-          >
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Entered At
           </th>
-          <th
-            scope="col"
-            class="
-              px-6
-              py-3
-              text-left text-xs
-              font-medium
-              text-gray-500
-              uppercase
-              tracking-wider
-            "
-          >
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Entered On
           </th>
         </tr>
@@ -145,9 +101,7 @@ export default defineComponent({
     const observations = ref([] as Observation[])
 
     const availableCodes = ref([] as string[])
-    const selectedCodes = ref(
-      (arrayQuery(route.value.query.code) || []) as string[]
-    )
+    const selectedCodes = ref((arrayQuery(route.value.query.code) || []) as string[])
 
     const selectedCodeString = computed({
       get: () => selectedCodes.value[0] || '',

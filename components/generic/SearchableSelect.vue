@@ -10,12 +10,7 @@
         leave-class="opacity-100"
         leave-to-class="opacity-0 scale-90"
       >
-        <div
-          v-if="isOpen"
-          class="fixed inset-0 transition-opacity"
-          aria-hidden="true"
-          @click="cancel()"
-        >
+        <div v-if="isOpen" class="fixed inset-0 transition-opacity" aria-hidden="true" @click="cancel()">
           <div class="absolute inset-0 bg-gray-500 opacity-10"></div>
         </div>
       </transition>
@@ -24,17 +19,7 @@
       <div class="flex w-full">
         <div
           ref="input"
-          class="
-            block
-            w-full
-            border
-            px-3
-            py-2
-            shadow-sm
-            sm:text-sm
-            border-gray-300
-            rounded-md
-          "
+          class="block w-full border px-3 py-2 shadow-sm sm:text-sm border-gray-300 rounded-md"
           :class="{
             invisible: isOpen,
           }"
@@ -63,27 +48,14 @@
             </svg>
           </div>
         </div>
-        <GenericButtonTertiary class="ml-2" @click="clear"
-          >Clear</GenericButtonTertiary
-        >
+        <GenericButtonTertiary class="ml-2" @click="clear">Clear</GenericButtonTertiary>
       </div>
 
       <!-- Popover -->
 
       <div
         v-show="isOpen"
-        class="
-          absolute
-          top-0
-          bg-white
-          rounded-md
-          shadow-lg
-          ring-1 ring-black ring-opacity-5
-          pin-x
-          p-2
-          z-50
-          w-full
-        "
+        class="absolute top-0 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 pin-x p-2 z-50 w-full"
       >
         <input
           ref="search"
@@ -108,21 +80,13 @@
             ref="option"
             :key="option"
             class="px-3 py-2 cursor-pointer rounded"
-            :class="[
-              i === highlightedIndex ? 'bg-indigo-50' : 'hover:bg-grey-darker',
-            ]"
+            :class="[i === highlightedIndex ? 'bg-indigo-50' : 'hover:bg-grey-darker']"
             @click="select(i)"
           >
-            {{
-              labels && labels.length === options.length
-                ? `${option} (${labelFor(option)})`
-                : option
-            }}
+            {{ labels && labels.length === options.length ? `${option} (${labelFor(option)})` : option }}
           </li>
         </ul>
-        <div v-show="filteredOptions.length === 0" class="px-3 py-2 text-grey">
-          No results found for "{{ search }}"
-        </div>
+        <div v-show="filteredOptions.length === 0" class="px-3 py-2 text-grey">No results found for "{{ search }}"</div>
       </div>
     </div>
   </transition>
@@ -163,9 +127,7 @@ export default {
   computed: {
     filteredOptions() {
       if (!this.labels) {
-        return this.options.filter((option) =>
-          option.toLowerCase().startsWith(this.search.toLowerCase())
-        )
+        return this.options.filter((option) => option.toLowerCase().startsWith(this.search.toLowerCase()))
       }
       return this.options.filter(
         (option, index) =>
@@ -214,19 +176,11 @@ export default {
     },
     highlightPrev() {
       console.log('highlightPrev')
-      this.highlight(
-        this.highlightedIndex - 1 < 0
-          ? this.filteredOptions.length - 1
-          : this.highlightedIndex - 1
-      )
+      this.highlight(this.highlightedIndex - 1 < 0 ? this.filteredOptions.length - 1 : this.highlightedIndex - 1)
     },
     highlightNext() {
       console.log('highlightNext')
-      this.highlight(
-        this.highlightedIndex + 1 >= this.filteredOptions.length
-          ? 0
-          : this.highlightedIndex + 1
-      )
+      this.highlight(this.highlightedIndex + 1 >= this.filteredOptions.length ? 0 : this.highlightedIndex + 1)
     },
     labelFor(value) {
       if (this.labels) {

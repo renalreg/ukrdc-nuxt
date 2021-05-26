@@ -11,16 +11,7 @@
     <div
       v-if="active && primary === false"
       :class="classToastAll"
-      class="
-        max-w-sm
-        w-full
-        shadow-lg
-        rounded-lg
-        pointer-events-auto
-        relative
-        mb-4
-        overflow-hidden
-      "
+      class="max-w-sm w-full shadow-lg rounded-lg pointer-events-auto relative mb-4 overflow-hidden"
     >
       <div
         v-if="progress && timeout"
@@ -33,17 +24,10 @@
           <div class="flex items-start">
             <toastIcon class="flex-shrink-0" :type="type" :icon="icon" />
             <div class="ml-3 w-0 flex-1 pt-0.5">
-              <p
-                v-if="title"
-                :class="classTitle"
-                class="text-sm leading-5 font-medium"
-              >
+              <p v-if="title" :class="classTitle" class="text-sm leading-5 font-medium">
                 {{ title }}
               </p>
-              <p
-                :class="[classMessage, { 'mt-1': title }]"
-                class="text-sm leading-5"
-              >
+              <p :class="[classMessage, { 'mt-1': title }]" class="text-sm leading-5">
                 {{ message }}
               </p>
             </div>
@@ -68,12 +52,7 @@
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
@@ -95,17 +74,10 @@
         <div class="w-0 flex-1 flex items-center p-4">
           <toastIcon class="flex-shrink-0 mr-4" :type="type" :icon="icon" />
           <div class="w-full">
-            <p
-              v-if="title"
-              :class="classTitle"
-              class="text-sm leading-5 font-medium"
-            >
+            <p v-if="title" :class="classTitle" class="text-sm leading-5 font-medium">
               {{ title }}
             </p>
-            <p
-              :class="[classMessage, { 'mt-1': title }]"
-              class="text-sm leading-5"
-            >
+            <p :class="[classMessage, { 'mt-1': title }]" class="text-sm leading-5">
               {{ message }}
             </p>
           </div>
@@ -234,12 +206,7 @@
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
@@ -347,9 +314,7 @@ export default {
       return []
     },
     timeLeftPercent() {
-      return Math.round(
-        (((this.timeLeft * 100) / (this.timeout * 1000)) * 100) / 100
-      )
+      return Math.round((((this.timeLeft * 100) / (this.timeout * 1000)) * 100) / 100)
     },
     progressStyle() {
       return `width: ${this.timeLeftPercent}%; transition: width 0.1s linear;`

@@ -4,17 +4,7 @@
       <div class="w-full">
         <label for="search" class="sr-only">Search</label>
         <div class="relative">
-          <div
-            class="
-              pointer-events-none
-              absolute
-              inset-y-0
-              left-0
-              pl-3
-              flex
-              items-center
-            "
-          >
+          <div class="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
             <!-- Heroicon name: solid/search -->
             <svg
               class="h-5 w-5 text-gray-400"

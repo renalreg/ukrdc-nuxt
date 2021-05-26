@@ -1,21 +1,9 @@
 <template>
   <GenericModalSlot ref="surveyViewerGenericModalMaxSlot">
-    <div
-      v-if="availableToOpen"
-      class="
-        px-0
-        py-0
-        w-full
-        h-full
-        box-border
-        overflow-y-scroll overflow-x-hidden
-      "
-    >
+    <div v-if="availableToOpen" class="px-0 py-0 w-full h-full box-border overflow-y-scroll overflow-x-hidden">
       <div class="overflow-hidden sm:rounded-lg">
         <div class="px-4 py-5">
-          <h3 class="text-lg leading-6 font-medium text-gray-900">
-            Survey Information
-          </h3>
+          <h3 class="text-lg leading-6 font-medium text-gray-900">Survey Information</h3>
           <p class="mt-1 max-w-2xl text-sm text-gray-500">
             {{ survey.id }}
           </p>
@@ -41,9 +29,7 @@
               </dd>
             </div>
             <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
-              <dt class="text-sm font-medium text-gray-500">
-                Survey Type Code
-              </dt>
+              <dt class="text-sm font-medium text-gray-500">Survey Type Code</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 {{ survey.surveytypecode }}
               </dd>
@@ -61,28 +47,16 @@
           </div>
           <div class="border-t border-gray-200 px-4">
             <dl class="sm:divide-y sm:divide-gray-200">
-              <div
-                v-for="question in questions"
-                :key="question.id"
-                class="flex items-center py-4"
-              >
+              <div v-for="question in questions" :key="question.id" class="flex items-center py-4">
                 <div class="mr-4 text-sm font-medium text-gray-900">
                   {{ question.questiontypecode }}
                 </div>
                 <div>
                   <dt class="text-sm font-medium text-gray-500 mb-1">
-                    {{
-                      question.questionType
-                        ? question.questionType
-                        : `Question Code ${question.questiontypecode}`
-                    }}
+                    {{ question.questionType ? question.questionType : `Question Code ${question.questiontypecode}` }}
                   </dt>
                   <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                    {{
-                      question.responseText
-                        ? question.responseText
-                        : `Response Code ${question.response}`
-                    }}
+                    {{ question.responseText ? question.responseText : `Response Code ${question.response}` }}
                   </dd>
                 </div>
               </div>

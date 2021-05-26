@@ -27,11 +27,7 @@
       </ul>
       <!-- Real results -->
       <ul v-else class="divide-y divide-gray-200">
-        <workitemsListItem
-          v-for="item in workitems"
-          :key="item.id"
-          :item="item"
-        />
+        <workitemsListItem v-for="item in workitems" :key="item.id" :item="item" />
       </ul>
       <GenericPaginator
         v-if="!$fetchState.pending"
@@ -47,14 +43,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  watch,
-  ref,
-  useRoute,
-  useFetch,
-  useContext,
-} from '@nuxtjs/composition-api'
+import { defineComponent, watch, ref, useRoute, useFetch, useContext } from '@nuxtjs/composition-api'
 
 import usePagination from '@/mixins/usePagination'
 import useDateRange from '@/mixins/useDateRange'
@@ -78,13 +67,7 @@ export default defineComponent({
     const { page, total, size } = usePagination()
     const { range, since, until } = useDateRange()
     const { arrayQuery } = useQuery()
-    const {
-      facilities,
-      facilityIds,
-      facilityLabels,
-      selectedFacility,
-      fetchFacilities,
-    } = useFacilities()
+    const { facilities, facilityIds, facilityLabels, selectedFacility, fetchFacilities } = useFacilities()
 
     const workitems = ref([] as WorkItemShort[])
 

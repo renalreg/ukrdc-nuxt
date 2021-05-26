@@ -5,11 +5,7 @@
       <TextH2> {{ title }} </TextH2>
     </GenericCardHeader>
     <ul class="divide-y divide-gray-200">
-      <errorsListItem
-        v-for="item in relatedErrors"
-        :key="item.id"
-        :item="item"
-      />
+      <errorsListItem v-for="item in relatedErrors" :key="item.id" :item="item" />
     </ul>
     <GenericPaginator
       class="bg-white border-t border-gray-200"
@@ -23,13 +19,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  onMounted,
-  ref,
-  useContext,
-  watch,
-} from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, useContext, watch } from '@nuxtjs/composition-api'
 import { Message } from '~/interfaces/errors'
 
 export default defineComponent({
@@ -61,8 +51,7 @@ export default defineComponent({
 
     async function updateRelatedErrors(): Promise<void> {
       const res = await $axios.$get(
-        props.errorsUrl +
-          `?page=${relatedErrorsPage.value}&size=${relatedErrorsSize.value}`
+        props.errorsUrl + `?page=${relatedErrorsPage.value}&size=${relatedErrorsSize.value}`
       )
       // Set related errors
       relatedErrors.value = res.items

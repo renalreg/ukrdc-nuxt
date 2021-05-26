@@ -1,22 +1,10 @@
 <template>
   <div>
     <div class="max-w-7xl mx-auto mb-4">
-      <h1 class="text-2xl font-semibold text-gray-900">New Today</h1>
-    </div>
-
-    <div class="mb-8">
-      <genericAlertWarning v-for="message in response.warnings" :key="message" :message="message">
-      </genericAlertWarning>
-
-      <genericAlertInfo v-for="message in response.messages" :key="message" :message="message"> </genericAlertInfo>
+      <h1 class="text-2xl font-semibold text-gray-900">Mirth Channels</h1>
     </div>
 
     <div class="max-w-7xl mx-auto mb-8">
-      <dashStats :workitems="response.workitems" :ukrdcrecords="response.ukrdcrecords" />
-    </div>
-
-    <div v-if="$hasPermission('ukrdc:mirth:read')" class="max-w-7xl mx-auto mb-8">
-      <TextH2> Mirth Channels </TextH2>
       <div v-for="group in mirthGroups" :key="group.id" class="mb-6">
         <div class="mb-4">
           <TextH4>
@@ -54,38 +42,23 @@
 <script lang="ts">
 import { defineComponent, ref, useFetch, useContext } from '@nuxtjs/composition-api'
 
-import { DashResponse, ChannelStatistics } from '@/interfaces/dash'
+import { ChannelStatistics } from '@/interfaces/dash'
 import { ChannelGroup } from '@/interfaces/mirth'
 
 export default defineComponent({
   setup() {
-    const { $axios, $config, $hasPermission } = useContext()
+    const { $axios, $config } = useContext()
 
-    const response = ref({} as DashResponse)
-    const messages = ref([] as string[])
-    const warnings = ref([] as string[])
     const mirthStatistics = ref([] as ChannelStatistics[])
     const mirthGroups = ref([] as ChannelGroup[])
 
     const error = ref('')
 
     useFetch(async () => {
-      const [dashResponse, mirthResponse] = await Promise.all([
-        $axios.$get(`${$config.apiBase}/dash/`),
-        // Only read Mirth stats if user has permission
-        $hasPermission('ukrdc:mirth:read') ? $axios.$get(`${$config.apiBase}/mirth/groups/`) : null,
-      ])
-      // Fetch the dashboard response from our API server
-      response.value = dashResponse
-      messages.value = dashResponse.messages
-      warnings.value = dashResponse.warnings
-      mirthGroups.value = mirthResponse
+      mirthGroups.value = await $axios.$get(`${$config.apiBase}/mirth/groups/`)
     })
 
     return {
-      response,
-      messages,
-      warnings,
       mirthStatistics,
       mirthGroups,
       error,
@@ -93,7 +66,7 @@ export default defineComponent({
   },
 
   head: {
-    title: 'Dashboard',
+    title: 'Mirth Channels',
   },
 })
 </script>
