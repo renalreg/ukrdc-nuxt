@@ -1,14 +1,10 @@
-export interface DashStatistics {
-  day: number
-  prev: number
-  total: number
-}
+import { TotalDayPrev } from '@/interfaces/statistics'
 
 export interface DashResponse {
   messages: string[]
   warnings: string[]
-  ukrdcrecords: DashStatistics
-  workitems: DashStatistics
+  ukrdcrecords: TotalDayPrev
+  workitems: TotalDayPrev
 }
 
 export interface ChannelStatistics {

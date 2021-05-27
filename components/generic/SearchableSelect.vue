@@ -10,7 +10,7 @@
         leave-class="opacity-100"
         leave-to-class="opacity-0 scale-90"
       >
-        <div v-if="isOpen" class="fixed inset-0 transition-opacity" aria-hidden="true" @click="cancel()">
+        <div v-if="isOpen && closable" class="fixed inset-0 transition-opacity" aria-hidden="true" @click="cancel()">
           <div class="absolute inset-0 bg-gray-500 opacity-10"></div>
         </div>
       </transition>
@@ -114,6 +114,16 @@ export default {
       required: false,
       default: 'Select an item...',
     },
+    mountOpened: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    closable: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
 
   data() {
@@ -137,6 +147,12 @@ export default {
     },
   },
 
+  mounted() {
+    if (this.mountOpened) {
+      this.open()
+    }
+  },
+
   methods: {
     open() {
       this.isOpen = true
@@ -145,10 +161,12 @@ export default {
       })
     },
     close() {
-      this.isOpen = false
-      this.$nextTick(() => {
-        this.$refs.input.focus()
-      })
+      if (this.closable) {
+        this.isOpen = false
+        this.$nextTick(() => {
+          this.$refs.input.focus()
+        })
+      }
     },
     cancel() {
       this.close()

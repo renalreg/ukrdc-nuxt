@@ -8,9 +8,9 @@
         <div v-else class="h-4 animate-pulse bg-gray-200 rounded w-full sm:w-1/2"></div>
       </dt>
       <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
-        <div v-if="value != undefined" class="flex items-baseline text-2xl font-semibold text-indigo-600">
+        <TextHc v-if="value != undefined">
           {{ value }}
-        </div>
+        </TextHc>
         <div v-else class="h-6 animate-pulse bg-gray-200 rounded w-full sm:w-1/4"></div>
 
         <dashDeltaBadge v-if="delta != undefined" :delta="delta" :invert="invert" />
