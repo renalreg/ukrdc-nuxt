@@ -16,11 +16,7 @@ export default function () {
   const route = useRoute()
   const router = useRouter()
 
-  function pushNewQuery(
-    queryKey: string,
-    newValue: any,
-    resetPage: boolean = false
-  ) {
+  function pushNewQuery(queryKey: string, newValue: any, resetPage: boolean = false) {
     const newQuery = Object.assign({}, route.value.query, {
       [queryKey]: [newValue],
     })
@@ -33,11 +29,7 @@ export default function () {
     })
   }
 
-  function arrayQuery(
-    queryKey: string,
-    defaultValue: (string | null)[] = [],
-    resetPage: boolean = false
-  ) {
+  function arrayQuery(queryKey: string, defaultValue: (string | null)[] = [], resetPage: boolean = false) {
     return computed({
       get: (): (string | null)[] => {
         const val = route.value.query[queryKey]
@@ -87,11 +79,7 @@ export default function () {
     })
   }
 
-  function integerQuery(
-    queryKey: string,
-    defaultValue: number | null = null,
-    resetPage: boolean = false
-  ) {
+  function integerQuery(queryKey: string, defaultValue: number | null = null, resetPage: boolean = false) {
     return computed({
       get: (): number | null => {
         const val = singleQuery(route.value.query[queryKey])
