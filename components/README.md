@@ -14,13 +14,3 @@ components/
 ```
 
 will be auto-imported as `<BaseFooButton />`
-
-## Top-level components
-
-### Paginator.vue
-
-A reusable component for paginated lists. Provides props and events for navigating through a list.
-
-### SearchBar.vue
-
-A reusable search bar component. Provides props and events for binding search strings and handling submissions.

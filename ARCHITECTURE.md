@@ -1,23 +1,24 @@
 # UKRDC-Nuxt Architecture
 
-  - [MIDDLEWARE](#middleware)
-  - [SCHEMES](#schemes)
-  - [MIXINS](#mixins)
-  - [PLUGINS](#plugins)
-  - [UTILITIES](#utilities)
-  - [COMPONENTS](#components)
-    - [MASTERRECORDS](#components-masterrecords)
-    - [WORKITEMS](#components-workitems)
-    - [NAVIGATION](#components-navigation)
-    - [PROFILE](#components-profile)
-    - [DASH](#components-dash)
-    - [GENERIC](#components-generic)
-  - [LAYOUTS](#layouts)
-  - [STATIC](#static)
-  - [ASSETS](#assets)
-  - [PAGES](#pages)
-  - [INTERFACES](#interfaces)
-  - [STORE](#store)
+  - [middleware](#middleware)
+  - [schemes](#schemes)
+  - [mixins](#mixins)
+  - [dist](#dist)
+  - [plugins](#plugins)
+  - [utilities](#utilities)
+  - [components](#components)
+    - [components/masterrecords](#components-masterrecords)
+    - [components/workitems](#components-workitems)
+    - [components/navigation](#components-navigation)
+    - [components/profile](#components-profile)
+    - [components/dash](#components-dash)
+    - [components/generic](#components-generic)
+  - [layouts](#layouts)
+  - [static](#static)
+  - [assets](#assets)
+  - [pages](#pages)
+  - [interfaces](#interfaces)
+  - [store](#store)
 
 <a name="middleware"></a>
 
@@ -36,13 +37,29 @@ More information about the usage of this directory in [the documentation](https:
 
 This directory contains Javascript plugins defining custom authentication schemes for `nuxt-auth`.
 
-Currently used to customise the user info we obtain from Auth0.
+Currently used to enable runtime config of the Auth module
 
 <a name="mixins"></a>
 
 ## MIXINS
 
-This directory contains some Vue mixins providing functions common to many components.
+Technically not mixins in the Vue 2 Options API sense. 
+
+Modules beginning with the `use` prefix, used by the composition API to augment component functionality. These function kind of like abstract base classes to provide foundations for components to build on.
+
+For example, `usePagination` creates basic functionality for pages that use URL query-based pagination.
+
+<a name="dist"></a>
+
+## STATIC
+
+This directory contains your static files.
+Each file inside this directory is mapped to `/`.
+Thus you'd want to delete this README.md before deploying to production.
+
+Example: `/static/robots.txt` is mapped as `/robots.txt`.
+
+More information about the usage of this directory in [the documentation](https://nuxtjs.org/guide/assets#static).
 
 <a name="plugins"></a>
 
@@ -78,16 +95,6 @@ components/
 ```
 
 will be auto-imported as `<BaseFooButton />`
-
-### Top-level components
-
-#### Paginator.vue
-
-A reusable component for paginated lists. Provides props and events for navigating through a list.
-
-#### SearchBar.vue
-
-A reusable search bar component. Provides props and events for binding search strings and handling submissions.
 
 <a name="components-masterrecords"></a>
 
