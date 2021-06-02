@@ -3,7 +3,6 @@
   - [middleware](#middleware)
   - [schemes](#schemes)
   - [mixins](#mixins)
-  - [dist](#dist)
   - [plugins](#plugins)
   - [utilities](#utilities)
   - [components](#components)
@@ -48,18 +47,6 @@ Technically not mixins in the Vue 2 Options API sense.
 Modules beginning with the `use` prefix, used by the composition API to augment component functionality. These function kind of like abstract base classes to provide foundations for components to build on.
 
 For example, `usePagination` creates basic functionality for pages that use URL query-based pagination.
-
-<a name="dist"></a>
-
-## STATIC
-
-This directory contains your static files.
-Each file inside this directory is mapped to `/`.
-Thus you'd want to delete this README.md before deploying to production.
-
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/guide/assets#static).
 
 <a name="plugins"></a>
 
