@@ -1,10 +1,20 @@
 # ukrdc-nuxt
 
-## Project Status
+## Developer Installation
 
-This rewrite of the UKRDC client is currently in development, and is not yet being used in production.
+### Prerequisites
 
-## Build Setup
+- Create a `.env` file, for example:
+
+```
+OAUTH_ISSUER=https://renalregistry.okta.com/oauth2/ausn7fa9zfh1DC2La5d6
+APP_CLIENT_ID=0oan98slw3m4mnhxq5d6
+APP_BASE=/new/app
+```
+
+- Ensure a local UKRDC-FastAPI instance is running locally (see <https://github.com/renalreg/ukrdc-fastapi>)
+
+### Installation
 
 ```bash
 # install dependencies
@@ -12,13 +22,6 @@ $ yarn install
 
 # serve with hot reload at localhost:3000
 $ yarn dev
-
-# build for production and launch server
-$ yarn build
-$ yarn start
-
-# generate static project
-$ yarn generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
