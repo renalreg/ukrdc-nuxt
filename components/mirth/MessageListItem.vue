@@ -11,7 +11,7 @@
             </div>
             <!-- Recieved  -->
             <div class="col-span-1">
-              <TextP> {{ message.connectorMessages.length }} messages in chain</TextP>
+              <TextP> {{ connectorMessagesArray.length }} messages in chain</TextP>
               <TextP class="mt-2 line-clamp-2">
                 {{ message.processed ? 'Processed' : 'Failed' }}
                 {{ hasErrors ? ' with errors' : '' }}
@@ -43,9 +43,12 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const connectorMessagesArray = computed(() => {
+      return Object.values(props.message.connectorMessages)
+    })
     const channelName = computed(() => {
       let name: string = ''
-      for (const msg of props.message.connectorMessages) {
+      for (const msg of connectorMessagesArray.value) {
         if (!name.includes(msg.channelName)) {
           name = name + '/' + msg.channelName
         }
@@ -57,7 +60,7 @@ export default defineComponent({
       return messageHasErrors(props.message)
     })
 
-    return { channelName, hasErrors, isEmptyObject }
+    return { connectorMessagesArray, channelName, hasErrors, isEmptyObject }
   },
 })
 </script>

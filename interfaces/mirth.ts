@@ -36,13 +36,17 @@ export interface ConnectorMessage {
   metaDataMap: MetaDataMap
 }
 
+export interface connectorMessagesMap {
+  [key: number]: ConnectorMessage
+}
+
 export interface ChannelMessage {
   messageId: number
   serverId: string
   channelId: string
   processed: boolean
 
-  connectorMessages: ConnectorMessage[]
+  connectorMessages: connectorMessagesMap
 
   links: ChannelMessageLinks
 }

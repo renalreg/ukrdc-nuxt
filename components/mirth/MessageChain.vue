@@ -45,7 +45,7 @@ export default defineComponent({
     const chain = computed(() => {
       const currentChain = {} as ChainMap
       if (props.message.connectorMessages) {
-        for (const msg of props.message.connectorMessages) {
+        for (const msg of Object.values(props.message.connectorMessages)) {
           if (!(msg.chainId in currentChain)) {
             currentChain[msg.chainId] = []
           }

@@ -1,9 +1,7 @@
 export function todayString(addDays: number = 0): string {
   const today = new Date()
   today.setDate(today.getDate() + addDays)
-  return (
-    today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
-  )
+  return today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
 }
 
 export function nowString(addDays: number = 0): string {
