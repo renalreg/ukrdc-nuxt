@@ -1,7 +1,8 @@
 <template>
   <client-only>
-    <div class="mb-4">
+    <div class="mb-4 flex w-full">
       <v-date-picker
+        class="w-full"
         :value="value"
         :model-config="modelConfig"
         :is24hr="true"
@@ -49,6 +50,9 @@
           </div>
         </template>
       </v-date-picker>
+      <GenericButtonTertiary class="ml-2 h-9" @click="$emit('input', { since: null, until: null })"
+        >Clear</GenericButtonTertiary
+      >
     </div>
   </client-only>
 </template>
@@ -81,7 +85,7 @@ export default defineComponent({
   },
   setup() {
     const textBoxClasses =
-      'flex-grow pl-8 pr-2 py-1 w-full bg-white border border-gray-300 rounded-md placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500'
+      'flex-grow h-9 pl-8 pr-2 py-1 w-full bg-white border border-gray-300 rounded-md placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500'
 
     return { textBoxClasses }
   },
