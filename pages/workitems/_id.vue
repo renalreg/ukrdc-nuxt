@@ -79,7 +79,7 @@
       <SkeleText v-else class="h-4 w-1/2" />
     </div>
 
-    <GenericCard>
+    <GenericCard class="mb-8">
       <GenericCardContent>
         <GenericDl>
           <GenericDi>
@@ -109,7 +109,7 @@
 
     <div
       v-if="$hasPermission('ukrdc:workitems:write') && record && record.status !== 3"
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 my-8"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
     >
       <genericButtonPrimary class="inline-flex items-center justify-center w-full" @click="addCommentModal.show()">
         <IconPencil />
