@@ -8,9 +8,7 @@ export default function () {
   const router = useRouter()
 
   const since = ref((singleQuery(route.value.query.since) || null) as string)
-  const until = ref(
-    (singleQuery(route.value.query.until) || nowString(0)) as string
-  )
+  const until = ref((singleQuery(route.value.query.until) || nowString(0)) as string)
   const range = computed({
     get: () => {
       return {
@@ -26,6 +24,13 @@ export default function () {
         since: since.value,
         until: until.value,
       })
+
+      // If we use both date and page to filter, we need to
+      // reset the page number
+      if (newQuery.page) {
+        newQuery.page = '0'
+      }
+
       router.push({
         path: route.value.path,
         query: newQuery,
