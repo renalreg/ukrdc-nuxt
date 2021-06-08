@@ -47,7 +47,7 @@ export default function () {
           [queryKey]: newValue,
         })
         if (resetPage) {
-          newQuery.page = ['1']
+          newQuery.page = ['0']
         }
         router.push({
           path: route.value.path,
