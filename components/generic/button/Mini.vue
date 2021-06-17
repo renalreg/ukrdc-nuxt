@@ -2,7 +2,6 @@
   <button
     type="button"
     class="
-      inline-flex
       items-center
       px-2
       py-0.5
@@ -14,8 +13,7 @@
       text-gray-700
       bg-white
       hover:bg-gray-50
-      focus:outline-none
-      focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+      focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
     "
     @click="$emit('click')"
   >

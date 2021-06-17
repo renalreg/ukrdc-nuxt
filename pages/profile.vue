@@ -48,12 +48,8 @@
             flex flex-col-reverse
             justify-stretch
             space-y-4 space-y-reverse
-            sm:flex-row-reverse
-            sm:justify-end
-            sm:space-x-reverse sm:space-y-0 sm:space-x-3
-            lg:mt-0
-            lg:flex-row
-            lg:space-x-3
+            sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3
+            lg:mt-0 lg:flex-row lg:space-x-3
           "
         >
           <a
@@ -74,8 +70,7 @@
               text-gray-700
               bg-white
               hover:bg-gray-50
-              focus:outline-none
-              focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+              focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
             "
             >Manage Account</a
           >

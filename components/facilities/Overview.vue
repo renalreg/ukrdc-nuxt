@@ -51,8 +51,7 @@
             items-center
             overflow-hidden
             divide-y divide-gray-200
-            lg:grid-cols-2
-            lg:divide-y-0 lg:divide-x
+            lg:grid-cols-2 lg:divide-y-0 lg:divide-x
           "
         >
           <div class="pl-4 py-4">
