@@ -1,12 +1,16 @@
 <template>
   <div>
     <div v-if="!isEmptyObject(record) && record.patient.names && record.patient.names.length > 0" class="mt-4">
-      <h2 class="text-gray-500 text-xs font-medium uppercase tracking-wide">Names</h2>
+      <h2 class="text-gray-500 text-xs font-medium uppercase tracking-wide">Demographics</h2>
 
       <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <li v-for="item in record.patient.names" :key="item.given + item.family" class="col-span-1">
           <GenericCardMini class="px-4 py-2 w-full">
             <TextL1> {{ item.given }} {{ item.family }} </TextL1>
+            <TextP class="mt-2 flex items-center">
+              {{ formatDate(record.patient.birthTime, (t = false)) }}
+              <b class="ml-1"> {{ genderChar }}</b>
+            </TextP>
           </GenericCardMini>
         </li>
       </ul>
