@@ -42,11 +42,7 @@
               shadow-xl
               transform
               transition-all
-              sm:my-8
-              sm:align-middle
-              sm:max-w-xl
-              sm:w-full
-              sm:p-6
+              sm:my-8 sm:align-middle sm:max-w-xl sm:w-full sm:p-6
             "
             role="dialog"
             aria-modal="true"

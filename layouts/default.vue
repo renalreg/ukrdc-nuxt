@@ -77,8 +77,7 @@
               rounded-md
               text-gray-500
               hover:text-gray-900
-              focus:outline-none
-              focus:ring-2 focus:ring-inset focus:ring-indigo-500
+              focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500
             "
             @click="toggle()"
           >

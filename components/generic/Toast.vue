@@ -39,8 +39,7 @@
                   transition
                   ease-in-out
                   duration-150
-                  focus:outline-none
-                  focus:text-gray-500
+                  focus:outline-none focus:text-gray-500
                 "
                 @click="destroy"
               >
@@ -104,11 +103,8 @@
                   ease-in-out
                   duration-150
                   hover:text-indigo-500
-                  focus:outline-none
-                  focus:shadow-outline-blue
-                  focus:border-blue-300
-                  active:text-indigo-700
-                  active:bg-gray-50
+                  focus:outline-none focus:shadow-outline-blue focus:border-blue-300
+                  active:text-indigo-700 active:bg-gray-50
                 "
                 @click="primaryAction"
               >
@@ -134,11 +130,8 @@
                   ease-in-out
                   duration-150
                   hover:text-gray-500
-                  focus:outline-none
-                  focus:shadow-outline-blue
-                  focus:border-blue-300
-                  active:text-gray-800
-                  active:bg-gray-50
+                  focus:outline-none focus:shadow-outline-blue focus:border-blue-300
+                  active:text-gray-800 active:bg-gray-50
                 "
                 @click="secondaryAction"
               >
@@ -174,8 +167,7 @@
                   font-medium
                   text-indigo-600
                   hover:text-indigo-500
-                  focus:outline-none
-                  focus:underline
+                  focus:outline-none focus:underline
                   transition
                   ease-in-out
                   duration-150
@@ -190,8 +182,7 @@
                 class="
                   inline-flex
                   text-gray-400
-                  focus:outline-none
-                  focus:text-gray-500
+                  focus:outline-none focus:text-gray-500
                   transition
                   ease-in-out
                   duration-150

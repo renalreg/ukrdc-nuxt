@@ -16,8 +16,7 @@
         transition-colors
         ease-in-out
         duration-200
-        focus:outline-none
-        focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
       "
       :class="{ 'bg-green-400': value }"
       aria-pressed="false"

@@ -25,8 +25,7 @@
                   rounded-full
                   text-gray-500
                   hover:text-gray-600
-                  focus:outline-none
-                  focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+                  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
                 "
                 @click="hide()"
               >
