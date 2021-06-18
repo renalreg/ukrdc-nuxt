@@ -5,7 +5,11 @@
       <TextH2> {{ title }} </TextH2>
     </GenericCardHeader>
     <ul class="divide-y divide-gray-200">
-      <errorsListItem v-for="item in relatedErrors" :key="item.id" :item="item" />
+      <div v-for="item in relatedErrors" :key="item.id" :item="item" class="hover:bg-gray-50">
+        <NuxtLink :to="`/errors/${item.id}`">
+          <ErrorsListItem :item="item" />
+        </NuxtLink>
+      </div>
     </ul>
     <GenericPaginator
       class="bg-white border-t border-gray-200"

@@ -20,7 +20,11 @@
       </ul>
       <!-- Real results -->
       <ul v-else class="divide-y divide-gray-200">
-        <errorsListItem v-for="item in messages" :key="item.id" :item="item" />
+        <div v-for="item in messages" :key="item.id" :item="item" class="hover:bg-gray-50">
+          <NuxtLink :to="`/errors/${item.id}`">
+            <ErrorsListItem :item="item" />
+          </NuxtLink>
+        </div>
       </ul>
       <GenericPaginator
         v-if="!$fetchState.pending"

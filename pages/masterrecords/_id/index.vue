@@ -51,7 +51,11 @@
         <TextH2> Linked Master Records </TextH2>
       </GenericCardHeader>
       <ul class="divide-y divide-gray-200">
-        <masterrecordsListItem v-for="item in relatedRecords" :key="item.id" :item="item" />
+        <div v-for="item in relatedRecords" :key="item.id" class="hover:bg-gray-50">
+          <NuxtLink :to="`/masterrecords/${item.id}`">
+            <MasterrecordsListItem :item="item" />
+          </NuxtLink>
+        </div>
       </ul>
     </GenericCard>
   </div>

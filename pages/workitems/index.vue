@@ -27,7 +27,11 @@
       </ul>
       <!-- Real results -->
       <ul v-else class="divide-y divide-gray-200">
-        <workitemsListItem v-for="item in workitems" :key="item.id" :item="item" />
+        <div v-for="item in workitems" :key="item.id" :item="item" class="hover:bg-gray-50">
+          <NuxtLink :to="`/workitems/${item.id}`">
+            <workitemsListItem :item="item" />
+          </NuxtLink>
+        </div>
       </ul>
       <GenericPaginator
         v-if="!$fetchState.pending"
