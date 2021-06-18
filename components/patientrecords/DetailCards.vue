@@ -9,7 +9,6 @@
             <TextL1> {{ item.given }} {{ item.family }} </TextL1>
             <TextP class="mt-2 flex items-center">
               {{ formatDate(record.patient.birthTime, (t = false)) }}
-              <b class="ml-1"> {{ genderChar }}</b>
             </TextP>
           </GenericCardMini>
         </li>
