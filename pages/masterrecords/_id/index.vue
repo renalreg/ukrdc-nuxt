@@ -42,7 +42,10 @@
       <GenericCardHeader>
         <TextH2> Patient Records </TextH2>
       </GenericCardHeader>
-      <PatientrecordsGroupedList :records="patientRecords" />
+      <ul v-if="$fetchState.pending" class="divide-y divide-gray-200">
+        <SkeleListItem v-for="n in 5" :key="n" />
+      </ul>
+      <PatientrecordsGroupedList v-else :records="patientRecords" />
     </GenericCard>
 
     <!-- Related Master Records card -->
@@ -50,7 +53,10 @@
       <GenericCardHeader>
         <TextH2> Linked Master Records </TextH2>
       </GenericCardHeader>
-      <ul class="divide-y divide-gray-200">
+      <ul v-if="$fetchState.pending" class="divide-y divide-gray-200">
+        <SkeleListItem v-for="n in 2" :key="n" />
+      </ul>
+      <ul v-else class="divide-y divide-gray-200">
         <div v-for="item in relatedRecords" :key="item.id" class="hover:bg-gray-50">
           <NuxtLink :to="`/masterrecords/${item.id}`">
             <MasterrecordsListItem :item="item" />
