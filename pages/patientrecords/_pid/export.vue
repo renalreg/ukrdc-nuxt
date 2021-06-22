@@ -8,7 +8,7 @@
         <option value="exportRADAR">Export to RADAR</option>
       </GenericSelect>
 
-      <GenericButton>Run Export</GenericButton>
+      <GenericButton @click="actionExport">Run Export</GenericButton>
     </div>
   </div>
 </template>
