@@ -55,13 +55,25 @@
 
       <div
         v-show="isOpen"
-        class="absolute top-0 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 pin-x p-2 z-50 w-full"
+        class="
+          absolute
+          top-0
+          bg-white
+          rounded-md
+          shadow-lg
+          ring-1 ring-black ring-opacity-5
+          pin-x
+          px-2
+          pt-2
+          z-50
+          w-full
+        "
       >
         <input
           ref="search"
           v-model="search"
           type="text"
-          class="block mb-2 w-full px-3 py-2 bg-grey-darker rounded"
+          class="block w-full px-3 py-2 bg-grey-darker rounded"
           style="outline: 0"
           @keydown.up="highlightPrev"
           @keydown.down="highlightNext"
@@ -72,7 +84,7 @@
         <ul
           v-show="options.length > 0"
           ref="options"
-          class="list-reset relative overflow-y-scroll"
+          class="list-reset relative overflow-y-scroll pt-2"
           style="max-height: 200px"
         >
           <li

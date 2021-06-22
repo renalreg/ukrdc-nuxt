@@ -92,3 +92,4 @@ sw.*
 # IDE files
 .vscode/
 .backup/
+.debugUser/

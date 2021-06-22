@@ -49,7 +49,11 @@
         <TextH2> Related Records </TextH2>
       </GenericCardHeader>
       <ul class="divide-y divide-gray-200">
-        <masterrecordsListItem v-for="item in error.masterRecords" :key="item.id" :item="item" />
+        <div v-for="item in error.masterRecords" :key="item.id" class="hover:bg-gray-50">
+          <NuxtLink :to="`/masterrecords/${item.id}`">
+            <MasterrecordsListItem :item="item" />
+          </NuxtLink>
+        </div>
       </ul>
     </GenericCard>
 
@@ -69,7 +73,11 @@
         <TextH2> Mirth Messages </TextH2>
       </GenericCardHeader>
       <ul class="divide-y divide-gray-200">
-        <MirthMessageListItem :message="mirthMessage" />
+        <div class="hover:bg-gray-50">
+          <NuxtLink :to="`/mirth/messages/${mirthMessage.channelId}/${mirthMessage.messageId}`">
+            <MirthMessageListItem :message="mirthMessage" />
+          </NuxtLink>
+        </div>
       </ul>
     </GenericCard>
   </div>

@@ -2,9 +2,12 @@
   <li>
     <div class="flex items-center py-4">
       <div class="min-w-0 flex-1 flex items-center">
-        <div class="flex-none justify-center w-16 cursor-pointer" @click="showDetail = !showDetail">
-          <IconChevronDown v-show="showDetail" class="mx-auto" />
-          <IconChevronRight v-show="!showDetail" class="mx-auto" />
+        <div
+          class="flex flex-none items-center justify-center w-16 self-stretch cursor-pointer"
+          @click="showDetail = !showDetail"
+        >
+          <IconChevronDown v-show="showDetail" />
+          <IconChevronRight v-show="!showDetail" />
         </div>
         <div class="min-w-0 grid grid-cols-4 items-center md:gap-4 w-full pr-4">
           <!-- Name, DoB, gender -->

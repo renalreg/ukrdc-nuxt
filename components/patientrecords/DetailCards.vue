@@ -1,19 +1,42 @@
 <template>
   <div>
-    <div v-if="!isEmptyObject(record) && record.patient.names && record.patient.names.length > 0" class="mt-4">
-      <h2 class="text-gray-500 text-xs font-medium uppercase tracking-wide">Demographics</h2>
+    <div>
+      <div v-if="!isEmptyObject(record)" class="mt-4">
+        <h2 class="text-gray-500 text-xs font-medium uppercase tracking-wide">History</h2>
+        <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <li class="col-span-1 sm:col-span-2">
+            <GenericCardMini class="px-4 py-2 w-full grid grid-cols-1 sm:grid-cols-2">
+              <div>
+                <TextL1> Created </TextL1>
+                <TextP class="flex items-center">
+                  {{ formatDate(record.repositoryCreationDate, (t = true)) }}
+                </TextP>
+              </div>
+              <div>
+                <TextL1> Updated </TextL1>
+                <TextP class="flex items-center">
+                  {{ formatDate(record.repositoryUpdateDate, (t = true)) }}
+                </TextP>
+              </div>
+            </GenericCardMini>
+          </li>
+        </ul>
+      </div>
 
-      <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <li v-for="item in record.patient.names" :key="item.given + item.family" class="col-span-1">
-          <GenericCardMini class="px-4 py-2 w-full">
-            <TextL1> {{ item.given }} {{ item.family }} </TextL1>
-            <TextP class="mt-2 flex items-center">
-              {{ formatDate(record.patient.birthTime, (t = false)) }}
-              <b class="ml-1"> {{ genderChar }}</b>
-            </TextP>
-          </GenericCardMini>
-        </li>
-      </ul>
+      <div v-if="!isEmptyObject(record) && record.patient.names && record.patient.names.length > 0" class="mt-4">
+        <h2 class="text-gray-500 text-xs font-medium uppercase tracking-wide">Demographics</h2>
+
+        <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <li v-for="item in record.patient.names" :key="item.given + item.family" class="col-span-1">
+            <GenericCardMini class="px-4 py-2 w-full">
+              <TextL1> {{ item.given }} {{ item.family }} </TextL1>
+              <TextP class="mt-2 flex items-center">
+                {{ formatDate(record.patient.birthTime, (t = false)) }}
+              </TextP>
+            </GenericCardMini>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <div v-if="!isEmptyObject(record)" class="mt-4">
