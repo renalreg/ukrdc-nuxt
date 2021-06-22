@@ -9,7 +9,11 @@
         <TextH2> Open Work Items </TextH2>
       </GenericCardHeader>
       <ul class="divide-y divide-gray-200">
-        <workitemsListItem v-for="item in workItems" :key="item.id" :item="item" />
+        <div v-for="item in workItems" :key="item.id" :item="item" class="hover:bg-gray-50">
+          <NuxtLink :to="`/workitems/${item.id}`">
+            <workitemsListItem :item="item" />
+          </NuxtLink>
+        </div>
       </ul>
     </GenericCard>
 
