@@ -84,7 +84,7 @@
         <ul
           v-show="options.length > 0"
           ref="options"
-          class="list-reset relative overflow-y-scroll pt-2"
+          class="list-reset relative overflow-y-scroll py-2"
           style="max-height: 200px"
         >
           <li
