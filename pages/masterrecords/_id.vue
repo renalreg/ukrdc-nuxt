@@ -48,6 +48,10 @@ export default defineComponent({
         href: `/masterrecords/${route.value.params.id}`,
       },
       {
+        name: 'Link Records',
+        href: `/masterrecords/${route.value.params.id}/linkrecords`,
+      },
+      {
         name: 'Issues',
         href: `/masterrecords/${route.value.params.id}/issues`,
       },

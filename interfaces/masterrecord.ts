@@ -3,6 +3,7 @@ interface MasterRecordLinks {
   statistics: string
   related: string
   errors: string
+  linkrecords: string
   persons: string
   workitems: string
   patientrecords: string

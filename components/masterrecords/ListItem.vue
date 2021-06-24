@@ -4,7 +4,7 @@
     <div class="flex items-center px-4 py-4 sm:px-6">
       <!-- Content container -->
       <div class="min-w-0 flex-1 flex items-center">
-        <div class="min-w-0 grid grid-cols-2 lg:grid-cols-3 md:gap-4 w-full">
+        <div class="min-w-0 grid grid-cols-3 lg:grid-cols-4 md:gap-4 w-full">
           <!-- Name, DoB, gender -->
           <div>
             <TextL1c class="capitalize truncate">
@@ -14,6 +14,13 @@
             <TextP class="mt-2 flex items-center">
               {{ formatDate(item.dateOfBirth, (t = false)) }}
               <b class="ml-1"> {{ genderChar }}</b>
+            </TextP>
+          </div>
+          <!-- Record ID -->
+          <div>
+            <TextL1>Record ID</TextL1>
+            <TextP class="mt-2">
+              {{ item.id }}
             </TextP>
           </div>
           <!-- National ID -->

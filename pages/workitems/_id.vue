@@ -322,25 +322,45 @@ export default defineComponent({
       })
     }
 
+    function closeWorkItem() {
+      // Close a workitem with a comment
+      $axios
+        .$post(`${$config.apiBase}/empi/workitems/${route.value.params.id}/close`, {
+          comment: customComment.value,
+        })
+        .catch((error) => {
+          console.log(error.response.data.detail)
+          $toast.show({
+            type: 'danger',
+            title: 'Error',
+            message: error.response.data.detail,
+            timeout: 10,
+            classTimeout: 'bg-red-600',
+          })
+        })
+        .finally(() => {
+          fetch()
+        })
+
+      const el = closeModal.value as modalInterface
+      el.toggle()
+    }
+
     function mergeWorkItem() {
-      actionWorkItem(`${$config.apiBase}/empi/workitems/${route.value.params.id}/merge`)
+      // Send a merge message, then close the workitem with comment
+      actionAndCloseWorkItem(`${$config.apiBase}/empi/workitems/${route.value.params.id}/merge`)
       const el = mergeModal.value as modalInterface
       el.toggle()
     }
 
     function unlinkWorkItem() {
-      actionWorkItem(`${$config.apiBase}/empi/workitems/${route.value.params.id}/unlink`)
+      // Send an unlink message, then close the workitem with comment
+      actionAndCloseWorkItem(`${$config.apiBase}/empi/workitems/${route.value.params.id}/unlink`)
       const el = unlinkModal.value as modalInterface
       el.toggle()
     }
 
-    function closeWorkItem() {
-      actionWorkItem(`${$config.apiBase}/empi/workitems/${route.value.params.id}/close`)
-      const el = closeModal.value as modalInterface
-      el.toggle()
-    }
-
-    function actionWorkItem(postPath: string) {
+    function actionAndCloseWorkItem(postPath: string) {
       $axios
         .$post(postPath)
         .then((res: MirthMessageResponse) => {
