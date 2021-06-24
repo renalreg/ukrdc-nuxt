@@ -35,7 +35,8 @@
       </GenericCard>
     </div>
     <div v-else class="mt-2 text-sm text-gray-500 text-center">
-      <div v-if="search && !$fetchState.pending">No results found</div>
+      <LoadingIndicator v-if="search && $fetchState.pending"></LoadingIndicator>
+      <div v-else-if="search && !$fetchState.pending">No results found</div>
       <div v-else>
         <p class="mb-4">Search by name, date of birth, national ID, or local ID</p>
         <p><b>Tip: </b>Refine your search by joining terms,</p>
