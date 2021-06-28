@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div v-if="facility">
+    <LoadingIndicator v-if="$fetchState.pending"></LoadingIndicator>
+    <div v-else-if="facility">
       <div v-if="showHeading" class="mb-6">
         <TextH1 v-if="facility"> {{ facility.description }} </TextH1>
         <SkeleText v-else class="h-8 w-1/4 mb-2" />
