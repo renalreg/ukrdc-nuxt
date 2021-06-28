@@ -17,6 +17,9 @@ export default function () {
       }
     },
     set(newRange: DateRange) {
+      if (!newRange) {
+        return
+      }
       since.value = newRange.start
       until.value = newRange.end
 
