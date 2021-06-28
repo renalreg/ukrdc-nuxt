@@ -44,6 +44,7 @@ import { defineComponent, watch, ref, useRoute, useFetch, useContext } from '@nu
 
 import usePagination from '@/mixins/usePagination'
 import useDateRange from '@/mixins/useDateRange'
+import { nowString } from '@/utilities/dateUtils'
 
 import { Message } from '@/interfaces/errors'
 import useFacilities from '~/mixins/useFacilities'
@@ -63,6 +64,9 @@ export default defineComponent({
     const { page, total, size } = usePagination()
     const { range, since, until } = useDateRange()
     const { facilities, facilityIds, facilityLabels, selectedFacility, fetchFacilities } = useFacilities()
+
+    // Set initial date range
+    since.value = nowString(-30)
 
     const messages = ref([] as Message[])
 

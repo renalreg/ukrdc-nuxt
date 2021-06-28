@@ -55,6 +55,7 @@ import useDateRange from '@/mixins/useDateRange'
 import { WorkItemShort } from '@/interfaces/workitem'
 import useQuery from '~/mixins/useQuery'
 import useFacilities from '~/mixins/useFacilities'
+import { nowString } from '~/utilities/dateUtils'
 
 interface WorkItemPage {
   items: WorkItemShort[]
@@ -72,6 +73,9 @@ export default defineComponent({
     const { range, since, until } = useDateRange()
     const { arrayQuery } = useQuery()
     const { facilities, facilityIds, facilityLabels, selectedFacility, fetchFacilities } = useFacilities()
+
+    // Set initial date range
+    since.value = nowString(-365)
 
     const workitems = ref([] as WorkItemShort[])
 
