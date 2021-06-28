@@ -1,6 +1,7 @@
 <template>
   <div>
-    <FacilitiesOverview :code="facilityCode" />
+    <LoadingIndicator v-if="$fetchState.pending"></LoadingIndicator>
+    <FacilitiesOverview v-else :code="facilityCode" />
   </div>
 </template>
 
