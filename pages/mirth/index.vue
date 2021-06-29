@@ -25,10 +25,10 @@
               <TextP> {{ item.statistics.received }} received </TextP>
               <span
                 v-if="item.statistics.error === 0"
-                class="inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-sm mt-2"
+                class="inline-block px-2 py-0.5 text-green-800 text-sm font-medium bg-green-100 rounded-sm mt-2"
                 >No errors</span
               >
-              <span v-else class="inline-block px-2 py-0.5 text-red-800 text-xs font-medium bg-red-100 rounded-sm mt-2"
+              <span v-else class="inline-block px-2 py-0.5 text-red-800 text-sm font-medium bg-red-100 rounded-sm mt-2"
                 >{{ item.statistics.error }} errors</span
               >
             </GenericCardMini>

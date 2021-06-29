@@ -41,7 +41,7 @@
               <NuxtLink
                 :to="item.url"
                 href="#"
-                class="group flex items-center px-2 py-2 text-base font-medium rounded-md"
+                class="group flex items-center px-2 py-2 font-medium rounded-md text-lg"
                 :class="[
                   $route.path == item.url
                     ? ['bg-gray-100', 'text-gray-900']
@@ -67,7 +67,7 @@
             <div v-else>
               <h3
                 :id="item.title + '_Heading'"
-                class="px-3 mt-5 mb-3 text-xs font-semibold text-gray-500 uppercase tracking-wider"
+                class="px-3 mt-5 mb-3 text-sm font-semibold text-gray-500 uppercase tracking-wider"
               >
                 {{ item.title }}
               </h3>

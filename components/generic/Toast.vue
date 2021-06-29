@@ -24,10 +24,10 @@
           <div class="flex items-start">
             <toastIcon class="flex-shrink-0" :type="type" :icon="icon" />
             <div class="ml-3 w-0 flex-1 pt-0.5">
-              <p v-if="title" :class="classTitle" class="text-sm leading-5 font-medium">
+              <p v-if="title" :class="classTitle" class="leading-5 font-medium">
                 {{ title }}
               </p>
-              <p :class="[classMessage, { 'mt-1': title }]" class="text-sm leading-5">
+              <p :class="[classMessage, { 'mt-1': title }]" class="leading-5">
                 {{ message }}
               </p>
             </div>
@@ -73,10 +73,10 @@
         <div class="w-0 flex-1 flex items-center p-4">
           <toastIcon class="flex-shrink-0 mr-4" :type="type" :icon="icon" />
           <div class="w-full">
-            <p v-if="title" :class="classTitle" class="text-sm leading-5 font-medium">
+            <p v-if="title" :class="classTitle" class="leading-5 font-medium">
               {{ title }}
             </p>
-            <p :class="[classMessage, { 'mt-1': title }]" class="text-sm leading-5">
+            <p :class="[classMessage, { 'mt-1': title }]" class="leading-5">
               {{ message }}
             </p>
           </div>
@@ -95,7 +95,6 @@
                   border border-transparent
                   px-4
                   py-3
-                  text-sm
                   leading-5
                   font-medium
                   text-indigo-600
@@ -122,7 +121,6 @@
                   border border-transparent
                   px-4
                   py-3
-                  text-sm
                   leading-5
                   font-medium
                   text-gray-700
@@ -157,12 +155,11 @@
           <div class="flex items-center">
             <toastIcon class="flex-shrink-0 mr-4" :type="type" :icon="icon" />
             <div class="w-0 flex-1 flex justify-between">
-              <p class="w-0 flex-1 text-sm leading-5">{{ message }}</p>
+              <p class="w-0 flex-1 leading-5">{{ message }}</p>
               <button
                 class="
                   ml-3
                   flex-shrink-0
-                  text-sm
                   leading-5
                   font-medium
                   text-indigo-600

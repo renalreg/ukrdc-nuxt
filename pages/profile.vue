@@ -36,7 +36,7 @@
             <h1 class="text-2xl font-bold text-gray-900">
               {{ $auth.user.name }}
             </h1>
-            <p class="text-sm font-medium text-gray-500">
+            <p class="font-medium text-gray-500">
               {{ $auth.user.email }}
               {{ $auth.user.email_verified ? '(Verified)' : '(Unverified)' }}
             </p>
@@ -63,7 +63,6 @@
               py-2
               border border-gray-300
               shadow-sm
-              text-sm
               leading-4
               font-medium
               rounded-md
@@ -78,10 +77,10 @@
         </div>
       </div>
       <div>
-        <h3 class="text-sm leading-6 font-medium text-gray-900 mb-2">Permissions</h3>
+        <h3 class="leading-6 font-medium text-gray-900 mb-2">Permissions</h3>
         <div v-for="group in perms" :key="group" class="inline">
           <span
-            class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium mr-2 mb-2"
+            class="inline-flex items-center px-3 py-0.5 rounded-full font-medium mr-2 mb-2"
             :class="classesForScope(group)"
           >
             {{ group }}

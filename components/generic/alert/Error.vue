@@ -18,7 +18,7 @@
         </svg>
       </div>
       <div class="ml-3 flex-1 md:flex md:justify-between">
-        <p class="text-sm text-red-700">
+        <p class="text-red-700">
           {{ message }}
         </p>
       </div>

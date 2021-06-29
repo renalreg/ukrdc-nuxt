@@ -7,7 +7,7 @@
       py-0.5
       border border-gray-300
       shadow-sm
-      text-xs
+      text-sm
       font-medium
       rounded-sm
       text-gray-700

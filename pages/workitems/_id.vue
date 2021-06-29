@@ -163,7 +163,7 @@
           label="Incoming Attributes"
           :highlight="Object.keys(record.attributes)"
         />
-        <div v-else class="rounded-md bg-red-50 text-sm font-medium text-red-800 p-4">No valid person record found</div>
+        <div v-else class="rounded-md bg-red-50 font-medium text-red-800 p-4">No valid person record found</div>
         <NuxtLink v-if="record.masterRecord" :to="`/masterrecords/${record.masterRecord.id}`">
           <masterrecordsRecordCard
             class="border-2 border-indigo-500"
@@ -172,7 +172,7 @@
           />
         </NuxtLink>
 
-        <div v-else class="rounded-md bg-red-50 text-sm font-medium text-red-800 p-4">No valid master record found</div>
+        <div v-else class="rounded-md bg-red-50 font-medium text-red-800 p-4">No valid master record found</div>
       </div>
     </div>
 
@@ -208,7 +208,7 @@
           :full="true"
           :highlight="Object.keys(record.attributes)"
         />
-        <div v-else class="rounded-md bg-red-50 text-sm font-medium text-red-800 p-4">No valid person record found</div>
+        <div v-else class="rounded-md bg-red-50 font-medium text-red-800 p-4">No valid person record found</div>
         <personsRecordCard
           :record="relatedPersons[relatedRecordsIndex]"
           :label="`Related record ${relatedRecordsIndex + 1} of ${relatedPersons.length}`"

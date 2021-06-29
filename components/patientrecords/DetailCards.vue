@@ -2,7 +2,7 @@
   <div>
     <div>
       <div v-if="!isEmptyObject(record)" class="mt-4">
-        <h2 class="text-gray-500 text-xs font-medium uppercase tracking-wide">History</h2>
+        <h2 class="text-gray-500 text-sm font-medium uppercase tracking-wide">History</h2>
         <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <li class="col-span-1 sm:col-span-2">
             <GenericCardMini class="px-4 py-2 w-full grid grid-cols-1 sm:grid-cols-2">
@@ -24,7 +24,7 @@
       </div>
 
       <div v-if="!isEmptyObject(record) && record.patient.names && record.patient.names.length > 0" class="mt-4">
-        <h2 class="text-gray-500 text-xs font-medium uppercase tracking-wide">Demographics</h2>
+        <h2 class="text-gray-500 text-sm font-medium uppercase tracking-wide">Demographics</h2>
 
         <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <li v-for="item in record.patient.names" :key="item.given + item.family" class="col-span-1">
@@ -40,7 +40,7 @@
     </div>
 
     <div v-if="!isEmptyObject(record)" class="mt-4">
-      <h2 class="text-gray-500 text-xs font-medium uppercase tracking-wide">Patient Numbers</h2>
+      <h2 class="text-gray-500 text-sm font-medium uppercase tracking-wide">Patient Numbers</h2>
       <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <li
           v-for="item in record.patient.numbers"
@@ -55,7 +55,7 @@
                 justify-center
                 w-16
                 bg-indigo-600
-                text-white text-sm
+                text-white
                 font-medium
                 rounded-l-md
               "
@@ -63,7 +63,7 @@
               {{ item.numbertype }}
             </div>
             <div class="flex-1 flex items-center justify-between truncate">
-              <div class="flex-1 px-4 py-2 text-sm truncate">
+              <div class="flex-1 px-4 py-2 truncate">
                 <p class="text-gray-900 font-medium hover:text-gray-600 truncate">
                   {{ item.patientid }}
                 </p>
@@ -76,7 +76,7 @@
     </div>
 
     <div v-if="!isEmptyObject(record) && record.patient.addresses && record.patient.addresses.length > 0" class="mt-4">
-      <h2 class="text-gray-500 text-xs font-medium uppercase tracking-wide">Addresses</h2>
+      <h2 class="text-gray-500 text-sm font-medium uppercase tracking-wide">Addresses</h2>
 
       <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <li v-for="item in record.patient.addresses" :key="item.street" class="col-span-1">
@@ -102,7 +102,7 @@
                 inline-block
                 px-2
                 py-0.5
-                text-green-800 text-xs
+                text-green-800 text-sm
                 font-medium
                 bg-green-100
                 rounded-sm
@@ -112,7 +112,7 @@
             >
             <span
               v-else
-              class="flex-shrink-0 inline-block px-2 py-0.5 text-red-800 text-xs font-medium bg-red-100 rounded-sm mt-2"
+              class="flex-shrink-0 inline-block px-2 py-0.5 text-red-800 text-sm font-medium bg-red-100 rounded-sm mt-2"
               >Inactive since {{ formatDate(item.toTime, (t = false)) }}</span
             >
           </GenericCardMini>

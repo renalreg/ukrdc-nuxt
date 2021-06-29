@@ -34,7 +34,7 @@
         />
       </GenericCard>
     </div>
-    <div v-else class="mt-2 text-sm text-gray-500 text-center">
+    <div v-else class="mt-2 text-gray-500 text-center">
       <LoadingIndicator v-if="search && $fetchState.pending"></LoadingIndicator>
       <div v-else-if="search && !$fetchState.pending">No results found</div>
       <div v-else>

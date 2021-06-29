@@ -1,7 +1,7 @@
 <template>
   <nav class="overflow-hidden flex items-center justify-between px-2 py-2" aria-label="Pagination">
     <div class="hidden sm:block">
-      <p class="text-sm text-gray-700">
+      <p class="text-gray-700">
         {{ itemLabel }}
         <span class="font-medium">{{ value + 1 }}</span>
         of
@@ -18,7 +18,6 @@
           px-4
           py-2
           border border-gray-300
-          text-sm
           font-medium
           rounded-md
           text-gray-700
@@ -39,7 +38,6 @@
           px-4
           py-2
           border border-gray-300
-          text-sm
           font-medium
           rounded-md
           text-gray-700

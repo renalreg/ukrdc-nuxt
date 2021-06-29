@@ -1,7 +1,7 @@
 <!--Paragraph-level label -->
 
 <template>
-  <p class="text-sm font-medium text-gray-500">
+  <p class="font-medium text-gray-500">
     <slot></slot>
   </p>
 </template>
