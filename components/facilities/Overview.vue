@@ -15,7 +15,7 @@
         <dashStatBlock
           :value="facility.statistics.errors ? facility.statistics.errors.day : undefined"
           :previous-value="facility.statistics.errors ? facility.statistics.errors.prev : undefined"
-          :invert="false"
+          :invert="true"
           title="New Errors"
         />
 
@@ -30,7 +30,7 @@
         <dashStatBlock
           :value="facility.statistics.patientRecords ? facility.statistics.patientRecords.day : undefined"
           :previous-value="facility.statistics.patientRecords ? facility.statistics.patientRecords.prev : undefined"
-          :invert="true"
+          :invert="false"
           title="New Records"
         />
 
@@ -52,7 +52,7 @@
             items-center
             overflow-hidden
             divide-y divide-gray-200
-            lg:grid-cols-2 lg:divide-y-0 lg:divide-x
+            md:grid-cols-2 md:divide-y-0 md:divide-x
           "
         >
           <div class="pl-4 py-4">
@@ -80,7 +80,7 @@
               <DashQualityScore :percent="qualityPct" />
             </div>
             <ChartDoughnut
-              class="w-44 p-4 float-right hidden sm:block"
+              class="w-44 p-4 float-right"
               :data="[
                 facility.statistics.recordsWithErrors,
                 facility.statistics.patientRecords.total - facility.statistics.recordsWithErrors,
