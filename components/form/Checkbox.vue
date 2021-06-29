@@ -1,5 +1,5 @@
 <template>
-  <label class="wrapper flex items-center font-medium text-gray-500 mr-4 text-sm">
+  <label class="wrapper flex items-center font-medium text-gray-500 mr-4">
     <input
       v-model="proxyChecked"
       class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 mr-2 rounded"

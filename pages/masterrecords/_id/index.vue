@@ -5,7 +5,7 @@
       <GenericCardContent>
         <GenericDl>
           <GenericDi>
-            <TextDt class="text-sm font-medium text-gray-500">National ID</TextDt>
+            <TextDt class="font-medium text-gray-500">National ID</TextDt>
             <TextDd>{{ record.nationalid }}</TextDd>
           </GenericDi>
 

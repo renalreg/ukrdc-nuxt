@@ -24,6 +24,6 @@ export function formatDate(rawDate: string, t: boolean = true): string {
 }
 
 export interface DateRange {
-  start: string
-  end: string
+  start: string | null
+  end: string | null
 }

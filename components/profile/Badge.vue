@@ -29,7 +29,7 @@
         <p :class="{ 'text-right': rightToLeft }" class="text-base font-medium text-gray-700 group-hover:text-gray-900">
           {{ $auth.loggedIn ? $auth.user.name : 'Signed out' }}
         </p>
-        <p :class="{ 'text-right': rightToLeft }" class="text-sm font-medium text-gray-500 group-hover:text-gray-700">
+        <p :class="{ 'text-right': rightToLeft }" class="font-medium text-gray-500 group-hover:text-gray-700">
           Manage account
         </p>
       </div>

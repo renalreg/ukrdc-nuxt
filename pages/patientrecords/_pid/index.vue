@@ -51,7 +51,7 @@
       v-if="!isEmptyObject(record) && record.programMemberships && record.programMemberships.length > 0"
       class="mt-4"
     >
-      <h2 class="text-gray-500 text-xs font-medium uppercase tracking-wide">Program Memberships</h2>
+      <h2 class="text-gray-500 text-sm font-medium uppercase tracking-wide">Program Memberships</h2>
 
       <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <li
@@ -71,7 +71,7 @@
                 inline-block
                 px-2
                 py-0.5
-                text-green-800 text-xs
+                text-green-800 text-sm
                 font-medium
                 bg-green-100
                 rounded-sm
@@ -81,7 +81,7 @@
             >
             <span
               v-else
-              class="flex-shrink-0 inline-block px-2 py-0.5 text-red-800 text-xs font-medium bg-red-100 rounded-sm mt-2"
+              class="flex-shrink-0 inline-block px-2 py-0.5 text-red-800 text-sm font-medium bg-red-100 rounded-sm mt-2"
               >Inactive since {{ formatDate(item.toTime, (t = false)) }}</span
             >
           </GenericCardMini>

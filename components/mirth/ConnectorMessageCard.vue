@@ -1,6 +1,6 @@
 <template>
   <genericCardMini class="col-span-1 flex items-center justify-between truncate">
-    <div class="flex-1 px-4 py-2 text-sm truncate">
+    <div class="flex-1 px-4 py-2 truncate">
       <TextH3>
         {{ message.connectorName }}
       </TextH3>
@@ -9,12 +9,12 @@
       <div class="mt-2">
         <span
           v-if="errorMessage"
-          class="flex-shrink-0 inline-block px-2 py-0.5 text-red-800 text-xs font-medium bg-red-100 rounded-sm"
+          class="flex-shrink-0 inline-block px-2 py-0.5 text-red-800 text-sm font-medium bg-red-100 rounded-sm"
           >Error</span
         >
         <span
           v-else
-          class="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-sm"
+          class="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-sm font-medium bg-green-100 rounded-sm"
           >Success</span
         >
         <genericButtonMini class="float-right" @click="$emit('viewSourceClick')"> View message </genericButtonMini>

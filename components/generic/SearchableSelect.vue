@@ -19,7 +19,7 @@
       <div class="flex w-full">
         <div
           ref="input"
-          class="block w-full border px-3 py-2 shadow-sm sm:text-sm border-gray-300 rounded-md"
+          class="block w-full border px-3 py-2 shadow-sm sm: border-gray-300 rounded-md"
           :class="{
             invisible: isOpen,
           }"
@@ -30,7 +30,7 @@
           @keydown.space.prevent="open"
         >
           <span v-if="value">{{ `${value} (${labelFor(value)})` }}</span>
-          <span v-else class="text-grey-dark">{{ hint }}</span>
+          <span v-else class="text-grey-dark text-base">{{ hint }}</span>
           <div class="float-right flex items-center pointer-events-none">
             <!-- Heroicon name: solid/selector -->
             <svg

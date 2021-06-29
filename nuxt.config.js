@@ -22,10 +22,10 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { ssr: false, src: '~/plugins/v-calendar.js' },
+    { ssr: false, src: '~/plugins/v-calendar.ts' },
     { ssr: false, src: '~/plugins/toast.ts' },
-    { ssr: false, src: '~/plugins/axios-toast.js' },
-    { ssr: true, src: '~/plugins/axios-sentry.js' },
+    { ssr: false, src: '~/plugins/axios-toast.ts' },
+    { ssr: true, src: '~/plugins/axios-sentry.ts' },
     { ssr: true, src: '~/plugins/ukrdc-permissions.ts' },
   ],
 
@@ -50,7 +50,7 @@ export default {
 
   // Sentry Configuration: https://sentry.nuxtjs.org/guide/setup
   sentry: {
-    publishRelease: true,
+    publishRelease: false,
     tracing: true,
   },
 

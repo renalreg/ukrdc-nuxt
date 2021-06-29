@@ -1,7 +1,7 @@
 <template>
   <nav class="px-4 py-3 flex items-center justify-between sm:px-6" aria-label="Pagination">
     <div class="hidden sm:block">
-      <p class="text-sm text-gray-700">
+      <p class="text-gray-700">
         Showing
         <span class="font-medium">{{ page * size + 1 }}</span>
         to
@@ -21,7 +21,6 @@
           px-4
           py-2
           border border-gray-300
-          text-sm
           font-medium
           rounded-md
           text-gray-700
@@ -42,7 +41,6 @@
           px-4
           py-2
           border border-gray-300
-          text-sm
           font-medium
           rounded-md
           text-gray-700

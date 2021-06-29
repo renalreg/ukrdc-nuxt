@@ -21,7 +21,7 @@
             :key="tab.name"
             :to="tab.href"
             role="tab"
-            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
+            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium"
             :class="[
               $route.path.replace(/\/$/, '') === tab.href.replace(/\/$/, '')
                 ? 'border-indigo-500 text-indigo-600'

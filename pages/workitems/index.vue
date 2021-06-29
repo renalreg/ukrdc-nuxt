@@ -10,7 +10,7 @@
         <FormCheckbox v-model="statuses" label="WIP" :value="2" />
         <FormCheckbox v-model="statuses" label="Closed" :value="3" />
       </div>
-      <GenericDateRange v-model="range" />
+      <GenericDateRange v-model="dateRange" />
       <GenericSearchableSelect
         v-model="selectedFacility"
         class="mb-4"
@@ -55,6 +55,7 @@ import useDateRange from '@/mixins/useDateRange'
 import { WorkItemShort } from '@/interfaces/workitem'
 import useQuery from '~/mixins/useQuery'
 import useFacilities from '~/mixins/useFacilities'
+import { nowString } from '~/utilities/dateUtils'
 
 interface WorkItemPage {
   items: WorkItemShort[]
@@ -69,27 +70,30 @@ export default defineComponent({
 
     const { $axios, $config } = useContext()
     const { page, total, size } = usePagination()
-    const { range, since, until } = useDateRange()
+    const { makeDateRange } = useDateRange()
     const { arrayQuery } = useQuery()
     const { facilities, facilityIds, facilityLabels, selectedFacility, fetchFacilities } = useFacilities()
 
-    const workitems = ref([] as WorkItemShort[])
+    // Set initial date dateRange
+    const dateRange = makeDateRange(nowString(-365), nowString(0), true)
 
+    const workitems = ref([] as WorkItemShort[])
     const statuses = arrayQuery('status', ['1'], true)
 
     const { fetch } = useFetch(async () => {
+      console.log('Fetchign workitems')
       // Fetch the dashboard response from our API server
       let path = `${$config.apiBase}/empi/workitems/?page=${page.value}&size=${size.value}`
-      if (since.value) {
-        path = path + `&since=${since.value}`
+      if (dateRange.value.start) {
+        path = path + `&since=${dateRange.value.start}`
       }
       // Pass `until` to API if it's given
-      if (until.value) {
-        path = path + `&until=${until.value}`
-      } else if (since.value) {
+      if (dateRange.value.end) {
+        path = path + `&until=${dateRange.value.end}`
+      } else if (dateRange.value.start) {
         // If no `until` is given but a `since` is given, then a single date is selected
-        // In this case we want to only show that one day, not a range
-        path = path + `&until=${since.value}`
+        // In this case we want to only show that one day, not a dateRange
+        path = path + `&until=${dateRange.value.start}`
       }
       // Pass selected statuses to the API
       for (const status of statuses.value) {
@@ -116,9 +120,7 @@ export default defineComponent({
       page,
       total,
       size,
-      range,
-      since,
-      until,
+      dateRange,
       workitems,
       statuses,
       facilities,

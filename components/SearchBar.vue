@@ -34,7 +34,6 @@
                 py-2
                 pl-10
                 pr-3
-                text-sm
                 placeholder-gray-500
                 focus:outline-none
                 focus:text-gray-900
@@ -42,7 +41,7 @@
                 focus:ring-1
                 focus:ring-indigo-500
                 focus:border-indigo-500
-                sm:text-sm
+                sm:
               "
               placeholder="Search"
               type="search"

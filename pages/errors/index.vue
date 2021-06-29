@@ -4,7 +4,7 @@
       <h1 class="text-2xl font-semibold text-gray-900">Errors</h1>
     </div>
 
-    <GenericDateRange v-model="range" />
+    <GenericDateRange v-model="dateRange" />
     <GenericSearchableSelect
       v-model="selectedFacility"
       class="mb-4"
@@ -44,6 +44,7 @@ import { defineComponent, watch, ref, useRoute, useFetch, useContext } from '@nu
 
 import usePagination from '@/mixins/usePagination'
 import useDateRange from '@/mixins/useDateRange'
+import { nowString } from '@/utilities/dateUtils'
 
 import { Message } from '@/interfaces/errors'
 import useFacilities from '~/mixins/useFacilities'
@@ -61,8 +62,11 @@ export default defineComponent({
 
     const { $axios, $config } = useContext()
     const { page, total, size } = usePagination()
-    const { range, since, until } = useDateRange()
+    const { makeDateRange } = useDateRange()
     const { facilities, facilityIds, facilityLabels, selectedFacility, fetchFacilities } = useFacilities()
+
+    // Set initial date dateRange
+    const dateRange = makeDateRange(nowString(-30), nowString(0), true)
 
     const messages = ref([] as Message[])
 
@@ -70,16 +74,16 @@ export default defineComponent({
       // Fetch the dashboard response from our API server
       let path = `${$config.apiBase}/errors/messages/?status=ERROR&page=${page.value}&size=${size.value}`
       // Filter by since if it exists
-      if (since.value) {
-        path = path + `&since=${since.value}`
+      if (dateRange.value.start) {
+        path = path + `&since=${dateRange.value.start}`
       }
       // Pass `until` to API if it's given
-      if (until.value) {
-        path = path + `&until=${until.value}`
-      } else if (since.value) {
+      if (dateRange.value.end) {
+        path = path + `&until=${dateRange.value.end}`
+      } else if (dateRange.value.start) {
         // If no `until` is given but a `since` is given, then a single date is selected
-        // In this case we want to only show that one day, not a range
-        path = path + `&until=${since.value}`
+        // In this case we want to only show that one day, not a dateRange
+        path = path + `&until=${dateRange.value.start}`
       }
       // Filter by facility if it exists
       if (selectedFacility.value) {
@@ -102,9 +106,7 @@ export default defineComponent({
       page,
       total,
       size,
-      range,
-      since,
-      until,
+      dateRange,
       messages,
       facilities,
       facilityIds,

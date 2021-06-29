@@ -46,7 +46,7 @@
       ></span>
     </button>
     <span v-if="label" id="toggle-label" class="ml-3">
-      <span class="text-sm font-medium text-gray-900">{{ label }} </span>
+      <span class="font-medium text-gray-900">{{ label }} </span>
     </span>
   </div>
 </template>

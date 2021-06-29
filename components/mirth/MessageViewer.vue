@@ -12,8 +12,8 @@
           >
             <div class="flex-1 min-w-0">
               <span class="absolute inset-0" aria-hidden="true" />
-              <p class="text-sm font-medium text-gray-900">{{ key }}</p>
-              <p class="text-sm text-gray-500 line-clamp-3">
+              <p class="font-medium text-gray-900">{{ key }}</p>
+              <p class="text-gray-500 line-clamp-3">
                 {{ value }}
               </p>
             </div>
@@ -27,7 +27,7 @@
             <GenericToggle v-model="formatMessage" label="Format XML" />
           </div>
 
-          <div class="font-mono text-xs text-left px-4 box-border">
+          <div class="font-mono text-sm text-left px-4 box-border">
             <pre>
             <code
               v-for="(line, index) in formatMessageToXMLArray(messageData)"

@@ -125,4 +125,8 @@ export default defineComponent({
 })
 </script>
 
-<style></style>
+<style>
+html {
+  font-size: 14px;
+}
+</style>

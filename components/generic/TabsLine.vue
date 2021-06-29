@@ -18,7 +18,7 @@
             v-for="tab in tabs"
             :key="tab"
             role="tab"
-            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
+            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium"
             :class="
               value === tab
                 ? 'border-indigo-500 text-indigo-600'
