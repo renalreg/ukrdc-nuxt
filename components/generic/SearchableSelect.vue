@@ -30,7 +30,7 @@
           @keydown.space.prevent="open"
         >
           <span v-if="value">{{ `${value} (${labelFor(value)})` }}</span>
-          <span v-else class="text-grey-dark">{{ hint }}</span>
+          <span v-else class="text-grey-dark text-base">{{ hint }}</span>
           <div class="float-right flex items-center pointer-events-none">
             <!-- Heroicon name: solid/selector -->
             <svg
