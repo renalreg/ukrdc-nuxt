@@ -14,7 +14,7 @@
       >
         <template #default="{ inputValue, inputEvents }">
           <div class="flex flex-col sm:flex-row justify-start items-center">
-            <div class="relative flex-grow">
+            <div class="relative flex-grow w-full">
               <svg
                 class="text-gray-600 w-4 h-full mx-2 absolute pointer-events-none"
                 fill="none"
@@ -33,7 +33,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </span>
-            <div class="relative flex-grow">
+            <div class="relative flex-grow w-full">
               <svg
                 class="text-gray-600 w-4 h-full mx-2 absolute pointer-events-none"
                 fill="none"
