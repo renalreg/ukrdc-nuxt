@@ -13,8 +13,8 @@
         v-on="$listeners"
       >
         <template #default="{ inputValue, inputEvents }">
-          <div class="flex flex-col sm:flex-row justify-start items-center">
-            <div class="relative flex-grow w-full">
+          <div class="flex flex-col sm:flex-row justify-start items-center h-full">
+            <div class="relative flex-grow w-full h-full">
               <svg
                 class="text-gray-600 w-4 h-full mx-2 absolute pointer-events-none"
                 fill="none"
@@ -33,7 +33,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </span>
-            <div class="relative flex-grow w-full">
+            <div class="relative flex-grow w-full h-full">
               <svg
                 class="text-gray-600 w-4 h-full mx-2 absolute pointer-events-none"
                 fill="none"
@@ -50,7 +50,7 @@
           </div>
         </template>
       </v-date-picker>
-      <GenericButtonTertiary class="ml-2 h-9" @click="$emit('input', { since: null, until: null })"
+      <GenericButtonTertiary class="ml-2" @click="$emit('input', { since: null, until: null })"
         >Clear</GenericButtonTertiary
       >
     </div>
@@ -85,7 +85,7 @@ export default defineComponent({
   },
   setup() {
     const textBoxClasses =
-      'flex-grow h-9 pl-8 pr-2 py-1 w-full bg-white border border-gray-300 rounded-md placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500'
+      'flex-grow pl-8 pr-2 py-1 w-full h-full bg-white border border-gray-300 rounded-md placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500'
 
     return { textBoxClasses }
   },
