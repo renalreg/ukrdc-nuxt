@@ -17,9 +17,7 @@ export function integerQuery(query: string | (string | null)[]): number | null {
   return null
 }
 
-export function arrayQuery(
-  query: string | number | (string | number | null)[]
-): (string | number | null)[] {
+export function arrayQuery(query: string | number | (string | number | null)[]): (string | number | null)[] {
   // Return a value array form a query string
   // If a single value is passed,
   // oconvert into a one-element array
