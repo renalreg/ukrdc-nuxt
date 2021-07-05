@@ -52,12 +52,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, ref, useRoute, useRouter, useFetch, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, watch, ref, useRoute, useFetch, useContext } from '@nuxtjs/composition-api'
 
 import usePagination from '@/mixins/usePagination'
 import useLocalStorage from '@/mixins/useLocalStorage'
-
 import { MasterRecord } from '@/interfaces/masterrecord'
+import useQuery from '~/mixins/useQuery'
 
 interface MasterRecordPage {
   items: MasterRecord[]
@@ -69,21 +69,21 @@ interface MasterRecordPage {
 export default defineComponent({
   setup() {
     const route = useRoute()
-    const router = useRouter()
 
     const { $axios, $config } = useContext()
     const { page, total, size } = usePagination()
     const { JSONStorage } = useLocalStorage()
+    const { arrayQuery } = useQuery()
 
     const masterrecords = ref([] as MasterRecord[])
 
-    const search = ref((route.value.query.search || []) as string[])
+    const search = arrayQuery('search', [], true, true)
     const searchboxString = ref('')
 
     const showUKRDC = JSONStorage('searchIncludeUKRDC', false)
 
     const { fetch } = useFetch(async () => {
-      search.value = route.value.query.search as string[]
+      // search.value = route.value.query.search as string[]
       if (search.value && search.value.length > 0) {
         // Set the search string
         searchboxString.value = buildSearchStringFromQueryArray()
@@ -110,16 +110,6 @@ export default defineComponent({
     function searchSubmit(): void {
       // Build a search query from our search string
       search.value = buildQueryArrayFromSearchString()
-      // Reset page
-      page.value = 0
-      // Navigate to the search query path
-      const newQuery = Object.assign({}, route.value.query, {
-        search: search.value,
-      })
-      router.push({
-        path: route.value.path,
-        query: newQuery,
-      })
     }
 
     function buildQueryArrayFromSearchString(): string[] {
@@ -145,7 +135,7 @@ export default defineComponent({
       }
     }
 
-    function buildQueryStringFromArray(input: string[] | string, queryName: string): string {
+    function buildQueryStringFromArray(input: (string | null)[] | string, queryName: string): string {
       // Builds a query string from an array of strings.
       // e.g. ['john', '1949-03-01'] becomes search=john&search=1949-03-01
       if (Array.isArray(input)) {
