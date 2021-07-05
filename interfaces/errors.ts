@@ -3,6 +3,7 @@ import { WorkItemShort } from '@/interfaces/workitem'
 
 interface ErrorLinks {
   self: string
+  mirth: string
   source: string
 }
 export interface Message {
@@ -23,4 +24,9 @@ export interface Message {
 export interface ExtendedError extends Message {
   masterRecords: MasterRecord[]
   workItems: WorkItemShort[]
+}
+
+export interface ErrorSource {
+  content: string
+  contentType: string
 }

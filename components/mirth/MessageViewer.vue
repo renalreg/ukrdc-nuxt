@@ -22,22 +22,12 @@
       </div>
 
       <div v-for="(messageData, type) in availableMessageData" :key="type">
-        <div v-if="currentTab == type" class="h-full box-border flex flex-col overflow-x-scroll">
-          <div v-if="messageData.dataType === 'XML'" class="pl-8 pb-3 pt-3 border-b border-gray-200">
-            <GenericToggle v-model="formatMessage" label="Format XML" />
-          </div>
-
-          <div class="font-mono text-sm text-left px-4 box-border">
-            <pre>
-            <code
-              v-for="(line, index) in formatMessageToXMLArray(messageData)"
-              :key="'code' + index"
-              class="whitespace-pre"
-              >{{ line }}</code
-            >
-          </pre>
-          </div>
-        </div>
+        <GenericCodeReader
+          v-if="currentTab == type"
+          :content="messageData.content"
+          :content-type="messageData.dataType"
+          class="h-full box-border flex flex-col overflow-x-scroll"
+        />
       </div>
     </div>
   </GenericModalMaxSlot>
@@ -46,7 +36,6 @@
 <script lang="ts">
 import { defineComponent, ref, computed, watch } from '@nuxtjs/composition-api'
 
-import formatXml from 'xml-formatter'
 import { ConnectorMessageData, ConnectorMessage, MetaDataMap } from '@/interfaces/mirth'
 import { modalInterface } from '@/interfaces/modal'
 
@@ -99,21 +88,6 @@ export default defineComponent({
       }
     })
 
-    function formatMessageToXML(messageData: ConnectorMessageData): string {
-      if (messageData.content === null) {
-        return ''
-      }
-      if (!formatMessage.value) {
-        return messageData.content
-      } else {
-        return formatXml(messageData.content)
-      }
-    }
-
-    function formatMessageToXMLArray(messageData: ConnectorMessageData): string[] {
-      return formatMessageToXML(messageData).split('\n')
-    }
-
     // Modal visibility
     const messageViewerGenericModalMaxSlot = ref<modalInterface>()
 
@@ -136,7 +110,6 @@ export default defineComponent({
       nonNullMetadata,
       availableMessageData,
       formatMessage,
-      formatMessageToXMLArray,
       messageViewerGenericModalMaxSlot,
       hide,
       toggle,
@@ -145,22 +118,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style scoped>
-pre {
-  counter-reset: line;
-}
-code {
-  counter-increment: line;
-  display: block;
-}
-code:before {
-  content: counter(line);
-  user-select: none;
-  -webkit-user-select: none;
-  display: inline-block;
-  width: 6ex;
-  border-width: 0 1px 0 0;
-  margin-right: 4px;
-}
-</style>

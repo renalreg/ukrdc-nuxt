@@ -14,6 +14,12 @@
       hint="Select a facility..."
     />
 
+    <div class="mb-4 flex flex-grow items-center">
+      <NuxtLink v-if="nationalId" :to="{ query: { nationalid: null } }">
+        <GenericButton>Show Results From All Patients</GenericButton>
+      </NuxtLink>
+    </div>
+
     <GenericCard>
       <!-- Skeleton results -->
       <ul v-if="$fetchState.pending" class="divide-y divide-gray-200">
@@ -49,6 +55,7 @@ import { nowString } from '@/utilities/dateUtils'
 
 import { Message } from '@/interfaces/errors'
 import useFacilities from '~/mixins/useFacilities'
+import useQuery from '~/mixins/useQuery'
 
 interface MessagePage {
   items: Message[]
@@ -64,7 +71,11 @@ export default defineComponent({
     const { $axios, $config } = useContext()
     const { page, total, size } = usePagination()
     const { makeDateRange } = useDateRange()
+    const { stringQuery } = useQuery()
     const { facilities, facilityIds, facilityLabels, selectedFacility, fetchFacilities } = useFacilities()
+
+    // Set up URL query params for additional filters
+    const nationalId = stringQuery('nationalid', true, true)
 
     // Set initial date dateRange
     const dateRange = makeDateRange(nowString(-365), nowString(0), true)
@@ -90,6 +101,10 @@ export default defineComponent({
       if (selectedFacility.value) {
         path = path + `&facility=${selectedFacility.value}`
       }
+      // Filter by national ID if it exists
+      if (nationalId.value) {
+        path = path + `&ni=${nationalId.value}`
+      }
       const res: MessagePage = await $axios.$get(path)
       messages.value = res.items
       total.value = res.total
@@ -113,6 +128,7 @@ export default defineComponent({
       facilityIds,
       facilityLabels,
       selectedFacility,
+      nationalId,
     }
   },
 
