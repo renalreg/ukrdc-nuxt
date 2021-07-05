@@ -67,7 +67,7 @@ export default defineComponent({
     const { facilities, facilityIds, facilityLabels, selectedFacility, fetchFacilities } = useFacilities()
 
     // Set initial date dateRange
-    const dateRange = makeDateRange(nowString(-30), nowString(0), true)
+    const dateRange = makeDateRange(nowString(-365), nowString(0), true)
 
     const messages = ref([] as Message[])
 
