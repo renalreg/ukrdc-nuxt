@@ -107,12 +107,21 @@ export default function () {
     return computed({
       get: (): number | null => {
         const val = singleQuery(route.value.query[queryKey])
-        if (val) {
+        if (val !== null) {
           return parseInt(val)
         }
         return defaultValue
       },
       set: (newValue: number | null) => {
+        // Check if the query has actually changed
+        const current = singleQuery(route.value.query[queryKey])
+        console.log({ current, newValue })
+        if (current !== null) {
+          // If no change, skip navigation
+          if (parseInt(current) === newValue) {
+            return
+          }
+        }
         pushNewQuery(queryKey, newValue, history, resetPage)
       },
     })
