@@ -88,7 +88,7 @@ export default defineComponent({
         // Set the search string
         searchboxString.value = buildSearchStringFromQueryArray()
         // Build our query string from search terms and page info
-        let path = `${$config.apiBase}/search/?${buildQueryStringFromArray(search.value, 'search')}&page=${
+        let path = `${$config.apiBase}/v1/search/?${buildQueryStringFromArray(search.value, 'search')}&page=${
           page.value
         }&size=${size.value}`
         if (showUKRDC.value) {

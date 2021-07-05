@@ -22,7 +22,7 @@ export default function () {
   async function fetchFacilities() {
     // If we don't already have a list of available facilties, fetch one
     if (facilities.value.length === 0) {
-      facilities.value = await $axios.$get(`${$config.apiBase}/facilities/`)
+      facilities.value = await $axios.$get(`${$config.apiBase}/v1/facilities/`)
     }
   }
 

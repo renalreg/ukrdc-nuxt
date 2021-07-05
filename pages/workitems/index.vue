@@ -83,7 +83,7 @@ export default defineComponent({
 
     const { fetch } = useFetch(async () => {
       // Fetch the dashboard response from our API server
-      let path = `${$config.apiBase}/workitems/?page=${page.value}&size=${size.value}`
+      let path = `${$config.apiBase}/v1/workitems/?page=${page.value}&size=${size.value}`
       if (dateRange.value.start) {
         path = path + `&since=${dateRange.value.start}`
       }

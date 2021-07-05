@@ -96,7 +96,7 @@ export default defineComponent({
     })
 
     useFetch(async () => {
-      const path = `${$config.apiBase}/patientrecords/${route.value.params.pid}/`
+      const path = `${$config.apiBase}/v1/patientrecords/${route.value.params.pid}/`
 
       const res: PatientRecord = await $axios.$get(path)
       record.value = res

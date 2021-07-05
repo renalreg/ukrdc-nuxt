@@ -276,7 +276,7 @@ export default defineComponent({
     // Data fetching
     const { fetch } = useFetch(async () => {
       // Get the main record data
-      const path = `${$config.apiBase}/workitems/${route.value.params.id}/`
+      const path = `${$config.apiBase}/v1/workitems/${route.value.params.id}/`
       const res: WorkItem = await $axios.$get(path)
       record.value = res
       customComment.value = res.updateDescription
@@ -306,7 +306,7 @@ export default defineComponent({
 
     // Workitem actions
     async function updateWorkItemComment() {
-      const path = `${$config.apiBase}/workitems/${route.value.params.id}/`
+      const path = `${$config.apiBase}/v1/workitems/${route.value.params.id}/`
       await $axios.$put(path, {
         comment: customComment.value,
       })
@@ -325,7 +325,7 @@ export default defineComponent({
     function closeWorkItem() {
       // Close a workitem with a comment
       $axios
-        .$post(`${$config.apiBase}/workitems/${route.value.params.id}/close`, {
+        .$post(`${$config.apiBase}/v1/workitems/${route.value.params.id}/close`, {
           comment: customComment.value,
         })
         .catch((error) => {
@@ -348,14 +348,14 @@ export default defineComponent({
 
     function mergeWorkItem() {
       // Send a merge message, then close the workitem with comment
-      actionAndCloseWorkItem(`${$config.apiBase}/workitems/${route.value.params.id}/merge`)
+      actionAndCloseWorkItem(`${$config.apiBase}/v1/workitems/${route.value.params.id}/merge`)
       const el = mergeModal.value as modalInterface
       el.toggle()
     }
 
     function unlinkWorkItem() {
       // Send an unlink message, then close the workitem with comment
-      actionAndCloseWorkItem(`${$config.apiBase}/workitems/${route.value.params.id}/unlink`)
+      actionAndCloseWorkItem(`${$config.apiBase}/v1/workitems/${route.value.params.id}/unlink`)
       const el = unlinkModal.value as modalInterface
       el.toggle()
     }
@@ -366,7 +366,7 @@ export default defineComponent({
         .then((res: MirthMessageResponse) => {
           if (res.status === 'success') {
             $axios
-              .$post(`${$config.apiBase}/workitems/${route.value.params.id}/close`, {
+              .$post(`${$config.apiBase}/v1/workitems/${route.value.params.id}/close`, {
                 comment: customComment.value,
               })
               .catch((error) => {
