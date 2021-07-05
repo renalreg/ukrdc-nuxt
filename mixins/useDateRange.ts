@@ -7,7 +7,12 @@ export default function () {
   const route = useRoute()
   const router = useRouter()
 
-  function makeDateRange(defaultStart: string | null, defaultEnd: string | null, resetPage: boolean = true) {
+  function makeDateRange(
+    defaultStart: string | null,
+    defaultEnd: string | null,
+    history: boolean = true,
+    resetPage: boolean = true
+  ) {
     return computed({
       get: () => {
         return {
@@ -34,10 +39,17 @@ export default function () {
           }
         }
 
-        router.push({
-          path: route.value.path,
-          query: newQuery,
-        })
+        if (history) {
+          router.push({
+            path: route.value.path,
+            query: newQuery,
+          })
+        } else {
+          router.replace({
+            path: route.value.path,
+            query: newQuery,
+          })
+        }
       },
     })
   }
