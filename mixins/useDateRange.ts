@@ -21,7 +21,6 @@ export default function () {
         }
       },
       set(newRange: DateRange) {
-        console.log('Setting dateRange')
         if (!newRange) {
           return
         }

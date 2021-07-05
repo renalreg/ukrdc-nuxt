@@ -82,7 +82,6 @@ export default defineComponent({
     const statuses = arrayQuery('status', ['1'], true)
 
     const { fetch } = useFetch(async () => {
-      console.log('Fetchign workitems')
       // Fetch the dashboard response from our API server
       let path = `${$config.apiBase}/workitems/?page=${page.value}&size=${size.value}`
       if (dateRange.value.start) {

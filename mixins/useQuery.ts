@@ -115,7 +115,6 @@ export default function () {
       set: (newValue: number | null) => {
         // Check if the query has actually changed
         const current = singleQuery(route.value.query[queryKey])
-        console.log({ current, newValue })
         if (current !== null && current !== undefined) {
           // If no change, skip navigation
           if (parseInt(current) === newValue) {
