@@ -12,6 +12,7 @@
       </div>
       <GenericDateRange v-model="dateRange" />
       <GenericSearchableSelect
+        v-if="facilityIds.length > 1"
         v-model="selectedFacility"
         class="mb-4"
         :options="facilityIds"
