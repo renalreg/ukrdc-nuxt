@@ -55,7 +55,7 @@ export default defineComponent({
     const error = ref('')
 
     useFetch(async () => {
-      mirthGroups.value = await $axios.$get(`${$config.apiBase}/mirth/groups/`)
+      mirthGroups.value = await $axios.$get(`${$config.apiBase}/v1/mirth/groups/`)
     })
 
     return {

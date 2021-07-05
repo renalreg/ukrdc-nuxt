@@ -50,7 +50,7 @@ export default defineComponent({
     const error = ref('')
 
     useFetch(async () => {
-      const dashResponse: DashResponse = await $axios.$get(`${$config.apiBase}/dash/`)
+      const dashResponse: DashResponse = await $axios.$get(`${$config.apiBase}/v1/dash/`)
       // Fetch the dashboard response from our API server
       response.value = dashResponse
       messages.value = dashResponse.messages

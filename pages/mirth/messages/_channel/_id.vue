@@ -29,7 +29,7 @@ export default defineComponent({
 
     useFetch(async () => {
       // Get the main record data
-      const path = `${$config.apiBase}/mirth/channels/${route.value.params.channel}/messages/${route.value.params.id}/`
+      const path = `${$config.apiBase}/v1/mirth/channels/${route.value.params.channel}/messages/${route.value.params.id}/`
       const res: ChannelMessage = await $axios.$get(path)
       message.value = res
     })

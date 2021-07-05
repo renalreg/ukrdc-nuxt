@@ -132,7 +132,7 @@ export default defineComponent({
     })
 
     useFetch(async () => {
-      facility.value = await $axios.$get(`${$config.apiBase}/facilities/${props.code}`)
+      facility.value = await $axios.$get(`${$config.apiBase}/v1/facilities/${props.code}`)
     })
 
     return {
