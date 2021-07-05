@@ -97,7 +97,7 @@ export default defineComponent({
 
     useFetch(async () => {
       // Get the main record data
-      const path = `${$config.apiBase}/empi/masterrecords/${route.value.params.id}/`
+      const path = `${$config.apiBase}/masterrecords/${route.value.params.id}/`
       const res: MasterRecord = await $axios.$get(path)
       record.value = res
 

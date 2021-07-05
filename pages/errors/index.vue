@@ -6,12 +6,19 @@
 
     <GenericDateRange v-model="dateRange" />
     <GenericSearchableSelect
+      v-if="facilityIds.length > 1"
       v-model="selectedFacility"
       class="mb-4"
       :options="facilityIds"
       :labels="facilityLabels"
       hint="Select a facility..."
     />
+
+    <div class="mb-4 flex flex-grow items-center">
+      <NuxtLink v-if="nationalId" :to="{ query: { nationalid: null } }">
+        <GenericButton>Show Results From All Patients</GenericButton>
+      </NuxtLink>
+    </div>
 
     <GenericCard>
       <!-- Skeleton results -->
@@ -48,6 +55,7 @@ import { nowString } from '@/utilities/dateUtils'
 
 import { Message } from '@/interfaces/errors'
 import useFacilities from '~/mixins/useFacilities'
+import useQuery from '~/mixins/useQuery'
 
 interface MessagePage {
   items: Message[]
@@ -63,10 +71,14 @@ export default defineComponent({
     const { $axios, $config } = useContext()
     const { page, total, size } = usePagination()
     const { makeDateRange } = useDateRange()
+    const { stringQuery } = useQuery()
     const { facilities, facilityIds, facilityLabels, selectedFacility, fetchFacilities } = useFacilities()
 
+    // Set up URL query params for additional filters
+    const nationalId = stringQuery('nationalid', true, true)
+
     // Set initial date dateRange
-    const dateRange = makeDateRange(nowString(-30), nowString(0), true)
+    const dateRange = makeDateRange(nowString(-365), nowString(0), true)
 
     const messages = ref([] as Message[])
 
@@ -88,6 +100,10 @@ export default defineComponent({
       // Filter by facility if it exists
       if (selectedFacility.value) {
         path = path + `&facility=${selectedFacility.value}`
+      }
+      // Filter by national ID if it exists
+      if (nationalId.value) {
+        path = path + `&ni=${nationalId.value}`
       }
       const res: MessagePage = await $axios.$get(path)
       messages.value = res.items
@@ -112,6 +128,7 @@ export default defineComponent({
       facilityIds,
       facilityLabels,
       selectedFacility,
+      nationalId,
     }
   },
 

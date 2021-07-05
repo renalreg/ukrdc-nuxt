@@ -199,17 +199,14 @@ export default {
     highlight(index) {
       this.open()
       this.highlightedIndex = index
-      console.log(this.$refs.option[index])
       this.$nextTick(() => {
         this.$refs.option[index].scrollIntoView({ block: 'nearest' })
       })
     },
     highlightPrev() {
-      console.log('highlightPrev')
       this.highlight(this.highlightedIndex - 1 < 0 ? this.filteredOptions.length - 1 : this.highlightedIndex - 1)
     },
     highlightNext() {
-      console.log('highlightNext')
       this.highlight(this.highlightedIndex + 1 >= this.filteredOptions.length ? 0 : this.highlightedIndex + 1)
     },
     labelFor(value) {

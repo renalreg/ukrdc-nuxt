@@ -16,20 +16,32 @@ export default function () {
   const route = useRoute()
   const router = useRouter()
 
-  function pushNewQuery(queryKey: string, newValue: any, resetPage: boolean = false) {
+  function pushNewQuery(queryKey: string, newValue: any, history: boolean = true, resetPage: boolean = false) {
     const newQuery = Object.assign({}, route.value.query, {
       [queryKey]: [newValue],
     })
     if (resetPage) {
       newQuery.page = ['0']
     }
-    router.push({
-      path: route.value.path,
-      query: newQuery,
-    })
+    if (history) {
+      router.push({
+        path: route.value.path,
+        query: newQuery,
+      })
+    } else {
+      router.replace({
+        path: route.value.path,
+        query: newQuery,
+      })
+    }
   }
 
-  function arrayQuery(queryKey: string, defaultValue: (string | null)[] = [], resetPage: boolean = false) {
+  function arrayQuery(
+    queryKey: string,
+    defaultValue: (string | null)[] = [],
+    history: boolean = true,
+    resetPage: boolean = false
+  ) {
     return computed({
       get: (): (string | null)[] => {
         const val = route.value.query[queryKey]
@@ -49,47 +61,67 @@ export default function () {
         if (resetPage) {
           newQuery.page = ['0']
         }
-        router.push({
-          path: route.value.path,
-          query: newQuery,
-        })
+        if (history) {
+          router.push({
+            path: route.value.path,
+            query: newQuery,
+          })
+        } else {
+          router.replace({
+            path: route.value.path,
+            query: newQuery,
+          })
+        }
       },
     })
   }
 
-  function stringQuery(queryKey: string, resetPage: boolean = false) {
+  function stringQuery(queryKey: string, history: boolean = true, resetPage: boolean = false) {
     return computed({
       get: (): string | null => {
         return singleQuery(route.value.query[queryKey])
       },
       set: (newValue: string | null) => {
-        pushNewQuery(queryKey, newValue, resetPage)
+        pushNewQuery(queryKey, newValue, history, resetPage)
       },
     })
   }
 
-  function booleanQuery(queryKey: string, resetPage: boolean = false) {
+  function booleanQuery(queryKey: string, history: boolean = true, resetPage: boolean = false) {
     return computed({
       get: (): boolean | null => {
         return singleQuery(route.value.query[queryKey]) === 'true'
       },
       set: (newValue: boolean | null) => {
-        pushNewQuery(queryKey, newValue, resetPage)
+        pushNewQuery(queryKey, newValue, history, resetPage)
       },
     })
   }
 
-  function integerQuery(queryKey: string, defaultValue: number | null = null, resetPage: boolean = false) {
+  function integerQuery(
+    queryKey: string,
+    defaultValue: number | null = null,
+    history: boolean = true,
+    resetPage: boolean = false
+  ) {
     return computed({
       get: (): number | null => {
         const val = singleQuery(route.value.query[queryKey])
-        if (val) {
-          return parseInt(val)
+        if (val === null || val === undefined) {
+          return defaultValue
         }
-        return defaultValue
+        return parseInt(val)
       },
       set: (newValue: number | null) => {
-        pushNewQuery(queryKey, newValue, resetPage)
+        // Check if the query has actually changed
+        const current = singleQuery(route.value.query[queryKey])
+        if (current !== null && current !== undefined) {
+          // If no change, skip navigation
+          if (parseInt(current) === newValue) {
+            return
+          }
+        }
+        pushNewQuery(queryKey, newValue, history, resetPage)
       },
     })
   }

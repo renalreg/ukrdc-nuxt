@@ -1,12 +1,29 @@
 <template>
   <div>
-    <div class="mb-6">
-      <TextH1 v-if="error"> Error {{ error.id }} from {{ error.facility }} </TextH1>
-      <SkeleText v-else class="h-8 w-1/4 mb-2" />
-      <TextL1 v-if="error">
-        {{ error.error }}
-      </TextL1>
-      <SkeleText v-else class="h-4 w-1/2" />
+    <GenericModalMaxSlot ref="errorSourceGenericModalMaxSlot">
+      <GenericCodeReader
+        v-if="source && source.content"
+        :content="source.content"
+        :content-type="source.contentType"
+        class="h-full box-border flex flex-col overflow-x-scroll"
+      />
+      <div v-else class="w-full h-full flex">
+        <div class="w-full text-center mb-auto mt-auto">Missing or empty source file</div>
+      </div>
+    </GenericModalMaxSlot>
+
+    <div class="mb-6 flex items-end gap-4">
+      <div class="flex-grow">
+        <TextH1 v-if="error"> Error {{ error.id }} from {{ error.facility }} </TextH1>
+        <SkeleText v-else class="h-8 w-1/4 mb-2" />
+        <TextL1 v-if="error" class="line-clamp-1">
+          {{ error.error }}
+        </TextL1>
+        <SkeleText v-else class="h-4 w-1/2" />
+      </div>
+      <div>
+        <GenericButtonPrimary class="w-48" @click="fetchAndShowSource">{{ sourceButtonLabel }}</GenericButtonPrimary>
+      </div>
     </div>
 
     <!-- Header card -->
@@ -86,11 +103,12 @@
 <script lang="ts">
 import { defineComponent, ref, useRoute, useFetch, useContext } from '@nuxtjs/composition-api'
 
-import { ExtendedError } from '@/interfaces/errors'
+import { ExtendedError, ErrorSource } from '@/interfaces/errors'
 import { ChannelMessage } from '@/interfaces/mirth'
 
 import { formatDate } from '@/utilities/dateUtils'
 import { isEmptyObject } from '@/utilities/objectUtils'
+import { modalInterface } from '~/interfaces/modal'
 
 export default defineComponent({
   setup() {
@@ -98,7 +116,12 @@ export default defineComponent({
     const { $axios, $config, $hasPermission } = useContext()
 
     const error = ref<ExtendedError>()
+    const source = ref<ErrorSource>()
     const mirthMessage = ref<ChannelMessage>()
+
+    // Modal visibility
+    const errorSourceGenericModalMaxSlot = ref<modalInterface>()
+    const sourceButtonLabel = ref('Show Source')
 
     useFetch(async () => {
       // Get the main record data
@@ -108,17 +131,39 @@ export default defineComponent({
 
       // Conditionally get the Mirth message data
       if ($hasPermission('ukrdc:mirth:read')) {
-        const path = error.value.links.source
-        const res: ChannelMessage = await $axios.$get(path)
-        mirthMessage.value = res
+        const mirthPath = error.value.links.mirth
+        const mirthRes: ChannelMessage = await $axios.$get(mirthPath)
+        mirthMessage.value = mirthRes
       }
     })
 
+    async function fetchSource() {
+      if (!source.value) {
+        sourceButtonLabel.value = 'Loading...'
+        const sourcePath = error.value?.links.source
+        if (sourcePath) {
+          const sourceRes: ErrorSource = await $axios.$get(sourcePath)
+          source.value = sourceRes
+        }
+        sourceButtonLabel.value = 'Show Source'
+      }
+    }
+
+    // Get and show source
+    async function fetchAndShowSource() {
+      await fetchSource()
+      errorSourceGenericModalMaxSlot.value?.show()
+    }
+
     return {
       error,
+      source,
       mirthMessage,
       isEmptyObject,
       formatDate,
+      errorSourceGenericModalMaxSlot,
+      sourceButtonLabel,
+      fetchAndShowSource,
     }
   },
 })

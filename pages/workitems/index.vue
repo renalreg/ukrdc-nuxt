@@ -12,6 +12,7 @@
       </div>
       <GenericDateRange v-model="dateRange" />
       <GenericSearchableSelect
+        v-if="facilityIds.length > 1"
         v-model="selectedFacility"
         class="mb-4"
         :options="facilityIds"
@@ -81,9 +82,8 @@ export default defineComponent({
     const statuses = arrayQuery('status', ['1'], true)
 
     const { fetch } = useFetch(async () => {
-      console.log('Fetchign workitems')
       // Fetch the dashboard response from our API server
-      let path = `${$config.apiBase}/empi/workitems/?page=${page.value}&size=${size.value}`
+      let path = `${$config.apiBase}/workitems/?page=${page.value}&size=${size.value}`
       if (dateRange.value.start) {
         path = path + `&since=${dateRange.value.start}`
       }
