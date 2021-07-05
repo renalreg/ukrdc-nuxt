@@ -4,7 +4,7 @@
       <GenericToggle v-model="formatMessage" label="Format XML" />
     </div>
 
-    <div class="font-mono text-sm text-left px-4 box-border">
+    <div v-if="content" class="font-mono text-sm text-left px-4 box-border">
       <pre>
       <code
         v-for="(line, index) in formatMessageToXMLArray(content)"
@@ -14,6 +14,7 @@
       >
     </pre>
     </div>
+    <div v-else>Empty file</div>
   </div>
 </template>
 

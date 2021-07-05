@@ -7,6 +7,9 @@
         :content-type="source.contentType"
         class="h-full box-border flex flex-col overflow-x-scroll"
       />
+      <div v-else class="w-full h-full flex">
+        <div class="w-full text-center mb-auto mt-auto">Missing or empty source file</div>
+      </div>
     </GenericModalMaxSlot>
 
     <div class="mb-6 flex items-end gap-4">
