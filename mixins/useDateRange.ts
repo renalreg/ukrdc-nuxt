@@ -34,7 +34,7 @@ export default function () {
           // If we use both date and page to filter, we need to
           // reset the page number
           if (newQuery.page) {
-            newQuery.page = '0'
+            newQuery.page = '1'
           }
         }
 

@@ -21,7 +21,7 @@ export default function () {
       [queryKey]: [newValue],
     })
     if (resetPage) {
-      newQuery.page = ['0']
+      newQuery.page = ['1']
     }
     if (history) {
       router.push({
@@ -59,7 +59,7 @@ export default function () {
           [queryKey]: newValue,
         })
         if (resetPage) {
-          newQuery.page = ['0']
+          newQuery.page = ['1']
         }
         if (history) {
           router.push({
