@@ -46,6 +46,7 @@ export default defineComponent({
         },
         options: props.options,
       }
+      // @ts-ignore
       return new Chart(canvas, options)
     })
   },
