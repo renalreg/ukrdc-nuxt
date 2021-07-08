@@ -5,7 +5,7 @@
         <dashStatBlock
           :value="workitems ? workitems.day : undefined"
           :previous-value="workitems ? workitems.prev : undefined"
-          :invert="true"
+          :invert="false"
           title="New Workitems"
         />
       </NuxtLink>
@@ -19,6 +19,7 @@
         <dashStatBlock
           :value="ukrdcrecords ? ukrdcrecords.day : undefined"
           :previous-value="ukrdcrecords ? ukrdcrecords.prev : undefined"
+          :invert="true"
           title="New UKRDC Records"
       /></NuxtLink>
 
