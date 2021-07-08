@@ -49,7 +49,7 @@ export default defineComponent({
 
     // Related errors data
     const relatedErrors = ref([] as Message[])
-    const relatedErrorsPage = ref(0)
+    const relatedErrorsPage = ref(1)
     const relatedErrorsSize = ref(props.size)
     const relatedErrorsTotal = ref(0)
 
