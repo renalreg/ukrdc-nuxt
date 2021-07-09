@@ -4,7 +4,8 @@
       <h1 class="text-2xl font-semibold text-gray-900">Mirth Channels</h1>
     </div>
 
-    <div class="max-w-7xl mx-auto mb-8">
+    <LoadingIndicator v-if="$fetchState.pending"></LoadingIndicator>
+    <div v-else class="max-w-7xl mx-auto mb-8">
       <div v-for="group in mirthGroups" :key="group.id" class="mb-6">
         <div class="mb-4">
           <TextH4>
