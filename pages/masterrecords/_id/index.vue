@@ -6,7 +6,15 @@
         <GenericDl>
           <GenericDi>
             <TextDt class="font-medium text-gray-500">National ID</TextDt>
-            <TextDd>{{ record.nationalid }}</TextDd>
+            <TextDd
+              ><div class="flex items-center gap-2">
+                <div>{{ record.nationalid }}</div>
+                <IconCheckCircle
+                  v-if="tracingRecord && tracingRecord.localpatientid === record.nationalid"
+                  v-tooltip="'Verified by tracing'"
+                  class="inline text-green-600"
+                /></div
+            ></TextDd>
           </GenericDi>
 
           <GenericDi>
@@ -21,7 +29,16 @@
 
           <GenericDi>
             <TextDt>Date of Birth</TextDt>
-            <TextDd>{{ formatDate(record.dateOfBirth, (t = false)) }} </TextDd>
+            <TextDd>
+              <div class="flex items-center gap-2">
+                <div>{{ formatDate(record.dateOfBirth, (t = false)) }}</div>
+                <IconCheckCircle
+                  v-if="tracingRecord && tracingRecord.patient.birthTime === record.dateOfBirth"
+                  v-tooltip="'Verified by tracing'"
+                  class="inline text-green-600"
+                />
+              </div>
+            </TextDd>
           </GenericDi>
 
           <GenericDi>
@@ -68,10 +85,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useFetch, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useFetch, useContext, computed } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/utilities/dateUtils'
 import { formatGender } from '@/utilities/codeUtils'
+import { isTracing } from '@/utilities/recordUtils'
 
 import { MasterRecord, MasterRecordStatistics } from '@/interfaces/masterrecord'
 import { PatientRecordShort } from '@/interfaces/patientrecord'
@@ -95,6 +113,14 @@ export default defineComponent({
     const relatedRecords = ref([] as MasterRecord[])
     const patientRecords = ref([] as PatientRecordShort[])
 
+    const tracingRecord = computed(() => {
+      const tracings = patientRecords.value.filter(isTracing)
+      if (tracings.length < 1) {
+        return null
+      }
+      return tracings[0]
+    })
+
     useFetch(async () => {
       // Use the record links to load related data concurrently
       const [relatedRecordsResponse, patientRecordsResponse] = await Promise.all([
@@ -109,6 +135,7 @@ export default defineComponent({
     return {
       patientRecords,
       relatedRecords,
+      tracingRecord,
       formatGender,
       formatDate,
     }

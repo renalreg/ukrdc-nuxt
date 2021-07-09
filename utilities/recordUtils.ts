@@ -8,10 +8,7 @@ export function isData(record: PatientRecordShort): boolean {
   if (record.sendingextract === 'PV') {
     return true
   }
-  if (
-    record.sendingextract === 'UKRDC' &&
-    !ukrdcMembershipFacilities.includes(record.sendingfacility)
-  ) {
+  if (record.sendingextract === 'UKRDC' && !ukrdcMembershipFacilities.includes(record.sendingfacility)) {
     return true
   }
   return false
@@ -35,10 +32,14 @@ export function isMembership(record: PatientRecordShort) {
   if (membershipExtracts.includes(record.sendingextract)) {
     return true
   }
-  if (
-    record.sendingextract === 'UKRDC' &&
-    ukrdcMembershipFacilities.includes(record.sendingfacility)
-  ) {
+  if (record.sendingextract === 'UKRDC' && ukrdcMembershipFacilities.includes(record.sendingfacility)) {
+    return true
+  }
+  return false
+}
+
+export function isTracing(record: PatientRecordShort) {
+  if (record.sendingextract === 'UKRDC' && record.sendingfacility === 'TRACING') {
     return true
   }
   return false
