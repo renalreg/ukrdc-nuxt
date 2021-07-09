@@ -1,6 +1,6 @@
 import { PatientRecordShort } from '@/interfaces/patientrecord'
 
-const ukrdcMembershipFacilities = ['PV', 'PKB', 'TRACING']
+const ukrdcMembershipFacilities = ['PV', 'PKB']
 const membershipExtracts = ['RADAR']
 const migratedExtracts = ['PVMIG', 'HSMIG']
 
@@ -33,6 +33,13 @@ export function isMembership(record: PatientRecordShort) {
     return true
   }
   if (record.sendingextract === 'UKRDC' && ukrdcMembershipFacilities.includes(record.sendingfacility)) {
+    return true
+  }
+  return false
+}
+
+export function isTracing(record: PatientRecordShort) {
+  if (record.sendingextract === 'UKRDC' && record.sendingfacility === 'TRACING') {
     return true
   }
   return false

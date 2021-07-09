@@ -19,6 +19,11 @@
       <TextH4>Membership Records</TextH4>
     </div>
     <patientrecordsListItem v-for="item in groupedRecords.memberships" :key="item.pid + '_membership'" :item="item" />
+
+    <div v-if="groupedRecords.tracing.length > 0" class="bg-gray-50 pl-4 sm:pl-6 py-1">
+      <TextH4>Tracing Records</TextH4>
+    </div>
+    <patientrecordsListItem v-for="item in groupedRecords.tracing" :key="item.pid + '_tracing'" :item="item" />
   </ul>
 </template>
 
@@ -27,13 +32,14 @@ import { computed, defineComponent } from '@nuxtjs/composition-api'
 
 import { PatientRecordShort } from '@/interfaces/patientrecord'
 
-import { isData, isSurvey, isMigrated, isMembership } from '@/utilities/recordUtils'
+import { isData, isSurvey, isMigrated, isMembership, isTracing } from '@/utilities/recordUtils'
 
 interface PRGroups {
   data: PatientRecordShort[]
   surveys: PatientRecordShort[]
   migrated: PatientRecordShort[]
   memberships: PatientRecordShort[]
+  tracing: PatientRecordShort[]
 }
 
 export default defineComponent({
@@ -51,6 +57,7 @@ export default defineComponent({
           surveys: [],
           migrated: [],
           memberships: [],
+          tracing: [],
         } as PRGroups
       }
 
@@ -59,6 +66,7 @@ export default defineComponent({
         surveys: props.records.filter(isSurvey),
         migrated: props.records.filter(isMigrated),
         memberships: props.records.filter(isMembership),
+        tracing: props.records.filter(isTracing),
       } as PRGroups
     })
 
