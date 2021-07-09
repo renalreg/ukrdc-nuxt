@@ -1,6 +1,6 @@
 import { PatientRecordShort } from '@/interfaces/patientrecord'
 
-const ukrdcMembershipFacilities = ['PV', 'PKB']
+const ukrdcMembershipFacilities = ['PV', 'PKB', 'TRACING']
 const membershipExtracts = ['RADAR']
 const migratedExtracts = ['PVMIG', 'HSMIG']
 
@@ -8,10 +8,7 @@ export function isData(record: PatientRecordShort): boolean {
   if (record.sendingextract === 'PV') {
     return true
   }
-  if (
-    record.sendingextract === 'UKRDC' &&
-    !ukrdcMembershipFacilities.includes(record.sendingfacility)
-  ) {
+  if (record.sendingextract === 'UKRDC' && !ukrdcMembershipFacilities.includes(record.sendingfacility)) {
     return true
   }
   return false
@@ -35,10 +32,7 @@ export function isMembership(record: PatientRecordShort) {
   if (membershipExtracts.includes(record.sendingextract)) {
     return true
   }
-  if (
-    record.sendingextract === 'UKRDC' &&
-    ukrdcMembershipFacilities.includes(record.sendingfacility)
-  ) {
+  if (record.sendingextract === 'UKRDC' && ukrdcMembershipFacilities.includes(record.sendingfacility)) {
     return true
   }
   return false
