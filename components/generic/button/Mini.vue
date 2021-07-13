@@ -5,6 +5,7 @@
       items-center
       px-2
       py-0.5
+      h-7
       border border-gray-300
       shadow-sm
       text-sm
