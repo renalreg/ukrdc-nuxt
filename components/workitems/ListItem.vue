@@ -1,6 +1,13 @@
 <template>
   <li>
-    <div class="flex items-center px-4 py-4 sm:px-6">
+    <div
+      role="button"
+      tabindex="0"
+      class="cursor-pointer flex items-center px-4 py-4 sm:px-6"
+      @click="$emit('click', $event)"
+      @keyup.enter="$emit('click', $event)"
+      @keyup.space="$emit('click', $event)"
+    >
       <div class="min-w-0 grid grid-cols-3 lg:grid-cols-4 md:gap-4 w-full">
         <!-- IDs and description -->
         <div class="col-span-2">

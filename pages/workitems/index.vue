@@ -38,9 +38,7 @@
       <!-- Real results -->
       <ul v-else class="divide-y divide-gray-200">
         <div v-for="item in workitems" :key="item.id" :item="item" class="hover:bg-gray-50">
-          <NuxtLink :to="`/workitems/${item.id}`">
-            <workitemsListItem :item="item" />
-          </NuxtLink>
+          <workitemsListItem :item="item" @click="$router.push(`/workitems/${item.id}`)" />
         </div>
       </ul>
       <GenericPaginator

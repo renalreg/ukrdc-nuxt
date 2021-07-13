@@ -24,9 +24,9 @@
           </div>
         </GenericButtonMini>
 
-        <NuxtLink v-if="nationalId" :to="{ query: { nationalid: null } }">
-          <GenericButtonMini>Show Results From All Patients</GenericButtonMini>
-        </NuxtLink>
+        <GenericButtonMini v-if="nationalId" @click="$router.push({ query: { nationalid: null } })"
+          >Show Results From All Patients</GenericButtonMini
+        >
       </div>
     </div>
 
@@ -37,10 +37,8 @@
       </ul>
       <!-- Real results -->
       <ul v-else class="divide-y divide-gray-200">
-        <div v-for="item in messages" :key="item.id" :item="item" class="hover:bg-gray-50">
-          <NuxtLink :to="`/errors/${item.id}`">
-            <ErrorsListItem :item="item" />
-          </NuxtLink>
+        <div v-for="item in messages" :key="item.id" class="hover:bg-gray-50">
+          <ErrorsListItem :item="item" @click="$router.push(`/errors/${item.id}`)" />
         </div>
       </ul>
       <GenericPaginator
