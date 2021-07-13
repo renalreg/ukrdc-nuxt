@@ -136,10 +136,10 @@ export default defineComponent({
     const availableServicesLabels = computed(() => {
       return availableServicesMap.value.map(({ description }) => description)
     })
-    const selectedService = stringQuery('service_id', true)
+    const selectedService = stringQuery('service_id', null, true)
 
     // Lab order filter
-    const selectedOrderId = stringQuery('order_id', true)
+    const selectedOrderId = stringQuery('order_id', null, true)
 
     const { fetch } = useFetch(async () => {
       const apiPath = props.record.links.results

@@ -4,20 +4,30 @@
       <h1 class="text-2xl font-semibold text-gray-900">Errors</h1>
     </div>
 
-    <GenericDateRange v-model="dateRange" />
-    <GenericSearchableSelect
-      v-if="facilityIds.length > 1"
-      v-model="selectedFacility"
-      class="mb-4"
-      :options="facilityIds"
-      :labels="facilityLabels"
-      hint="Select a facility..."
-    />
+    <div class="mb-4 flex flex-col">
+      <GenericDateRange v-model="dateRange" />
+      <GenericSearchableSelect
+        v-if="facilityIds.length > 1"
+        v-model="selectedFacility"
+        class="mb-4"
+        :options="facilityIds"
+        :labels="facilityLabels"
+        hint="Select a facility..."
+      />
+      <div>
+        <NuxtLink v-if="nationalId" :to="{ query: { nationalid: null } }">
+          <GenericButtonMini>Show Results From All Patients</GenericButtonMini>
+        </NuxtLink>
 
-    <div class="mb-4 flex flex-grow items-center">
-      <NuxtLink v-if="nationalId" :to="{ query: { nationalid: null } }">
-        <GenericButton>Show Results From All Patients</GenericButton>
-      </NuxtLink>
+        <GenericButtonMini class="float-right" @click="toggleOrder">
+          <div v-show="orderAscending" class="flex">
+            <TextP>Oldest - Newest</TextP><IconMiniSortAscending class="ml-2" />
+          </div>
+          <div v-show="!orderAscending" class="flex">
+            <TextP>Newest - Oldest</TextP><IconMiniSortDescending class="ml-2" />
+          </div>
+        </GenericButtonMini>
+      </div>
     </div>
 
     <GenericCard>
@@ -56,6 +66,7 @@ import { nowString } from '@/utilities/dateUtils'
 import { Message } from '@/interfaces/errors'
 import useFacilities from '~/mixins/useFacilities'
 import useQuery from '~/mixins/useQuery'
+import useSortBy from '~/mixins/useSortBy'
 
 interface MessagePage {
   items: Message[]
@@ -73,9 +84,10 @@ export default defineComponent({
     const { makeDateRange } = useDateRange()
     const { stringQuery } = useQuery()
     const { facilities, facilityIds, facilityLabels, selectedFacility, fetchFacilities } = useFacilities()
+    const { orderAscending, orderBy, toggleOrder } = useSortBy()
 
     // Set up URL query params for additional filters
-    const nationalId = stringQuery('nationalid', true, true)
+    const nationalId = stringQuery('nationalid', null, true, true)
 
     // Set initial date dateRange
     const dateRange = makeDateRange(nowString(-365), nowString(0), true)
@@ -84,7 +96,7 @@ export default defineComponent({
 
     const { fetch } = useFetch(async () => {
       // Fetch the dashboard response from our API server
-      let path = `${$config.apiBase}/v1/errors/messages/?status=ERROR&page=${page.value}&size=${size.value}`
+      let path = `${$config.apiBase}/v1/errors/messages/?status=ERROR&page=${page.value}&size=${size.value}&sort_by=received&order_by=${orderBy.value}`
       // Filter by since if it exists
       if (dateRange.value.start) {
         path = path + `&since=${dateRange.value.start}`
@@ -129,6 +141,9 @@ export default defineComponent({
       facilityLabels,
       selectedFacility,
       nationalId,
+      orderAscending,
+      orderBy,
+      toggleOrder,
     }
   },
 

@@ -4,7 +4,7 @@
       <h1 class="text-2xl font-semibold text-gray-900">Work Items</h1>
     </div>
 
-    <div class="mb-4">
+    <div class="mb-4 flex flex-col">
       <div class="mb-2 flex items-center">
         <FormCheckbox v-model="statuses" label="Open" :value="1" />
         <FormCheckbox v-model="statuses" label="WIP" :value="2" />
@@ -18,6 +18,16 @@
         :labels="facilityLabels"
         hint="Select a facility..."
       />
+      <div>
+        <GenericButtonMini class="float-right" @click="toggleOrder">
+          <div v-show="orderAscending" class="flex">
+            <TextP>Oldest - Newest</TextP><IconMiniSortAscending class="ml-2" />
+          </div>
+          <div v-show="!orderAscending" class="flex">
+            <TextP>Newest - Oldest</TextP><IconMiniSortDescending class="ml-2" />
+          </div>
+        </GenericButtonMini>
+      </div>
     </div>
 
     <GenericCard>
@@ -54,6 +64,7 @@ import usePagination from '@/mixins/usePagination'
 import { WorkItemShort } from '@/interfaces/workitem'
 import useQuery from '~/mixins/useQuery'
 import useFacilities from '~/mixins/useFacilities'
+import useSortBy from '~/mixins/useSortBy'
 
 interface WorkItemPage {
   items: WorkItemShort[]
@@ -70,13 +81,14 @@ export default defineComponent({
     const { page, total, size } = usePagination()
     const { arrayQuery } = useQuery()
     const { facilities, facilityIds, facilityLabels, selectedFacility, fetchFacilities } = useFacilities()
+    const { orderAscending, orderBy, toggleOrder } = useSortBy()
 
     const workitems = ref([] as WorkItemShort[])
     const statuses = arrayQuery('status', ['1'], true)
 
     const { fetch } = useFetch(async () => {
       // Fetch the dashboard response from our API server
-      let path = `${$config.apiBase}/v1/workitems/?page=${page.value}&size=${size.value}`
+      let path = `${$config.apiBase}/v1/workitems/?page=${page.value}&size=${size.value}&sort_by=last_updated&order_by=${orderBy.value}`
       // Pass selected statuses to the API
       for (const status of statuses.value) {
         path = path + `&status=${status}`
@@ -108,6 +120,9 @@ export default defineComponent({
       facilityIds,
       facilityLabels,
       selectedFacility,
+      orderAscending,
+      orderBy,
+      toggleOrder,
     }
   },
   head: {
