@@ -1,6 +1,8 @@
 <template>
-  <router-link v-if="to" v-tooltip="tooltip" tag="button" :to="to" type="button" class="btn-round-base">
-    <slot />
+  <router-link v-if="to" v-slot="{ navigate }" custom :to="to">
+    <button v-tooltip="tooltip" type="button" class="btn-round-base" @click="navigate">
+      <slot />
+    </button>
   </router-link>
   <button v-else v-tooltip="tooltip" type="button" class="btn-round-base" @click="$emit('click')">
     <slot />
@@ -13,7 +15,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 export default defineComponent({
   props: {
     to: {
-      type: Object,
+      type: [Object, String],
       required: false,
       default: null,
     },
