@@ -76,23 +76,40 @@ export default function () {
     })
   }
 
-  function stringQuery(queryKey: string, history: boolean = true, resetPage: boolean = false) {
-    return computed({
-      get: (): string | null => {
-        return singleQuery(route.value.query[queryKey])
-      },
-      set: (newValue: string | null) => {
-        pushNewQuery(queryKey, newValue, history, resetPage)
-      },
-    })
-  }
-
   function booleanQuery(queryKey: string, history: boolean = true, resetPage: boolean = false) {
     return computed({
       get: (): boolean | null => {
         return singleQuery(route.value.query[queryKey]) === 'true'
       },
       set: (newValue: boolean | null) => {
+        pushNewQuery(queryKey, newValue, history, resetPage)
+      },
+    })
+  }
+
+  function stringQuery(
+    queryKey: string,
+    defaultValue: string | null = null,
+    history: boolean = true,
+    resetPage: boolean = false
+  ) {
+    return computed({
+      get: (): string | null => {
+        const val = singleQuery(route.value.query[queryKey])
+        if (val === null || val === undefined) {
+          return defaultValue
+        }
+        return val
+      },
+      set: (newValue: string | null) => {
+        // Check if the query has actually changed
+        const current = singleQuery(route.value.query[queryKey])
+        if (current !== null && current !== undefined) {
+          // If no change, skip navigation
+          if (current === newValue) {
+            return
+          }
+        }
         pushNewQuery(queryKey, newValue, history, resetPage)
       },
     })

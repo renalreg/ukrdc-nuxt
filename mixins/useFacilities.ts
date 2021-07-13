@@ -17,7 +17,7 @@ export default function () {
   const facilityLabels = computed(() => {
     return facilities.value.map(({ description }) => description)
   })
-  const selectedFacility = stringQuery('facility', true)
+  const selectedFacility = stringQuery('facility', null, true)
 
   async function fetchFacilities() {
     // If we don't already have a list of available facilties, fetch one
