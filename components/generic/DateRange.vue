@@ -50,8 +50,8 @@
           </div>
         </template>
       </v-date-picker>
-      <GenericButtonTertiary class="ml-2" @click="$emit('input', { since: null, until: null })"
-        >Clear</GenericButtonTertiary
+      <GenericButton colour="white" class="ml-2" @click="$emit('input', { since: null, until: null })"
+        >Clear</GenericButton
       >
     </div>
   </client-only>

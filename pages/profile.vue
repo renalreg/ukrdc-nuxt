@@ -73,7 +73,7 @@
             "
             >Manage Account</a
           >
-          <GenericButtonPrimary @click="logout()"> Sign out </GenericButtonPrimary>
+          <GenericButton @click="logout()"> Sign out </GenericButton>
         </div>
       </div>
       <div>

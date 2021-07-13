@@ -1,13 +1,51 @@
 <template>
-  <genericButtonBase
-    type="button"
-    class="bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-indigo-500"
-    @click="$emit('click')"
-  >
+  <router-link v-if="to" v-tooltip="tooltip" tag="button" :to="to" type="button" :class="`btn-${colour}`">
     <slot />
-  </genericButtonBase>
+  </router-link>
+  <button v-else v-tooltip="tooltip" type="button" :class="`btn-${colour}`" @click="$emit('click')">
+    <slot />
+  </button>
 </template>
 
 <script>
-export default {}
+export default {
+  props: {
+    to: {
+      type: Object,
+      required: false,
+      default: null,
+    },
+    colour: {
+      type: String,
+      required: false,
+      default: 'white',
+    },
+    tooltip: {
+      type: String,
+      required: false,
+      default: null,
+    },
+  },
+}
 </script>
+
+<style lang="postcss">
+.btn-white {
+  @apply btn-base bg-white hover:bg-gray-50 focus:ring-indigo-500 border-gray-300 text-gray-700;
+}
+.btn-indigo {
+  @apply btn-base bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 border-transparent text-white;
+}
+.btn-green {
+  @apply btn-base bg-green-600 hover:bg-green-700 focus:ring-green-500 border-transparent text-white;
+}
+.btn-yellow {
+  @apply btn-base bg-yellow-600 hover:bg-yellow-700 focus:ring-yellow-500 border-transparent text-white;
+}
+.btn-red {
+  @apply btn-base bg-red-600 hover:bg-red-700 focus:ring-red-500 border-transparent text-white;
+}
+.btn-base {
+  @apply py-2 px-4 rounded-md shadow-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 border;
+}
+</style>

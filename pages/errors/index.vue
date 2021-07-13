@@ -24,9 +24,9 @@
           </div>
         </GenericButtonMini>
 
-        <NuxtLink v-if="nationalId" :to="{ query: { nationalid: null } }">
-          <GenericButtonMini>Show Results From All Patients</GenericButtonMini>
-        </NuxtLink>
+        <GenericButtonMini v-show="nationalId" @click="$router.push({ query: { nationalid: null } })"
+          >Show Results From All Patients</GenericButtonMini
+        >
       </div>
     </div>
 

@@ -1,22 +1,8 @@
 <template>
-  <button
-    v-tooltip="tooltip"
-    type="button"
-    class="
-      inline-flex
-      items-center
-      p-1
-      border border-gray-300
-      rounded-full
-      shadow-sm
-      text-gray-400
-      hover:text-gray-500
-      bg-white
-      hover:bg-gray-50
-      focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
-    "
-    @click="$emit('click')"
-  >
+  <router-link v-if="to" v-tooltip="tooltip" tag="button" :to="to" type="button" class="btn-round-base">
+    <slot />
+  </router-link>
+  <button v-else v-tooltip="tooltip" type="button" class="btn-round-base" @click="$emit('click')">
     <slot />
   </button>
 </template>
@@ -26,6 +12,11 @@ import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
+    to: {
+      type: Object,
+      required: false,
+      default: null,
+    },
     tooltip: {
       type: String,
       required: false,
@@ -34,3 +25,19 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="postcss">
+.btn-round-base {
+  @apply inline-flex
+      items-center
+      p-1
+      border border-gray-300
+      rounded-full
+      shadow-sm
+      text-gray-400
+      hover:text-gray-500
+      bg-white
+      hover:bg-gray-50
+      focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
+}
+</style>

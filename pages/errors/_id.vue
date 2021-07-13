@@ -22,7 +22,7 @@
         <SkeleText v-else class="h-4 w-1/2" />
       </div>
       <div>
-        <GenericButtonPrimary class="w-48" @click="fetchAndShowSource">{{ sourceButtonLabel }}</GenericButtonPrimary>
+        <GenericButton class="w-48" @click="fetchAndShowSource">{{ sourceButtonLabel }}</GenericButton>
       </div>
     </div>
 

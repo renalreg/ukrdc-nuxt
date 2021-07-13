@@ -8,7 +8,7 @@
 
       <div class="flex justify-end">
         <genericButton @click="addCommentModal.hide()">Cancel</genericButton>
-        <genericButtonPrimary class="ml-2" type="submit" @click="updateWorkItemComment()"> Save </genericButtonPrimary>
+        <GenericButton class="ml-2" type="submit" @click="updateWorkItemComment()"> Save </GenericButton>
       </div>
     </GenericModalSlot>
 
@@ -24,9 +24,7 @@
 
       <div class="flex justify-end">
         <genericButton @click="mergeModal.hide()"> Cancel </genericButton>
-        <genericButtonPrimary type="submit" class="ml-2" @click="mergeWorkItem()">
-          Merge and Close
-        </genericButtonPrimary>
+        <GenericButton type="submit" class="ml-2" @click="mergeWorkItem()"> Merge and Close </GenericButton>
       </div>
     </GenericModalSlot>
 
@@ -43,9 +41,9 @@
 
       <div class="flex justify-end">
         <GenericButton @click="unlinkModal.hide()"> Cancel </GenericButton>
-        <genericButtonPrimary type="submit" class="ml-3" colour="red" @click="unlinkWorkItem()">
+        <GenericButton type="submit" class="ml-3" colour="red" @click="unlinkWorkItem()">
           Unlink and Close
-        </genericButtonPrimary>
+        </GenericButton>
       </div>
     </GenericModalSlot>
 
@@ -63,9 +61,9 @@
 
       <div class="flex justify-end">
         <GenericButton @click="closeModal.hide()"> Cancel </GenericButton>
-        <genericButtonPrimary type="submit" class="ml-3" colour="red" @click="closeWorkItem()">
+        <GenericButton type="submit" class="ml-3" colour="red" @click="closeWorkItem()">
           Close Work Item
-        </genericButtonPrimary>
+        </GenericButton>
       </div>
     </GenericModalSlot>
 
@@ -111,37 +109,29 @@
       v-if="$hasPermission('ukrdc:workitems:write') && record && record.status !== 3"
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
     >
-      <genericButtonPrimary class="inline-flex items-center justify-center w-full" @click="addCommentModal.show()">
+      <GenericButton
+        colour="indigo"
+        class="inline-flex items-center justify-center w-full"
+        @click="addCommentModal.show()"
+      >
         <IconPencil />
         Comment
-      </genericButtonPrimary>
+      </GenericButton>
 
-      <genericButtonPrimary
-        class="inline-flex items-center justify-center w-full"
-        colour="green"
-        @click="closeModal.show()"
-      >
+      <GenericButton class="inline-flex items-center justify-center w-full" colour="green" @click="closeModal.show()">
         <IconCheckCircle />
         Close
-      </genericButtonPrimary>
+      </GenericButton>
 
-      <genericButtonPrimary
-        class="inline-flex items-center justify-center w-full"
-        colour="yellow"
-        @click="mergeModal.show()"
-      >
+      <GenericButton class="inline-flex items-center justify-center w-full" colour="yellow" @click="mergeModal.show()">
         <IconLink />
         Merge
-      </genericButtonPrimary>
+      </GenericButton>
 
-      <genericButtonPrimary
-        class="inline-flex items-center justify-center w-full"
-        colour="red"
-        @click="unlinkModal.show()"
-      >
+      <GenericButton class="inline-flex items-center justify-center w-full" colour="red" @click="unlinkModal.show()">
         <IconXCircle />
         Unlink
-      </genericButtonPrimary>
+      </GenericButton>
     </div>
 
     <!-- Proposed link cards -->
