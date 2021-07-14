@@ -13,9 +13,11 @@
         </div>
         <!-- Identifiers  -->
         <div class="flex items-center gap-4 col-span-1">
-          <NuxtLink :to="{ query: { nationalid: item.ni } }">
-            <GenericButtonRound tooltip="Filter errors by this patient"><IconMiniFilter /></GenericButtonRound>
-          </NuxtLink>
+          <GenericButtonRound
+            :to="{ path: '/errors', query: { nationalid: item.ni } }"
+            tooltip="Filter errors by this patient"
+            ><IconMiniFilter
+          /></GenericButtonRound>
           <div class="flex-grow">
             <TextL1>Patient Number</TextL1>
             <TextP class="mt-2">

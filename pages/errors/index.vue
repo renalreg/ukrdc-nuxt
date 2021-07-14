@@ -14,12 +14,8 @@
         :labels="facilityLabels"
         hint="Select a facility..."
       />
-      <div>
-        <NuxtLink v-if="nationalId" :to="{ query: { nationalid: null } }">
-          <GenericButtonMini>Show Results From All Patients</GenericButtonMini>
-        </NuxtLink>
-
-        <GenericButtonMini class="float-right" @click="toggleOrder">
+      <div class="flex gap-2 flex-row-reverse">
+        <GenericButtonMini @click="toggleOrder">
           <div v-show="orderAscending" class="flex">
             <TextP>Oldest - Newest</TextP><IconMiniSortAscending class="ml-2" />
           </div>
@@ -27,6 +23,10 @@
             <TextP>Newest - Oldest</TextP><IconMiniSortDescending class="ml-2" />
           </div>
         </GenericButtonMini>
+
+        <GenericButtonMini v-show="nationalId" @click="$router.push({ query: { nationalid: null } })"
+          >Show Results From All Patients</GenericButtonMini
+        >
       </div>
     </div>
 

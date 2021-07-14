@@ -32,10 +32,8 @@
             </TextP>
           </div>
           <!-- Record link -->
-          <GenericButtonMini class="h-8 justify-self-end"
-            ><NuxtLink :to="`/patientrecords/${item.pid}`" class="block hover:bg-gray-50"
-              >View Record</NuxtLink
-            ></GenericButtonMini
+          <GenericButtonMini :to="`/patientrecords/${item.pid}`" class="h-8 justify-self-end"
+            >View Record</GenericButtonMini
           >
         </div>
       </div>
