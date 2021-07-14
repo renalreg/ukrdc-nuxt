@@ -39,11 +39,14 @@ import { TabItem } from '@/interfaces/tabs'
 
 import { isMembership } from '@/utilities/recordUtils'
 
+import usePermissions from '~/mixins/usePermissions'
+
 export default defineComponent({
   setup() {
     const route = useRoute()
     const router = useRouter()
-    const { $axios, $config, $hasPermission } = useContext()
+    const { $axios, $config } = useContext()
+    const { hasPermission } = usePermissions()
 
     const record = ref<PatientRecord>()
     const related = ref<PatientRecordShort[]>()
@@ -84,7 +87,7 @@ export default defineComponent({
     const tabs = computed(() => {
       return [
         ...baseTabs,
-        ...($hasPermission('ukrdc:mirth:write')
+        ...(hasPermission('ukrdc:mirth:write')
           ? [
               {
                 name: 'Export',

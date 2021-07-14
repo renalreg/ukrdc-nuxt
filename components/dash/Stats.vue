@@ -1,6 +1,6 @@
 <template>
   <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
-    <GenericCardSplit v-if="$hasPermission('ukrdc:workitems:read')">
+    <GenericCardSplit v-if="hasPermission('ukrdc:workitems:read')">
       <NuxtLink to="/workitems">
         <dashStatBlock
           :value="workitems ? workitems.day : undefined"
@@ -14,7 +14,7 @@
         ><dashStatBlock :value="workitems ? workitems.total : undefined" title="Total Workitems"
       /></NuxtLink>
     </GenericCardSplit>
-    <GenericCardSplit v-if="$hasPermission('ukrdc:records:read')">
+    <GenericCardSplit v-if="hasPermission('ukrdc:records:read')">
       <NuxtLink to="/masterrecords">
         <dashStatBlock
           :value="ukrdcrecords ? ukrdcrecords.day : undefined"
@@ -32,8 +32,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-
 import { TotalDayPrev } from 'interfaces/statistics'
+import usePermissions from '~/mixins/usePermissions'
 
 export default defineComponent({
   props: {
@@ -47,6 +47,10 @@ export default defineComponent({
       required: false,
       default: null,
     },
+  },
+  setup() {
+    const { hasPermission } = usePermissions()
+    return { hasPermission }
   },
 })
 </script>
