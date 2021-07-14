@@ -215,7 +215,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useRoute, useFetch, useContext, computed } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useRoute, useFetch, useContext, computed, useMeta } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/utilities/dateUtils'
 import { formatGender } from '@/utilities/codeUtils'
@@ -234,6 +234,10 @@ export default defineComponent({
     const route = useRoute()
     const { $axios, $config, $toast } = useContext()
     const { hasPermission } = usePermissions()
+
+    // Head
+    const { title } = useMeta()
+    title.value = `Work Item ${route.value.params.id}`
 
     // Work item record data
     const record = ref<WorkItem>()

@@ -101,7 +101,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useRoute, useFetch, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useRoute, useFetch, useContext, useMeta } from '@nuxtjs/composition-api'
 
 import { ExtendedError, ErrorSource } from '@/interfaces/errors'
 import { ChannelMessage } from '@/interfaces/mirth'
@@ -117,6 +117,10 @@ export default defineComponent({
     const route = useRoute()
     const { $axios, $config } = useContext()
     const { hasPermission } = usePermissions()
+
+    // Head
+    const { title } = useMeta()
+    title.value = `Error ${route.value.params.id}`
 
     const error = ref<ExtendedError>()
     const source = ref<ErrorSource>()
@@ -168,6 +172,9 @@ export default defineComponent({
       sourceButtonLabel,
       fetchAndShowSource,
     }
+  },
+  head: {
+    title: 'Error',
   },
 })
 </script>
