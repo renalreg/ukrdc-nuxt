@@ -275,8 +275,7 @@ export default defineComponent({
       customComment.value = res.updateDescription
 
       // Use the record links to load related data concurrently
-      const [incomingMasterRecordRes, relatedRecordsRes, relatedPersonsRes] = await Promise.all([
-        $axios.$get(record.value.person.links.masterrecords),
+      const [relatedRecordsRes, relatedPersonsRes] = await Promise.all([
         $axios.$get(record.value.links.related),
         $axios.$get(record.value.masterRecord.links.persons),
       ])
