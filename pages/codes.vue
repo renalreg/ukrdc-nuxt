@@ -27,13 +27,11 @@
           </ul>
           <!-- Real results -->
           <ul v-else class="divide-y divide-gray-200">
-            <CodesListItem
-              v-for="code in codes"
-              :key="`${code.codingStandard}.${code.code}`"
-              class="hover:bg-gray-50 cursor-pointer"
-              :code="code"
-              @click.native="selectCode(code)"
-            />
+            <div v-for="code in codes" :key="`${code.codingStandard}.${code.code}`">
+              <NuxtLink :to="`/codes/${code.codingStandard}.${code.code}`">
+                <CodesListItem class="hover:bg-gray-50" :code="code" />
+              </NuxtLink>
+            </div>
           </ul>
           <GenericPaginator
             v-if="!$fetchState.pending"
@@ -48,10 +46,7 @@
       </div>
       <!-- Code details -->
       <GenericCard class="px-4 py-4">
-        <div v-if="selectedCode">
-          <CodesDetails :code="selectedCode" />
-        </div>
-        <div v-else>Select a code</div>
+        <NuxtChild />
       </GenericCard>
     </div>
   </div>
@@ -97,7 +92,7 @@ export default defineComponent({
         standards.value = standardsResponse
       }
       // Fetch code list
-      let path = `${$config.apiBase}/v1/codes/?page=${page.value}&size=${size.value}`
+      let path = `${$config.apiBase}/v1/codes/list/?page=${page.value}&size=${size.value}`
       // Filter by service if it exists
       if (selectedStandard.value) {
         path = path + `&coding_standard=${encodeURIComponent(selectedStandard.value)}`
