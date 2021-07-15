@@ -129,12 +129,12 @@ import { formatDate } from '@/utilities/dateUtils'
 import { formatGender } from '@/utilities/codeUtils'
 import { isEmptyObject } from '@/utilities/objectUtils'
 
-import { PatientRecordShort } from '@/interfaces/patientrecord'
+import { PatientRecord } from '@/interfaces/patientrecord'
 
 export default defineComponent({
   props: {
     record: {
-      type: Object as () => PatientRecordShort,
+      type: Object as () => PatientRecord,
       required: true,
     },
   },

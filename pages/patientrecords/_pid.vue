@@ -32,7 +32,7 @@ import {
   useMeta,
 } from '@nuxtjs/composition-api'
 
-import { PatientRecord, PatientRecordShort } from '@/interfaces/patientrecord'
+import { PatientRecord } from '@/interfaces/patientrecord'
 import { TabItem } from '@/interfaces/tabs'
 
 import { isMembership } from '@/utilities/recordUtils'
@@ -51,8 +51,8 @@ export default defineComponent({
     title.value = `Record ${route.value.params.pid}`
 
     const record = ref<PatientRecord>()
-    const related = ref<PatientRecordShort[]>()
-    const relatedDataRecords = computed<PatientRecordShort[]>(() => {
+    const related = ref<PatientRecord[]>()
+    const relatedDataRecords = computed<PatientRecord[]>(() => {
       if (related.value) {
         return related.value.filter((record) => !isMembership(record))
       }
@@ -117,7 +117,7 @@ export default defineComponent({
       // Update title
       title.value = `${fullName.value} from ${record.value.sendingfacility}`
 
-      const rel: PatientRecordShort[] = await $axios.$get(`${path}related/`)
+      const rel: PatientRecord[] = await $axios.$get(`${path}related/`)
       related.value = rel
     })
 

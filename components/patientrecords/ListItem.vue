@@ -48,12 +48,12 @@
 <script lang="ts">
 import { defineComponent, ref } from '@nuxtjs/composition-api'
 import { formatDate } from '@/utilities/dateUtils'
-import { PatientRecordShort } from '@/interfaces/patientrecord'
+import { PatientRecord } from '@/interfaces/patientrecord'
 
 export default defineComponent({
   props: {
     item: {
-      type: Object as () => PatientRecordShort,
+      type: Object as () => PatientRecord,
       required: true,
     },
   },
