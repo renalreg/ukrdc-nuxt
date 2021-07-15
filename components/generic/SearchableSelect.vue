@@ -19,7 +19,7 @@
       <div class="flex w-full">
         <div
           ref="input"
-          class="block w-full border px-3 py-2 shadow-sm sm: border-gray-300 rounded-md"
+          class="flex items-center truncate w-full border px-3 py-2 shadow-sm sm: border-gray-300 rounded-md"
           :class="{
             invisible: isOpen,
           }"
@@ -29,9 +29,12 @@
           @keydown.down.prevent="open"
           @keydown.space.prevent="open"
         >
-          <span v-if="value">{{ `${value} (${labelFor(value)})` }}</span>
-          <span v-else class="text-grey-dark text-base">{{ hint }}</span>
-          <div class="float-right flex items-center pointer-events-none">
+          <div class="flex-grow truncate">
+            <span v-if="value" class="truncate line-clamp-1">{{ `${value} (${labelFor(value)})` }}</span>
+            <span v-else class="truncate line-clamp-1 text-grey-dark text-base">{{ hint }}</span>
+          </div>
+
+          <div class="flex-shrink items-center pointer-events-none">
             <!-- Heroicon name: solid/selector -->
             <svg
               class="h-5 w-5 text-gray-400"
