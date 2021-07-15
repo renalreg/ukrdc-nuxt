@@ -5,16 +5,43 @@
       <GenericCardContent>
         <GenericDl>
           <GenericDi>
+            <TextDt>Full Name</TextDt>
+            <TextDd>
+              <div class="flex items-center gap-2">
+                <div class="capitalize">{{ record.givenname.toLowerCase() }} {{ record.surname.toLowerCase() }}</div>
+                <TracingBadge v-if="tracingRecord" :verified="nameMatchesTracing" />
+              </div>
+            </TextDd>
+          </GenericDi>
+
+          <GenericDi>
+            <TextDt>Gender</TextDt>
+            <TextDd>
+              <div class="flex items-center gap-2">
+                <div>{{ formatGender(record.gender) }}</div>
+                <TracingBadge v-if="tracingRecord" :verified="tracingRecord.patient.gender === record.gender" />
+              </div>
+            </TextDd>
+          </GenericDi>
+
+          <GenericDi>
+            <TextDt>Date of Birth</TextDt>
+            <TextDd>
+              <div class="flex items-center gap-2">
+                <div>{{ formatDate(record.dateOfBirth, (t = false)) }}</div>
+                <TracingBadge v-if="tracingRecord" :verified="tracingRecord.patient.birthTime === record.dateOfBirth" />
+              </div>
+            </TextDd>
+          </GenericDi>
+
+          <GenericDi>
             <TextDt class="font-medium text-gray-500">National ID</TextDt>
-            <TextDd
-              ><div class="flex items-center gap-2">
+            <TextDd>
+              <div class="flex items-center gap-2">
                 <div>{{ record.nationalid }}</div>
-                <IconCheckCircle
-                  v-if="tracingRecord && tracingRecord.localpatientid === record.nationalid"
-                  v-tooltip="'Verified by tracing'"
-                  class="inline text-green-600"
-                /></div
-            ></TextDd>
+                <TracingBadge v-if="tracingRecord" :verified="tracingRecord.localpatientid === record.nationalid" />
+              </div>
+            </TextDd>
           </GenericDi>
 
           <GenericDi>
@@ -23,32 +50,8 @@
           </GenericDi>
 
           <GenericDi>
-            <TextDt>Gender</TextDt>
-            <TextDd>{{ formatGender(record.gender) }} </TextDd>
-          </GenericDi>
-
-          <GenericDi>
-            <TextDt>Date of Birth</TextDt>
-            <TextDd>
-              <div class="flex items-center gap-2">
-                <div>{{ formatDate(record.dateOfBirth, (t = false)) }}</div>
-                <IconCheckCircle
-                  v-if="tracingRecord && tracingRecord.patient.birthTime === record.dateOfBirth"
-                  v-tooltip="'Verified by tracing'"
-                  class="inline text-green-600"
-                />
-              </div>
-            </TextDd>
-          </GenericDi>
-
-          <GenericDi>
             <TextDt>Last Updated</TextDt>
             <TextDd>{{ formatDate(record.lastUpdated) }} </TextDd>
-          </GenericDi>
-
-          <GenericDi>
-            <TextDt>Effective Date</TextDt>
-            <TextDd>{{ formatDate(record.effectiveDate) }} </TextDd>
           </GenericDi>
         </GenericDl>
       </GenericCardContent>
@@ -102,7 +105,7 @@ import { formatGender } from '@/utilities/codeUtils'
 import { isTracing } from '@/utilities/recordUtils'
 
 import { MasterRecord, MasterRecordStatistics } from '@/interfaces/masterrecord'
-import { PatientRecordShort } from '@/interfaces/patientrecord'
+import { PatientRecord } from '@/interfaces/patientrecord'
 import { MinimalMessage } from '~/interfaces/errors'
 
 export default defineComponent({
@@ -122,15 +125,43 @@ export default defineComponent({
     const { $axios } = useContext()
 
     const relatedRecords = ref([] as MasterRecord[])
-    const patientRecords = ref([] as PatientRecordShort[])
+    const patientRecords = ref([] as PatientRecord[])
     const latestMessage = ref<MinimalMessage>()
 
-    const tracingRecord = computed(() => {
+    const tracingRecord = computed<PatientRecord | null>(() => {
       const tracings = patientRecords.value.filter(isTracing)
       if (tracings.length < 1) {
         return null
       }
       return tracings[0]
+    })
+
+    function givenNameMatchesTracing() {
+      if (!tracingRecord.value) {
+        return false
+      }
+      for (const name of tracingRecord.value.patient.names) {
+        if (props.record.givenname.toLowerCase() === name.given.toLowerCase()) {
+          return true
+        }
+      }
+      return false
+    }
+
+    function surnameMatchesTracing() {
+      if (!tracingRecord.value) {
+        return false
+      }
+      for (const name of tracingRecord.value.patient.names) {
+        if (props.record.surname.toLowerCase() === name.family.toLowerCase()) {
+          return true
+        }
+      }
+      return false
+    }
+
+    const nameMatchesTracing = computed(() => {
+      return givenNameMatchesTracing() && surnameMatchesTracing()
     })
 
     const latestMessageInfo = computed(() => {
@@ -173,6 +204,7 @@ export default defineComponent({
       latestMessageInfo,
       formatGender,
       formatDate,
+      nameMatchesTracing,
     }
   },
 })
