@@ -73,7 +73,7 @@
             "
             >Manage Account</a
           >
-          <GenericButtonPrimary @click="logout()"> Sign out </GenericButtonPrimary>
+          <GenericButton @click="logout()"> Sign out </GenericButton>
         </div>
       </div>
       <div>
@@ -93,12 +93,14 @@
 
 <script lang="ts">
 import { defineComponent, useContext, computed } from '@nuxtjs/composition-api'
+import usePermissions from '~/mixins/usePermissions'
 
 export default defineComponent({
   setup() {
-    const { $getPermission, $auth, $config } = useContext()
+    const { $auth, $config } = useContext()
+    const { getPermissions } = usePermissions()
 
-    const perms = computed(() => $getPermission())
+    const perms = computed(() => getPermissions())
 
     function logout(): void {
       // In principle we should be able to use nuxt-auth's $auth.logout function,

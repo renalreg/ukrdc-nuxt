@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useRoute, useFetch, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useRoute, useFetch, useContext, useMeta } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/utilities/dateUtils'
 import { formatGender } from '@/utilities/codeUtils'
@@ -41,6 +41,10 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const { $axios, $config } = useContext()
+
+    // Head
+    const { title } = useMeta()
+    title.value = `Record ${route.value.params.id}`
 
     const tabs = [
       {
@@ -101,6 +105,9 @@ export default defineComponent({
       const res: MasterRecord = await $axios.$get(path)
       record.value = res
 
+      // Update title
+      title.value = `${record.value.givenname} ${record.value.surname}`
+
       // Get basic record statistics
       const statsRes: MasterRecordStatistics = await $axios.$get(record.value.links.statistics)
       stats.value = statsRes
@@ -117,7 +124,7 @@ export default defineComponent({
     }
   },
   head: {
-    title: 'Master Records',
+    title: 'Master Record',
   },
 })
 </script>

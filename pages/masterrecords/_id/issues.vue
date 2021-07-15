@@ -36,6 +36,8 @@ import { formatGender } from '@/utilities/codeUtils'
 import { MasterRecord, MasterRecordStatistics } from '@/interfaces/masterrecord'
 import { WorkItem } from '@/interfaces/workitem'
 
+import usePermissions from '~/mixins/usePermissions'
+
 export default defineComponent({
   props: {
     record: {
@@ -49,13 +51,14 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { $axios, $hasPermission } = useContext()
+    const { $axios } = useContext()
+    const { hasPermission } = usePermissions()
 
     const workItems = ref([] as WorkItem[])
 
     useFetch(async () => {
       // Use the record links to load related data concurrently
-      if ($hasPermission('ukrdc:workitems:read')) {
+      if (hasPermission('ukrdc:workitems:read')) {
         workItems.value = await $axios.$get(props.record.links.workitems)
       }
     })

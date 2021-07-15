@@ -20,7 +20,7 @@ interface PatientRecordLinks {
   exportRADAR: string
 }
 
-export interface PatientRecordShort {
+export interface PatientRecord {
   pid: string
   sendingfacility: string
   sendingextract: string
@@ -28,11 +28,8 @@ export interface PatientRecordShort {
   ukrdcid: string
   repositoryCreationDate: string
   repositoryUpdateDate: string
-
-  links: PatientRecordLinks
-}
-
-export interface PatientRecord extends PatientRecordShort {
   programMemberships: ProgramMembership[]
   patient: Patient
+
+  links: PatientRecordLinks
 }

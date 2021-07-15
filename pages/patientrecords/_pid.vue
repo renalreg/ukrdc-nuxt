@@ -2,10 +2,7 @@
   <div>
     <div v-if="record && record.patient" class="md:flex items-center mb-2">
       <div class="flex-grow">
-        <TextH1>
-          {{ record.patient.names[0].given }}
-          {{ record.patient.names[0].family }}
-        </TextH1>
+        <TextH1>{{ fullName }}</TextH1>
       </div>
       <div v-if="related">
         <GenericSelect v-model="selectedPid">
@@ -32,26 +29,42 @@ import {
   computed,
   watch,
   useRouter,
+  useMeta,
 } from '@nuxtjs/composition-api'
 
-import { PatientRecord, PatientRecordShort } from '@/interfaces/patientrecord'
+import { PatientRecord } from '@/interfaces/patientrecord'
 import { TabItem } from '@/interfaces/tabs'
 
 import { isMembership } from '@/utilities/recordUtils'
+
+import usePermissions from '~/mixins/usePermissions'
 
 export default defineComponent({
   setup() {
     const route = useRoute()
     const router = useRouter()
-    const { $axios, $config, $hasPermission } = useContext()
+    const { $axios, $config } = useContext()
+    const { hasPermission } = usePermissions()
+
+    // Head
+    const { title } = useMeta()
+    title.value = `Record ${route.value.params.pid}`
 
     const record = ref<PatientRecord>()
-    const related = ref<PatientRecordShort[]>()
-    const relatedDataRecords = computed<PatientRecordShort[]>(() => {
+    const related = ref<PatientRecord[]>()
+    const relatedDataRecords = computed<PatientRecord[]>(() => {
       if (related.value) {
         return related.value.filter((record) => !isMembership(record))
       }
       return []
+    })
+
+    const fullName = computed(() => {
+      if (record) {
+        return `${record.value?.patient.names[0].given} ${record.value?.patient.names[0].family}`
+      } else {
+        return ''
+      }
     })
 
     const selectedPid = ref(route.value.params.pid)
@@ -84,7 +97,7 @@ export default defineComponent({
     const tabs = computed(() => {
       return [
         ...baseTabs,
-        ...($hasPermission('ukrdc:mirth:write')
+        ...(hasPermission('ukrdc:mirth:write')
           ? [
               {
                 name: 'Export',
@@ -100,7 +113,11 @@ export default defineComponent({
 
       const res: PatientRecord = await $axios.$get(path)
       record.value = res
-      const rel: PatientRecordShort[] = await $axios.$get(`${path}related/`)
+
+      // Update title
+      title.value = `${fullName.value} from ${record.value.sendingfacility}`
+
+      const rel: PatientRecord[] = await $axios.$get(`${path}related/`)
       related.value = rel
     })
 
@@ -109,6 +126,7 @@ export default defineComponent({
       related,
       relatedDataRecords,
       selectedPid,
+      fullName,
       tabs,
     }
   },

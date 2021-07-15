@@ -22,7 +22,7 @@
         <SkeleText v-else class="h-4 w-1/2" />
       </div>
       <div>
-        <GenericButtonPrimary class="w-48" @click="fetchAndShowSource">{{ sourceButtonLabel }}</GenericButtonPrimary>
+        <GenericButton class="w-48" @click="fetchAndShowSource">{{ sourceButtonLabel }}</GenericButton>
       </div>
     </div>
 
@@ -101,7 +101,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useRoute, useFetch, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useRoute, useFetch, useContext, useMeta } from '@nuxtjs/composition-api'
 
 import { ExtendedError, ErrorSource } from '@/interfaces/errors'
 import { ChannelMessage } from '@/interfaces/mirth'
@@ -110,10 +110,17 @@ import { formatDate } from '@/utilities/dateUtils'
 import { isEmptyObject } from '@/utilities/objectUtils'
 import { modalInterface } from '~/interfaces/modal'
 
+import usePermissions from '~/mixins/usePermissions'
+
 export default defineComponent({
   setup() {
     const route = useRoute()
-    const { $axios, $config, $hasPermission } = useContext()
+    const { $axios, $config } = useContext()
+    const { hasPermission } = usePermissions()
+
+    // Head
+    const { title } = useMeta()
+    title.value = `Error ${route.value.params.id}`
 
     const error = ref<ExtendedError>()
     const source = ref<ErrorSource>()
@@ -130,7 +137,7 @@ export default defineComponent({
       error.value = res
 
       // Conditionally get the Mirth message data
-      if ($hasPermission('ukrdc:mirth:read')) {
+      if (hasPermission('ukrdc:mirth:read')) {
         const mirthPath = error.value.links.mirth
         const mirthRes: ChannelMessage = await $axios.$get(mirthPath)
         mirthMessage.value = mirthRes
@@ -165,6 +172,9 @@ export default defineComponent({
       sourceButtonLabel,
       fetchAndShowSource,
     }
+  },
+  head: {
+    title: 'Error',
   },
 })
 </script>

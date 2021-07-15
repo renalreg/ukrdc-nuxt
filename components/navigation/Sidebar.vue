@@ -84,7 +84,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
+import usePermissions from '~/mixins/usePermissions'
 
 interface NavItem {
   title: string
@@ -108,7 +109,7 @@ export default defineComponent({
   },
 
   setup() {
-    const { $hasPermission } = useContext()
+    const { hasPermission } = usePermissions()
 
     const pages = ref([
       {
@@ -121,35 +122,35 @@ export default defineComponent({
         title: 'Records',
         url: '/masterrecords',
         svg: 'M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4',
-        visible: $hasPermission('ukrdc:records:read'),
+        visible: hasPermission('ukrdc:records:read'),
       },
       {
         title: 'Administration',
         visible:
-          $hasPermission('ukrdc:workitems:read') ||
-          $hasPermission('ukrdc:workitems:write') ||
-          $hasPermission('ukrdc:errors:read') ||
-          $hasPermission('ukrdc:errors:write') ||
-          $hasPermission('ukrdc:mirth:read') ||
-          $hasPermission('ukrdc:mirth:write'),
+          hasPermission('ukrdc:workitems:read') ||
+          hasPermission('ukrdc:workitems:write') ||
+          hasPermission('ukrdc:errors:read') ||
+          hasPermission('ukrdc:errors:write') ||
+          hasPermission('ukrdc:mirth:read') ||
+          hasPermission('ukrdc:mirth:write'),
       },
       {
         title: 'Work Items',
         url: '/workitems',
         svg: 'M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1',
-        visible: $hasPermission('ukrdc:workitems:read'),
+        visible: hasPermission('ukrdc:workitems:read'),
       },
       {
         title: 'Errors',
         url: '/errors',
         svg: 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z',
-        visible: $hasPermission('ukrdc:errors:read') || $hasPermission('ukrdc:errors:write'),
+        visible: hasPermission('ukrdc:errors:read') || hasPermission('ukrdc:errors:write'),
       },
       {
         title: 'Channels',
         url: '/mirth',
         svg: 'M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20',
-        visible: $hasPermission('ukrdc:mirth:read'),
+        visible: hasPermission('ukrdc:mirth:read'),
       },
     ] as NavItem[])
 

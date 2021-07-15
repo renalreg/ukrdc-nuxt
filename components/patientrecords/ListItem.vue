@@ -32,10 +32,8 @@
             </TextP>
           </div>
           <!-- Record link -->
-          <GenericButtonMini class="h-8 justify-self-end"
-            ><NuxtLink :to="`/patientrecords/${item.pid}`" class="block hover:bg-gray-50"
-              >View Record</NuxtLink
-            ></GenericButtonMini
+          <GenericButtonMini :to="`/patientrecords/${item.pid}`" class="h-8 justify-self-end"
+            >View Record</GenericButtonMini
           >
         </div>
       </div>
@@ -50,12 +48,12 @@
 <script lang="ts">
 import { defineComponent, ref } from '@nuxtjs/composition-api'
 import { formatDate } from '@/utilities/dateUtils'
-import { PatientRecordShort } from '@/interfaces/patientrecord'
+import { PatientRecord } from '@/interfaces/patientrecord'
 
 export default defineComponent({
   props: {
     item: {
-      type: Object as () => PatientRecordShort,
+      type: Object as () => PatientRecord,
       required: true,
     },
   },

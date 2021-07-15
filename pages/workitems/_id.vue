@@ -1,6 +1,6 @@
 <template>
   <div>
-    <GenericModalSlot v-if="$hasPermission('ukrdc:workitems:write')" ref="addCommentModal">
+    <GenericModalSlot v-if="hasPermission('ukrdc:workitems:write')" ref="addCommentModal">
       <div class="text-left">
         <div class="mb-4">Add Work Item comment</div>
         <FormTextArea v-model="customComment" rows="3"></FormTextArea>
@@ -8,11 +8,11 @@
 
       <div class="flex justify-end">
         <genericButton @click="addCommentModal.hide()">Cancel</genericButton>
-        <genericButtonPrimary class="ml-2" type="submit" @click="updateWorkItemComment()"> Save </genericButtonPrimary>
+        <GenericButton class="ml-2" type="submit" @click="updateWorkItemComment()"> Save </GenericButton>
       </div>
     </GenericModalSlot>
 
-    <GenericModalSlot v-if="$hasPermission('ukrdc:workitems:write')" ref="mergeModal">
+    <GenericModalSlot v-if="hasPermission('ukrdc:workitems:write')" ref="mergeModal">
       <div class="text-left">
         <div class="mb-4">Merge and close the Work Item</div>
 
@@ -24,13 +24,11 @@
 
       <div class="flex justify-end">
         <genericButton @click="mergeModal.hide()"> Cancel </genericButton>
-        <genericButtonPrimary type="submit" class="ml-2" @click="mergeWorkItem()">
-          Merge and Close
-        </genericButtonPrimary>
+        <GenericButton type="submit" class="ml-2" @click="mergeWorkItem()"> Merge and Close </GenericButton>
       </div>
     </GenericModalSlot>
 
-    <GenericModalSlot v-if="$hasPermission('ukrdc:workitems:write')" ref="unlinkModal">
+    <GenericModalSlot v-if="hasPermission('ukrdc:workitems:write')" ref="unlinkModal">
       <div class="text-left">
         <div class="mb-4">Unlink and close the Work Item</div>
         <div>
@@ -43,13 +41,13 @@
 
       <div class="flex justify-end">
         <GenericButton @click="unlinkModal.hide()"> Cancel </GenericButton>
-        <genericButtonPrimary type="submit" class="ml-3" colour="red" @click="unlinkWorkItem()">
+        <GenericButton type="submit" class="ml-3" colour="red" @click="unlinkWorkItem()">
           Unlink and Close
-        </genericButtonPrimary>
+        </GenericButton>
       </div>
     </GenericModalSlot>
 
-    <GenericModalSlot v-if="$hasPermission('ukrdc:workitems:write')" ref="closeModal">
+    <GenericModalSlot v-if="hasPermission('ukrdc:workitems:write')" ref="closeModal">
       <div class="text-left">
         <div class="mb-4">Close the Work Item</div>
 
@@ -63,9 +61,9 @@
 
       <div class="flex justify-end">
         <GenericButton @click="closeModal.hide()"> Cancel </GenericButton>
-        <genericButtonPrimary type="submit" class="ml-3" colour="red" @click="closeWorkItem()">
+        <GenericButton type="submit" class="ml-3" colour="red" @click="closeWorkItem()">
           Close Work Item
-        </genericButtonPrimary>
+        </GenericButton>
       </div>
     </GenericModalSlot>
 
@@ -108,40 +106,32 @@
     </GenericCard>
 
     <div
-      v-if="$hasPermission('ukrdc:workitems:write') && record && record.status !== 3"
+      v-if="hasPermission('ukrdc:workitems:write') && record && record.status !== 3"
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
     >
-      <genericButtonPrimary class="inline-flex items-center justify-center w-full" @click="addCommentModal.show()">
+      <GenericButton
+        colour="indigo"
+        class="inline-flex items-center justify-center w-full"
+        @click="addCommentModal.show()"
+      >
         <IconPencil />
         Comment
-      </genericButtonPrimary>
+      </GenericButton>
 
-      <genericButtonPrimary
-        class="inline-flex items-center justify-center w-full"
-        colour="green"
-        @click="closeModal.show()"
-      >
+      <GenericButton class="inline-flex items-center justify-center w-full" colour="green" @click="closeModal.show()">
         <IconCheckCircle />
         Close
-      </genericButtonPrimary>
+      </GenericButton>
 
-      <genericButtonPrimary
-        class="inline-flex items-center justify-center w-full"
-        colour="yellow"
-        @click="mergeModal.show()"
-      >
+      <GenericButton class="inline-flex items-center justify-center w-full" colour="yellow" @click="mergeModal.show()">
         <IconLink />
         Merge
-      </genericButtonPrimary>
+      </GenericButton>
 
-      <genericButtonPrimary
-        class="inline-flex items-center justify-center w-full"
-        colour="red"
-        @click="unlinkModal.show()"
-      >
+      <GenericButton class="inline-flex items-center justify-center w-full" colour="red" @click="unlinkModal.show()">
         <IconXCircle />
         Unlink
-      </genericButtonPrimary>
+      </GenericButton>
     </div>
 
     <!-- Proposed link cards -->
@@ -225,7 +215,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useRoute, useFetch, useContext, computed } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useRoute, useFetch, useContext, computed, useMeta } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/utilities/dateUtils'
 import { formatGender } from '@/utilities/codeUtils'
@@ -236,11 +226,18 @@ import { WorkItem } from '@/interfaces/workitem'
 import { modalInterface } from '@/interfaces/modal'
 import { MirthMessageResponse } from '@/interfaces/mirth'
 
+import usePermissions from '~/mixins/usePermissions'
+
 export default defineComponent({
   setup() {
     // Dependencies
     const route = useRoute()
     const { $axios, $config, $toast } = useContext()
+    const { hasPermission } = usePermissions()
+
+    // Head
+    const { title } = useMeta()
+    title.value = `Work Item ${route.value.params.id}`
 
     // Work item record data
     const record = ref<WorkItem>()
@@ -282,13 +279,10 @@ export default defineComponent({
       customComment.value = res.updateDescription
 
       // Use the record links to load related data concurrently
-      const [incomingMasterRecordRes, relatedRecordsRes, relatedPersonsRes] = await Promise.all([
-        $axios.$get(record.value.person.links.masterrecords),
+      const [relatedRecordsRes, relatedPersonsRes] = await Promise.all([
         $axios.$get(record.value.links.related),
         $axios.$get(record.value.masterRecord.links.persons),
       ])
-
-      console.log(incomingMasterRecordRes)
 
       // Set related workitems
       relatedRecords.value = relatedRecordsRes
@@ -408,6 +402,7 @@ export default defineComponent({
       mergeWorkItem,
       unlinkWorkItem,
       closeWorkItem,
+      hasPermission,
     }
   },
   head: {
