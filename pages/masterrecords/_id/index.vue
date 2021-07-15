@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Description list -->
-    <GenericCard>
+    <GenericCard class="mb-4">
       <GenericCardContent>
         <GenericDl>
           <GenericDi>
@@ -55,7 +55,17 @@
     </GenericCard>
 
     <!-- Related Patient Records card -->
-    <GenericCard class="mt-4">
+    <div v-if="!$fetchState.pending">
+      <div v-if="latestMessage">
+        <GenericAlertError v-if="latestMessage.msgStatus === 'ERROR'" class="mb-4" :message="latestMessageInfo" />
+        <GenericAlertInfo v-else class="mb-4" :message="latestMessageInfo" />
+      </div>
+      <div v-else>
+        <GenericAlertWarning class="mb-4" :message="latestMessageInfo" />
+      </div>
+    </div>
+
+    <GenericCard>
       <GenericCardHeader>
         <TextH2> Patient Records </TextH2>
       </GenericCardHeader>
@@ -93,6 +103,7 @@ import { isTracing } from '@/utilities/recordUtils'
 
 import { MasterRecord, MasterRecordStatistics } from '@/interfaces/masterrecord'
 import { PatientRecordShort } from '@/interfaces/patientrecord'
+import { MinimalMessage } from '~/interfaces/errors'
 
 export default defineComponent({
   props: {
@@ -112,6 +123,7 @@ export default defineComponent({
 
     const relatedRecords = ref([] as MasterRecord[])
     const patientRecords = ref([] as PatientRecordShort[])
+    const latestMessage = ref<MinimalMessage>()
 
     const tracingRecord = computed(() => {
       const tracings = patientRecords.value.filter(isTracing)
@@ -121,12 +133,33 @@ export default defineComponent({
       return tracings[0]
     })
 
+    const latestMessageInfo = computed(() => {
+      if (!latestMessage.value) {
+        return 'No new patient data received in the last year'
+      }
+      if (latestMessage.value.msgStatus === 'ERROR') {
+        return `Latest file ${latestMessage.value.filename} failed from ${latestMessage.value.facility} on ${formatDate(
+          latestMessage.value.received,
+          false
+        )}`
+      }
+      return `Latest file ${latestMessage.value.filename} recieved from ${latestMessage.value.facility} on ${formatDate(
+        latestMessage.value.received,
+        false
+      )}`
+    })
+
     useFetch(async () => {
       // Use the record links to load related data concurrently
-      const [relatedRecordsResponse, patientRecordsResponse] = await Promise.all([
+      const [latestMessageResponse, relatedRecordsResponse, patientRecordsResponse] = await Promise.all([
+        $axios.$get(props.record.links.latestMessage),
         $axios.$get(props.record.links.related),
         $axios.$get(props.record.links.patientrecords),
       ])
+
+      if (latestMessageResponse) {
+        latestMessage.value = latestMessageResponse
+      }
 
       relatedRecords.value = relatedRecordsResponse
       patientRecords.value = patientRecordsResponse
@@ -136,6 +169,8 @@ export default defineComponent({
       patientRecords,
       relatedRecords,
       tracingRecord,
+      latestMessage,
+      latestMessageInfo,
       formatGender,
       formatDate,
     }

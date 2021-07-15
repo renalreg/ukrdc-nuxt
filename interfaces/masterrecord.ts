@@ -1,5 +1,6 @@
 interface MasterRecordLinks {
   self: string
+  latestMessage: string
   statistics: string
   related: string
   errors: string
