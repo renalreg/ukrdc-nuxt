@@ -8,7 +8,11 @@ export function isData(record: PatientRecordShort): boolean {
   if (record.sendingextract === 'PV') {
     return true
   }
-  if (record.sendingextract === 'UKRDC' && !ukrdcMembershipFacilities.includes(record.sendingfacility)) {
+  if (
+    record.sendingextract === 'UKRDC' &&
+    !ukrdcMembershipFacilities.includes(record.sendingfacility) &&
+    record.sendingfacility !== 'TRACING'
+  ) {
     return true
   }
   return false
