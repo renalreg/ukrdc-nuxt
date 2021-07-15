@@ -6,18 +6,20 @@ interface ErrorLinks {
   mirth: string
   source: string
 }
-export interface Message {
+
+export interface MinimalMessage {
   id: string
-  messageId: number
-  channelId: string
   received: string
   msgStatus: string
   ni: string
   filename: string
   facility: string
+}
+export interface Message extends MinimalMessage {
+  messageId: number
+  channelId: string
   error: string
   status: string
-
   links: ErrorLinks
 }
 
