@@ -24,7 +24,7 @@
           <TextL1 class="inline">Created: </TextL1><TextP class="inline">{{ formatDate(code.creationDate) }} </TextP>
         </div>
         <div class="mt-2">
-          <TextL1 class="inline">Created: </TextL1
+          <TextL1 class="inline">Updated: </TextL1
           ><TextP class="inline">{{ code.updateDate ? formatDate(code.updateDate) : 'Never updated' }} </TextP>
         </div>
       </div>
