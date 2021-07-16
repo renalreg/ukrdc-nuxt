@@ -28,6 +28,10 @@
           ><TextP class="inline">{{ code.updateDate ? formatDate(code.updateDate) : 'Never updated' }} </TextP>
         </div>
       </div>
+      <!-- Links -->
+      <div v-if="externalLink" class="mb-4">
+        <a :href="externalLink" target="_blank">{{ externalLink }}</a>
+      </div>
     </div>
 
     <!-- Code maps  -->
@@ -65,7 +69,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, useFetch, useRoute, watch } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref, useContext, useFetch, useRoute, watch } from '@nuxtjs/composition-api'
 import { formatDate } from '@/utilities/dateUtils'
 import { ExtendedCode } from '@/interfaces/codes'
 
@@ -75,6 +79,19 @@ export default defineComponent({
     const { $axios, $config } = useContext()
 
     const code = ref<ExtendedCode>()
+
+    const externalLink = computed(() => {
+      if (!code.value) {
+        return null
+      }
+      if (code.value.codingStandard === 'LOINC') {
+        return `https://loinc.org/${code.value.code}/`
+      }
+      if (code.value.codingStandard === 'SNOMED') {
+        return `https://termbrowser.nhs.uk/?perspective=full&conceptId1=${code.value.code}`
+      }
+      return null
+    })
 
     const { fetch } = useFetch(async () => {
       // Scroll to top every time we fetch a new code
@@ -91,7 +108,7 @@ export default defineComponent({
       fetch()
     })
 
-    return { formatDate, code }
+    return { formatDate, externalLink, code }
   },
 })
 </script>
