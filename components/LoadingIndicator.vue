@@ -8,7 +8,7 @@
 
 <style lang="postcss" scoped>
 .spinner {
-  margin: 100px auto 0;
+  margin: 0 auto 0;
   width: 70px;
   text-align: center;
 }

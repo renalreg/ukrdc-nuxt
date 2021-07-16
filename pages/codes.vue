@@ -4,22 +4,20 @@
       <h1 class="text-2xl font-semibold text-gray-900">Codes List</h1>
     </div>
 
-    <div v-if="standards">
-      <div v-if="standards.length > 1">
-        <GenericSearchableSelect
-          v-model="selectedStandard"
-          class="mb-4"
-          :options="standards"
-          hint="Select a coding standard..."
-          :mount-opened="false"
-          :closable="true"
-        />
-      </div>
+    <div v-if="standards && standards.length > 1" :class="$route.params.id ? 'hidden lg:block' : 'block'">
+      <GenericSearchableSelect
+        v-model="selectedStandard"
+        class="mb-4"
+        :options="standards"
+        hint="Select a coding standard..."
+        :mount-opened="false"
+        :closable="true"
+      />
     </div>
 
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
       <!-- Code list -->
-      <div>
+      <div :class="$route.params.id ? 'hidden lg:block' : 'block'">
         <GenericCard>
           <!-- Skeleton results -->
           <ul v-if="$fetchState.pending" class="divide-y divide-gray-200">
@@ -45,9 +43,17 @@
         </GenericCard>
       </div>
       <!-- Code details -->
-      <GenericCard class="py-4">
-        <NuxtChild />
-      </GenericCard>
+      <div>
+        <GenericButton
+          v-show="$route.params.id"
+          class="lg:hidden mb-4 w-full"
+          :to="{ path: `/codes/`, query: $route.query }"
+          >Back to List</GenericButton
+        >
+        <GenericCard class="pt-4" :class="$route.params.id ? 'block' : 'hidden lg:block'">
+          <NuxtChild />
+        </GenericCard>
+      </div>
     </div>
   </div>
 </template>
@@ -83,6 +89,7 @@ export default defineComponent({
       if (!standards.value) {
         const standardsResponse: string[] = await $axios.$get(`${$config.apiBase}/v1/codes/standards/`)
         // Fetch the dashboard response from our API server
+        standardsResponse.sort()
         standards.value = standardsResponse
       }
       // Fetch code list

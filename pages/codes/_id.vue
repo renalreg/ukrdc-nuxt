@@ -24,7 +24,7 @@
           <TextL1 class="inline">Created: </TextL1><TextP class="inline">{{ formatDate(code.creationDate) }} </TextP>
         </div>
         <div class="mt-2">
-          <TextL1 class="inline">Created: </TextL1
+          <TextL1 class="inline">Updated: </TextL1
           ><TextP class="inline">{{ code.updateDate ? formatDate(code.updateDate) : 'Never updated' }} </TextP>
         </div>
       </div>
@@ -35,7 +35,7 @@
     </div>
 
     <!-- Code maps  -->
-    <div v-if="code.mapsTo.length > 0 || code.mappedBy.length > 0" class="border-b">
+    <div v-if="code.mapsTo.length > 0 || code.mappedBy.length > 0">
       <!-- Maps to  -->
       <div v-if="code.mapsTo.length > 0">
         <div class="bg-gray-50 pl-4 sm:pl-6 py-1 border-t border-b">
