@@ -17,9 +17,9 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
       <!-- Code list -->
-      <div>
+      <div :class="$route.params.id ? 'hidden lg:block' : 'block'">
         <GenericCard>
           <!-- Skeleton results -->
           <ul v-if="$fetchState.pending" class="divide-y divide-gray-200">
@@ -45,9 +45,14 @@
         </GenericCard>
       </div>
       <!-- Code details -->
-      <GenericCard class="py-4">
-        <NuxtChild />
-      </GenericCard>
+      <div>
+        <GenericButton class="lg:hidden mb-2" :to="{ path: `/codes/`, query: $route.query }"
+          >Back to List</GenericButton
+        >
+        <GenericCard class="py-4" :class="$route.params.id ? 'block' : 'hidden lg:block'">
+          <NuxtChild />
+        </GenericCard>
+      </div>
     </div>
   </div>
 </template>
