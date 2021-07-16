@@ -1,8 +1,8 @@
 <template>
   <li>
-    <div class="px-4 py-4 sm:px-6 min-w-0 grid grid-cols-3 sm:grid-cols-5 gap-2 w-full">
+    <div class="px-4 py-4 sm:px-6 min-w-0 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 w-full">
       <!-- Heading -->
-      <div class="col-span-3">
+      <div class="col-span-5 lg:col-span-3">
         <TextL1c class="truncate">
           {{ item.filename || 'No filename found' }}
         </TextL1c>
@@ -10,8 +10,15 @@
           {{ item.error ? item.error : 'No error message recorded' }}
         </TextP>
       </div>
+      <!-- Recieved  -->
+      <div class="col-span-2 lg:col-span-1">
+        <TextP>From {{ item.facility }}</TextP>
+        <TextP class="mt-2">
+          {{ formatDate(item.received) }}
+        </TextP>
+      </div>
       <!-- Identifiers  -->
-      <div class="flex items-center gap-4 col-span-1">
+      <div class="flex items-center gap-4 col-span-3 lg:col-span-1">
         <GenericButtonRound
           :to="{ path: '/errors', query: { nationalid: item.ni } }"
           tooltip="Filter errors by this patient"
@@ -23,14 +30,6 @@
             {{ item.ni }}
           </TextP>
         </div>
-      </div>
-
-      <!-- Recieved  -->
-      <div class="col-span-2 sm:col-span-1">
-        <TextP>From {{ item.facility }}</TextP>
-        <TextP class="mt-2">
-          {{ formatDate(item.received) }}
-        </TextP>
       </div>
     </div>
   </li>
