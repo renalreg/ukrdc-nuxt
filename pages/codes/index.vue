@@ -1,3 +1,3 @@
 <template>
-  <div>Select a code</div>
+  <div class="px-4 sm:px-6">Select a code</div>
 </template>
