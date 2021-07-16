@@ -119,5 +119,8 @@ export default defineComponent({
 
     return { standards, selectedStandard, codes, selectedCode, page, total, size }
   },
+  head: {
+    title: 'Code List',
+  },
 })
 </script>

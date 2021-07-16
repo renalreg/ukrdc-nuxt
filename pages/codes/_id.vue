@@ -69,7 +69,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, useContext, useFetch, useRoute, watch } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref, useContext, useFetch, useMeta, useRoute, watch } from '@nuxtjs/composition-api'
 import { formatDate } from '@/utilities/dateUtils'
 import { ExtendedCode } from '@/interfaces/codes'
 
@@ -77,6 +77,10 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const { $axios, $config } = useContext()
+
+    // Head
+    const { title } = useMeta()
+    title.value = `Code ${route.value.params.id}`
 
     const code = ref<ExtendedCode>()
 
@@ -110,5 +114,6 @@ export default defineComponent({
 
     return { formatDate, externalLink, code }
   },
+  head: {},
 })
 </script>
