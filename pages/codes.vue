@@ -28,7 +28,7 @@
           <!-- Real results -->
           <ul v-else class="divide-y divide-gray-200">
             <div v-for="code in codes" :key="`${code.codingStandard}.${code.code}`">
-              <NuxtLink :to="`/codes/${code.codingStandard}.${code.code}`">
+              <NuxtLink :to="{ path: `/codes/${code.codingStandard}.${code.code}/`, query: $route.query }">
                 <CodesListItem class="hover:bg-gray-50" :code="code" />
               </NuxtLink>
             </div>
@@ -45,7 +45,7 @@
         </GenericCard>
       </div>
       <!-- Code details -->
-      <GenericCard class="px-4 py-4">
+      <GenericCard class="py-4">
         <NuxtChild />
       </GenericCard>
     </div>
@@ -53,7 +53,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, useFetch, useRoute, watch } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext, useFetch, watch } from '@nuxtjs/composition-api'
 
 import { Code } from '@/interfaces/codes'
 import useQuery from '~/mixins/useQuery'
@@ -68,7 +68,6 @@ interface CodesPage {
 
 export default defineComponent({
   setup() {
-    const route = useRoute()
     const { $axios, $config } = useContext()
     const { page, total, size } = usePagination()
     const { stringQuery } = useQuery()
@@ -78,11 +77,6 @@ export default defineComponent({
 
     const codes = ref([] as Code[])
     const selectedCode = ref<Code>()
-
-    function selectCode(code: Code) {
-      selectedCode.value = code
-      document.getElementsByTagName('main')[0].scrollTop = 0
-    }
 
     const { fetch } = useFetch(async () => {
       // We only need to fetch the list of standards once
@@ -105,11 +99,18 @@ export default defineComponent({
       size.value = codesResponse.size
     })
 
-    watch(route, () => {
-      fetch()
+    watch([page, selectedStandard], (curr, prev) => {
+      // When we change page, the query object gets written to,
+      // triggering this event even if the values themselves
+      // don't change. We need to compare them before deciding
+      // to fetch, otherwise the list of codes will refresh
+      // every time you click on a code and change page.
+      if (!(curr[0] === prev[0] && curr[1] === prev[1])) {
+        fetch()
+      }
     })
 
-    return { standards, selectedStandard, codes, selectedCode, selectCode, page, total, size }
+    return { standards, selectedStandard, codes, selectedCode, page, total, size }
   },
 })
 </script>

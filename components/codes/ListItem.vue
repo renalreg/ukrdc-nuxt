@@ -3,10 +3,7 @@
     <div class="px-4 py-4 sm:px-6 min-w-0 grid grid-cols-2 lg:grid-cols-3 md:gap-4 w-full">
       <!-- Heading -->
       <div class="col-span-2">
-        <TextL1 class="capitalize truncate inline"> {{ code.codingStandard }} / </TextL1>
-        <TextL1c class="capitalize truncate inline">
-          {{ code.code }}
-        </TextL1c>
+        <CodesTitle :code="code.code" :coding-standard="code.codingStandard" />
         <TextP class="mt-2 truncate">
           {{ code.description || 'No description found' }}
         </TextP>

@@ -16,3 +16,8 @@ export interface CodeMap {
   creationDate: string
   updateDate: string
 }
+
+export interface ExtendedCode extends Code {
+  mapsTo: CodeMap[]
+  mappedBy: CodeMap[]
+}
