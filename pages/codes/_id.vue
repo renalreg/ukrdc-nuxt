@@ -5,7 +5,7 @@
       <!-- Heading -->
       <div class="mb-4">
         <CodesTitle :code="code.code" :coding-standard="code.codingStandard" />
-        <TextP class="mt-2 truncate">
+        <TextP class="mt-2">
           {{ code.description || 'No description found' }}
         </TextP>
       </div>
