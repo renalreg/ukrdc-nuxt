@@ -83,6 +83,7 @@ export default defineComponent({
       if (!standards.value) {
         const standardsResponse: string[] = await $axios.$get(`${$config.apiBase}/v1/codes/standards/`)
         // Fetch the dashboard response from our API server
+        standardsResponse.sort()
         standards.value = standardsResponse
       }
       // Fetch code list
