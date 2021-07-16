@@ -35,7 +35,7 @@
     </div>
 
     <!-- Code maps  -->
-    <div v-if="code.mapsTo.length > 0 || code.mappedBy.length > 0" class="border-b">
+    <div v-if="code.mapsTo.length > 0 || code.mappedBy.length > 0">
       <!-- Maps to  -->
       <div v-if="code.mapsTo.length > 0">
         <div class="bg-gray-50 pl-4 sm:pl-6 py-1 border-t border-b">

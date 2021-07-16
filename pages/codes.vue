@@ -47,7 +47,7 @@
         <GenericButton class="lg:hidden mb-4 w-full" :to="{ path: `/codes/`, query: $route.query }"
           >Back to List</GenericButton
         >
-        <GenericCard class="py-4" :class="$route.params.id ? 'block' : 'hidden lg:block'">
+        <GenericCard class="pt-4" :class="$route.params.id ? 'block' : 'hidden lg:block'">
           <NuxtChild />
         </GenericCard>
       </div>
