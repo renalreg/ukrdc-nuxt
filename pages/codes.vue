@@ -4,17 +4,15 @@
       <h1 class="text-2xl font-semibold text-gray-900">Codes List</h1>
     </div>
 
-    <div v-if="standards">
-      <div v-if="standards.length > 1">
-        <GenericSearchableSelect
-          v-model="selectedStandard"
-          class="mb-4"
-          :options="standards"
-          hint="Select a coding standard..."
-          :mount-opened="false"
-          :closable="true"
-        />
-      </div>
+    <div v-if="standards && standards.length > 1" :class="$route.params.id ? 'hidden lg:block' : 'block'">
+      <GenericSearchableSelect
+        v-model="selectedStandard"
+        class="mb-4"
+        :options="standards"
+        hint="Select a coding standard..."
+        :mount-opened="false"
+        :closable="true"
+      />
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -46,7 +44,7 @@
       </div>
       <!-- Code details -->
       <div>
-        <GenericButton class="lg:hidden mb-2" :to="{ path: `/codes/`, query: $route.query }"
+        <GenericButton class="lg:hidden mb-4 w-full" :to="{ path: `/codes/`, query: $route.query }"
           >Back to List</GenericButton
         >
         <GenericCard class="py-4" :class="$route.params.id ? 'block' : 'hidden lg:block'">
