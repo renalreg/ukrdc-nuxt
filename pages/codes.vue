@@ -44,7 +44,10 @@
       </div>
       <!-- Code details -->
       <div>
-        <GenericButton class="lg:hidden mb-4 w-full" :to="{ path: `/codes/`, query: $route.query }"
+        <GenericButton
+          v-show="$route.params.id"
+          class="lg:hidden mb-4 w-full"
+          :to="{ path: `/codes/`, query: $route.query }"
           >Back to List</GenericButton
         >
         <GenericCard class="pt-4" :class="$route.params.id ? 'block' : 'hidden lg:block'">
