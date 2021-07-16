@@ -110,10 +110,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext, useMeta } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   setup() {
+    const { base } = useContext()
+    const { link } = useMeta()
+    link.value = [{ rel: 'icon', type: 'image/x-icon', href: `${base || '/'}favicon.ico` }]
+
     const sbOpen = ref(false)
 
     function toggle() {
@@ -122,6 +126,7 @@ export default defineComponent({
 
     return { sbOpen, toggle }
   },
+  head: {},
 })
 </script>
 
