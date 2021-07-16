@@ -99,7 +99,7 @@ export default defineComponent({
         document.getElementsByTagName('main')[0].scrollTop = 0
       }
       // Fetch code details
-      const codeResponse: ExtendedCode = await $axios.$get(`${$config.apiBase}/v1/codes/list/${route.value.params.id}`)
+      const codeResponse: ExtendedCode = await $axios.$get(`${$config.apiBase}/v1/codes/list/${route.value.params.id}/`)
       // Fetch the dashboard response from our API server
       code.value = codeResponse
     })
