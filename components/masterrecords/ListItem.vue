@@ -1,41 +1,38 @@
 <template>
   <li>
-    <!-- Content and chevron container -->
-    <div class="flex items-center px-4 py-4 sm:px-6">
-      <!-- Content container -->
-      <div class="min-w-0 grid grid-cols-3 lg:grid-cols-4 md:gap-4 w-full">
-        <!-- Name, DoB, gender -->
-        <div>
-          <TextL1c class="capitalize truncate">
-            {{ item.givenname.toLowerCase() }}
-            {{ item.surname.toLowerCase() }}
-          </TextL1c>
-          <TextP class="mt-2 flex items-center">
-            {{ formatDate(item.dateOfBirth, (t = false)) }}
-            <b class="ml-1"> {{ genderChar }}</b>
-          </TextP>
-        </div>
-        <!-- Record ID -->
-        <div>
-          <TextL1>Record ID</TextL1>
-          <TextP class="mt-2">
-            {{ item.id }}
-          </TextP>
-        </div>
-        <!-- National ID -->
-        <div class="text-right sm:text-left">
-          <TextP>
-            {{ item.nationalid.trim() }}
-          </TextP>
-          <masterrecordsNationalIdTypeTag class="mt-2" :nationalid-type="item.nationalidType" />
-        </div>
-        <!-- Details (large breakpoint only) -->
-        <div class="hidden lg:block">
-          <TextL1>Last updated</TextL1>
-          <TextP class="mt-2">
-            {{ formatDate(item.lastUpdated) }}
-          </TextP>
-        </div>
+    <!-- Content container -->
+    <div class="px-4 py-4 sm:px-6 min-w-0 grid grid-cols-3 lg:grid-cols-4 md:gap-4 w-full">
+      <!-- Name, DoB, gender -->
+      <div>
+        <TextL1c class="capitalize truncate">
+          {{ item.givenname.toLowerCase() }}
+          {{ item.surname.toLowerCase() }}
+        </TextL1c>
+        <TextP class="mt-2 flex items-center">
+          {{ formatDate(item.dateOfBirth, (t = false)) }}
+          <b class="ml-1"> {{ genderChar }}</b>
+        </TextP>
+      </div>
+      <!-- Record ID -->
+      <div>
+        <TextL1>Record ID</TextL1>
+        <TextP class="mt-2">
+          {{ item.id }}
+        </TextP>
+      </div>
+      <!-- National ID -->
+      <div class="text-right sm:text-left">
+        <TextP>
+          {{ item.nationalid.trim() }}
+        </TextP>
+        <masterrecordsNationalIdTypeTag class="mt-2" :nationalid-type="item.nationalidType" />
+      </div>
+      <!-- Details (large breakpoint only) -->
+      <div class="hidden lg:block">
+        <TextL1>Last updated</TextL1>
+        <TextP class="mt-2">
+          {{ formatDate(item.lastUpdated) }}
+        </TextP>
       </div>
     </div>
   </li>
