@@ -1,3 +1,7 @@
+export function urlCompare(url1: string, url2: string) {
+  return url1.replace(/\/$/, '') === url2.replace(/\/$/, '')
+}
+
 /*
 MIT License
 

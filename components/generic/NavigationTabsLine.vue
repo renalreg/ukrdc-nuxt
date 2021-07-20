@@ -8,7 +8,7 @@
         class="block w-full focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
         @change="$emit('input', $event.target.value)"
       >
-        <option v-for="tab in tabs" :key="tab.name" :selected="$route.path === tab.href">
+        <option v-for="tab in tabs" :key="tab.name" :selected="urlCompare($route.path, tab.href)">
           {{ tab.name }}
         </option>
       </select>
@@ -23,11 +23,11 @@
             role="tab"
             class="whitespace-nowrap py-4 px-1 border-b-2 font-medium"
             :class="[
-              $route.path.replace(/\/$/, '') === tab.href.replace(/\/$/, '')
+              urlCompare($route.path, tab.href)
                 ? 'border-indigo-500 text-indigo-600'
                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
             ]"
-            :aria-current="$route.path === tab.href ? 'page' : undefined"
+            :aria-current="urlCompare($route.path, tab.href) ? 'page' : undefined"
             @click="$emit('input', tab)"
           >
             {{ tab.name }}
@@ -40,6 +40,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
+import { urlCompare } from '@/utilities/pathUtils'
 
 export interface Tabs {
   name: string
@@ -52,6 +53,9 @@ export default defineComponent({
       type: Array as () => Tabs[],
       required: true,
     },
+  },
+  setup() {
+    return { urlCompare }
   },
 })
 </script>
