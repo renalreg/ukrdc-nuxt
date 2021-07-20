@@ -220,6 +220,7 @@ import { defineComponent, ref, useRoute, useFetch, useContext, computed, useMeta
 import { formatDate } from '@/utilities/dateUtils'
 import { formatGender } from '@/utilities/codeUtils'
 import { isEmptyObject } from '@/utilities/objectUtils'
+import { delay } from '@/utilities/timeUtils'
 
 import { Person } from '@/interfaces/persons'
 import { WorkItem } from '@/interfaces/workitem'
@@ -333,7 +334,10 @@ export default defineComponent({
           })
         })
         .finally(() => {
-          fetch()
+          // Delay fetch to allow JTRACE time to process
+          delay(1000).then(() => {
+            fetch()
+          })
         })
 
       const el = closeModal.value as modalInterface
@@ -380,7 +384,10 @@ export default defineComponent({
           })
         })
         .finally(() => {
-          fetch()
+          // Delay fetch to allow JTRACE time to process
+          delay(1000).then(() => {
+            fetch()
+          })
         })
     }
 
