@@ -97,19 +97,13 @@ import usePermissions from '~/mixins/usePermissions'
 
 export default defineComponent({
   setup() {
-    const { $auth, $config } = useContext()
+    const { $auth } = useContext()
     const { getPermissions } = usePermissions()
 
     const perms = computed(() => getPermissions())
 
     function logout(): void {
-      // In principle we should be able to use nuxt-auth's $auth.logout function,
-      // however Okta requires an ID token when using the logout API, which nuxt-auth
-      // doesn't store. Instead we reset the auth state locally, then redirect to
-      // the user management logout page
-      $auth.reset()
-      const logoutUrl = $config.oktaDomain + '/login/signout?fromURI=' + window.location.href
-      window.location.href = logoutUrl
+      $auth.logout()
     }
 
     function classesForScope(scope: string): string[] {

@@ -57,7 +57,7 @@ export default {
   auth: {
     strategies: {
       okta: {
-        scheme: '~/schemes/runtimeConfigurableScheme',
+        scheme: '~/schemes/oktaScheme',
         responseType: 'code',
         grantType: 'authorization_code',
         scope: ['openid', 'profile', 'email', 'offline_access'],
@@ -106,7 +106,7 @@ export default {
             authorization: process.env.OAUTH_ISSUER + '/v1/authorize',
             token: process.env.OAUTH_ISSUER + '/v1/token',
             userInfo: process.env.OAUTH_ISSUER + '/v1/userinfo',
-            logout: process.env.OAUTH_ISSUER + '/v1/logout',
+            logout: process.env.OKTA_DOMAIN + '/login/signout',
           },
           clientId: process.env.APP_CLIENT_ID,
         },
