@@ -35,16 +35,21 @@
       </GenericCard>
     </div>
     <div v-else class="mt-2 text-gray-500 text-center">
-      <LoadingIndicator v-if="search && $fetchState.pending"></LoadingIndicator>
-      <div v-else-if="search && !$fetchState.pending">No results found</div>
+      <LoadingIndicator v-if="activeSearch && $fetchState.pending"></LoadingIndicator>
+      <div v-else-if="activeSearch && !$fetchState.pending">No results found</div>
       <div v-else>
         <p class="mb-4">Search by name, date of birth, national ID, or local ID</p>
         <p><b>Tip: </b>Refine your search by joining terms,</p>
-        <p>
+        <p class="mb-4">
           For example,
           <span class="inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-800">
             john && 1/12/1980
           </span>
+        </p>
+        <p>Search for an exact name using quote marks,</p>
+        <p>
+          For example,
+          <span class="inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-800"> "jon" </span>
         </p>
       </div>
     </div>
@@ -52,7 +57,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, ref, useRoute, useFetch, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, watch, ref, useRoute, useFetch, useContext, computed } from '@nuxtjs/composition-api'
 
 import usePagination from '@/mixins/usePagination'
 import useLocalStorage from '@/mixins/useLocalStorage'
@@ -79,6 +84,12 @@ export default defineComponent({
 
     const search = arrayQuery('search', [], true, true)
     const searchboxString = ref('')
+    const activeSearch = computed(() => {
+      if (search.value && search.value.length > 0) {
+        return true
+      }
+      return false
+    })
 
     const showUKRDC = JSONStorage('searchIncludeUKRDC', false)
 
@@ -155,6 +166,7 @@ export default defineComponent({
       showUKRDC,
       searchSubmit,
       search,
+      activeSearch,
       page,
       size,
       total,
