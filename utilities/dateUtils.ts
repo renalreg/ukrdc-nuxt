@@ -20,7 +20,7 @@ export function formatDate(rawDate: string, t: boolean = true): string {
     options.hour = '2-digit'
     options.minute = '2-digit'
   }
-  return new Date(Date.parse(rawDate)).toLocaleString([], options)
+  return new Date(Date.parse(rawDate)).toLocaleString('en-GB', options)
 }
 
 export interface DateRange {
