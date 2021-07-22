@@ -56,9 +56,9 @@ export default defineComponent({
 
     const styleNegative = computed(() => {
       if (props.invert) {
-        return !negative
+        return !negative.value
       } else {
-        return negative
+        return negative.value
       }
     })
 
