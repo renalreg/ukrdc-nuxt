@@ -57,10 +57,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, ref, useRoute, useFetch, useContext, computed } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  watch,
+  ref,
+  useRoute,
+  useFetch,
+  useContext,
+  computed,
+  useStore,
+} from '@nuxtjs/composition-api'
 
 import usePagination from '@/mixins/usePagination'
-import useLocalStorage from '@/mixins/useLocalStorage'
 import { MasterRecord } from '@/interfaces/masterrecord'
 import useQuery from '~/mixins/useQuery'
 
@@ -74,10 +82,10 @@ interface MasterRecordPage {
 export default defineComponent({
   setup() {
     const route = useRoute()
+    const store = useStore()
 
     const { $axios, $config } = useContext()
     const { page, total, size } = usePagination()
-    const { JSONStorage } = useLocalStorage()
     const { arrayQuery } = useQuery()
 
     const masterrecords = ref([] as MasterRecord[])
@@ -91,7 +99,14 @@ export default defineComponent({
       return false
     })
 
-    const showUKRDC = JSONStorage('searchIncludeUKRDC', false)
+    const showUKRDC = computed({
+      get: () => {
+        return store.getters.searchShowUKRDC
+      },
+      set: (newValue: boolean) => {
+        store.commit('changeSearchShowUKRDC', newValue)
+      },
+    })
 
     const { fetch } = useFetch(async () => {
       // search.value = route.value.query.search as string[]
@@ -114,7 +129,7 @@ export default defineComponent({
       }
     })
 
-    watch(route, () => {
+    watch([route, showUKRDC], () => {
       fetch()
     })
 
