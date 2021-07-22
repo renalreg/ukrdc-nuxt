@@ -15,7 +15,7 @@ export default class RuntimeConfigurableOktaScheme extends RuntimeConfigurableOa
   logout() {
     if (this.options.endpoints.logout) {
       const opts = {
-        client_id: this.options.clientId + '',
+        client_id: this.options.clientId,
         fromURI: this.logoutRedirectURI,
       }
       const url = this.options.endpoints.logout + '?' + encodeQuery(opts)
