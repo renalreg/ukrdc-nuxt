@@ -21,6 +21,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { ssr: true, src: '~/plugins/vuex-persistedstate.ts' },
     { ssr: false, src: '~/plugins/v-calendar.ts' },
     { ssr: false, src: '~/plugins/v-tooltip.ts' },
     { ssr: false, src: '~/plugins/toast.ts' },
