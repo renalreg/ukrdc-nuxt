@@ -35,8 +35,8 @@
       </GenericCard>
     </div>
     <div v-else class="mt-2 text-gray-500 text-center">
-      <LoadingIndicator v-if="activeSearch && $fetchState.pending"></LoadingIndicator>
-      <div v-else-if="activeSearch && !$fetchState.pending">No results found</div>
+      <LoadingIndicator v-if="searchQueryIsPopulated && $fetchState.pending"></LoadingIndicator>
+      <div v-else-if="searchQueryIsPopulated && !$fetchState.pending">No results found</div>
       <div v-else>
         <p class="mb-4">Search by name, date of birth, national ID, or local ID</p>
         <p><b>Tip: </b>Refine your search by joining terms,</p>
@@ -57,12 +57,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, ref, useRoute, useFetch, useContext, computed } from '@nuxtjs/composition-api'
+import { defineComponent, watch, ref, useRoute, useFetch, useContext } from '@nuxtjs/composition-api'
 
 import usePagination from '@/mixins/usePagination'
 import { MasterRecord } from '@/interfaces/masterrecord'
-import useQuery from '~/mixins/useQuery'
+
 import useUserPrefs from '~/mixins/useUserPrefs'
+import useRecordSearch from '~/mixins/useRecordSearch'
 
 interface MasterRecordPage {
   items: MasterRecord[]
@@ -77,29 +78,18 @@ export default defineComponent({
 
     const { $axios, $config } = useContext()
     const { page, total, size } = usePagination()
-    const { arrayQuery } = useQuery()
     const { showUKRDC } = useUserPrefs()
+    const { searchQueryIsPopulated, searchboxString, searchSubmit, apiQueryString } = useRecordSearch()
 
     const masterrecords = ref([] as MasterRecord[])
 
-    const search = arrayQuery('search', [], true, true)
-    const searchboxString = ref('')
-    const activeSearch = computed(() => {
-      if (search.value && search.value.length > 0) {
-        return true
-      }
-      return false
-    })
-
     const { fetch } = useFetch(async () => {
       // search.value = route.value.query.search as string[]
-      if (search.value && search.value.length > 0) {
+      if (searchQueryIsPopulated) {
         // Set the search string
-        searchboxString.value = buildSearchStringFromQueryArray()
+        // searchboxString.value = buildSearchStringFromQueryArray()
         // Build our query string from search terms and page info
-        let path = `${$config.apiBase}/v1/search/?${buildQueryStringFromArray(search.value, 'search')}&page=${
-          page.value
-        }&size=${size.value}`
+        let path = `${$config.apiBase}/v1/search/?${apiQueryString.value}&page=${page.value}&size=${size.value}`
         if (showUKRDC.value) {
           path = path + '&include_ukrdc=true'
         }
@@ -116,55 +106,12 @@ export default defineComponent({
       fetch()
     })
 
-    function searchSubmit(): void {
-      // Build a search query from our search string
-      search.value = buildQueryArrayFromSearchString()
-    }
-
-    function buildQueryArrayFromSearchString(): string[] {
-      // Builds an array of strings from a search bar string.
-      // e.g. 'john & 1970-03-01' becomes ['john', '1949-03-01']
-      const sections: string[] = searchboxString.value.split('&')
-      return sections.map(function (s: string) {
-        return s.trim()
-      })
-    }
-
-    function buildSearchStringFromQueryArray(): string {
-      // Builds a search bar string from an array of strings.
-      // e.g. ['john', '1949-03-01'] becomes john & 1949-03-01
-      if (Array.isArray(search.value)) {
-        let q = ''
-        for (const term of search.value) {
-          q = q.concat(`${term} & `)
-        }
-        return q.slice(0, -3) // Remove trailing ' & '
-      } else {
-        return search.value
-      }
-    }
-
-    function buildQueryStringFromArray(input: (string | null)[] | string, queryName: string): string {
-      // Builds a query string from an array of strings.
-      // e.g. ['john', '1949-03-01'] becomes search=john&search=1949-03-01
-      if (Array.isArray(input)) {
-        let q = ''
-        for (const term of input) {
-          q = q.concat(`${queryName}=${term}&`)
-        }
-        return q.slice(0, -1) // Remove trailing '&'
-      } else {
-        return `${queryName}=${input}`
-      }
-    }
-
     return {
       masterrecords,
       searchboxString,
       showUKRDC,
       searchSubmit,
-      search,
-      activeSearch,
+      searchQueryIsPopulated,
       page,
       size,
       total,
