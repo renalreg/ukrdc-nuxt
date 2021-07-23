@@ -119,7 +119,7 @@ export default defineComponent({
     })
 
     const mergeBlockDescription = computed(() => {
-      if (superceeded.value?.id || superceding.value?.id) {
+      if (superceeded.value?.id && superceding.value?.id) {
         if (superceeded.value?.id === superceding.value?.id) {
           return 'A record cannot be merged into itself. Please select a different record on one side.'
         }
