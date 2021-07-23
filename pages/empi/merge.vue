@@ -16,12 +16,12 @@
     <div class="block lg:flex gap-2 mb-6">
       <div class="flex-1">
         <div v-if="superceeded">
-          <GenericButton class="w-full" @click="clearSuperceeded"> Change Superceeded Record </GenericButton>
+          <GenericButton class="w-full" @click="clearSuperceeded"> Change Superseded Record </GenericButton>
           <NuxtLink :to="`/masterrecords/${superceeded.id}`">
             <masterrecordsRecordCard
               class="mt-4 border-2 border-indigo-500"
               :record="superceeded"
-              :label="`Superceeded ${superceeded.id.toString()}`"
+              :label="`Superseded Record ${superceeded.id.toString()}`"
             />
           </NuxtLink>
         </div>
@@ -41,12 +41,12 @@
 
       <div class="flex-1">
         <div v-if="superceding">
-          <GenericButton class="w-full" @click="clearsuperceding"> Change superceding Record </GenericButton>
+          <GenericButton class="w-full" @click="clearsuperceding"> Change Superseding Record </GenericButton>
           <NuxtLink :to="`/masterrecords/${superceding.id}`">
             <masterrecordsRecordCard
               class="mt-4 border-2 border-indigo-500"
               :record="superceding"
-              :label="`superceding ${superceding.id.toString()}`"
+              :label="`Superseding Record ${superceding.id.toString()}`"
             />
           </NuxtLink>
         </div>
@@ -59,7 +59,7 @@
       </div>
     </div>
 
-    <GenericAlertWarning v-if="mergeBlockDescription" :message="mergeBlockDescription" />
+    <GenericAlertWarning v-if="mergeBlockDescription" class="mb-4" :message="mergeBlockDescription" />
 
     <div v-if="readyToMerge">
       <div class="mb-6">
@@ -122,6 +122,9 @@ export default defineComponent({
       if (superceeded.value?.id || superceding.value?.id) {
         if (superceeded.value?.id === superceding.value?.id) {
           return 'A record cannot be merged into itself. Please select a different record on one side.'
+        }
+        if (superceeded.value?.nationalidType !== superceding.value?.nationalidType) {
+          return `You are about to merge a ${superceeded.value?.nationalidType} record into a ${superceding.value?.nationalidType} record.`
         }
       }
       return ''
