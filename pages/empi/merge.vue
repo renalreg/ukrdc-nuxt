@@ -111,12 +111,14 @@ export default defineComponent({
     const searchingFor = ref<Direction>()
 
     const readyToMerge = computed(() => {
-      return superceededId.value && superceedingId.value && superceededId.value !== superceedingId.value
+      return superceeded.value?.id && superceeding.value?.id && superceeded.value?.id !== superceeding.value?.id
     })
 
     const mergeBlockDescription = computed(() => {
-      if (superceededId.value === superceedingId.value) {
-        return 'A record cannot be merged into itself. Please select a different record on one side.'
+      if (superceeded.value?.id || superceeding.value?.id) {
+        if (superceeded.value?.id === superceeding.value?.id) {
+          return 'A record cannot be merged into itself. Please select a different record on one side.'
+        }
       }
       return ''
     })
