@@ -1,4 +1,4 @@
-import { computed, ref, useRoute, watch } from '@nuxtjs/composition-api'
+import { computed, onMounted, ref, useRoute, watch } from '@nuxtjs/composition-api'
 import useQuery from '@/mixins/useQuery'
 
 export default function () {
@@ -83,6 +83,10 @@ export default function () {
   })
 
   watch([route], () => {
+    searchApply()
+  })
+
+  onMounted(() => {
     searchApply()
   })
 
