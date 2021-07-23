@@ -1,12 +1,5 @@
 <template>
   <div>
-    <GenericModalConfirm
-      ref="resetPasswordAlert"
-      title="Reset your password"
-      message="Are you sure you want to reset your password? You will receieve an email shortly to start the reset."
-      icon="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"
-      @confirm="resetPasswordAuth0()"
-    />
     <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
       <div v-if="$auth.loggedIn" class="max-w-3xl lg:flex lg:items-center lg:justify-between lg:space-x-5 lg:max-w-7xl">
         <div class="flex items-center space-x-5 mb-4">

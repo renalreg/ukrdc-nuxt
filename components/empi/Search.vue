@@ -2,11 +2,6 @@
   <div>
     <div class="mb-4">
       <SearchBar v-model="searchboxString" :focus="true" @submit="searchSubmit" />
-      <GenericCollapseHeader label="Advanced">
-        <div class="mt-2">
-          <FormCheckbox v-model="showUKRDC" label="Show internal UKRDC records" />
-        </div>
-      </GenericCollapseHeader>
     </div>
 
     <div v-if="masterrecords.length > 0">
@@ -18,9 +13,12 @@
         <!-- Real results -->
         <ul v-else class="divide-y divide-gray-200">
           <div v-for="item in masterrecords" :key="item.id" class="hover:bg-gray-50">
-            <NuxtLink :to="`/masterrecords/${item.id}`">
-              <MasterrecordsListItem :item="item" />
-            </NuxtLink>
+            <MasterrecordsListItem
+              class="cursor-pointer"
+              :item="item"
+              :show-record-id="false"
+              @click.native="$emit('select', item.id)"
+            />
           </div>
         </ul>
         <GenericPaginator
@@ -39,18 +37,6 @@
       <div v-else-if="searchQueryIsPopulated && !$fetchState.pending">No results found</div>
       <div v-else>
         <p class="mb-4">Search by name, date of birth, national ID, or local ID</p>
-        <p><b>Tip: </b>Refine your search by joining terms,</p>
-        <p class="mb-4">
-          For example,
-          <span class="inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-800">
-            john && 1/12/1980
-          </span>
-        </p>
-        <p>Search for an exact name using quote marks,</p>
-        <p>
-          For example,
-          <span class="inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-800"> "jon" </span>
-        </p>
       </div>
     </div>
   </div>
@@ -86,13 +72,10 @@ export default defineComponent({
     const { fetch } = useFetch(async () => {
       // search.value = route.value.query.search as string[]
       if (searchQueryIsPopulated) {
-        // Build our query string from search terms and page info
-        let path = `${$config.apiBase}/v1/search/?${apiQueryString.value}&page=${page.value}&size=${size.value}`
-        if (showUKRDC.value) {
-          path = path + '&include_ukrdc=true'
-        }
         // Fetch the search results from our API server
-        const res: MasterRecordPage = await $axios.$get(path)
+        const res: MasterRecordPage = await $axios.$get(
+          `${$config.apiBase}/v1/search/?${apiQueryString.value}&page=${page.value}&size=${size.value}&include_ukrdc=true`
+        )
         masterrecords.value = res.items
         total.value = res.total
         page.value = res.page
