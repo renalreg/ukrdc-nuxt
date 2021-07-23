@@ -13,7 +13,12 @@
         <!-- Real results -->
         <ul v-else class="divide-y divide-gray-200">
           <div v-for="item in masterrecords" :key="item.id" class="hover:bg-gray-50">
-            <MasterrecordsListItem class="cursor-pointer" :item="item" @click.native="$emit('select', item.id)" />
+            <MasterrecordsListItem
+              class="cursor-pointer"
+              :item="item"
+              :show-record-id="false"
+              @click.native="$emit('select', item.id)"
+            />
           </div>
         </ul>
         <GenericPaginator

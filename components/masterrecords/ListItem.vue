@@ -1,7 +1,10 @@
 <template>
   <li>
     <!-- Content container -->
-    <div class="px-4 py-4 sm:px-6 min-w-0 grid grid-cols-3 lg:grid-cols-4 md:gap-4 w-full">
+    <div
+      class="px-4 py-4 sm:px-6 min-w-0 grid grid-cols-3 md:gap-4 w-full"
+      :class="showRecordId ? 'lg:grid-cols-4' : 'col-span-2'"
+    >
       <!-- Name, DoB, gender -->
       <div>
         <TextL1c class="capitalize truncate">
@@ -14,21 +17,21 @@
         </TextP>
       </div>
       <!-- Record ID -->
-      <div>
+      <div v-show="showRecordId" class="hidden lg:block">
         <TextL1>Record ID</TextL1>
         <TextP class="mt-2">
           {{ item.id }}
         </TextP>
       </div>
       <!-- National ID -->
-      <div class="text-right sm:text-left">
+      <div>
         <TextP>
           {{ item.nationalid.trim() }}
         </TextP>
         <masterrecordsNationalIdTypeTag class="mt-2" :nationalid-type="item.nationalidType" />
       </div>
       <!-- Details (large breakpoint only) -->
-      <div class="hidden lg:block">
+      <div>
         <TextL1>Last updated</TextL1>
         <TextP class="mt-2">
           {{ formatDate(item.lastUpdated) }}
@@ -48,6 +51,11 @@ export default defineComponent({
     item: {
       type: Object as () => MasterRecord,
       required: true,
+    },
+    showRecordId: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
   },
 
