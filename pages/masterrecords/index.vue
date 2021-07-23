@@ -86,8 +86,6 @@ export default defineComponent({
     const { fetch } = useFetch(async () => {
       // search.value = route.value.query.search as string[]
       if (searchQueryIsPopulated) {
-        // Set the search string
-        // searchboxString.value = buildSearchStringFromQueryArray()
         // Build our query string from search terms and page info
         let path = `${$config.apiBase}/v1/search/?${apiQueryString.value}&page=${page.value}&size=${size.value}`
         if (showUKRDC.value) {
