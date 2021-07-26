@@ -15,19 +15,19 @@
 
     <div class="block lg:flex gap-2 mb-6">
       <div class="flex-1">
-        <div v-if="superceeded">
+        <div v-if="superseded">
           <GenericButton class="w-full" @click="clearSuperceeded"> Change Superseded Record </GenericButton>
-          <NuxtLink :to="`/masterrecords/${superceeded.id}`">
+          <NuxtLink :to="`/masterrecords/${superseded.id}`">
             <masterrecordsRecordCard
               class="mt-4 border-2 border-indigo-500"
-              :record="superceeded"
-              :label="`Superseded Record ${superceeded.id.toString()}`"
+              :record="superseded"
+              :label="`Superseded Record ${superseded.id.toString()}`"
             />
           </NuxtLink>
         </div>
         <div v-else>
-          <EmpiSearch v-if="searchingFor === 'superceeded'" @select="selectSuperceeded" />
-          <GenericButton v-else class="w-full" @click="searchingFor = 'superceeded'">
+          <EmpiSearch v-if="searchingFor === 'superseded'" @select="selectSuperceeded" />
+          <GenericButton v-else class="w-full" @click="searchingFor = 'superseded'">
             Search for a Record
           </GenericButton>
         </div>
@@ -40,19 +40,19 @@
       </div>
 
       <div class="flex-1">
-        <div v-if="superceding">
-          <GenericButton class="w-full" @click="clearsuperceding"> Change Superseding Record </GenericButton>
-          <NuxtLink :to="`/masterrecords/${superceding.id}`">
+        <div v-if="superseding">
+          <GenericButton class="w-full" @click="clearsuperseding"> Change Superseding Record </GenericButton>
+          <NuxtLink :to="`/masterrecords/${superseding.id}`">
             <masterrecordsRecordCard
               class="mt-4 border-2 border-indigo-500"
-              :record="superceding"
-              :label="`Superseding Record ${superceding.id.toString()}`"
+              :record="superseding"
+              :label="`Superseding Record ${superseding.id.toString()}`"
             />
           </NuxtLink>
         </div>
         <div v-else>
-          <EmpiSearch v-if="searchingFor === 'superceding'" @select="selectsuperceding" />
-          <GenericButton v-else class="w-full" @click="searchingFor = 'superceding'">
+          <EmpiSearch v-if="searchingFor === 'superseding'" @select="selectsuperseding" />
+          <GenericButton v-else class="w-full" @click="searchingFor = 'superseding'">
             Search for a Record
           </GenericButton>
         </div>
@@ -65,18 +65,18 @@
       <div class="mb-6">
         <TextH2 class="mb-2">Merge Details</TextH2>
         <TextP
-          >Master Record <TextL1c class="inline">{{ superceededId }}</TextL1c> will be merged into Master Record
-          <TextL1c class="inline">{{ supercedingId }}</TextL1c
+          >Master Record <TextL1c class="inline">{{ supersededId }}</TextL1c> will be merged into Master Record
+          <TextL1c class="inline">{{ supersedingId }}</TextL1c
           >.
         </TextP>
         <TextP
-          >Demographic data on record <TextL1c class="inline">{{ superceededId }}</TextL1c> will be replaced by
-          demographic data from record <TextL1c class="inline">{{ supercedingId }}</TextL1c
+          >Demographic data on record <TextL1c class="inline">{{ supersededId }}</TextL1c> will be replaced by
+          demographic data from record <TextL1c class="inline">{{ supersedingId }}</TextL1c
           >.</TextP
         >
         <TextP
-          >All Patient Records linked to Master Record <TextL1c class="inline">{{ superceededId }}</TextL1c> will be
-          re-linked to Master Record <TextL1c class="inline">{{ supercedingId }}</TextL1c
+          >All Patient Records linked to Master Record <TextL1c class="inline">{{ supersededId }}</TextL1c> will be
+          re-linked to Master Record <TextL1c class="inline">{{ supersedingId }}</TextL1c
           >.</TextP
         >
       </div>
@@ -93,8 +93,8 @@ import { MasterRecord } from '~/interfaces/masterrecord'
 import useQuery from '~/mixins/useQuery'
 
 enum Direction {
-  superceding = 'superceding',
-  Superceeded = 'superceeded',
+  superseding = 'superseding',
+  Superceeded = 'superseded',
 }
 
 export default defineComponent({
@@ -106,25 +106,25 @@ export default defineComponent({
 
     const beginMergeAlert = ref<modalInterface>()
 
-    const superceededId = stringQuery('superceeded', null, true, false)
-    const supercedingId = stringQuery('superceding', null, true, false)
+    const supersededId = stringQuery('superseded', null, true, false)
+    const supersedingId = stringQuery('superseding', null, true, false)
 
-    const superceeded = ref<MasterRecord>()
-    const superceding = ref<MasterRecord>()
+    const superseded = ref<MasterRecord>()
+    const superseding = ref<MasterRecord>()
 
     const searchingFor = ref<Direction>()
 
     const readyToMerge = computed(() => {
-      return superceeded.value?.id && superceding.value?.id && superceeded.value?.id !== superceding.value?.id
+      return superseded.value?.id && superseding.value?.id && superseded.value?.id !== superseding.value?.id
     })
 
     const mergeBlockDescription = computed(() => {
-      if (superceeded.value?.id && superceding.value?.id) {
-        if (superceeded.value?.id === superceding.value?.id) {
+      if (superseded.value?.id && superseding.value?.id) {
+        if (superseded.value?.id === superseding.value?.id) {
           return 'A record cannot be merged into itself. Please select a different record on one side.'
         }
-        if (superceeded.value?.nationalidType !== superceding.value?.nationalidType) {
-          return `You are about to merge a ${superceeded.value?.nationalidType} record into a ${superceding.value?.nationalidType} record.`
+        if (superseded.value?.nationalidType !== superseding.value?.nationalidType) {
+          return `You are about to merge a ${superseded.value?.nationalidType} record into a ${superseding.value?.nationalidType} record.`
         }
       }
       return ''
@@ -132,8 +132,8 @@ export default defineComponent({
 
     function switchRecords() {
       const newQuery = Object.assign({}, route.value.query)
-      newQuery.superceeded = [supercedingId.value]
-      newQuery.superceding = [superceededId.value]
+      newQuery.superseded = [supersedingId.value]
+      newQuery.superseding = [supersededId.value]
       router.push({
         path: route.value.path,
         query: newQuery,
@@ -141,12 +141,12 @@ export default defineComponent({
     }
 
     function clearMerge() {
-      superceding.value = undefined
-      superceeded.value = undefined
+      superseding.value = undefined
+      superseded.value = undefined
       searchingFor.value = undefined
       const newQuery = Object.assign({}, route.value.query)
-      newQuery.superceeded = [null]
-      newQuery.superceding = [null]
+      newQuery.superseded = [null]
+      newQuery.superseding = [null]
       router.push({
         path: route.value.path,
         query: newQuery,
@@ -156,8 +156,8 @@ export default defineComponent({
     async function requestMerge() {
       try {
         await $axios.$post(`${$config.apiBase}/v1/empi/merge`, {
-          superceding: superceding.value?.id,
-          superceeded: superceeded.value?.id,
+          superseding: superseding.value?.id,
+          superseded: superseded.value?.id,
         })
         $toast.show({
           type: 'success',
@@ -181,24 +181,24 @@ export default defineComponent({
       el.hide()
     }
 
-    function clearsuperceding() {
-      superceding.value = undefined
-      supercedingId.value = null
-      searchingFor.value = Direction.superceding
+    function clearsuperseding() {
+      superseding.value = undefined
+      supersedingId.value = null
+      searchingFor.value = Direction.superseding
     }
 
     function clearSuperceeded() {
-      superceeded.value = undefined
-      superceededId.value = null
+      superseded.value = undefined
+      supersededId.value = null
       searchingFor.value = Direction.Superceeded
     }
 
-    function selectsuperceding(id: string) {
-      supercedingId.value = id
+    function selectsuperseding(id: string) {
+      supersedingId.value = id
     }
 
     function selectSuperceeded(id: string) {
-      superceededId.value = id
+      supersededId.value = id
     }
 
     async function fetchRecord(id: string, ouput: Ref) {
@@ -209,25 +209,25 @@ export default defineComponent({
 
     const { fetch } = useFetch(async () => {
       await Promise.all([
-        superceededId.value ? fetchRecord(superceededId.value, superceeded) : null,
-        supercedingId.value ? fetchRecord(supercedingId.value, superceding) : null,
+        supersededId.value ? fetchRecord(supersededId.value, superseded) : null,
+        supersedingId.value ? fetchRecord(supersedingId.value, superseding) : null,
       ])
     })
 
-    watch([superceededId, supercedingId], () => {
+    watch([supersededId, supersedingId], () => {
       fetch()
     })
 
     return {
       beginMergeAlert,
-      superceededId,
-      supercedingId,
-      superceeded,
-      superceding,
+      supersededId,
+      supersedingId,
+      superseded,
+      superseding,
       searchingFor,
-      clearsuperceding,
+      clearsuperseding,
       clearSuperceeded,
-      selectsuperceding,
+      selectsuperseding,
       selectSuperceeded,
       switchRecords,
       readyToMerge,
