@@ -3,6 +3,7 @@ interface MasterRecordLinks {
   latestMessage: string
   statistics: string
   related: string
+  messages: string
   errors: string
   linkrecords: string
   persons: string

@@ -6,9 +6,12 @@
         <TextL1c class="truncate">
           {{ item.filename || 'No filename found' }}
         </TextL1c>
-        <TextP class="mt-2 line-clamp-2">
-          {{ item.error ? item.error : 'No error message recorded' }}
-        </TextP>
+        <div class="mt-2 flex">
+          <ErrorsStatusBadge class="flex-shrink mr-2" :message="item" />
+          <TextP class="flex-grow line-clamp-2">
+            {{ itemDescription }}
+          </TextP>
+        </div>
       </div>
       <!-- Recieved  -->
       <div class="col-span-2 lg:col-span-1">
@@ -20,6 +23,7 @@
       <!-- Identifiers  -->
       <div class="flex items-center gap-4 col-span-3 lg:col-span-1">
         <GenericButtonRound
+          v-if="showPatientFilter"
           :to="{ path: '/errors', query: { nationalid: item.ni } }"
           tooltip="Filter errors by this patient"
           ><IconMiniFilter
@@ -36,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from '@nuxtjs/composition-api'
 import { formatDate } from '@/utilities/dateUtils'
 import { Message } from '@/interfaces/errors'
 
@@ -46,9 +50,25 @@ export default defineComponent({
       type: Object as () => Message,
       required: true,
     },
+    showPatientFilter: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
-  setup() {
-    return { formatDate }
+  setup(props) {
+    const itemDescription = computed(() => {
+      if (props.item.msgStatus === 'ERROR') {
+        return props.item.error ? props.item.error : 'No error message recorded'
+      }
+      if (props.item.msgStatus === 'STORED') {
+        return 'Stored without error'
+      }
+      if (props.item.msgStatus === 'RECEIVED') {
+        return 'Processed without error'
+      }
+    })
+    return { itemDescription, formatDate }
   },
 })
 </script>

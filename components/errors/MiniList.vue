@@ -42,6 +42,11 @@ export default defineComponent({
       required: false,
       default: 10,
     },
+    status: {
+      type: String,
+      required: false,
+      default: 'ERROR',
+    },
   },
   setup(props) {
     // Dependencies
@@ -54,9 +59,11 @@ export default defineComponent({
     const relatedErrorsTotal = ref(0)
 
     async function updateRelatedErrors(): Promise<void> {
-      const res = await $axios.$get(
-        props.errorsUrl + `?page=${relatedErrorsPage.value}&size=${relatedErrorsSize.value}`
-      )
+      let path = props.errorsUrl + `?page=${relatedErrorsPage.value}&size=${relatedErrorsSize.value}`
+      if (status) {
+        path = path + `&status=${status}`
+      }
+      const res = await $axios.$get(path)
       // Set related errors
       relatedErrors.value = res.items
       relatedErrorsPage.value = res.page
