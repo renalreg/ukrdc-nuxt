@@ -14,7 +14,9 @@
 
     <div class="mb-6 flex items-end gap-4">
       <div class="flex-grow">
-        <TextH1 v-if="error"> Error {{ error.id }} from {{ error.facility }} </TextH1>
+        <TextH1 v-if="error">
+          {{ error.msgStatus === 'ERROR' ? 'Error' : 'Message' }} {{ error.id }} from {{ error.facility }}
+        </TextH1>
         <SkeleText v-else class="h-8 w-1/4 mb-2" />
         <TextL1 v-if="error" class="line-clamp-1">
           {{ error.error }}
@@ -31,9 +33,9 @@
       <GenericCardContent>
         <GenericDl>
           <GenericDi>
-            <TextDt>Facility</TextDt>
+            <TextDt>Channel</TextDt>
             <TextDd v-if="error">
-              {{ error.facility }}
+              {{ error.channel ? error.channel : error.channelId }}
             </TextDd>
             <SkeleText v-else class="h-6 w-full" />
           </GenericDi>
@@ -49,6 +51,20 @@
             </TextDd>
             <SkeleText v-else class="h-6 w-full" />
           </GenericDi>
+          <GenericDi>
+            <TextDt>Facility</TextDt>
+            <TextDd v-if="error">
+              {{ error.facility }}
+            </TextDd>
+            <SkeleText v-else class="h-6 w-full" />
+          </GenericDi>
+          <GenericDi>
+            <TextDt>Status</TextDt>
+            <TextDd v-if="error">
+              {{ error.msgStatus }}
+            </TextDd>
+            <SkeleText v-else class="h-6 w-full" />
+          </GenericDi>
           <GenericDi v-if="error && error.error" class="sm:col-span-2">
             <TextDt>Error Message</TextDt>
             <TextDd v-if="error">
@@ -61,12 +77,12 @@
     </GenericCard>
 
     <!-- Related Master Records card -->
-    <GenericCard v-if="error && error.masterRecords.length > 0" class="mt-4">
+    <GenericCard v-if="masterRecords.length > 0" class="mt-4">
       <GenericCardHeader>
         <TextH2> Related Records </TextH2>
       </GenericCardHeader>
       <ul class="divide-y divide-gray-200">
-        <div v-for="item in error.masterRecords" :key="item.id" class="hover:bg-gray-50">
+        <div v-for="item in masterRecords" :key="item.id" class="hover:bg-gray-50">
           <NuxtLink :to="`/masterrecords/${item.id}`">
             <MasterrecordsListItem :item="item" />
           </NuxtLink>
@@ -75,12 +91,12 @@
     </GenericCard>
 
     <!-- Related Work Items card -->
-    <GenericCard v-if="error && error.workItems.length > 0" class="mt-4">
+    <GenericCard v-if="workItems.length > 0" class="mt-4">
       <GenericCardHeader>
         <TextH2> Related Work Items </TextH2>
       </GenericCardHeader>
       <ul class="divide-y divide-gray-200">
-        <workitemsListItem v-for="item in error.workItems" :key="item.id" :item="item" />
+        <workitemsListItem v-for="item in workItems" :key="item.id" :item="item" />
       </ul>
     </GenericCard>
 
@@ -103,8 +119,10 @@
 <script lang="ts">
 import { defineComponent, ref, useRoute, useFetch, useContext, useMeta } from '@nuxtjs/composition-api'
 
-import { ExtendedError, ErrorSource } from '@/interfaces/errors'
+import { Message, ErrorSource } from '@/interfaces/errors'
 import { ChannelMessage } from '@/interfaces/mirth'
+import { MasterRecord } from '@/interfaces/masterrecord'
+import { WorkItemShort } from '@/interfaces/workitem'
 
 import { formatDate } from '@/utilities/dateUtils'
 import { isEmptyObject } from '@/utilities/objectUtils'
@@ -122,9 +140,11 @@ export default defineComponent({
     const { title } = useMeta()
     title.value = `Error ${route.value.params.id}`
 
-    const error = ref<ExtendedError>()
+    const error = ref<Message>()
     const source = ref<ErrorSource>()
     const mirthMessage = ref<ChannelMessage>()
+    const workItems = ref([] as WorkItemShort[])
+    const masterRecords = ref([] as MasterRecord[])
 
     // Modal visibility
     const errorSourceGenericModalMaxSlot = ref<modalInterface>()
@@ -133,8 +153,16 @@ export default defineComponent({
     useFetch(async () => {
       // Get the main record data
       const path = `${$config.apiBase}/v1/errors/messages/${route.value.params.id}/`
-      const res: ExtendedError = await $axios.$get(path)
+      const res: Message = await $axios.$get(path)
       error.value = res
+
+      // Get auxilalry record data
+      if (hasPermission('ukrdc:records:read')) {
+        masterRecords.value = await $axios.$get(error.value.links.masterrecords)
+      }
+      if (hasPermission('ukrdc:workitems:read')) {
+        workItems.value = await $axios.$get(error.value.links.workitems)
+      }
 
       // Conditionally get the Mirth message data
       if (hasPermission('ukrdc:mirth:read')) {
@@ -166,6 +194,8 @@ export default defineComponent({
       error,
       source,
       mirthMessage,
+      workItems,
+      masterRecords,
       isEmptyObject,
       formatDate,
       errorSourceGenericModalMaxSlot,
