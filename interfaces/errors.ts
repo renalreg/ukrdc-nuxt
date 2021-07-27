@@ -18,6 +18,7 @@ export interface MinimalMessage {
 export interface Message extends MinimalMessage {
   messageId: number
   channelId: string
+  channel: string
   error: string
   status: string
   msgStatus: string
