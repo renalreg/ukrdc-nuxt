@@ -1,6 +1,6 @@
 <template>
   <GenericCardMini class="px-4 py-2">
-    <div class="h-16 mb-2">
+    <div class="mb-2">
       <p class="text-gray-900 font-medium hover:text-gray-600 line-clamp-2">
         {{ item.drugProductGeneric }}
       </p>
