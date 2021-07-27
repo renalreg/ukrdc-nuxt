@@ -3,9 +3,14 @@
     <div class="px-4 py-4 sm:px-6 min-w-0 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 w-full">
       <!-- Heading -->
       <div class="col-span-5 lg:col-span-3">
-        <TextL1c class="truncate">
-          {{ item.filename || 'No filename found' }}
-        </TextL1c>
+        <div class="truncate">
+          <TextL1c class="md:inline truncate">
+            {{ item.filename || 'No filename found' }}
+          </TextL1c>
+          <TextL1 class="md:inline truncate">
+            {{ item.channel ? `on ${item.channel}` : '' }}
+          </TextL1>
+        </div>
         <div class="mt-2 flex">
           <ErrorsStatusBadge class="flex-shrink mr-2" :message="item" />
           <TextP class="flex-grow line-clamp-2">
@@ -65,7 +70,7 @@ export default defineComponent({
         return 'Stored without error'
       }
       if (props.item.msgStatus === 'RECEIVED') {
-        return 'Processed without error'
+        return 'Received without error'
       }
     })
     return { itemDescription, formatDate }
