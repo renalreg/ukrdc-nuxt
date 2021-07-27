@@ -14,7 +14,9 @@
 
     <div class="mb-6 flex items-end gap-4">
       <div class="flex-grow">
-        <TextH1 v-if="error"> Error {{ error.id }} from {{ error.facility }} </TextH1>
+        <TextH1 v-if="error">
+          {{ error.msgStatus === 'ERROR' ? 'Error' : 'Message' }} {{ error.id }} from {{ error.facility }}
+        </TextH1>
         <SkeleText v-else class="h-8 w-1/4 mb-2" />
         <TextL1 v-if="error" class="line-clamp-1">
           {{ error.error }}
@@ -31,9 +33,9 @@
       <GenericCardContent>
         <GenericDl>
           <GenericDi>
-            <TextDt>Facility</TextDt>
+            <TextDt>Channel</TextDt>
             <TextDd v-if="error">
-              {{ error.facility }}
+              {{ error.channel ? error.channel : error.channelId }}
             </TextDd>
             <SkeleText v-else class="h-6 w-full" />
           </GenericDi>
@@ -46,6 +48,20 @@
             <TextDt>Filename</TextDt>
             <TextDd v-if="error">
               {{ error.filename }}
+            </TextDd>
+            <SkeleText v-else class="h-6 w-full" />
+          </GenericDi>
+          <GenericDi>
+            <TextDt>Facility</TextDt>
+            <TextDd v-if="error">
+              {{ error.facility }}
+            </TextDd>
+            <SkeleText v-else class="h-6 w-full" />
+          </GenericDi>
+          <GenericDi>
+            <TextDt>Status</TextDt>
+            <TextDd v-if="error">
+              {{ error.msgStatus }}
             </TextDd>
             <SkeleText v-else class="h-6 w-full" />
           </GenericDi>
