@@ -1,9 +1,8 @@
-import { MasterRecord } from '@/interfaces/masterrecord'
-import { WorkItemShort } from '@/interfaces/workitem'
-
 interface ErrorLinks {
   self: string
   mirth: string
+  workitems: string
+  masterrecords: string
   source: string
 }
 
@@ -18,15 +17,11 @@ export interface MinimalMessage {
 export interface Message extends MinimalMessage {
   messageId: number
   channelId: string
+  channel: string
   error: string
   status: string
   msgStatus: string
   links: ErrorLinks
-}
-
-export interface ExtendedError extends Message {
-  masterRecords: MasterRecord[]
-  workItems: WorkItemShort[]
 }
 
 export interface ErrorSource {
