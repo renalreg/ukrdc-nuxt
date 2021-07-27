@@ -49,7 +49,7 @@
             </TextDd>
             <SkeleText v-else class="h-6 w-full" />
           </GenericDi>
-          <GenericDi class="sm:col-span-2">
+          <GenericDi v-if="error && error.error" class="sm:col-span-2">
             <TextDt>Error Message</TextDt>
             <TextDd v-if="error">
               {{ error.error }}

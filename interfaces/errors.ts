@@ -20,6 +20,7 @@ export interface Message extends MinimalMessage {
   channelId: string
   error: string
   status: string
+  msgStatus: string
   links: ErrorLinks
 }
 
