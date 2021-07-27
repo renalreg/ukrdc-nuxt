@@ -157,8 +157,12 @@ export default defineComponent({
       error.value = res
 
       // Get auxilalry record data
-      masterRecords.value = await $axios.$get(error.value.links.masterrecords)
-      workItems.value = await $axios.$get(error.value.links.workitems)
+      if (hasPermission('ukrdc:records:read')) {
+        masterRecords.value = await $axios.$get(error.value.links.masterrecords)
+      }
+      if (hasPermission('ukrdc:workitems:read')) {
+        workItems.value = await $axios.$get(error.value.links.workitems)
+      }
 
       // Conditionally get the Mirth message data
       if (hasPermission('ukrdc:mirth:read')) {
