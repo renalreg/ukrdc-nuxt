@@ -22,7 +22,7 @@
       v-if="record && record.links"
       class="my-4"
       title="Record Errors"
-      :errors-url="record.links.errors"
+      :errors-url="record.links.messages"
     />
   </div>
 </template>

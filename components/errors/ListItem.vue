@@ -29,7 +29,7 @@
       <div class="flex items-center gap-4 col-span-3 lg:col-span-1">
         <GenericButtonRound
           v-if="showPatientFilter"
-          :to="{ path: '/errors', query: { nationalid: item.ni } }"
+          :to="{ path: '/messages', query: { nationalid: item.ni } }"
           tooltip="Filter errors by this patient"
           ><IconMiniFilter
         /></GenericButtonRound>
@@ -47,7 +47,7 @@
 <script lang="ts">
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 import { formatDate } from '@/utilities/dateUtils'
-import { Message } from '@/interfaces/errors'
+import { Message } from '@/interfaces/messages'
 
 export default defineComponent({
   props: {

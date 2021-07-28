@@ -119,7 +119,7 @@
 <script lang="ts">
 import { defineComponent, ref, useRoute, useFetch, useContext, useMeta } from '@nuxtjs/composition-api'
 
-import { Message, ErrorSource } from '@/interfaces/errors'
+import { Message, ErrorSource } from '@/interfaces/messages'
 import { ChannelMessage } from '@/interfaces/mirth'
 import { MasterRecord } from '@/interfaces/masterrecord'
 import { WorkItemShort } from '@/interfaces/workitem'
@@ -152,7 +152,7 @@ export default defineComponent({
 
     useFetch(async () => {
       // Get the main record data
-      const path = `${$config.apiBase}/v1/errors/messages/${route.value.params.id}/`
+      const path = `${$config.apiBase}/v1/messages/${route.value.params.id}/`
       const res: Message = await $axios.$get(path)
       error.value = res
 

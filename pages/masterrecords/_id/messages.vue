@@ -21,7 +21,7 @@
       <!-- Real results -->
       <ul v-else class="divide-y divide-gray-200">
         <div v-for="item in messages" :key="item.id" :item="item" class="hover:bg-gray-50">
-          <NuxtLink :to="`/errors/${item.id}`">
+          <NuxtLink :to="`/messages/${item.id}`">
             <ErrorsListItem :show-patient-filter="false" :item="item" />
           </NuxtLink>
         </div>
@@ -41,7 +41,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, useContext, useFetch, useRoute, watch } from '@nuxtjs/composition-api'
-import { Message } from '~/interfaces/errors'
+import { Message } from '~/interfaces/messages'
 import { MasterRecord, MasterRecordStatistics } from '~/interfaces/masterrecord'
 import usePagination from '~/mixins/usePagination'
 import useSortBy from '~/mixins/useSortBy'
