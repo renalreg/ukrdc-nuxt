@@ -1,4 +1,4 @@
-interface ErrorLinks {
+interface MessageLinks {
   self: string
   mirth: string
   workitems: string
@@ -21,7 +21,7 @@ export interface Message extends MinimalMessage {
   error: string
   status: string
   msgStatus: string
-  links: ErrorLinks
+  links: MessageLinks
 }
 
 export interface ErrorSource {

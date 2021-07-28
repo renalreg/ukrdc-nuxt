@@ -6,7 +6,7 @@
     </GenericCardHeader>
     <ul class="divide-y divide-gray-200">
       <div v-for="item in relatedErrors" :key="item.id" :item="item" class="hover:bg-gray-50">
-        <NuxtLink :to="`/errors/${item.id}`">
+        <NuxtLink :to="`/messages/${item.id}`">
           <ErrorsListItem :item="item" />
         </NuxtLink>
       </div>
@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, useContext, watch } from '@nuxtjs/composition-api'
-import { Message } from '~/interfaces/errors'
+import { Message } from '@/interfaces/messages'
 
 export default defineComponent({
   props: {

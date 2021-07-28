@@ -38,7 +38,7 @@
       <!-- Real results -->
       <ul v-else class="divide-y divide-gray-200">
         <div v-for="item in messages" :key="item.id" :item="item" class="hover:bg-gray-50">
-          <NuxtLink :to="`/errors/${item.id}`">
+          <NuxtLink :to="`/messages/${item.id}`">
             <ErrorsListItem :item="item" />
           </NuxtLink>
         </div>
@@ -63,7 +63,7 @@ import usePagination from '@/mixins/usePagination'
 import useDateRange from '@/mixins/useDateRange'
 import { nowString } from '@/utilities/dateUtils'
 
-import { Message } from '@/interfaces/errors'
+import { Message } from '@/interfaces/messages'
 import useFacilities from '~/mixins/useFacilities'
 import useQuery from '~/mixins/useQuery'
 import useSortBy from '~/mixins/useSortBy'
@@ -96,7 +96,7 @@ export default defineComponent({
 
     const { fetch } = useFetch(async () => {
       // Fetch the dashboard response from our API server
-      let path = `${$config.apiBase}/v1/errors/messages/?status=ERROR&page=${page.value}&size=${size.value}&sort_by=received&order_by=${orderBy.value}`
+      let path = `${$config.apiBase}/v1/messages/?status=ERROR&page=${page.value}&size=${size.value}&sort_by=received&order_by=${orderBy.value}`
       // Filter by since if it exists
       if (dateRange.value.start) {
         path = path + `&since=${dateRange.value.start}`

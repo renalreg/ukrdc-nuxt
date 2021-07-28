@@ -106,7 +106,7 @@ import { isTracing } from '@/utilities/recordUtils'
 
 import { MasterRecord, MasterRecordStatistics } from '@/interfaces/masterrecord'
 import { PatientRecord } from '@/interfaces/patientrecord'
-import { MinimalMessage } from '~/interfaces/errors'
+import { MinimalMessage } from '~/interfaces/messages'
 
 export default defineComponent({
   props: {
