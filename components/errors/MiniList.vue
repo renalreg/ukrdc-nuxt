@@ -60,8 +60,8 @@ export default defineComponent({
 
     async function updateRelatedErrors(): Promise<void> {
       let path = props.errorsUrl + `?page=${relatedErrorsPage.value}&size=${relatedErrorsSize.value}`
-      if (status) {
-        path = path + `&status=${status}`
+      if (props.status) {
+        path = path + `&status=${props.status}`
       }
       const res = await $axios.$get(path)
       // Set related errors
