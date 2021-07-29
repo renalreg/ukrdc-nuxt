@@ -167,7 +167,7 @@
     </div>
 
     <!-- Related errors card -->
-    <ErrorsMiniList v-if="record" class="mt-4 mb-8" :errors-url="record.links.errors" :size="5" />
+    <ErrorsMiniList v-if="record" class="mt-4 mb-8" :errors-url="record.links.messages" :size="5" />
 
     <!-- Related WorkItems  -->
     <GenericCard v-if="relatedRecords.length > 0" class="mb-8">
