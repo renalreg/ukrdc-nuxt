@@ -12,41 +12,6 @@
       </div>
     </GenericModalSlot>
 
-    <GenericModalSlot v-if="hasPermission('ukrdc:workitems:write')" ref="mergeModal">
-      <div class="text-left">
-        <div class="mb-4">Merge and close the Work Item</div>
-
-        <FormLabel>
-          Comments
-          <FormTextArea v-model="customComment" rows="3"></FormTextArea>
-        </FormLabel>
-      </div>
-
-      <div class="flex justify-end">
-        <genericButton @click="mergeModal.hide()"> Cancel </genericButton>
-        <GenericButton type="submit" class="ml-2" @click="mergeWorkItem()"> Merge and Close </GenericButton>
-      </div>
-    </GenericModalSlot>
-
-    <GenericModalSlot v-if="hasPermission('ukrdc:workitems:write')" ref="unlinkModal">
-      <div class="text-left">
-        <div class="mb-4">Unlink and close the Work Item</div>
-        <div>
-          <FormLabel>
-            Comments
-            <FormTextArea v-model="customComment" rows="3"></FormTextArea>
-          </FormLabel>
-        </div>
-      </div>
-
-      <div class="flex justify-end">
-        <GenericButton @click="unlinkModal.hide()"> Cancel </GenericButton>
-        <GenericButton type="submit" class="ml-3" colour="red" @click="unlinkWorkItem()">
-          Unlink and Close
-        </GenericButton>
-      </div>
-    </GenericModalSlot>
-
     <GenericModalSlot v-if="hasPermission('ukrdc:workitems:write')" ref="closeModal">
       <div class="text-left">
         <div class="mb-4">Close the Work Item</div>
@@ -110,6 +75,7 @@
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
     >
       <GenericButton
+        v-if="availableActions.comment"
         colour="indigo"
         class="inline-flex items-center justify-center w-full"
         @click="addCommentModal.show()"
@@ -118,99 +84,112 @@
         Comment
       </GenericButton>
 
-      <GenericButton class="inline-flex items-center justify-center w-full" colour="green" @click="closeModal.show()">
+      <GenericButton
+        v-if="availableActions.close"
+        class="inline-flex items-center justify-center w-full"
+        colour="green"
+        @click="closeModal.show()"
+      >
         <IconCheckCircle />
         Close
       </GenericButton>
 
-      <GenericButton class="inline-flex items-center justify-center w-full" colour="yellow" @click="mergeModal.show()">
-        <IconLink />
-        Merge
-      </GenericButton>
-
-      <GenericButton class="inline-flex items-center justify-center w-full" colour="red" @click="unlinkModal.show()">
-        <IconXCircle />
-        Unlink
+      <GenericButton
+        v-if="record && availableActions.merge"
+        tooltip="You will be redirected here after merging"
+        :to="{
+          path: '/empi/merge',
+          query: {
+            superseded: record.incoming.masterRecords[relatedRecordsIndex].id,
+            superseding: record.destination.masterRecord.id,
+            callback: $route.fullPath,
+          },
+        }"
+        class="inline-flex items-center justify-center w-full"
+        colour="yellow"
+      >
+        <IconMiniExternalLink />
+        Merge Master Records
       </GenericButton>
     </div>
 
-    <!-- Proposed link cards -->
-    <div class="mb-8">
-      <TextH2 class="mb-4"> Proposed Link </TextH2>
+    <TextH2 class="mb-4">Compare Records</TextH2>
 
-      <div v-if="record" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <PersonsRecordCard
-          v-if="record.person"
-          class="border-2 border-red-500"
-          :record="record.person"
-          label="Incoming"
-          :highlight="Object.keys(record.attributes)"
-        />
-        <WorkitemsAttributeRecordCard
-          v-else-if="!isEmptyObject(record.attributes)"
-          class="border-2 border-red-500"
-          :record="record.attributes"
-          label="Incoming Attributes"
-          :highlight="Object.keys(record.attributes)"
-        />
-        <div v-else class="rounded-md bg-red-50 font-medium text-red-800 p-4">No valid person record found</div>
-        <NuxtLink v-if="record.masterRecord" :to="`/masterrecords/${record.masterRecord.id}`">
+    <!-- Compare records cards -->
+    <div v-if="record && record.incoming.masterRecords.length > 0" class="mb-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <NuxtLink
+          v-if="record.incoming.masterRecords.length > 0"
+          :to="`/masterrecords/${record.incoming.masterRecords[relatedRecordsIndex].id}`"
+        >
           <masterrecordsRecordCard
             class="border-2 border-indigo-500"
-            :record="record.masterRecord"
-            label="Master record"
+            :record="record.incoming.masterRecords[relatedRecordsIndex]"
+            :label="`Incoming Master Record ${relatedRecordsIndex + 1} of ${record.incoming.masterRecords.length}`"
           />
         </NuxtLink>
-
-        <div v-else class="rounded-md bg-red-50 font-medium text-red-800 p-4">No valid master record found</div>
+        <div v-else class="rounded-md bg-red-50 font-medium text-red-800 p-4">No incoming Master Records</div>
+        <NuxtLink v-if="record.destination.masterRecord" :to="`/masterrecords/${record.destination.masterRecord.id}`">
+          <masterrecordsRecordCard
+            class="border-2 border-indigo-500"
+            :record="record.destination.masterRecord"
+            label="Destination Master Record"
+          />
+        </NuxtLink>
       </div>
+      <GenericCard v-if="record.incoming.masterRecords.length > 1" class="pl-4 mt-2">
+        <GenericItemPaginator
+          v-model="relatedRecordsIndex"
+          :total="record.incoming.masterRecords.length"
+          item-label="Record"
+      /></GenericCard>
+    </div>
+
+    <!-- Compare persons cards -->
+    <div v-if="record && record.destination.persons.length > 0" class="mb-8">
+      <div v-if="record.destination.persons.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <personsRecordCard
+          v-if="record.incoming.person"
+          class="border-2 border-red-500"
+          :record="record.person"
+          label="Incoming Person Record"
+          :full="true"
+          :highlight="Object.keys(record.attributes)"
+        />
+        <div v-else class="rounded-md bg-red-50 font-medium text-red-800 p-4">No incoming Person record</div>
+        <personsRecordCard
+          :record="record.destination.persons[relatedPersonsIndex]"
+          :label="`Related Person Record ${relatedPersonsIndex + 1} of ${record.destination.persons.length}`"
+          :full="true"
+          :highlight="Object.keys(record.attributes)"
+        />
+      </div>
+      <GenericCard v-if="record.destination.persons.length > 1" class="pl-4 mt-2">
+        <GenericItemPaginator
+          v-model="relatedPersonsIndex"
+          :total="record.destination.persons.length"
+          item-label="Record"
+      /></GenericCard>
     </div>
 
     <!-- Related errors card -->
     <ErrorsMiniList v-if="record" class="mt-4 mb-8" :errors-url="record.links.messages" :size="5" />
 
     <!-- Related WorkItems  -->
-    <GenericCard v-if="relatedRecords.length > 0" class="mb-8">
+    <GenericCard v-if="relatedWorkItems.length > 0" class="mb-8">
       <!-- Card header -->
       <GenericCardHeader>
         <TextH2> Related Work Items </TextH2>
       </GenericCardHeader>
       <!-- Results list -->
       <ul class="divide-y divide-gray-200">
-        <div v-for="item in relatedRecords" :key="item.id" :item="item" class="hover:bg-gray-50">
+        <div v-for="item in relatedWorkItems" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/workitems/${item.id}`">
             <workitemsListItem :item="item" />
           </NuxtLink>
         </div>
       </ul>
     </GenericCard>
-
-    <!-- Compare records cards -->
-    <div v-if="relatedPersons.length > 0" class="mb-8">
-      <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Compare Records</h3>
-
-      <div v-if="relatedPersons.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <personsRecordCard
-          v-if="record.person"
-          class="border-2 border-red-500"
-          :record="record.person"
-          label="Incoming"
-          :full="true"
-          :highlight="Object.keys(record.attributes)"
-        />
-        <div v-else class="rounded-md bg-red-50 font-medium text-red-800 p-4">No valid person record found</div>
-        <personsRecordCard
-          :record="relatedPersons[relatedRecordsIndex]"
-          :label="`Related record ${relatedRecordsIndex + 1} of ${relatedPersons.length}`"
-          :full="true"
-          :highlight="Object.keys(record.attributes)"
-        />
-      </div>
-
-      <GenericCard v-if="relatedPersons.length > 1" class="pl-4 mt-2">
-        <GenericItemPaginator v-model="relatedRecordsIndex" :total="relatedPersons.length" item-label="Record"
-      /></GenericCard>
-    </div>
   </div>
 </template>
 
@@ -222,12 +201,17 @@ import { formatGender } from '@/utilities/codeUtils'
 import { isEmptyObject } from '@/utilities/objectUtils'
 import { delay } from '@/utilities/timeUtils'
 
-import { Person } from '@/interfaces/persons'
-import { WorkItem } from '@/interfaces/workitem'
+import { WorkItem, WorkItemExtended } from '@/interfaces/workitem'
 import { modalInterface } from '@/interfaces/modal'
-import { MirthMessageResponse } from '@/interfaces/mirth'
 
 import usePermissions from '~/mixins/usePermissions'
+
+interface AvailableActions {
+  close: boolean
+  comment: boolean
+  merge: boolean
+  unlink: boolean
+}
 
 export default defineComponent({
   setup() {
@@ -241,14 +225,14 @@ export default defineComponent({
     title.value = `Work Item ${route.value.params.id}`
 
     // Work item record data
-    const record = ref<WorkItem>()
+    const record = ref<WorkItemExtended>()
 
     // Related persons data
-    const relatedRecords = ref([] as WorkItem[])
-    const relatedPersons = ref([] as Person[])
+    const relatedWorkItems = ref([] as WorkItem[])
 
     // Related record paginator data
     const relatedRecordsIndex = ref(0)
+    const relatedPersonsIndex = ref(0)
 
     // Workitem status data
     const customComment = ref('')
@@ -265,38 +249,38 @@ export default defineComponent({
       }
     })
 
+    // Dynamic UI
+    const availableActions = computed<AvailableActions>(() => {
+      return {
+        // We can always comment and close?
+        close: true,
+        comment: true,
+        // We can only merge if we have an incoming Master Record, and both
+        // incoming and destination records are UKRDC type
+        merge:
+          record.value &&
+          record.value.type !== 9 &&
+          record.value.incoming.masterRecords.length > 0 &&
+          record.value.destination.masterRecord.nationalidType === 'UKRDC',
+        // Currently Unlink never makes sense, so ignore for now. Maybe remove entirely?
+        unlink: false,
+      } as AvailableActions
+    })
+
     // Template refs
     const addCommentModal = ref<modalInterface>()
-    const mergeModal = ref<modalInterface>()
-    const unlinkModal = ref<modalInterface>()
     const closeModal = ref<modalInterface>()
 
     // Data fetching
     const { fetch } = useFetch(async () => {
       // Get the main record data
       const path = `${$config.apiBase}/v1/workitems/${route.value.params.id}/`
-      const res: WorkItem = await $axios.$get(path)
+      const res: WorkItemExtended = await $axios.$get(path)
       record.value = res
       customComment.value = res.updateDescription
 
       // Use the record links to load related data concurrently
-      const [relatedRecordsRes, relatedPersonsRes] = await Promise.all([
-        $axios.$get(record.value.links.related),
-        $axios.$get(record.value.masterRecord.links.persons),
-      ])
-
-      // Set related workitems
-      relatedRecords.value = relatedRecordsRes
-
-      // Exclude the WorkItems Person record from our related Persons array
-      relatedPersons.value = []
-      if (record.value.person && relatedPersonsRes) {
-        for (const relatedPerson of relatedPersonsRes) {
-          if (relatedPerson.id !== record.value.person.id) {
-            relatedPersons.value.push(relatedPerson)
-          }
-        }
-      }
+      relatedWorkItems.value = await $axios.$get(record.value.links.related)
     })
 
     // Workitem actions
@@ -344,70 +328,20 @@ export default defineComponent({
       el.toggle()
     }
 
-    function mergeWorkItem() {
-      // Send a merge message, then close the workitem with comment
-      actionAndCloseWorkItem(`${$config.apiBase}/v1/workitems/${route.value.params.id}/merge`)
-      const el = mergeModal.value as modalInterface
-      el.toggle()
-    }
-
-    function unlinkWorkItem() {
-      // Send an unlink message, then close the workitem with comment
-      actionAndCloseWorkItem(`${$config.apiBase}/v1/workitems/${route.value.params.id}/unlink`)
-      const el = unlinkModal.value as modalInterface
-      el.toggle()
-    }
-
-    function actionAndCloseWorkItem(postPath: string) {
-      $axios
-        .$post(postPath)
-        .then((res: MirthMessageResponse) => {
-          if (res.status === 'success') {
-            $axios
-              .$post(`${$config.apiBase}/v1/workitems/${route.value.params.id}/close`, {
-                comment: customComment.value,
-              })
-              .catch((error) => {
-                // Re-throw error so parent .catch can handle it
-                throw error
-              })
-          }
-        })
-        .catch((error) => {
-          console.log(error.response.data.detail)
-          $toast.show({
-            type: 'danger',
-            title: 'Error',
-            message: error.response.data.detail,
-            timeout: 10,
-            classTimeout: 'bg-red-600',
-          })
-        })
-        .finally(() => {
-          // Delay fetch to allow JTRACE time to process
-          delay(1000).then(() => {
-            fetch()
-          })
-        })
-    }
-
     return {
       record,
-      relatedPersons,
       formatDate,
       formatGender,
       isEmptyObject,
-      relatedRecords,
+      relatedWorkItems,
       relatedRecordsIndex,
+      relatedPersonsIndex,
       customComment,
       statusString,
+      availableActions,
       addCommentModal,
-      mergeModal,
-      unlinkModal,
       closeModal,
       updateWorkItemComment,
-      mergeWorkItem,
-      unlinkWorkItem,
       closeWorkItem,
       hasPermission,
     }
