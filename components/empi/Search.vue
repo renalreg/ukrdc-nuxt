@@ -59,7 +59,14 @@ interface MasterRecordPage {
 }
 
 export default defineComponent({
-  setup() {
+  props: {
+    onlyUkrdc: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+  },
+  setup(props) {
     const route = useRoute()
 
     const { $axios, $config } = useContext()
@@ -73,9 +80,11 @@ export default defineComponent({
       // search.value = route.value.query.search as string[]
       if (searchQueryIsPopulated) {
         // Fetch the search results from our API server
-        const res: MasterRecordPage = await $axios.$get(
-          `${$config.apiBase}/v1/search/?${apiQueryString.value}&page=${page.value}&size=${size.value}&include_ukrdc=true`
-        )
+        let path = `${$config.apiBase}/v1/search/?${apiQueryString.value}&page=${page.value}&size=${size.value}&include_ukrdc=true`
+        if (props.onlyUkrdc) {
+          path = path + `&only_ukrdc=1`
+        }
+        const res: MasterRecordPage = await $axios.$get(path)
         masterrecords.value = res.items
         total.value = res.total
         page.value = res.page

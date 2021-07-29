@@ -1,7 +1,10 @@
 <template>
   <GenericCard>
     <div class="px-4 py-5 sm:px-6">
-      <h3 class="text-lg leading-6 font-medium text-gray-900 capitalize">
+      <h3
+        class="text-lg leading-6 font-medium text-gray-900 capitalize"
+        :class="highlight.includes('name') ? highlightClasses : []"
+      >
         {{ record.givenname.toLowerCase() }}
         {{ record.surname.toLowerCase() }}
       </h3>
@@ -24,13 +27,19 @@
         </div>
         <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="font-medium text-gray-500">Date of Birth</dt>
-          <dd class="mt-1 text-gray-900 sm:mt-0 sm:col-span-2">
+          <dd
+            class="mt-1 text-gray-900 sm:mt-0 sm:col-span-2"
+            :class="highlight.includes('dateOfBirth') ? highlightClasses : []"
+          >
             {{ formatDate(record.dateOfBirth, (t = false)) }}
           </dd>
         </div>
         <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="font-medium text-gray-500">Assigned Gender</dt>
-          <dd class="mt-1 text-gray-900 sm:mt-0 sm:col-span-2">
+          <dd
+            class="mt-1 text-gray-900 sm:mt-0 sm:col-span-2"
+            :class="highlight.includes('gender') ? highlightClasses : []"
+          >
             {{ formatGender(record.gender) }}
           </dd>
         </div>
@@ -63,9 +72,24 @@ export default defineComponent({
       required: false,
       default: null,
     },
+    highlight: {
+      type: Array,
+      required: false,
+      default: () => [],
+    },
   },
   setup() {
-    return { formatDate, formatGender }
+    const highlightClasses = [
+      'bg-red-100',
+      'text-red-800',
+      'font-medium',
+      'rounded-md',
+      'pl-2',
+      '-ml-2',
+      'pr-2',
+      'mr-2',
+    ]
+    return { highlightClasses, formatDate, formatGender }
   },
 })
 </script>
