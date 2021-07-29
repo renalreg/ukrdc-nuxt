@@ -88,7 +88,11 @@
           >.</TextP
         >
       </div>
-      <GenericButton colour="red" @click="beginMergeAlert.show()">Begin Record Merge</GenericButton>
+
+      <div class="flex gap-2">
+        <GenericButton colour="red" @click="beginMergeAlert.show()">Begin Record Merge</GenericButton>
+        <GenericButton v-if="callbackPath" :to="callbackPath">Cancel</GenericButton>
+      </div>
     </div>
   </div>
 </template>
@@ -116,6 +120,7 @@ export default defineComponent({
 
     const supersededId = stringQuery('superseded', null, true, false)
     const supersedingId = stringQuery('superseding', null, true, false)
+    const callbackPath = stringQuery('callback', null)
 
     const superseded = ref<MasterRecord>()
     const superseding = ref<MasterRecord>()
@@ -195,6 +200,9 @@ export default defineComponent({
           classTimeout: 'bg-green-600',
         })
         clearMerge()
+        if (callbackPath.value) {
+          router.push(callbackPath.value)
+        }
       } catch (error) {
         console.log(error.response.data.detail)
         $toast.show({
@@ -250,6 +258,7 @@ export default defineComponent({
       beginMergeAlert,
       supersededId,
       supersedingId,
+      callbackPath,
       superseded,
       superseding,
       searchingFor,

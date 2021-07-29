@@ -122,7 +122,7 @@ import { defineComponent, ref, useRoute, useFetch, useContext, useMeta } from '@
 import { Message, ErrorSource } from '@/interfaces/messages'
 import { ChannelMessage } from '@/interfaces/mirth'
 import { MasterRecord } from '@/interfaces/masterrecord'
-import { WorkItemShort } from '@/interfaces/workitem'
+import { WorkItem } from '@/interfaces/workitem'
 
 import { formatDate } from '@/utilities/dateUtils'
 import { isEmptyObject } from '@/utilities/objectUtils'
@@ -143,7 +143,7 @@ export default defineComponent({
     const error = ref<Message>()
     const source = ref<ErrorSource>()
     const mirthMessage = ref<ChannelMessage>()
-    const workItems = ref([] as WorkItemShort[])
+    const workItems = ref([] as WorkItem[])
     const masterRecords = ref([] as MasterRecord[])
 
     // Modal visibility

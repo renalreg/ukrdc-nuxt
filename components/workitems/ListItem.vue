@@ -43,12 +43,12 @@
 <script lang="ts">
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 import { formatDate } from '@/utilities/dateUtils'
-import { WorkItemShort } from '@/interfaces/workitem'
+import { WorkItem } from '@/interfaces/workitem'
 
 export default defineComponent({
   props: {
     item: {
-      type: Object as () => WorkItemShort,
+      type: Object as () => WorkItem,
       required: true,
     },
   },

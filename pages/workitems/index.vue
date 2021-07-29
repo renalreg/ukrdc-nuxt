@@ -61,13 +61,13 @@ import { defineComponent, watch, ref, useRoute, useFetch, useContext } from '@nu
 
 import usePagination from '@/mixins/usePagination'
 
-import { WorkItemShort } from '@/interfaces/workitem'
+import { WorkItem } from '@/interfaces/workitem'
 import useQuery from '~/mixins/useQuery'
 import useFacilities from '~/mixins/useFacilities'
 import useSortBy from '~/mixins/useSortBy'
 
 interface WorkItemPage {
-  items: WorkItemShort[]
+  items: WorkItem[]
   total: number
   page: number
   size: number
@@ -83,7 +83,7 @@ export default defineComponent({
     const { facilities, facilityIds, facilityLabels, selectedFacility, fetchFacilities } = useFacilities()
     const { orderAscending, orderBy, toggleOrder } = useSortBy()
 
-    const workitems = ref([] as WorkItemShort[])
+    const workitems = ref([] as WorkItem[])
     const statuses = arrayQuery('status', ['1'], true)
 
     const { fetch } = useFetch(async () => {
