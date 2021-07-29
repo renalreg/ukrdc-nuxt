@@ -10,7 +10,7 @@ interface WorkItemLinks {
   unlink: string
 }
 
-export interface WorkItemShort {
+export interface WorkItem {
   id: number
 
   type: number
@@ -19,13 +19,26 @@ export interface WorkItemShort {
   lastUpdated: string
   updatedBy: string
 
+  updateDescription: string
+  attributes: object
+
   masterRecord: MasterRecord
   person: Person
 
   links: WorkItemLinks
 }
 
-export interface WorkItem extends WorkItemShort {
-  updateDescription: string
-  attributes: object
+interface WorkItemIncoming {
+  person: Person
+  masterRecords: MasterRecord[]
+}
+
+interface WorkItemDestination {
+  persons: Person[]
+  masterRecord: MasterRecord
+}
+
+export interface WorkItemExtended extends WorkItem {
+  incoming: WorkItemIncoming
+  destination: WorkItemDestination
 }
