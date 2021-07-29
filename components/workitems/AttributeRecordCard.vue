@@ -11,7 +11,7 @@
     </div>
     <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
       <dl class="sm:divide-y sm:divide-gray-200">
-        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="font-medium text-gray-500">Local ID</dt>
           <dd class="mt-1 text-gray-900 sm:mt-0 sm:col-span-2 align-middle">
             <div v-if="record.localid" :class="highlight.includes('localid') ? highlightClasses : []">
@@ -31,7 +31,7 @@
             </div>
           </dd>
         </div>
-        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="font-medium text-gray-500">Date of Birth</dt>
           <dd
             class="mt-1 text-gray-900 sm:mt-0 sm:col-span-2"
@@ -40,7 +40,7 @@
             {{ record.dateOfBirth ? formatDate(record.dateOfBirth, (t = false)) : 'N/A' }}
           </dd>
         </div>
-        <div v-if="record.dateOfDeath || full" class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <div v-if="record.dateOfDeath || full" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="font-medium text-gray-500">Date of Death</dt>
           <dd
             class="mt-1 text-gray-900 sm:mt-0 sm:col-span-2"
@@ -49,7 +49,7 @@
             {{ record.dateOfDeath ? formatDate(record.dateOfDeath, (t = false)) : 'N/A' }}
           </dd>
         </div>
-        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="font-medium text-gray-500">Assigned Gender</dt>
           <dd
             class="mt-1 text-gray-900 sm:mt-0 sm:col-span-2"
@@ -58,7 +58,7 @@
             {{ formatGender(record.gender) }}
           </dd>
         </div>
-        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="font-medium text-gray-500">Last Updated</dt>
           <dd class="mt-1 text-gray-900 sm:mt-0 sm:col-span-2">N/A</dd>
         </div>
