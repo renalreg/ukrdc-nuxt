@@ -116,7 +116,7 @@
     <TextH2 class="mb-4">Compare Records</TextH2>
 
     <!-- Compare records cards -->
-    <div v-if="record && record.incoming.masterRecords.length > 0" class="mb-8">
+    <div v-if="record" class="mb-8">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <NuxtLink
           v-if="record.incoming.masterRecords.length > 0"
@@ -128,6 +128,13 @@
             :label="`Incoming Master Record ${relatedRecordsIndex + 1} of ${record.incoming.masterRecords.length}`"
           />
         </NuxtLink>
+        <WorkitemsAttributeRecordCard
+          v-else-if="!isEmptyObject(record.attributes)"
+          class="border-2 border-green-500"
+          :record="record.attributes"
+          label="Incoming Attributes"
+          :highlight="Object.keys(record.attributes)"
+        />
         <div v-else class="rounded-md bg-red-50 font-medium text-red-800 p-4">No incoming Master Records</div>
         <NuxtLink v-if="record.destination.masterRecord" :to="`/masterrecords/${record.destination.masterRecord.id}`">
           <masterrecordsRecordCard
@@ -154,6 +161,13 @@
           :record="record.person"
           label="Incoming Person Record"
           :full="true"
+          :highlight="Object.keys(record.attributes)"
+        />
+        <WorkitemsAttributeRecordCard
+          v-else-if="!isEmptyObject(record.attributes)"
+          class="border-2 border-green-500"
+          :record="record.attributes"
+          label="Incoming Attributes"
           :highlight="Object.keys(record.attributes)"
         />
         <div v-else class="rounded-md bg-red-50 font-medium text-red-800 p-4">No incoming Person record</div>
