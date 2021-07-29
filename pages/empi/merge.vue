@@ -22,11 +22,12 @@
               class="mt-4 border-2 border-indigo-500"
               :record="superseded"
               :label="`Superseded Record ${superseded.id.toString()}`"
+              :highlight="highlightSections"
             />
           </NuxtLink>
         </div>
         <div v-else>
-          <EmpiSearch v-if="searchingFor === 'superseded'" @select="selectSuperceeded" />
+          <EmpiSearch v-if="searchingFor === 'superseded'" :only-ukrdc="true" @select="selectSuperceeded" />
           <GenericButton v-else class="w-full" @click="searchingFor = 'superseded'">
             Search for a Record
           </GenericButton>
@@ -47,11 +48,12 @@
               class="mt-4 border-2 border-indigo-500"
               :record="superseding"
               :label="`Superseding Record ${superseding.id.toString()}`"
+              :highlight="highlightSections"
             />
           </NuxtLink>
         </div>
         <div v-else>
-          <EmpiSearch v-if="searchingFor === 'superseding'" @select="selectsuperseding" />
+          <EmpiSearch v-if="searchingFor === 'superseding'" :only-ukrdc="true" @select="selectsuperseding" />
           <GenericButton v-else class="w-full" @click="searchingFor = 'superseding'">
             Search for a Record
           </GenericButton>
@@ -60,6 +62,12 @@
     </div>
 
     <GenericAlertWarning v-if="mergeBlockDescription" class="mb-4" :message="mergeBlockDescription" />
+
+    <GenericAlertError
+      v-if="highlightSections.length > 0"
+      class="mb-4"
+      :message="`You are about to merge records with mismatching demographics for: ${highlightSections.join(', ')}`"
+    />
 
     <div v-if="readyToMerge">
       <div class="mb-6">
@@ -116,6 +124,26 @@ export default defineComponent({
 
     const readyToMerge = computed(() => {
       return superseded.value?.id && superseding.value?.id && superseded.value?.id !== superseding.value?.id
+    })
+
+    const highlightSections = computed<string[]>(() => {
+      if (!(superseding.value && superseded.value)) {
+        return []
+      }
+      const highlight = []
+      if (
+        superseding.value.givenname !== superseded.value.givenname ||
+        superseding.value.surname !== superseded.value.surname
+      ) {
+        highlight.push('name')
+      }
+      if (superseding.value.dateOfBirth !== superseded.value.dateOfBirth) {
+        highlight.push('dateOfBirth')
+      }
+      if (superseding.value.gender !== superseded.value.gender) {
+        highlight.push('gender')
+      }
+      return highlight
     })
 
     const mergeBlockDescription = computed(() => {
@@ -225,6 +253,7 @@ export default defineComponent({
       superseded,
       superseding,
       searchingFor,
+      highlightSections,
       clearsuperseding,
       clearSuperceeded,
       selectsuperseding,
