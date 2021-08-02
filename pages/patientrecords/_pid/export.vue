@@ -65,6 +65,7 @@ export default defineComponent({
               timeout: 10,
               classTimeout: 'bg-red-600',
             })
+            throw error
           })
       }
     }
