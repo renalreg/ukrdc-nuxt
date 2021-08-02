@@ -330,6 +330,7 @@ export default defineComponent({
             timeout: 10,
             classTimeout: 'bg-red-600',
           })
+          throw error
         })
         .finally(() => {
           // Delay fetch to allow JTRACE time to process
