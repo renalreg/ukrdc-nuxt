@@ -3,6 +3,7 @@
     <div v-if="record && record.patient" class="md:flex items-center mb-2">
       <div class="flex-grow">
         <TextH1>{{ fullName }}</TextH1>
+        <TextL1> PID {{ $route.params.pid }} </TextL1>
       </div>
       <div v-if="related">
         <GenericSelect v-model="selectedPid">
