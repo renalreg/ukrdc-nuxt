@@ -38,6 +38,8 @@ import { MasterRecord, MasterRecordStatistics } from '@/interfaces/masterrecord'
 import { TabItem } from '@/interfaces/tabs'
 
 export default defineComponent({
+  fetchOnServer: false,
+
   setup() {
     const route = useRoute()
     const { $axios, $config } = useContext()

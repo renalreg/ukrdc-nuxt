@@ -21,6 +21,8 @@ import { ChannelMessage } from '@/interfaces/mirth'
 import { isEmptyObject } from '@/utilities/objectUtils'
 
 export default defineComponent({
+  fetchOnServer: false,
+
   setup() {
     const route = useRoute()
     const { $axios, $config } = useContext()

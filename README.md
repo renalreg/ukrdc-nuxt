@@ -28,6 +28,14 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 
 ## Developer notes
 
+### Server-side fetching
+
+In order to enable runtime-configueration, we make use of Nuxt server-side rendering. However, on some pages we want data fetching to always happen client-side. This is usually for pages where mutliple API routes are called, populating the page in "chunks". Usually, we don't want the user to have to wait for every chunk to finish before showing anything (as is the case with server-side fetching), so for these pages we set `fetchOnServer: false`. Now, the server will render the DOM, send this to the client, and the client will then call the API to populate page data.
+
+A primary example of this is when viewing a Master Record. While most record data laods quickly, some queries such as finding related records and messages take longer to run. We want to show the user all data as soon as it's available, so we enforce client-side fetching to allow this.
+
+Similarly, some API routes slow down occasionally due to upstream load, e.g. Mirth message information. We'd rather show users that the data is being loaded rather than just hanging waiting for the page to load at all. By moving fetching to the client-side we can render loading messages/animations and handle timeouts more gracefully.
+
 ### Framework rationale
 
 #### Vue
