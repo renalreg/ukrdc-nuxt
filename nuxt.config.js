@@ -27,6 +27,7 @@ export default {
     { ssr: false, src: '~/plugins/toast.ts' },
     { ssr: false, src: '~/plugins/axios-toast.ts' },
     { ssr: true, src: '~/plugins/axios-sentry.ts' },
+    { ssr: false, src: '~/plugins/vue-clickaway.ts' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

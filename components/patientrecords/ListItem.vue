@@ -31,10 +31,15 @@
               {{ item.ukrdcid }}
             </TextP>
           </div>
-          <!-- Record link -->
-          <GenericButtonMini :to="`/patientrecords/${item.pid}`" class="h-8 justify-self-end"
-            >View Record</GenericButtonMini
-          >
+          <!-- Record links -->
+          <div v-click-away="closeMenu" class="justify-self-end flex items-center">
+            <GenericButtonMini :to="`/patientrecords/${item.pid}`" class="h-8">View Record</GenericButtonMini>
+            <GenericButtonMini class="h-8 ml-1" @click="showMenu = !showMenu"><IconChevronDown /></GenericButtonMini>
+          </div>
+          <GenericMenu class="mt-8" :show="showMenu">
+            <GenericMenuItem @click.native="copyPID"> Copy PID </GenericMenuItem>
+            <GenericMenuItem :disabled="true"> Delete Record </GenericMenuItem>
+          </GenericMenu>
         </div>
       </div>
     </div>
@@ -46,7 +51,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
 import { formatDate } from '@/utilities/dateUtils'
 import { PatientRecord } from '@/interfaces/patientrecord'
 
@@ -57,9 +62,30 @@ export default defineComponent({
       required: true,
     },
   },
-  setup() {
+  setup(props) {
+    const { $toast } = useContext()
+
     const showDetail = ref(false)
-    return { showDetail, formatDate }
+    const showMenu = ref(false)
+
+    function closeMenu() {
+      showMenu.value = false
+    }
+
+    function copyPID() {
+      navigator.clipboard.writeText(props.item.pid).then(() => {
+        closeMenu()
+        $toast.show({
+          type: 'success',
+          title: 'Success',
+          message: 'PID copied to clipboard',
+          timeout: 5,
+          classTimeout: 'bg-green-600',
+        })
+      })
+    }
+
+    return { showDetail, showMenu, closeMenu, copyPID, formatDate }
   },
 })
 </script>
