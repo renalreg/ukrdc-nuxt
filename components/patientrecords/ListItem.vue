@@ -3,6 +3,8 @@
     <div class="flex items-center py-4">
       <div class="min-w-0 flex-1 flex items-center">
         <div
+          v-tooltip="'Show Details'"
+          aria-label="Show details"
           class="flex flex-none items-center justify-center w-16 self-stretch cursor-pointer"
           @click="showDetail = !showDetail"
         >
@@ -34,7 +36,14 @@
           <!-- Record links -->
           <div v-click-away="closeMenu" class="justify-self-end flex items-center">
             <GenericButtonMini :to="`/patientrecords/${item.pid}`" class="h-8">View Record</GenericButtonMini>
-            <GenericButtonMini class="h-8 ml-1" @click="showMenu = !showMenu"><IconChevronDown /></GenericButtonMini>
+            <GenericButtonMini
+              label="Manage record"
+              tooltip="Manage Record"
+              class="h-8 ml-1"
+              @click="showMenu = !showMenu"
+            >
+              <IconChevronDown />
+            </GenericButtonMini>
           </div>
           <GenericMenu class="mt-8" :show="showMenu">
             <GenericMenuItem @click.native="copyPID"> Copy PID </GenericMenuItem>
