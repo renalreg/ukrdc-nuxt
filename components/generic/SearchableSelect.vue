@@ -2,18 +2,7 @@
   <transition :duration="200">
     <div class="relative">
       <!-- Background overlay, show/hide based on modal state. -->
-      <transition
-        enter-active-class="ease-out"
-        enter-class="opacity-0"
-        enter-to-class="opacity-100"
-        leave-active-class="ease-in"
-        leave-class="opacity-100"
-        leave-to-class="opacity-0 scale-90"
-      >
-        <div v-if="isOpen && closable" class="fixed inset-0 transition-opacity" aria-hidden="true" @click="cancel()">
-          <div class="absolute inset-0 bg-gray-500 opacity-10"></div>
-        </div>
-      </transition>
+      <GenericBlackout :visible="closable && isOpen" @click="cancel()" />
 
       <!-- Main component -->
       <div class="flex w-full">

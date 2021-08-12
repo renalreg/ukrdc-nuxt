@@ -3,14 +3,7 @@
     <div v-show="visible" class="fixed z-10 inset-0">
       <div class="items-end justify-center h-screen w-screen block p-0 mt-16 md:mt-0">
         <!-- Modal panel, show/hide based on modal state. -->
-        <transition
-          enter-active-class="ease-out"
-          enter-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-          enter-to-class="opacity-100 translate-y-0 sm:scale-100"
-          leave-active-class="ease-in"
-          leave-class="opacity-100 translate-y-0 sm:scale-100"
-          leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-        >
+        <TransitionModal>
           <div
             v-show="visible"
             class="inline-block align-bottom vibrancy shadow-xl transform transition-all sm:align-middle h-full w-full"
@@ -45,7 +38,7 @@
             </div>
             <slot></slot>
           </div>
-        </transition>
+        </TransitionModal>
       </div>
     </div>
   </transition>
