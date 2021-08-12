@@ -13,7 +13,7 @@
         </div>
         <div class="mt-2 flex">
           <ErrorsStatusBadge class="flex-shrink mr-2" :message="item" />
-          <TextP class="flex-grow line-clamp-2">
+          <TextP class="flex-grow line-clamp-1">
             {{ itemDescription }}
           </TextP>
         </div>
@@ -31,6 +31,7 @@
           v-if="showPatientFilter"
           :to="{ path: '/messages', query: { nationalid: item.ni } }"
           tooltip="Filter errors by this patient"
+          :label="`Filter errors by patient ${item.ni}`"
           ><IconMiniFilter
         /></GenericButtonRound>
         <div class="flex-grow">
