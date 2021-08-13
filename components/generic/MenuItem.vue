@@ -28,7 +28,14 @@ export default defineComponent({
       if (props.disabled) {
         return ['text-gray-400']
       } else {
-        return ['text-gray-700', 'hover:bg-gray-100', 'hover:text-gray-900', 'cursor-pointer']
+        return [
+          'text-gray-700',
+          'hover:bg-gray-100',
+          'hover:text-gray-900',
+          'focus:bg-indigo-100',
+          'focus:text-gray-900',
+          'cursor-pointer',
+        ]
       }
     })
 
