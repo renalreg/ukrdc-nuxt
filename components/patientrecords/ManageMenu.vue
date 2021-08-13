@@ -7,7 +7,9 @@
       </GenericButtonMini>
       <GenericMenu class="mt-8" :show="showMenu">
         <GenericMenuItem @click.native="copyPID"> Copy PID </GenericMenuItem>
-        <GenericMenuItem @click.native="showDeleteModal"> Delete Record </GenericMenuItem>
+        <GenericMenuItem v-if="hasPermission('ukrdc:records:delete')" @click.native="showDeleteModal">
+          Delete Record
+        </GenericMenuItem>
       </GenericMenu>
     </div>
   </div>
@@ -17,6 +19,7 @@
 import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
 import { PatientRecord } from '@/interfaces/patientrecord'
 import { modalInterface } from '~/interfaces/modal'
+import usePermissions from '~/mixins/usePermissions'
 
 export default defineComponent({
   props: {
@@ -27,6 +30,7 @@ export default defineComponent({
   },
   setup(props) {
     const { $toast } = useContext()
+    const { hasPermission } = usePermissions()
 
     const deleteModal = ref<modalInterface>()
 
@@ -54,7 +58,7 @@ export default defineComponent({
       deleteModal.value?.show()
     }
 
-    return { deleteModal, showMenu, closeMenu, copyPID, showDeleteModal }
+    return { deleteModal, showMenu, closeMenu, copyPID, showDeleteModal, hasPermission }
   },
 })
 </script>
