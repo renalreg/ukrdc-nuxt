@@ -75,7 +75,7 @@
       <ul v-if="$fetchState.pending" class="divide-y divide-gray-200">
         <SkeleListItem v-for="n in 5" :key="n" />
       </ul>
-      <PatientrecordsGroupedList v-else :records="patientRecords" />
+      <PatientrecordsGroupedList v-else :records="patientRecords" @refresh="refreshRecords" />
     </GenericCard>
 
     <!-- Related Master Records card -->
@@ -180,7 +180,7 @@ export default defineComponent({
       )}`
     })
 
-    useFetch(async () => {
+    const { fetch } = useFetch(async () => {
       // Use the record links to load related data concurrently
       const [latestMessageResponse, relatedRecordsResponse, patientRecordsResponse] = await Promise.all([
         $axios.$get(props.record.links.latestMessage),
@@ -196,12 +196,18 @@ export default defineComponent({
       patientRecords.value = patientRecordsResponse
     })
 
+    function refreshRecords() {
+      console.log('Refreshing Patient Records...')
+      fetch()
+    }
+
     return {
       patientRecords,
       relatedRecords,
       tracingRecord,
       latestMessage,
       latestMessageInfo,
+      refreshRecords,
       formatGender,
       formatDate,
       nameMatchesTracing,

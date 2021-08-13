@@ -36,7 +36,7 @@
           <!-- Record links -->
           <div class="justify-self-end flex items-center">
             <GenericButtonMini :to="`/patientrecords/${item.pid}`" class="h-8">View Record</GenericButtonMini>
-            <PatientrecordsManageMenu :item="item" />
+            <PatientrecordsManageMenu :item="item" @deleted="$emit('deleted')" />
           </div>
         </div>
       </div>

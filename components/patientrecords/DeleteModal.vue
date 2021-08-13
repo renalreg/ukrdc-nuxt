@@ -1,7 +1,7 @@
 <template>
   <transition :duration="200">
     <div v-show="visible" class="fixed z-10 inset-0 overflow-y-auto">
-      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <div class="flex items-end justify-center min-h-screen w-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <!-- Background overlay, show/hide based on modal state. -->
         <GenericBlackout :visible="visible" @click="hide()" />
 
@@ -24,7 +24,8 @@
               shadow-xl
               transform
               transition-all
-              sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6
+              w-full
+              sm:w-3/4 sm:max-w-3xl sm:my-8 sm:align-middle sm:p-6
             "
             role="dialog"
             aria-modal="true"
@@ -61,15 +62,159 @@
                   />
                 </svg>
               </div>
-              <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                <h3 id="modal-headline" class="text-lg leading-6 font-medium text-gray-900">Delete patient record?</h3>
-                <div class="mt-2">
-                  <p class="text-gray-500">MESSAGE</p>
+              <div class="mt-3 sm:mt-0 ml-8 sm:ml-4 text-left">
+                <h3 id="modal-headline" class="text-lg leading-6 font-medium text-gray-900">
+                  {{ previewErrorMessage ? 'Unable to delete patient record' : 'Delete patient record' }}
+                </h3>
+                <div class="mt-2 mb-4">
+                  <div v-if="previewErrorMessage">
+                    <TextP>{{ previewErrorMessage }}</TextP>
+                  </div>
+                  <div v-if="previewResponse && !deleteInProgress">
+                    <TextH3 class="mb-2">The following data will be permanantly deleted</TextH3>
+                    <ul class="list-disc">
+                      <li>
+                        Patient record {{ previewResponse.patientRecord.pid }} - UKRDCID
+                        {{ previewResponse.patientRecord.ukrdcid }} - Created
+                        {{ formatDate(previewResponse.patientRecord.repositoryCreationDate, (t = false)) }}
+                        <ul class="list-disc ml-4">
+                          <li v-if="previewResponse.patientRecord.programMemberships.length > 0">
+                            {{ previewResponse.patientRecord.programMemberships.length }} program memberships
+                            <ul class="list-disc ml-4">
+                              <li
+                                v-for="membership in previewResponse.patientRecord.programMemberships"
+                                :key="membership.programName"
+                              >
+                                {{ membership.programName }} since {{ formatDate(membership.fromTime, (t = false)) }}
+                              </li>
+                            </ul>
+                          </li>
+                          <li v-if="previewResponse.patientRecord.socialHistories.length > 0">
+                            {{ previewResponse.patientRecord.socialHistories.length }} social histories
+                          </li>
+                          <li v-if="previewResponse.patientRecord.familyHistories.length > 0">
+                            {{ previewResponse.patientRecord.familyHistories.length }} family histories
+                          </li>
+                          <li v-if="previewResponse.patientRecord.observations.length > 0">
+                            {{ previewResponse.patientRecord.observations.length }} observations
+                          </li>
+                          <li v-if="previewResponse.patientRecord.allergies.length > 0">
+                            {{ previewResponse.patientRecord.allergies.length }} allergies
+                          </li>
+                          <li v-if="previewResponse.patientRecord.diagnoses.length > 0">
+                            {{ previewResponse.patientRecord.diagnoses.length }} diagnoses
+                          </li>
+                          <li v-if="previewResponse.patientRecord.renaldiagnoses.length > 0">
+                            {{ previewResponse.patientRecord.renaldiagnoses.length }} renal diagnoses
+                          </li>
+                          <li v-if="previewResponse.patientRecord.medications.length > 0">
+                            {{ previewResponse.patientRecord.medications.length }} medications
+                          </li>
+                          <li v-if="previewResponse.patientRecord.procedures.length > 0">
+                            {{ previewResponse.patientRecord.procedures.length }} procedures
+                          </li>
+                          <li v-if="previewResponse.patientRecord.documents.length > 0">
+                            {{ previewResponse.patientRecord.documents.length }} documents
+                          </li>
+                          <li v-if="previewResponse.patientRecord.encounters.length > 0">
+                            {{ previewResponse.patientRecord.encounters.length }} encounters
+                          </li>
+                          <li v-if="previewResponse.patientRecord.clinicalRelationships.length > 0">
+                            {{ previewResponse.patientRecord.clinicalRelationships.length }} clinical relationships
+                          </li>
+                          <li v-if="previewResponse.patientRecord.surveys.length > 0">
+                            {{ previewResponse.patientRecord.surveys.length }} surveys
+                          </li>
+                          <li v-if="previewResponse.patientRecord.patient">
+                            Patient - Date of Birth
+                            {{ formatDate(previewResponse.patientRecord.patient.birthTime, (t = false)) }}
+                            <ul class="list-disc ml-4">
+                              <li
+                                v-for="name in previewResponse.patientRecord.patient.names"
+                                :key="name.given + name.family"
+                              >
+                                Patient Name {{ name.given }} {{ name.family }}
+                              </li>
+                            </ul>
+                            <ul class="list-disc ml-4">
+                              <li
+                                v-for="number in previewResponse.patientRecord.patient.numbers"
+                                :key="number.organization + number.numbertype + number.patientid"
+                              >
+                                Patient Number {{ number.organization }}:{{ number.numbertype }}:{{ number.patientid }}
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                      <li v-if="previewResponse.empi.masterRecords.length > 0">
+                        {{ previewResponse.empi.masterRecords.length }} Master Records
+                        <ul class="list-disc ml-4">
+                          <li v-for="masterRecord in previewResponse.empi.masterRecords" :key="masterRecord.id">
+                            Master Record {{ masterRecord.id }} - {{ masterRecord.givenname }}
+                            {{ masterRecord.surname }} - Date of Birth
+                            {{ formatDate(masterRecord.dateOfBirth, (t = false)) }}
+                          </li>
+                        </ul>
+                      </li>
+
+                      <li v-if="previewResponse.empi.persons.length > 0">
+                        {{ previewResponse.empi.persons.length }} Person Records
+                        <ul class="list-disc ml-4">
+                          <li v-for="person in previewResponse.empi.persons" :key="person.id">
+                            Person {{ person.id }} - {{ person.givenname }} {{ person.surname }} - Date of Birth
+                            {{ formatDate(person.dateOfBirth, (t = false)) }}
+                          </li>
+                        </ul>
+                      </li>
+
+                      <li v-if="previewResponse.empi.linkRecords.length > 0">
+                        {{ previewResponse.empi.linkRecords.length }} Link Records
+                        <ul class="list-disc ml-4">
+                          <li v-for="linkRecord in previewResponse.empi.linkRecords" :key="linkRecord.id">
+                            Link Record {{ linkRecord.id }} - Person {{ linkRecord.personId }} linked to Master Record
+                            {{ linkRecord.masterId }}
+                          </li>
+                        </ul>
+                      </li>
+
+                      <li v-if="previewResponse.empi.pidxrefs.length > 0">
+                        {{ previewResponse.empi.pidxrefs.length }} PID Cross References
+                        <ul class="list-disc ml-4">
+                          <li v-for="pidXRef in previewResponse.empi.pidxrefs" :key="pidXRef.id">
+                            PIDXRef {{ pidXRef.id }} - {{ pidXRef.sendingFacility }} via {{ pidXRef.sendingExtract }}:
+                            {{ pidXRef.localid }}
+                          </li>
+                        </ul>
+                      </li>
+
+                      <li v-if="previewResponse.empi.workItems.length > 0">
+                        {{ previewResponse.empi.workItems.length }} Work Items
+                      </li>
+                    </ul>
+                  </div>
                 </div>
+                <FormCheckbox
+                  v-if="(previewResponse && !previewErrorMessage) || deleteInProgress"
+                  v-model="confirmChecked"
+                  :disabled="!previewResponse"
+                  label="Yes, delete this record and all associated data"
+                />
               </div>
             </div>
+            <div v-if="(!previewErrorMessage && !previewResponse) || deleteInProgress" class="w-full">
+              <LoadingIndicator></LoadingIndicator>
+            </div>
             <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-              <GenericButton class="ml-2" colour="red" @click="confirm()"> Delete </GenericButton>
+              <GenericButton
+                v-if="previewResponse && !previewErrorMessage"
+                class="ml-2"
+                colour="red"
+                :disabled="!confirmChecked || deleteInProgress"
+                @click="doRealDelete()"
+              >
+                Delete
+              </GenericButton>
               <GenericButton @click="cancel()"> Cancel </GenericButton>
             </div>
           </div>
@@ -80,9 +225,30 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext, watch } from '@nuxtjs/composition-api'
 import useModal from '@/mixins/useModal'
-import { PatientRecord } from '~/interfaces/patientrecord'
+import { formatDate } from '@/utilities/dateUtils'
+import { PatientRecord, PatientRecordFull } from '~/interfaces/patientrecord'
+import { MasterRecord } from '~/interfaces/masterrecord'
+import { Person, PidXRef } from '~/interfaces/persons'
+import { WorkItem } from '~/interfaces/workitem'
+import { LinkRecordSummary } from '~/interfaces/linkrecords'
+
+interface DeletePIDFromEMPISchema {
+  persons: Person[]
+  masterRecords: MasterRecord[]
+  pidxrefs: PidXRef[]
+  workItems: WorkItem[]
+  linkRecords: LinkRecordSummary[]
+}
+
+interface DeletePIDResponseSchema {
+  hash: string
+  committed: boolean
+
+  patientRecord: PatientRecordFull
+  empi: DeletePIDFromEMPISchema
+}
 
 export default defineComponent({
   props: {
@@ -92,25 +258,79 @@ export default defineComponent({
     },
   },
 
-  setup(_, { emit }) {
+  setup(props, { emit }) {
+    const { $axios, $config, $toast } = useContext()
     const { visible, show, hide, toggle } = useModal()
 
-    function confirm(): void {
-      emit('confirm')
-      hide()
-    }
+    const confirmChecked = ref(false)
+    const previewResponse = ref<DeletePIDResponseSchema>()
+    const deleteResponse = ref<DeletePIDResponseSchema>()
+    const previewErrorMessage = ref<string>()
+    const deleteInProgress = ref(false)
+
     function cancel(): void {
       emit('cancel')
       hide()
     }
 
+    watch(visible, async () => {
+      if (visible.value) {
+        // Reset the modal each time it's is shown.
+        confirmChecked.value = false
+        previewResponse.value = undefined
+        deleteResponse.value = undefined
+
+        try {
+          const res: DeletePIDResponseSchema = await $axios.$post(
+            `${$config.apiBase}/v1/patientrecords/${props.item.pid}/delete`
+          )
+          previewResponse.value = res
+        } catch (error) {
+          if (error.response.status === 400) {
+            console.log(error.response.data.detail)
+            previewErrorMessage.value = error.response.data.detail
+          }
+        }
+      }
+    })
+
+    async function doRealDelete() {
+      emit('confirm')
+      if (confirmChecked.value && previewResponse.value) {
+        deleteInProgress.value = true
+        const res: DeletePIDResponseSchema = await $axios.$post(
+          `${$config.apiBase}/v1/patientrecords/${props.item.pid}/delete`,
+          {
+            hash: previewResponse.value.hash,
+          }
+        )
+        previewResponse.value = res
+      }
+      deleteInProgress.value = false
+      hide()
+      emit('deleted')
+      $toast.show({
+        type: 'success',
+        title: 'Success',
+        message: 'Record deleted',
+        timeout: 5,
+        classTimeout: 'bg-green-600',
+      })
+    }
+
     return {
       visible,
-      confirm,
+      confirmChecked,
+      previewResponse,
+      deleteResponse,
+      previewErrorMessage,
+      deleteInProgress,
+      doRealDelete,
       cancel,
       show,
       hide,
       toggle,
+      formatDate,
     }
   },
 })

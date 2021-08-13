@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PatientrecordsDeleteModal ref="deleteModal" :item="item" />
+    <PatientrecordsDeleteModal ref="deleteModal" :item="item" @deleted="$emit('deleted')" />
     <div v-click-away="closeMenu" class="justify-self-end flex items-center">
       <GenericButtonMini label="Manage record" tooltip="Manage Record" class="h-8 ml-1" @click="showMenu = !showMenu">
         <IconChevronDown />
