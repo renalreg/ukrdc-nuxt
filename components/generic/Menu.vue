@@ -7,7 +7,7 @@
     leave-class="opacity-100 scale-100"
     leave-to-class="opacity-0 scale-95"
   >
-    <div
+    <ul
       v-show="show"
       class="
         origin-top-right
@@ -16,6 +16,7 @@
         mx-2
         my-2
         w-56
+        py-1
         rounded-md
         shadow-lg
         bg-white
@@ -27,10 +28,8 @@
       aria-labelledby="option-menu-button"
       tabindex="-1"
     >
-      <div class="py-1" role="none">
-        <slot></slot>
-      </div>
-    </div>
+      <slot></slot>
+    </ul>
   </transition>
 </template>
 

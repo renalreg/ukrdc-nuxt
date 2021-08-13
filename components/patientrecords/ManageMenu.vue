@@ -2,27 +2,26 @@
   <div>
     <PatientrecordsDeleteModal ref="deleteModal" :item="item" @deleted="$emit('deleted')" />
     <div v-click-away="closeMenu" class="justify-self-end flex items-center">
-      <GenericButtonMini label="Manage record" tooltip="Manage Record" class="h-8 ml-1" @click="showMenu = !showMenu">
+      <GenericButtonMini
+        aria-haspopup="true"
+        :aria-expanded="showMenu"
+        :aria-controls="`${item.pid}manageMenu`"
+        label="Manage record"
+        tooltip="Manage Record"
+        class="h-8 ml-1"
+        @click="showMenu = !showMenu"
+        @keydown.native.enter.prevent="showMenu = !showMenu"
+        @keydown.native.esc="showMenu = false"
+      >
         <IconChevronDown />
       </GenericButtonMini>
-      <GenericMenu class="mt-8" :show="showMenu">
-        <GenericMenuItem @click.native="copyPID"> Copy PID </GenericMenuItem>
-        <GenericMenuItem v-if="hasPermission('ukrdc:records:delete')" @click.native="showDeleteModal">
-          Delete Record
-        </GenericMenuItem>
-        <GenericMenuItem
-          v-if="hasPermission('ukrdc:records:write') && hasPermission('ukrdc:empi:write')"
-          :disabled="true"
-        >
-          Unlink Record
-        </GenericMenuItem>
-      </GenericMenu>
+      <GenericAutoMenu :id="`${item.pid}manageMenu`" class="mt-8" :show="showMenu" :items="manageMenuItems" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref, useContext } from '@nuxtjs/composition-api'
 import { PatientRecord } from '@/interfaces/patientrecord'
 import { modalInterface } from '~/interfaces/modal'
 import usePermissions from '~/mixins/usePermissions'
@@ -37,6 +36,24 @@ export default defineComponent({
   setup(props) {
     const { $toast } = useContext()
     const { hasPermission } = usePermissions()
+
+    const manageMenuItems = computed(() => {
+      return [
+        {
+          label: 'Copy PID',
+          callback: copyPID,
+        },
+        {
+          label: 'Delete Record',
+          callback: showDeleteModal,
+        },
+        {
+          label: 'Unlink Record',
+          callback: () => {},
+          disabled: true,
+        },
+      ]
+    })
 
     const deleteModal = ref<modalInterface>()
 
@@ -64,7 +81,15 @@ export default defineComponent({
       deleteModal.value?.show()
     }
 
-    return { deleteModal, showMenu, closeMenu, copyPID, showDeleteModal, hasPermission }
+    return {
+      deleteModal,
+      manageMenuItems,
+      showMenu,
+      closeMenu,
+      copyPID,
+      showDeleteModal,
+      hasPermission,
+    }
   },
 })
 </script>
