@@ -6,8 +6,8 @@
         <IconChevronDown />
       </GenericButtonMini>
       <GenericMenu class="mt-8" :show="showMenu">
-        <GenericMenuItem @click.native="copyPID"> Copy PID </GenericMenuItem>
-        <GenericMenuItem v-if="hasPermission('ukrdc:records:delete')" @click.native="showDeleteModal">
+        <GenericMenuItem @click="copyPID"> Copy PID </GenericMenuItem>
+        <GenericMenuItem v-if="hasPermission('ukrdc:records:delete')" @click="showDeleteModal">
           Delete Record
         </GenericMenuItem>
         <GenericMenuItem

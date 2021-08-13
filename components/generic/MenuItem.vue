@@ -1,5 +1,12 @@
 <template>
-  <span class="block px-4 py-2 text-sm" :class="classes" role="menuitem" tabindex="-1">
+  <span
+    class="block px-4 py-2 text-sm"
+    :class="classes"
+    role="menuitem"
+    :tabindex="disabled ? -1 : 0"
+    @click="$emit('click')"
+    @keydown.enter.prevent="$emit('click')"
+  >
     <slot></slot>
   </span>
 </template>
