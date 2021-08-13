@@ -274,6 +274,7 @@ export default defineComponent({
     }
 
     watch(visible, async () => {
+      // If the modal becomes visible
       if (visible.value) {
         // Reset the modal each time it's is shown.
         confirmChecked.value = false
@@ -281,11 +282,13 @@ export default defineComponent({
         deleteResponse.value = undefined
 
         try {
+          // Fetch the delete preview and confirmation hash
           const res: DeletePIDResponseSchema = await $axios.$post(
             `${$config.apiBase}/v1/patientrecords/${props.item.pid}/delete`
           )
           previewResponse.value = res
         } catch (error) {
+          // Populate error message if preview fails
           if (error.response.status === 400) {
             console.log(error.response.data.detail)
             previewErrorMessage.value = error.response.data.detail
@@ -295,20 +298,29 @@ export default defineComponent({
     })
 
     async function doRealDelete() {
+      // Emit confirm event (currently unused)
       emit('confirm')
+      // If the checkbox is checked and we have a preview response
       if (confirmChecked.value && previewResponse.value) {
+        // Start the delete spinner
         deleteInProgress.value = true
+        // Request an actual delete by sending the confirmation hash
         const res: DeletePIDResponseSchema = await $axios.$post(
           `${$config.apiBase}/v1/patientrecords/${props.item.pid}/delete`,
           {
             hash: previewResponse.value.hash,
           }
         )
+        // Populate the updated preview (currently unused)
         previewResponse.value = res
       }
+      // Remove the delete spinner
       deleteInProgress.value = false
+      // Hide the modal
       hide()
+      // Emit an event notifying parents that a record has been deleted
       emit('deleted')
+      // Show success toast
       $toast.show({
         type: 'success',
         title: 'Success',
