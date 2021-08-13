@@ -6,3 +6,9 @@ export interface LinkRecord {
   person: Person
   masterRecord: MasterRecord
 }
+
+export interface LinkRecordSummary {
+  id: number
+  personId: number
+  masterId: number
+}

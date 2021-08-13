@@ -3,6 +3,8 @@
     <div class="flex items-center py-4">
       <div class="min-w-0 flex-1 flex items-center">
         <div
+          v-tooltip="'Show Details'"
+          aria-label="Show details"
           class="flex flex-none items-center justify-center w-16 self-stretch cursor-pointer"
           @click="showDetail = !showDetail"
         >
@@ -31,10 +33,11 @@
               {{ item.ukrdcid }}
             </TextP>
           </div>
-          <!-- Record link -->
-          <GenericButtonMini :to="`/patientrecords/${item.pid}`" class="h-8 justify-self-end"
-            >View Record</GenericButtonMini
-          >
+          <!-- Record links -->
+          <div class="justify-self-end flex items-center">
+            <GenericButtonMini :to="`/patientrecords/${item.pid}`" class="h-8">View Record</GenericButtonMini>
+            <PatientrecordsManageMenu :item="item" @deleted="$emit('deleted')" />
+          </div>
         </div>
       </div>
     </div>

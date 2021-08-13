@@ -3,27 +3,52 @@
     <div v-if="groupedRecords.data.length > 0" class="bg-gray-50 pl-4 sm:pl-6 py-1">
       <TextH4>Data feeds</TextH4>
     </div>
-    <patientrecordsListItem v-for="item in groupedRecords.data" :key="item.pid + '_data'" :item="item" />
+    <patientrecordsListItem
+      v-for="item in groupedRecords.data"
+      :key="item.pid + '_data'"
+      :item="item"
+      @deleted="$emit('refresh')"
+    />
 
     <div v-if="groupedRecords.surveys.length > 0" class="bg-gray-50 pl-4 sm:pl-6 py-1">
       <TextH4>Survey feeds</TextH4>
     </div>
-    <patientrecordsListItem v-for="item in groupedRecords.surveys" :key="item.pid + '_survey'" :item="item" />
+    <patientrecordsListItem
+      v-for="item in groupedRecords.surveys"
+      :key="item.pid + '_survey'"
+      :item="item"
+      @deleted="$emit('refresh')"
+    />
 
     <div v-if="groupedRecords.migrated.length > 0" class="bg-gray-50 pl-4 sm:pl-6 py-1">
       <TextH4>Historic Migrated Data</TextH4>
     </div>
-    <patientrecordsListItem v-for="item in groupedRecords.migrated" :key="item.pid + '_mig'" :item="item" />
+    <patientrecordsListItem
+      v-for="item in groupedRecords.migrated"
+      :key="item.pid + '_mig'"
+      :item="item"
+      @deleted="$emit('refresh')"
+    />
 
     <div v-if="groupedRecords.memberships.length > 0" class="bg-gray-50 pl-4 sm:pl-6 py-1">
       <TextH4>Membership Records</TextH4>
     </div>
-    <patientrecordsListItem v-for="item in groupedRecords.memberships" :key="item.pid + '_membership'" :item="item" />
+    <patientrecordsListItem
+      v-for="item in groupedRecords.memberships"
+      :key="item.pid + '_membership'"
+      :item="item"
+      @deleted="$emit('refresh')"
+    />
 
     <div v-if="groupedRecords.tracing.length > 0" class="bg-gray-50 pl-4 sm:pl-6 py-1">
       <TextH4>Tracing Records</TextH4>
     </div>
-    <patientrecordsListItem v-for="item in groupedRecords.tracing" :key="item.pid + '_tracing'" :item="item" />
+    <patientrecordsListItem
+      v-for="item in groupedRecords.tracing"
+      :key="item.pid + '_tracing'"
+      :item="item"
+      @deleted="$emit('refresh')"
+    />
   </ul>
 </template>
 

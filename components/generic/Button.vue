@@ -1,10 +1,25 @@
 <template>
   <router-link v-if="to" v-slot="{ navigate }" custom :to="to">
-    <button v-tooltip="tooltip" type="button" :class="`btn-${colour}`" @click="navigate">
+    <button
+      v-tooltip="tooltip"
+      :aria-label="label"
+      type="button"
+      :disabled="disabled"
+      :class="[`btn-${colour}`, disabled ? 'btn-disabled' : '']"
+      @click="navigate"
+    >
       <slot />
     </button>
   </router-link>
-  <button v-else v-tooltip="tooltip" type="button" :class="`btn-${colour}`" @click="$emit('click')">
+  <button
+    v-else
+    v-tooltip="tooltip"
+    :aria-label="label"
+    type="button"
+    :disabled="disabled"
+    :class="[`btn-${colour}`, { 'btn-disabled': disabled }]"
+    @click="$emit('click')"
+  >
     <slot />
   </button>
 </template>
@@ -27,11 +42,24 @@ export default {
       required: false,
       default: null,
     },
+    label: {
+      type: String,
+      required: false,
+      default: null,
+    },
+    disabled: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
 }
 </script>
 
 <style lang="postcss">
+.btn-disabled {
+  @apply opacity-50 cursor-default;
+}
 .btn-white {
   @apply btn-base bg-white hover:bg-gray-50 focus:ring-indigo-500 border-gray-300 text-gray-700;
 }

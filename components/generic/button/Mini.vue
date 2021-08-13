@@ -1,10 +1,17 @@
 <template>
   <router-link v-if="to" v-slot="{ navigate }" custom :to="to">
-    <button v-tooltip="tooltip" type="button" :class="`btn-mini-${colour}`" @click="navigate">
+    <button v-tooltip="tooltip" :aria-label="label" type="button" :class="`btn-mini-${colour}`" @click="navigate">
       <slot />
     </button>
   </router-link>
-  <button v-else v-tooltip="tooltip" type="button" :class="`btn-mini-${colour}`" @click="$emit('click')">
+  <button
+    v-else
+    v-tooltip="tooltip"
+    :aria-label="label"
+    type="button"
+    :class="`btn-mini-${colour}`"
+    @click="$emit('click')"
+  >
     <slot />
   </button>
 </template>
@@ -24,6 +31,11 @@ export default defineComponent({
       default: 'white',
     },
     tooltip: {
+      type: String,
+      required: false,
+      default: null,
+    },
+    label: {
       type: String,
       required: false,
       default: null,
