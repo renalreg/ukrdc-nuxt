@@ -110,7 +110,7 @@ export default defineComponent({
 
         // Reset page when we change the filter
         const newQuery = {
-          page: '0',
+          page: '1',
           code: selectedCodes.value,
         }
         router.push({
