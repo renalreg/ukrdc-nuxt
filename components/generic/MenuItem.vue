@@ -1,5 +1,12 @@
 <template>
-  <span class="block px-4 py-2 text-sm" :class="classes" role="menuitem" tabindex="-1">
+  <span
+    class="block px-4 py-2 text-sm"
+    :class="classes"
+    role="menuitem"
+    :tabindex="disabled ? -1 : 0"
+    @click="$emit('click')"
+    @keydown.enter.prevent="$emit('click')"
+  >
     <slot></slot>
   </span>
 </template>
@@ -21,7 +28,14 @@ export default defineComponent({
       if (props.disabled) {
         return ['text-gray-400']
       } else {
-        return ['text-gray-700', 'hover:bg-gray-100', 'hover:text-gray-900', 'cursor-pointer']
+        return [
+          'text-gray-700',
+          'hover:bg-gray-100',
+          'hover:text-gray-900',
+          'focus:bg-indigo-100',
+          'focus:text-gray-900',
+          'cursor-pointer',
+        ]
       }
     })
 
