@@ -5,8 +5,11 @@
         <div
           v-tooltip="'Show Details'"
           aria-label="Show details"
+          role="button"
+          tabindex="0"
           class="flex flex-none items-center justify-center w-16 self-stretch cursor-pointer"
           @click="showDetail = !showDetail"
+          @keydown.enter.prevent="showDetail = !showDetail"
         >
           <IconChevronDown v-show="showDetail" />
           <IconChevronRight v-show="!showDetail" />
