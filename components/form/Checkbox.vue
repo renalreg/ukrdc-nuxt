@@ -3,7 +3,9 @@
     <input
       v-model="proxyChecked"
       class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 mr-2 rounded"
+      :class="{ 'opacity-50': disabled }"
       type="checkbox"
+      :disabled="disabled"
       :value="value"
     />
     {{ label }}
@@ -30,6 +32,11 @@ export default {
       type: [String, Number, Boolean],
       required: false,
       default: null,
+    },
+    disabled: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   computed: {
