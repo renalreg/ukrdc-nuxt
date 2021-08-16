@@ -142,7 +142,7 @@ export default defineComponent({
 
       // If we don't already have a list of available codes, fetch one
       if (availableCodes.value.length === 0) {
-        availableCodes.value = await $axios.$get(`${apiPath}codes`)
+        availableCodes.value = await $axios.$get(props.record.links.observationCodes)
       }
     })
 
