@@ -11,11 +11,19 @@ interface ProgramMembership {
 
 interface PatientRecordLinks {
   self: string
-  laborders: string
-  observations: string
-  results: string
+  related: string
+
   medications: string
+  treatments: string
   surveys: string
+
+  observations: string
+  observationCodes: string
+
+  results: string
+  resultServices: string
+
+  laborders: string
 
   exportPV: string
   exportPVDocs: string

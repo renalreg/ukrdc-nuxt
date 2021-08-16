@@ -163,7 +163,7 @@ export default defineComponent({
 
       // If we don't already have a list of available codes, fetch one
       if (availableServicesMap.value.length === 0) {
-        availableServicesMap.value = await $axios.$get(`${apiPath}services`)
+        availableServicesMap.value = await $axios.$get(props.record.links.resultServices)
       }
     })
 
