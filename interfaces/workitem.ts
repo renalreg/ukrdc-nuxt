@@ -41,4 +41,5 @@ interface WorkItemDestination {
 export interface WorkItemExtended extends WorkItem {
   incoming: WorkItemIncoming
   destination: WorkItemDestination
+  collection: WorkItem[]
 }

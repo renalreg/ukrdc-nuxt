@@ -14,7 +14,7 @@
 
     <GenericModalSlot v-if="hasPermission('ukrdc:workitems:write')" ref="closeModal">
       <div class="text-left">
-        <div class="mb-4">Close the Work Item</div>
+        <div class="mb-4">{{ closeMessageOverride ? closeMessageOverride : 'Close the Work Item' }}</div>
 
         <div>
           <FormLabel>
@@ -42,6 +42,7 @@
       <SkeleText v-else class="h-4 w-1/2" />
     </div>
 
+    <!-- Work Item Details -->
     <GenericCard class="mb-8">
       <GenericCardContent>
         <GenericDl>
@@ -113,13 +114,39 @@
       </GenericButton>
     </div>
 
+    <!-- WorkItem Collection  -->
+    <GenericCard v-if="record && record.collection.length > 0" class="mb-8">
+      <!-- Card header -->
+      <GenericCardHeader>
+        <TextH2> Related Work Items </TextH2>
+        <TextL2>Work Items for the same patient, raised by the same event</TextL2>
+      </GenericCardHeader>
+      <!-- Results list -->
+      <ul class="divide-y divide-gray-200">
+        <div v-for="item in record.collection" :key="item.id" :item="item" class="hover:bg-gray-50">
+          <NuxtLink :to="`/workitems/${item.id}`">
+            <workitemsListItem :item="item" />
+          </NuxtLink>
+        </div>
+      </ul>
+    </GenericCard>
+
     <TextH2 class="mb-4">Compare Records</TextH2>
 
     <!-- Compare records cards -->
     <div v-if="record" class="mb-8">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Type 9 incoming attribute card -->
+        <WorkitemsAttributeRecordCard
+          v-if="record.type === 9"
+          class="border-2 border-green-500"
+          :record="record.attributes"
+          label="Incoming Attributes"
+          :highlight="Object.keys(record.attributes)"
+        />
+        <!-- Incoming records card -->
         <NuxtLink
-          v-if="record.incoming.masterRecords.length > 0"
+          v-else-if="record.incoming.masterRecords.length > 0"
           :to="`/masterrecords/${record.incoming.masterRecords[relatedRecordsIndex].id}`"
         >
           <masterrecordsRecordCard
@@ -128,14 +155,8 @@
             :label="`Incoming Master Record ${relatedRecordsIndex + 1} of ${record.incoming.masterRecords.length}`"
           />
         </NuxtLink>
-        <WorkitemsAttributeRecordCard
-          v-else-if="!isEmptyObject(record.attributes)"
-          class="border-2 border-green-500"
-          :record="record.attributes"
-          label="Incoming Attributes"
-          :highlight="Object.keys(record.attributes)"
-        />
-        <div v-else class="rounded-md bg-red-50 font-medium text-red-800 p-4">No incoming Master Records</div>
+        <!-- Empty incoming records card -->
+        <div v-else class="rounded-md bg-red-50 font-medium text-red-800 p-4">No new incoming Master Records</div>
         <NuxtLink v-if="record.destination.masterRecord" :to="`/masterrecords/${record.destination.masterRecord.id}`">
           <masterrecordsRecordCard
             class="border-2 border-indigo-500"
@@ -193,7 +214,8 @@
     <GenericCard v-if="relatedWorkItems.length > 0" class="mb-8">
       <!-- Card header -->
       <GenericCardHeader>
-        <TextH2> Related Work Items </TextH2>
+        <TextH2>Other Open Work Items</TextH2>
+        <TextL2>Open Work Items for the same patient</TextL2>
       </GenericCardHeader>
       <!-- Results list -->
       <ul class="divide-y divide-gray-200">
@@ -282,6 +304,7 @@ export default defineComponent({
         unlink: false,
       } as AvailableActions
     })
+    const closeMessageOverride = ref<String>()
 
     // Template refs
     const addCommentModal = ref<modalInterface>()
@@ -294,6 +317,17 @@ export default defineComponent({
       const res: WorkItemExtended = await $axios.$get(path)
       record.value = res
       customComment.value = res.updateDescription
+
+      // Check if the workitem has already been actioned and is ready to be closed
+      if (
+        record.value?.status === 1 &&
+        record.value?.destination.masterRecord.nationalidType === 'UKRDC' &&
+        record.value?.incoming.masterRecords.length <= 0
+      ) {
+        closeMessageOverride.value =
+          'It looks like the incoming Master Record for this Work Item has been merged. Close the Work Item?'
+        closeModal.value?.show()
+      }
 
       // Use the record links to load related data concurrently
       relatedWorkItems.value = await $axios.$get(record.value.links.related)
@@ -358,6 +392,7 @@ export default defineComponent({
       availableActions,
       addCommentModal,
       closeModal,
+      closeMessageOverride,
       updateWorkItemComment,
       closeWorkItem,
       hasPermission,
