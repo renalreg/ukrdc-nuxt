@@ -42,34 +42,48 @@
       <SkeleText v-else class="h-4 w-1/2" />
     </div>
 
-    <!-- Work Item Details -->
-    <GenericCard class="mb-8">
-      <GenericCardContent>
-        <GenericDl>
-          <GenericDi>
-            <TextDt>Last Updated</TextDt>
-            <TextDd v-if="record">
-              {{ record.lastUpdated ? formatDate(record.lastUpdated) : 'Never' }}
-            </TextDd>
-            <SkeleText v-else class="h-6 w-full" />
-          </GenericDi>
-          <GenericDi>
-            <TextDt>Last Updated By</TextDt>
-            <TextDd v-if="record">
-              {{ record.updatedBy ? record.updatedBy : 'N/A' }}
-            </TextDd>
-            <SkeleText v-else class="h-6 w-full" />
-          </GenericDi>
-          <GenericDi class="sm:col-span-2">
-            <TextDt>Comments</TextDt>
-            <TextDd v-if="record">
-              {{ record.updateDescription ? record.updateDescription : 'None' }}
-            </TextDd>
-            <SkeleText v-else class="h-6 w-full" />
-          </GenericDi>
-        </GenericDl>
-      </GenericCardContent>
-    </GenericCard>
+    <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4">
+      <!-- Work Item Details -->
+      <GenericCard class="mb-8">
+        <GenericCardHeader><TextH2>Details</TextH2></GenericCardHeader>
+        <GenericCardContent>
+          <GenericDl>
+            <GenericDi>
+              <TextDt>Last Updated</TextDt>
+              <TextDd v-if="record">
+                {{ record.lastUpdated ? formatDate(record.lastUpdated) : 'Never' }}
+              </TextDd>
+              <SkeleText v-else class="h-6 w-full" />
+            </GenericDi>
+            <GenericDi>
+              <TextDt>Last Updated By</TextDt>
+              <TextDd v-if="record">
+                {{ record.updatedBy ? record.updatedBy : 'N/A' }}
+              </TextDd>
+              <SkeleText v-else class="h-6 w-full" />
+            </GenericDi>
+            <GenericDi class="sm:col-span-2">
+              <TextDt>Comments</TextDt>
+              <TextDd v-if="record">
+                {{ record.updateDescription ? record.updateDescription : 'None' }}
+              </TextDd>
+              <SkeleText v-else class="h-6 w-full" />
+            </GenericDi>
+          </GenericDl>
+        </GenericCardContent>
+      </GenericCard>
+      <!-- Work Item Advice -->
+      <GenericCard class="mb-8">
+        <GenericCardHeader><TextH2>Advice</TextH2></GenericCardHeader>
+        <GenericCardContent>
+          <ul>
+            <li v-for="(adviceIndex, index) in workItemAdvices" :key="`advice${index}`" class="mb-2">
+              {{ advicesMap[adviceIndex] }}
+            </li>
+          </ul>
+        </GenericCardContent>
+      </GenericCard>
+    </div>
 
     <div
       v-if="hasPermission('ukrdc:workitems:write') && record && record.status !== 3"
@@ -306,6 +320,72 @@ export default defineComponent({
     })
     const closeMessageOverride = ref<String>()
 
+    const advicesMap = {
+      0: 'No advice available.',
+      1: 'This Work Item is already closed.',
+      2: 'Related Work Items labelled UKRDC should be resolved first. See below.',
+      3: 'No new incoming Master Records. This Work Item can probably be closed.',
+      4: 'You may need to use DemoGraphicGenerator.exe to issue a demographic update before closing this Work Item.',
+      5: 'Check incoming and destination records, then merge the two records if the link is valid.',
+    }
+    const workItemAdvices = computed(() => {
+      const advices: number[] = []
+      // If we have a Work Item record
+      if (record.value) {
+        // If the Work Item is already closed
+        if (record.value.status === 3) {
+          // Advise that the Work Item is already closed
+          advices.push(1)
+        }
+        // If the Work Item is part of a collection
+        if (record.value.collection.length > 0) {
+          // For each related Work Item in the collection
+          for (const relatedItem of record.value.collection) {
+            // If the related Work Item is a mergable UKRDC Work Item
+            if (relatedItem.masterRecord.nationalidType === 'UKRDC' && relatedItem.status !== 3) {
+              // Advise that the UKRDC item should be resolved first
+              advices.push(2)
+              break
+            }
+          }
+        }
+        // For type 6 or 7 work items
+        if (record.value.type === 6 || record.value.type === 7) {
+          // If there are no incoming Master Records
+          if (record.value.incoming.masterRecords.length === 0) {
+            if (record.value.status !== 3) {
+              // Advise that the workitem is probably ready to be closed
+              advices.push(3)
+            }
+          } else {
+            // Advise that a demographic update may be required
+            advices.push(4)
+          }
+        }
+        // For type 3 or 4 work items
+        else if (record.value.type === 3 || record.value.type === 4) {
+          // If there are no incoming Master Records
+          if (record.value.incoming.masterRecords.length === 0) {
+            if (record.value.status !== 3) {
+              // Advise that the workitem is probably ready to be closed
+              advices.push(3)
+            }
+            // If records are mergable (i.e. both are UKRDC records)
+          } else if (availableActions.value.merge) {
+            // Advise that records could be merged
+            advices.push(5)
+          }
+        }
+      }
+
+      // Advise if there is no advice available...
+      if (advices.length === 0) {
+        advices.push(0)
+      }
+
+      return advices
+    })
+
     // Template refs
     const addCommentModal = ref<modalInterface>()
     const closeModal = ref<modalInterface>()
@@ -393,6 +473,8 @@ export default defineComponent({
       addCommentModal,
       closeModal,
       closeMessageOverride,
+      workItemAdvices,
+      advicesMap,
       updateWorkItemComment,
       closeWorkItem,
       hasPermission,
