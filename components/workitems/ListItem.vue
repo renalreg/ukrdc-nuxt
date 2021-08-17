@@ -3,6 +3,23 @@
     <div class="px-4 py-4 sm:px-6 min-w-0 grid grid-cols-3 lg:grid-cols-4 md:gap-4 w-full">
       <!-- IDs and description -->
       <div class="col-span-2">
+        <span
+          v-if="item.status == 3"
+          class="
+            inline-flex
+            items-center
+            h-5
+            px-2.5
+            py-0.5
+            rounded-full
+            text-sm
+            font-medium
+            bg-green-100
+            text-green-800
+          "
+        >
+          Closed
+        </span>
         <TextL1 v-if="item.person" class="capitalize truncate inline">
           {{ item.person.givenname.toLowerCase() }}
           {{ item.person.surname.toLowerCase() }} →</TextL1
@@ -11,9 +28,7 @@
           {{ item.masterRecord.givenname.toLowerCase() }}
           {{ item.masterRecord.surname.toLowerCase() }}
         </TextL1c>
-        <TextP class="mt-2 truncate">
-          {{ item.description }}
-        </TextP>
+        <TextP class="mt-2 truncate"> {{ item.type }}: {{ item.description }} </TextP>
       </div>
       <!-- National ID -->
       <div class="text-right sm:text-left">
