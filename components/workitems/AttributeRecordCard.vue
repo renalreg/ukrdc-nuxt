@@ -37,7 +37,7 @@
             class="mt-1 text-gray-900 sm:mt-0 sm:col-span-2"
             :class="highlight.includes('dateOfBirth') ? highlightClasses : []"
           >
-            {{ record.dateOfBirth ? formatDate(record.dateOfBirth, (t = false)) : 'N/A' }}
+            {{ formattedDoB }}
           </dd>
         </div>
         <div v-if="record.dateOfDeath || full" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -46,7 +46,7 @@
             class="mt-1 text-gray-900 sm:mt-0 sm:col-span-2"
             :class="highlight.includes('dateOfDeath') ? highlightClasses : []"
           >
-            {{ record.dateOfDeath ? formatDate(record.dateOfDeath, (t = false)) : 'N/A' }}
+            {{ formattedDoD }}
           </dd>
         </div>
         <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -68,7 +68,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/utilities/dateUtils'
 import { formatGender } from '@/utilities/codeUtils'
@@ -97,7 +97,7 @@ export default defineComponent({
       default: () => [],
     },
   },
-  setup() {
+  setup(props) {
     const highlightClasses = [
       'bg-red-100',
       'text-red-800',
@@ -108,7 +108,24 @@ export default defineComponent({
       'pr-2',
       'mr-2',
     ]
-    return { formatDate, formatGender, highlightClasses }
+
+    const formattedDoB = computed(() => {
+      return props.record.dateOfBirth
+        ? `
+        ${formatDate(props.record.dateOfBirth.split(':')[0], false)} : 
+        ${formatDate(props.record.dateOfBirth.split(':')[1], false)}`
+        : 'N/A'
+    })
+
+    const formattedDoD = computed(() => {
+      return props.record.dateOfDeath
+        ? `
+        ${formatDate(props.record.dateOfDeath.split(':')[0], false)} : 
+        ${formatDate(props.record.dateOfDeath.split(':')[1], false)}`
+        : 'N/A'
+    })
+
+    return { formattedDoB, formattedDoD, formatDate, formatGender, highlightClasses }
   },
 })
 </script>
