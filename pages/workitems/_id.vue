@@ -204,6 +204,7 @@
           :record="record.attributes"
           label="Incoming Attributes"
           :highlight="Object.keys(record.attributes)"
+          :full="true"
         />
         <div v-else class="rounded-md bg-red-50 font-medium text-red-800 p-4">No incoming Person record</div>
         <personsRecordCard
