@@ -44,7 +44,7 @@
     </div>
 
     <!-- Info Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
       <!-- Work Item Details -->
       <WorkitemsDetailCard :item="record" />
       <!-- Work Item Advice -->
