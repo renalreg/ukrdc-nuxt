@@ -137,7 +137,7 @@
           v-else-if="record.incoming.person"
           class="border-2 border-red-500"
           :record="record.person"
-          label="Incoming Person Record"
+          :label="`Incoming Person Record ${record.incoming.person.id}`"
           :highlight="Object.keys(record.attributes)"
         />
         <!-- Missing incoming person card -->
@@ -153,7 +153,7 @@
           <masterrecordsRecordCard
             class="border-2 border-indigo-500"
             :record="record.destination.masterRecord"
-            label="Destination Master Record"
+            :label="`Destination Master Record ${record.destination.masterRecord.id}`"
           />
         </NuxtLink>
       </div>
