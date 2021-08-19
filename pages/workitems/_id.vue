@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- Modals -->
     <GenericModalSlot v-if="hasPermission('ukrdc:workitems:write')" ref="addCommentModal">
       <div class="text-left">
         <div class="mb-4">Add Work Item comment</div>
@@ -42,49 +43,15 @@
       <SkeleText v-else class="h-4 w-1/2" />
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4">
+    <!-- Info Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4 mb-8">
       <!-- Work Item Details -->
-      <GenericCard class="mb-8">
-        <GenericCardHeader><TextH2>Details</TextH2></GenericCardHeader>
-        <GenericCardContent>
-          <GenericDl>
-            <GenericDi>
-              <TextDt>Last Updated</TextDt>
-              <TextDd v-if="record">
-                {{ record.lastUpdated ? formatDate(record.lastUpdated) : 'Never' }}
-              </TextDd>
-              <SkeleText v-else class="h-6 w-full" />
-            </GenericDi>
-            <GenericDi>
-              <TextDt>Last Updated By</TextDt>
-              <TextDd v-if="record">
-                {{ record.updatedBy ? record.updatedBy : 'N/A' }}
-              </TextDd>
-              <SkeleText v-else class="h-6 w-full" />
-            </GenericDi>
-            <GenericDi class="sm:col-span-2">
-              <TextDt>Comments</TextDt>
-              <TextDd v-if="record">
-                {{ record.updateDescription ? record.updateDescription : 'None' }}
-              </TextDd>
-              <SkeleText v-else class="h-6 w-full" />
-            </GenericDi>
-          </GenericDl>
-        </GenericCardContent>
-      </GenericCard>
+      <WorkitemsDetailCard :item="record" />
       <!-- Work Item Advice -->
-      <GenericCard class="mb-8">
-        <GenericCardHeader><TextH2>Advice</TextH2></GenericCardHeader>
-        <GenericCardContent>
-          <ul>
-            <li v-for="(adviceIndex, index) in workItemAdvices" :key="`advice${index}`" class="mb-2">
-              {{ advicesMap[adviceIndex] }}
-            </li>
-          </ul>
-        </GenericCardContent>
-      </GenericCard>
+      <WorkitemsAdviceCard :item="record" :related="workItemCollection" />
     </div>
 
+    <!-- Action Buttons -->
     <div
       v-if="hasPermission('ukrdc:workitems:write') && record && record.status !== 3"
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
@@ -117,7 +84,7 @@
           query: {
             superseded: record.incoming.masterRecords[relatedRecordsIndex].id,
             superseding: record.destination.masterRecord.id,
-            callback: $route.fullPath,
+            callback: $route.fullPath + '?justMerged=true',
           },
         }"
         class="inline-flex items-center justify-center w-full"
@@ -128,16 +95,16 @@
       </GenericButton>
     </div>
 
-    <!-- WorkItem Collection  -->
-    <GenericCard v-if="record && record.collection.length > 0" class="mb-8">
+    <!-- Related Work Items  -->
+    <GenericCard v-if="workItemCollection.length > 0" class="mb-8">
       <!-- Card header -->
       <GenericCardHeader>
-        <TextH2> Related Work Items </TextH2>
+        <TextH2>Related Work Items</TextH2>
         <TextL2>Work Items for the same patient, raised by the same event</TextL2>
       </GenericCardHeader>
       <!-- Results list -->
       <ul class="divide-y divide-gray-200">
-        <div v-for="item in record.collection" :key="item.id" :item="item" class="hover:bg-gray-50">
+        <div v-for="item in workItemCollection" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/workitems/${item.id}`">
             <workitemsListItem :item="item" />
           </NuxtLink>
@@ -145,11 +112,18 @@
       </ul>
     </GenericCard>
 
-    <TextH2 class="mb-4">Compare Records</TextH2>
+    <!-- Work Item Trigger -->
+    <div v-if="record" class="flex">
+      <TextH2 class="flex-grow mb-4">Work Item Trigger</TextH2>
+      <div class="flex-shrink">
+        <GenericButtonMini @click="showDestinationPersons = !showDestinationPersons">
+          {{ showDestinationPersons ? 'Show Destination Master Record' : 'Show Related Person Records' }}
+        </GenericButtonMini>
+      </div>
+    </div>
 
-    <!-- Compare records cards -->
-    <div v-if="record" class="mb-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div v-if="record && record.destination.persons.length > 0" class="mb-8">
+      <div v-if="record.destination.persons.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Type 9 incoming attribute card -->
         <WorkitemsAttributeRecordCard
           v-if="record.type === 9"
@@ -158,20 +132,24 @@
           label="Incoming Attributes"
           :highlight="Object.keys(record.attributes)"
         />
-        <!-- Incoming records card -->
-        <NuxtLink
-          v-else-if="record.incoming.masterRecords.length > 0"
-          :to="`/masterrecords/${record.incoming.masterRecords[relatedRecordsIndex].id}`"
-        >
-          <masterrecordsRecordCard
-            class="border-2 border-indigo-500"
-            :record="record.incoming.masterRecords[relatedRecordsIndex]"
-            :label="`Incoming Master Record ${relatedRecordsIndex + 1} of ${record.incoming.masterRecords.length}`"
-          />
-        </NuxtLink>
-        <!-- Empty incoming records card -->
-        <div v-else class="rounded-md bg-red-50 font-medium text-red-800 p-4">No new incoming Master Records</div>
-        <NuxtLink v-if="record.destination.masterRecord" :to="`/masterrecords/${record.destination.masterRecord.id}`">
+        <!-- Else incoming person card -->
+        <personsRecordCard
+          v-else-if="record.incoming.person"
+          class="border-2 border-red-500"
+          :record="record.person"
+          label="Incoming Person Record"
+          :highlight="Object.keys(record.attributes)"
+        />
+        <!-- Missing incoming person card -->
+        <div v-else class="rounded-md bg-red-50 font-medium text-red-800 p-4">No incoming Person record</div>
+        <!-- Destination person card -->
+        <personsRecordCard
+          v-if="showDestinationPersons"
+          :record="record.destination.persons[relatedPersonsIndex]"
+          :label="`Related Person Record ${relatedPersonsIndex + 1} of ${record.destination.persons.length}`"
+          :highlight="Object.keys(record.attributes)"
+        />
+        <NuxtLink v-else :to="`/masterrecords/${record.destination.masterRecord.id}`">
           <masterrecordsRecordCard
             class="border-2 border-indigo-500"
             :record="record.destination.masterRecord"
@@ -179,42 +157,7 @@
           />
         </NuxtLink>
       </div>
-      <GenericCard v-if="record.incoming.masterRecords.length > 1" class="pl-4 mt-2">
-        <GenericItemPaginator
-          v-model="relatedRecordsIndex"
-          :total="record.incoming.masterRecords.length"
-          item-label="Record"
-      /></GenericCard>
-    </div>
-
-    <!-- Compare persons cards -->
-    <div v-if="record && record.destination.persons.length > 0" class="mb-8">
-      <div v-if="record.destination.persons.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <personsRecordCard
-          v-if="record.incoming.person"
-          class="border-2 border-red-500"
-          :record="record.person"
-          label="Incoming Person Record"
-          :full="true"
-          :highlight="Object.keys(record.attributes)"
-        />
-        <WorkitemsAttributeRecordCard
-          v-else-if="!isEmptyObject(record.attributes)"
-          class="border-2 border-green-500"
-          :record="record.attributes"
-          label="Incoming Attributes"
-          :highlight="Object.keys(record.attributes)"
-          :full="true"
-        />
-        <div v-else class="rounded-md bg-red-50 font-medium text-red-800 p-4">No incoming Person record</div>
-        <personsRecordCard
-          :record="record.destination.persons[relatedPersonsIndex]"
-          :label="`Related Person Record ${relatedPersonsIndex + 1} of ${record.destination.persons.length}`"
-          :full="true"
-          :highlight="Object.keys(record.attributes)"
-        />
-      </div>
-      <GenericCard v-if="record.destination.persons.length > 1" class="pl-4 mt-2">
+      <GenericCard v-if="showDestinationPersons && record.destination.persons.length > 1" class="pl-4 mt-2">
         <GenericItemPaginator
           v-model="relatedPersonsIndex"
           :total="record.destination.persons.length"
@@ -222,25 +165,52 @@
       /></GenericCard>
     </div>
 
-    <!-- Related errors card -->
-    <ErrorsMiniList v-if="record" class="mt-4 mb-8" :errors-url="record.links.messages" :size="5" />
+    <!-- Proposed Merge -->
+    <div v-if="availableActions.merge">
+      <TextH2 class="mb-4">Proposed Merge</TextH2>
 
-    <!-- Related WorkItems  -->
-    <GenericCard v-if="relatedWorkItems.length > 0" class="mb-8">
-      <!-- Card header -->
-      <GenericCardHeader>
-        <TextH2>Other Open Work Items</TextH2>
-        <TextL2>Open Work Items for the same patient</TextL2>
-      </GenericCardHeader>
-      <!-- Results list -->
-      <ul class="divide-y divide-gray-200">
-        <div v-for="item in relatedWorkItems" :key="item.id" :item="item" class="hover:bg-gray-50">
-          <NuxtLink :to="`/workitems/${item.id}`">
-            <workitemsListItem :item="item" />
+      <div v-if="record" class="mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Type 9 incoming attribute card -->
+          <WorkitemsAttributeRecordCard
+            v-if="record.type === 9"
+            class="border-2 border-green-500"
+            :record="record.attributes"
+            label="Incoming Attributes"
+            :highlight="Object.keys(record.attributes)"
+          />
+          <!-- Incoming records card -->
+          <NuxtLink
+            v-else-if="record.incoming.masterRecords.length > 0"
+            :to="`/masterrecords/${record.incoming.masterRecords[relatedRecordsIndex].id}`"
+          >
+            <masterrecordsRecordCard
+              class="border-2 border-indigo-500"
+              :record="record.incoming.masterRecords[relatedRecordsIndex]"
+              :label="`Incoming Master Record ${relatedRecordsIndex + 1} of ${record.incoming.masterRecords.length}`"
+            />
+          </NuxtLink>
+          <!-- Empty incoming records card -->
+          <div v-else class="rounded-md bg-red-50 font-medium text-red-800 p-4">No new incoming Master Records</div>
+          <NuxtLink v-if="record.destination.masterRecord" :to="`/masterrecords/${record.destination.masterRecord.id}`">
+            <masterrecordsRecordCard
+              class="border-2 border-indigo-500"
+              :record="record.destination.masterRecord"
+              label="Destination Master Record"
+            />
           </NuxtLink>
         </div>
-      </ul>
-    </GenericCard>
+        <GenericCard v-if="record.incoming.masterRecords.length > 1" class="pl-4 mt-2">
+          <GenericItemPaginator
+            v-model="relatedRecordsIndex"
+            :total="record.incoming.masterRecords.length"
+            item-label="Record"
+        /></GenericCard>
+      </div>
+    </div>
+
+    <!-- Related errors card -->
+    <ErrorsMiniList v-if="record" class="mt-4 mb-8" :errors-url="record.links.messages" :size="5" />
   </div>
 </template>
 
@@ -251,6 +221,7 @@ import { formatDate } from '@/utilities/dateUtils'
 import { formatGender } from '@/utilities/codeUtils'
 import { isEmptyObject } from '@/utilities/objectUtils'
 import { delay } from '@/utilities/timeUtils'
+import { workItemIsMergable } from '@/utilities/workItemUtils'
 
 import { WorkItem, WorkItemExtended } from '@/interfaces/workitem'
 import { modalInterface } from '@/interfaces/modal'
@@ -281,7 +252,7 @@ export default defineComponent({
     const record = ref<WorkItemExtended>()
 
     // Related persons data
-    const relatedWorkItems = ref([] as WorkItem[])
+    const workItemCollection = ref([] as WorkItem[])
 
     // Related record paginator data
     const relatedRecordsIndex = ref(0)
@@ -303,6 +274,7 @@ export default defineComponent({
     })
 
     // Dynamic UI
+    const showDestinationPersons = ref(false)
     const availableActions = computed<AvailableActions>(() => {
       return {
         // We can always comment and close?
@@ -310,86 +282,30 @@ export default defineComponent({
         comment: true,
         // We can only merge if we have an incoming Master Record, and both
         // incoming and destination records are UKRDC type
-        merge:
-          record.value &&
-          record.value.type !== 9 &&
-          record.value.incoming.masterRecords.length > 0 &&
-          record.value.destination.masterRecord.nationalidType === 'UKRDC',
+        merge: workItemIsMergable(record.value),
         // Currently Unlink never makes sense, so ignore for now. Maybe remove entirely?
         unlink: false,
       } as AvailableActions
     })
     const closeMessageOverride = ref<String>()
 
-    const advicesMap = {
-      0: 'No advice available.',
-      1: 'This Work Item is already closed.',
-      2: 'Related Work Items labelled UKRDC should be resolved first. See below.',
-      3: 'No new incoming Master Records. This Work Item can probably be closed.',
-      4: 'You may need to use DemoGraphicGenerator.exe to issue a demographic update before closing this Work Item.',
-      5: 'Check incoming and destination records, then merge the two records if the link is valid.',
-    }
-    const workItemAdvices = computed(() => {
-      const advices: number[] = []
-      // If we have a Work Item record
-      if (record.value) {
-        // If the Work Item is already closed
-        if (record.value.status === 3) {
-          // Advise that the Work Item is already closed
-          advices.push(1)
-        }
-        // If the Work Item is part of a collection
-        if (record.value.collection.length > 0) {
-          // For each related Work Item in the collection
-          for (const relatedItem of record.value.collection) {
-            // If the related Work Item is a mergable UKRDC Work Item
-            if (relatedItem.masterRecord.nationalidType === 'UKRDC' && relatedItem.status !== 3) {
-              // Advise that the UKRDC item should be resolved first
-              advices.push(2)
-              break
-            }
-          }
-        }
-        // For type 6 or 7 work items
-        if (record.value.type === 6 || record.value.type === 7) {
-          // If there are no incoming Master Records
-          if (record.value.incoming.masterRecords.length === 0) {
-            if (record.value.status !== 3) {
-              // Advise that the workitem is probably ready to be closed
-              advices.push(3)
-            }
-          } else {
-            // Advise that a demographic update may be required
-            advices.push(4)
-          }
-        }
-        // For type 3 or 4 work items
-        else if (record.value.type === 3 || record.value.type === 4) {
-          // If there are no incoming Master Records
-          if (record.value.incoming.masterRecords.length === 0) {
-            if (record.value.status !== 3) {
-              // Advise that the workitem is probably ready to be closed
-              advices.push(3)
-            }
-            // If records are mergable (i.e. both are UKRDC records)
-          } else if (availableActions.value.merge) {
-            // Advise that records could be merged
-            advices.push(5)
-          }
-        }
-      }
-
-      // Advise if there is no advice available...
-      if (advices.length === 0) {
-        advices.push(0)
-      }
-
-      return advices
-    })
-
     // Template refs
     const addCommentModal = ref<modalInterface>()
     const closeModal = ref<modalInterface>()
+
+    // Trigger dynamic modals
+    function checkMerged() {
+      if (
+        record.value?.status === 1 &&
+        record.value?.destination.masterRecord.nationalidType === 'UKRDC' &&
+        record.value?.incoming.masterRecords.length <= 0 &&
+        route.value.query.justMerged === 'true'
+      ) {
+        closeMessageOverride.value =
+          'It looks like the incoming Master Record for this Work Item has been merged. Close the Work Item?'
+        closeModal.value?.show()
+      }
+    }
 
     // Data fetching
     const { fetch } = useFetch(async () => {
@@ -399,19 +315,10 @@ export default defineComponent({
       record.value = res
       customComment.value = res.updateDescription
 
-      // Check if the workitem has already been actioned and is ready to be closed
-      if (
-        record.value?.status === 1 &&
-        record.value?.destination.masterRecord.nationalidType === 'UKRDC' &&
-        record.value?.incoming.masterRecords.length <= 0
-      ) {
-        closeMessageOverride.value =
-          'It looks like the incoming Master Record for this Work Item has been merged. Close the Work Item?'
-        closeModal.value?.show()
-      }
+      // Check if the workitem has already been merged and is ready to be closed
+      checkMerged()
 
-      // Use the record links to load related data concurrently
-      relatedWorkItems.value = await $axios.$get(record.value.links.related)
+      workItemCollection.value = await $axios.$get(record.value.links.collection)
     })
 
     // Workitem actions
@@ -465,7 +372,7 @@ export default defineComponent({
       formatDate,
       formatGender,
       isEmptyObject,
-      relatedWorkItems,
+      workItemCollection,
       relatedRecordsIndex,
       relatedPersonsIndex,
       customComment,
@@ -474,8 +381,7 @@ export default defineComponent({
       addCommentModal,
       closeModal,
       closeMessageOverride,
-      workItemAdvices,
-      advicesMap,
+      showDestinationPersons,
       updateWorkItemComment,
       closeWorkItem,
       hasPermission,
