@@ -22,18 +22,25 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@nuxtjs/composition-api'
-import { WorkItemExtended } from '@/interfaces/workitem'
-import { workItemIsMergable } from '@/utilities/workItemUtils'
+import { computed, defineComponent, useRoute } from '@nuxtjs/composition-api'
+import { WorkItem, WorkItemExtended } from '@/interfaces/workitem'
+import {
+  collectionIsUnresolved,
+  workItemIsMergable,
+  workItemIsOpen,
+  workItemIsSecondary,
+  workItemIsUKRDC,
+} from '@/utilities/workItemUtils'
 
 const advicesMap = {
-  0: 'No advice available.',
-  1: 'This Work Item is already closed.',
   2: 'Related Work Items labelled UKRDC should be resolved first. See below.',
-  3: 'No new incoming Master Records. This Work Item can probably be closed.',
-  4: 'You may need to use DemoGraphicGenerator.exe to issue a demographic update before closing this Work Item.',
-  5: 'Check the proposed merge, then click Merge Master Records if the link is valid.',
+  4: 'You may need to use PatientView, RaDaR, or DemoGraphicGenerator.exe to issue a demographic update before closing this Work Item.',
+  5: '<p>Check the proposed merge, then click Merge Master Records if the link is valid.</p> <p>You may need to use PatientView, RaDaR, or DemoGraphicGenerator.exe to issue a demographic update before merging records.</p>',
+  6: 'This Work Item was recently merged, and can now be closed.',
+  7: 'A previous merge may have been completed but Person record data was not correctly updated to match.',
   9: 'See <a href="https://confluence.ukrdc.org/display/TNG/Person+matched+by+facility%2C+extract+and+national+id+-+not+matched+by+demographics" target="_blank">documentation on Confluence</a> for advice on resolving this work item',
+  10: 'This Work Item is already closed. No further action to be taken.',
+  11: 'Related Work Items are still unresolved. See below.',
 }
 
 export default defineComponent({
@@ -44,70 +51,57 @@ export default defineComponent({
       default: undefined,
     },
     related: {
-      type: Array as () => WorkItemExtended[],
+      type: Array as () => WorkItem[],
       required: false,
       default: () => [],
     },
   },
   setup(props) {
     const workItemAdvices = computed(() => {
+      const route = useRoute()
+
       const advices: number[] = []
-      // If we have a Work Item record
-      if (props.item) {
-        // If the Work Item is already closed
-        if (props.item.status === 3) {
-          // Advise that the Work Item is already closed
-          advices.push(1)
-        } else {
-          // If the Work Item is part of a collection
-          if (props.related.length > 0) {
-            // For each related Work Item in the collection
-            for (const relatedItem of props.related) {
-              // If the related Work Item is a mergable UKRDC Work Item
-              if (relatedItem.masterRecord.nationalidType === 'UKRDC' && relatedItem.status !== 3) {
-                // Advise that the UKRDC item should be resolved first
-                advices.push(2)
-                break
-              }
-            }
-          }
-          // For type 9 work items
-          if (props.item.type === 9) {
-            advices.push(9)
-          }
-          // For type 6 or 7 work items
-          if (props.item.type === 6 || props.item.type === 7) {
-            // If there are no incoming Master Records
-            if (props.item.incoming.masterRecords.length === 0) {
-              if (props.item.status !== 3) {
-                // Advise that the workitem is probably ready to be closed
-                advices.push(3)
-              }
-            } else {
-              // Advise that a demographic update may be required
-              advices.push(4)
-            }
-          }
-          // For type 3 or 4 work items
-          else if (props.item.type === 3 || props.item.type === 4) {
-            // If there are no incoming Master Records
-            if (props.item.incoming.masterRecords.length === 0) {
-              if (props.item.status !== 3) {
-                // Advise that the workitem is probably ready to be closed
-                advices.push(3)
-              }
-              // If records are mergable (i.e. both are UKRDC records)
-            } else if (workItemIsMergable(props.item)) {
-              // Advise that records could be merged
-              advices.push(5)
-            }
-          }
-        }
+
+      // If we have no Work Item record, return early
+      if (!props.item) {
+        return []
       }
 
-      // Advise if there is no advice available...
-      if (advices.length === 0) {
-        advices.push(0)
+      // If workitem is closed
+      if (!workItemIsOpen(props.item)) {
+        // If items in the collection are still open
+        if (collectionIsUnresolved(props.related)) {
+          // Advise to close related items
+          advices.push(11)
+        } else {
+          // Advise no further action
+          advices.push(10)
+        }
+        // If item is an open type 9
+      } else if (props.item.type === 9) {
+        // Advise link to type 9 documentation
+        advices.push(9)
+        // If item is an open type 3 or 6
+      } else if (workItemIsUKRDC(props.item)) {
+        // If the workitem has records to merge
+        if (workItemIsMergable(props.item)) {
+          // Advise to check/update demographics, then merge and close
+          advices.push(5)
+          // If the workitem has no records to merge, but was just merged
+        } else if (route.value.query.justMerged === 'true') {
+          // Advise to close the workitem
+          advices.push(6)
+          // If the workitem has no records to merge, but was NOT just merged
+        } else {
+          // Advise that merge may have been completed with incorrect data
+          advices.push(7)
+        }
+        // If item is an open type 4 or 7, and is secondary to others in the collection
+      } else if (workItemIsSecondary(props.item, props.related)) {
+        // Advise to close related UKRDC items first
+        advices.push(2)
+      } else {
+        advices.push(4)
       }
 
       return advices
