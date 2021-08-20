@@ -1,10 +1,15 @@
 <template>
   <GenericCard>
     <div class="px-4 sm:px-6 h-24 flex flex-col justify-center">
-      <h3 class="text-lg leading-6 font-medium text-gray-900 capitalize">
-        {{ record.givenname.toLowerCase() }}
-        {{ record.surname.toLowerCase() }}
-      </h3>
+      <span
+        :class="highlight.includes('givenname') || highlight.includes('surname') ? highlightClasses : ['text-gray-900']"
+      >
+        <h3 class="text-lg leading-6 font-medium capitalize">
+          {{ record.givenname.toLowerCase() }}
+          {{ record.surname.toLowerCase() }}
+        </h3>
+      </span>
+
       <p class="mt-1 max-w-2xl text-gray-500">
         {{ label ? label : `Person Record ${record.id}` }}
       </p>
