@@ -282,7 +282,7 @@ export default defineComponent({
         comment: true,
         // We can only merge if we have an incoming Master Record, and both
         // incoming and destination records are UKRDC type
-        merge: workItemIsMergable(record.value),
+        merge: record.value ? workItemIsMergable(record.value) : false,
         // Currently Unlink never makes sense, so ignore for now. Maybe remove entirely?
         unlink: false,
       } as AvailableActions
