@@ -2,7 +2,7 @@
   <GenericCard>
     <GenericCardHeader><TextH2>Details</TextH2></GenericCardHeader>
     <GenericCardContent>
-      <GenericDl>
+      <GenericDl :cols="2">
         <GenericDi>
           <TextDt>Last Updated</TextDt>
           <TextDd v-if="item">

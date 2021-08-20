@@ -9,7 +9,7 @@
           </p>
         </div>
         <div class="border-t border-gray-200 px-4 py-5">
-          <dl class="sm:divide-y sm:divide-gray-200">
+          <GenericCardDl>
             <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
               <dt class="font-medium text-gray-500">Entered On</dt>
               <dd class="mt-1 text-gray-900 sm:mt-0 sm:col-span-2">
@@ -34,7 +34,7 @@
                 {{ survey.surveytypecode }}
               </dd>
             </div>
-          </dl>
+          </GenericCardDl>
         </div>
       </div>
 
@@ -46,7 +46,7 @@
             </h3>
           </div>
           <div class="border-t border-gray-200 px-4">
-            <dl class="sm:divide-y sm:divide-gray-200">
+            <GenericCardDl>
               <div v-for="question in questions" :key="question.id" class="flex items-center py-4">
                 <div class="mr-4 font-medium text-gray-900">
                   {{ question.questiontypecode }}
@@ -60,7 +60,7 @@
                   </dd>
                 </div>
               </div>
-            </dl>
+            </GenericCardDl>
           </div>
         </div>
       </div>

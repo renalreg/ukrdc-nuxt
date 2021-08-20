@@ -79,3 +79,12 @@ export function collectionIsUnresolved(related: WorkItem[]) {
   }
   return false
 }
+
+export function formatAttributeValue(attributeString: String) {
+  const splitString = attributeString.split(':')
+  if (splitString.length > 1) {
+    return `${attributeString.split(':')[0]} → ${attributeString.split(':')[1]}`
+  } else {
+    return attributeString.split(':')[0]
+  }
+}

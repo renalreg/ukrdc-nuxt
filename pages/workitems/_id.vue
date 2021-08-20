@@ -113,49 +113,66 @@
     </GenericCard>
 
     <!-- Work Item Trigger -->
-    <div v-if="record" class="flex">
-      <TextH2 class="flex-grow mb-4">Work Item Trigger</TextH2>
-      <div class="flex-shrink">
-        <GenericButtonMini @click="showDestinationPersons = !showDestinationPersons">
-          {{ showDestinationPersons ? 'Show Destination Master Record' : 'Show Related Person Records' }}
-        </GenericButtonMini>
-      </div>
+    <div v-if="record" class="flex mb-4">
+      <TextH2>Work Item Trigger</TextH2>
     </div>
 
-    <div v-if="record && record.destination.persons.length > 0" class="mb-8">
-      <div v-if="record.destination.persons.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- Type 9 incoming attribute card -->
-        <WorkitemsAttributeRecordCard
-          v-if="record.type === 9"
-          class="border-2 border-green-500"
-          :record="record.attributes"
-          label="Incoming Attributes"
-          :highlight="Object.keys(record.attributes)"
-        />
-        <!-- Else incoming person card -->
-        <personsRecordCard
-          v-else-if="record.incoming.person"
-          class="border-2 border-red-500"
-          :record="record.person"
-          :label="`Incoming Person Record ${record.incoming.person.id}`"
-          :highlight="Object.keys(record.attributes)"
-        />
-        <!-- Missing incoming person card -->
-        <div v-else class="rounded-md bg-red-50 font-medium text-red-800 p-4">No incoming Person record</div>
-        <!-- Destination person card -->
-        <personsRecordCard
-          v-if="showDestinationPersons"
-          :record="record.destination.persons[relatedPersonsIndex]"
-          :label="`Related Person Record ${relatedPersonsIndex + 1} of ${record.destination.persons.length}`"
-          :highlight="Object.keys(record.attributes)"
-        />
-        <NuxtLink v-else :to="`/masterrecords/${record.destination.masterRecord.id}`">
-          <masterrecordsRecordCard
-            class="border-2 border-indigo-500"
-            :record="record.destination.masterRecord"
-            :label="`Destination Master Record ${record.destination.masterRecord.id}`"
+    <div v-if="record" class="mb-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div id="incomingCard">
+          <!-- Attribute toggle -->
+          <GenericTabToggle
+            v-model="showIncomingAttributes"
+            true-label="Attributes"
+            false-label="Person Record"
+            class="mb-2"
           />
-        </NuxtLink>
+          <!-- Type 9 incoming attribute card -->
+          <WorkitemsAttributeRecordCard
+            v-if="showIncomingAttributes"
+            class="border-2 border-green-500"
+            :record="record.attributes"
+            label="Incoming Attributes"
+            :highlight="Object.keys(record.attributes)"
+            :full="showDestinationPersons"
+          />
+          <!-- Else incoming person card -->
+          <personsRecordCard
+            v-else-if="record.incoming.person"
+            class="border-2 border-red-500"
+            :record="record.person"
+            :label="`Incoming Person Record ${record.incoming.person.id}`"
+            :highlight="Object.keys(record.attributes)"
+            :full="showDestinationPersons"
+          />
+          <!-- Missing incoming person card -->
+          <div v-else class="rounded-md bg-red-50 font-medium text-red-800 p-4">No incoming Person record</div>
+        </div>
+
+        <div id="destinationCard">
+          <!-- Destination toggle -->
+          <GenericTabToggle
+            v-model="showDestinationPersons"
+            true-label="Related Persons"
+            false-label="Destination Master Record"
+            class="mb-2"
+          />
+          <!-- Destination person card -->
+          <personsRecordCard
+            v-if="showDestinationPersons && record.destination.persons.length > 0"
+            :record="record.destination.persons[relatedPersonsIndex]"
+            :label="`Related Person Record ${relatedPersonsIndex + 1} of ${record.destination.persons.length}`"
+            :highlight="Object.keys(record.attributes)"
+            :full="true"
+          />
+          <NuxtLink v-else :to="`/masterrecords/${record.destination.masterRecord.id}`">
+            <masterrecordsRecordCard
+              class="border-2 border-indigo-500"
+              :record="record.destination.masterRecord"
+              :label="`Destination Master Record ${record.destination.masterRecord.id}`"
+            />
+          </NuxtLink>
+        </div>
       </div>
       <GenericCard v-if="showDestinationPersons && record.destination.persons.length > 1" class="pl-4 mt-2">
         <GenericItemPaginator
@@ -171,17 +188,9 @@
 
       <div v-if="record" class="mb-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- Type 9 incoming attribute card -->
-          <WorkitemsAttributeRecordCard
-            v-if="record.type === 9"
-            class="border-2 border-green-500"
-            :record="record.attributes"
-            label="Incoming Attributes"
-            :highlight="Object.keys(record.attributes)"
-          />
           <!-- Incoming records card -->
           <NuxtLink
-            v-else-if="record.incoming.masterRecords.length > 0"
+            v-if="record.incoming.masterRecords.length > 0"
             :to="`/masterrecords/${record.incoming.masterRecords[relatedRecordsIndex].id}`"
           >
             <masterrecordsRecordCard
@@ -274,6 +283,7 @@ export default defineComponent({
     })
 
     // Dynamic UI
+    const showIncomingAttributes = ref(false)
     const showDestinationPersons = ref(false)
     const availableActions = computed<AvailableActions>(() => {
       return {
@@ -381,6 +391,7 @@ export default defineComponent({
       addCommentModal,
       closeModal,
       closeMessageOverride,
+      showIncomingAttributes,
       showDestinationPersons,
       updateWorkItemComment,
       closeWorkItem,

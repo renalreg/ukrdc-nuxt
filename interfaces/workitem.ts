@@ -11,6 +11,17 @@ interface WorkItemLinks {
   unlink: string
 }
 
+export interface WorkItemAttributes {
+  sendingExtract: string
+  sendingFacility: string
+  localid: string
+  dateOfBirth: string
+  dateOfDeath: string
+  gender: string
+  givenname: string
+  surname: string
+}
+
 export interface WorkItem {
   id: number
 
@@ -24,7 +35,7 @@ export interface WorkItem {
   updatedBy: string
   updateDescription: string
 
-  attributes: object
+  attributes: WorkItemAttributes
 
   masterRecord: MasterRecord
   person: Person
