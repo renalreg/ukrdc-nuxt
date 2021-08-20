@@ -6,21 +6,27 @@
     >
       <!-- Current: "text-gray-900", Default: "text-gray-500 hover:text-gray-700" -->
       <button
-        class="focus:ring-2 focus:ring-indigo-500 rounded-md focus:outline-none focus:ring-offset-gray-100"
+        class="rounded-md focus:outline-none focus:ring-offset-gray-100"
+        :class="
+          !value
+            ? 'p-1.5 rounded-md bg-white shadow-sm focus:shadow-md ring-1 ring-black ring-opacity-5'
+            : 'focus:bg-gray-200'
+        "
         @click="$emit('input', false)"
       >
-        <div :class="!value ? 'p-1.5 rounded-md bg-white shadow-sm ring-1 ring-black ring-opacity-5' : ''">
-          {{ falseLabel }}
-        </div>
+        {{ falseLabel }}
       </button>
 
       <button
-        class="focus:ring-2 focus:ring-indigo-500 rounded-md focus:outline-none focus:ring-offset-gray-100"
+        class="rounded-md focus:outline-none focus:ring-offset-gray-100"
+        :class="
+          value
+            ? 'p-1.5 rounded-md bg-white shadow-sm focus:shadow-md ring-1 ring-black ring-opacity-5'
+            : 'focus:bg-gray-200'
+        "
         @click="$emit('input', true)"
       >
-        <div :class="value ? 'p-1.5 rounded-md bg-white shadow-sm ring-1 ring-black ring-opacity-5' : ''">
-          {{ trueLabel }}
-        </div>
+        {{ trueLabel }}
       </button>
     </nav>
   </div>
