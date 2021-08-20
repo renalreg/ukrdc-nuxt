@@ -34,10 +34,33 @@
         </div>
       </div>
 
-      <div class="flex-none h-8 lg:w-8 mb-2">
-        <button v-tooltip="'Switch Records'" class="block mx-auto" @click="switchRecords">
-          <IconSwitchH class="hidden lg:block" /><IconSwitchV class="block lg:hidden" />
-        </button>
+      <div class="flex-none flex flex-row lg:flex-col my-4 lg:my-0 lg:w-8 mb-2 justify-center lg:justify-start">
+        <div class="flex-shrink">
+          <button
+            v-tooltip="'Switch Records'"
+            class="
+              w-8
+              block
+              mx-auto
+              rounded-md
+              shadow-sm
+              font-medium
+              focus:outline-none focus:ring-2 focus:ring-offset-2
+              border
+              bg-white
+              hover:bg-gray-50
+              focus:ring-indigo-500
+              border-gray-300
+              text-gray-700
+            "
+            @click="switchRecords"
+          >
+            <IconSwitchH class="hidden lg:block my-2" /><IconSwitchV class="block lg:hidden my-2" />
+          </button>
+        </div>
+        <div class="hidden lg:flex flex-col flex-grow justify-center">
+          <div class="h-8"><IconArrowRight /></div>
+        </div>
       </div>
 
       <div class="flex-1">

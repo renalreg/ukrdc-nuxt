@@ -1,68 +1,51 @@
 <template>
   <GenericCard>
-    <div class="px-4 py-5 sm:px-6">
-      <h3 class="text-lg leading-6 font-medium text-gray-900">
-        {{ record.givenname ? record.givenname : '' }}
-        {{ record.surname ? record.surname : '' }}
-      </h3>
-      <p v-if="label" class="mt-1 max-w-2xl text-gray-500">
-        {{ label }}
-      </p>
+    <div class="px-4 sm:px-6 h-24 flex flex-col justify-center">
+      <div class="text-gray-500" :class="highlight.includes('givenname') ? highlightClasses : []">
+        {{ record.givenname ? formatAttributeValue(record.givenname) : 'Given Name not specified' }}
+      </div>
+      <div class="text-gray-500 mt-1" :class="highlight.includes('surname') ? highlightClasses : []">
+        {{ record.surname ? formatAttributeValue(record.surname) : 'Surname not specified' }}
+      </div>
     </div>
     <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-      <dl class="sm:divide-y sm:divide-gray-200">
-        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-          <dt class="font-medium text-gray-500">Local ID</dt>
-          <dd class="mt-1 text-gray-900 sm:mt-0 sm:col-span-2 align-middle">
-            <div v-if="record.localid" :class="highlight.includes('localid') ? highlightClasses : []">
-              {{ record.localid }}
-            </div>
-            <div>
-              <span
-                v-if="record.sendingFacility"
-                :class="highlight.includes('sendingFacility') ? highlightClasses : []"
-                >{{ record.sendingFacility }}</span
-              >
-              <span
-                v-if="record.sendingExtract"
-                :class="highlight.includes('sendingExtract') ? highlightClasses : []"
-                >{{ 'via ' + record.sendingExtract }}</span
-              >
-            </div>
-          </dd>
-        </div>
-        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-          <dt class="font-medium text-gray-500">Date of Birth</dt>
-          <dd
-            class="mt-1 text-gray-900 sm:mt-0 sm:col-span-2"
-            :class="highlight.includes('dateOfBirth') ? highlightClasses : []"
-          >
+      <GenericCardDl>
+        <GenericCardDi>
+          <GenericCardDt>Local ID</GenericCardDt>
+          <GenericCardDd :class="highlight.includes('localid') ? highlightClasses : []">
+            {{ record.localid ? formatAttributeValue(record.localid) : 'Not specified' }}
+          </GenericCardDd>
+        </GenericCardDi>
+        <GenericCardDi>
+          <GenericCardDt>Sender</GenericCardDt>
+          <GenericCardDd>
+            <span :class="highlight.includes('sendingFacility') ? highlightClasses : []">{{
+              record.sendingFacility ? record.sendingFacility : ''
+            }}</span>
+            <span :class="highlight.includes('sendingExtract') ? highlightClasses : []">{{
+              record.sendingExtract ? 'via ' + record.sendingExtract : 'Not specified'
+            }}</span>
+          </GenericCardDd>
+        </GenericCardDi>
+        <GenericCardDi>
+          <GenericCardDt>Date of Birth</GenericCardDt>
+          <GenericCardDd :class="highlight.includes('dateOfBirth') ? highlightClasses : []">
             {{ formattedDoB }}
-          </dd>
-        </div>
-        <div v-if="record.dateOfDeath || full" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-          <dt class="font-medium text-gray-500">Date of Death</dt>
-          <dd
-            class="mt-1 text-gray-900 sm:mt-0 sm:col-span-2"
-            :class="highlight.includes('dateOfDeath') ? highlightClasses : []"
-          >
+          </GenericCardDd>
+        </GenericCardDi>
+        <GenericCardDi>
+          <GenericCardDt>Assigned Gender</GenericCardDt>
+          <GenericCardDd :class="highlight.includes('gender') ? highlightClasses : []">
+            {{ formattedGender }}
+          </GenericCardDd>
+        </GenericCardDi>
+        <GenericCardDi>
+          <GenericCardDt>Date of Death</GenericCardDt>
+          <GenericCardDd :class="highlight.includes('dateOfDeath') ? highlightClasses : []">
             {{ formattedDoD }}
-          </dd>
-        </div>
-        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-          <dt class="font-medium text-gray-500">Assigned Gender</dt>
-          <dd
-            class="mt-1 text-gray-900 sm:mt-0 sm:col-span-2"
-            :class="highlight.includes('gender') ? highlightClasses : []"
-          >
-            {{ formatGender(record.gender) }}
-          </dd>
-        </div>
-        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-          <dt class="font-medium text-gray-500">Last Updated</dt>
-          <dd class="mt-1 text-gray-900 sm:mt-0 sm:col-span-2">N/A</dd>
-        </div>
-      </dl>
+          </GenericCardDd>
+        </GenericCardDi>
+      </GenericCardDl>
     </div>
   </GenericCard>
 </template>
@@ -72,24 +55,20 @@ import { computed, defineComponent } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/utilities/dateUtils'
 import { formatGender } from '@/utilities/codeUtils'
+import { formatAttributeValue } from '@/utilities/workItemUtils'
 
-import { Person } from '~/interfaces/persons'
+import { WorkItemAttributes } from '~/interfaces/workitem'
 
 export default defineComponent({
   props: {
     record: {
-      type: Object as () => Person,
+      type: Object as () => WorkItemAttributes,
       required: true,
     },
     label: {
       type: String,
       required: false,
       default: null,
-    },
-    full: {
-      type: Boolean,
-      required: false,
-      default: false,
     },
     highlight: {
       type: Array,
@@ -112,20 +91,36 @@ export default defineComponent({
     const formattedDoB = computed(() => {
       return props.record.dateOfBirth
         ? `
-        ${formatDate(props.record.dateOfBirth.split(':')[0], false)} : 
+        ${formatDate(props.record.dateOfBirth.split(':')[0], false)} → 
         ${formatDate(props.record.dateOfBirth.split(':')[1], false)}`
-        : 'N/A'
+        : 'Not specified'
     })
 
     const formattedDoD = computed(() => {
       return props.record.dateOfDeath
         ? `
-        ${formatDate(props.record.dateOfDeath.split(':')[0], false)} : 
+        ${formatDate(props.record.dateOfDeath.split(':')[0], false)} →
         ${formatDate(props.record.dateOfDeath.split(':')[1], false)}`
-        : 'N/A'
+        : 'Not specified'
     })
 
-    return { formattedDoB, formattedDoD, formatDate, formatGender, highlightClasses }
+    const formattedGender = computed(() => {
+      return props.record.gender
+        ? `
+        ${formatGender(props.record.gender.split(':')[0])} →
+        ${formatGender(props.record.gender.split(':')[1])}`
+        : 'Not specified'
+    })
+
+    return {
+      formattedDoB,
+      formattedDoD,
+      formattedGender,
+      formatDate,
+      formatGender,
+      formatAttributeValue,
+      highlightClasses,
+    }
   },
 })
 </script>

@@ -3,11 +3,23 @@ import { MasterRecord } from '@/interfaces/masterrecord'
 
 interface WorkItemLinks {
   self: string
+  collection: string
   related: string
   errors: string
   merge: string
   close: string
   unlink: string
+}
+
+export interface WorkItemAttributes {
+  sendingExtract: string
+  sendingFacility: string
+  localid: string
+  dateOfBirth: string
+  dateOfDeath: string
+  gender: string
+  givenname: string
+  surname: string
 }
 
 export interface WorkItem {
@@ -16,11 +28,14 @@ export interface WorkItem {
   type: number
   description: string
   status: number
+
+  creationDate: string
+
   lastUpdated: string
   updatedBy: string
-
   updateDescription: string
-  attributes: object
+
+  attributes: WorkItemAttributes
 
   masterRecord: MasterRecord
   person: Person

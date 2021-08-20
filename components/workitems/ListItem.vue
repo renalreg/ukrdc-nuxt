@@ -46,9 +46,9 @@
       </div>
       <!-- Last updated (small and up) -->
       <div class="hidden lg:block">
-        <TextP>From {{ facility }}</TextP>
+        <TextP>{{ facility }} via {{ extract }}</TextP>
         <TextP class="mt-2">
-          {{ formatDate(item.lastUpdated) }}
+          {{ formatDate(item.creationDate) }}
         </TextP>
       </div>
     </div>
@@ -75,7 +75,14 @@ export default defineComponent({
         return 'Unknown Facility'
       }
     })
-    return { formatDate, facility }
+    const extract = computed(() => {
+      if (props.item.person?.xrefEntries[0]?.sendingExtract) {
+        return props.item.person?.xrefEntries[0]?.sendingExtract
+      } else {
+        return 'Unknown Extract'
+      }
+    })
+    return { formatDate, facility, extract }
   },
 })
 </script>
