@@ -113,18 +113,14 @@
     </GenericCard>
 
     <!-- Work Item Trigger -->
-    <div v-if="record" class="flex mb-4">
-      <TextH2>Work Item Trigger</TextH2>
-    </div>
-
     <div v-if="record" class="mb-8">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div id="incomingCard">
           <!-- Attribute toggle -->
           <GenericTabToggle
             v-model="showIncomingAttributes"
-            true-label="Attributes"
-            false-label="Person Record"
+            true-label="Incoming Attributes"
+            false-label="Incoming Person Record"
             class="mb-2"
           />
           <!-- Type 9 incoming attribute card -->
@@ -153,7 +149,7 @@
           <!-- Destination toggle -->
           <GenericTabToggle
             v-model="showDestinationPersons"
-            true-label="Related Persons"
+            true-label="Related Person Records"
             false-label="Destination Master Record"
             class="mb-2"
           />
