@@ -6,7 +6,7 @@
     >
       <!-- Current: "text-gray-900", Default: "text-gray-500 hover:text-gray-700" -->
       <button
-        class="rounded-md focus:outline-none focus:ring-offset-gray-100"
+        class="rounded-md focus:outline-none focus:ring-offset-gray-100 truncate"
         :class="
           !value
             ? 'p-1.5 rounded-md bg-white shadow-sm focus:shadow-md ring-1 ring-black ring-opacity-5'
@@ -18,7 +18,7 @@
       </button>
 
       <button
-        class="rounded-md focus:outline-none focus:ring-offset-gray-100"
+        class="rounded-md focus:outline-none focus:ring-offset-gray-100 truncate"
         :class="
           value
             ? 'p-1.5 rounded-md bg-white shadow-sm focus:shadow-md ring-1 ring-black ring-opacity-5'
