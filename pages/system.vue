@@ -1,7 +1,7 @@
 <template>
   <div>
     <TextH1 class="mb-4">System Configuration</TextH1>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
       <GenericCard>
         <GenericCardHeader>
           <TextH2>Client</TextH2>
@@ -17,7 +17,7 @@
           </GenericCardDi>
           <GenericCardDi>
             <GenericCardDt>Version Hash</GenericCardDt>
-            <GenericCardDd>{{ $config.githubSHA }}</GenericCardDd>
+            <GenericCardDd>{{ $config.githubSha }}</GenericCardDd>
           </GenericCardDi>
         </GenericCardDl>
       </GenericCard>
@@ -45,11 +45,12 @@
         </GenericCardDl>
       </GenericCard>
     </div>
+    <GenericButton @click="copyConfigReport">Copy Configuration Report</GenericButton>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, useFetch } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref, useContext, useFetch } from '@nuxtjs/composition-api'
 
 interface serverSystemInfo {
   githubRef: string
@@ -59,18 +60,44 @@ interface serverSystemInfo {
 
 export default defineComponent({
   setup() {
-    const { $axios, $config } = useContext()
+    const { $axios, $config, $toast } = useContext()
 
     const serverInfo = ref<serverSystemInfo>()
 
     useFetch(async () => {
       serverInfo.value = await $axios.$get(`${$config.apiBase}/v1/system/info/`)
-
-      console.log(await $axios.$get(`${$config.apiBase}/v1/system/user/`))
     })
+
+    const configReportJSON = computed(() => {
+      return JSON.stringify(
+        {
+          server: serverInfo.value,
+          client: {
+            deploymentEnv: $config.deploymentEnv,
+            githubRef: $config.githubRef,
+            githubSha: $config.githubSha,
+          },
+        },
+        null,
+        4
+      )
+    })
+
+    function copyConfigReport() {
+      navigator.clipboard.writeText(configReportJSON.value).then(() => {
+        $toast.show({
+          type: 'success',
+          title: 'Success',
+          message: 'Configuration Report copied to clipboard',
+          timeout: 5,
+          classTimeout: 'bg-green-600',
+        })
+      })
+    }
 
     return {
       serverInfo,
+      copyConfigReport,
     }
   },
   head: {
