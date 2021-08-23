@@ -88,6 +88,10 @@ export default {
     userPermissionKey: process.env.USER_PERMISSION_KEY || 'org.ukrdc.permissions',
     // Okta domain
     oktaDomain: process.env.OKTA_DOMAIN || 'https://renalregistry.okta.com',
+    // System info variables
+    githubRef: process.env.GITHUB_REF || 'Not Available',
+    githubSHA: process.env.GITHUB_SHA || 'Not Available',
+    deploymentEnv: process.env.DEPLOYMENT_ENV || 'development',
     // Axios public runtime config
     axios: {
       browserBaseURL: process.env.BROWSER_BASE_URL,
