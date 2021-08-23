@@ -39,7 +39,13 @@
             <TextDd>
               <div class="flex items-center gap-2">
                 <div>{{ record.nationalid }}</div>
-                <TracingBadge v-if="tracingRecord" :verified="tracingRecord.localpatientid === record.nationalid" />
+                <TracingBadge
+                  v-if="tracingRecord"
+                  :verified="
+                    tracingRecord.localpatientid.trim() === record.nationalid.trim() ||
+                    tracingRecord.ukrdcid.trim() === record.nationalid.trim()
+                  "
+                />
               </div>
             </TextDd>
           </GenericDi>
