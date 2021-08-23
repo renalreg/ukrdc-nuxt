@@ -50,13 +50,11 @@
             target="blank"
             type="button"
             class="
-              inline-flex
-              items-center
+              text-center
               px-3
               py-2
               border border-gray-300
               shadow-sm
-              leading-4
               font-medium
               rounded-md
               text-gray-700
@@ -69,8 +67,8 @@
           <GenericButton @click="logout()"> Sign out </GenericButton>
         </div>
       </div>
-      <div>
-        <h3 class="leading-6 font-medium text-gray-900 mb-2">Permissions</h3>
+      <div class="mb-4">
+        <TextH3 class="mb-2">Permissions</TextH3>
         <div v-for="group in perms" :key="group" class="inline">
           <span
             class="inline-flex items-center px-3 py-0.5 rounded-full font-medium mr-2 mb-2"
@@ -79,6 +77,11 @@
             {{ group }}
           </span>
         </div>
+      </div>
+      <div>
+        <NuxtLink to="/system" class="flex gap-1 items-center">
+          <TextH3 class="flex-shrink"> System Configuration</TextH3><IconMiniArrowRight class="flex-shrink mx-0" />
+        </NuxtLink>
       </div>
     </div>
   </div>
