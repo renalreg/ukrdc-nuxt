@@ -52,7 +52,18 @@ export default {
   // Sentry Configuration: https://sentry.nuxtjs.org/guide/setup
   sentry: {
     publishRelease: false,
-    tracing: true,
+    tracing: {
+      tracesSampleRate: 1.0,
+      vueOptions: {
+        tracing: true,
+        tracingOptions: {
+          hooks: ['mount', 'update'],
+          timeout: 2000,
+          trackComponents: true,
+        },
+      },
+      browserOptions: {},
+    },
   },
 
   // Auth Configuration: https://auth.nuxtjs.org/api/options
