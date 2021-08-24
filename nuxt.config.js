@@ -51,7 +51,6 @@ export default {
 
   // Sentry Configuration: https://sentry.nuxtjs.org/guide/setup
   sentry: {
-    // Specify a build-time DSN to be overridden
     dsn: process.env.SENTRY_DSN,
     publishRelease: false,
     tracing: {
@@ -112,8 +111,6 @@ export default {
     // Sentry public runtime config, see https://sentry.nuxtjs.org/sentry/runtime-config/
     sentry: {
       config: {
-        dsn: process.env.SENTRY_DSN,
-        disabled: !process.env.SENTRY_DSN,
         environment: process.env.DEPLOYMENT_ENV || 'development',
       },
     },

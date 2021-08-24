@@ -50,6 +50,7 @@ jobs:
           build-args: |
             GITHUB_SHA=${{ github.sha }}
             GITHUB_REF=${{ github.ref }}
+            SENTRY_DSN=${{ secrets.SENTRY_DSN }}
           tags: ghcr.io/renalreg/ukrdc-nuxt:${{github.event.inputs.deployment_env}}
 
       - name: Create Sentry release
