@@ -1,29 +1,17 @@
 <template>
   <div>
-    <nav
-      class="grid grid-cols-2 group p-0.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm font-medium"
-      aria-label="Tabs"
-    >
-      <!-- Current: "text-gray-900", Default: "text-gray-500 hover:text-gray-700" -->
+    <nav class="grid grid-cols-2 group rounded-lg bg-gray-100 hover:bg-gray-200 text-sm font-medium" aria-label="Tabs">
       <button
-        class="rounded-md focus:outline-none focus:ring-offset-gray-100 truncate"
-        :class="
-          !value
-            ? 'p-1.5 rounded-md bg-white shadow-sm focus:shadow-md ring-1 ring-black ring-opacity-5'
-            : 'focus:bg-gray-200'
-        "
+        class="p-1.5 border rounded-l-md rounded-r-none truncate"
+        :class="!value ? ' bg-indigo-600  border-indigo-700  text-white' : 'focus:bg-gray-200 border-gray-300'"
         @click="$emit('input', false)"
       >
         {{ falseLabel }}
       </button>
 
       <button
-        class="rounded-md focus:outline-none focus:ring-offset-gray-100 truncate"
-        :class="
-          value
-            ? 'p-1.5 rounded-md bg-white shadow-sm focus:shadow-md ring-1 ring-black ring-opacity-5'
-            : 'focus:bg-gray-200'
-        "
+        class="p-1.5 border rounded-r-md rounded-l-none truncate"
+        :class="value ? ' bg-indigo-600 border-indigo-700  text-white' : 'focus:bg-gray-200 border-gray-300'"
         @click="$emit('input', true)"
       >
         {{ trueLabel }}
