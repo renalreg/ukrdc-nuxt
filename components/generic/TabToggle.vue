@@ -1,9 +1,13 @@
 <template>
   <div>
-    <nav class="grid grid-cols-2 group rounded-lg bg-gray-100 hover:bg-gray-200 text-sm font-medium" aria-label="Tabs">
+    <nav class="grid grid-cols-2 group rounded-lg bg-white text-sm font-medium shadow-sm" aria-label="Tabs">
       <button
         class="p-1.5 border rounded-l-md rounded-r-none truncate"
-        :class="!value ? ' bg-indigo-600  border-indigo-700  text-white' : 'focus:bg-gray-200 border-gray-300'"
+        :class="
+          !value
+            ? ' bg-indigo-600  border-indigo-700  text-white'
+            : 'hover:bg-gray-100 focus:bg-gray-200 border-gray-300'
+        "
         @click="$emit('input', false)"
       >
         {{ falseLabel }}
@@ -11,7 +15,9 @@
 
       <button
         class="p-1.5 border rounded-r-md rounded-l-none truncate"
-        :class="value ? ' bg-indigo-600 border-indigo-700  text-white' : 'focus:bg-gray-200 border-gray-300'"
+        :class="
+          value ? ' bg-indigo-600 border-indigo-700  text-white' : 'hover:bg-gray-100 focus:bg-gray-200 border-gray-300'
+        "
         @click="$emit('input', true)"
       >
         {{ trueLabel }}
