@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext, useRouter } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/utilities/dateUtils'
 import { formatGender } from '@/utilities/codeUtils'
@@ -40,37 +40,33 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const router = useRouter()
     const { $axios, $config, $toast } = useContext()
 
     const unlinkModal = ref<modalInterface>()
     const unlinkComment = ref('')
 
-    async function doUnlink() {
-      try {
-        await $axios.$post(`${$config.apiBase}/v1/empi/unlink`, {
+    function doUnlink() {
+      $axios
+        .$post(`${$config.apiBase}/v1/empi/unlink/`, {
           personId: props.record.person.id,
           masterId: props.record.masterRecord.id,
           comment: unlinkComment.value || '',
         })
-        $toast.show({
-          type: 'success',
-          title: 'Success',
-          message: 'Record unlink request sent successfully',
-          timeout: 10,
-          classTimeout: 'bg-green-600',
+        .then((response: LinkRecord) => {
+          console.log(response)
+          $toast.show({
+            type: 'success',
+            title: 'Success',
+            message: 'Record unlink request sent successfully',
+            timeout: 10,
+            classTimeout: 'bg-green-600',
+          })
+          router.push({ path: `/masterrecords/${response.masterRecord.id}` })
         })
-      } catch (error) {
-        console.log(error.response.data.detail)
-        $toast.show({
-          type: 'danger',
-          title: 'Error',
-          message: 'Error processing merge request',
-          timeout: 10,
-          classTimeout: 'bg-red-600',
+        .finally(() => {
+          unlinkModal.value?.hide()
         })
-        throw error
-      }
-      unlinkModal.value?.hide()
     }
 
     return {
