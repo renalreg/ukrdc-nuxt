@@ -3,7 +3,7 @@
     <GenericModalSlot ref="unlinkModal">
       <div class="text-left">
         <div class="mb-4">Unlink comment</div>
-        <FormTextArea v-model="unlinkComment" rows="3"></FormTextArea>
+        <FormTextArea v-model="unlinkComment" :max-length="100" rows="3"></FormTextArea>
       </div>
 
       <div class="flex justify-end">

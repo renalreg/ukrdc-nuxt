@@ -4,7 +4,7 @@
     <GenericModalSlot v-if="hasPermission('ukrdc:workitems:write')" ref="addCommentModal">
       <div class="text-left">
         <div class="mb-4">Add Work Item comment</div>
-        <FormTextArea v-model="customComment" rows="3"></FormTextArea>
+        <FormTextArea v-model="customComment" :max-length="100" rows="3"></FormTextArea>
       </div>
 
       <div class="flex justify-end">
@@ -20,7 +20,7 @@
         <div>
           <FormLabel>
             Comments
-            <FormTextArea v-model="customComment" rows="3"></FormTextArea>
+            <FormTextArea v-model="customComment" :max-length="100" rows="3"></FormTextArea>
           </FormLabel>
         </div>
       </div>
