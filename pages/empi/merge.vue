@@ -19,7 +19,7 @@
           <GenericButton class="w-full" @click="clearSuperceeded"> Change Superseded Record </GenericButton>
           <NuxtLink :to="`/masterrecords/${superseded.id}`">
             <masterrecordsRecordCard
-              class="mt-4 border-2 border-indigo-500"
+              class="mt-4"
               :record="superseded"
               :label="`Superseded Record ${superseded.id.toString()}`"
               :highlight="highlightSections"
@@ -68,7 +68,7 @@
           <GenericButton class="w-full" @click="clearsuperseding"> Change Superseding Record </GenericButton>
           <NuxtLink :to="`/masterrecords/${superseding.id}`">
             <masterrecordsRecordCard
-              class="mt-4 border-2 border-indigo-500"
+              class="mt-4"
               :record="superseding"
               :label="`Superseding Record ${superseding.id.toString()}`"
               :highlight="highlightSections"

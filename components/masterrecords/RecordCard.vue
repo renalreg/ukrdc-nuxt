@@ -1,5 +1,5 @@
 <template>
-  <GenericCard>
+  <GenericCard class="border-2 border-indigo-500">
     <div class="px-4 sm:px-6 h-24 flex flex-col justify-center">
       <h3
         class="text-lg leading-6 font-medium text-gray-900 capitalize"

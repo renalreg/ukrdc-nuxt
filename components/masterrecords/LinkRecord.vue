@@ -22,9 +22,9 @@
     </GenericCard>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <PersonsRecordCard class="border-2 border-red-500" :record="record.person" />
+      <PersonsRecordCard :record="record.person" />
       <NuxtLink :to="`/masterrecords/${record.masterRecord.id}`">
-        <masterrecordsRecordCard class="border-2 border-indigo-500" :record="record.masterRecord" />
+        <masterrecordsRecordCard :record="record.masterRecord" />
       </NuxtLink>
     </div>
   </div>
