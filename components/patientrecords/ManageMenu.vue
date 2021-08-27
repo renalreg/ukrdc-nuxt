@@ -10,12 +10,6 @@
         <GenericMenuItem v-if="hasPermission('ukrdc:records:delete')" @click="showDeleteModal">
           Delete Record
         </GenericMenuItem>
-        <GenericMenuItem
-          v-if="hasPermission('ukrdc:records:write') && hasPermission('ukrdc:empi:write')"
-          :disabled="true"
-        >
-          Unlink Record
-        </GenericMenuItem>
       </GenericMenu>
     </div>
   </div>
