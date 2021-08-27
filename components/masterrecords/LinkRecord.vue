@@ -12,8 +12,15 @@
       </div>
     </GenericModalSlot>
 
-    <TextL1 class="mb-2 w-full text-center">Link Record {{ record.id }}</TextL1>
-    <GenericButton @click="unlinkModal.show()">Unlink</GenericButton>
+    <GenericCard class="flex items-center p-2 mb-2">
+      <div class="flex-grow pl-2">
+        <TextL1>Link Record {{ record.id }}</TextL1>
+      </div>
+      <div class="flex-shrink">
+        <GenericButtonMini @click="unlinkModal.show()">Unlink</GenericButtonMini>
+      </div>
+    </GenericCard>
+
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <PersonsRecordCard class="border-2 border-red-500" :record="record.person" />
       <NuxtLink :to="`/masterrecords/${record.masterRecord.id}`">
