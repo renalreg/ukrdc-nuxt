@@ -12,7 +12,7 @@ export default function ({ app, $axios }: Context) {
     app.$toast.show({
       type: 'danger',
       title: 'Error Fetching Data',
-      message: error.message,
+      message: error.response ? error.response.data.detail : error.message,
       timeout: 5,
     })
   })

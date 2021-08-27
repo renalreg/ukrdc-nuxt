@@ -4,12 +4,14 @@
     <GenericModalSlot v-if="hasPermission('ukrdc:workitems:write')" ref="addCommentModal">
       <div class="text-left">
         <div class="mb-4">Add Work Item comment</div>
-        <FormTextArea v-model="customComment" rows="3"></FormTextArea>
+        <FormTextArea v-model="customComment" :max-length="100" rows="3"></FormTextArea>
       </div>
 
       <div class="flex justify-end">
-        <genericButton @click="addCommentModal.hide()">Cancel</genericButton>
-        <GenericButton class="ml-2" type="submit" @click="updateWorkItemComment()"> Save </GenericButton>
+        <GenericButton @click="addCommentModal.hide()">Cancel</GenericButton>
+        <GenericButton colour="indigo" class="ml-2" type="submit" @click="updateWorkItemComment()">
+          Save
+        </GenericButton>
       </div>
     </GenericModalSlot>
 
@@ -20,7 +22,7 @@
         <div>
           <FormLabel>
             Comments
-            <FormTextArea v-model="customComment" rows="3"></FormTextArea>
+            <FormTextArea v-model="customComment" :max-length="100" rows="3"></FormTextArea>
           </FormLabel>
         </div>
       </div>
@@ -126,7 +128,6 @@
           <!-- Type 9 incoming attribute card -->
           <WorkitemsAttributeRecordCard
             v-if="showIncomingAttributes"
-            class="border-2 border-green-500"
             :record="record.attributes"
             label="Incoming Attributes"
             :highlight="Object.keys(record.attributes)"
@@ -135,7 +136,6 @@
           <!-- Else incoming person card -->
           <personsRecordCard
             v-else-if="record.incoming.person"
-            class="border-2 border-red-500"
             :record="record.person"
             :label="`Incoming Person Record ${record.incoming.person.id}`"
             :highlight="Object.keys(record.attributes)"
@@ -163,7 +163,6 @@
           />
           <NuxtLink v-else :to="`/masterrecords/${record.destination.masterRecord.id}`">
             <masterrecordsRecordCard
-              class="border-2 border-indigo-500"
               :record="record.destination.masterRecord"
               :label="`Destination Master Record ${record.destination.masterRecord.id}`"
             />
@@ -190,7 +189,6 @@
             :to="`/masterrecords/${record.incoming.masterRecords[relatedRecordsIndex].id}`"
           >
             <masterrecordsRecordCard
-              class="border-2 border-indigo-500"
               :record="record.incoming.masterRecords[relatedRecordsIndex]"
               :label="`Incoming Master Record ${relatedRecordsIndex + 1} of ${record.incoming.masterRecords.length}`"
             />
@@ -198,11 +196,7 @@
           <!-- Empty incoming records card -->
           <div v-else class="rounded-md bg-red-50 font-medium text-red-800 p-4">No new incoming Master Records</div>
           <NuxtLink v-if="record.destination.masterRecord" :to="`/masterrecords/${record.destination.masterRecord.id}`">
-            <masterrecordsRecordCard
-              class="border-2 border-indigo-500"
-              :record="record.destination.masterRecord"
-              label="Destination Master Record"
-            />
+            <masterrecordsRecordCard :record="record.destination.masterRecord" label="Destination Master Record" />
           </NuxtLink>
         </div>
         <GenericCard v-if="record.incoming.masterRecords.length > 1" class="pl-4 mt-2">

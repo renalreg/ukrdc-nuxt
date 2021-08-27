@@ -19,7 +19,7 @@
           <GenericButton class="w-full" @click="clearSuperceeded"> Change Superseded Record </GenericButton>
           <NuxtLink :to="`/masterrecords/${superseded.id}`">
             <masterrecordsRecordCard
-              class="mt-4 border-2 border-indigo-500"
+              class="mt-4"
               :record="superseded"
               :label="`Superseded Record ${superseded.id.toString()}`"
               :highlight="highlightSections"
@@ -59,7 +59,7 @@
           </button>
         </div>
         <div class="hidden lg:flex flex-col flex-grow justify-center">
-          <div class="h-8"><IconArrowRight /></div>
+          <div v-show="superseded && superseding" class="h-8"><IconArrowRight /></div>
         </div>
       </div>
 
@@ -68,7 +68,7 @@
           <GenericButton class="w-full" @click="clearsuperseding"> Change Superseding Record </GenericButton>
           <NuxtLink :to="`/masterrecords/${superseding.id}`">
             <masterrecordsRecordCard
-              class="mt-4 border-2 border-indigo-500"
+              class="mt-4"
               :record="superseding"
               :label="`Superseding Record ${superseding.id.toString()}`"
               :highlight="highlightSections"
@@ -209,36 +209,29 @@ export default defineComponent({
       })
     }
 
-    async function requestMerge() {
-      try {
-        await $axios.$post(`${$config.apiBase}/v1/empi/merge`, {
+    function requestMerge() {
+      $axios
+        .$post(`${$config.apiBase}/v1/empi/merge`, {
           superseding: superseding.value?.id,
           superseded: superseded.value?.id,
         })
-        $toast.show({
-          type: 'success',
-          title: 'Success',
-          message: 'Record merge request sent successfully',
-          timeout: 10,
-          classTimeout: 'bg-green-600',
+        .then(() => {
+          $toast.show({
+            type: 'success',
+            title: 'Success',
+            message: 'Record merge request sent successfully',
+            timeout: 10,
+            classTimeout: 'bg-green-600',
+          })
+          clearMerge()
+          if (callbackPath.value) {
+            router.push(callbackPath.value)
+          }
         })
-        clearMerge()
-        if (callbackPath.value) {
-          router.push(callbackPath.value)
-        }
-      } catch (error) {
-        console.log(error.response.data.detail)
-        $toast.show({
-          type: 'danger',
-          title: 'Error',
-          message: 'Error processing merge request',
-          timeout: 10,
-          classTimeout: 'bg-red-600',
+        .finally(() => {
+          const el = beginMergeAlert.value as modalInterface
+          el.hide()
         })
-        throw error
-      }
-      const el = beginMergeAlert.value as modalInterface
-      el.hide()
     }
 
     function clearsuperseding() {

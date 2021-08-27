@@ -1,5 +1,5 @@
 <template>
-  <GenericCard>
+  <GenericCard class="border-2 border-red-500">
     <div class="px-4 sm:px-6 h-24 flex flex-col justify-center">
       <span
         :class="highlight.includes('givenname') || highlight.includes('surname') ? highlightClasses : ['text-gray-900']"

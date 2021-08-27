@@ -1,5 +1,5 @@
 <template>
-  <GenericCard>
+  <GenericCard class="border-2 border-green-500">
     <div class="px-4 sm:px-6 h-24 flex flex-col justify-center">
       <div class="text-gray-500" :class="highlight.includes('givenname') ? highlightClasses : []">
         {{ record.givenname ? formatAttributeValue(record.givenname) : 'Given Name not specified' }}
