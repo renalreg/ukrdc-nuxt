@@ -7,7 +7,7 @@
       <!-- Main component -->
       <div class="flex w-full">
         <div
-          ref="input"
+          ref="mainInput"
           class="flex items-center truncate w-full border px-3 py-2 shadow-sm sm: border-gray-300 rounded-md"
           :class="{
             invisible: isOpen,
@@ -17,6 +17,7 @@
           @keydown.up.prevent="open"
           @keydown.down.prevent="open"
           @keydown.space.prevent="open"
+          @keydown.enter.prevent="open"
         >
           <div class="flex-grow truncate">
             <span v-if="value" class="truncate line-clamp-1">{{ `${value} (${labelFor(value)})` }}</span>
@@ -62,7 +63,7 @@
         "
       >
         <input
-          ref="search"
+          ref="searchInput"
           v-model="search"
           type="text"
           class="block w-full px-3 py-2 bg-grey-darker rounded"
@@ -75,13 +76,13 @@
         />
         <ul
           v-show="options.length > 0"
-          ref="options"
+          ref="optionsElement"
           class="list-reset relative overflow-y-scroll py-2"
           style="max-height: 200px"
         >
           <li
             v-for="(option, i) in filteredOptions"
-            ref="option"
+            ref="optionElement"
             :key="option"
             class="px-3 py-2 cursor-pointer rounded"
             :class="[i === highlightedIndex ? 'bg-indigo-50' : 'hover:bg-grey-darker']"
@@ -96,8 +97,10 @@
   </transition>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { computed, defineComponent, onMounted, ref, nextTick } from '@nuxtjs/composition-api'
+
+export default defineComponent({
   props: {
     value: {
       type: String,
@@ -105,11 +108,11 @@ export default {
       default: null,
     },
     options: {
-      type: Array,
+      type: Array as () => String[],
       required: true,
     },
     labels: {
-      type: Array,
+      type: Array as () => String[],
       required: false,
       default: null,
     },
@@ -130,86 +133,110 @@ export default {
     },
   },
 
-  data() {
-    return {
-      search: '',
-      isOpen: false,
-      highlightedIndex: 0,
-    }
-  },
+  setup(props, { emit }) {
+    const search = ref('')
+    const isOpen = ref(false)
+    const highlightedIndex = ref(0)
 
-  computed: {
-    filteredOptions() {
-      if (!this.labels) {
-        return this.options.filter((option) => option.toLowerCase().startsWith(this.search.toLowerCase()))
+    const searchInput = ref()
+    const mainInput = ref()
+    const optionElement = ref()
+
+    const filteredOptions = computed(() => {
+      if (!props.labels) {
+        return props.options.filter((option) => option.toLowerCase().startsWith(search.value.toLowerCase()))
       }
-      return this.options.filter(
+      return props.options.filter(
         (option, index) =>
-          option.toLowerCase().startsWith(this.search.toLowerCase()) ||
-          this.labels[index].toLowerCase().startsWith(this.search.toLowerCase())
+          option.toLowerCase().startsWith(search.value.toLowerCase()) ||
+          props.labels[index].toLowerCase().startsWith(search.value.toLowerCase())
       )
-    },
-  },
+    })
 
-  mounted() {
-    if (this.mountOpened) {
-      this.open()
-    }
-  },
-
-  methods: {
-    open() {
-      this.isOpen = true
-      this.$nextTick(() => {
-        this.$refs.search.focus()
+    function open() {
+      isOpen.value = true
+      nextTick(() => {
+        searchInput.value.focus()
       })
-    },
-    close() {
-      if (this.closable) {
-        this.isOpen = false
-        this.$nextTick(() => {
-          this.$refs.input.focus()
+    }
+
+    function close() {
+      if (props.closable) {
+        isOpen.value = false
+        nextTick(() => {
+          mainInput.value.focus()
         })
       }
-    },
-    cancel() {
-      this.close()
-    },
-    commitSelection() {
-      this.$emit('input', this.filteredOptions[this.highlightedIndex])
-      this.close()
-    },
-    select(index) {
-      this.highlightedIndex = index
-      this.commitSelection()
-    },
-    clear() {
-      this.highlightedIndex = 0
-      this.$emit('input', null)
-      this.close()
-    },
-    highlight(index) {
-      this.open()
-      this.highlightedIndex = index
-      this.$nextTick(() => {
-        this.$refs.option[index].scrollIntoView({ block: 'nearest' })
-      })
-    },
-    highlightPrev() {
-      this.highlight(this.highlightedIndex - 1 < 0 ? this.filteredOptions.length - 1 : this.highlightedIndex - 1)
-    },
-    highlightNext() {
-      this.highlight(this.highlightedIndex + 1 >= this.filteredOptions.length ? 0 : this.highlightedIndex + 1)
-    },
-    labelFor(value) {
-      if (this.labels) {
-        const index = this.options.indexOf(value)
+    }
+
+    function cancel() {
+      close()
+    }
+
+    function commitSelection() {
+      close()
+      emit('input', filteredOptions.value[highlightedIndex.value])
+    }
+
+    function select(index: number) {
+      highlightedIndex.value = index
+      commitSelection()
+    }
+
+    function clear() {
+      highlightedIndex.value = 0
+      emit('input', null)
+      close()
+    }
+
+    function highlight(index: number) {
+      open()
+      highlightedIndex.value = index
+      optionElement.value[index].scrollIntoView({ block: 'nearest' })
+    }
+
+    function highlightPrev() {
+      highlight(highlightedIndex.value - 1 < 0 ? filteredOptions.value.length - 1 : highlightedIndex.value - 1)
+    }
+
+    function highlightNext() {
+      highlight(highlightedIndex.value + 1 >= filteredOptions.value.length ? 0 : highlightedIndex.value + 1)
+    }
+
+    function labelFor(value: string) {
+      if (props.labels) {
+        const index = props.options.indexOf(value)
         if (index) {
-          return this.labels[index]
+          return props.labels[index]
         }
       }
       return value
-    },
+    }
+
+    onMounted(() => {
+      if (props.mountOpened) {
+        open()
+      }
+    })
+
+    return {
+      searchInput,
+      mainInput,
+      optionElement,
+      search,
+      isOpen,
+      highlightedIndex,
+      filteredOptions,
+      open,
+      close,
+      cancel,
+      select,
+      highlightNext,
+      highlightPrev,
+      clear,
+      commitSelection,
+      labelFor,
+    }
   },
-}
+})
 </script>

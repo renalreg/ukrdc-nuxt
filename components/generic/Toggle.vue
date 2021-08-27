@@ -51,8 +51,10 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({
   props: {
     label: {
       type: String,
@@ -64,10 +66,12 @@ export default {
       required: true,
     },
   },
-  methods: {
-    toggle() {
-      this.$emit('input', !this.value)
-    },
+  setup(props, { emit }) {
+    function toggle() {
+      emit('input', !props.value)
+    }
+
+    return { toggle }
   },
-}
+})
 </script>

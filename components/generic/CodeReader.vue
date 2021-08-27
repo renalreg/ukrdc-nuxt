@@ -5,21 +5,14 @@
     </div>
 
     <div v-if="content" class="font-mono text-sm text-left px-4 box-border">
-      <pre>
-      <code
-        v-for="(line, index) in formatMessageToXMLArray(content)"
-        :key="'code' + index"
-        class="whitespace-pre"
-        >{{ line }}</code
-      >
-    </pre>
+      <code class="whitespace-pre block mt-2">{{ formattedMessage }}</code>
     </div>
     <div v-else>Empty file</div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
 
 import formatXml from 'xml-formatter'
 
@@ -35,8 +28,11 @@ export default defineComponent({
       default: null,
     },
   },
-  setup() {
+  setup(props) {
     const formatMessage = ref(true)
+    const formattedMessage = computed(() => {
+      return formatMessageToXML(props.content)
+    })
 
     function formatMessageToXML(content: string): string {
       if (content === null) {
@@ -49,33 +45,10 @@ export default defineComponent({
       }
     }
 
-    function formatMessageToXMLArray(content: string): string[] {
-      return formatMessageToXML(content).split('\n')
-    }
-
     return {
       formatMessage,
-      formatMessageToXMLArray,
+      formattedMessage,
     }
   },
 })
 </script>
-
-<style scoped>
-pre {
-  counter-reset: line;
-}
-code {
-  counter-increment: line;
-  display: block;
-}
-code:before {
-  content: counter(line);
-  user-select: none;
-  -webkit-user-select: none;
-  display: inline-block;
-  width: 6ex;
-  border-width: 0 1px 0 0;
-  margin-right: 4px;
-}
-</style>

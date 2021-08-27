@@ -12,8 +12,10 @@
   </label>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, computed } from '@nuxtjs/composition-api'
+
+export default defineComponent({
   model: {
     prop: 'checked',
     event: 'change',
@@ -39,15 +41,15 @@ export default {
       default: false,
     },
   },
-  computed: {
-    proxyChecked: {
-      get() {
-        return this.checked
+  setup(props, { emit }) {
+    const proxyChecked = computed({
+      get: () => props.checked,
+      set: (value) => {
+        emit('change', value)
       },
-      set(val) {
-        this.$emit('change', val)
-      },
-    },
+    })
+
+    return { proxyChecked }
   },
-}
+})
 </script>
