@@ -1,33 +1,34 @@
 <template>
   <GenericModalMaxSlot ref="messageViewerGenericModalMaxSlot">
-    <GenericTabs v-model="currentTab" class="mx-auto px-4 py-2 border-b border-gray-200" :tabs="tabs" />
-    <div class="flex flex-col w-full h-full box-border overflow-y-scroll overflow-x-hidden">
-      <div v-if="currentTab == 'metadata'" id="viewerMetadata" class="p-4">
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-          <GenericCardFlat
-            v-for="(value, key) in nonNullMetadata"
-            :key="key"
-            class="relative px-4 py-4 flex items-center space-x-2"
-            :class="key.includes('ERROR') ? 'border-2 border-red-500' : ''"
-          >
-            <div class="flex-1 min-w-0">
-              <span class="absolute inset-0" aria-hidden="true" />
-              <p class="font-medium text-gray-900">{{ key }}</p>
-              <p class="text-gray-500 line-clamp-3">
-                {{ value }}
-              </p>
-            </div>
-          </GenericCardFlat>
+    <div class="flex flex-col h-full">
+      <GenericTabs v-model="currentTab" class="flex-0 w-full px-4 py-2 border-b border-gray-200" :tabs="tabs" />
+      <div class="flex-1 w-full min-h-0 overflow-scroll">
+        <div v-if="currentTab == 'metadata'" id="viewerMetadata" class="p-4">
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+            <GenericCardFlat
+              v-for="(value, key) in nonNullMetadata"
+              :key="key"
+              class="relative px-4 py-4 flex items-center space-x-2"
+              :class="key.includes('ERROR') ? 'border-2 border-red-500' : ''"
+            >
+              <div class="flex-1 min-w-0">
+                <span class="absolute inset-0" aria-hidden="true" />
+                <p class="font-medium text-gray-900">{{ key }}</p>
+                <p class="text-gray-500 line-clamp-3">
+                  {{ value }}
+                </p>
+              </div>
+            </GenericCardFlat>
+          </div>
         </div>
-      </div>
 
-      <div v-for="(messageData, type) in availableMessageData" :key="type">
-        <GenericCodeReader
-          v-if="currentTab == type"
-          :content="messageData.content"
-          :content-type="messageData.dataType"
-          class="h-full box-border flex flex-col overflow-x-scroll"
-        />
+        <div v-for="(messageData, type) in availableMessageData" :key="type">
+          <GenericCodeReader
+            v-if="currentTab == type"
+            :content="messageData.content"
+            :content-type="messageData.dataType"
+          />
+        </div>
       </div>
     </div>
   </GenericModalMaxSlot>
