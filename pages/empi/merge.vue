@@ -59,7 +59,7 @@
           </button>
         </div>
         <div class="hidden lg:flex flex-col flex-grow justify-center">
-          <div class="h-8"><IconArrowRight /></div>
+          <div v-show="superseded && superseding" class="h-8"><IconArrowRight /></div>
         </div>
       </div>
 
