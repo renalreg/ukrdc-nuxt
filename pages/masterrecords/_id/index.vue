@@ -203,7 +203,6 @@ export default defineComponent({
     })
 
     function refreshRecords() {
-      console.log('Refreshing Patient Records...')
       fetch()
     }
 
