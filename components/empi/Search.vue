@@ -77,7 +77,6 @@ export default defineComponent({
     const masterrecords = ref([] as MasterRecord[])
 
     const { fetch } = useFetch(async () => {
-      // search.value = route.value.query.search as string[]
       if (searchQueryIsPopulated) {
         // Fetch the search results from our API server
         let path = `${$config.apiBase}/v1/search/?${apiQueryString.value}&page=${page.value}&size=${size.value}&include_ukrdc=true`
