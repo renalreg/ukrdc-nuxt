@@ -32,7 +32,7 @@
 
     <GenericCard>
       <!-- Skeleton results -->
-      <ul v-if="$fetchState.pending" class="divide-y divide-gray-200">
+      <ul v-if="!messages" class="divide-y divide-gray-200">
         <SkeleListItem v-for="n in 10" :key="n" />
       </ul>
       <!-- Real results -->
@@ -44,7 +44,6 @@
         </div>
       </ul>
       <GenericPaginator
-        v-if="!$fetchState.pending"
         class="bg-white border-t border-gray-200"
         :page="page"
         :size="size"
@@ -57,7 +56,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, ref, useRoute, useFetch, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, watch, ref, useRoute, useContext, onMounted } from '@nuxtjs/composition-api'
 
 import usePagination from '@/mixins/usePagination'
 import useDateRange from '@/mixins/useDateRange'
@@ -92,9 +91,11 @@ export default defineComponent({
     // Set initial date dateRange
     const dateRange = makeDateRange(nowString(-365), nowString(0), true)
 
-    const messages = ref([] as Message[])
+    // Data refs
+    const messages = ref<Message[]>()
 
-    const { fetch } = useFetch(async () => {
+    // Data fetching
+    async function fetchMessages() {
       // Fetch the dashboard response from our API server
       let path = `${$config.apiBase}/v1/messages/?status=ERROR&page=${page.value}&size=${size.value}&sort_by=received&order_by=${orderBy.value}`
       // Filter by since if it exists
@@ -124,10 +125,14 @@ export default defineComponent({
       size.value = res.size
 
       await fetchFacilities()
+    }
+
+    onMounted(() => {
+      fetchMessages()
     })
 
     watch(route, () => {
-      fetch()
+      fetchMessages()
     })
 
     return {

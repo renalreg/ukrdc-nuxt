@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useRoute, useFetch, useContext, useMeta } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useRoute, useContext, useMeta, onMounted } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/utilities/dateUtils'
 import { formatGender } from '@/utilities/codeUtils'
@@ -38,8 +38,6 @@ import { MasterRecord, MasterRecordStatistics } from '@/interfaces/masterrecord'
 import { TabItem } from '@/interfaces/tabs'
 
 export default defineComponent({
-  fetchOnServer: false,
-
   setup() {
     const route = useRoute()
     const { $axios, $config } = useContext()
@@ -47,6 +45,8 @@ export default defineComponent({
     // Head
     const { title } = useMeta()
     title.value = `Record ${route.value.params.id}`
+
+    // Navigation
 
     const tabs = [
       {
@@ -67,8 +67,35 @@ export default defineComponent({
       },
     ] as TabItem[]
 
+    // Data refs
+
     const record = ref<MasterRecord>()
     const stats = ref<MasterRecordStatistics>()
+
+    // Data fetching
+
+    async function fetchRecord() {
+      // Get the main record data
+      const path = `${$config.apiBase}/v1/masterrecords/${route.value.params.id}/`
+      const res: MasterRecord = await $axios.$get(path)
+      record.value = res
+
+      // Update title
+      title.value = `${record.value.givenname} ${record.value.surname}`
+
+      // Get basic record statistics
+      const statsRes: MasterRecordStatistics = await $axios.$get(record.value.links.statistics)
+      stats.value = statsRes
+      issueMessage.value = buildErrorMessage(stats.value)
+    }
+
+    onMounted(() => {
+      fetchRecord()
+    })
+
+    // Dynamic UI elements
+
+    const issueMessage = ref<string>()
 
     function buildErrorMessage(stats: MasterRecordStatistics): string {
       let msg = ''
@@ -102,23 +129,6 @@ export default defineComponent({
       }
       return msg
     }
-
-    const issueMessage = ref<string>()
-
-    useFetch(async () => {
-      // Get the main record data
-      const path = `${$config.apiBase}/v1/masterrecords/${route.value.params.id}/`
-      const res: MasterRecord = await $axios.$get(path)
-      record.value = res
-
-      // Update title
-      title.value = `${record.value.givenname} ${record.value.surname}`
-
-      // Get basic record statistics
-      const statsRes: MasterRecordStatistics = await $axios.$get(record.value.links.statistics)
-      stats.value = statsRes
-      issueMessage.value = buildErrorMessage(stats.value)
-    })
 
     return {
       tabs,

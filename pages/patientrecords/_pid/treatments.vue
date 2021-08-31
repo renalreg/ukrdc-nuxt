@@ -1,7 +1,7 @@
 <template>
   <div>
-    <!-- This example requires Tailwind CSS v2.0+ -->
-    <div class="flow-root">
+    <LoadingIndicator v-if="!treatments"></LoadingIndicator>
+    <div v-else class="flow-root">
       <ul role="list" class="-mb-8">
         <li v-for="(treatment, index) in treatmentEvents" :key="index">
           <div class="relative pb-8">
@@ -73,7 +73,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useFetch, useContext, computed } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext, computed, onMounted } from '@nuxtjs/composition-api'
 
 import { Treatment } from '@/interfaces/treatment'
 import { PatientRecord } from '@/interfaces/patientrecord'
@@ -106,11 +106,23 @@ export default defineComponent({
   setup(props) {
     const { $axios } = useContext()
 
-    const treatments = ref([] as Treatment[])
+    // Data refs
+    const treatments = ref<Treatment[]>()
 
+    // Data fetching
+
+    async function fetchTreatments() {
+      treatments.value = await $axios.$get(props.record.links.treatments)
+    }
+
+    onMounted(() => {
+      fetchTreatments()
+    })
+
+    // Sorted and paired treatment events
     const treatmentEvents = computed(() => {
       const events: TreatmentEvent[] = []
-      for (const treatment of treatments.value) {
+      for (const treatment of treatments.value || []) {
         if (treatment.toTime) {
           const event = {
             id: treatment.id,
@@ -146,11 +158,6 @@ export default defineComponent({
         return new Date(b.time).getTime() - new Date(a.time).getTime()
       })
       return events
-    })
-
-    useFetch(async () => {
-      const res: Treatment[] = await $axios.$get(props.record.links.treatments)
-      treatments.value = res
     })
 
     return {

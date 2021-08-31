@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div v-if="medications.length <= 0" class="text-gray-500 text-center">No medications on record</div>
+    <LoadingIndicator v-if="!medications"></LoadingIndicator>
+    <div v-if="medications && medications.length <= 0" class="text-gray-500 text-center">No medications on record</div>
     <div v-if="activeMedications.length > 0" class="mt-4">
       <h2 class="text-gray-500 text-sm font-medium uppercase tracking-wide">Active</h2>
 
@@ -24,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useFetch, useContext, computed } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext, computed, onMounted } from '@nuxtjs/composition-api'
 
 import { Medication } from '@/interfaces/medication'
 import { PatientRecord } from '@/interfaces/patientrecord'
@@ -40,20 +41,30 @@ export default defineComponent({
   setup(props) {
     const { $axios } = useContext()
 
-    const medications = ref([] as Medication[])
+    // Data refs
+    const medications = ref<Medication[]>()
 
-    useFetch(async () => {
-      const res: Medication[] = await $axios.$get(props.record.links.medications)
-      medications.value = res
+    // Data fetching
+
+    async function fetchMedications() {
+      medications.value = await $axios.$get(props.record.links.medications)
+    }
+
+    onMounted(() => {
+      fetchMedications()
     })
 
+    // Split active and inactive medications
+
     const activeMedications = computed(() => {
-      return medications.value.filter(function (item: Medication) {
+      if (!medications.value) return []
+      return medications.value?.filter(function (item: Medication) {
         return item.toTime === null
       })
     })
     const inactiveMedications = computed(() => {
-      return medications.value.filter(function (item: Medication) {
+      if (!medications.value) return []
+      return medications.value?.filter(function (item: Medication) {
         return item.toTime !== null
       })
     })

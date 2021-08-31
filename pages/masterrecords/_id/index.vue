@@ -63,8 +63,8 @@
       </GenericCardContent>
     </GenericCard>
 
-    <!-- Related Patient Records card -->
-    <div v-if="!$fetchState.pending">
+    <!-- Record message banners -->
+    <div v-if="!fetchPending">
       <div v-if="latestMessage">
         <GenericAlertError v-if="latestMessage.msgStatus === 'ERROR'" class="mb-4" :message="latestMessageInfo" />
         <GenericAlertInfo v-else class="mb-4" :message="latestMessageInfo" />
@@ -74,11 +74,12 @@
       </div>
     </div>
 
+    <!-- Related Patient Records card -->
     <GenericCard>
       <GenericCardHeader>
         <TextH2> Patient Records </TextH2>
       </GenericCardHeader>
-      <ul v-if="$fetchState.pending" class="divide-y divide-gray-200">
+      <ul v-if="fetchPending" class="divide-y divide-gray-200">
         <SkeleListItem v-for="n in 5" :key="n" />
       </ul>
       <PatientrecordsGroupedList v-else :records="patientRecords" @refresh="refreshRecords" />
@@ -89,7 +90,7 @@
       <GenericCardHeader>
         <TextH2> Linked Master Records </TextH2>
       </GenericCardHeader>
-      <ul v-if="$fetchState.pending" class="divide-y divide-gray-200">
+      <ul v-if="fetchPending" class="divide-y divide-gray-200">
         <SkeleListItem v-for="n in 2" :key="n" />
       </ul>
       <ul v-else class="divide-y divide-gray-200">
@@ -104,7 +105,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useFetch, useContext, computed } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext, computed, onMounted } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/utilities/dateUtils'
 import { formatGender } from '@/utilities/codeUtils'
@@ -130,13 +131,47 @@ export default defineComponent({
   setup(props) {
     const { $axios } = useContext()
 
-    const relatedRecords = ref([] as MasterRecord[])
-    const patientRecords = ref([] as PatientRecord[])
+    // Data refs
+
+    const relatedRecords = ref<MasterRecord[]>()
+    const patientRecords = ref<PatientRecord[]>()
     const latestMessage = ref<MinimalMessage>()
 
+    // Data fetching
+    const fetchPending = ref(true)
+
+    async function fetchRelatedRecordData() {
+      fetchPending.value = true
+      // Use the record links to load related data concurrently
+      const [latestMessageResponse, relatedRecordsResponse, patientRecordsResponse] = await Promise.all([
+        $axios.$get(props.record.links.latestMessage),
+        $axios.$get(props.record.links.related),
+        $axios.$get(props.record.links.patientrecords),
+      ])
+
+      if (latestMessageResponse) {
+        latestMessage.value = latestMessageResponse
+      }
+
+      relatedRecords.value = relatedRecordsResponse
+      patientRecords.value = patientRecordsResponse
+
+      fetchPending.value = false
+    }
+
+    onMounted(() => {
+      fetchRelatedRecordData()
+    })
+
+    function refreshRecords() {
+      fetchRelatedRecordData()
+    }
+
+    // Tracing record matching
+
     const tracingRecord = computed<PatientRecord | null>(() => {
-      const tracings = patientRecords.value.filter(isTracing)
-      if (tracings.length < 1) {
+      const tracings = patientRecords.value?.filter(isTracing)
+      if (!tracings || (tracings && tracings.length < 1)) {
         return null
       }
       return tracings[0]
@@ -170,6 +205,8 @@ export default defineComponent({
       return givenNameMatchesTracing() && surnameMatchesTracing()
     })
 
+    // Dynamic UI elements
+
     const latestMessageInfo = computed(() => {
       if (!latestMessage.value) {
         return 'No new patient data received in the last year'
@@ -186,28 +223,8 @@ export default defineComponent({
       )}`
     })
 
-    const { fetch } = useFetch(async () => {
-      // Use the record links to load related data concurrently
-      const [latestMessageResponse, relatedRecordsResponse, patientRecordsResponse] = await Promise.all([
-        $axios.$get(props.record.links.latestMessage),
-        $axios.$get(props.record.links.related),
-        $axios.$get(props.record.links.patientrecords),
-      ])
-
-      if (latestMessageResponse) {
-        latestMessage.value = latestMessageResponse
-      }
-
-      relatedRecords.value = relatedRecordsResponse
-      patientRecords.value = patientRecordsResponse
-    })
-
-    function refreshRecords() {
-      console.log('Refreshing Patient Records...')
-      fetch()
-    }
-
     return {
+      fetchPending,
       patientRecords,
       relatedRecords,
       tracingRecord,

@@ -7,7 +7,7 @@
     <div v-if="masterrecords.length > 0">
       <GenericCard>
         <!-- Skeleton results -->
-        <ul v-if="$fetchState.pending" class="divide-y divide-gray-200">
+        <ul v-if="searchInProgress" class="divide-y divide-gray-200">
           <SkeleListItem v-for="n in 10" :key="n" />
         </ul>
         <!-- Real results -->
@@ -22,7 +22,7 @@
           </div>
         </ul>
         <GenericPaginator
-          v-if="!$fetchState.pending"
+          v-if="!searchInProgress"
           class="bg-white border-t border-gray-200"
           :page="page"
           :size="size"
@@ -33,8 +33,8 @@
       </GenericCard>
     </div>
     <div v-else class="mt-2 text-gray-500 text-center">
-      <LoadingIndicator v-if="searchQueryIsPopulated && $fetchState.pending"></LoadingIndicator>
-      <div v-else-if="searchQueryIsPopulated && !$fetchState.pending">No results found</div>
+      <LoadingIndicator v-if="searchQueryIsPopulated && searchInProgress"></LoadingIndicator>
+      <div v-else-if="searchQueryIsPopulated && !searchInProgress">No results found</div>
       <div v-else>
         <p class="mb-4">Search by name, date of birth, national ID, or local ID</p>
       </div>
@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, ref, useRoute, useFetch, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, watch, ref, useRoute, useContext, onMounted } from '@nuxtjs/composition-api'
 
 import usePagination from '@/mixins/usePagination'
 import { MasterRecord } from '@/interfaces/masterrecord'
@@ -76,9 +76,11 @@ export default defineComponent({
 
     const masterrecords = ref([] as MasterRecord[])
 
-    const { fetch } = useFetch(async () => {
-      // search.value = route.value.query.search as string[]
+    const searchInProgress = ref(false)
+
+    async function fetchSearchResults() {
       if (searchQueryIsPopulated) {
+        searchInProgress.value = true
         // Fetch the search results from our API server
         let path = `${$config.apiBase}/v1/search/?${apiQueryString.value}&page=${page.value}&size=${size.value}&include_ukrdc=true`
         if (props.onlyUkrdc) {
@@ -89,17 +91,24 @@ export default defineComponent({
         total.value = res.total
         page.value = res.page
         size.value = res.size
+
+        searchInProgress.value = false
       }
-    })
+    }
 
     watch([route, showUKRDC], () => {
-      fetch()
+      fetchSearchResults()
+    })
+
+    onMounted(() => {
+      fetchSearchResults()
     })
 
     return {
       masterrecords,
       searchboxString,
       showUKRDC,
+      searchInProgress,
       searchSubmit,
       searchQueryIsPopulated,
       page,

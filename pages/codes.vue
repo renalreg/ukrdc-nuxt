@@ -20,7 +20,7 @@
       <div :class="$route.params.id ? 'hidden lg:block' : 'block'">
         <GenericCard>
           <!-- Skeleton results -->
-          <ul v-if="$fetchState.pending" class="divide-y divide-gray-200">
+          <ul v-if="fetchInProgress" class="divide-y divide-gray-200">
             <SkeleListItem v-for="n in 10" :key="n" />
           </ul>
           <!-- Real results -->
@@ -32,7 +32,6 @@
             </div>
           </ul>
           <GenericPaginator
-            v-if="!$fetchState.pending"
             class="bg-white border-t border-gray-200"
             :page="page"
             :size="size"
@@ -59,7 +58,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, useFetch, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, useContext, watch } from '@nuxtjs/composition-api'
 
 import { Code } from '@/interfaces/codes'
 import useQuery from '~/mixins/useQuery'
@@ -78,20 +77,27 @@ export default defineComponent({
     const { page, total, size } = usePagination()
     const { stringQuery } = useQuery()
 
+    // Data refs
+
     const standards = ref<string[]>()
     const selectedStandard = stringQuery('standard', null, true, true)
 
     const codes = ref([] as Code[])
     const selectedCode = ref<Code>()
 
-    const { fetch } = useFetch(async () => {
-      // We only need to fetch the list of standards once
-      if (!standards.value) {
-        const standardsResponse: string[] = await $axios.$get(`${$config.apiBase}/v1/codes/standards/`)
-        // Fetch the dashboard response from our API server
-        standardsResponse.sort()
-        standards.value = standardsResponse
-      }
+    // Data fetching
+
+    const fetchInProgress = ref(false)
+
+    async function fetchCodingStandards() {
+      const standardsResponse: string[] = await $axios.$get(`${$config.apiBase}/v1/codes/standards/`)
+      // Fetch the dashboard response from our API server
+      standardsResponse.sort()
+      standards.value = standardsResponse
+    }
+
+    async function fetchCodes() {
+      fetchInProgress.value = true
       // Fetch code list
       let path = `${$config.apiBase}/v1/codes/list/?page=${page.value}&size=${size.value}`
       // Filter by service if it exists
@@ -104,6 +110,13 @@ export default defineComponent({
       total.value = codesResponse.total
       page.value = codesResponse.page
       size.value = codesResponse.size
+
+      fetchInProgress.value = false
+    }
+
+    onMounted(() => {
+      fetchCodingStandards()
+      fetchCodes()
     })
 
     watch([page, selectedStandard], (curr, prev) => {
@@ -113,11 +126,11 @@ export default defineComponent({
       // to fetch, otherwise the list of codes will refresh
       // every time you click on a code and change page.
       if (!(curr[0] === prev[0] && curr[1] === prev[1])) {
-        fetch()
+        fetchCodes()
       }
     })
 
-    return { standards, selectedStandard, codes, selectedCode, page, total, size }
+    return { standards, selectedStandard, codes, selectedCode, fetchInProgress, page, total, size }
   },
   head: {
     title: 'Code List',

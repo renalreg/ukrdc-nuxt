@@ -78,21 +78,14 @@
 
     <div v-if="results.length > 0" class="mt-4">
       <GenericCard>
-        <GenericPaginator
-          v-if="!$fetchState.pending"
-          :page="page"
-          :size="size"
-          :total="total"
-          @next="page++"
-          @prev="page--"
-        />
+        <GenericPaginator :page="page" :size="size" :total="total" @next="page++" @prev="page--" />
       </GenericCard>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, useContext, useFetch, useRoute, watch } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref, useContext, useRoute, watch } from '@nuxtjs/composition-api'
 
 import { PatientRecord } from '@/interfaces/patientrecord'
 import { ResultItem } from '@/interfaces/laborder'
@@ -126,24 +119,14 @@ export default defineComponent({
     const { page, total, size } = usePagination()
     const { stringQuery } = useQuery()
 
+    // Data refs
+
     const results = ref([] as ResultItem[])
 
-    // Result item services
-    const availableServicesMap = ref([] as ResultService[])
-    const availableServicesIds = computed(() => {
-      return availableServicesMap.value.map(({ id }) => id)
-    })
-    const availableServicesLabels = computed(() => {
-      return availableServicesMap.value.map(({ description }) => description)
-    })
-    const selectedService = stringQuery('service_id', null, true, true)
+    // Data fetching
 
-    // Lab order filter
-    const selectedOrderId = stringQuery('order_id', null, true, true)
-
-    const { fetch } = useFetch(async () => {
-      const apiPath = props.record.links.results
-      let path = `${apiPath}?page=${page.value}&size=${size.value}`
+    async function fetchResults() {
+      let path = `${props.record.links.results}?page=${page.value}&size=${size.value}`
 
       // Filter by service if it exists
       if (selectedService.value) {
@@ -165,11 +148,33 @@ export default defineComponent({
       if (availableServicesMap.value.length === 0) {
         availableServicesMap.value = await $axios.$get(props.record.links.resultServices)
       }
+    }
+
+    onMounted(() => {
+      fetchResults()
     })
 
     watch(route, () => {
-      fetch()
+      fetchResults()
     })
+
+    // Result item services
+
+    const availableServicesMap = ref([] as ResultService[])
+
+    const availableServicesIds = computed(() => {
+      return availableServicesMap.value.map(({ id }) => id)
+    })
+
+    const availableServicesLabels = computed(() => {
+      return availableServicesMap.value.map(({ description }) => description)
+    })
+
+    const selectedService = stringQuery('service_id', null, true, true)
+
+    // Lab order filter
+
+    const selectedOrderId = stringQuery('order_id', null, true, true)
 
     return {
       page,

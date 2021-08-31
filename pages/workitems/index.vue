@@ -32,7 +32,7 @@
 
     <GenericCard>
       <!-- Skeleton results -->
-      <ul v-if="$fetchState.pending" class="divide-y divide-gray-200">
+      <ul v-if="!workitems" class="divide-y divide-gray-200">
         <SkeleListItem v-for="n in 10" :key="n" />
       </ul>
       <!-- Real results -->
@@ -44,7 +44,6 @@
         </div>
       </ul>
       <GenericPaginator
-        v-if="!$fetchState.pending"
         class="bg-white border-t border-gray-200"
         :page="page"
         :size="size"
@@ -57,7 +56,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, ref, useRoute, useFetch, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, watch, ref, useRoute, useContext, onMounted } from '@nuxtjs/composition-api'
 
 import usePagination from '@/mixins/usePagination'
 
@@ -83,10 +82,14 @@ export default defineComponent({
     const { facilities, facilityIds, facilityLabels, selectedFacility, fetchFacilities } = useFacilities()
     const { orderAscending, orderBy, toggleOrder } = useSortBy()
 
-    const workitems = ref([] as WorkItem[])
+    // Data refs
+
+    const workitems = ref<WorkItem[]>()
     const statuses = arrayQuery('status', ['1'], true)
 
-    const { fetch } = useFetch(async () => {
+    // Data fetching
+
+    async function fetchWorkitems() {
       // Fetch the dashboard response from our API server
       let path = `${$config.apiBase}/v1/workitems/?page=${page.value}&size=${size.value}&sort_by=last_updated&order_by=${orderBy.value}`
       // Pass selected statuses to the API
@@ -104,10 +107,14 @@ export default defineComponent({
       size.value = res.size
 
       await fetchFacilities()
+    }
+
+    onMounted(() => {
+      fetchWorkitems()
     })
 
     watch(route, () => {
-      fetch()
+      fetchWorkitems()
     })
 
     return {

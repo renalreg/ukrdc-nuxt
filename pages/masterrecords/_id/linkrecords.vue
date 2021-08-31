@@ -1,6 +1,6 @@
 <template>
   <div>
-    <LoadingIndicator v-if="$fetchState.pending"></LoadingIndicator>
+    <LoadingIndicator v-if="!linkRecords"></LoadingIndicator>
     <div v-else class="grid grid-cols-1 gap-6">
       <MasterrecordsLinkRecord v-for="link in linkRecords" :key="link.id" :record="link" />
     </div>
@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useFetch, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext, onMounted } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/utilities/dateUtils'
 import { formatGender } from '@/utilities/codeUtils'
@@ -31,11 +31,19 @@ export default defineComponent({
   setup(props) {
     const { $axios } = useContext()
 
-    const linkRecords = ref([] as LinkRecord[])
+    // Data refs
 
-    useFetch(async () => {
+    const linkRecords = ref<LinkRecord[]>()
+
+    // Data fetching
+
+    async function fetchLinkRecords() {
       // Use the record links to load related data concurrently
       linkRecords.value = await $axios.$get(props.record.links.linkrecords)
+    }
+
+    onMounted(() => {
+      fetchLinkRecords()
     })
 
     return {

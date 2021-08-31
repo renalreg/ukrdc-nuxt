@@ -60,6 +60,7 @@
     >
       <GenericButton
         v-if="availableActions.comment"
+        :primary="true"
         colour="indigo"
         class="inline-flex items-center justify-center w-full"
         @click="addCommentModal.show()"
@@ -70,6 +71,7 @@
 
       <GenericButton
         v-if="availableActions.close"
+        :primary="true"
         class="inline-flex items-center justify-center w-full"
         colour="green"
         @click="closeModal.show()"
@@ -80,6 +82,7 @@
 
       <GenericButton
         v-if="record && availableActions.merge"
+        :primary="true"
         tooltip="You will be redirected here after merging"
         :to="{
           path: '/empi/merge',
@@ -214,7 +217,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useRoute, useFetch, useContext, computed, useMeta } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useRoute, useContext, computed, useMeta, onMounted } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/utilities/dateUtils'
 import { formatGender } from '@/utilities/codeUtils'
@@ -235,8 +238,6 @@ interface AvailableActions {
 }
 
 export default defineComponent({
-  fetchOnServer: false,
-
   setup() {
     // Dependencies
     const route = useRoute()
@@ -257,43 +258,27 @@ export default defineComponent({
     const relatedRecordsIndex = ref(0)
     const relatedPersonsIndex = ref(0)
 
-    // Workitem status data
-    const customComment = ref('')
+    // Data fetching
 
-    const statusString = computed(() => {
-      if (record.value?.status === 1) {
-        return ''
-      } else if (record.value?.status === 2) {
-        return '(WIP)'
-      } else if (record.value?.status === 3) {
-        return '(Closed)'
-      } else {
-        return '(Unknown status)'
-      }
+    async function fetchWorkItem() {
+      // Get the main record data
+      const path = `${$config.apiBase}/v1/workitems/${route.value.params.id}/`
+      const res: WorkItemExtended = await $axios.$get(path)
+      record.value = res
+      customComment.value = res.updateDescription
+
+      // Check if the workitem has already been merged and is ready to be closed
+      checkMerged()
+
+      workItemCollection.value = await $axios.$get(record.value.links.collection)
+    }
+
+    onMounted(() => {
+      fetchWorkItem()
     })
-
-    // Dynamic UI
-    const showIncomingAttributes = ref(false)
-    const showDestinationPersons = ref(false)
-    const availableActions = computed<AvailableActions>(() => {
-      return {
-        // We can always comment and close?
-        close: true,
-        comment: true,
-        // We can only merge if we have an incoming Master Record, and both
-        // incoming and destination records are UKRDC type
-        merge: record.value ? workItemIsMergable(record.value) : false,
-        // Currently Unlink never makes sense, so ignore for now. Maybe remove entirely?
-        unlink: false,
-      } as AvailableActions
-    })
-    const closeMessageOverride = ref<String>()
-
-    // Template refs
-    const addCommentModal = ref<modalInterface>()
-    const closeModal = ref<modalInterface>()
 
     // Trigger dynamic modals
+
     function checkMerged() {
       if (
         record.value?.status === 1 &&
@@ -307,19 +292,45 @@ export default defineComponent({
       }
     }
 
-    // Data fetching
-    const { fetch } = useFetch(async () => {
-      // Get the main record data
-      const path = `${$config.apiBase}/v1/workitems/${route.value.params.id}/`
-      const res: WorkItemExtended = await $axios.$get(path)
-      record.value = res
-      customComment.value = res.updateDescription
+    // Dynamic UI
 
-      // Check if the workitem has already been merged and is ready to be closed
-      checkMerged()
-
-      workItemCollection.value = await $axios.$get(record.value.links.collection)
+    const statusString = computed(() => {
+      if (record.value?.status === 1) {
+        return ''
+      } else if (record.value?.status === 2) {
+        return '(WIP)'
+      } else if (record.value?.status === 3) {
+        return '(Closed)'
+      } else {
+        return '(Unknown status)'
+      }
     })
+
+    const showIncomingAttributes = ref(false)
+
+    const showDestinationPersons = ref(false)
+
+    const availableActions = computed<AvailableActions>(() => {
+      return {
+        // We can always comment and close?
+        close: true,
+        comment: true,
+        // We can only merge if we have an incoming Master Record, and both
+        // incoming and destination records are UKRDC type
+        merge: record.value ? workItemIsMergable(record.value) : false,
+        // Currently Unlink never makes sense, so ignore for now. Maybe remove entirely?
+        unlink: false,
+      } as AvailableActions
+    })
+
+    const closeMessageOverride = ref<String>()
+
+    // Custom comment
+    const customComment = ref('')
+
+    // Template refs
+    const addCommentModal = ref<modalInterface>()
+    const closeModal = ref<modalInterface>()
 
     // Workitem actions
     async function updateWorkItemComment() {
@@ -330,7 +341,7 @@ export default defineComponent({
 
       const el = addCommentModal.value as modalInterface
       el.toggle()
-      fetch()
+      fetchWorkItem()
       $toast.show({
         type: 'success',
         title: 'Success',
@@ -359,7 +370,7 @@ export default defineComponent({
         .finally(() => {
           // Delay fetch to allow JTRACE time to process
           delay(1000).then(() => {
-            fetch()
+            fetchWorkItem()
           })
         })
 

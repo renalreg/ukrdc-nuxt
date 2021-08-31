@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mb-6">
-      <TextH1 v-if="!isEmptyObject(message)"> Message {{ message.messageId }} </TextH1>
+      <TextH1 v-if="message"> Message {{ message.messageId }} </TextH1>
       <SkeleText v-else class="h-8 w-1/4 mb-2" />
     </div>
 
@@ -9,36 +9,38 @@
     <MirthMessageCard :message="message" />
 
     <!-- Chain grid -->
-    <MirthMessageChain v-if="!isEmptyObject(message)" :message="message" />
+    <MirthMessageChain v-if="message" :message="message" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useRoute, useFetch, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useRoute, useContext, onMounted } from '@nuxtjs/composition-api'
 
 import { ChannelMessage } from '@/interfaces/mirth'
 
-import { isEmptyObject } from '@/utilities/objectUtils'
-
 export default defineComponent({
-  fetchOnServer: false,
-
   setup() {
     const route = useRoute()
     const { $axios, $config } = useContext()
 
-    const message = ref({} as ChannelMessage)
+    // Data refs
 
-    useFetch(async () => {
-      // Get the main record data
-      const path = `${$config.apiBase}/v1/mirth/channels/${route.value.params.channel}/messages/${route.value.params.id}/`
-      const res: ChannelMessage = await $axios.$get(path)
-      message.value = res
+    const message = ref<ChannelMessage>()
+
+    // Data fetching
+
+    async function fetchMessage() {
+      message.value = await $axios.$get(
+        `${$config.apiBase}/v1/mirth/channels/${route.value.params.channel}/messages/${route.value.params.id}/`
+      )
+    }
+
+    onMounted(() => {
+      fetchMessage()
     })
 
     return {
       message,
-      isEmptyObject,
     }
   },
 })

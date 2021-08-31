@@ -1,23 +1,18 @@
 <template>
   <div>
-    <nav class="grid grid-cols-2 group rounded-lg bg-white text-sm font-medium shadow-sm" aria-label="Tabs">
+    <nav class="grid grid-cols-2 group rounded-lg bg-gray-100 text-sm font-medium" aria-label="Tabs">
+      <!-- Current: "text-gray-900", Default: "text-gray-500 hover:text-gray-700" -->
       <button
-        class="p-1.5 border rounded-l-md rounded-r-none truncate"
-        :class="
-          !value
-            ? ' bg-indigo-600  border-indigo-700  text-white'
-            : 'hover:bg-gray-100 focus:bg-gray-200 border-gray-300'
-        "
+        class="rounded-md focus:outline-none focus:ring-offset-gray-100 truncate"
+        :class="!value ? 'tab-active' : 'tab-inactive'"
         @click="$emit('input', false)"
       >
         {{ falseLabel }}
       </button>
 
       <button
-        class="p-1.5 border rounded-r-md rounded-l-none truncate"
-        :class="
-          value ? ' bg-indigo-600 border-indigo-700  text-white' : 'hover:bg-gray-100 focus:bg-gray-200 border-gray-300'
-        "
+        class="rounded-md focus:outline-none focus:ring-offset-gray-100 truncate"
+        :class="value ? 'tab-active' : 'tab-inactive'"
         @click="$emit('input', true)"
       >
         {{ trueLabel }}
@@ -49,3 +44,12 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="postcss">
+.tab-active {
+  @apply border border-gray-300 focus:border-indigo-500 p-1.5 rounded-md bg-white shadow-sm;
+}
+.tab-inactive {
+  @apply focus:bg-gray-200 hover:bg-gray-200;
+}
+</style>

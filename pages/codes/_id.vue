@@ -1,5 +1,5 @@
 <template>
-  <LoadingIndicator v-if="$fetchState.pending"></LoadingIndicator>
+  <LoadingIndicator v-if="!code"></LoadingIndicator>
   <div v-else-if="code">
     <div class="px-4 sm:px-6">
       <!-- Heading -->
@@ -69,7 +69,16 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, useContext, useFetch, useMeta, useRoute, watch } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  ref,
+  useContext,
+  useMeta,
+  useRoute,
+  watch,
+} from '@nuxtjs/composition-api'
 import { formatDate } from '@/utilities/dateUtils'
 import { ExtendedCode } from '@/interfaces/codes'
 
@@ -82,7 +91,30 @@ export default defineComponent({
     const { title } = useMeta()
     title.value = `Code ${route.value.params.id}`
 
+    // Data refs
+
     const code = ref<ExtendedCode>()
+
+    // Data fetching
+
+    async function fetchCode() {
+      // Scroll to top every time we fetch a new code
+      if (process.client) {
+        document.getElementsByTagName('main')[0].scrollTop = 0
+      }
+      // Fetch code details
+      code.value = await $axios.$get(`${$config.apiBase}/v1/codes/list/${route.value.params.id}/`)
+    }
+
+    onMounted(() => {
+      fetchCode()
+    })
+
+    watch(route, () => {
+      fetchCode()
+    })
+
+    // External code links
 
     const externalLink = computed(() => {
       if (!code.value) {
@@ -95,21 +127,6 @@ export default defineComponent({
         return `https://termbrowser.nhs.uk/?perspective=full&conceptId1=${code.value.code}`
       }
       return null
-    })
-
-    const { fetch } = useFetch(async () => {
-      // Scroll to top every time we fetch a new code
-      if (process.client) {
-        document.getElementsByTagName('main')[0].scrollTop = 0
-      }
-      // Fetch code details
-      const codeResponse: ExtendedCode = await $axios.$get(`${$config.apiBase}/v1/codes/list/${route.value.params.id}/`)
-      // Fetch the dashboard response from our API server
-      code.value = codeResponse
-    })
-
-    watch(route, () => {
-      fetch()
     })
 
     return { formatDate, externalLink, code }

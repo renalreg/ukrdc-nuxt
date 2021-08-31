@@ -42,16 +42,9 @@
       </tbody>
     </GenericTable>
 
-    <div v-if="observations.length > 0" class="mt-4">
+    <div v-if="observations && observations.length > 0" class="mt-4">
       <GenericCard>
-        <GenericPaginator
-          v-if="!$fetchState.pending"
-          :page="page"
-          :size="size"
-          :total="total"
-          @next="page++"
-          @prev="page--"
-        />
+        <GenericPaginator :page="page" :size="size" :total="total" @next="page++" @prev="page--" />
       </GenericCard>
     </div>
   </div>
@@ -64,9 +57,9 @@ import {
   ref,
   useRoute,
   useRouter,
-  useFetch,
   useContext,
   computed,
+  onMounted,
 } from '@nuxtjs/composition-api'
 
 import usePagination from '@/mixins/usePagination'
@@ -98,35 +91,17 @@ export default defineComponent({
     const { $axios } = useContext()
     const { page, total, size } = usePagination()
 
-    const observations = ref([] as Observation[])
+    // Data refs
+
+    const observations = ref<Observation[]>()
 
     const availableCodes = ref([] as string[])
     const selectedCodes = ref((arrayQuery(route.value.query.code) || []) as string[])
 
-    const selectedCodeString = computed({
-      get: () => selectedCodes.value[0] || '',
-      set: (newCode: string) => {
-        selectedCodes.value = [newCode]
+    // Data fetching
 
-        // Reset page when we change the filter
-        const newQuery = {
-          page: '1',
-          code: selectedCodes.value,
-        }
-        router.push({
-          path: route.value.path,
-          query: newQuery,
-        })
-      },
-    })
-
-    watch(route, () => {
-      fetch()
-    })
-
-    const { fetch } = useFetch(async () => {
-      const apiPath = props.record.links.observations
-      let path = `${apiPath}?page=${page.value}&size=${size.value}`
+    async function fetchObservations() {
+      let path = `${props.record.links.observations}?page=${page.value}&size=${size.value}`
 
       for (const code of selectedCodes.value) {
         if (code) {
@@ -144,6 +119,33 @@ export default defineComponent({
       if (availableCodes.value.length === 0) {
         availableCodes.value = await $axios.$get(props.record.links.observationCodes)
       }
+    }
+
+    onMounted(() => {
+      fetchObservations()
+    })
+
+    watch(route, () => {
+      fetchObservations()
+    })
+
+    // Observation code filter
+
+    const selectedCodeString = computed({
+      get: () => selectedCodes.value[0] || '',
+      set: (newCode: string) => {
+        selectedCodes.value = [newCode]
+
+        // Reset page when we change the filter
+        const newQuery = {
+          page: '1',
+          code: selectedCodes.value,
+        }
+        router.push({
+          path: route.value.path,
+          query: newQuery,
+        })
+      },
     })
 
     return {

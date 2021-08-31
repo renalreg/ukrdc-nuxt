@@ -8,7 +8,9 @@
 
       <div class="flex justify-end">
         <GenericButton @click="unlinkModal.hide()">Cancel</GenericButton>
-        <GenericButton colour="red" class="ml-2" type="submit" @click="doUnlink()"> Unlink </GenericButton>
+        <GenericButton :primary="true" colour="red" class="ml-2" type="submit" @click="doUnlink()">
+          Unlink
+        </GenericButton>
       </div>
     </GenericModalSlot>
 

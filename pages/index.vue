@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useFetch, useContext, watch, useRouter } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext, watch, useRouter, onMounted } from '@nuxtjs/composition-api'
 import useFacilities from '@/mixins/useFacilities'
 
 import { DashResponse } from '@/interfaces/dash'
@@ -43,13 +43,17 @@ export default defineComponent({
     const { $axios, $config } = useContext()
     const { facilities, facilityIds, facilityLabels, selectedFacility, fetchFacilities } = useFacilities()
 
+    // Data refs
+
     const response = ref({} as DashResponse)
     const messages = ref([] as string[])
     const warnings = ref([] as string[])
 
     const error = ref('')
 
-    useFetch(async () => {
+    // Data fetching
+
+    async function fetchDash() {
       const dashResponse: DashResponse = await $axios.$get(`${$config.apiBase}/v1/dash/`)
       // Fetch the dashboard response from our API server
       response.value = dashResponse
@@ -57,12 +61,16 @@ export default defineComponent({
       warnings.value = dashResponse.warnings
 
       await fetchFacilities()
-    })
+    }
 
     watch(selectedFacility, () => {
       if (selectedFacility.value) {
         router.push({ path: `/facilities/${selectedFacility.value}` })
       }
+    })
+
+    onMounted(() => {
+      fetchDash()
     })
 
     return {

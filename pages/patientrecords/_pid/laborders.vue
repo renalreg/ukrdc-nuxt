@@ -31,21 +31,14 @@
 
     <div v-if="orders.length > 0" class="mt-4">
       <GenericCard>
-        <GenericPaginator
-          v-if="!$fetchState.pending"
-          :page="page"
-          :size="size"
-          :total="total"
-          @next="page++"
-          @prev="page--"
-        />
+        <GenericPaginator :page="page" :size="size" :total="total" @next="page++" @prev="page--" />
       </GenericCard>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useFetch, useContext, watch, useRoute } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext, watch, useRoute, onMounted } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/utilities/dateUtils'
 
@@ -73,19 +66,27 @@ export default defineComponent({
     const { $axios } = useContext()
     const { page, total, size } = usePagination()
 
+    // Data refs
     const orders = ref([] as LabOrderShort[])
 
-    const { fetch } = useFetch(async () => {
-      const path = `${props.record.links.laborders}?page=${page.value}&size=${size.value}`
-      const res: LabOrdersPage = await $axios.$get(path)
+    // Data fetching
+
+    async function fetchOrders() {
+      const res: LabOrdersPage = await $axios.$get(
+        `${props.record.links.laborders}?page=${page.value}&size=${size.value}`
+      )
       orders.value = res.items
       total.value = res.total
       page.value = res.page
       size.value = res.size
+    }
+
+    onMounted(() => {
+      fetchOrders()
     })
 
     watch(route, () => {
-      fetch()
+      fetchOrders()
     })
 
     return { page, size, total, orders, formatDate }

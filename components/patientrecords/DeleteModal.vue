@@ -210,6 +210,7 @@
                 v-if="previewResponse && !previewErrorMessage"
                 class="ml-2"
                 colour="red"
+                :primary="true"
                 :disabled="!confirmChecked || deleteInProgress"
                 @click="doRealDelete()"
               >

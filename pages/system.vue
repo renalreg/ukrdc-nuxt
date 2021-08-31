@@ -50,7 +50,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, useContext, useFetch } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref, useContext } from '@nuxtjs/composition-api'
 
 interface serverSystemInfo {
   githubRef: string
@@ -62,11 +62,21 @@ export default defineComponent({
   setup() {
     const { $axios, $config, $toast } = useContext()
 
+    // Data refs
+
     const serverInfo = ref<serverSystemInfo>()
 
-    useFetch(async () => {
+    // Data fetching
+
+    async function fetchServerInfo() {
       serverInfo.value = await $axios.$get(`${$config.apiBase}/v1/system/info/`)
+    }
+
+    onMounted(() => {
+      fetchServerInfo()
     })
+
+    // Config reports
 
     const configReportJSON = computed(() => {
       return JSON.stringify(

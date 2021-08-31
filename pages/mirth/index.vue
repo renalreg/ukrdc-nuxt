@@ -4,7 +4,7 @@
       <h1 class="text-2xl font-semibold text-gray-900">Mirth Channels</h1>
     </div>
 
-    <LoadingIndicator v-if="$fetchState.pending"></LoadingIndicator>
+    <LoadingIndicator v-if="!mirthGroups"></LoadingIndicator>
     <div v-else class="max-w-7xl mx-auto mb-8">
       <div v-for="group in mirthGroups" :key="group.id" class="mb-6">
         <div class="mb-4">
@@ -41,28 +41,30 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useFetch, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext, onMounted } from '@nuxtjs/composition-api'
 
-import { ChannelStatistics } from '@/interfaces/dash'
 import { ChannelGroup } from '@/interfaces/mirth'
 
 export default defineComponent({
   setup() {
     const { $axios, $config } = useContext()
 
-    const mirthStatistics = ref([] as ChannelStatistics[])
-    const mirthGroups = ref([] as ChannelGroup[])
+    // Data refs
 
-    const error = ref('')
+    const mirthGroups = ref<ChannelGroup[]>()
 
-    useFetch(async () => {
+    // Data fetching
+
+    async function fetchMirthGroups() {
       mirthGroups.value = await $axios.$get(`${$config.apiBase}/v1/mirth/groups/`)
+    }
+
+    onMounted(() => {
+      fetchMirthGroups()
     })
 
     return {
-      mirthStatistics,
       mirthGroups,
-      error,
     }
   },
 

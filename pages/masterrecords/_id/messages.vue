@@ -15,7 +15,7 @@
 
     <GenericCard>
       <!-- Skeleton results -->
-      <ul v-if="$fetchState.pending" class="divide-y divide-gray-200">
+      <ul v-if="!messages" class="divide-y divide-gray-200">
         <SkeleListItem v-for="n in 10" :key="n" />
       </ul>
       <!-- Real results -->
@@ -27,7 +27,6 @@
         </div>
       </ul>
       <GenericPaginator
-        v-if="!$fetchState.pending"
         class="bg-white border-t border-gray-200"
         :page="page"
         :size="size"
@@ -40,13 +39,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, useFetch, useRoute, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, useContext, useRoute, watch } from '@nuxtjs/composition-api'
 import { Message } from '~/interfaces/messages'
 import { MasterRecord, MasterRecordStatistics } from '~/interfaces/masterrecord'
 import usePagination from '~/mixins/usePagination'
 import useSortBy from '~/mixins/useSortBy'
 
-// TODO: Move to a common page interface
 interface MessagePage {
   items: Message[]
   total: number
@@ -73,20 +71,29 @@ export default defineComponent({
     const { page, total, size } = usePagination()
     const { orderAscending, orderBy, toggleOrder } = useSortBy()
 
-    const messages = ref([] as Message[])
+    // Data refs
 
-    const { fetch } = useFetch(async () => {
+    const messages = ref<Message[]>()
+
+    // Data fetching
+
+    async function fetchMessages() {
       // Fetch the dashboard response from our API server
       const path = `${props.record.links.messages}?page=${page.value}&size=${size.value}&sort_by=received&order_by=${orderBy.value}`
       const res: MessagePage = await $axios.$get(path)
+
       messages.value = res.items
       total.value = res.total
       page.value = res.page
       size.value = res.size
+    }
+
+    onMounted(() => {
+      fetchMessages()
     })
 
     watch(route, () => {
-      fetch()
+      fetchMessages()
     })
 
     return {
@@ -94,7 +101,6 @@ export default defineComponent({
       total,
       size,
       messages,
-
       orderAscending,
       orderBy,
       toggleOrder,
