@@ -60,6 +60,7 @@
     >
       <GenericButton
         v-if="availableActions.comment"
+        :primary="true"
         colour="indigo"
         class="inline-flex items-center justify-center w-full"
         @click="addCommentModal.show()"
@@ -70,6 +71,7 @@
 
       <GenericButton
         v-if="availableActions.close"
+        :primary="true"
         class="inline-flex items-center justify-center w-full"
         colour="green"
         @click="closeModal.show()"
@@ -80,6 +82,7 @@
 
       <GenericButton
         v-if="record && availableActions.merge"
+        :primary="true"
         tooltip="You will be redirected here after merging"
         :to="{
           path: '/empi/merge',
