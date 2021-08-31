@@ -76,7 +76,7 @@
               </div>
             </div>
             <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-              <GenericButton class="ml-2" :colour="danger ? 'red' : 'indigo'" @click="confirm()">
+              <GenericButton :primary="true" class="ml-2" :colour="danger ? 'red' : 'indigo'" @click="confirm()">
                 {{ confirmLabel }}
               </GenericButton>
               <GenericButton @click="cancel()">

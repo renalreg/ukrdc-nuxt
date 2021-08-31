@@ -2,9 +2,10 @@
   <div>
     <patientrecordsSurveyViewer ref="surveyViewerModal" class="w-full md:w-large" />
 
-    <div v-if="surveys.length <= 0" class="text-gray-500 text-center">No surveys on record</div>
+    <LoadingIndicator v-if="!surveys"></LoadingIndicator>
+    <div v-if="surveys && surveys.length <= 0" class="text-gray-500 text-center">No surveys on record</div>
 
-    <div class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-2 justify-center">
+    <div v-if="surveys" class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-2 justify-center">
       <genericCardMini
         v-for="item in surveys"
         :key="item.id"
@@ -35,13 +36,7 @@
               "
               >{{ item.questions.length }} questions</span
             >
-            <genericButtonMini
-              class="float-right"
-              @click="
-                openSurvey = item
-                $refs.surveyViewerModal.show(item)
-              "
-            >
+            <genericButtonMini class="float-right" @click="$refs.surveyViewerModal.show(item)">
               View survey
             </genericButtonMini>
           </div>
@@ -52,7 +47,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useFetch, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext, onMounted } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/utilities/dateUtils'
 
@@ -70,17 +65,21 @@ export default defineComponent({
   setup(props) {
     const { $axios } = useContext()
 
-    const surveys = ref([] as Survey[])
-    const openSurvey = ref({} as Survey)
+    // Data refs
+    const surveys = ref<Survey[]>()
 
-    useFetch(async () => {
-      const res: Survey[] = await $axios.$get(props.record.links.surveys)
-      surveys.value = res
+    // Data fetching
+
+    async function fetchSurveys() {
+      surveys.value = await $axios.$get(props.record.links.surveys)
+    }
+
+    onMounted(() => {
+      fetchSurveys()
     })
 
     return {
       surveys,
-      openSurvey,
       formatDate,
     }
   },

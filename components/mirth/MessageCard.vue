@@ -4,14 +4,14 @@
       <GenericDl>
         <GenericDi>
           <TextDt>Message ID</TextDt>
-          <TextDd v-if="!isEmptyObject(message)">
+          <TextDd v-if="message && !isEmptyObject(message)">
             {{ message.messageId }}
           </TextDd>
           <SkeleText v-else class="h-6 w-full" />
         </GenericDi>
         <GenericDi>
           <TextDt>Processed</TextDt>
-          <TextDd v-if="!isEmptyObject(message)">
+          <TextDd v-if="message && !isEmptyObject(message)">
             {{ message.processed ? 'Yes' : 'No' }}
             {{ hasErrors ? '(with errors)' : '' }}
           </TextDd>
@@ -19,7 +19,7 @@
         </GenericDi>
         <GenericDi>
           <TextDt>Channel</TextDt>
-          <TextDd v-if="!isEmptyObject(message)">
+          <TextDd v-if="message && !isEmptyObject(message)">
             {{ channelName }}
           </TextDd>
           <SkeleText v-else class="h-6 w-full" />
@@ -42,7 +42,8 @@ export default defineComponent({
   props: {
     message: {
       type: Object as () => ChannelMessage,
-      required: true,
+      required: false,
+      default: undefined,
     },
   },
   setup(props) {

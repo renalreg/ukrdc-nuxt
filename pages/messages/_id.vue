@@ -101,23 +101,26 @@
     </GenericCard>
 
     <!-- Mirth Messages card -->
-    <GenericCard v-if="mirthMessage" class="mt-4">
+    <GenericCard v-if="hasPermission('ukrdc:mirth:read')" class="mt-4">
       <GenericCardHeader>
         <TextH2> Mirth Messages </TextH2>
       </GenericCardHeader>
       <ul class="divide-y divide-gray-200">
-        <div class="hover:bg-gray-50">
+        <li v-if="mirthMessage" class="hover:bg-gray-50">
           <NuxtLink :to="`/mirth/messages/${mirthMessage.channelId}/${mirthMessage.messageId}`">
             <MirthMessageListItem :message="mirthMessage" />
           </NuxtLink>
-        </div>
+        </li>
+        <li v-else>
+          <SkeleListItem />
+        </li>
       </ul>
     </GenericCard>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useRoute, useFetch, useContext, useMeta } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useRoute, useContext, useMeta, onMounted } from '@nuxtjs/composition-api'
 
 import { Message, ErrorSource } from '@/interfaces/messages'
 import { ChannelMessage } from '@/interfaces/mirth'
@@ -139,8 +142,11 @@ export default defineComponent({
     const { hasPermission } = usePermissions()
 
     // Head
+
     const { title } = useMeta()
     title.value = `Error ${route.value.params.id}`
+
+    // Data refs
 
     const error = ref<Message>()
     const source = ref<ErrorSource>()
@@ -148,11 +154,9 @@ export default defineComponent({
     const workItems = ref([] as WorkItem[])
     const masterRecords = ref([] as MasterRecord[])
 
-    // Modal visibility
-    const errorSourceGenericModalMaxSlot = ref<modalInterface>()
-    const sourceButtonLabel = ref('Show Source')
+    // Data fetching
 
-    useFetch(async () => {
+    async function fetchMessage() {
       // Get the main record data
       const path = `${$config.apiBase}/v1/messages/${route.value.params.id}/`
       const res: Message = await $axios.$get(path)
@@ -172,7 +176,7 @@ export default defineComponent({
         const mirthRes: ChannelMessage = await $axios.$get(mirthPath)
         mirthMessage.value = mirthRes
       }
-    })
+    }
 
     async function fetchSource() {
       if (!source.value) {
@@ -186,7 +190,15 @@ export default defineComponent({
       }
     }
 
-    // Get and show source
+    onMounted(() => {
+      fetchMessage()
+    })
+
+    // Modal visibility
+
+    const errorSourceGenericModalMaxSlot = ref<modalInterface>()
+    const sourceButtonLabel = ref('Show Source')
+
     async function fetchAndShowSource() {
       await fetchSource()
       errorSourceGenericModalMaxSlot.value?.show()
@@ -203,6 +215,7 @@ export default defineComponent({
       errorSourceGenericModalMaxSlot,
       sourceButtonLabel,
       fetchAndShowSource,
+      hasPermission,
     }
   },
   head: {

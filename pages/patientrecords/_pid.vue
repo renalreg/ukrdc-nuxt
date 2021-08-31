@@ -24,13 +24,13 @@
 import {
   defineComponent,
   ref,
-  useFetch,
   useRoute,
   useContext,
   computed,
   watch,
   useRouter,
   useMeta,
+  onMounted,
 } from '@nuxtjs/composition-api'
 
 import { PatientRecord } from '@/interfaces/patientrecord'
@@ -53,14 +53,46 @@ export default defineComponent({
     const { title } = useMeta()
     title.value = `Record ${route.value.params.pid}`
 
+    // Data refs
+
     const record = ref<PatientRecord>()
     const related = ref<PatientRecord[]>()
+
+    // Data fetching
+
+    async function fetchRecord() {
+      const path = `${$config.apiBase}/v1/patientrecords/${route.value.params.pid}/`
+
+      const res: PatientRecord = await $axios.$get(path)
+      record.value = res
+
+      // Update title
+      title.value = `${fullName.value} from ${record.value.sendingfacility}`
+
+      const rel: PatientRecord[] = await $axios.$get(`${path}related/`)
+      related.value = rel
+    }
+
+    onMounted(() => {
+      fetchRecord()
+    })
+
+    // PID Switcher UI
+
     const relatedDataRecords = computed<PatientRecord[]>(() => {
       if (related.value) {
         return related.value.filter((record) => !isMembership(record))
       }
       return []
     })
+
+    const selectedPid = ref(route.value.params.pid)
+
+    watch(selectedPid, (value: string) => {
+      router.push({ name: route.value.name!, params: { pid: value } })
+    })
+
+    // Dynamic UI elements
 
     const fullName = computed(() => {
       if (record) {
@@ -70,10 +102,7 @@ export default defineComponent({
       }
     })
 
-    const selectedPid = ref(route.value.params.pid)
-    watch(selectedPid, (value: string) => {
-      router.push({ name: route.value.name!, params: { pid: value } })
-    })
+    // Navigation
 
     const baseTabs = [
       {
@@ -101,6 +130,7 @@ export default defineComponent({
         href: `/patientrecords/${route.value.params.pid}/surveys`,
       },
     ] as TabItem[]
+
     const tabs = computed(() => {
       return [
         ...baseTabs,
@@ -113,19 +143,6 @@ export default defineComponent({
             ]
           : []),
       ]
-    })
-
-    useFetch(async () => {
-      const path = `${$config.apiBase}/v1/patientrecords/${route.value.params.pid}/`
-
-      const res: PatientRecord = await $axios.$get(path)
-      record.value = res
-
-      // Update title
-      title.value = `${fullName.value} from ${record.value.sendingfacility}`
-
-      const rel: PatientRecord[] = await $axios.$get(`${path}related/`)
-      related.value = rel
     })
 
     return {

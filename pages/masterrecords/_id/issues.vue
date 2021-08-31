@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useFetch, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext, onMounted } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/utilities/dateUtils'
 import { formatGender } from '@/utilities/codeUtils'
@@ -54,13 +54,20 @@ export default defineComponent({
     const { $axios } = useContext()
     const { hasPermission } = usePermissions()
 
+    // Data refs
     const workItems = ref([] as WorkItem[])
 
-    useFetch(async () => {
+    // Data fetching
+
+    async function fetchWorkItems() {
       // Use the record links to load related data concurrently
       if (hasPermission('ukrdc:workitems:read')) {
         workItems.value = await $axios.$get(props.record.links.workitems)
       }
+    }
+
+    onMounted(() => {
+      fetchWorkItems()
     })
 
     return {

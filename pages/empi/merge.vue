@@ -113,7 +113,7 @@
       </div>
 
       <div class="flex gap-2">
-        <GenericButton colour="red" @click="beginMergeAlert.show()">Begin Record Merge</GenericButton>
+        <GenericButton :primary="true" colour="red" @click="beginMergeAlert.show()">Begin Record Merge</GenericButton>
         <GenericButton v-if="callbackPath" :to="callbackPath">Cancel</GenericButton>
       </div>
     </div>
@@ -121,8 +121,8 @@
 </template>
 
 <script lang="ts">
-import { computed, Ref, ref, useContext, useFetch, useRoute, useRouter, watch } from '@nuxtjs/composition-api'
-import { defineComponent } from '@vue/composition-api'
+import { computed, Ref, ref, useContext, useRoute, useRouter, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted } from '@vue/composition-api'
 import { modalInterface } from '@/interfaces/modal'
 import { MasterRecord } from '~/interfaces/masterrecord'
 import useQuery from '~/mixins/useQuery'
@@ -139,7 +139,11 @@ export default defineComponent({
     const { $axios, $config, $toast } = useContext()
     const { stringQuery } = useQuery()
 
+    // Modals
+
     const beginMergeAlert = ref<modalInterface>()
+
+    // Data refs
 
     const supersededId = stringQuery('superseded', null, true, false)
     const supersedingId = stringQuery('superseding', null, true, false)
@@ -153,6 +157,36 @@ export default defineComponent({
     const readyToMerge = computed(() => {
       return superseded.value?.id && superseding.value?.id && superseded.value?.id !== superseding.value?.id
     })
+
+    const mergeBlockDescription = computed(() => {
+      if (superseded.value?.id && superseding.value?.id) {
+        if (superseded.value?.id === superseding.value?.id) {
+          return 'A record cannot be merged into itself. Please select a different record on one side.'
+        }
+        if (superseded.value?.nationalidType !== superseding.value?.nationalidType) {
+          return `You are about to merge a ${superseded.value?.nationalidType} record into a ${superseding.value?.nationalidType} record.`
+        }
+      }
+      return ''
+    })
+
+    // Data fetching
+    async function fetchRecords() {
+      await Promise.all([
+        supersededId.value ? fetchRecord(supersededId.value, superseded) : null,
+        supersedingId.value ? fetchRecord(supersedingId.value, superseding) : null,
+      ])
+    }
+
+    onMounted(() => {
+      fetchRecords()
+    })
+
+    watch([supersededId, supersedingId], () => {
+      fetchRecords()
+    })
+
+    // Record card style
 
     const highlightSections = computed<string[]>(() => {
       if (!(superseding.value && superseded.value)) {
@@ -174,17 +208,7 @@ export default defineComponent({
       return highlight
     })
 
-    const mergeBlockDescription = computed(() => {
-      if (superseded.value?.id && superseding.value?.id) {
-        if (superseded.value?.id === superseding.value?.id) {
-          return 'A record cannot be merged into itself. Please select a different record on one side.'
-        }
-        if (superseded.value?.nationalidType !== superseding.value?.nationalidType) {
-          return `You are about to merge a ${superseded.value?.nationalidType} record into a ${superseding.value?.nationalidType} record.`
-        }
-      }
-      return ''
-    })
+    // Edit merge functions
 
     function switchRecords() {
       const newQuery = Object.assign({}, route.value.query)
@@ -207,31 +231,6 @@ export default defineComponent({
         path: route.value.path,
         query: newQuery,
       })
-    }
-
-    function requestMerge() {
-      $axios
-        .$post(`${$config.apiBase}/v1/empi/merge`, {
-          superseding: superseding.value?.id,
-          superseded: superseded.value?.id,
-        })
-        .then(() => {
-          $toast.show({
-            type: 'success',
-            title: 'Success',
-            message: 'Record merge request sent successfully',
-            timeout: 10,
-            classTimeout: 'bg-green-600',
-          })
-          clearMerge()
-          if (callbackPath.value) {
-            router.push(callbackPath.value)
-          }
-        })
-        .finally(() => {
-          const el = beginMergeAlert.value as modalInterface
-          el.hide()
-        })
     }
 
     function clearsuperseding() {
@@ -260,16 +259,32 @@ export default defineComponent({
       ouput.value = res
     }
 
-    const { fetch } = useFetch(async () => {
-      await Promise.all([
-        supersededId.value ? fetchRecord(supersededId.value, superseded) : null,
-        supersedingId.value ? fetchRecord(supersedingId.value, superseding) : null,
-      ])
-    })
+    // Do merge
 
-    watch([supersededId, supersedingId], () => {
-      fetch()
-    })
+    function requestMerge() {
+      $axios
+        .$post(`${$config.apiBase}/v1/empi/merge`, {
+          superseding: superseding.value?.id,
+          superseded: superseded.value?.id,
+        })
+        .then(() => {
+          $toast.show({
+            type: 'success',
+            title: 'Success',
+            message: 'Record merge request sent successfully',
+            timeout: 10,
+            classTimeout: 'bg-green-600',
+          })
+          clearMerge()
+          if (callbackPath.value) {
+            router.push(callbackPath.value)
+          }
+        })
+        .finally(() => {
+          const el = beginMergeAlert.value as modalInterface
+          el.hide()
+        })
+    }
 
     return {
       beginMergeAlert,
