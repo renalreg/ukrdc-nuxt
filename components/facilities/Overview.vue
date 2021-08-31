@@ -1,7 +1,7 @@
 <template>
   <div>
-    <LoadingIndicator v-if="$fetchState.pending"></LoadingIndicator>
-    <div v-else-if="facility">
+    <LoadingIndicator v-if="!facility"></LoadingIndicator>
+    <div v-else>
       <div v-if="showHeading" class="mb-6">
         <TextH1 v-if="facility"> {{ facility.description }} </TextH1>
         <SkeleText v-else class="h-8 w-1/4 mb-2" />
@@ -97,7 +97,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useFetch, useContext, computed } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext, computed, onMounted } from '@nuxtjs/composition-api'
 
 import { Facility } from '@/interfaces/facilities'
 
@@ -118,6 +118,10 @@ export default defineComponent({
 
     const facility = ref<Facility>()
 
+    async function fetchFacility() {
+      facility.value = await $axios.$get(`${$config.apiBase}/v1/facilities/${props.code}`)
+    }
+
     const qualityPct = computed<number>(() => {
       if (!facility.value) {
         return 0
@@ -131,8 +135,8 @@ export default defineComponent({
       return (good / total) * 100
     })
 
-    useFetch(async () => {
-      facility.value = await $axios.$get(`${$config.apiBase}/v1/facilities/${props.code}`)
+    onMounted(() => {
+      fetchFacility()
     })
 
     return {
