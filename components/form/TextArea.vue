@@ -17,7 +17,9 @@
       @input="$emit('input', $event.target.value)"
     ></textarea>
     <div v-if="maxLength">
-      <TextL1 :class="[value.length >= maxLength ? 'text-red-600' : '']">{{ value.length }}/{{ maxLength }}</TextL1>
+      <TextL1 :class="[value && value.length >= maxLength ? 'text-red-600' : '']"
+        >{{ value ? value.length : 0 }}/{{ maxLength }}</TextL1
+      >
     </div>
   </div>
 </template>
