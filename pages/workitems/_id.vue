@@ -238,8 +238,6 @@ interface AvailableActions {
 }
 
 export default defineComponent({
-  fetchOnServer: false,
-
   setup() {
     // Dependencies
     const route = useRoute()

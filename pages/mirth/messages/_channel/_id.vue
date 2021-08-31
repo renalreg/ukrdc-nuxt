@@ -19,8 +19,6 @@ import { defineComponent, ref, useRoute, useContext, onMounted } from '@nuxtjs/c
 import { ChannelMessage } from '@/interfaces/mirth'
 
 export default defineComponent({
-  fetchOnServer: false,
-
   setup() {
     const route = useRoute()
     const { $axios, $config } = useContext()

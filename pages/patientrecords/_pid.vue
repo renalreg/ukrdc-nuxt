@@ -41,8 +41,6 @@ import { isMembership } from '@/utilities/recordUtils'
 import usePermissions from '~/mixins/usePermissions'
 
 export default defineComponent({
-  fetchOnServer: false,
-
   setup() {
     const route = useRoute()
     const router = useRouter()

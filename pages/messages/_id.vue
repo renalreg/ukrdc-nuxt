@@ -134,8 +134,6 @@ import { modalInterface } from '~/interfaces/modal'
 import usePermissions from '~/mixins/usePermissions'
 
 export default defineComponent({
-  fetchOnServer: false,
-
   setup() {
     const route = useRoute()
     const { $axios, $config } = useContext()
