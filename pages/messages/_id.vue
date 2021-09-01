@@ -122,7 +122,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useContext, useMeta, useRoute } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, useMeta, useRoute } from '@nuxtjs/composition-api'
 
 import { ErrorSource, Message } from '@/interfaces/messages'
 import { ChannelMessage } from '@/interfaces/mirth'
@@ -134,12 +134,20 @@ import { isEmptyObject } from '@/helpers/utils/objectUtils'
 import { modalInterface } from '~/interfaces/modal'
 
 import usePermissions from '~/helpers/usePermissions'
+import fetchMessages from '~/helpers/fetch/fetchMessages'
 
 export default defineComponent({
   setup() {
     const route = useRoute()
-    const { $axios, $config } = useContext()
     const { hasPermission } = usePermissions()
+    const {
+      fetchMessage,
+      fetchMessageMasterRecords,
+      fetchMessageWorkItems,
+      fetchMessageMirth,
+      fetchMessageSource,
+      fetchSourceInProgress,
+    } = fetchMessages()
 
     // Head
 
@@ -156,44 +164,25 @@ export default defineComponent({
 
     // Data fetching
 
-    async function fetchMessage() {
-      // Get the main record data
-      const path = `${$config.apiBase}/v1/messages/${route.value.params.id}/`
-      const res: Message = await $axios.$get(path)
-      error.value = res
+    async function getMessageData() {
+      error.value = await fetchMessage(route.value.params.id)
 
       // Get auxilalry record data
       if (hasPermission('ukrdc:records:read')) {
-        masterRecords.value = await $axios.$get(error.value.links.masterrecords)
+        masterRecords.value = await fetchMessageMasterRecords(error.value)
       }
       if (hasPermission('ukrdc:workitems:read')) {
-        workItems.value = await $axios.$get(error.value.links.workitems)
+        workItems.value = await fetchMessageWorkItems(error.value)
       }
 
       // Conditionally get the Mirth message data
       if (hasPermission('ukrdc:mirth:read')) {
-        const mirthPath = error.value.links.mirth
-        const mirthRes: ChannelMessage = await $axios.$get(mirthPath)
-        mirthMessage.value = mirthRes
-      }
-    }
-
-    const fetchSourceInProgress = ref(false)
-
-    async function fetchSource() {
-      if (!source.value) {
-        fetchSourceInProgress.value = true
-        const sourcePath = error.value?.links.source
-        if (sourcePath) {
-          const sourceRes: ErrorSource = await $axios.$get(sourcePath)
-          source.value = sourceRes
-        }
-        fetchSourceInProgress.value = false
+        mirthMessage.value = await fetchMessageMirth(error.value)
       }
     }
 
     onMounted(() => {
-      fetchMessage()
+      getMessageData()
     })
 
     // Modal visibility
@@ -201,8 +190,10 @@ export default defineComponent({
     const errorSourceGenericModalMaxSlot = ref<modalInterface>()
 
     async function fetchAndShowSource() {
-      await fetchSource()
-      errorSourceGenericModalMaxSlot.value?.show()
+      if (error.value) {
+        source.value = await fetchMessageSource(error.value)
+        errorSourceGenericModalMaxSlot.value?.show()
+      }
     }
 
     return {
