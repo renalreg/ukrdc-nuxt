@@ -32,16 +32,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useContext, useRouter, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, useRouter, watch } from '@nuxtjs/composition-api'
 import useFacilities from '@/helpers/useFacilities'
-
 import { DashResponse } from '@/interfaces/dash'
+import fetchDash from '~/helpers/fetch/fetchDash'
 
 export default defineComponent({
   setup() {
     const router = useRouter()
-    const { $axios, $config } = useContext()
     const { facilities, facilityIds, facilityLabels, selectedFacility } = useFacilities()
+    const { fetchDashboard } = fetchDash()
 
     // Data refs
 
@@ -53,8 +53,8 @@ export default defineComponent({
 
     // Data fetching
 
-    async function fetchDash() {
-      const dashResponse: DashResponse = await $axios.$get(`${$config.apiBase}/v1/dash/`)
+    async function getDash() {
+      const dashResponse = await fetchDashboard()
       // Fetch the dashboard response from our API server
       response.value = dashResponse
       messages.value = dashResponse.messages
@@ -62,13 +62,15 @@ export default defineComponent({
     }
 
     watch(selectedFacility, () => {
+      // Our facility selector applies a query param when a facility is selected
+      // We watch this query param, and if it changes, we navigate to that facilities page
       if (selectedFacility.value) {
         router.push({ path: `/facilities/${selectedFacility.value}` })
       }
     })
 
     onMounted(() => {
-      fetchDash()
+      getDash()
     })
 
     return {
