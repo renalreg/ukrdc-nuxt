@@ -1,5 +1,5 @@
 import { useContext } from '@nuxtjs/composition-api'
-import { WorkItem } from '~/interfaces/workitem'
+import { WorkItem, WorkItemExtended } from '~/interfaces/workitem'
 
 interface WorkItemPage {
   items: WorkItem[]
@@ -31,5 +31,25 @@ export default function () {
     return (await $axios.$get(path)) as WorkItemPage
   }
 
-  return { fetchWorkItemsPage }
+  async function fetchWorkItem(id: string): Promise<WorkItemExtended> {
+    return (await $axios.$get(`${$config.apiBase}/v1/workitems/${id}/`)) as WorkItemExtended
+  }
+
+  async function closeWorkItem(id: string, comment: string): Promise<void> {
+    await $axios.$post(`${$config.apiBase}/v1/workitems/${id}/close/`, {
+      comment,
+    })
+  }
+
+  async function putWorkItemComment(id: string, comment: string): Promise<void> {
+    await $axios.$put(`${$config.apiBase}/v1/workitems/${id}/`, {
+      comment,
+    })
+  }
+
+  async function fetchWorkItemCollection(workItem: WorkItemExtended): Promise<WorkItem[]> {
+    return (await $axios.$get(workItem.links.collection)) as WorkItem[]
+  }
+
+  return { fetchWorkItemsPage, fetchWorkItem, closeWorkItem, putWorkItemComment, fetchWorkItemCollection }
 }
