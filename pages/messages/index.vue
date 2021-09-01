@@ -56,16 +56,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, ref, useRoute, useContext, onMounted } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, useContext, useRoute, watch } from '@nuxtjs/composition-api'
 
-import usePagination from '@/mixins/usePagination'
-import useDateRange from '@/mixins/useDateRange'
-import { nowString } from '@/utilities/dateUtils'
+import usePagination from '~/helpers/query/usePagination'
+import useDateRange from '~/helpers/query/useDateRange'
+import { nowString } from '@/helpers/utils/dateUtils'
 
 import { Message } from '@/interfaces/messages'
-import useFacilities from '~/mixins/useFacilities'
-import useQuery from '~/mixins/useQuery'
-import useSortBy from '~/mixins/useSortBy'
+import useFacilities from '~/helpers/useFacilities'
+import useQuery from '~/helpers/query/useQuery'
+import useSortBy from '~/helpers/query/useSortBy'
 
 interface MessagePage {
   items: Message[]

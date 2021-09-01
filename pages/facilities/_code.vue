@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, useRoute, computed, useMeta } from '@nuxtjs/composition-api'
+import { computed, defineComponent, useMeta, useRoute } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   setup() {

@@ -22,23 +22,23 @@
 
 <script lang="ts">
 import {
-  defineComponent,
-  ref,
-  useRoute,
-  useContext,
   computed,
-  watch,
-  useRouter,
-  useMeta,
+  defineComponent,
   onMounted,
+  ref,
+  useContext,
+  useMeta,
+  useRoute,
+  useRouter,
+  watch,
 } from '@nuxtjs/composition-api'
 
 import { PatientRecord } from '@/interfaces/patientrecord'
 import { TabItem } from '@/interfaces/tabs'
 
-import { isMembership } from '@/utilities/recordUtils'
+import { isMembership } from '@/helpers/utils/recordUtils'
 
-import usePermissions from '~/mixins/usePermissions'
+import usePermissions from '~/helpers/usePermissions'
 
 export default defineComponent({
   setup() {

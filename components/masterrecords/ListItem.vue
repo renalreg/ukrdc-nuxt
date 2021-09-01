@@ -42,8 +42,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from '@nuxtjs/composition-api'
-import { formatDate } from '@/utilities/dateUtils'
+import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { formatDate } from '@/helpers/utils/dateUtils'
 import { MasterRecord } from '@/interfaces/masterrecord'
 
 export default defineComponent({

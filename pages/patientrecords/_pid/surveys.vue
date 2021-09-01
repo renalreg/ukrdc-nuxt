@@ -47,9 +47,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, onMounted } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, useContext } from '@nuxtjs/composition-api'
 
-import { formatDate } from '@/utilities/dateUtils'
+import { formatDate } from '@/helpers/utils/dateUtils'
 
 import { Survey } from '@/interfaces/survey'
 import { PatientRecord } from '@/interfaces/patientrecord'

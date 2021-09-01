@@ -122,18 +122,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useRoute, useContext, useMeta, onMounted } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, useContext, useMeta, useRoute } from '@nuxtjs/composition-api'
 
-import { Message, ErrorSource } from '@/interfaces/messages'
+import { ErrorSource, Message } from '@/interfaces/messages'
 import { ChannelMessage } from '@/interfaces/mirth'
 import { MasterRecord } from '@/interfaces/masterrecord'
 import { WorkItem } from '@/interfaces/workitem'
 
-import { formatDate } from '@/utilities/dateUtils'
-import { isEmptyObject } from '@/utilities/objectUtils'
+import { formatDate } from '@/helpers/utils/dateUtils'
+import { isEmptyObject } from '@/helpers/utils/objectUtils'
 import { modalInterface } from '~/interfaces/modal'
 
-import usePermissions from '~/mixins/usePermissions'
+import usePermissions from '~/helpers/usePermissions'
 
 export default defineComponent({
   setup() {

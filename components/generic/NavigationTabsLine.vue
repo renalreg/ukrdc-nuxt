@@ -40,7 +40,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import { urlCompare } from '@/utilities/pathUtils'
+import { urlCompare } from '@/helpers/utils/pathUtils'
 
 export interface Tabs {
   name: string

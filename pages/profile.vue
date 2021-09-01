@@ -88,8 +88,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, useContext, computed } from '@nuxtjs/composition-api'
-import usePermissions from '~/mixins/usePermissions'
+import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
+import usePermissions from '~/helpers/usePermissions'
 
 export default defineComponent({
   setup() {

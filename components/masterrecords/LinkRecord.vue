@@ -35,8 +35,8 @@
 <script lang="ts">
 import { defineComponent, ref, useContext, useRouter } from '@nuxtjs/composition-api'
 
-import { formatDate } from '@/utilities/dateUtils'
-import { formatGender } from '@/utilities/codeUtils'
+import { formatDate } from '@/helpers/utils/dateUtils'
+import { formatGender } from '@/helpers/utils/codeUtils'
 
 import { LinkRecord } from '@/interfaces/linkrecords'
 import { modalInterface } from '~/interfaces/modal'

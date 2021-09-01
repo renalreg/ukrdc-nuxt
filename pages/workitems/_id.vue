@@ -217,18 +217,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useRoute, useContext, computed, useMeta, onMounted } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref, useContext, useMeta, useRoute } from '@nuxtjs/composition-api'
 
-import { formatDate } from '@/utilities/dateUtils'
-import { formatGender } from '@/utilities/codeUtils'
-import { isEmptyObject } from '@/utilities/objectUtils'
-import { delay } from '@/utilities/timeUtils'
-import { workItemIsMergable } from '@/utilities/workItemUtils'
+import { formatDate } from '@/helpers/utils/dateUtils'
+import { formatGender } from '@/helpers/utils/codeUtils'
+import { isEmptyObject } from '@/helpers/utils/objectUtils'
+import { delay } from '@/helpers/utils/timeUtils'
+import { workItemIsMergable } from '@/helpers/utils/workItemUtils'
 
 import { WorkItem, WorkItemExtended } from '@/interfaces/workitem'
 import { modalInterface } from '@/interfaces/modal'
 
-import usePermissions from '~/mixins/usePermissions'
+import usePermissions from '~/helpers/usePermissions'
 
 interface AvailableActions {
   close: boolean

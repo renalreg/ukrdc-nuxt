@@ -38,13 +38,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, watch, useRoute, onMounted } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, useContext, useRoute, watch } from '@nuxtjs/composition-api'
 
-import { formatDate } from '@/utilities/dateUtils'
+import { formatDate } from '@/helpers/utils/dateUtils'
 
 import { LabOrderShort } from '@/interfaces/laborder'
 import { PatientRecord } from '@/interfaces/patientrecord'
-import usePagination from '~/mixins/usePagination'
+import usePagination from '~/helpers/query/usePagination'
 
 interface LabOrdersPage {
   items: LabOrderShort[]

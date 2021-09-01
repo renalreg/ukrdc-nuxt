@@ -33,7 +33,7 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import { TotalDayPrev } from 'interfaces/statistics'
-import usePermissions from '~/mixins/usePermissions'
+import usePermissions from '~/helpers/usePermissions'
 
 export default defineComponent({
   props: {

@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, computed } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref, useContext } from '@nuxtjs/composition-api'
 
 import { PatientRecord } from '@/interfaces/patientrecord'
 

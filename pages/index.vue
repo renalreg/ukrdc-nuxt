@@ -32,8 +32,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, watch, useRouter, onMounted } from '@nuxtjs/composition-api'
-import useFacilities from '@/mixins/useFacilities'
+import { defineComponent, onMounted, ref, useContext, useRouter, watch } from '@nuxtjs/composition-api'
+import useFacilities from '@/helpers/useFacilities'
 
 import { DashResponse } from '@/interfaces/dash'
 

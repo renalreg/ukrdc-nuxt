@@ -227,8 +227,8 @@
 
 <script lang="ts">
 import { defineComponent, ref, useContext, watch } from '@nuxtjs/composition-api'
-import useModal from '@/mixins/useModal'
-import { formatDate } from '@/utilities/dateUtils'
+import useModal from '@/helpers/useModal'
+import { formatDate } from '@/helpers/utils/dateUtils'
 import { PatientRecord, PatientRecordFull } from '~/interfaces/patientrecord'
 import { MasterRecord } from '~/interfaces/masterrecord'
 import { Person, PidXRef } from '~/interfaces/persons'

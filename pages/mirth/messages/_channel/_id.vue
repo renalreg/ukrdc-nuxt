@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useRoute, useContext, onMounted } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, useContext, useRoute } from '@nuxtjs/composition-api'
 
 import { ChannelMessage } from '@/interfaces/mirth'
 

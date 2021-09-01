@@ -52,20 +52,20 @@
 
 <script lang="ts">
 import {
+  computed,
   defineComponent,
-  watch,
+  onMounted,
   ref,
+  useContext,
   useRoute,
   useRouter,
-  useContext,
-  computed,
-  onMounted,
+  watch,
 } from '@nuxtjs/composition-api'
 
-import usePagination from '@/mixins/usePagination'
+import usePagination from '~/helpers/query/usePagination'
 
-import { arrayQuery } from '@/utilities/queryUtils'
-import { formatDate } from '@/utilities/dateUtils'
+import { arrayQuery } from '@/helpers/utils/queryUtils'
+import { formatDate } from '@/helpers/utils/dateUtils'
 
 import { Observation } from '@/interfaces/observation'
 import { PatientRecord } from '@/interfaces/patientrecord'

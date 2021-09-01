@@ -53,9 +53,9 @@
 <script lang="ts">
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 
-import { formatDate } from '@/utilities/dateUtils'
-import { formatGender } from '@/utilities/codeUtils'
-import { formatAttributeValue } from '@/utilities/workItemUtils'
+import { formatDate } from '@/helpers/utils/dateUtils'
+import { formatGender } from '@/helpers/utils/codeUtils'
+import { formatAttributeValue } from '@/helpers/utils/workItemUtils'
 
 import { WorkItemAttributes } from '~/interfaces/workitem'
 
@@ -91,7 +91,7 @@ export default defineComponent({
     const formattedDoB = computed(() => {
       return props.record.dateOfBirth
         ? `
-        ${formatDate(props.record.dateOfBirth.split(':')[0], false)} → 
+        ${formatDate(props.record.dateOfBirth.split(':')[0], false)} →
         ${formatDate(props.record.dateOfBirth.split(':')[1], false)}`
         : 'Not specified'
     })

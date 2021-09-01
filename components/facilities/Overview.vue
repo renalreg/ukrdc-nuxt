@@ -97,7 +97,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, computed, onMounted } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref, useContext } from '@nuxtjs/composition-api'
 
 import { Facility } from '@/interfaces/facilities'
 

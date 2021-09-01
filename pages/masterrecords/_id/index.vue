@@ -105,11 +105,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, computed, onMounted } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref, useContext } from '@nuxtjs/composition-api'
 
-import { formatDate } from '@/utilities/dateUtils'
-import { formatGender } from '@/utilities/codeUtils'
-import { isTracing } from '@/utilities/recordUtils'
+import { formatDate } from '@/helpers/utils/dateUtils'
+import { formatGender } from '@/helpers/utils/codeUtils'
+import { isTracing } from '@/helpers/utils/recordUtils'
 
 import { MasterRecord, MasterRecordStatistics } from '@/interfaces/masterrecord'
 import { PatientRecord } from '@/interfaces/patientrecord'

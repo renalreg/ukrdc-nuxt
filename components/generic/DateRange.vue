@@ -73,7 +73,7 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 
-import { DateRange, nowString } from '@/utilities/dateUtils'
+import { DateRange, nowString } from '@/helpers/utils/dateUtils'
 
 export default defineComponent({
   props: {

@@ -42,8 +42,8 @@
 import { defineComponent, onMounted, ref, useContext, useRoute, watch } from '@nuxtjs/composition-api'
 import { Message } from '~/interfaces/messages'
 import { MasterRecord, MasterRecordStatistics } from '~/interfaces/masterrecord'
-import usePagination from '~/mixins/usePagination'
-import useSortBy from '~/mixins/useSortBy'
+import usePagination from '~/helpers/query/usePagination'
+import useSortBy from '~/helpers/query/useSortBy'
 
 interface MessagePage {
   items: Message[]

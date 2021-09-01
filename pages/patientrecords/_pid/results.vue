@@ -89,9 +89,9 @@ import { computed, defineComponent, onMounted, ref, useContext, useRoute, watch 
 
 import { PatientRecord } from '@/interfaces/patientrecord'
 import { ResultItem } from '@/interfaces/laborder'
-import { formatDate } from '@/utilities/dateUtils'
-import usePagination from '~/mixins/usePagination'
-import useQuery from '~/mixins/useQuery'
+import { formatDate } from '@/helpers/utils/dateUtils'
+import usePagination from '~/helpers/query/usePagination'
+import useQuery from '~/helpers/query/useQuery'
 
 interface ResultsPage {
   items: ResultItem[]

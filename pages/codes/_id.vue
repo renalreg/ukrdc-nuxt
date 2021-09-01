@@ -79,7 +79,7 @@ import {
   useRoute,
   watch,
 } from '@nuxtjs/composition-api'
-import { formatDate } from '@/utilities/dateUtils'
+import { formatDate } from '@/helpers/utils/dateUtils'
 import { ExtendedCode } from '@/interfaces/codes'
 
 export default defineComponent({

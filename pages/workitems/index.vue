@@ -56,16 +56,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, ref, useRoute, onMounted } from '@nuxtjs/composition-api'
-
-import usePagination from '@/mixins/usePagination'
+import { defineComponent, onMounted, ref, useRoute, watch } from '@nuxtjs/composition-api'
 
 import { WorkItem } from '@/interfaces/workitem'
-import useQuery from '~/mixins/useQuery'
-import useFacilities from '~/mixins/useFacilities'
-import useSortBy from '~/mixins/useSortBy'
+import usePagination from '~/helpers/query/usePagination'
 
-import fetchWorkItems from '~/mixins/fetch/fetchWorkItems'
+import useQuery from '~/helpers/query/useQuery'
+import useFacilities from '~/helpers/useFacilities'
+import useSortBy from '~/helpers/query/useSortBy'
+
+import fetchWorkItems from '~/helpers/fetch/fetchWorkItems'
 
 export default defineComponent({
   setup() {

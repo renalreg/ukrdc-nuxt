@@ -85,7 +85,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from '@nuxtjs/composition-api'
-import usePermissions from '~/mixins/usePermissions'
+import usePermissions from '~/helpers/usePermissions'
 
 interface NavItem {
   title: string

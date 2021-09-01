@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, onMounted } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, useContext } from '@nuxtjs/composition-api'
 
 import { ChannelGroup } from '@/interfaces/mirth'
 

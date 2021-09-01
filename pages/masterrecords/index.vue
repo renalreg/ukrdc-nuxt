@@ -56,15 +56,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, ref, useRoute, onMounted } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, useRoute, watch } from '@nuxtjs/composition-api'
 
-import usePagination from '@/mixins/usePagination'
+import usePagination from '~/helpers/query/usePagination'
 import { MasterRecord } from '@/interfaces/masterrecord'
 
-import useUserPrefs from '~/mixins/useUserPrefs'
-import useRecordSearch from '~/mixins/useRecordSearch'
+import useUserPrefs from '~/helpers/useUserPrefs'
+import useRecordSearch from '~/helpers/query/useRecordSearch'
 
-import fetchSearchResults from '~/mixins/fetch/fetchSearchResults'
+import fetchSearchResults from '~/helpers/fetch/fetchSearchResults'
 
 export default defineComponent({
   setup() {

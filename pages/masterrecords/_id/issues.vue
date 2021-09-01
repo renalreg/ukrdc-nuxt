@@ -28,15 +28,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, onMounted } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, useContext } from '@nuxtjs/composition-api'
 
-import { formatDate } from '@/utilities/dateUtils'
-import { formatGender } from '@/utilities/codeUtils'
+import { formatDate } from '@/helpers/utils/dateUtils'
+import { formatGender } from '@/helpers/utils/codeUtils'
 
 import { MasterRecord, MasterRecordStatistics } from '@/interfaces/masterrecord'
 import { WorkItem } from '@/interfaces/workitem'
 
-import usePermissions from '~/mixins/usePermissions'
+import usePermissions from '~/helpers/usePermissions'
 
 export default defineComponent({
   props: {

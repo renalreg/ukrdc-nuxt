@@ -29,10 +29,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useRoute, useContext, useMeta, onMounted } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, useContext, useMeta, useRoute } from '@nuxtjs/composition-api'
 
-import { formatDate } from '@/utilities/dateUtils'
-import { formatGender } from '@/utilities/codeUtils'
+import { formatDate } from '@/helpers/utils/dateUtils'
+import { formatGender } from '@/helpers/utils/codeUtils'
 
 import { MasterRecord, MasterRecordStatistics } from '@/interfaces/masterrecord'
 import { TabItem } from '@/interfaces/tabs'

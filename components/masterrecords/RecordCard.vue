@@ -51,8 +51,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import { formatDate } from '@/utilities/dateUtils'
-import { formatGender } from '@/utilities/codeUtils'
+import { formatDate } from '@/helpers/utils/dateUtils'
+import { formatGender } from '@/helpers/utils/codeUtils'
 
 import { MasterRecord } from '~/interfaces/masterrecord'
 

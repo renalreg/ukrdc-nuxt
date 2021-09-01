@@ -61,8 +61,8 @@
 import { defineComponent, onMounted, ref, useContext, watch } from '@nuxtjs/composition-api'
 
 import { Code } from '@/interfaces/codes'
-import useQuery from '~/mixins/useQuery'
-import usePagination from '~/mixins/usePagination'
+import useQuery from '~/helpers/query/useQuery'
+import usePagination from '~/helpers/query/usePagination'
 
 interface CodesPage {
   items: Code[]

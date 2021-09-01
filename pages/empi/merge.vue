@@ -125,7 +125,7 @@ import { computed, Ref, ref, useContext, useRoute, useRouter, watch } from '@nux
 import { defineComponent, onMounted } from '@vue/composition-api'
 import { modalInterface } from '@/interfaces/modal'
 import { MasterRecord } from '~/interfaces/masterrecord'
-import useQuery from '~/mixins/useQuery'
+import useQuery from '~/helpers/query/useQuery'
 
 enum Direction {
   superseding = 'superseding',

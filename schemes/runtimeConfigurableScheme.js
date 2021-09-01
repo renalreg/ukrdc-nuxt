@@ -1,5 +1,5 @@
 import { Oauth2Scheme } from '@nuxtjs/auth-next/dist/runtime.js'
-import { urljoin } from '@/utilities/pathUtils'
+import { urljoin } from '@/helpers/utils/pathUtils'
 
 export default class RuntimeConfigurableOauth2Scheme extends Oauth2Scheme {
   constructor($auth, options) {
