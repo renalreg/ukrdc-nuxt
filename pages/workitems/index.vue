@@ -84,8 +84,8 @@ export default defineComponent({
 
     // Data fetching
 
-    async function fetchWorkitems() {
-      const results = await fetchWorkItemsPage(
+    async function getWorkitems() {
+      const itemsPage = await fetchWorkItemsPage(
         page.value || 0,
         size.value,
         orderBy.value || 'desc',
@@ -93,18 +93,18 @@ export default defineComponent({
         selectedFacility.value
       )
 
-      workitems.value = results.items
-      total.value = results.total
-      page.value = results.page
-      size.value = results.size
+      workitems.value = itemsPage.items
+      total.value = itemsPage.total
+      page.value = itemsPage.page
+      size.value = itemsPage.size
     }
 
     onMounted(() => {
-      fetchWorkitems()
+      getWorkitems()
     })
 
     watch(route, () => {
-      fetchWorkitems()
+      getWorkitems()
     })
 
     return {

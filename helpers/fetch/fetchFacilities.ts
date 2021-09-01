@@ -1,5 +1,5 @@
 import { useContext } from '@nuxtjs/composition-api'
-import { FacilitySummary } from '~/interfaces/facilities'
+import { FacilitySummary, Facility } from '~/interfaces/facilities'
 
 export default function () {
   const { $axios, $config } = useContext()
@@ -8,5 +8,9 @@ export default function () {
     return (await $axios.$get(`${$config.apiBase}/v1/facilities/`)) as FacilitySummary[]
   }
 
-  return { fetchFacilitiesList }
+  async function fetchFacility(code: string): Promise<Facility> {
+    return (await $axios.$get(`${$config.apiBase}/v1/facilities/${code}`)) as Facility
+  }
+
+  return { fetchFacilitiesList, fetchFacility }
 }

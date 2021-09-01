@@ -69,23 +69,15 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  onMounted,
-  ref,
-  useContext,
-  useMeta,
-  useRoute,
-  watch,
-} from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref, useMeta, useRoute, watch } from '@nuxtjs/composition-api'
 import { formatDate } from '@/helpers/utils/dateUtils'
 import { ExtendedCode } from '@/interfaces/codes'
+import fetchCodes from '~/helpers/fetch/fetchCodes'
 
 export default defineComponent({
   setup() {
     const route = useRoute()
-    const { $axios, $config } = useContext()
+    const { fetchCode } = fetchCodes()
 
     // Head
     const { title } = useMeta()
@@ -97,21 +89,21 @@ export default defineComponent({
 
     // Data fetching
 
-    async function fetchCode() {
+    async function getCode() {
       // Scroll to top every time we fetch a new code
       if (process.client) {
         document.getElementsByTagName('main')[0].scrollTop = 0
       }
       // Fetch code details
-      code.value = await $axios.$get(`${$config.apiBase}/v1/codes/list/${route.value.params.id}/`)
+      code.value = await fetchCode(route.value.params.id)
     }
 
     onMounted(() => {
-      fetchCode()
+      getCode()
     })
 
     watch(route, () => {
-      fetchCode()
+      getCode()
     })
 
     // External code links

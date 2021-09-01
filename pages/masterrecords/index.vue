@@ -58,8 +58,8 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, useRoute, watch } from '@nuxtjs/composition-api'
 
-import usePagination from '~/helpers/query/usePagination'
 import { MasterRecord } from '@/interfaces/masterrecord'
+import usePagination from '~/helpers/query/usePagination'
 
 import useUserPrefs from '~/helpers/useUserPrefs'
 import useRecordSearch from '~/helpers/query/useRecordSearch'
@@ -81,23 +81,28 @@ export default defineComponent({
 
     // Data fetching
 
-    async function fetchResults() {
+    async function getResults() {
       if (searchQueryIsPopulated) {
-        const results = await fetchSearchResultsPage(apiQueryString.value, page.value || 0, size.value, showUKRDC.value)
+        const resultsPage = await fetchSearchResultsPage(
+          apiQueryString.value,
+          page.value || 0,
+          size.value,
+          showUKRDC.value
+        )
 
-        masterrecords.value = results.items
-        total.value = results.total
-        page.value = results.page
-        size.value = results.size
+        masterrecords.value = resultsPage.items
+        total.value = resultsPage.total
+        page.value = resultsPage.page
+        size.value = resultsPage.size
       }
     }
 
     onMounted(() => {
-      fetchResults()
+      getResults()
     })
 
     watch([route, showUKRDC], () => {
-      fetchResults()
+      getResults()
     })
 
     return {
