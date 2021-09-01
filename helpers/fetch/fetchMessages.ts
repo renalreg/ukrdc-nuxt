@@ -1,5 +1,8 @@
 import { ref, useContext } from '@nuxtjs/composition-api'
+import { MasterRecord } from '~/interfaces/masterrecord'
 import { ErrorSource, Message } from '~/interfaces/messages'
+import { ChannelMessage } from '~/interfaces/mirth'
+import { WorkItem } from '~/interfaces/workitem'
 
 interface MessagePage {
   items: Message[]
@@ -51,16 +54,16 @@ export default function () {
     return (await $axios.$get(`${$config.apiBase}/v1/messages/${id}`)) as Message
   }
 
-  async function fetchMessageMasterRecords(message: Message) {
-    return await $axios.$get(message.links.masterrecords)
+  async function fetchMessageMasterRecords(message: Message): Promise<MasterRecord[]> {
+    return (await $axios.$get(message.links.masterrecords)) as MasterRecord[]
   }
 
-  async function fetchMessageWorkItems(message: Message) {
-    return await $axios.$get(message.links.workitems)
+  async function fetchMessageWorkItems(message: Message): Promise<WorkItem[]> {
+    return (await $axios.$get(message.links.workitems)) as WorkItem[]
   }
 
-  async function fetchMessageMirth(message: Message) {
-    return await $axios.$get(message.links.mirth)
+  async function fetchMessageMirth(message: Message): Promise<ChannelMessage> {
+    return (await $axios.$get(message.links.mirth)) as ChannelMessage
   }
 
   const fetchSourceInProgress = ref(false)
