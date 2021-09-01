@@ -56,7 +56,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, ref, useRoute, useContext, onMounted } from '@nuxtjs/composition-api'
+import { defineComponent, watch, ref, useRoute, onMounted } from '@nuxtjs/composition-api'
 
 import usePagination from '@/mixins/usePagination'
 
@@ -65,22 +65,17 @@ import useQuery from '~/mixins/useQuery'
 import useFacilities from '~/mixins/useFacilities'
 import useSortBy from '~/mixins/useSortBy'
 
-interface WorkItemPage {
-  items: WorkItem[]
-  total: number
-  page: number
-  size: number
-}
+import fetchWorkItems from '~/mixins/fetch/fetchWorkItems'
 
 export default defineComponent({
   setup() {
     const route = useRoute()
 
-    const { $axios, $config } = useContext()
     const { page, total, size } = usePagination()
     const { arrayQuery } = useQuery()
     const { facilities, facilityIds, facilityLabels, selectedFacility, fetchFacilities } = useFacilities()
     const { orderAscending, orderBy, toggleOrder } = useSortBy()
+    const { fetchWorkItemsPage } = fetchWorkItems()
 
     // Data refs
 
@@ -90,27 +85,23 @@ export default defineComponent({
     // Data fetching
 
     async function fetchWorkitems() {
-      // Fetch the dashboard response from our API server
-      let path = `${$config.apiBase}/v1/workitems/?page=${page.value}&size=${size.value}&sort_by=last_updated&order_by=${orderBy.value}`
-      // Pass selected statuses to the API
-      for (const status of statuses.value) {
-        path = path + `&status=${status}`
-      }
-      // Filter by facility if it exists
-      if (selectedFacility.value) {
-        path = path + `&facility=${selectedFacility.value}`
-      }
-      const res: WorkItemPage = await $axios.$get(path)
-      workitems.value = res.items
-      total.value = res.total
-      page.value = res.page
-      size.value = res.size
+      const results = await fetchWorkItemsPage(
+        page.value || 0,
+        size.value,
+        orderBy.value || 'desc',
+        statuses.value,
+        selectedFacility.value
+      )
 
-      await fetchFacilities()
+      workitems.value = results.items
+      total.value = results.total
+      page.value = results.page
+      size.value = results.size
     }
 
     onMounted(() => {
       fetchWorkitems()
+      fetchFacilities()
     })
 
     watch(route, () => {
