@@ -1,4 +1,4 @@
-import { computed, ref, useContext } from '@nuxtjs/composition-api'
+import { computed, onMounted, ref, useContext } from '@nuxtjs/composition-api'
 import useQuery from '~/helpers/query/useQuery'
 
 interface Facility {
@@ -25,6 +25,10 @@ export default function () {
       facilities.value = await $axios.$get(`${$config.apiBase}/v1/facilities/`)
     }
   }
+
+  onMounted(() => {
+    fetchFacilities()
+  })
 
   return {
     facilities,

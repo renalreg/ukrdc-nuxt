@@ -58,11 +58,11 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, useContext, useRoute, watch } from '@nuxtjs/composition-api'
 
+import { nowString } from '@/helpers/utils/dateUtils'
+import { Message } from '@/interfaces/messages'
 import usePagination from '~/helpers/query/usePagination'
 import useDateRange from '~/helpers/query/useDateRange'
-import { nowString } from '@/helpers/utils/dateUtils'
 
-import { Message } from '@/interfaces/messages'
 import useFacilities from '~/helpers/useFacilities'
 import useQuery from '~/helpers/query/useQuery'
 import useSortBy from '~/helpers/query/useSortBy'
@@ -82,7 +82,7 @@ export default defineComponent({
     const { page, total, size } = usePagination()
     const { makeDateRange } = useDateRange()
     const { stringQuery } = useQuery()
-    const { facilities, facilityIds, facilityLabels, selectedFacility, fetchFacilities } = useFacilities()
+    const { facilities, facilityIds, facilityLabels, selectedFacility } = useFacilities()
     const { orderAscending, orderBy, toggleOrder } = useSortBy()
 
     // Set up URL query params for additional filters
@@ -123,8 +123,6 @@ export default defineComponent({
       total.value = res.total
       page.value = res.page
       size.value = res.size
-
-      await fetchFacilities()
     }
 
     onMounted(() => {

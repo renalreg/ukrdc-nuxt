@@ -41,7 +41,7 @@ export default defineComponent({
   setup() {
     const router = useRouter()
     const { $axios, $config } = useContext()
-    const { facilities, facilityIds, facilityLabels, selectedFacility, fetchFacilities } = useFacilities()
+    const { facilities, facilityIds, facilityLabels, selectedFacility } = useFacilities()
 
     // Data refs
 
@@ -59,8 +59,6 @@ export default defineComponent({
       response.value = dashResponse
       messages.value = dashResponse.messages
       warnings.value = dashResponse.warnings
-
-      await fetchFacilities()
     }
 
     watch(selectedFacility, () => {

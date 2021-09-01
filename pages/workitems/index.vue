@@ -73,7 +73,7 @@ export default defineComponent({
 
     const { page, total, size } = usePagination()
     const { arrayQuery } = useQuery()
-    const { facilities, facilityIds, facilityLabels, selectedFacility, fetchFacilities } = useFacilities()
+    const { facilities, facilityIds, facilityLabels, selectedFacility } = useFacilities()
     const { orderAscending, orderBy, toggleOrder } = useSortBy()
     const { fetchWorkItemsPage } = fetchWorkItems()
 
@@ -101,7 +101,6 @@ export default defineComponent({
 
     onMounted(() => {
       fetchWorkitems()
-      fetchFacilities()
     })
 
     watch(route, () => {
