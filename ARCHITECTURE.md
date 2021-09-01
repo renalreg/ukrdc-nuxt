@@ -1,23 +1,23 @@
 # UKRDC-Nuxt Architecture
 
-  - [middleware](#middleware)
-  - [schemes](#schemes)
-  - [mixins](#mixins)
-  - [plugins](#plugins)
-  - [utilities](#utilities)
-  - [components](#components)
-    - [components/masterrecords](#components-masterrecords)
-    - [components/workitems](#components-workitems)
-    - [components/navigation](#components-navigation)
-    - [components/profile](#components-profile)
-    - [components/dash](#components-dash)
-    - [components/generic](#components-generic)
-  - [layouts](#layouts)
-  - [static](#static)
-  - [assets](#assets)
-  - [pages](#pages)
-  - [interfaces](#interfaces)
-  - [store](#store)
+- [middleware](#middleware)
+- [schemes](#schemes)
+- [mixins](#mixins)
+- [plugins](#plugins)
+- [utilities](#utilities)
+- [components](#components)
+  - [components/masterrecords](#components-masterrecords)
+  - [components/workitems](#components-workitems)
+  - [components/navigation](#components-navigation)
+  - [components/profile](#components-profile)
+  - [components/dash](#components-dash)
+  - [components/generic](#components-generic)
+- [layouts](#layouts)
+- [static](#static)
+- [assets](#assets)
+- [pages](#pages)
+- [interfaces](#interfaces)
+- [store](#store)
 
 <a name="middleware"></a>
 
@@ -42,7 +42,7 @@ Currently used to enable runtime config of the Auth module
 
 ## MIXINS
 
-Technically not mixins in the Vue 2 Options API sense. 
+Technically not mixins in the Vue 2 Options API sense.
 
 Modules beginning with the `use` prefix, used by the composition API to augment component functionality. These function kind of like abstract base classes to provide foundations for components to build on.
 

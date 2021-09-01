@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       deployment_env:
-        description: "Deployment environment"
-        default: "staging"
+        description: 'Deployment environment'
+        default: 'staging'
 
 jobs:
   test:
@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: '16'
           check-latest: true
-      
+
       - name: Install with Yarn
         run: yarn install
 
