@@ -24,7 +24,9 @@
         <SkeleText v-else class="h-4 w-1/2" />
       </div>
       <div>
-        <GenericButton class="w-48" @click="fetchAndShowSource">{{ sourceButtonLabel }}</GenericButton>
+        <GenericButton :disabled="fetchSourceInProgress" class="w-48" @click="fetchAndShowSource">{{
+          fetchSourceInProgress ? 'Loading...' : 'Show Source'
+        }}</GenericButton>
       </div>
     </div>
 
@@ -176,15 +178,17 @@ export default defineComponent({
       }
     }
 
+    const fetchSourceInProgress = ref(false)
+
     async function fetchSource() {
       if (!source.value) {
-        sourceButtonLabel.value = 'Loading...'
+        fetchSourceInProgress.value = true
         const sourcePath = error.value?.links.source
         if (sourcePath) {
           const sourceRes: ErrorSource = await $axios.$get(sourcePath)
           source.value = sourceRes
         }
-        sourceButtonLabel.value = 'Show Source'
+        fetchSourceInProgress.value = false
       }
     }
 
@@ -195,7 +199,6 @@ export default defineComponent({
     // Modal visibility
 
     const errorSourceGenericModalMaxSlot = ref<modalInterface>()
-    const sourceButtonLabel = ref('Show Source')
 
     async function fetchAndShowSource() {
       await fetchSource()
@@ -211,7 +214,7 @@ export default defineComponent({
       isEmptyObject,
       formatDate,
       errorSourceGenericModalMaxSlot,
-      sourceButtonLabel,
+      fetchSourceInProgress,
       fetchAndShowSource,
       hasPermission,
     }
