@@ -1,4 +1,5 @@
 import { useContext } from '@nuxtjs/composition-api'
+import { buildCommonMessageQuery, MessagePage } from './fetchMessages'
 import { WorkItem, WorkItemExtended } from '~/interfaces/workitem'
 
 interface WorkItemPage {
@@ -47,9 +48,31 @@ export default function () {
     })
   }
 
-  async function fetchWorkItemCollection(workItem: WorkItemExtended): Promise<WorkItem[]> {
+  async function fetchWorkItemCollection(workItem: WorkItem): Promise<WorkItem[]> {
     return (await $axios.$get(workItem.links.collection)) as WorkItem[]
   }
 
-  return { fetchWorkItemsPage, fetchWorkItem, closeWorkItem, putWorkItemComment, fetchWorkItemCollection }
+  async function fetchWorkItemMessagesPage(
+    workItem: WorkItem,
+    page: number,
+    size: number,
+    orderBy: string | null,
+    status: string | null,
+    since: string | null,
+    until: string | null
+  ): Promise<MessagePage> {
+    let path = `${workItem.links.messages}?page=${page}&size=${size}&sort_by=received`
+    // Filter by status and date
+    path = path + buildCommonMessageQuery(orderBy, status, since, until)
+    return (await $axios.$get(path)) as MessagePage
+  }
+
+  return {
+    fetchWorkItemsPage,
+    fetchWorkItem,
+    closeWorkItem,
+    putWorkItemComment,
+    fetchWorkItemCollection,
+    fetchWorkItemMessagesPage,
+  }
 }

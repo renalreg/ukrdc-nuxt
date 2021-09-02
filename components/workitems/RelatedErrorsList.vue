@@ -23,9 +23,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useContext, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
 import { Message } from '@/interfaces/messages'
 import { WorkItem } from '~/interfaces/workitem'
+import fetchWorkItems from '~/helpers/fetch/fetchWorkItems'
 
 export default defineComponent({
   props: {
@@ -46,7 +47,7 @@ export default defineComponent({
   },
   setup(props) {
     // Dependencies
-    const { $axios } = useContext()
+    const { fetchWorkItemMessagesPage } = fetchWorkItems()
 
     // Related errors data
     const relatedErrors = ref([] as Message[])
@@ -55,16 +56,20 @@ export default defineComponent({
     const relatedErrorsTotal = ref(0)
 
     async function updateRelatedErrors(): Promise<void> {
-      let path = props.workitem.links.messages + `?page=${relatedErrorsPage.value}&size=${relatedErrorsSize.value}`
-      if (props.status) {
-        path = path + `&status=${props.status}`
-      }
-      const res = await $axios.$get(path)
+      const errorsPage = await fetchWorkItemMessagesPage(
+        props.workitem,
+        relatedErrorsPage.value,
+        relatedErrorsSize.value,
+        null,
+        props.status,
+        null,
+        null
+      )
       // Set related errors
-      relatedErrors.value = res.items
-      relatedErrorsPage.value = res.page
-      relatedErrorsSize.value = res.size
-      relatedErrorsTotal.value = res.total
+      relatedErrors.value = errorsPage.items
+      relatedErrorsPage.value = errorsPage.page
+      relatedErrorsSize.value = errorsPage.size
+      relatedErrorsTotal.value = errorsPage.total
     }
 
     onMounted(updateRelatedErrors)
