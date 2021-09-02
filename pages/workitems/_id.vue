@@ -212,7 +212,7 @@
     </div>
 
     <!-- Related errors card -->
-    <ErrorsMiniList v-if="record" class="mt-4 mb-8" :errors-url="record.links.messages" :size="5" />
+    <WorkitemsRelatedErrorsList v-if="record" class="mt-4 mb-8" :workitem="record" :size="5" />
   </div>
 </template>
 

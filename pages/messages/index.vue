@@ -94,7 +94,8 @@ export default defineComponent({
       const messagesPage = await fetchMessagesPage(
         page.value || 0,
         size.value,
-        orderBy.value || 'desc',
+        orderBy.value,
+        null, // Status filter
         dateRange.value.start,
         dateRange.value.end,
         selectedFacility.value,

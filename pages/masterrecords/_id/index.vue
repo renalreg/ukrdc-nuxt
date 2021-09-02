@@ -105,11 +105,13 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useContext } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/helpers/utils/dateUtils'
 import { formatGender } from '@/helpers/utils/codeUtils'
 import { isTracing } from '@/helpers/utils/recordUtils'
+
+import fetchMasterRecords from '@/helpers/fetch/fetchMasterRecords'
 
 import { MasterRecord, MasterRecordStatistics } from '@/interfaces/masterrecord'
 import { PatientRecord } from '@/interfaces/patientrecord'
@@ -129,30 +131,29 @@ export default defineComponent({
   },
 
   setup(props) {
-    const { $axios } = useContext()
+    const { fetchMasterRecordRelated, fetchMasterRecordLatestMessage, fetchMasterRecordPatientRecords } =
+      fetchMasterRecords()
 
     // Data refs
 
     const relatedRecords = ref<MasterRecord[]>()
     const patientRecords = ref<PatientRecord[]>()
-    const latestMessage = ref<MinimalMessage>()
+    const latestMessage = ref<MinimalMessage | null>()
 
     // Data fetching
     const fetchPending = ref(true)
 
     async function fetchRelatedRecordData() {
       fetchPending.value = true
-      // Use the record links to load related data concurrently
+
+      // Load related data concurrently
       const [latestMessageResponse, relatedRecordsResponse, patientRecordsResponse] = await Promise.all([
-        $axios.$get(props.record.links.latestMessage),
-        $axios.$get(props.record.links.related),
-        $axios.$get(props.record.links.patientrecords),
+        fetchMasterRecordLatestMessage(props.record),
+        fetchMasterRecordRelated(props.record),
+        fetchMasterRecordPatientRecords(props.record),
       ])
 
-      if (latestMessageResponse) {
-        latestMessage.value = latestMessageResponse
-      }
-
+      latestMessage.value = latestMessageResponse
       relatedRecords.value = relatedRecordsResponse
       patientRecords.value = patientRecordsResponse
 

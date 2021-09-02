@@ -39,18 +39,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useContext, useRoute, watch } from '@nuxtjs/composition-api'
-import { Message } from '~/interfaces/messages'
-import { MasterRecord, MasterRecordStatistics } from '~/interfaces/masterrecord'
+import { defineComponent, onMounted, ref, useRoute, watch } from '@nuxtjs/composition-api'
+
 import usePagination from '~/helpers/query/usePagination'
 import useSortBy from '~/helpers/query/useSortBy'
 
-interface MessagePage {
-  items: Message[]
-  total: number
-  page: number
-  size: number
-}
+import fetchMasterRecords from '@/helpers/fetch/fetchMasterRecords'
+
+import { Message } from '~/interfaces/messages'
+import { MasterRecord, MasterRecordStatistics } from '~/interfaces/masterrecord'
 
 export default defineComponent({
   props: {
@@ -67,9 +64,9 @@ export default defineComponent({
   setup(props) {
     const route = useRoute()
 
-    const { $axios } = useContext()
     const { page, total, size } = usePagination()
     const { orderAscending, orderBy, toggleOrder } = useSortBy()
+    const { fetchMasterRecordMessagesPage } = fetchMasterRecords()
 
     // Data refs
 
@@ -78,14 +75,20 @@ export default defineComponent({
     // Data fetching
 
     async function fetchMessages() {
-      // Fetch the dashboard response from our API server
-      const path = `${props.record.links.messages}?page=${page.value}&size=${size.value}&sort_by=received&order_by=${orderBy.value}`
-      const res: MessagePage = await $axios.$get(path)
+      const messagesPage = await fetchMasterRecordMessagesPage(
+        props.record,
+        page.value || 0,
+        size.value,
+        orderBy.value,
+        null, // Status filter
+        null, // Since filter
+        null // Until filter
+      )
 
-      messages.value = res.items
-      total.value = res.total
-      page.value = res.page
-      size.value = res.size
+      messages.value = messagesPage.items
+      total.value = messagesPage.total
+      page.value = messagesPage.page
+      size.value = messagesPage.size
     }
 
     onMounted(() => {

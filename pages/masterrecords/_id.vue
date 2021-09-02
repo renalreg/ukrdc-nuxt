@@ -29,10 +29,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useContext, useMeta, useRoute } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, useMeta, useRoute } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/helpers/utils/dateUtils'
 import { formatGender } from '@/helpers/utils/codeUtils'
+import fetchMasterRecords from '@/helpers/fetch/fetchMasterRecords'
 
 import { MasterRecord, MasterRecordStatistics } from '@/interfaces/masterrecord'
 import { TabItem } from '@/interfaces/tabs'
@@ -40,7 +41,7 @@ import { TabItem } from '@/interfaces/tabs'
 export default defineComponent({
   setup() {
     const route = useRoute()
-    const { $axios, $config } = useContext()
+    const { fetchMasterRecord, fetchMasterRecordStatistics } = fetchMasterRecords()
 
     // Head
     const { title } = useMeta()
@@ -75,17 +76,13 @@ export default defineComponent({
     // Data fetching
 
     async function fetchRecord() {
-      // Get the main record data
-      const path = `${$config.apiBase}/v1/masterrecords/${route.value.params.id}/`
-      const res: MasterRecord = await $axios.$get(path)
-      record.value = res
+      record.value = await fetchMasterRecord(route.value.params.id)
 
       // Update title
       title.value = `${record.value.givenname} ${record.value.surname}`
 
       // Get basic record statistics
-      const statsRes: MasterRecordStatistics = await $axios.$get(record.value.links.statistics)
-      stats.value = statsRes
+      stats.value = await fetchMasterRecordStatistics(record.value)
       issueMessage.value = buildErrorMessage(stats.value)
     }
 
@@ -97,7 +94,7 @@ export default defineComponent({
 
     const issueMessage = ref<string>()
 
-    function buildErrorMessage(stats: MasterRecordStatistics): string {
+    function buildErrorMessage(stats?: MasterRecordStatistics): string {
       let msg = ''
       let workItemsMsg = ''
       let errorMsg = ''

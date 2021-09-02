@@ -4,11 +4,41 @@ import { ErrorSource, Message } from '~/interfaces/messages'
 import { ChannelMessage } from '~/interfaces/mirth'
 import { WorkItem } from '~/interfaces/workitem'
 
-interface MessagePage {
+export interface MessagePage {
   items: Message[]
   total: number
   page: number
   size: number
+}
+
+export function buildCommonMessageQuery(
+  orderBy: string | null,
+  status: string | null,
+  since: string | null,
+  until: string | null
+): string {
+  let path = ''
+  // Order results
+  if (orderBy) {
+    path = path + `&order_by=${orderBy}`
+  }
+  // Filter by since if it exists
+  if (since) {
+    path = path + `&since=${since}`
+  }
+  // Pass `until` to API if it's given
+  if (until) {
+    path = path + `&until=${until}`
+  } else if (since) {
+    // If no `until` is given but a `since` is given, then a single date is selected
+    // In this case we want to only show that one day, not a dateRange
+    path = path + `&until=${since}`
+  }
+  // Filter by message status
+  if (status) {
+    path = path + `&status=${status}`
+  }
+  return path
 }
 
 export default function () {
@@ -17,26 +47,17 @@ export default function () {
   async function fetchMessagesPage(
     page: number,
     size: number,
-    orderBy: string,
+    orderBy: string | null,
+    status: string | null,
     since: string | null,
     until: string | null,
     facility: string | null,
     nationalId: string | null
   ): Promise<MessagePage> {
-    let path = `${$config.apiBase}/v1/messages/?status=ERROR&page=${page}&size=${size}&sort_by=received&order_by=${orderBy}`
+    let path = `${$config.apiBase}/v1/messages/?status=ERROR&page=${page}&size=${size}&sort_by=received`
 
-    // Filter by since if it exists
-    if (since) {
-      path = path + `&since=${since}`
-    }
-    // Pass `until` to API if it's given
-    if (until) {
-      path = path + `&until=${until}`
-    } else if (since) {
-      // If no `until` is given but a `since` is given, then a single date is selected
-      // In this case we want to only show that one day, not a dateRange
-      path = path + `&until=${since}`
-    }
+    // Filter by status and date
+    path = path + buildCommonMessageQuery(orderBy, status, since, until)
 
     // Filter by facility if it exists
     if (facility) {
