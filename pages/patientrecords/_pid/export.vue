@@ -14,9 +14,10 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
 
 import { PatientRecord } from '@/interfaces/patientrecord'
+import fetchPatientRecords from '~/helpers/fetch/fetchPatientRecords'
 
 export default defineComponent({
   props: {
@@ -27,47 +28,39 @@ export default defineComponent({
   },
 
   setup(props) {
-    const { $axios, $toast } = useContext()
+    const { $toast } = useContext()
+    const { postPatientRecordExport } = fetchPatientRecords()
 
     const exportKey = ref('exportPV')
-    const currentExportUrl = computed(() => {
-      if (exportKey.value === 'exportPV') {
-        return props.record.links.exportPV
-      } else if (exportKey.value === 'exportPVDocs') {
-        return props.record.links.exportPVDocs
-      } else if (exportKey.value === 'exportPVTests') {
-        return props.record.links.exportPVTests
-      } else if (exportKey.value === 'exportRADAR') {
-        return props.record.links.exportRADAR
-      } else {
-        return undefined
-      }
-    })
 
     function actionExport() {
-      if (currentExportUrl.value) {
-        $axios
-          .$post(currentExportUrl.value)
-          .then(() => {
-            $toast.show({
-              type: 'success',
-              title: 'Success',
-              message: 'Export initiated',
-              classTimeout: 'bg-green-600',
-            })
-          })
-          .catch((error) => {
-            console.log(error.response.data.detail)
-            $toast.show({
-              type: 'danger',
-              title: 'Error',
-              message: error.response.data.detail,
-              timeout: 10,
-              classTimeout: 'bg-red-600',
-            })
-            throw error
-          })
+      let scope: string | null
+      switch (exportKey.value) {
+        case 'exportPVDocs': {
+          scope = 'docs'
+          break
+        }
+        case 'exportPVTests': {
+          scope = 'tests'
+          break
+        }
+        case 'exportRADAR': {
+          scope = 'radar'
+          break
+        }
+        default: {
+          scope = null
+          break
+        }
       }
+      postPatientRecordExport(props.record, scope).then(() => {
+        $toast.show({
+          type: 'success',
+          title: 'Success',
+          message: 'Export initiated',
+          classTimeout: 'bg-green-600',
+        })
+      })
     }
 
     return {

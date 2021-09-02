@@ -73,10 +73,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useContext } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
 
 import { Treatment } from '@/interfaces/treatment'
 import { PatientRecord } from '@/interfaces/patientrecord'
+import fetchPatientRecords from '~/helpers/fetch/fetchPatientRecords'
 
 interface TreatmentEvent {
   id: string
@@ -104,19 +105,14 @@ export default defineComponent({
   },
 
   setup(props) {
-    const { $axios } = useContext()
+    const { fetchPatientRecordTreatments } = fetchPatientRecords()
 
     // Data refs
     const treatments = ref<Treatment[]>()
 
     // Data fetching
-
-    async function fetchTreatments() {
-      treatments.value = await $axios.$get(props.record.links.treatments)
-    }
-
-    onMounted(() => {
-      fetchTreatments()
+    onMounted(async () => {
+      treatments.value = await fetchPatientRecordTreatments(props.record)
     })
 
     // Sorted and paired treatment events

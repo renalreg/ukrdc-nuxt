@@ -38,20 +38,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useContext, useRoute, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, useRoute, watch } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/helpers/utils/dateUtils'
 
 import { LabOrderShort } from '@/interfaces/laborder'
 import { PatientRecord } from '@/interfaces/patientrecord'
 import usePagination from '~/helpers/query/usePagination'
-
-interface LabOrdersPage {
-  items: LabOrderShort[]
-  total: number
-  page: number
-  size: number
-}
+import fetchPatientRecords from '~/helpers/fetch/fetchPatientRecords'
 
 export default defineComponent({
   props: {
@@ -63,8 +57,8 @@ export default defineComponent({
 
   setup(props) {
     const route = useRoute()
-    const { $axios } = useContext()
     const { page, total, size } = usePagination()
+    const { fetchPatientRecordLabOrdersPage } = fetchPatientRecords()
 
     // Data refs
     const orders = ref([] as LabOrderShort[])
@@ -72,13 +66,11 @@ export default defineComponent({
     // Data fetching
 
     async function fetchOrders() {
-      const res: LabOrdersPage = await $axios.$get(
-        `${props.record.links.laborders}?page=${page.value}&size=${size.value}`
-      )
-      orders.value = res.items
-      total.value = res.total
-      page.value = res.page
-      size.value = res.size
+      const ordersPage = await fetchPatientRecordLabOrdersPage(props.record, page.value || 0, size.value)
+      orders.value = ordersPage.items
+      total.value = ordersPage.total
+      page.value = ordersPage.page
+      size.value = ordersPage.size
     }
 
     onMounted(() => {

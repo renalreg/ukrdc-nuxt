@@ -47,12 +47,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/helpers/utils/dateUtils'
 
 import { Survey } from '@/interfaces/survey'
 import { PatientRecord } from '@/interfaces/patientrecord'
+import fetchPatientRecords from '~/helpers/fetch/fetchPatientRecords'
 
 export default defineComponent({
   props: {
@@ -63,19 +64,14 @@ export default defineComponent({
   },
 
   setup(props) {
-    const { $axios } = useContext()
+    const { fetchPatientRecordSurveys } = fetchPatientRecords()
 
     // Data refs
     const surveys = ref<Survey[]>()
 
     // Data fetching
-
-    async function fetchSurveys() {
-      surveys.value = await $axios.$get(props.record.links.surveys)
-    }
-
-    onMounted(() => {
-      fetchSurveys()
+    onMounted(async () => {
+      surveys.value = await fetchPatientRecordSurveys(props.record)
     })
 
     return {

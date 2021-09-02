@@ -85,26 +85,14 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useContext, useRoute, watch } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref, useRoute, watch } from '@nuxtjs/composition-api'
 
 import { PatientRecord } from '@/interfaces/patientrecord'
 import { ResultItem } from '@/interfaces/laborder'
 import { formatDate } from '@/helpers/utils/dateUtils'
 import usePagination from '~/helpers/query/usePagination'
 import useQuery from '~/helpers/query/useQuery'
-
-interface ResultsPage {
-  items: ResultItem[]
-  total: number
-  page: number
-  size: number
-}
-
-interface ResultService {
-  id: string
-  description: string
-  standard: string
-}
+import fetchPatientRecords, { ResultService } from '~/helpers/fetch/fetchPatientRecords'
 
 export default defineComponent({
   props: {
@@ -115,9 +103,9 @@ export default defineComponent({
   },
   setup(props) {
     const route = useRoute()
-    const { $axios } = useContext()
     const { page, total, size } = usePagination()
     const { stringQuery } = useQuery()
+    const { fetchPatientRecordResultsPage, fetchPatientRecordResultServices } = fetchPatientRecords()
 
     // Data refs
 
@@ -126,27 +114,21 @@ export default defineComponent({
     // Data fetching
 
     async function fetchResults() {
-      let path = `${props.record.links.results}?page=${page.value}&size=${size.value}`
-
-      // Filter by service if it exists
-      if (selectedService.value) {
-        path = path + `&service_id=${selectedService.value}`
-      }
-
-      // Filter by order ID if it exists
-      if (selectedOrderId.value) {
-        path = path + `&order_id=${selectedOrderId.value}`
-      }
-
-      const res: ResultsPage = await $axios.$get(path)
-      results.value = res.items
-      total.value = res.total
-      page.value = res.page
-      size.value = res.size
+      const resultsPage = await fetchPatientRecordResultsPage(
+        props.record,
+        page.value || 0,
+        size.value,
+        selectedService.value,
+        selectedOrderId.value
+      )
+      results.value = resultsPage.items
+      total.value = resultsPage.total
+      page.value = resultsPage.page
+      size.value = resultsPage.size
 
       // If we don't already have a list of available codes, fetch one
       if (availableServicesMap.value.length === 0) {
-        availableServicesMap.value = await $axios.$get(props.record.links.resultServices)
+        availableServicesMap.value = await fetchPatientRecordResultServices(props.record)
       }
     }
 
