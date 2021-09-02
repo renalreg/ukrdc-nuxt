@@ -4,6 +4,7 @@ import { MasterRecord, MasterRecordStatistics } from '~/interfaces/masterrecord'
 import { MinimalMessage } from '~/interfaces/messages'
 import { PatientRecord } from '~/interfaces/patientrecord'
 import { LinkRecord } from '~/interfaces/linkrecords'
+import { WorkItem } from '~/interfaces/workitem'
 
 export default function () {
   const { $axios, $config } = useContext()
@@ -47,6 +48,10 @@ export default function () {
     return (await $axios.$get(masterRecord.links.linkrecords)) as LinkRecord[]
   }
 
+  async function fetchMasterRecordWorkItems(masterRecord: MasterRecord): Promise<WorkItem[]> {
+    return (await $axios.$get(masterRecord.links.workitems)) as WorkItem[]
+  }
+
   return {
     fetchMasterRecord,
     fetchMasterRecordRelated,
@@ -55,5 +60,6 @@ export default function () {
     fetchMasterRecordLatestMessage,
     fetchMasterRecordPatientRecords,
     fetchMasterRecordLinkRecords,
+    fetchMasterRecordWorkItems,
   }
 }

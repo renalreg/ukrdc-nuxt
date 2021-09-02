@@ -42,7 +42,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useContext, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/helpers/utils/dateUtils'
 import { formatGender } from '@/helpers/utils/codeUtils'
@@ -67,8 +67,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { $axios } = useContext()
-    const { fetchMasterRecordMessagesPage } = fetchMasterRecords()
+    const { fetchMasterRecordMessagesPage, fetchMasterRecordWorkItems } = fetchMasterRecords()
     const { hasPermission } = usePermissions()
 
     // Data refs
@@ -84,7 +83,7 @@ export default defineComponent({
     async function fetchWorkItems() {
       // Use the record links to load related data concurrently
       if (hasPermission('ukrdc:workitems:read')) {
-        workItems.value = await $axios.$get(props.record.links.workitems)
+        workItems.value = await fetchMasterRecordWorkItems(props.record)
       }
     }
 
