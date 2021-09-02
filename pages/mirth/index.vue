@@ -41,26 +41,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
+import fetchMirth from '~/helpers/fetch/fetchMirth'
 
 import { ChannelGroup } from '@/interfaces/mirth'
 
 export default defineComponent({
   setup() {
-    const { $axios, $config } = useContext()
+    const { fetchMirthGroups } = fetchMirth()
 
     // Data refs
-
     const mirthGroups = ref<ChannelGroup[]>()
 
     // Data fetching
-
-    async function fetchMirthGroups() {
-      mirthGroups.value = await $axios.$get(`${$config.apiBase}/v1/mirth/groups/`)
-    }
-
-    onMounted(() => {
-      fetchMirthGroups()
+    onMounted(async () => {
+      mirthGroups.value = await fetchMirthGroups()
     })
 
     return {

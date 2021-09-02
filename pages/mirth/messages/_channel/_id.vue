@@ -14,29 +14,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useContext, useRoute } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, useRoute } from '@nuxtjs/composition-api'
+import fetchMirth from '~/helpers/fetch/fetchMirth'
 
 import { ChannelMessage } from '@/interfaces/mirth'
 
 export default defineComponent({
   setup() {
     const route = useRoute()
-    const { $axios, $config } = useContext()
+    const { fetchMirthMessage } = fetchMirth()
 
     // Data refs
-
     const message = ref<ChannelMessage>()
 
     // Data fetching
-
-    async function fetchMessage() {
-      message.value = await $axios.$get(
-        `${$config.apiBase}/v1/mirth/channels/${route.value.params.channel}/messages/${route.value.params.id}/`
-      )
-    }
-
-    onMounted(() => {
-      fetchMessage()
+    onMounted(async () => {
+      message.value = await fetchMirthMessage(route.value.params.channel, route.value.params.id)
     })
 
     return {
