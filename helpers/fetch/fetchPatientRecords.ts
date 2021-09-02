@@ -1,10 +1,14 @@
 import { useContext } from '@nuxtjs/composition-api'
 import { LabOrderShort, ResultItem } from '~/interfaces/laborder'
+import { LinkRecordSummary } from '~/interfaces/linkrecords'
+import { MasterRecord } from '~/interfaces/masterrecord'
 import { Medication } from '~/interfaces/medication'
 import { Observation } from '~/interfaces/observation'
-import { PatientRecord } from '~/interfaces/patientrecord'
+import { PatientRecord, PatientRecordFull } from '~/interfaces/patientrecord'
+import { Person, PidXRef } from '~/interfaces/persons'
 import { Survey } from '~/interfaces/survey'
 import { Treatment } from '~/interfaces/treatment'
+import { WorkItem } from '~/interfaces/workitem'
 
 export interface ResultsPage {
   items: ResultItem[]
@@ -31,6 +35,22 @@ export interface ObservationPage {
   total: number
   page: number
   size: number
+}
+
+export interface DeletePIDFromEMPISchema {
+  persons: Person[]
+  masterRecords: MasterRecord[]
+  pidxrefs: PidXRef[]
+  workItems: WorkItem[]
+  linkRecords: LinkRecordSummary[]
+}
+
+export interface DeletePIDResponseSchema {
+  hash: string
+  committed: boolean
+
+  patientRecord: PatientRecordFull
+  empi: DeletePIDFromEMPISchema
 }
 
 export default function () {
@@ -137,6 +157,15 @@ export default function () {
     return await $axios.$post(path)
   }
 
+  async function postPatientRecordDelete(
+    record: PatientRecord,
+    confirmationHash: string | null
+  ): Promise<DeletePIDResponseSchema> {
+    return (await $axios.$post(record.links.delete, {
+      hash: confirmationHash,
+    })) as DeletePIDResponseSchema
+  }
+
   return {
     fetchPatientRecord,
     fetchPatientRecordRelated,
@@ -149,5 +178,6 @@ export default function () {
     fetchPatientRecordObservationCodes,
     fetchPatientRecordSurveys,
     postPatientRecordExport,
+    postPatientRecordDelete,
   }
 }
