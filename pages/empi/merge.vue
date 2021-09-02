@@ -121,11 +121,15 @@
 </template>
 
 <script lang="ts">
-import { computed, Ref, ref, useContext, useRoute, useRouter, watch } from '@nuxtjs/composition-api'
+import { computed, ref, useContext, useRoute, useRouter, watch } from '@nuxtjs/composition-api'
 import { defineComponent, onMounted } from '@vue/composition-api'
-import { modalInterface } from '@/interfaces/modal'
-import { MasterRecord } from '~/interfaces/masterrecord'
+
 import useQuery from '~/helpers/query/useQuery'
+import fetchEMPI from '~/helpers/fetch/fetchEMPI'
+import fetchMasterRecords from '@/helpers/fetch/fetchMasterRecords'
+
+import { modalInterface } from '~/interfaces/modal'
+import { MasterRecord } from '~/interfaces/masterrecord'
 
 enum Direction {
   superseding = 'superseding',
@@ -136,8 +140,10 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const router = useRouter()
-    const { $axios, $config, $toast } = useContext()
+    const { $toast } = useContext()
     const { stringQuery } = useQuery()
+    const { PostEMPIMerge } = fetchEMPI()
+    const { fetchMasterRecord } = fetchMasterRecords()
 
     // Modals
 
@@ -172,10 +178,12 @@ export default defineComponent({
 
     // Data fetching
     async function fetchRecords() {
-      await Promise.all([
-        supersededId.value ? fetchRecord(supersededId.value, superseded) : null,
-        supersedingId.value ? fetchRecord(supersedingId.value, superseding) : null,
-      ])
+      if (supersededId.value) {
+        superseded.value = await fetchMasterRecord(supersededId.value)
+      }
+      if (supersedingId.value) {
+        superseding.value = await fetchMasterRecord(supersedingId.value)
+      }
     }
 
     onMounted(() => {
@@ -253,37 +261,29 @@ export default defineComponent({
       supersededId.value = id
     }
 
-    async function fetchRecord(id: string, ouput: Ref) {
-      const path = `${$config.apiBase}/v1/masterrecords/${id}/`
-      const res: MasterRecord = await $axios.$get(path)
-      ouput.value = res
-    }
-
     // Do merge
 
     function requestMerge() {
-      $axios
-        .$post(`${$config.apiBase}/v1/empi/merge`, {
-          superseding: superseding.value?.id,
-          superseded: superseded.value?.id,
-        })
-        .then(() => {
-          $toast.show({
-            type: 'success',
-            title: 'Success',
-            message: 'Record merge request sent successfully',
-            timeout: 10,
-            classTimeout: 'bg-green-600',
+      if (superseded.value && superseding.value) {
+        PostEMPIMerge(superseded.value.id, superseding.value.id)
+          .then(() => {
+            $toast.show({
+              type: 'success',
+              title: 'Success',
+              message: 'Record merge request sent successfully',
+              timeout: 10,
+              classTimeout: 'bg-green-600',
+            })
+            clearMerge()
+            if (callbackPath.value) {
+              router.push(callbackPath.value)
+            }
           })
-          clearMerge()
-          if (callbackPath.value) {
-            router.push(callbackPath.value)
-          }
-        })
-        .finally(() => {
-          const el = beginMergeAlert.value as modalInterface
-          el.hide()
-        })
+          .finally(() => {
+            const el = beginMergeAlert.value as modalInterface
+            el.hide()
+          })
+      }
     }
 
     return {
