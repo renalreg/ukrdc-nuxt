@@ -1,7 +1,7 @@
-import { Patient } from '@/interfaces/patient'
 import { Medication } from './medication'
 import { Observation } from './observation'
 import { Survey } from './survey'
+import { Patient } from '@/interfaces/patient'
 
 interface ProgramMembership {
   programName: string
@@ -12,6 +12,7 @@ interface ProgramMembership {
 interface PatientRecordLinks {
   self: string
   related: string
+  delete: string
 
   medications: string
   treatments: string

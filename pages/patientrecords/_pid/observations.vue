@@ -51,31 +51,16 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  watch,
-  ref,
-  useRoute,
-  useRouter,
-  useContext,
-  computed,
-  onMounted,
-} from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref, useRoute, useRouter, watch } from '@nuxtjs/composition-api'
 
-import usePagination from '@/mixins/usePagination'
+import usePagination from '~/helpers/query/usePagination'
 
-import { arrayQuery } from '@/utilities/queryUtils'
-import { formatDate } from '@/utilities/dateUtils'
+import { arrayQuery } from '@/helpers/utils/queryUtils'
+import { formatDate } from '@/helpers/utils/dateUtils'
 
 import { Observation } from '@/interfaces/observation'
 import { PatientRecord } from '@/interfaces/patientrecord'
-
-interface ObservationPage {
-  items: Observation[]
-  total: number
-  page: number
-  size: number
-}
+import fetchPatientRecords from '~/helpers/fetch/fetchPatientRecords'
 
 export default defineComponent({
   props: {
@@ -88,8 +73,8 @@ export default defineComponent({
   setup(props) {
     const route = useRoute()
     const router = useRouter()
-    const { $axios } = useContext()
     const { page, total, size } = usePagination()
+    const { fetchPatientRecordObservationsPage, fetchPatientRecordObservationCodes } = fetchPatientRecords()
 
     // Data refs
 
@@ -109,15 +94,20 @@ export default defineComponent({
         }
       }
 
-      const res: ObservationPage = await $axios.$get(path)
-      observations.value = res.items
-      total.value = res.total
-      page.value = res.page
-      size.value = res.size
+      const observationsPage = await fetchPatientRecordObservationsPage(
+        props.record,
+        page.value || 0,
+        size.value,
+        selectedCodes.value
+      )
+      observations.value = observationsPage.items
+      total.value = observationsPage.total
+      page.value = observationsPage.page
+      size.value = observationsPage.size
 
       // If we don't already have a list of available codes, fetch one
       if (availableCodes.value.length === 0) {
-        availableCodes.value = await $axios.$get(props.record.links.observationCodes)
+        availableCodes.value = await fetchPatientRecordObservationCodes(props.record)
       }
     }
 

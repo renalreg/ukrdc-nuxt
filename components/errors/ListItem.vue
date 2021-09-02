@@ -47,7 +47,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from '@nuxtjs/composition-api'
-import { formatDate } from '@/utilities/dateUtils'
+import { formatDate } from '@/helpers/utils/dateUtils'
 import { Message } from '@/interfaces/messages'
 
 export default defineComponent({

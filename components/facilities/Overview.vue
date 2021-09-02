@@ -97,9 +97,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, computed, onMounted } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
 
 import { Facility } from '@/interfaces/facilities'
+import fetchFacilities from '~/helpers/fetch/fetchFacilities'
 
 export default defineComponent({
   props: {
@@ -114,13 +115,13 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { $axios, $config } = useContext()
+    const { fetchFacility } = fetchFacilities()
 
     const facility = ref<Facility>()
 
-    async function fetchFacility() {
-      facility.value = await $axios.$get(`${$config.apiBase}/v1/facilities/${props.code}`)
-    }
+    onMounted(async () => {
+      facility.value = await fetchFacility(props.code)
+    })
 
     const qualityPct = computed<number>(() => {
       if (!facility.value) {
@@ -133,10 +134,6 @@ export default defineComponent({
       const bad = facility.value.statistics.recordsWithErrors
       const good = total - bad
       return (good / total) * 100
-    })
-
-    onMounted(() => {
-      fetchFacility()
     })
 
     return {

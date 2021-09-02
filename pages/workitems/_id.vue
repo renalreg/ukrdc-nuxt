@@ -29,7 +29,7 @@
 
       <div class="flex justify-end">
         <GenericButton @click="closeModal.hide()"> Cancel </GenericButton>
-        <GenericButton type="submit" class="ml-3" colour="red" @click="closeWorkItem()">
+        <GenericButton type="submit" class="ml-3" colour="red" @click="handleCloseWorkItem()">
           Close Work Item
         </GenericButton>
       </div>
@@ -212,23 +212,24 @@
     </div>
 
     <!-- Related errors card -->
-    <ErrorsMiniList v-if="record" class="mt-4 mb-8" :errors-url="record.links.messages" :size="5" />
+    <WorkitemsRelatedErrorsList v-if="record" class="mt-4 mb-8" :workitem="record" :size="5" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useRoute, useContext, computed, useMeta, onMounted } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref, useContext, useMeta, useRoute } from '@nuxtjs/composition-api'
 
-import { formatDate } from '@/utilities/dateUtils'
-import { formatGender } from '@/utilities/codeUtils'
-import { isEmptyObject } from '@/utilities/objectUtils'
-import { delay } from '@/utilities/timeUtils'
-import { workItemIsMergable } from '@/utilities/workItemUtils'
+import { formatDate } from '@/helpers/utils/dateUtils'
+import { formatGender } from '@/helpers/utils/codeUtils'
+import { isEmptyObject } from '@/helpers/utils/objectUtils'
+import { delay } from '@/helpers/utils/timeUtils'
+import { workItemIsMergable } from '@/helpers/utils/workItemUtils'
 
 import { WorkItem, WorkItemExtended } from '@/interfaces/workitem'
 import { modalInterface } from '@/interfaces/modal'
 
-import usePermissions from '~/mixins/usePermissions'
+import usePermissions from '~/helpers/usePermissions'
+import fetchWorkItems from '~/helpers/fetch/fetchWorkItems'
 
 interface AvailableActions {
   close: boolean
@@ -241,8 +242,9 @@ export default defineComponent({
   setup() {
     // Dependencies
     const route = useRoute()
-    const { $axios, $config, $toast } = useContext()
+    const { $toast } = useContext()
     const { hasPermission } = usePermissions()
+    const { fetchWorkItem, closeWorkItem, putWorkItemComment, fetchWorkItemCollection } = fetchWorkItems()
 
     // Head
     const { title } = useMeta()
@@ -250,6 +252,7 @@ export default defineComponent({
 
     // Work item record data
     const record = ref<WorkItemExtended>()
+    const customComment = ref('')
 
     // Related persons data
     const workItemCollection = ref([] as WorkItem[])
@@ -260,21 +263,19 @@ export default defineComponent({
 
     // Data fetching
 
-    async function fetchWorkItem() {
-      // Get the main record data
-      const path = `${$config.apiBase}/v1/workitems/${route.value.params.id}/`
-      const res: WorkItemExtended = await $axios.$get(path)
-      record.value = res
-      customComment.value = res.updateDescription
+    async function getWorkItem() {
+      record.value = await fetchWorkItem(route.value.params.id)
+      workItemCollection.value = await fetchWorkItemCollection(record.value)
+
+      // Apply existing comment
+      customComment.value = record.value?.updateDescription || ''
 
       // Check if the workitem has already been merged and is ready to be closed
       checkMerged()
-
-      workItemCollection.value = await $axios.$get(record.value.links.collection)
     }
 
     onMounted(() => {
-      fetchWorkItem()
+      getWorkItem()
     })
 
     // Trigger dynamic modals
@@ -325,39 +326,22 @@ export default defineComponent({
 
     const closeMessageOverride = ref<String>()
 
-    // Custom comment
-    const customComment = ref('')
-
     // Template refs
     const addCommentModal = ref<modalInterface>()
     const closeModal = ref<modalInterface>()
 
     // Workitem actions
-    async function updateWorkItemComment() {
-      const path = `${$config.apiBase}/v1/workitems/${route.value.params.id}/`
-      await $axios.$put(path, {
-        comment: customComment.value,
-      })
-
-      const el = addCommentModal.value as modalInterface
-      el.toggle()
-      fetchWorkItem()
-      $toast.show({
-        type: 'success',
-        title: 'Success',
-        message: 'Comment added',
-        classTimeout: 'bg-green-600',
-      })
-    }
-
-    function closeWorkItem() {
-      // Close a workitem with a comment
-      $axios
-        .$post(`${$config.apiBase}/v1/workitems/${route.value.params.id}/close`, {
-          comment: customComment.value,
+    function updateWorkItemComment() {
+      putWorkItemComment(route.value.params.id, customComment.value)
+        .then(() => {
+          $toast.show({
+            type: 'success',
+            title: 'Success',
+            message: 'Comment added',
+            classTimeout: 'bg-green-600',
+          })
         })
         .catch((error) => {
-          console.log(error.response.data.detail)
           $toast.show({
             type: 'danger',
             title: 'Error',
@@ -370,7 +354,38 @@ export default defineComponent({
         .finally(() => {
           // Delay fetch to allow JTRACE time to process
           delay(1000).then(() => {
-            fetchWorkItem()
+            getWorkItem()
+          })
+        })
+
+      const el = addCommentModal.value as modalInterface
+      el.toggle()
+    }
+
+    function handleCloseWorkItem() {
+      closeWorkItem(route.value.params.id, customComment.value)
+        .then(() => {
+          $toast.show({
+            type: 'success',
+            title: 'Success',
+            message: 'Work Item closed',
+            classTimeout: 'bg-green-600',
+          })
+        })
+        .catch((error) => {
+          $toast.show({
+            type: 'danger',
+            title: 'Error',
+            message: error.response.data.detail,
+            timeout: 10,
+            classTimeout: 'bg-red-600',
+          })
+          throw error
+        })
+        .finally(() => {
+          // Delay fetch to allow JTRACE time to process
+          delay(1000).then(() => {
+            getWorkItem()
           })
         })
 
@@ -395,7 +410,7 @@ export default defineComponent({
       showIncomingAttributes,
       showDestinationPersons,
       updateWorkItemComment,
-      closeWorkItem,
+      handleCloseWorkItem,
       hasPermission,
     }
   },

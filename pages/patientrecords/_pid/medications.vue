@@ -25,10 +25,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, computed, onMounted } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
 
 import { Medication } from '@/interfaces/medication'
 import { PatientRecord } from '@/interfaces/patientrecord'
+import fetchPatientRecords from '~/helpers/fetch/fetchPatientRecords'
 
 export default defineComponent({
   props: {
@@ -39,19 +40,14 @@ export default defineComponent({
   },
 
   setup(props) {
-    const { $axios } = useContext()
+    const { fetchPatientRecordMedications } = fetchPatientRecords()
 
     // Data refs
     const medications = ref<Medication[]>()
 
     // Data fetching
-
-    async function fetchMedications() {
-      medications.value = await $axios.$get(props.record.links.medications)
-    }
-
-    onMounted(() => {
-      fetchMedications()
+    onMounted(async () => {
+      medications.value = await fetchPatientRecordMedications(props.record)
     })
 
     // Split active and inactive medications

@@ -56,31 +56,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, ref, useRoute, useContext, onMounted } from '@nuxtjs/composition-api'
-
-import usePagination from '@/mixins/usePagination'
+import { defineComponent, onMounted, ref, useRoute, watch } from '@nuxtjs/composition-api'
 
 import { WorkItem } from '@/interfaces/workitem'
-import useQuery from '~/mixins/useQuery'
-import useFacilities from '~/mixins/useFacilities'
-import useSortBy from '~/mixins/useSortBy'
+import usePagination from '~/helpers/query/usePagination'
 
-interface WorkItemPage {
-  items: WorkItem[]
-  total: number
-  page: number
-  size: number
-}
+import useQuery from '~/helpers/query/useQuery'
+import useFacilities from '~/helpers/useFacilities'
+import useSortBy from '~/helpers/query/useSortBy'
+
+import fetchWorkItems from '~/helpers/fetch/fetchWorkItems'
 
 export default defineComponent({
   setup() {
     const route = useRoute()
 
-    const { $axios, $config } = useContext()
     const { page, total, size } = usePagination()
     const { arrayQuery } = useQuery()
-    const { facilities, facilityIds, facilityLabels, selectedFacility, fetchFacilities } = useFacilities()
+    const { facilities, facilityIds, facilityLabels, selectedFacility } = useFacilities()
     const { orderAscending, orderBy, toggleOrder } = useSortBy()
+    const { fetchWorkItemsPage } = fetchWorkItems()
 
     // Data refs
 
@@ -89,32 +84,27 @@ export default defineComponent({
 
     // Data fetching
 
-    async function fetchWorkitems() {
-      // Fetch the dashboard response from our API server
-      let path = `${$config.apiBase}/v1/workitems/?page=${page.value}&size=${size.value}&sort_by=last_updated&order_by=${orderBy.value}`
-      // Pass selected statuses to the API
-      for (const status of statuses.value) {
-        path = path + `&status=${status}`
-      }
-      // Filter by facility if it exists
-      if (selectedFacility.value) {
-        path = path + `&facility=${selectedFacility.value}`
-      }
-      const res: WorkItemPage = await $axios.$get(path)
-      workitems.value = res.items
-      total.value = res.total
-      page.value = res.page
-      size.value = res.size
+    async function getWorkitems() {
+      const itemsPage = await fetchWorkItemsPage(
+        page.value || 0,
+        size.value,
+        orderBy.value || 'desc',
+        statuses.value,
+        selectedFacility.value
+      )
 
-      await fetchFacilities()
+      workitems.value = itemsPage.items
+      total.value = itemsPage.total
+      page.value = itemsPage.page
+      size.value = itemsPage.size
     }
 
     onMounted(() => {
-      fetchWorkitems()
+      getWorkitems()
     })
 
     watch(route, () => {
-      fetchWorkitems()
+      getWorkitems()
     })
 
     return {

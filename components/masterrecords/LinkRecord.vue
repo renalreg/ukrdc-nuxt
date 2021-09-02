@@ -35,8 +35,10 @@
 <script lang="ts">
 import { defineComponent, ref, useContext, useRouter } from '@nuxtjs/composition-api'
 
-import { formatDate } from '@/utilities/dateUtils'
-import { formatGender } from '@/utilities/codeUtils'
+import { formatDate } from '@/helpers/utils/dateUtils'
+import { formatGender } from '@/helpers/utils/codeUtils'
+
+import fetchEMPI from '~/helpers/fetch/fetchEMPI'
 
 import { LinkRecord } from '@/interfaces/linkrecords'
 import { modalInterface } from '~/interfaces/modal'
@@ -50,18 +52,14 @@ export default defineComponent({
   },
   setup(props) {
     const router = useRouter()
-    const { $axios, $config, $toast } = useContext()
+    const { $toast } = useContext()
+    const { PostEMPIUnlink } = fetchEMPI()
 
     const unlinkModal = ref<modalInterface>()
     const unlinkComment = ref('')
 
     function doUnlink() {
-      $axios
-        .$post(`${$config.apiBase}/v1/empi/unlink/`, {
-          personId: props.record.person.id,
-          masterId: props.record.masterRecord.id,
-          comment: unlinkComment.value || '',
-        })
+      PostEMPIUnlink(props.record.person.id, props.record.masterRecord.id, unlinkComment.value)
         .then((response: LinkRecord) => {
           console.log(response)
           $toast.show({

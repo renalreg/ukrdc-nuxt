@@ -58,24 +58,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useContext, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
 
 import { Code } from '@/interfaces/codes'
-import useQuery from '~/mixins/useQuery'
-import usePagination from '~/mixins/usePagination'
-
-interface CodesPage {
-  items: Code[]
-  total: number
-  page: number
-  size: number
-}
+import useQuery from '~/helpers/query/useQuery'
+import usePagination from '~/helpers/query/usePagination'
+import fetchCodes from '~/helpers/fetch/fetchCodes'
 
 export default defineComponent({
   setup() {
-    const { $axios, $config } = useContext()
     const { page, total, size } = usePagination()
     const { stringQuery } = useQuery()
+    const { fetchCodingStandards, fetchCodesPage, fetchInProgress } = fetchCodes()
 
     // Data refs
 
@@ -86,37 +80,17 @@ export default defineComponent({
     const selectedCode = ref<Code>()
 
     // Data fetching
-
-    const fetchInProgress = ref(false)
-
-    async function fetchCodingStandards() {
-      const standardsResponse: string[] = await $axios.$get(`${$config.apiBase}/v1/codes/standards/`)
-      // Fetch the dashboard response from our API server
-      standardsResponse.sort()
-      standards.value = standardsResponse
+    async function getCodes() {
+      const codesPage = await fetchCodesPage(page.value || 0, size.value, selectedStandard.value)
+      codes.value = codesPage.items
+      total.value = codesPage.total
+      page.value = codesPage.page
+      size.value = codesPage.size
     }
 
-    async function fetchCodes() {
-      fetchInProgress.value = true
-      // Fetch code list
-      let path = `${$config.apiBase}/v1/codes/list/?page=${page.value}&size=${size.value}`
-      // Filter by service if it exists
-      if (selectedStandard.value) {
-        path = path + `&coding_standard=${encodeURIComponent(selectedStandard.value)}`
-      }
-      const codesResponse: CodesPage = await $axios.$get(path)
-      // Fetch the dashboard response from our API server
-      codes.value = codesResponse.items
-      total.value = codesResponse.total
-      page.value = codesResponse.page
-      size.value = codesResponse.size
-
-      fetchInProgress.value = false
-    }
-
-    onMounted(() => {
-      fetchCodingStandards()
-      fetchCodes()
+    onMounted(async () => {
+      standards.value = await fetchCodingStandards()
+      getCodes()
     })
 
     watch([page, selectedStandard], (curr, prev) => {
@@ -126,7 +100,7 @@ export default defineComponent({
       // to fetch, otherwise the list of codes will refresh
       // every time you click on a code and change page.
       if (!(curr[0] === prev[0] && curr[1] === prev[1])) {
-        fetchCodes()
+        getCodes()
       }
     })
 

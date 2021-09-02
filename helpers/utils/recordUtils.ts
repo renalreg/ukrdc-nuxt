@@ -1,4 +1,4 @@
-import { PatientRecord } from '@/interfaces/patientrecord'
+import { PatientRecord } from '~/interfaces/patientrecord'
 
 const ukrdcMembershipFacilities = ['PV', 'PKB']
 const membershipExtracts = ['RADAR']

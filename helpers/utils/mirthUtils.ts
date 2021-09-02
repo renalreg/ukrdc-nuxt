@@ -1,4 +1,4 @@
-import { ChannelMessage } from '@/interfaces/mirth'
+import { ChannelMessage } from '~/interfaces/mirth'
 
 export function messageHasErrors(message: ChannelMessage): boolean {
   for (const msg of Object.values(message.connectorMessages)) {

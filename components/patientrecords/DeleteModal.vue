@@ -227,13 +227,14 @@
 
 <script lang="ts">
 import { defineComponent, ref, useContext, watch } from '@nuxtjs/composition-api'
-import useModal from '@/mixins/useModal'
-import { formatDate } from '@/utilities/dateUtils'
+import useModal from '@/helpers/useModal'
+import { formatDate } from '@/helpers/utils/dateUtils'
 import { PatientRecord, PatientRecordFull } from '~/interfaces/patientrecord'
 import { MasterRecord } from '~/interfaces/masterrecord'
 import { Person, PidXRef } from '~/interfaces/persons'
 import { WorkItem } from '~/interfaces/workitem'
 import { LinkRecordSummary } from '~/interfaces/linkrecords'
+import fetchPatientRecords from '~/helpers/fetch/fetchPatientRecords'
 
 interface DeletePIDFromEMPISchema {
   persons: Person[]
@@ -260,8 +261,9 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const { $axios, $config, $toast } = useContext()
+    const { $toast } = useContext()
     const { visible, show, hide, toggle } = useModal()
+    const { postPatientRecordDelete } = fetchPatientRecords()
 
     const confirmChecked = ref(false)
     const previewResponse = ref<DeletePIDResponseSchema>()
@@ -284,14 +286,11 @@ export default defineComponent({
 
         try {
           // Fetch the delete preview and confirmation hash
-          const res: DeletePIDResponseSchema = await $axios.$post(
-            `${$config.apiBase}/v1/patientrecords/${props.item.pid}/delete`
-          )
-          previewResponse.value = res
+          previewResponse.value = await postPatientRecordDelete(props.item, null)
+          console.log(previewResponse.value)
         } catch (error) {
           // Populate error message if preview fails
           if (error.response.status === 400) {
-            console.log(error.response.data.detail)
             previewErrorMessage.value = error.response.data.detail
           }
         }
@@ -306,14 +305,7 @@ export default defineComponent({
         // Start the delete spinner
         deleteInProgress.value = true
         // Request an actual delete by sending the confirmation hash
-        const res: DeletePIDResponseSchema = await $axios.$post(
-          `${$config.apiBase}/v1/patientrecords/${props.item.pid}/delete`,
-          {
-            hash: previewResponse.value.hash,
-          }
-        )
-        // Populate the updated preview (currently unused)
-        previewResponse.value = res
+        previewResponse.value = await postPatientRecordDelete(props.item, previewResponse.value.hash)
       }
       // Remove the delete spinner
       deleteInProgress.value = false

@@ -207,8 +207,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref, onMounted } from '@nuxtjs/composition-api'
-import { removeElement } from '@/utilities/domUtils'
+import { computed, defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
+import { removeElement } from '@/helpers/utils/domUtils'
 
 interface Action {
   action(): void

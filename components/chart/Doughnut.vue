@@ -7,7 +7,8 @@
 <script lang="ts">
 import { defineComponent, onMounted } from '@nuxtjs/composition-api'
 
-import { Chart, DoughnutController, ArcElement } from 'chart.js'
+import { ArcElement, Chart, DoughnutController } from 'chart.js'
+
 Chart.register(DoughnutController, ArcElement)
 
 export default defineComponent({

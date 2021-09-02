@@ -21,31 +21,22 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  useRoute,
-  useContext,
-  computed,
-  watch,
-  useRouter,
-  useMeta,
-  onMounted,
-} from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref, useMeta, useRoute, useRouter, watch } from '@nuxtjs/composition-api'
 
 import { PatientRecord } from '@/interfaces/patientrecord'
 import { TabItem } from '@/interfaces/tabs'
 
-import { isMembership } from '@/utilities/recordUtils'
+import { isMembership } from '@/helpers/utils/recordUtils'
+import fetchPatientRecords from '~/helpers/fetch/fetchPatientRecords'
 
-import usePermissions from '~/mixins/usePermissions'
+import usePermissions from '~/helpers/usePermissions'
 
 export default defineComponent({
   setup() {
     const route = useRoute()
     const router = useRouter()
-    const { $axios, $config } = useContext()
     const { hasPermission } = usePermissions()
+    const { fetchPatientRecord, fetchPatientRecordRelated } = fetchPatientRecords()
 
     // Head
     const { title } = useMeta()
@@ -58,21 +49,16 @@ export default defineComponent({
 
     // Data fetching
 
-    async function fetchRecord() {
-      const path = `${$config.apiBase}/v1/patientrecords/${route.value.params.pid}/`
-
-      const res: PatientRecord = await $axios.$get(path)
-      record.value = res
+    async function getRecord() {
+      record.value = await fetchPatientRecord(route.value.params.pid)
+      related.value = await fetchPatientRecordRelated(record.value)
 
       // Update title
       title.value = `${fullName.value} from ${record.value.sendingfacility}`
-
-      const rel: PatientRecord[] = await $axios.$get(`${path}related/`)
-      related.value = rel
     }
 
     onMounted(() => {
-      fetchRecord()
+      getRecord()
     })
 
     // PID Switcher UI

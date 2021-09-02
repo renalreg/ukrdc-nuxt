@@ -19,7 +19,7 @@
 import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
 import { PatientRecord } from '@/interfaces/patientrecord'
 import { modalInterface } from '~/interfaces/modal'
-import usePermissions from '~/mixins/usePermissions'
+import usePermissions from '~/helpers/usePermissions'
 
 export default defineComponent({
   props: {

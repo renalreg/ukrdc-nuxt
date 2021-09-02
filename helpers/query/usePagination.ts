@@ -1,5 +1,5 @@
 import { ref } from '@nuxtjs/composition-api'
-import useQuery from '@/mixins/useQuery'
+import useQuery from '~/helpers/query/useQuery'
 
 export default function () {
   const { integerQuery } = useQuery()

@@ -1,7 +1,7 @@
-import { useRoute, useRouter, computed } from '@nuxtjs/composition-api'
+import { computed, useRoute, useRouter } from '@nuxtjs/composition-api'
 
-import { DateRange } from '@/utilities/dateUtils'
-import { singleQuery } from '@/utilities/queryUtils'
+import { DateRange } from '~/helpers/utils/dateUtils'
+import { singleQuery } from '~/helpers/utils/queryUtils'
 
 export default function () {
   const route = useRoute()

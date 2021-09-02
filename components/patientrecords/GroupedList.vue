@@ -57,7 +57,7 @@ import { computed, defineComponent } from '@nuxtjs/composition-api'
 
 import { PatientRecord } from '@/interfaces/patientrecord'
 
-import { isData, isSurvey, isMigrated, isMembership, isTracing } from '@/utilities/recordUtils'
+import { isData, isMembership, isMigrated, isSurvey, isTracing } from '@/helpers/utils/recordUtils'
 
 interface PRGroups {
   data: PatientRecord[]

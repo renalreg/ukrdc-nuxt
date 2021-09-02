@@ -1,16 +1,16 @@
-/* 
+/*
 Builds computed properties with get and set methods.
 Get will read from the current router query, and
-set will change the current router query. 
+set will change the current router query.
 
 Type conversion is handled via the various included
 methods. E.g. boolearQuery will parse the query string
-and return a boolean. 
+and return a boolean.
 */
 
-import { useRoute, useRouter, computed } from '@nuxtjs/composition-api'
+import { computed, useRoute, useRouter } from '@nuxtjs/composition-api'
 
-import { singleQuery } from '@/utilities/queryUtils'
+import { singleQuery } from '~/helpers/utils/queryUtils'
 
 export default function () {
   const route = useRoute()

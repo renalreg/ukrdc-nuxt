@@ -56,34 +56,29 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, ref, useRoute, useContext, onMounted } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, useRoute, watch } from '@nuxtjs/composition-api'
 
-import usePagination from '@/mixins/usePagination'
-import useDateRange from '@/mixins/useDateRange'
-import { nowString } from '@/utilities/dateUtils'
-
+import { nowString } from '@/helpers/utils/dateUtils'
 import { Message } from '@/interfaces/messages'
-import useFacilities from '~/mixins/useFacilities'
-import useQuery from '~/mixins/useQuery'
-import useSortBy from '~/mixins/useSortBy'
+import usePagination from '~/helpers/query/usePagination'
+import useDateRange from '~/helpers/query/useDateRange'
 
-interface MessagePage {
-  items: Message[]
-  total: number
-  page: number
-  size: number
-}
+import useFacilities from '~/helpers/useFacilities'
+import useQuery from '~/helpers/query/useQuery'
+import useSortBy from '~/helpers/query/useSortBy'
+
+import fetchMessages from '~/helpers/fetch/fetchMessages'
 
 export default defineComponent({
   setup() {
     const route = useRoute()
 
-    const { $axios, $config } = useContext()
     const { page, total, size } = usePagination()
     const { makeDateRange } = useDateRange()
     const { stringQuery } = useQuery()
-    const { facilities, facilityIds, facilityLabels, selectedFacility, fetchFacilities } = useFacilities()
+    const { facilities, facilityIds, facilityLabels, selectedFacility } = useFacilities()
     const { orderAscending, orderBy, toggleOrder } = useSortBy()
+    const { fetchMessagesPage } = fetchMessages()
 
     // Set up URL query params for additional filters
     const nationalId = stringQuery('nationalid', null, true, true)
@@ -95,44 +90,29 @@ export default defineComponent({
     const messages = ref<Message[]>()
 
     // Data fetching
-    async function fetchMessages() {
-      // Fetch the dashboard response from our API server
-      let path = `${$config.apiBase}/v1/messages/?status=ERROR&page=${page.value}&size=${size.value}&sort_by=received&order_by=${orderBy.value}`
-      // Filter by since if it exists
-      if (dateRange.value.start) {
-        path = path + `&since=${dateRange.value.start}`
-      }
-      // Pass `until` to API if it's given
-      if (dateRange.value.end) {
-        path = path + `&until=${dateRange.value.end}`
-      } else if (dateRange.value.start) {
-        // If no `until` is given but a `since` is given, then a single date is selected
-        // In this case we want to only show that one day, not a dateRange
-        path = path + `&until=${dateRange.value.start}`
-      }
-      // Filter by facility if it exists
-      if (selectedFacility.value) {
-        path = path + `&facility=${selectedFacility.value}`
-      }
-      // Filter by national ID if it exists
-      if (nationalId.value) {
-        path = path + `&ni=${nationalId.value}`
-      }
-      const res: MessagePage = await $axios.$get(path)
-      messages.value = res.items
-      total.value = res.total
-      page.value = res.page
-      size.value = res.size
-
-      await fetchFacilities()
+    async function getMessages() {
+      const messagesPage = await fetchMessagesPage(
+        page.value || 0,
+        size.value,
+        orderBy.value,
+        null, // Status filter
+        dateRange.value.start,
+        dateRange.value.end,
+        selectedFacility.value,
+        nationalId.value
+      )
+      messages.value = messagesPage.items
+      total.value = messagesPage.total
+      page.value = messagesPage.page
+      size.value = messagesPage.size
     }
 
     onMounted(() => {
-      fetchMessages()
+      getMessages()
     })
 
     watch(route, () => {
-      fetchMessages()
+      getMessages()
     })
 
     return {

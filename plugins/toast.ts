@@ -4,7 +4,7 @@ allowing programatic toast creation.
 */
 
 import { Plugin } from '@nuxt/types'
-import { spawn } from '@/utilities/domUtils'
+import { spawn } from '@/helpers/utils/domUtils'
 import Vue from 'vue'
 import Toast from '~/components/generic/Toast.vue'
 

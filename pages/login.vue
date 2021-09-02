@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, useRoute, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, useContext, useRoute } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   auth: false,

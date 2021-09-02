@@ -5,7 +5,7 @@ interface WorkItemLinks {
   self: string
   collection: string
   related: string
-  errors: string
+  messages: string
   merge: string
   close: string
   unlink: string

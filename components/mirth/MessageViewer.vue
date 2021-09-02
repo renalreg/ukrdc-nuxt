@@ -35,9 +35,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, watch } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref, watch } from '@nuxtjs/composition-api'
 
-import { ConnectorMessageData, ConnectorMessage, MetaDataMap } from '@/interfaces/mirth'
+import { ConnectorMessage, ConnectorMessageData, MetaDataMap } from '@/interfaces/mirth'
 import { modalInterface } from '@/interfaces/modal'
 
 interface ConnectorMessageDataTabs {

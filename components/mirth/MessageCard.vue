@@ -31,12 +31,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from '@nuxtjs/composition-api'
 
 import { ChannelMessage } from '@/interfaces/mirth'
 
-import { isEmptyObject } from '@/utilities/objectUtils'
-import { messageHasErrors } from '~/utilities/mirthUtils'
+import { isEmptyObject } from '@/helpers/utils/objectUtils'
+import { messageHasErrors } from '~/helpers/utils/mirthUtils'
 
 export default defineComponent({
   props: {

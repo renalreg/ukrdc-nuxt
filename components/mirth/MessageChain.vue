@@ -24,12 +24,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
 
 import { messageViewerModalInterface } from '@/interfaces/modal'
-import { ChannelMessage, ChainMap, ConnectorMessage } from '@/interfaces/mirth'
+import { ChainMap, ChannelMessage, ConnectorMessage } from '@/interfaces/mirth'
 
-import { isEmptyObject } from '@/utilities/objectUtils'
+import { isEmptyObject } from '@/helpers/utils/objectUtils'
 
 export default defineComponent({
   props: {

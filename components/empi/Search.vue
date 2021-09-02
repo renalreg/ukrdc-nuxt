@@ -22,7 +22,6 @@
           </div>
         </ul>
         <GenericPaginator
-          v-if="!searchInProgress"
           class="bg-white border-t border-gray-200"
           :page="page"
           :size="size"
@@ -43,20 +42,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, ref, useRoute, useContext, onMounted } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, useRoute, watch } from '@nuxtjs/composition-api'
 
-import usePagination from '@/mixins/usePagination'
+import usePagination from '~/helpers/query/usePagination'
 import { MasterRecord } from '@/interfaces/masterrecord'
 
-import useUserPrefs from '~/mixins/useUserPrefs'
-import useRecordSearch from '~/mixins/useRecordSearch'
+import useUserPrefs from '~/helpers/useUserPrefs'
+import useRecordSearch from '~/helpers/query/useRecordSearch'
 
-interface MasterRecordPage {
-  items: MasterRecord[]
-  total: number
-  page: number
-  size: number
-}
+import fetchSearchResults from '~/helpers/fetch/fetchSearchResults'
 
 export default defineComponent({
   props: {
@@ -69,39 +63,36 @@ export default defineComponent({
   setup(props) {
     const route = useRoute()
 
-    const { $axios, $config } = useContext()
     const { page, total, size } = usePagination()
     const { showUKRDC } = useUserPrefs()
     const { searchQueryIsPopulated, searchboxString, searchSubmit, apiQueryString } = useRecordSearch()
+    const { fetchSearchResultsPage, searchInProgress } = fetchSearchResults()
 
     const masterrecords = ref([] as MasterRecord[])
 
-    const searchInProgress = ref(false)
-
-    async function fetchSearchResults() {
+    async function fetchResults() {
       if (searchQueryIsPopulated) {
-        searchInProgress.value = true
-        // Fetch the search results from our API server
-        let path = `${$config.apiBase}/v1/search/?${apiQueryString.value}&page=${page.value}&size=${size.value}&include_ukrdc=true`
-        if (props.onlyUkrdc) {
-          path = path + `&only_ukrdc=1`
-        }
-        const res: MasterRecordPage = await $axios.$get(path)
-        masterrecords.value = res.items
-        total.value = res.total
-        page.value = res.page
-        size.value = res.size
+        const results = await fetchSearchResultsPage(
+          apiQueryString.value,
+          page.value || 0,
+          size.value,
+          true,
+          props.onlyUkrdc
+        )
 
-        searchInProgress.value = false
+        masterrecords.value = results.items
+        total.value = results.total
+        page.value = results.page
+        size.value = results.size
       }
     }
 
-    watch([route, showUKRDC], () => {
-      fetchSearchResults()
+    onMounted(() => {
+      fetchResults()
     })
 
-    onMounted(() => {
-      fetchSearchResults()
+    watch([route, showUKRDC], () => {
+      fetchResults()
     })
 
     return {

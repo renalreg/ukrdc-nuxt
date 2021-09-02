@@ -1,5 +1,5 @@
 import { computed, onMounted, ref, useRoute, watch } from '@nuxtjs/composition-api'
-import useQuery from '@/mixins/useQuery'
+import useQuery from '~/helpers/query/useQuery'
 
 export default function () {
   const route = useRoute()

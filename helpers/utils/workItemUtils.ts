@@ -1,4 +1,4 @@
-/* 
+/*
 USEFUL RULES FOR WORKITEMS
 
 Type 9:
@@ -13,7 +13,7 @@ Type 7:
 
 Type 6:
 - Always a UKRDC destination record
-- Usually raised in a pair with a type 7 
+- Usually raised in a pair with a type 7
   - The type 6 is mergable (both incoming and destination are UKRDC records)
 
 Type 4:

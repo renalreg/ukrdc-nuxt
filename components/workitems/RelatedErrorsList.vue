@@ -2,7 +2,7 @@
   <!-- Related errors card -->
   <GenericCard v-if="relatedErrors && relatedErrors.length > 0">
     <GenericCardHeader>
-      <TextH2> {{ title }} </TextH2>
+      <TextH2> Related Errors </TextH2>
     </GenericCardHeader>
     <ul class="divide-y divide-gray-200">
       <div v-for="item in relatedErrors" :key="item.id" :item="item" class="hover:bg-gray-50">
@@ -23,19 +23,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useContext, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
 import { Message } from '@/interfaces/messages'
+import { WorkItem } from '~/interfaces/workitem'
+import fetchWorkItems from '~/helpers/fetch/fetchWorkItems'
 
 export default defineComponent({
   props: {
-    errorsUrl: {
-      type: String,
+    workitem: {
+      type: Object as () => WorkItem,
       required: true,
-    },
-    title: {
-      type: String,
-      required: false,
-      default: 'Related Errors',
     },
     size: {
       type: Number,
@@ -50,7 +47,7 @@ export default defineComponent({
   },
   setup(props) {
     // Dependencies
-    const { $axios } = useContext()
+    const { fetchWorkItemMessagesPage } = fetchWorkItems()
 
     // Related errors data
     const relatedErrors = ref([] as Message[])
@@ -59,16 +56,20 @@ export default defineComponent({
     const relatedErrorsTotal = ref(0)
 
     async function updateRelatedErrors(): Promise<void> {
-      let path = props.errorsUrl + `?page=${relatedErrorsPage.value}&size=${relatedErrorsSize.value}`
-      if (props.status) {
-        path = path + `&status=${props.status}`
-      }
-      const res = await $axios.$get(path)
+      const errorsPage = await fetchWorkItemMessagesPage(
+        props.workitem,
+        relatedErrorsPage.value,
+        relatedErrorsSize.value,
+        null,
+        props.status,
+        null,
+        null
+      )
       // Set related errors
-      relatedErrors.value = res.items
-      relatedErrorsPage.value = res.page
-      relatedErrorsSize.value = res.size
-      relatedErrorsTotal.value = res.total
+      relatedErrors.value = errorsPage.items
+      relatedErrorsPage.value = errorsPage.page
+      relatedErrorsSize.value = errorsPage.size
+      relatedErrorsTotal.value = errorsPage.total
     }
 
     onMounted(updateRelatedErrors)

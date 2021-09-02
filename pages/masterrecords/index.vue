@@ -56,29 +56,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, ref, useRoute, useContext, onMounted } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, useRoute, watch } from '@nuxtjs/composition-api'
 
-import usePagination from '@/mixins/usePagination'
 import { MasterRecord } from '@/interfaces/masterrecord'
+import usePagination from '~/helpers/query/usePagination'
 
-import useUserPrefs from '~/mixins/useUserPrefs'
-import useRecordSearch from '~/mixins/useRecordSearch'
+import useUserPrefs from '~/helpers/useUserPrefs'
+import useRecordSearch from '~/helpers/query/useRecordSearch'
 
-interface MasterRecordPage {
-  items: MasterRecord[]
-  total: number
-  page: number
-  size: number
-}
+import fetchSearchResults from '~/helpers/fetch/fetchSearchResults'
 
 export default defineComponent({
   setup() {
     const route = useRoute()
 
-    const { $axios, $config } = useContext()
     const { page, total, size } = usePagination()
     const { showUKRDC } = useUserPrefs()
     const { searchQueryIsPopulated, searchboxString, searchSubmit, apiQueryString } = useRecordSearch()
+    const { fetchSearchResultsPage, searchInProgress } = fetchSearchResults()
 
     // Data refs
 
@@ -86,33 +81,28 @@ export default defineComponent({
 
     // Data fetching
 
-    const searchInProgress = ref(false)
-
-    async function fetchSearchResults() {
+    async function getResults() {
       if (searchQueryIsPopulated) {
-        searchInProgress.value = true
-        // Build our query string from search terms and page info
-        let path = `${$config.apiBase}/v1/search/?${apiQueryString.value}&page=${page.value}&size=${size.value}`
-        if (showUKRDC.value) {
-          path = path + '&include_ukrdc=true'
-        }
-        // Fetch the search results from our API server
-        const res: MasterRecordPage = await $axios.$get(path)
-        masterrecords.value = res.items
-        total.value = res.total
-        page.value = res.page
-        size.value = res.size
+        const resultsPage = await fetchSearchResultsPage(
+          apiQueryString.value,
+          page.value || 0,
+          size.value,
+          showUKRDC.value
+        )
 
-        searchInProgress.value = false
+        masterrecords.value = resultsPage.items
+        total.value = resultsPage.total
+        page.value = resultsPage.page
+        size.value = resultsPage.size
       }
     }
 
     onMounted(() => {
-      fetchSearchResults()
+      getResults()
     })
 
     watch([route, showUKRDC], () => {
-      fetchSearchResults()
+      getResults()
     })
 
     return {

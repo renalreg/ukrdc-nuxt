@@ -167,9 +167,9 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 
-import { formatDate } from '@/utilities/dateUtils'
-import { formatGender } from '@/utilities/codeUtils'
-import { isEmptyObject } from '@/utilities/objectUtils'
+import { formatDate } from '@/helpers/utils/dateUtils'
+import { formatGender } from '@/helpers/utils/codeUtils'
+import { isEmptyObject } from '@/helpers/utils/objectUtils'
 
 import { PatientRecord } from '@/interfaces/patientrecord'
 

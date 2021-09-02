@@ -8,10 +8,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, onMounted } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
 
-import { formatDate } from '@/utilities/dateUtils'
-import { formatGender } from '@/utilities/codeUtils'
+import { formatDate } from '@/helpers/utils/dateUtils'
+import { formatGender } from '@/helpers/utils/codeUtils'
+
+import fetchMasterRecords from '@/helpers/fetch/fetchMasterRecords'
 
 import { MasterRecord, MasterRecordStatistics } from '@/interfaces/masterrecord'
 import { LinkRecord } from '@/interfaces/linkrecords'
@@ -29,21 +31,15 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { $axios } = useContext()
+    const { fetchMasterRecordLinkRecords } = fetchMasterRecords()
 
     // Data refs
 
     const linkRecords = ref<LinkRecord[]>()
 
     // Data fetching
-
-    async function fetchLinkRecords() {
-      // Use the record links to load related data concurrently
-      linkRecords.value = await $axios.$get(props.record.links.linkrecords)
-    }
-
-    onMounted(() => {
-      fetchLinkRecords()
+    onMounted(async () => {
+      linkRecords.value = await fetchMasterRecordLinkRecords(props.record)
     })
 
     return {
