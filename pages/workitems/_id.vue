@@ -55,7 +55,7 @@
 
     <!-- Action Buttons -->
     <div
-      v-if="hasPermission('ukrdc:workitems:write') && record && record.status !== 3"
+      v-if="hasPermission('ukrdc:workitems:write') && record"
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
     >
       <GenericButton
@@ -70,7 +70,7 @@
       </GenericButton>
 
       <GenericButton
-        v-if="availableActions.close"
+        v-if="availableActions.close && record.status !== 3"
         :primary="true"
         class="inline-flex items-center justify-center w-full"
         colour="green"
@@ -81,7 +81,7 @@
       </GenericButton>
 
       <GenericButton
-        v-if="record && availableActions.merge"
+        v-if="availableActions.merge && record.status !== 3"
         :primary="true"
         tooltip="You will be redirected here after merging"
         :to="{
