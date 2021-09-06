@@ -78,6 +78,9 @@ export default {
         codeChallengeMethod: 'S256',
       },
     },
+    // Error will occur if you refresh once Okta has expired your session
+    // In this case, we need to logout and re-authenticate with Okta
+    resetOnError: true,
   },
 
   // Router and middleware configuration
