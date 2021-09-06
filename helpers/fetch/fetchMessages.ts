@@ -1,4 +1,5 @@
 import { ref, useContext } from '@nuxtjs/composition-api'
+import { buildCommonDateRangeQuery } from './common'
 import { MasterRecord } from '~/interfaces/masterrecord'
 import { ErrorSource, Message } from '~/interfaces/messages'
 import { ChannelMessage } from '~/interfaces/mirth'
@@ -22,18 +23,8 @@ export function buildCommonMessageQuery(
   if (orderBy) {
     path = path + `&order_by=${orderBy}`
   }
-  // Filter by since if it exists
-  if (since) {
-    path = path + `&since=${since}`
-  }
-  // Pass `until` to API if it's given
-  if (until) {
-    path = path + `&until=${until}`
-  } else if (since) {
-    // If no `until` is given but a `since` is given, then a single date is selected
-    // In this case we want to only show that one day, not a dateRange
-    path = path + `&until=${since}`
-  }
+  // Filter by since-until if it exists
+  path = path + buildCommonDateRangeQuery(since, until)
   // Filter by message status
   if (status) {
     path = path + `&status=${status}`

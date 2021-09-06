@@ -1,4 +1,5 @@
 import { useContext } from '@nuxtjs/composition-api'
+import { buildCommonDateRangeQuery } from './common'
 import { LabOrderShort, ResultItem } from '~/interfaces/laborder'
 import { LinkRecordSummary } from '~/interfaces/linkrecords'
 import { MasterRecord } from '~/interfaces/masterrecord'
@@ -77,7 +78,9 @@ export default function () {
     page: number,
     size: number,
     serviceId: string | null,
-    orderId: string | null
+    orderId: string | null,
+    since: string | null,
+    until: string | null
   ): Promise<ResultsPage> {
     let path = `${record.links.results}?page=${page}&size=${size}`
 
@@ -85,7 +88,8 @@ export default function () {
     if (serviceId) {
       path = path + `&service_id=${serviceId}`
     }
-
+    // Filter by since-until if it exists
+    path = path + buildCommonDateRangeQuery(since, until)
     // Filter by order ID if it exists
     if (orderId) {
       path = path + `&order_id=${orderId}`

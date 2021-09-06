@@ -1,5 +1,6 @@
 <template>
   <div>
+    <GenericDateRange v-model="dateRange" />
     <GenericSearchableSelect
       v-model="selectedService"
       class="mb-4"
@@ -89,9 +90,13 @@ import { computed, defineComponent, onMounted, ref, useRoute, watch } from '@nux
 
 import { PatientRecord } from '@/interfaces/patientrecord'
 import { ResultItem } from '@/interfaces/laborder'
+
 import { formatDate } from '@/helpers/utils/dateUtils'
+
 import usePagination from '~/helpers/query/usePagination'
 import useQuery from '~/helpers/query/useQuery'
+import useDateRange from '~/helpers/query/useDateRange'
+
 import fetchPatientRecords, { ResultService } from '~/helpers/fetch/fetchPatientRecords'
 
 export default defineComponent({
@@ -104,8 +109,12 @@ export default defineComponent({
   setup(props) {
     const route = useRoute()
     const { page, total, size } = usePagination()
+    const { makeDateRange } = useDateRange()
     const { stringQuery } = useQuery()
     const { fetchPatientRecordResultsPage, fetchPatientRecordResultServices } = fetchPatientRecords()
+
+    // Set initial date dateRange
+    const dateRange = makeDateRange(null, null, true, false)
 
     // Data refs
 
@@ -119,7 +128,9 @@ export default defineComponent({
         page.value || 0,
         size.value,
         selectedService.value,
-        selectedOrderId.value
+        selectedOrderId.value,
+        dateRange.value.start,
+        dateRange.value.end
       )
       results.value = resultsPage.items
       total.value = resultsPage.total
@@ -162,6 +173,7 @@ export default defineComponent({
       page,
       size,
       total,
+      dateRange,
       results,
       availableServicesMap,
       availableServicesIds,
