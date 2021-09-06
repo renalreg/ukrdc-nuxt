@@ -25,7 +25,7 @@ export default function () {
       path = path + '&include_ukrdc=true'
     }
     if (onlyUKRDC) {
-      path = path + `&only_ukrdc=1`
+      path = path + `&number_type=UKRDC`
     }
 
     // Fetch the search results from our API server
