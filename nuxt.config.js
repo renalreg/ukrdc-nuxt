@@ -52,7 +52,16 @@ export default {
   // Sentry Configuration: https://sentry.nuxtjs.org/guide/setup
   sentry: {
     dsn: process.env.SENTRY_DSN,
-    publishRelease: false,
+    publishRelease: {
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      org: process.env.SENTRY_ORG,
+      project: process.env.SENTRY_PROJECT,
+      // Attach commits to the release
+      setCommits: {
+        auto: true, // set by default
+      },
+    },
+    sourceMapStyle: 'hidden-source-map',
     tracing: {
       tracesSampleRate: 1.0,
       vueOptions: {
