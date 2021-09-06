@@ -51,6 +51,9 @@ export default {
 
   // Sentry Configuration: https://sentry.nuxtjs.org/guide/setup
   sentry: {
+    config: {
+      release: process.env.GITHUB_SHA,
+    },
     dsn: process.env.SENTRY_DSN,
     publishRelease: {
       authToken: process.env.SENTRY_AUTH_TOKEN,
