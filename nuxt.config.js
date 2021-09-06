@@ -41,11 +41,8 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    extend(config, { isDev, isClient }) {
-      // Extend only webpack config for client-bundle
-      if (isDev && isClient) {
-        config.devtool = 'source-map'
-      }
+    extend(config) {
+      config.devtool = 'source-map'
     },
   },
 
