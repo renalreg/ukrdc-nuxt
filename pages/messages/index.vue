@@ -32,7 +32,7 @@
 
     <GenericCard>
       <!-- Skeleton results -->
-      <ul v-if="!messages" class="divide-y divide-gray-200">
+      <ul v-if="fetchInProgress" class="divide-y divide-gray-200">
         <SkeleListItem v-for="n in 10" :key="n" />
       </ul>
       <!-- Real results -->
@@ -78,7 +78,7 @@ export default defineComponent({
     const { stringQuery } = useQuery()
     const { facilities, facilityIds, facilityLabels, selectedFacility } = useFacilities()
     const { orderAscending, orderBy, toggleOrder } = useSortBy()
-    const { fetchMessagesPage } = fetchMessages()
+    const { fetchInProgress, fetchMessagesPage } = fetchMessages()
 
     // Set up URL query params for additional filters
     const nationalId = stringQuery('nationalid', null, true, true)
@@ -116,6 +116,7 @@ export default defineComponent({
     })
 
     return {
+      fetchInProgress,
       page,
       total,
       size,

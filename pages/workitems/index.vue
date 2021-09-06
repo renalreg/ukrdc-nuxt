@@ -32,7 +32,7 @@
 
     <GenericCard>
       <!-- Skeleton results -->
-      <ul v-if="!workitems" class="divide-y divide-gray-200">
+      <ul v-if="fetchInProgress" class="divide-y divide-gray-200">
         <SkeleListItem v-for="n in 10" :key="n" />
       </ul>
       <!-- Real results -->
@@ -75,7 +75,7 @@ export default defineComponent({
     const { arrayQuery } = useQuery()
     const { facilities, facilityIds, facilityLabels, selectedFacility } = useFacilities()
     const { orderAscending, orderBy, toggleOrder } = useSortBy()
-    const { fetchWorkItemsPage } = fetchWorkItems()
+    const { fetchInProgress, fetchWorkItemsPage } = fetchWorkItems()
 
     // Data refs
 
@@ -108,6 +108,7 @@ export default defineComponent({
     })
 
     return {
+      fetchInProgress,
       page,
       total,
       size,

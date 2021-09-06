@@ -1,4 +1,4 @@
-import { useContext } from '@nuxtjs/composition-api'
+import { ref, useContext } from '@nuxtjs/composition-api'
 import { buildCommonMessageQuery, MessagePage } from './fetchMessages'
 import { WorkItem, WorkItemExtended } from '~/interfaces/workitem'
 
@@ -11,6 +11,8 @@ interface WorkItemPage {
 
 export default function () {
   const { $axios, $config } = useContext()
+
+  const fetchInProgress = ref(false)
 
   async function fetchWorkItemsPage(
     page: number,
@@ -29,7 +31,10 @@ export default function () {
       path = path + `&facility=${facility}`
     }
 
-    return (await $axios.$get(path)) as WorkItemPage
+    fetchInProgress.value = true
+    const response: WorkItemPage = await $axios.$get(path)
+    fetchInProgress.value = false
+    return response
   }
 
   async function fetchWorkItem(id: string): Promise<WorkItemExtended> {
@@ -68,6 +73,7 @@ export default function () {
   }
 
   return {
+    fetchInProgress,
     fetchWorkItemsPage,
     fetchWorkItem,
     closeWorkItem,

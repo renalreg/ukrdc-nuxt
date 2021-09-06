@@ -44,6 +44,8 @@ export function buildCommonMessageQuery(
 export default function () {
   const { $axios, $config } = useContext()
 
+  const fetchInProgress = ref(false)
+
   async function fetchMessagesPage(
     page: number,
     size: number,
@@ -68,7 +70,10 @@ export default function () {
       path = path + `&ni=${nationalId}`
     }
 
-    return (await $axios.$get(path)) as MessagePage
+    fetchInProgress.value = true
+    const response: MessagePage = await $axios.$get(path)
+    fetchInProgress.value = false
+    return response
   }
 
   async function fetchMessage(id: string): Promise<Message> {
@@ -97,6 +102,7 @@ export default function () {
   }
 
   return {
+    fetchInProgress,
     fetchMessagesPage,
     fetchMessage,
     fetchMessageMasterRecords,

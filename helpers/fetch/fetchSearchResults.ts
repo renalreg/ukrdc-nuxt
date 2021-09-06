@@ -32,7 +32,6 @@ export default function () {
     searchInProgress.value = true
     const results: MasterRecordPage = await $axios.$get(path)
     searchInProgress.value = false
-
     return results
   }
 
