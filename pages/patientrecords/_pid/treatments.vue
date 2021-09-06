@@ -1,7 +1,8 @@
 <template>
   <div>
     <LoadingIndicator v-if="!treatments"></LoadingIndicator>
-    <div v-else class="flow-root">
+    <TextP v-if="treatments && treatments.length <= 0" class="text-center"> No treatments on record </TextP>
+    <div v-else-if="treatments && treatments.length > 0" class="flow-root">
       <ul role="list" class="-mb-8">
         <li v-for="(treatment, index) in treatmentEvents" :key="index">
           <div class="relative pb-8">

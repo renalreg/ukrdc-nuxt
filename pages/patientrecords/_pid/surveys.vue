@@ -3,7 +3,7 @@
     <patientrecordsSurveyViewer ref="surveyViewerModal" class="w-full md:w-large" />
 
     <LoadingIndicator v-if="!surveys"></LoadingIndicator>
-    <div v-if="surveys && surveys.length <= 0" class="text-gray-500 text-center">No surveys on record</div>
+    <TextP v-if="surveys && surveys.length <= 0" class="text-center">No surveys on record</TextP>
 
     <div v-if="surveys" class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-2 justify-center">
       <genericCardMini

@@ -1,7 +1,7 @@
 <template>
   <div>
     <LoadingIndicator v-if="!medications"></LoadingIndicator>
-    <div v-if="medications && medications.length <= 0" class="text-gray-500 text-center">No medications on record</div>
+    <TextP v-if="medications && medications.length <= 0" class="text-center">No medications on record</TextP>
     <div v-if="activeMedications.length > 0" class="mt-4">
       <h2 class="text-gray-500 text-sm font-medium uppercase tracking-wide">Active</h2>
 
