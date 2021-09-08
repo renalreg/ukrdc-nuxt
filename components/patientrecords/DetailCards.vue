@@ -30,9 +30,29 @@
           <li v-for="item in record.patient.names" :key="item.given + item.family" class="col-span-1">
             <GenericCardMini class="px-4 py-2 w-full">
               <TextL1> {{ item.given }} {{ item.family }} </TextL1>
-              <TextP class="mt-2 flex items-center">
-                {{ formatDate(record.patient.birthTime, (t = false)) }}
-              </TextP>
+              <TextP class="mt-1">{{ formatGender(record.patient.gender) }}</TextP>
+            </GenericCardMini>
+          </li>
+          <li class="col-span-1">
+            <GenericCardMini class="px-4 py-2 w-full">
+              <table class="table-auto">
+                <tbody>
+                  <tr>
+                    <td><TextL1>Date of Birth</TextL1></td>
+                    <td class="px-4">
+                      <TextP>{{ formatDate(record.patient.birthTime, (t = false)) }}</TextP>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><TextL1>Date of Death</TextL1></td>
+                    <td class="px-4">
+                      <TextP>
+                        {{ record.patient.deathTime ? formatDate(record.patient.deathTime, (t = false)) : 'N/A' }}
+                      </TextP>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </GenericCardMini>
           </li>
         </ul>
