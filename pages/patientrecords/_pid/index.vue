@@ -16,17 +16,8 @@
         </GenericDi>
 
         <GenericDi>
-          <TextDt>Gender</TextDt>
-          <TextDd>
-            {{ record.patient ? formatGender(record.patient.gender) : '' }}
-          </TextDd>
-        </GenericDi>
-
-        <GenericDi>
-          <TextDt>Date of Birth</TextDt>
-          <TextDd>
-            {{ record.patient ? formatDate(record.patient.birthTime, (t = false)) : '' }}
-          </TextDd>
+          <TextDt>PID</TextDt>
+          <TextDd>{{ record.pid }}</TextDd>
         </GenericDi>
 
         <GenericDi>
