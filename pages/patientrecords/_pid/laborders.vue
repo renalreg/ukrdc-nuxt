@@ -10,21 +10,7 @@
           }"
           class="col-span-1 flex shadow-sm rounded-md"
         >
-          <GenericCardMini class="w-full px-4 py-2 flex items-center justify-between">
-            <div class="flex-1 truncate">
-              <TextH3 class="truncate">
-                {{ item.id }}
-              </TextH3>
-              <TextP class="truncate">
-                Collected
-                {{ formatDate(item.specimenCollectedTime, (t = false)) }}
-              </TextP>
-            </div>
-            <div class="flex-shrink-0">
-              <span class="sr-only">Open options</span>
-              <IconChevronRight />
-            </div>
-          </GenericCardMini>
+          <PatientrecordsLaborderCard :item="item" class="w-full" />
         </NuxtLink>
       </li>
     </ul>
