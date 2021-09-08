@@ -22,7 +22,7 @@
               <TextH3 class="line-clamp-2">
                 {{ item.name }}
               </TextH3>
-
+              <TextL1> Rev. {{ item.revision }} </TextL1>
               <TextP> {{ item.statistics.received }} received </TextP>
               <span
                 v-if="item.statistics.error === 0"
