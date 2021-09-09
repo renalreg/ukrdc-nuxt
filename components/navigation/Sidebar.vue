@@ -36,42 +36,39 @@
         <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
 
         <div v-for="item in pages" :key="item.title">
-          <div v-if="item.visible">
-            <div v-if="item.url">
-              <NuxtLink
-                :to="item.url"
-                href="#"
-                class="group flex items-center px-2 py-2 font-medium rounded-md text-lg"
-                :class="[
-                  $route.path == item.url
-                    ? ['bg-gray-100', 'text-gray-900']
-                    : ['text-gray-600', 'hover:bg-gray-50', 'hover:text-gray-900'],
-                ]"
-                @click.native="$emit('toggle')"
+          <div v-if="item.visible && item.url">
+            <NuxtLink
+              :to="item.url"
+              class="group flex items-center px-2 py-2 font-medium rounded-md text-lg"
+              :class="[
+                $route.path == item.url
+                  ? ['bg-gray-100', 'text-gray-900']
+                  : ['text-gray-600', 'hover:bg-gray-50', 'hover:text-gray-900'],
+              ]"
+              @click.native="$emit('toggle')"
+            >
+              <!-- Current: "text-gray-500", Default: "text-gray-400 group-hover:text-gray-500" -->
+              <!-- Heroicon name: outline/home -->
+              <svg
+                class="text-gray-500 mr-4 h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
               >
-                <!-- Current: "text-gray-500", Default: "text-gray-400 group-hover:text-gray-500" -->
-                <!-- Heroicon name: outline/home -->
-                <svg
-                  class="text-gray-500 mr-4 h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="item.svg" />
-                </svg>
-                {{ item.title }}
-              </NuxtLink>
-            </div>
-            <div v-else>
-              <h3
-                :id="item.title + '_Heading'"
-                class="px-3 mt-5 mb-3 text-sm font-semibold text-gray-500 uppercase tracking-wider"
-              >
-                {{ item.title }}
-              </h3>
-            </div>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="item.svg" />
+              </svg>
+              {{ item.title }}
+            </NuxtLink>
+          </div>
+          <div v-else-if="item.visible">
+            <h3
+              :id="item.title + '_Heading'"
+              class="px-3 mt-5 mb-3 text-sm font-semibold text-gray-500 uppercase tracking-wider"
+            >
+              {{ item.title }}
+            </h3>
           </div>
         </div>
       </nav>
