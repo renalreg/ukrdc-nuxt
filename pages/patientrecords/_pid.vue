@@ -109,6 +109,10 @@ export default defineComponent({
         href: `/patientrecords/${route.value.params.pid}/observations`,
       },
       {
+        name: 'Documents',
+        href: `/patientrecords/${route.value.params.pid}/documents`,
+      },
+      {
         name: 'Surveys',
         href: `/patientrecords/${route.value.params.pid}/surveys`,
       },

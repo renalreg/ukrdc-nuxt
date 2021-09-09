@@ -2,6 +2,7 @@ import { Medication } from './medication'
 import { Observation } from './observation'
 import { Survey } from './survey'
 import { Patient } from '@/interfaces/patient'
+import { Document } from '@/interfaces/document'
 
 interface ProgramMembership {
   programName: string
@@ -17,6 +18,7 @@ interface PatientRecordLinks {
   medications: string
   treatments: string
   surveys: string
+  documents: string
 
   observations: string
   observationCodes: string
@@ -75,22 +77,6 @@ interface RenalDiagnosis {
   identificationTime: string
 
   comments: string
-}
-
-interface Document {
-  id: string
-  pid: string
-
-  idx: string
-  documenttime: string
-  notetext: string
-
-  documenttypecode: string
-  documenttypecodestd: string
-  documenttypedesc: string
-
-  filename: string
-  filetype: string
 }
 
 interface Encounter {

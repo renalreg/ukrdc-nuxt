@@ -10,6 +10,7 @@ import { Person, PidXRef } from '~/interfaces/persons'
 import { Survey } from '~/interfaces/survey'
 import { Treatment } from '~/interfaces/treatment'
 import { WorkItem } from '~/interfaces/workitem'
+import { DocumentSummary } from '~/interfaces/document'
 
 export interface ResultsPage {
   items: ResultItem[]
@@ -33,6 +34,13 @@ export interface LabOrdersPage {
 
 export interface ObservationPage {
   items: Observation[]
+  total: number
+  page: number
+  size: number
+}
+
+export interface DocumentsPage {
+  items: DocumentSummary[]
   total: number
   page: number
   size: number
@@ -135,6 +143,14 @@ export default function () {
     return (await $axios.$get(record.links.surveys)) as Survey[]
   }
 
+  async function fetchPatientRecordDocumentsPage(
+    record: PatientRecord,
+    page: number,
+    size: number
+  ): Promise<DocumentsPage> {
+    return (await $axios.$get(`${record.links.documents}?page=${page}&size=${size}`)) as DocumentsPage
+  }
+
   async function postPatientRecordExport(record: PatientRecord, scope: string | null): Promise<void> {
     let path: string
     switch (scope) {
@@ -180,6 +196,7 @@ export default function () {
     fetchPatientRecordLabOrdersPage,
     fetchPatientRecordObservationsPage,
     fetchPatientRecordObservationCodes,
+    fetchPatientRecordDocumentsPage,
     fetchPatientRecordSurveys,
     postPatientRecordExport,
     postPatientRecordDelete,
