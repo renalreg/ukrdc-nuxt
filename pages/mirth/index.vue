@@ -19,7 +19,7 @@
         <ul class="my-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <li v-for="item in group.channels" :key="item.channelId" class="col-span-1">
             <GenericCardMini v-if="item.statistics" class="px-4 py-2">
-              <TextH3 class="line-clamp-2">
+              <TextH3 class="truncate">
                 {{ item.name }}
               </TextH3>
               <TextL1> Rev. {{ item.revision }} </TextL1>
