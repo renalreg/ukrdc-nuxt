@@ -29,7 +29,7 @@
 import { defineComponent, onMounted, ref, useRoute, watch } from '@nuxtjs/composition-api'
 
 import { PatientRecord } from '@/interfaces/patientrecord'
-import { DocumentSummary } from '@/interfaces/document'
+import { PatientDocumentSummary } from '@/interfaces/document'
 
 import { formatDate } from '@/helpers/utils/dateUtils'
 
@@ -56,7 +56,7 @@ export default defineComponent({
 
     // Data refs
 
-    const documents = ref([] as DocumentSummary[])
+    const documents = ref([] as PatientDocumentSummary[])
 
     // Data fetching
 

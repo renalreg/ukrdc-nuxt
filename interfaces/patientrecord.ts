@@ -2,7 +2,7 @@ import { Medication } from './medication'
 import { Observation } from './observation'
 import { Survey } from './survey'
 import { Patient } from '@/interfaces/patient'
-import { Document } from '@/interfaces/document'
+import { PatientDocument } from '@/interfaces/document'
 
 interface ProgramMembership {
   programName: string
@@ -103,7 +103,7 @@ export interface PatientRecordFull extends PatientRecord {
   renaldiagnoses: RenalDiagnosis[]
   medications: Medication[]
   procedures: idPidInterface[]
-  documents: Document[]
+  documents: PatientDocument[]
   encounters: Encounter[]
   programMemberships: ProgramMembership[]
   clinicalRelationships: idPidInterface[]

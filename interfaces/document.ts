@@ -1,8 +1,9 @@
-interface DocumentLinks {
+interface PatientDocumentLinks {
   self: string
+  download: string
 }
 
-export interface DocumentSummary {
+export interface PatientDocumentSummary {
   id: string
   pid: string
 
@@ -15,10 +16,10 @@ export interface DocumentSummary {
   enteredbydesc: string
   enteredatcode: string
 
-  links: DocumentLinks
+  links: PatientDocumentLinks
 }
 
-export interface Document extends DocumentSummary {
+export interface PatientDocument extends PatientDocumentSummary {
   idx: number
 
   notetext: string

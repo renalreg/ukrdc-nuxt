@@ -16,7 +16,7 @@
             {{ item.filetype || 'text' }}
           </span>
           <TextP class="flex-grow line-clamp-1 ml-2">
-            {{ item.filename }}
+            {{ item.filename || `${item.documentname}.txt` }}
           </TextP>
         </div>
       </div>
@@ -40,13 +40,13 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import { DocumentSummary } from '~/interfaces/document'
+import { PatientDocumentSummary } from '~/interfaces/document'
 import { formatDate } from '@/helpers/utils/dateUtils'
 
 export default defineComponent({
   props: {
     item: {
-      type: Object as () => DocumentSummary,
+      type: Object as () => PatientDocumentSummary,
       required: true,
     },
   },

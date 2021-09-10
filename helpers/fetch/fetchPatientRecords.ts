@@ -1,4 +1,4 @@
-import { useContext } from '@nuxtjs/composition-api'
+import { ref, useContext } from '@nuxtjs/composition-api'
 import { buildCommonDateRangeQuery } from './common'
 import { LabOrderShort, ResultItem } from '~/interfaces/laborder'
 import { LinkRecordSummary } from '~/interfaces/linkrecords'
@@ -10,7 +10,7 @@ import { Person, PidXRef } from '~/interfaces/persons'
 import { Survey } from '~/interfaces/survey'
 import { Treatment } from '~/interfaces/treatment'
 import { WorkItem } from '~/interfaces/workitem'
-import { DocumentSummary } from '~/interfaces/document'
+import { PatientDocumentSummary, PatientDocument } from '~/interfaces/document'
 
 export interface ResultsPage {
   items: ResultItem[]
@@ -40,7 +40,7 @@ export interface ObservationPage {
 }
 
 export interface DocumentsPage {
-  items: DocumentSummary[]
+  items: PatientDocumentSummary[]
   total: number
   page: number
   size: number
@@ -151,6 +151,29 @@ export default function () {
     return (await $axios.$get(`${record.links.documents}?page=${page}&size=${size}`)) as DocumentsPage
   }
 
+  async function fetchPatientRecordDocument(record: PatientRecord, docId: string): Promise<PatientDocument> {
+    return (await $axios.$get(`${record.links.documents}${docId}/`)) as PatientDocument
+  }
+
+  const documentDownloadInProgress = ref(false)
+
+  function downloadPatientRecordDocument(patientDocument: PatientDocument): void {
+    documentDownloadInProgress.value = true
+    $axios({
+      url: patientDocument.links.download,
+      method: 'GET',
+      responseType: 'blob',
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]))
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', patientDocument.filename || `${patientDocument.documentname}.txt`)
+      document.body.appendChild(link)
+      link.click()
+      documentDownloadInProgress.value = false
+    })
+  }
+
   async function postPatientRecordExport(record: PatientRecord, scope: string | null): Promise<void> {
     let path: string
     switch (scope) {
@@ -197,6 +220,9 @@ export default function () {
     fetchPatientRecordObservationsPage,
     fetchPatientRecordObservationCodes,
     fetchPatientRecordDocumentsPage,
+    fetchPatientRecordDocument,
+    downloadPatientRecordDocument,
+    documentDownloadInProgress,
     fetchPatientRecordSurveys,
     postPatientRecordExport,
     postPatientRecordDelete,
