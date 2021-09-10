@@ -1,51 +1,54 @@
 <template>
   <div>
-    <GenericSelect v-model="selectedCodeString" class="mb-4">
-      <option :value="null">All Observations</option>
-      <option v-for="item in availableCodes" :key="item">
-        {{ item }}
-      </option>
-    </GenericSelect>
+    <TextP v-if="observations && observations.length <= 0" class="text-center">No observations on record</TextP>
+    <div v-else>
+      <GenericSelect v-model="selectedCodeString" class="mb-4">
+        <option :value="null">All Observations</option>
+        <option v-for="item in availableCodes" :key="item">
+          {{ item }}
+        </option>
+      </GenericSelect>
 
-    <!-- Small data card display -->
-    <div class="lg:hidden">
-      <PatientrecordsObservationCard
-        v-for="(item, index) in observations"
-        :key="`${item.observationCode}-${index}-card`"
-        :item="item"
-      />
-    </div>
-    <!-- Large table display -->
-    <GenericTable class="hidden lg:block">
-      <thead class="bg-gray-50">
-        <tr>
-          <th scope="col" class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-            Type
-          </th>
-          <th scope="col" class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-            Value
-          </th>
-          <th scope="col" class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-            Entered At
-          </th>
-          <th scope="col" class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-            Entered On
-          </th>
-        </tr>
-      </thead>
-      <tbody class="bg-white divide-y divide-gray-200">
-        <PatientrecordsObservationTableRow
+      <!-- Small data card display -->
+      <div class="lg:hidden">
+        <PatientrecordsObservationCard
           v-for="(item, index) in observations"
-          :key="`${item.observationCode}-${index}`"
+          :key="`${item.observationCode}-${index}-card`"
           :item="item"
         />
-      </tbody>
-    </GenericTable>
+      </div>
+      <!-- Large table display -->
+      <GenericTable class="hidden lg:block">
+        <thead class="bg-gray-50">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+              Type
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+              Value
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+              Entered At
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+              Entered On
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <PatientrecordsObservationTableRow
+            v-for="(item, index) in observations"
+            :key="`${item.observationCode}-${index}`"
+            :item="item"
+          />
+        </tbody>
+      </GenericTable>
 
-    <div v-if="observations && observations.length > 0" class="mt-4">
-      <GenericCard>
-        <GenericPaginator :page="page" :size="size" :total="total" @next="page++" @prev="page--" />
-      </GenericCard>
+      <div v-if="observations && observations.length > 0" class="mt-4">
+        <GenericCard>
+          <GenericPaginator :page="page" :size="size" :total="total" @next="page++" @prev="page--" />
+        </GenericCard>
+      </div>
     </div>
   </div>
 </template>
