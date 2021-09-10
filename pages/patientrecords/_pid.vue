@@ -28,13 +28,10 @@ import { TabItem } from '@/interfaces/tabs'
 import { isMembership } from '@/helpers/utils/recordUtils'
 import fetchPatientRecords from '~/helpers/fetch/fetchPatientRecords'
 
-import usePermissions from '~/helpers/usePermissions'
-
 export default defineComponent({
   setup() {
     const route = useRoute()
     const router = useRouter()
-    const { hasPermission } = usePermissions()
     const { fetchPatientRecord, fetchPatientRecordRelated } = fetchPatientRecords()
 
     // Head
@@ -87,7 +84,7 @@ export default defineComponent({
 
     // Navigation
 
-    const baseTabs = [
+    const tabs = [
       {
         name: 'Overview',
         href: `/patientrecords/${route.value.params.pid}`,
@@ -109,24 +106,14 @@ export default defineComponent({
         href: `/patientrecords/${route.value.params.pid}/observations`,
       },
       {
+        name: 'Documents',
+        href: `/patientrecords/${route.value.params.pid}/documents`,
+      },
+      {
         name: 'Surveys',
         href: `/patientrecords/${route.value.params.pid}/surveys`,
       },
     ] as TabItem[]
-
-    const tabs = computed(() => {
-      return [
-        ...baseTabs,
-        ...(hasPermission('ukrdc:mirth:write')
-          ? [
-              {
-                name: 'Export',
-                href: `/patientrecords/${route.value.params.pid}/export`,
-              },
-            ]
-          : []),
-      ]
-    })
 
     return {
       record,

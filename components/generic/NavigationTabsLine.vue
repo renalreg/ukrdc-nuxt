@@ -6,9 +6,9 @@
         id="tabs"
         name="tabs"
         class="block w-full focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
-        @change="$emit('input', $event.target.value)"
+        @change="switchTab($event.target.value)"
       >
-        <option v-for="tab in tabs" :key="tab.name" :selected="urlCompare($route.path, tab.href)">
+        <option v-for="tab in tabs" :key="tab.name" :value="tab.href" :selected="urlCompare($route.path, tab.href)">
           {{ tab.name }}
         </option>
       </select>
@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useRouter } from '@nuxtjs/composition-api'
 import { urlCompare } from '@/helpers/utils/pathUtils'
 
 export interface Tabs {
@@ -54,8 +54,14 @@ export default defineComponent({
       required: true,
     },
   },
-  setup() {
-    return { urlCompare }
+  setup(_, { emit }) {
+    const router = useRouter()
+
+    function switchTab(href: string) {
+      router.push({ path: href })
+      emit('input', href)
+    }
+    return { urlCompare, switchTab }
   },
 })
 </script>
