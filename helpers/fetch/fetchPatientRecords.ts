@@ -177,7 +177,7 @@ export default function () {
   async function postPatientRecordExport(record: PatientRecord, scope: string | null): Promise<void> {
     let path: string
     switch (scope) {
-      case null: {
+      case null || 'pv': {
         path = record.links.exportPV
         break
       }
