@@ -1,12 +1,17 @@
 <template>
   <div>
     <PatientrecordsDeleteModal ref="deleteModal" :item="item" @deleted="$emit('deleted')" />
-    <div v-click-away="closeMenu" class="justify-self-end flex items-center">
-      <GenericButtonMini label="Manage record" tooltip="Manage Record" class="h-8 ml-1" @click="showMenu = !showMenu">
+    <div v-click-away="closeMenu" class="relative justify-self-end flex items-center">
+      <GenericButtonMini
+        label="Manage record"
+        tooltip="Manage Record"
+        class="h-8 ml-1 z-0"
+        @click="showMenu = !showMenu"
+      >
         <IconChevronDown />
       </GenericButtonMini>
 
-      <GenericMenu class="mt-8" :show="showMenu">
+      <GenericMenu class="top-0 right-0 z-10" :show="showMenu">
         <GenericMenuItem @click="copyPID"> Copy PID </GenericMenuItem>
         <GenericMenuDivider />
         <div v-if="hasPermission('ukrdc:mirth:write')">

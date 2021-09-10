@@ -9,19 +9,7 @@
   >
     <div
       v-show="show"
-      class="
-        origin-top-right
-        absolute
-        right-0
-        mx-2
-        my-2
-        w-56
-        rounded-md
-        shadow-lg
-        bg-white
-        ring-1 ring-black ring-opacity-5
-        focus:outline-none
-      "
+      class="absolute mx-2 my-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
       role="menu"
       aria-orientation="vertical"
       aria-labelledby="option-menu-button"
