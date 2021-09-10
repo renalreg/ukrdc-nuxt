@@ -1,6 +1,7 @@
 <template>
   <div>
-    <GenericCard>
+    <TextP v-if="documents && documents.length <= 0" class="text-center">No documents on record</TextP>
+    <GenericCard v-else>
       <!-- Skeleton results -->
       <ul v-if="!documents" class="divide-y divide-gray-200">
         <SkeleListItem v-for="n in 10" :key="n" />
@@ -14,6 +15,7 @@
         </div>
       </ul>
       <GenericPaginator
+        v-if="documents && documents.length > 0"
         class="bg-white border-t border-gray-200"
         :page="page"
         :size="size"
@@ -56,7 +58,7 @@ export default defineComponent({
 
     // Data refs
 
-    const documents = ref([] as PatientDocumentSummary[])
+    const documents = ref<PatientDocumentSummary[]>()
 
     // Data fetching
 
