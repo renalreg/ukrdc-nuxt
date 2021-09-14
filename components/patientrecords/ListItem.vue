@@ -3,7 +3,7 @@
     <div class="flex items-center py-4">
       <div class="min-w-0 flex-1 flex items-center">
         <div
-          v-tooltip="'Show Details'"
+          v-tooltip="{ content: 'Show details', delay: { show: 500, hide: 0 } }"
           aria-label="Show details"
           role="button"
           tabindex="0"

@@ -1,12 +1,18 @@
 <template>
   <router-link v-if="to" v-slot="{ navigate }" custom :to="to">
-    <button v-tooltip="tooltip" :aria-label="label" type="button" :class="`btn-mini-${colour}`" @click="navigate">
+    <button
+      v-tooltip="{ content: tooltip, delay: { show: 500, hide: 0 } }"
+      :aria-label="label"
+      type="button"
+      :class="`btn-mini-${colour}`"
+      @click="navigate"
+    >
       <slot />
     </button>
   </router-link>
   <button
     v-else
-    v-tooltip="tooltip"
+    v-tooltip="{ content: tooltip, delay: { show: 500, hide: 0 } }"
     :aria-label="label"
     type="button"
     :class="`btn-mini-${colour}`"

@@ -1,10 +1,23 @@
 <template>
   <router-link v-if="to" v-slot="{ navigate }" custom :to="to">
-    <button v-tooltip="tooltip" :aria-label="label" type="button" class="btn-round-base" @click="navigate">
+    <button
+      v-tooltip="{ content: tooltip, delay: { show: 500, hide: 0 } }"
+      :aria-label="label"
+      type="button"
+      class="btn-round-base"
+      @click="navigate"
+    >
       <slot />
     </button>
   </router-link>
-  <button v-else v-tooltip="tooltip" :aria-label="label" type="button" class="btn-round-base" @click="$emit('click')">
+  <button
+    v-else
+    v-tooltip="{ content: tooltip, delay: { show: 500, hide: 0 } }"
+    :aria-label="label"
+    type="button"
+    class="btn-round-base"
+    @click="$emit('click')"
+  >
     <slot />
   </button>
 </template>
