@@ -37,7 +37,7 @@
       </ul>
       <!-- Real results -->
       <ul v-else class="divide-y divide-gray-200">
-        <div v-for="item in messages" :key="item.id" :item="item" class="hover:bg-gray-50">
+        <div v-for="item in messages" :key="item.id" class="hover:bg-gray-50">
           <NuxtLink :to="`/messages/${item.id}`">
             <ErrorsListItem :item="item" />
           </NuxtLink>
