@@ -1,6 +1,6 @@
 <template>
   <li>
-    <div class="px-4 py-4 sm:px-6 min-w-0 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 w-full">
+    <div class="group px-4 py-4 sm:px-6 min-w-0 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 w-full">
       <!-- Heading -->
       <div class="col-span-5 lg:col-span-3">
         <div class="truncate">
@@ -29,6 +29,7 @@
       <div class="flex items-center gap-4 col-span-3 lg:col-span-1">
         <GenericButtonRound
           v-if="showPatientFilter"
+          class="opacity-0 group-hover:opacity-100"
           :to="{ path: '/messages', query: { nationalid: item.ni } }"
           tooltip="Filter errors by this patient"
           :label="`Filter errors by patient ${item.ni}`"
