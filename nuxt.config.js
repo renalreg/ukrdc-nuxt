@@ -25,8 +25,7 @@ export default {
     { ssr: false, src: '~/plugins/v-calendar.ts' },
     { ssr: false, src: '~/plugins/v-tooltip.ts' },
     { ssr: false, src: '~/plugins/toast.ts' },
-    { ssr: false, src: '~/plugins/axios-toast.ts' },
-    { ssr: true, src: '~/plugins/axios-sentry.ts' },
+    { ssr: true, src: '~/plugins/axios.ts' },
     { ssr: false, src: '~/plugins/vue-clickaway.ts' },
   ],
 

@@ -72,7 +72,7 @@
     </div>
 
     <!-- Related Patient Records card -->
-    <GenericCard>
+    <GenericCard class="overflow-visible">
       <GenericCardHeader>
         <TextH2> Patient Records </TextH2>
       </GenericCardHeader>
