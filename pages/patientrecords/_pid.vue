@@ -1,15 +1,22 @@
 <template>
   <div>
     <div v-if="record && record.patient" class="md:flex items-center mb-2">
-      <div class="flex-grow">
+      <div class="flex-grow text-center sm:text-left mb-4 md:mb-0">
         <TextH1>{{ fullName }}</TextH1>
       </div>
-      <div v-if="related">
-        <GenericSelect v-model="selectedPid">
-          <option v-for="(item, index) in relatedDataRecords" :key="index" :value="item.pid">
-            From {{ item.sendingfacility }} via {{ item.sendingextract }}
-          </option>
-        </GenericSelect>
+      <div class="flex">
+        <div v-if="record.masterRecord">
+          <GenericButton :to="`/masterrecords/${record.masterRecord.id}`" class="truncate">
+            View Master Record
+          </GenericButton>
+        </div>
+        <div v-if="related" class="ml-2">
+          <GenericSelect v-model="selectedPid">
+            <option v-for="(item, index) in relatedDataRecords" :key="index" :value="item.pid">
+              From {{ item.sendingfacility }} via {{ item.sendingextract }}
+            </option>
+          </GenericSelect>
+        </div>
       </div>
     </div>
 
