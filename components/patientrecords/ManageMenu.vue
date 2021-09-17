@@ -31,7 +31,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
-import { PatientRecord } from '@/interfaces/patientrecord'
+import { PatientRecordSummary } from '@/interfaces/patientrecord'
 import { modalInterface } from '~/interfaces/modal'
 import usePermissions from '~/helpers/usePermissions'
 import fetchPatientRecords from '~/helpers/fetch/fetchPatientRecords'
@@ -39,7 +39,7 @@ import fetchPatientRecords from '~/helpers/fetch/fetchPatientRecords'
 export default defineComponent({
   props: {
     item: {
-      type: Object as () => PatientRecord,
+      type: Object as () => PatientRecordSummary,
       required: true,
     },
   },

@@ -2,7 +2,7 @@ import { useContext } from '@nuxtjs/composition-api'
 import { buildCommonMessageQuery, MessagePage } from './fetchMessages'
 import { MasterRecord, MasterRecordStatistics } from '~/interfaces/masterrecord'
 import { MinimalMessage } from '~/interfaces/messages'
-import { PatientRecord } from '~/interfaces/patientrecord'
+import { PatientRecordSummary } from '~/interfaces/patientrecord'
 import { LinkRecord } from '~/interfaces/linkrecords'
 import { WorkItem } from '~/interfaces/workitem'
 
@@ -40,8 +40,8 @@ export default function () {
     return ((await $axios.$get(masterRecord.links.latestMessage)) as MinimalMessage) || null
   }
 
-  async function fetchMasterRecordPatientRecords(masterRecord: MasterRecord): Promise<PatientRecord[]> {
-    return (await $axios.$get(masterRecord.links.patientrecords)) as PatientRecord[]
+  async function fetchMasterRecordPatientRecords(masterRecord: MasterRecord): Promise<PatientRecordSummary[]> {
+    return (await $axios.$get(masterRecord.links.patientrecords)) as PatientRecordSummary[]
   }
 
   async function fetchMasterRecordLinkRecords(masterRecord: MasterRecord): Promise<LinkRecord[]> {

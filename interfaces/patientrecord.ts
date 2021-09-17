@@ -1,6 +1,7 @@
 import { Medication } from './medication'
 import { Observation } from './observation'
 import { Survey } from './survey'
+import { MasterRecord } from './masterrecord'
 import { Patient } from '@/interfaces/patient'
 import { PatientDocument } from '@/interfaces/document'
 
@@ -34,7 +35,7 @@ interface PatientRecordLinks {
   exportRADAR: string
 }
 
-export interface PatientRecord {
+export interface PatientRecordSummary {
   pid: string
   sendingfacility: string
   sendingextract: string
@@ -46,6 +47,10 @@ export interface PatientRecord {
   patient: Patient
 
   links: PatientRecordLinks
+}
+
+export interface PatientRecord extends PatientRecordSummary {
+  masterRecord: MasterRecord
 }
 
 interface idPidInterface {
@@ -94,7 +99,7 @@ interface PVDelete {
   serviceId: string
 }
 
-export interface PatientRecordFull extends PatientRecord {
+export interface PatientRecordFull extends PatientRecordSummary {
   socialHistories: idPidInterface[]
   familyHistories: idPidInterface[]
   observations: Observation[]

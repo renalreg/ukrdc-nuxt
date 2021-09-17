@@ -22,7 +22,7 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useMeta, useRoute, useRouter, watch } from '@nuxtjs/composition-api'
 
-import { PatientRecord } from '@/interfaces/patientrecord'
+import { PatientRecord, PatientRecordSummary } from '@/interfaces/patientrecord'
 import { TabItem } from '@/interfaces/tabs'
 
 import { isMembership } from '@/helpers/utils/recordUtils'
@@ -41,7 +41,7 @@ export default defineComponent({
     // Data refs
 
     const record = ref<PatientRecord>()
-    const related = ref<PatientRecord[]>()
+    const related = ref<PatientRecordSummary[]>()
 
     // Data fetching
 
@@ -59,7 +59,7 @@ export default defineComponent({
 
     // PID Switcher UI
 
-    const relatedDataRecords = computed<PatientRecord[]>(() => {
+    const relatedDataRecords = computed<PatientRecordSummary[]>(() => {
       if (related.value) {
         return related.value.filter((record) => !isMembership(record))
       }

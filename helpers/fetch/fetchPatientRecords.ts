@@ -5,7 +5,7 @@ import { LinkRecordSummary } from '~/interfaces/linkrecords'
 import { MasterRecord } from '~/interfaces/masterrecord'
 import { Medication } from '~/interfaces/medication'
 import { Observation } from '~/interfaces/observation'
-import { PatientRecord, PatientRecordFull } from '~/interfaces/patientrecord'
+import { PatientRecord, PatientRecordSummary, PatientRecordFull } from '~/interfaces/patientrecord'
 import { Person, PidXRef } from '~/interfaces/persons'
 import { Survey } from '~/interfaces/survey'
 import { Treatment } from '~/interfaces/treatment'
@@ -69,8 +69,8 @@ export default function () {
     return (await $axios.$get(`${$config.apiBase}/v1/patientrecords/${pid}/`)) as PatientRecord
   }
 
-  async function fetchPatientRecordRelated(record: PatientRecord): Promise<PatientRecord[]> {
-    return (await $axios.$get(record.links.related)) as PatientRecord[]
+  async function fetchPatientRecordRelated(record: PatientRecord): Promise<PatientRecordSummary[]> {
+    return (await $axios.$get(record.links.related)) as PatientRecordSummary[]
   }
 
   async function fetchPatientRecordMedications(record: PatientRecord): Promise<Medication[]> {
@@ -174,7 +174,7 @@ export default function () {
     })
   }
 
-  async function postPatientRecordExport(record: PatientRecord, scope: string | null): Promise<void> {
+  async function postPatientRecordExport(record: PatientRecordSummary, scope: string | null): Promise<void> {
     let path: string
     switch (scope) {
       case null || 'pv': {
@@ -201,7 +201,7 @@ export default function () {
   }
 
   async function postPatientRecordDelete(
-    record: PatientRecord,
+    record: PatientRecordSummary,
     confirmationHash: string | null
   ): Promise<DeletePIDResponseSchema> {
     return (await $axios.$post(record.links.delete, {

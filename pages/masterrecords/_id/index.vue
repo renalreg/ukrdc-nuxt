@@ -111,7 +111,7 @@ import { isTracing } from '@/helpers/utils/recordUtils'
 import fetchMasterRecords from '@/helpers/fetch/fetchMasterRecords'
 
 import { MasterRecord, MasterRecordStatistics } from '@/interfaces/masterrecord'
-import { PatientRecord } from '@/interfaces/patientrecord'
+import { PatientRecordSummary } from '@/interfaces/patientrecord'
 import { MinimalMessage } from '~/interfaces/messages'
 
 export default defineComponent({
@@ -134,7 +134,7 @@ export default defineComponent({
     // Data refs
 
     const relatedRecords = ref<MasterRecord[]>()
-    const patientRecords = ref<PatientRecord[]>()
+    const patientRecords = ref<PatientRecordSummary[]>()
     const latestMessage = ref<MinimalMessage | null>()
 
     // Data fetching
@@ -167,7 +167,7 @@ export default defineComponent({
 
     // Tracing record matching
 
-    const tracingRecord = computed<PatientRecord | null>(() => {
+    const tracingRecord = computed<PatientRecordSummary | null>(() => {
       const tracings = patientRecords.value?.filter(isTracing)
       if (!tracings || (tracings && tracings.length < 1)) {
         return null
