@@ -55,22 +55,22 @@
 <script lang="ts">
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 
-import { PatientRecord } from '@/interfaces/patientrecord'
+import { PatientRecordSummary } from '@/interfaces/patientrecord'
 
 import { isData, isMembership, isMigrated, isSurvey, isTracing } from '@/helpers/utils/recordUtils'
 
 interface PRGroups {
-  data: PatientRecord[]
-  surveys: PatientRecord[]
-  migrated: PatientRecord[]
-  memberships: PatientRecord[]
-  tracing: PatientRecord[]
+  data: PatientRecordSummary[]
+  surveys: PatientRecordSummary[]
+  migrated: PatientRecordSummary[]
+  memberships: PatientRecordSummary[]
+  tracing: PatientRecordSummary[]
 }
 
 export default defineComponent({
   props: {
     records: {
-      type: Array as () => PatientRecord[],
+      type: Array as () => PatientRecordSummary[],
       required: true,
     },
   },

@@ -1,10 +1,10 @@
-import { PatientRecord } from '~/interfaces/patientrecord'
+import { PatientRecordSummary } from '~/interfaces/patientrecord'
 
 const ukrdcMembershipFacilities = ['PV', 'PKB']
 const membershipExtracts = ['RADAR']
 const migratedExtracts = ['PVMIG', 'HSMIG']
 
-export function isData(record: PatientRecord): boolean {
+export function isData(record: PatientRecordSummary): boolean {
   if (record.sendingextract === 'PV') {
     return true
   }
@@ -18,21 +18,21 @@ export function isData(record: PatientRecord): boolean {
   return false
 }
 
-export function isSurvey(record: PatientRecord): boolean {
+export function isSurvey(record: PatientRecordSummary): boolean {
   if (record.sendingextract === 'SURVEY') {
     return true
   }
   return false
 }
 
-export function isMigrated(record: PatientRecord) {
+export function isMigrated(record: PatientRecordSummary) {
   if (migratedExtracts.includes(record.sendingextract)) {
     return true
   }
   return false
 }
 
-export function isMembership(record: PatientRecord) {
+export function isMembership(record: PatientRecordSummary) {
   if (membershipExtracts.includes(record.sendingextract)) {
     return true
   }
@@ -42,7 +42,7 @@ export function isMembership(record: PatientRecord) {
   return false
 }
 
-export function isTracing(record: PatientRecord) {
+export function isTracing(record: PatientRecordSummary) {
   if (record.sendingextract === 'UKRDC' && record.sendingfacility === 'TRACING') {
     return true
   }

@@ -1,15 +1,22 @@
 <template>
   <div>
     <div v-if="record && record.patient" class="md:flex items-center mb-2">
-      <div class="flex-grow">
+      <div class="flex-grow text-center sm:text-left mb-4 md:mb-0">
         <TextH1>{{ fullName }}</TextH1>
       </div>
-      <div v-if="related">
-        <GenericSelect v-model="selectedPid">
-          <option v-for="(item, index) in relatedDataRecords" :key="index" :value="item.pid">
-            From {{ item.sendingfacility }} via {{ item.sendingextract }}
-          </option>
-        </GenericSelect>
+      <div class="flex">
+        <div v-if="record.masterRecord">
+          <GenericButton :to="`/masterrecords/${record.masterRecord.id}`" class="truncate">
+            View Master Record
+          </GenericButton>
+        </div>
+        <div v-if="related" class="ml-2">
+          <GenericSelect v-model="selectedPid">
+            <option v-for="(item, index) in relatedDataRecords" :key="index" :value="item.pid">
+              From {{ item.sendingfacility }} via {{ item.sendingextract }}
+            </option>
+          </GenericSelect>
+        </div>
       </div>
     </div>
 
@@ -22,7 +29,7 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useMeta, useRoute, useRouter, watch } from '@nuxtjs/composition-api'
 
-import { PatientRecord } from '@/interfaces/patientrecord'
+import { PatientRecord, PatientRecordSummary } from '@/interfaces/patientrecord'
 import { TabItem } from '@/interfaces/tabs'
 
 import { isMembership } from '@/helpers/utils/recordUtils'
@@ -41,7 +48,7 @@ export default defineComponent({
     // Data refs
 
     const record = ref<PatientRecord>()
-    const related = ref<PatientRecord[]>()
+    const related = ref<PatientRecordSummary[]>()
 
     // Data fetching
 
@@ -59,7 +66,7 @@ export default defineComponent({
 
     // PID Switcher UI
 
-    const relatedDataRecords = computed<PatientRecord[]>(() => {
+    const relatedDataRecords = computed<PatientRecordSummary[]>(() => {
       if (related.value) {
         return related.value.filter((record) => !isMembership(record))
       }
