@@ -13,10 +13,10 @@
         </TextL1c>
         <TextP class="mt-2 flex items-center">
           {{ formatDate(item.dateOfBirth, (t = false)) }}
-          <b class="ml-1"> {{ genderChar }}</b>
+          <b class="ml-1"> {{ formatGenderCharacter(item.gender) }}</b>
         </TextP>
       </div>
-      <!-- Record ID -->
+      <!-- Record ID (large breakpoint only) -->
       <div v-show="showRecordId" class="hidden lg:block">
         <TextL1>Record ID</TextL1>
         <TextP class="mt-2">
@@ -30,7 +30,7 @@
         </TextP>
         <masterrecordsNationalIdTypeTag class="mt-2" :nationalid-type="item.nationalidType" />
       </div>
-      <!-- Details (large breakpoint only) -->
+      <!-- Details  -->
       <div>
         <TextL1>Last updated</TextL1>
         <TextP class="mt-2">
@@ -42,8 +42,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import { formatDate } from '@/helpers/utils/dateUtils'
+import { formatGenderCharacter } from '@/helpers/utils/codeUtils'
 import { MasterRecord } from '@/interfaces/masterrecord'
 
 export default defineComponent({
@@ -59,17 +60,7 @@ export default defineComponent({
     },
   },
 
-  setup(props) {
-    const genderChar = computed(() => {
-      if (props.item.gender === '1') {
-        return '♂'
-      } else if (props.item.gender === '2') {
-        return '♀'
-      } else {
-        return ''
-      }
-    })
-
+  setup() {
     function TagClass(nationalidType: string): string[] {
       if (nationalidType.trim() === 'UKRDC') {
         return ['bg-red-100', 'text-red-800']
@@ -84,7 +75,7 @@ export default defineComponent({
       }
     }
 
-    return { genderChar, TagClass, formatDate }
+    return { TagClass, formatDate, formatGenderCharacter }
   },
 })
 </script>
