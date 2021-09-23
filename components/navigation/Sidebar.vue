@@ -10,7 +10,8 @@
           h-10
           w-10
           rounded-full
-          focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white
+          focus:outline-none
+          focus:ring-2 focus:ring-inset focus:ring-white
         "
         @click="$emit('toggle')"
       >
