@@ -27,4 +27,7 @@ export interface Patient {
   birthTime: string
   deathTime: string
   gender: string
+
+  ethnicGroupDescription: string
+  ethnicGroupCode: string
 }
