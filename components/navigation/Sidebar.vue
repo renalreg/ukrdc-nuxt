@@ -28,7 +28,7 @@
         </svg>
       </button>
     </div>
-    <div class="flex-1 h-0 pt-8 pb-4 overflow-y-auto">
+    <div class="flex-1 h-0 pt-6 pb-4 overflow-y-auto">
       <div class="flex-shrink-0 flex items-center px-4 mb-2">
         <img class="w-full h-auto" src="~/assets/UKKA_UKRDC.svg" alt="Workflow" />
       </div>

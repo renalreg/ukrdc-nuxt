@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="mb-8">
-      <genericAlertWarning v-for="message in response.warnings" :key="message" :message="message">
+    <div v-if="warnings.length > 0 || messages.length > 0" class="mb-8">
+      <genericAlertWarning v-for="message in warnings" :key="message" :message="message">
       </genericAlertWarning>
 
-      <genericAlertInfo v-for="message in response.messages" :key="message" :message="message"> </genericAlertInfo>
+      <genericAlertInfo v-for="message in messages" :key="message" :message="message"> </genericAlertInfo>
     </div>
 
     <!-- Admins will get workitems and records stats -->
