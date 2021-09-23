@@ -1,28 +1,6 @@
 <template>
   <div>
-    <div v-if="!isEmptyObject(record)" class="mt-4">
-      <h2 class="text-gray-500 text-sm font-medium uppercase tracking-wide">History</h2>
-      <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <li class="col-span-1 sm:col-span-2">
-          <GenericCardMini class="px-4 py-2 w-full grid grid-cols-1 sm:grid-cols-2">
-            <div>
-              <TextL1> Created </TextL1>
-              <TextP>
-                {{ formatDate(record.repositoryCreationDate, (t = true)) }}
-              </TextP>
-            </div>
-            <div>
-              <TextL1> Updated </TextL1>
-              <TextP>
-                {{ formatDate(record.repositoryUpdateDate, (t = true)) }}
-              </TextP>
-            </div>
-          </GenericCardMini>
-        </li>
-      </ul>
-    </div>
-
-    <div v-if="!isEmptyObject(record)" class="mt-4">
+    <div v-if="!isEmptyObject(record)">
       <h2 class="text-gray-500 text-sm font-medium uppercase tracking-wide">Demographics</h2>
       <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <li class="col-span-1 sm:col-span-2">
