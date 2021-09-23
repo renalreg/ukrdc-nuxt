@@ -1,8 +1,7 @@
 <template>
   <div>
     <div v-if="warnings.length > 0 || messages.length > 0" class="mb-8">
-      <genericAlertWarning v-for="message in warnings" :key="message" :message="message">
-      </genericAlertWarning>
+      <genericAlertWarning v-for="message in warnings" :key="message" :message="message"> </genericAlertWarning>
 
       <genericAlertInfo v-for="message in messages" :key="message" :message="message"> </genericAlertInfo>
     </div>
