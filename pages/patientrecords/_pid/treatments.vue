@@ -54,9 +54,9 @@
                   <TextP v-if="treatment.isDischarge" class="inline">
                     Discharged from
                     {{ treatment.admitReasonDesc ? treatment.admitReasonDesc : treatment.admitReasonCode }} at
-                    <TextL1c class="inline">{{ treatment.healthCareFacilityCode }}</TextL1c> ({{
-                      treatment.dischargeReasonDesc ? treatment.dischargeReasonDesc : treatment.dischargeReasonCode
-                    }})
+                    <TextL1c class="inline">{{ treatment.healthCareFacilityCode }}</TextL1c> {{
+                      treatment.dischargeReasonDesc ? `(${treatment.dischargeReasonDesc})` : ( treatment.dischargeReasonCode ? `(${treatment.dischargeReasonCode})` : '')
+                    }}
                   </TextP>
                   <TextP v-else class="inline">
                     {{ treatment.time }} - Admitted to
@@ -152,6 +152,17 @@ export default defineComponent({
       events.sort(function (a, b) {
         // Turn your strings into dates, and then subtract them
         // to get a value that is either negative, positive, or zero.
+        if (a.time === b.time) {
+          // If they're part of the same treatment
+          if (a.admitReasonDesc === b.admitReasonDesc) {
+            // Admit before discharge
+            return (b.isDischarge ? 1:0) - (a.isDischarge ? 1:0)
+          }
+          else {
+            // Discharge before admit
+            return (a.isDischarge ? 1:0) - (b.isDischarge ? 1:0)
+          }
+        }
         return new Date(b.time).getTime() - new Date(a.time).getTime()
       })
       return events
