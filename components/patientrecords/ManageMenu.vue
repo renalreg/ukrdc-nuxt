@@ -2,9 +2,9 @@
   <div>
     <PatientrecordsDeleteModal ref="deleteModal" :item="item" @deleted="$emit('deleted')" />
     <div v-click-away="closeMenu" class="relative justify-self-end flex items-center">
-      <GenericButtonMini label="Manage record" tooltip="Manage Record" class="h-8 z-0" @click="showMenu = !showMenu">
-        <IconChevronDown />
-      </GenericButtonMini>
+      <GenericButtonRaw label="Manage record" class="z-0" @click="showMenu = !showMenu">
+        <IconMiniDotsVertical class="text-gray-400 hover:text-gray-800" />
+      </GenericButtonRaw>
 
       <GenericMenu class="top-0 right-0 z-10" :show="showMenu">
         <GenericMenuItem @click="copyPID"> Copy PID </GenericMenuItem>
