@@ -10,3 +10,14 @@ export function formatGender(genderCode: number | string): string {
     return 'Not Known'
   }
 }
+
+export function formatGenderCharacter(genderCode: number | string): string {
+  // https://datadictionary.nhs.uk/attributes/person_gender_code.html
+  if (genderCode === 1 || genderCode === '1') {
+    return '♂'
+  } else if (genderCode === 2 || genderCode === '2') {
+    return '♀'
+  } else {
+    return ''
+  }
+}
