@@ -57,7 +57,7 @@
           </GenericDi>
           <GenericDi v-if="patientDocument && patientDocument.notetext" class="sm:col-span-3">
             <TextDt>Note</TextDt>
-            <TextDd class="whitespace-pre font-mono">
+            <TextDd class="whitespace-pre-wrap font-mono">
               {{ patientDocument.notetext }}
             </TextDd>
           </GenericDi>
