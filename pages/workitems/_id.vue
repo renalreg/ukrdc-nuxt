@@ -165,7 +165,10 @@
             :full="true"
           />
           <!-- Destination record card -->
-          <NuxtLink v-else-if="record.destination.masterRecord" :to="`/masterrecords/${record.nationalidTypeid}`">
+          <NuxtLink
+            v-else-if="record.destination.masterRecord"
+            :to="`/masterrecords/${record.destination.masterRecord.id}`"
+          >
             <masterrecordsRecordCard
               :record="record.destination.masterRecord"
               :label="`Destination Master Record ${record.destination.masterRecord.id}`"
