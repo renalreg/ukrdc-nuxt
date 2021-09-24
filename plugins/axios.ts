@@ -36,7 +36,7 @@ export default function ({ error, app, $axios, $sentry }: Context) {
     // We're assuming here that the API server will log the related error, and so logging
     // here just leads to duplicate messages.
     if (thisError.response?.status === 500) {
-      error({ statusCode: 500 })
+      error({ statusCode: 500, message: 'Internal server error' })
       throw thisError
     }
 
