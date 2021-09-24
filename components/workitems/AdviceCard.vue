@@ -23,7 +23,10 @@
           </TextP>
         </li>
         <li v-if="workItemAdvices.includes(6)">
-          <TextP>This Work Item was recently merged, and can now be closed.</TextP>
+          <TextP>
+            This Work Item was recently merged, and can now be
+            <span class="text-green-600 font-bold">closed</span>.
+          </TextP>
         </li>
         <li v-if="workItemAdvices.includes(7)">
           <TextP>
@@ -46,6 +49,16 @@
           <TextP>This Work Item is already closed. No further action to be taken.</TextP>
         </li>
         <li v-if="workItemAdvices.includes(11)"><TextP>Related Work Items are still unresolved. See below.</TextP></li>
+        <li v-if="workItemAdvices.includes(12)">
+          <TextP>The records associated with this Work Item may have already been merged. </TextP>
+          <TextP>
+            The destination record is missing, meaning it has either been deleted, or merged into another record
+            already.
+          </TextP>
+          <TextP>
+            This Work item can likely be <span class="text-green-600 font-bold">closed</span> without further action.
+          </TextP>
+        </li>
       </ul>
       <div v-else>
         <SkeleText class="h-6 mb-2 w-full" />
@@ -115,6 +128,10 @@ export default defineComponent({
         } else if (route.value.query.justMerged === 'true') {
           // Advise to close the workitem
           advices.push(6)
+          // If the workitem has no destination record, but was not just merged
+        } else if (!props.item.masterRecord) {
+          // Advise that the records may have been previously deleted or merged
+          advices.push(12)
           // If the workitem has no records to merge, but was NOT just merged
         } else {
           // Advise that merge may have been completed with incorrect data

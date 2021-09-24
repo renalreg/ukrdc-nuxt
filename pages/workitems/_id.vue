@@ -164,12 +164,18 @@
             :highlight="Object.keys(record.attributes)"
             :full="true"
           />
-          <NuxtLink v-else :to="`/masterrecords/${record.destination.masterRecord.id}`">
+          <!-- Destination record card -->
+          <NuxtLink v-else-if="record.destination.masterRecord" :to="`/masterrecords/${record.nationalidTypeid}`">
             <masterrecordsRecordCard
               :record="record.destination.masterRecord"
               :label="`Destination Master Record ${record.destination.masterRecord.id}`"
             />
           </NuxtLink>
+          <!-- Missing destination record card -->
+          <div v-else class="rounded-md bg-red-50 text-red-800 p-4">
+            <p class="font-medium">Destination record no longer exists</p>
+            <p>The record may have been merged or delete already</p>
+          </div>
         </div>
       </div>
       <GenericCard v-if="showDestinationPersons && record.destination.persons.length > 1" class="pl-4 mt-2">
@@ -283,7 +289,7 @@ export default defineComponent({
     function checkMerged() {
       if (
         record.value?.status === 1 &&
-        record.value?.destination.masterRecord.nationalidType === 'UKRDC' &&
+        record.value?.destination.masterRecord?.nationalidType === 'UKRDC' &&
         record.value?.incoming.masterRecords.length <= 0 &&
         route.value.query.justMerged === 'true'
       ) {
