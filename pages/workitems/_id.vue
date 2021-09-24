@@ -172,9 +172,9 @@
             />
           </NuxtLink>
           <!-- Missing destination record card -->
-          <div v-else class="rounded-md bg-red-50 p-4">
-            <p class="font-medium text-red-800">Destination record no longer exists</p>
-            <p class="text-red-800">The record may have been merged or delete already</p>
+          <div v-else class="rounded-md bg-red-50 text-red-800 p-4">
+            <p class="font-medium">Destination record no longer exists</p>
+            <p>The record may have been merged or delete already</p>
           </div>
         </div>
       </div>
