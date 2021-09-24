@@ -20,28 +20,36 @@ function decodePydanticErrors(errors: PydanticError[]) {
 }
 
 export default function ({ error, app, $axios, $sentry }: Context) {
-  $axios.onError((err) => {
+  $axios.onError((thisError) => {
     // Let nuxt-auth handle logging out on ExpiredAuthSessionError
-    if (error instanceof ExpiredAuthSessionError) {
-      throw err
+    if (thisError instanceof ExpiredAuthSessionError) {
+      throw thisError
     }
 
     // Redirect to 404 without propagating Sentry or toast
-    if (err.response?.status === 404) {
+    if (thisError.response?.status === 404) {
       error({ statusCode: 404, message: 'Page not found' })
-      throw err
+      throw thisError
+    }
+
+    // For internal API server errors, redirect to 500 without propagating Sentry or toast
+    // We're assuming here that the API server will log the related error, and so logging
+    // here just leads to duplicate messages.
+    if (thisError.response?.status === 500) {
+      error({ statusCode: 500, message: 'Internal server error' })
+      throw thisError
     }
 
     // Build message and redirect to 422 without propagating Sentry or toast
-    if (err.response?.status === 422) {
-      const msg = decodePydanticErrors(err.response.data.detail)
+    if (thisError.response?.status === 422) {
+      const msg = decodePydanticErrors(thisError.response.data.detail)
       error({ statusCode: 422, message: msg })
-      throw err
+      throw thisError
     }
 
     // Compute what message to show in the toast
     if (process.client) {
-      const msgToShow = err.response ? err.response.data.detail : err.message
+      const msgToShow = thisError.response ? thisError.response.data.detail : thisError.message
       // If we have no message to show, don't create a toast
       if (msgToShow) {
         app.$toast.show({
@@ -54,11 +62,9 @@ export default function ({ error, app, $axios, $sentry }: Context) {
     }
 
     // Log the error to Sentry
-    $sentry.captureException(error)
+    $sentry.captureException(thisError)
 
-    // For severe internal server errors, log but also redirect to a generic error page
-    if (err.response?.status === 500) {
-      error({ statusCode: 500 })
-    }
+    // Prevent further propagation
+    return Promise.resolve(false)
   })
 }
