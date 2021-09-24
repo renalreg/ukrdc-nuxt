@@ -28,6 +28,7 @@
           {{ item.masterRecord.givenname.toLowerCase() }}
           {{ item.masterRecord.surname.toLowerCase() }}
         </TextL1c>
+        <TextL1 v-else class="capitalize truncate inline text-red-800"> Missing Record </TextL1>
         <TextP class="mt-2 truncate"> {{ item.type }}: {{ item.description }} </TextP>
       </div>
       <!-- National ID -->
@@ -39,9 +40,8 @@
           {{ item.person.localid.trim() }}
         </TextP>
         <masterrecordsNationalIdTypeTag
-          v-if="item.masterRecord"
           class="mt-2"
-          :nationalid-type="item.masterRecord.nationalidType"
+          :nationalid-type="item.masterRecord ? item.masterRecord.nationalidType : 'Unknown Type'"
         />
       </div>
       <!-- Last updated (small and up) -->
