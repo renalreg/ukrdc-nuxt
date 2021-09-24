@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="grid grid-cols-2 group rounded-lg bg-gray-100 text-sm font-medium" aria-label="Tabs">
+    <nav class="grid grid-cols-2 group rounded-lg bg-gray-100 hover:bg-gray-200 text-sm font-medium" aria-label="Tabs">
       <!-- Current: "text-gray-900", Default: "text-gray-500 hover:text-gray-700" -->
       <button
         class="rounded-md focus:outline-none focus:ring-offset-gray-100 truncate"
@@ -50,6 +50,5 @@ export default defineComponent({
   @apply border border-gray-300 focus:border-indigo-500 p-1.5 rounded-md bg-white shadow-sm;
 }
 .tab-inactive {
-  @apply focus:bg-gray-200 hover:bg-gray-200;
 }
 </style>
