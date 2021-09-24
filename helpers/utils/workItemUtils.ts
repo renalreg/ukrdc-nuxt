@@ -49,7 +49,7 @@ export function workItemIsUKRDC(item: WorkItem) {
 
 export function workItemIsMergable(item: WorkItemExtended): Boolean {
   // Check if a workitem can be merged (incoming and destination UKRDC records)
-  return workItemIsUKRDC(item) && item.incoming.masterRecords.length > 0
+  return workItemIsUKRDC(item) && item.incoming.masterRecords.length > 0 && !!item.destination.masterRecord
 }
 
 export function workItemIsSecondary(item: WorkItemExtended, related: WorkItem[]) {
