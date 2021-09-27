@@ -82,7 +82,7 @@ export default defineComponent({
     // Data fetching
 
     async function getResults() {
-      if (searchQueryIsPopulated) {
+      if (searchQueryIsPopulated.value) {
         const resultsPage = await fetchSearchResultsPage(
           apiQueryString.value,
           page.value || 0,
