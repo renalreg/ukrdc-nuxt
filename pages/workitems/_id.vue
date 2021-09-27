@@ -100,23 +100,6 @@
       </GenericButton>
     </div>
 
-    <!-- Related Work Items  -->
-    <GenericCard v-if="workItemCollection.length > 0" class="mb-8">
-      <!-- Card header -->
-      <GenericCardHeader>
-        <TextH2>Related Work Items</TextH2>
-        <TextL2>Work Items for the same patient, raised by the same event</TextL2>
-      </GenericCardHeader>
-      <!-- Results list -->
-      <ul class="divide-y divide-gray-200">
-        <div v-for="item in workItemCollection" :key="item.id" :item="item" class="hover:bg-gray-50">
-          <NuxtLink :to="`/workitems/${item.id}`">
-            <workitemsListItem :item="item" />
-          </NuxtLink>
-        </div>
-      </ul>
-    </GenericCard>
-
     <!-- Work Item Trigger -->
     <div v-if="record" class="mb-8">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -219,6 +202,23 @@
         /></GenericCard>
       </div>
     </div>
+
+    <!-- Related Work Items  -->
+    <GenericCard v-if="workItemCollection.length > 0" class="mb-8">
+      <!-- Card header -->
+      <GenericCardHeader>
+        <TextH2>Related Work Items</TextH2>
+        <TextL2>Work Items for the same patient, raised by the same event</TextL2>
+      </GenericCardHeader>
+      <!-- Results list -->
+      <ul class="divide-y divide-gray-200">
+        <div v-for="item in workItemCollection" :key="item.id" :item="item" class="hover:bg-gray-50">
+          <NuxtLink :to="`/workitems/${item.id}`">
+            <workitemsListItem :item="item" />
+          </NuxtLink>
+        </div>
+      </ul>
+    </GenericCard>
 
     <!-- Related errors card -->
     <WorkitemsRelatedErrorsList v-if="record" class="mt-4 mb-8" :workitem="record" :size="5" />
