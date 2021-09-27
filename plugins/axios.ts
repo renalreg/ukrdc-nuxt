@@ -2,7 +2,6 @@
 Automatically redirect to an error page on API fetch errors.
 */
 import { Context } from '@nuxt/types'
-import { ExpiredAuthSessionError } from '@nuxtjs/auth-next/dist/runtime'
 
 interface PydanticError {
   loc: string[]
@@ -22,13 +21,19 @@ function decodePydanticErrors(errors: PydanticError[]) {
 export default function ({ error, app, $axios, $sentry }: Context) {
   $axios.onError((thisError) => {
     // Let nuxt-auth handle logging out on ExpiredAuthSessionError
-    if (thisError instanceof ExpiredAuthSessionError) {
+    // Using `thisError instanceof ExpiredAuthSessionError` doesn't seem to work, possibly
+    // due to something like https://github.com/microsoft/TypeScript/issues/13965
+    if (thisError.name === 'ExpiredAuthSessionError') {
+      // Return early to let @/plugins/axios-auth.ts handle the error
+      // We can't handle it here, as we need to access the $auth object which is only
+      // available in the context of plugins added to auth.plugins in nuxt.config.js
       throw thisError
     }
 
     // Redirect to 404 without propagating Sentry or toast
     if (thisError.response?.status === 404) {
       error({ statusCode: 404, message: 'Page not found' })
+      // Return early
       throw thisError
     }
 
@@ -37,6 +42,7 @@ export default function ({ error, app, $axios, $sentry }: Context) {
     // here just leads to duplicate messages.
     if (thisError.response?.status === 500) {
       error({ statusCode: 500, message: 'Internal server error' })
+      // Return early
       throw thisError
     }
 
@@ -44,6 +50,7 @@ export default function ({ error, app, $axios, $sentry }: Context) {
     if (thisError.response?.status === 422) {
       const msg = decodePydanticErrors(thisError.response.data.detail)
       error({ statusCode: 422, message: msg })
+      // Return early
       throw thisError
     }
 
@@ -63,8 +70,5 @@ export default function ({ error, app, $axios, $sentry }: Context) {
 
     // Log the error to Sentry
     $sentry.captureException(thisError)
-
-    // Prevent further propagation
-    return Promise.resolve(false)
   })
 }

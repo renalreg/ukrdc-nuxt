@@ -68,6 +68,7 @@ export default {
 
   // Auth Configuration: https://auth.nuxtjs.org/api/options
   auth: {
+    plugins: ['~/plugins/axios-auth.ts'],
     strategies: {
       okta: {
         scheme: '~/schemes/oktaScheme',
