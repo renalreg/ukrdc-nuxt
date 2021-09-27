@@ -61,13 +61,16 @@
     </GenericCard>
 
     <!-- Record message banners -->
-    <div v-if="!fetchPending">
+    <div>
+      <div v-if="latestMessage === undefined">
+        <GenericAlertPlaceholder class="mb-4" />
+      </div>
+      <div v-if="latestMessage === null">
+        <GenericAlertWarning class="mb-4" message="No new patient data received in the last year" />
+      </div>
       <div v-if="latestMessage">
         <GenericAlertError v-if="latestMessage.msgStatus === 'ERROR'" class="mb-4" :message="latestMessageInfo" />
         <GenericAlertInfo v-else class="mb-4" :message="latestMessageInfo" />
-      </div>
-      <div v-else>
-        <GenericAlertWarning class="mb-4" :message="latestMessageInfo" />
       </div>
     </div>
 
@@ -76,10 +79,10 @@
       <GenericCardHeader>
         <TextH2> Patient Records </TextH2>
       </GenericCardHeader>
-      <ul v-if="fetchPending" class="divide-y divide-gray-200">
+      <PatientrecordsGroupedList v-if="patientRecords" :records="patientRecords" @refresh="refreshRecords" />
+      <ul v-else class="divide-y divide-gray-200">
         <SkeleListItem v-for="n in 5" :key="n" />
       </ul>
-      <PatientrecordsGroupedList v-else :records="patientRecords" @refresh="refreshRecords" />
     </GenericCard>
 
     <!-- Related Master Records card -->
@@ -87,15 +90,15 @@
       <GenericCardHeader>
         <TextH2> Linked Master Records </TextH2>
       </GenericCardHeader>
-      <ul v-if="fetchPending" class="divide-y divide-gray-200">
-        <SkeleListItem v-for="n in 2" :key="n" />
-      </ul>
-      <ul v-else class="divide-y divide-gray-200">
+      <ul v-if="relatedRecords" class="divide-y divide-gray-200">
         <div v-for="item in relatedRecords" :key="item.id" class="hover:bg-gray-50">
           <NuxtLink :to="`/masterrecords/${item.id}`">
             <MasterrecordsListItem :item="item" />
           </NuxtLink>
         </div>
+      </ul>
+      <ul v-else class="divide-y divide-gray-200">
+        <SkeleListItem v-for="n in 2" :key="n" />
       </ul>
     </GenericCard>
   </div>
@@ -135,26 +138,21 @@ export default defineComponent({
 
     const relatedRecords = ref<MasterRecord[]>()
     const patientRecords = ref<PatientRecordSummary[]>()
-    const latestMessage = ref<MinimalMessage | null>()
+    const latestMessage = ref<MinimalMessage | null | undefined>(undefined)
 
     // Data fetching
-    const fetchPending = ref(true)
+    function fetchRelatedRecordData() {
+      fetchMasterRecordPatientRecords(props.record).then((records) => {
+        patientRecords.value = records
+      })
 
-    async function fetchRelatedRecordData() {
-      fetchPending.value = true
+      fetchMasterRecordRelated(props.record).then((records) => {
+        relatedRecords.value = records
+      })
 
-      // Load related data concurrently
-      const [latestMessageResponse, relatedRecordsResponse, patientRecordsResponse] = await Promise.all([
-        fetchMasterRecordLatestMessage(props.record),
-        fetchMasterRecordRelated(props.record),
-        fetchMasterRecordPatientRecords(props.record),
-      ])
-
-      latestMessage.value = latestMessageResponse
-      relatedRecords.value = relatedRecordsResponse
-      patientRecords.value = patientRecordsResponse
-
-      fetchPending.value = false
+      fetchMasterRecordLatestMessage(props.record).then((message) => {
+        latestMessage.value = message
+      })
     }
 
     onMounted(() => {
@@ -207,7 +205,7 @@ export default defineComponent({
 
     const latestMessageInfo = computed(() => {
       if (!latestMessage.value) {
-        return 'No new patient data received in the last year'
+        return null
       }
       if (latestMessage.value.msgStatus === 'ERROR') {
         return `Latest file ${latestMessage.value.filename} failed from ${latestMessage.value.facility} on ${formatDate(
@@ -222,7 +220,6 @@ export default defineComponent({
     })
 
     return {
-      fetchPending,
       patientRecords,
       relatedRecords,
       tracingRecord,
