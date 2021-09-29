@@ -29,6 +29,20 @@ function normalizePath(path = '', ctx) {
   result = result.replace(/\/+/g, '/')
   return result
 }
+function getProp(holder, propName) {
+  if (!propName || !holder || typeof holder !== 'object') {
+    return holder
+  }
+  if (propName in holder) {
+    return holder[propName]
+  }
+  const propParts = Array.isArray(propName) ? propName : (propName + '').split('.')
+  let result = holder
+  while (propParts.length && result) {
+    result = result[propParts.shift()]
+  }
+  return result
+}
 
 export default class RuntimeConfigurableOktaScheme extends RuntimeConfigurableOauth2Scheme {
   // In principle we should be able to use nuxt-auth's $auth.logout function,
