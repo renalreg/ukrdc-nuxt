@@ -87,7 +87,7 @@ function normalize(strArray: string[]) {
   return str
 }
 
-export function urljoin(...args: string[]) {
+export function urljoin(...args: string[]): string {
   const input = [].slice.call(args)
   return normalize(input)
 }
