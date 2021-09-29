@@ -1,7 +1,25 @@
 <template>
   <client-only>
-    <div class="mb-4">
-      <div class="flex mb-2 w-full">
+    <div class="mb-4 flex flex-col lg:flex-row gap-4">
+      <div class="flex gap-2 flex-none">
+        <GenericButtonMini :colour="lastNDays === 7 ? 'indigo-outline' : 'white'" @click="setLastNDays(7)">
+          Last 7 days
+        </GenericButtonMini>
+        <GenericButtonMini :colour="lastNDays === 30 ? 'indigo-outline' : 'white'" @click="setLastNDays(30)">
+          Last 30 days
+        </GenericButtonMini>
+        <GenericButtonMini :colour="lastNDays === 365 ? 'indigo-outline' : 'white'" @click="setLastNDays(365)">
+          Last year
+        </GenericButtonMini>
+        <GenericButtonMini :colour="lastNDays === 3650 ? 'indigo-outline' : 'white'" @click="setLastNDays(3650)">
+          Last 10 years
+        </GenericButtonMini>
+        <GenericButtonMini :colour="showCustom ? 'indigo-outline' : 'white'" @click="showCustom = true">
+          Custom
+        </GenericButtonMini>
+        <GenericButtonMini colour="red-outline" @click="clear()"> Clear </GenericButtonMini>
+      </div>
+      <div v-show="showCustom" class="flex w-full h-8 flex-1">
         <v-date-picker
           class="w-full"
           :value="value"
@@ -56,22 +74,13 @@
             </div>
           </template>
         </v-date-picker>
-        <GenericButton colour="white" class="ml-2" @click="$emit('input', { start: null, end: null })"
-          >Clear</GenericButton
-        >
-      </div>
-      <div class="flex gap-2">
-        <GenericButtonMini @click="setLastNDays(7)"><TextP>Last 7 days</TextP></GenericButtonMini>
-        <GenericButtonMini @click="setLastNDays(30)"><TextP>Last 30 days</TextP></GenericButtonMini>
-        <GenericButtonMini @click="setLastNDays(365)"><TextP>Last year</TextP></GenericButtonMini>
-        <GenericButtonMini @click="setLastNDays(3650)"><TextP>Last 10 years</TextP></GenericButtonMini>
       </div>
     </div>
   </client-only>
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
 
 import { DateRange, nowString } from '@/helpers/utils/dateUtils'
 
@@ -96,16 +105,34 @@ export default defineComponent({
       }),
     },
   },
-  setup(_, { emit }) {
+  setup(props, { emit }) {
+    const showCustom = ref(false)
+
     const textBoxClasses =
       'flex-grow pl-8 pr-2 py-1 w-full h-full bg-white border border-gray-300 rounded-md placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 truncate'
 
+    function clear(): void {
+      showCustom.value = false
+      emit('input', { start: null, end: null })
+    }
+
+    const lastNDays = computed((): number | null => {
+      if (showCustom.value) {
+        return null
+      }
+      if (props.value.start && props.value.end) {
+        return Math.round((Date.parse(props.value.end) - Date.parse(props.value.start)) / (1000 * 3600 * 24))
+      }
+      return null
+    })
+
     function setLastNDays(daysAgo: number): void {
+      showCustom.value = false
       const newRange: DateRange = { start: nowString(-daysAgo), end: nowString(0) }
       emit('input', newRange)
     }
 
-    return { textBoxClasses, setLastNDays }
+    return { showCustom, textBoxClasses, lastNDays, setLastNDays, clear }
   },
 })
 </script>
