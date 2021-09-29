@@ -5,11 +5,6 @@
     </div>
 
     <div class="mb-4 flex flex-col">
-      <div class="mb-2 flex items-center">
-        <FormCheckbox v-model="statuses" label="Open" :value="1" />
-        <FormCheckbox v-model="statuses" label="WIP" :value="2" />
-        <FormCheckbox v-model="statuses" label="Closed" :value="3" />
-      </div>
       <GenericSearchableSelect
         v-if="facilityIds.length > 1"
         v-model="selectedFacility"
@@ -18,8 +13,13 @@
         :labels="facilityLabels"
         hint="Select a facility..."
       />
-      <div>
-        <GenericButtonMini class="float-right" @click="toggleOrder">
+      <div class="flex items-center">
+        <div class="flex-grow flex items-center">
+          <FormCheckbox v-model="statuses" label="Open" :value="1" />
+          <FormCheckbox v-model="statuses" label="WIP" :value="2" />
+          <FormCheckbox v-model="statuses" label="Closed" :value="3" />
+        </div>
+        <GenericButtonMini class="flex-shrink" @click="toggleOrder">
           <div v-show="orderAscending" class="flex">
             <TextP>Oldest - Newest</TextP><IconMiniSortAscending class="ml-2" />
           </div>
