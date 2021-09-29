@@ -71,7 +71,7 @@ export default {
     plugins: ['~/plugins/axios-auth.ts'],
     strategies: {
       okta: {
-        scheme: '~/schemes/oktaScheme',
+        scheme: '~/schemes/oktaScheme.ts',
         responseType: 'code',
         grantType: 'authorization_code',
         scope: ['openid', 'profile', 'email', 'offline_access'],
