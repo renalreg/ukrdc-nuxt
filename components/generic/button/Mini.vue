@@ -57,6 +57,9 @@ export default defineComponent({
 .btn-mini-indigo {
   @apply btn-mini-base bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 border-transparent text-white;
 }
+.btn-mini-indigo-outline {
+  @apply btn-mini-base bg-white hover:bg-gray-50 focus:ring-indigo-500 border-indigo-600 text-indigo-600;
+}
 .btn-mini-green {
   @apply btn-mini-base bg-green-600 hover:bg-green-700 focus:ring-green-500 border-transparent text-white;
 }
@@ -66,16 +69,19 @@ export default defineComponent({
 .btn-mini-red {
   @apply btn-mini-base bg-red-600 hover:bg-red-700 focus:ring-red-500 border-transparent text-white;
 }
+.btn-mini-red-outline {
+  @apply btn-mini-base bg-white hover:bg-gray-50 focus:ring-red-500 border-red-600 text-red-600;
+}
 .btn-mini-base {
+  min-height: 2rem;
   @apply items-center
       px-2
-      py-0.5
-      h-7
+      py-1
       border
       shadow-sm
       text-sm
       font-medium
-      rounded-sm
+      rounded-md
       focus:outline-none focus:ring-2 focus:ring-offset-2;
 }
 </style>
