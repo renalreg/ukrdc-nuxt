@@ -15,6 +15,10 @@
       />
     </div>
 
+    <div>
+      <SearchBar v-model="searchboxString" :focus="false" />
+    </div>
+
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
       <!-- Code list -->
       <div :class="$route.params.id ? 'hidden lg:block' : 'block'">
@@ -79,9 +83,11 @@ export default defineComponent({
     const codes = ref([] as Code[])
     const selectedCode = ref<Code>()
 
+    const searchboxString = stringQuery('search', null, true, true)
+
     // Data fetching
     async function getCodes() {
-      const codesPage = await fetchCodesPage(page.value || 0, size.value, selectedStandard.value)
+      const codesPage = await fetchCodesPage(page.value || 0, size.value, selectedStandard.value, searchboxString.value)
       codes.value = codesPage.items
       total.value = codesPage.total
       page.value = codesPage.page
@@ -93,18 +99,29 @@ export default defineComponent({
       getCodes()
     })
 
-    watch([page, selectedStandard], (curr, prev) => {
+    watch([page, selectedStandard, searchboxString], (curr, prev) => {
       // When we change page, the query object gets written to,
       // triggering this event even if the values themselves
       // don't change. We need to compare them before deciding
       // to fetch, otherwise the list of codes will refresh
       // every time you click on a code and change page.
-      if (!(curr[0] === prev[0] && curr[1] === prev[1])) {
+      if (!(curr[0] === prev[0] && curr[1] === prev[1] && curr[2] === prev[2])) {
         getCodes()
       }
     })
 
-    return { standards, selectedStandard, codes, selectedCode, fetchInProgress, page, total, size }
+    return {
+      standards,
+      selectedStandard,
+      codes,
+      selectedCode,
+      searchboxString,
+      getCodes,
+      fetchInProgress,
+      page,
+      total,
+      size,
+    }
   },
   head: {
     title: 'Code List',

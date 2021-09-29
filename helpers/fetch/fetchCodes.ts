@@ -19,13 +19,22 @@ export default function () {
 
   const fetchInProgress = ref(false)
 
-  async function fetchCodesPage(page: number, size: number, standard: string | null): Promise<CodesPage> {
+  async function fetchCodesPage(
+    page: number,
+    size: number,
+    standard: string | null,
+    search: string | null
+  ): Promise<CodesPage> {
     fetchInProgress.value = true
     // Fetch code list
     let path = `${$config.apiBase}/v1/codes/list/?page=${page}&size=${size}`
     // Filter by service if it exists
     if (standard) {
       path = path + `&coding_standard=${encodeURIComponent(standard)}`
+    }
+    // Filter by search term if it exists
+    if (search) {
+      path = path + `&search=${encodeURIComponent(search)}`
     }
     const codesResponse = (await $axios.$get(path)) as CodesPage
     fetchInProgress.value = false
