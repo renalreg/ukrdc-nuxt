@@ -47,10 +47,10 @@ export default function () {
     facility: string | null,
     nationalId: string | null
   ): Promise<MessagePage> {
-    let path = `${$config.apiBase}/v1/messages/?status=ERROR&page=${page}&size=${size}&sort_by=received`
+    let path = `${$config.apiBase}/v1/messages/?page=${page}&size=${size}&sort_by=received`
 
     // Filter by status and date
-    path = path + buildCommonMessageQuery(orderBy, status, since, until)
+    path = path + buildCommonMessageQuery(orderBy, status || 'ERROR', since, until)
 
     // Filter by facility if it exists
     if (facility) {

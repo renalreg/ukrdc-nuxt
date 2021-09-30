@@ -27,6 +27,15 @@
         <GenericButtonMini v-show="nationalId" @click="$router.push({ query: { nationalid: null } })"
           >Show Results From All Patients</GenericButtonMini
         >
+
+        <form v-show="!nationalId" class="flex" @submit.prevent="nationalId = nationalIdSearchString.trim()">
+          <FormTextBoxMini
+            v-model="nationalIdSearchString"
+            class="rounded-r-none z-20"
+            placeholder="Filter by Patient Number"
+          ></FormTextBoxMini>
+          <GenericButtonMini class="z-10" anchor="left" type="submit">Go</GenericButtonMini>
+        </form>
       </div>
     </div>
 
@@ -82,6 +91,7 @@ export default defineComponent({
 
     // Set up URL query params for additional filters
     const nationalId = stringQuery('nationalid', null, true, true)
+    const nationalIdSearchString = ref<string | null>(null)
 
     // Set initial date dateRange
     const dateRange = makeDateRange(nowString(-365), nowString(0), true)
@@ -127,6 +137,7 @@ export default defineComponent({
       facilityLabels,
       selectedFacility,
       nationalId,
+      nationalIdSearchString,
       orderAscending,
       orderBy,
       toggleOrder,

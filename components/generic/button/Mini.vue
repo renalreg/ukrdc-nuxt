@@ -4,7 +4,12 @@
       v-tooltip="{ content: tooltip, delay: { show: 500, hide: 0 } }"
       :aria-label="label"
       type="button"
-      :class="`btn-mini-${colour}`"
+      :class="[
+        `btn-mini-${colour}`,
+        anchor !== 'left' ? 'rounded-l-md' : 'border-l-0',
+        anchor !== 'right' ? 'rounded-r-md' : 'border-r-0',
+        'border',
+      ]"
       @click="navigate"
     >
       <slot />
@@ -15,7 +20,12 @@
     v-tooltip="{ content: tooltip, delay: { show: 500, hide: 0 } }"
     :aria-label="label"
     type="button"
-    :class="`btn-mini-${colour}`"
+    :class="[
+      `btn-mini-${colour}`,
+      anchor !== 'left' ? 'rounded-l-md' : 'border-l-0',
+      anchor !== 'right' ? 'rounded-r-md' : 'border-r-0',
+      'border',
+    ]"
     @click="$emit('click')"
   >
     <slot />
@@ -42,6 +52,11 @@ export default defineComponent({
       default: null,
     },
     label: {
+      type: String,
+      required: false,
+      default: null,
+    },
+    anchor: {
       type: String,
       required: false,
       default: null,
@@ -77,11 +92,9 @@ export default defineComponent({
   @apply items-center
       px-2
       py-1
-      border
       shadow-sm
       text-sm
       font-medium
-      rounded-md
-      focus:outline-none focus:ring-2 focus:ring-offset-2;
+      focus:outline-none focus:ring-1;
 }
 </style>
