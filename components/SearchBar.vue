@@ -21,7 +21,7 @@
             </svg>
           </div>
           <form @submit.prevent="$emit('submit')">
-            <FormTextBox placeholder="Search" type="search" :value="value" v-on="$listeners" />
+            <FormTextBox class="pl-10 w-full" placeholder="Search" type="search" :value="value" v-on="$listeners" />
           </form>
         </div>
       </div>
