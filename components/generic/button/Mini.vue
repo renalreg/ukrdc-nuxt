@@ -95,6 +95,6 @@ export default defineComponent({
       shadow-sm
       text-sm
       font-medium
-      focus:outline-none focus:ring-2 focus:ring-offset-2;
+      focus:outline-none focus:ring-1;
 }
 </style>
