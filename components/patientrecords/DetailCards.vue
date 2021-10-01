@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="!isEmptyObject(record)">
-      <h2 class="text-gray-500 text-sm font-medium uppercase tracking-wide">Demographics</h2>
+      <TextH4>Demographics</TextH4>
       <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <li class="col-span-1 sm:col-span-2">
           <GenericCardMini class="px-4 py-2 w-full grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -37,7 +37,7 @@
     </div>
 
     <div v-if="!isEmptyObject(record)" class="mt-4">
-      <h2 class="text-gray-500 text-sm font-medium uppercase tracking-wide">Patient Numbers</h2>
+      <TextH4>Patient Numbers</TextH4>
       <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <li
           v-for="item in record.patient.numbers"
@@ -61,10 +61,10 @@
             </div>
             <div class="flex-1 flex items-center justify-between truncate">
               <div class="flex-1 px-4 py-2 truncate">
-                <p class="text-gray-900 font-medium hover:text-gray-600 truncate">
+                <TextB class="truncate">
                   {{ item.patientid }}
-                </p>
-                <p class="text-gray-500">{{ item.organization }}</p>
+                </TextB>
+                <TextP>{{ item.organization }}</TextP>
               </div>
             </div>
           </GenericCardMini>
@@ -73,25 +73,25 @@
     </div>
 
     <div v-if="!isEmptyObject(record) && record.patient.addresses && record.patient.addresses.length > 0" class="mt-4">
-      <h2 class="text-gray-500 text-sm font-medium uppercase tracking-wide">Addresses</h2>
+      <TextH4>Addresses</TextH4>
 
       <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <li v-for="item in record.patient.addresses" :key="item.street" class="col-span-1">
           <GenericCardMini class="px-4 py-2 w-full">
-            <p class="text-gray-900 font-medium hover:text-gray-600">
+            <TextB>
               {{ item.street }}
-            </p>
-            <p v-if="item.town" class="text-gray-500">{{ item.town }}</p>
-            <p v-if="item.county" class="text-gray-500">
+            </TextB>
+            <TextP v-if="item.town">{{ item.town }}</TextP>
+            <TextP v-if="item.county">
               {{ item.county }}
-            </p>
-            <p v-if="item.postcode" class="text-gray-500">
+            </TextP>
+            <TextP v-if="item.postcode">
               {{ item.postcode }}
-            </p>
-            <p v-if="item.countryDescription" class="text-gray-500">
+            </TextP>
+            <TextP v-if="item.countryDescription">
               {{ item.countryDescription }}
-            </p>
-            <p v-if="item.fromTime" class="text-gray-500">Since {{ formatDate(item.fromTime, (t = false)) }}</p>
+            </TextP>
+            <TextP v-if="item.fromTime">Since {{ formatDate(item.fromTime, (t = false)) }}</TextP>
             <span
               v-if="!item.toTime"
               class="
@@ -121,7 +121,7 @@
       v-if="!isEmptyObject(record) && record.programMemberships && record.programMemberships.length > 0"
       class="mt-4"
     >
-      <h2 class="text-gray-500 text-sm font-medium uppercase tracking-wide">Program Memberships</h2>
+      <TextH4>Program Memberships</TextH4>
 
       <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <li
@@ -130,10 +130,10 @@
           class="col-span-1 flex shadow-sm rounded-md"
         >
           <GenericCardMini class="px-4 py-2 w-full">
-            <p class="text-gray-900 font-medium hover:text-gray-600">
+            <TextB>
               {{ item.programName }}
-            </p>
-            <p v-if="item.fromTime" class="text-gray-500">Since {{ formatDate(item.fromTime, (t = false)) }}</p>
+            </TextB>
+            <TextP v-if="item.fromTime">Since {{ formatDate(item.fromTime, (t = false)) }}</TextP>
             <span
               v-if="!item.toTime"
               class="
@@ -158,6 +158,38 @@
         </li>
       </ul>
     </div>
+
+    <div v-if="full && !isEmptyObject(record) && record.patient.familydoctor" class="mt-4">
+      <TextH4>Family Doctor</TextH4>
+
+      <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <li
+          v-for="(info, index) in [
+            record.patient.familydoctor.gpInfo,
+            record.patient.familydoctor.gpPracticeInfo,
+          ].filter((x) => x)"
+          :key="`gp-info-${index}`"
+          class="col-span-1"
+        >
+          <GenericCardMini class="px-4 py-2 w-full">
+            <TextB>{{ info.type }} Information</TextB>
+            <TextP>{{ info.gpname || 'GP name not known' }}</TextP>
+            <TextP>{{ info.street }}</TextP>
+            <TextP>{{ info.postcode }}</TextP>
+            <TextP>Contact {{ info.contactvalue }}</TextP>
+          </GenericCardMini>
+        </li>
+        <li v-if="!record.patient.familydoctor.gpInfo">
+          <GenericCardMini class="px-4 py-2 w-full">
+            <TextB>GP Information</TextB>
+            <TextP>{{ record.patient.familydoctor.gpname || 'GP name not known' }}</TextP>
+            <TextP>{{ record.patient.familydoctor.street }}</TextP>
+            <TextP>{{ record.patient.familydoctor.postcode }}</TextP>
+            <TextP>Contact {{ record.patient.familydoctor.contactvalue }}</TextP>
+          </GenericCardMini>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -175,6 +207,11 @@ export default defineComponent({
     record: {
       type: Object as () => PatientRecord,
       required: true,
+    },
+    full: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   setup() {
