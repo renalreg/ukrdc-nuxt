@@ -36,7 +36,7 @@
       </GenericDl>
     </GenericCard>
 
-    <PatientrecordsDetailCards :record="record" />
+    <PatientrecordsDetailCards :full="true" :record="record" />
   </div>
 </template>
 
