@@ -113,7 +113,7 @@
             <MirthMessageListItem :message="mirthMessage" />
           </NuxtLink>
         </li>
-        <li v-else>
+        <li v-else-if="mirthMessage === undefined">
           <SkeleListItem />
         </li>
       </ul>
@@ -122,7 +122,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useMeta, useRoute } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, useContext, useMeta, useRoute } from '@nuxtjs/composition-api'
 
 import { ErrorSource, Message } from '@/interfaces/messages'
 import { ChannelMessage } from '@/interfaces/mirth'
@@ -139,6 +139,7 @@ import fetchMessages from '~/helpers/fetch/fetchMessages'
 export default defineComponent({
   setup() {
     const route = useRoute()
+    const { $toast } = useContext()
     const { hasPermission } = usePermissions()
     const {
       fetchMessage,
@@ -158,7 +159,7 @@ export default defineComponent({
 
     const error = ref<Message>()
     const source = ref<ErrorSource>()
-    const mirthMessage = ref<ChannelMessage>()
+    const mirthMessage = ref<ChannelMessage | null | undefined>(undefined)
     const workItems = ref([] as WorkItem[])
     const masterRecords = ref([] as MasterRecord[])
 
@@ -177,7 +178,11 @@ export default defineComponent({
 
       // Conditionally get the Mirth message data
       if (hasPermission('ukrdc:mirth:read')) {
-        mirthMessage.value = await fetchMessageMirth(error.value)
+        try {
+          mirthMessage.value = await fetchMessageMirth(error.value)
+        } catch (e) {
+          mirthMessage.value = null
+        }
       }
     }
 
@@ -191,8 +196,20 @@ export default defineComponent({
 
     async function fetchAndShowSource() {
       if (error.value) {
-        source.value = await fetchMessageSource(error.value)
-        errorSourceGenericModalMaxSlot.value?.show()
+        try {
+          source.value = await fetchMessageSource(error.value)
+          errorSourceGenericModalMaxSlot.value?.show()
+        } catch (e) {
+          if (e.response.status === 404) {
+            $toast.show({
+              type: 'danger',
+              title: 'Error',
+              message: e.response.data.detail,
+              timeout: 10,
+              classTimeout: 'bg-red-600',
+            })
+          }
+        }
       }
     }
 

@@ -30,9 +30,9 @@ export default function ({ error, app, $axios, $sentry }: Context) {
       throw thisError
     }
 
-    // Redirect to 404 without propagating Sentry or toast
+    // For API 404 errors a resource is usually missing or unavailable, and is
+    // generally handled by the component that triggered the request. Don't show toasts or log.
     if (thisError.response?.status === 404) {
-      error({ statusCode: 404, message: 'Page not found' })
       // Return early
       throw thisError
     }

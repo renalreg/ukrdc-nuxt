@@ -87,9 +87,12 @@ export default function () {
 
   async function fetchMessageSource(message: Message): Promise<ErrorSource> {
     fetchSourceInProgress.value = true
-    const source: ErrorSource = await $axios.$get(message.links.source)
-    fetchSourceInProgress.value = false
-    return source
+    try {
+      const source: ErrorSource = await $axios.$get(message.links.source)
+      return source
+    } finally {
+      fetchSourceInProgress.value = false
+    }
   }
 
   return {
