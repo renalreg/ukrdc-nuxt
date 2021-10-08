@@ -14,6 +14,7 @@
       <div v-if="!facility.statistics.lastUpdated">No data available. Please try again in a few minutes.</div>
 
       <div v-else>
+        <TextL2 class="mb-2"> Last updated {{ lastUpdatedString }} </TextL2>
         <!-- Basic stats -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
           <GenericCard>
@@ -72,8 +73,18 @@
           </GenericCard>
         </div>
 
+        <!-- Error history -->
+        <GenericCard v-if="facilityErrorsHistory">
+          <GenericCardHeader>
+            <TextH2> Error History </TextH2>
+          </GenericCardHeader>
+          <GenericCardContent class="p-4">
+            <ChartTimeSeries class="h-64" :data="facilityErrorsHistory" label="New Errors" />
+          </GenericCardContent>
+        </GenericCard>
+
         <!-- Failing NIs -->
-        <GenericCard v-if="facility.statistics.messages.errorIdsCount > 0">
+        <GenericCard v-if="facility.statistics.messages.errorIdsCount > 0" class="mt-4">
           <GenericCardHeader>
             <TextH2> Records Currently Failing </TextH2>
           </GenericCardHeader>
@@ -99,7 +110,8 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
 
-import { Facility } from '@/interfaces/facilities'
+import { DateTime } from 'luxon'
+import { Facility, ErrorHistoryItem } from '@/interfaces/facilities'
 import fetchFacilities from '~/helpers/fetch/fetchFacilities'
 
 export default defineComponent({
@@ -115,9 +127,17 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { fetchFacility } = fetchFacilities()
+    const { fetchFacility, fetchFacilityErrorsHistory } = fetchFacilities()
 
     const facility = ref<Facility>()
+    const facilityErrorsHistory = ref<ErrorHistoryItem[]>()
+
+    const lastUpdatedString = computed(() => {
+      if (!facility.value) {
+        return ''
+      }
+      return DateTime.fromISO(facility.value.statistics.lastUpdated).toLocaleString(DateTime.DATETIME_SHORT)
+    })
 
     // Failing NIs data
     const errorIdsPageNumber = ref(1)
@@ -134,10 +154,14 @@ export default defineComponent({
 
     onMounted(async () => {
       facility.value = await fetchFacility(props.code)
+      facilityErrorsHistory.value = await fetchFacilityErrorsHistory(facility.value)
+      console.log()
     })
 
     return {
+      lastUpdatedString,
       facility,
+      facilityErrorsHistory,
       errorIdsPage,
       errorIdsPageNumber,
       errorIdsPageSize,
