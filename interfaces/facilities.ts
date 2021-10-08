@@ -1,16 +1,32 @@
-import { TotalDayPrev } from '@/interfaces/statistics'
+interface FacilityLinks {
+  self: string
+  errorsHistory: string
+}
 
 export interface FacilitySummary {
   id: string
   description: string
+  links: FacilityLinks
+}
+
+interface FacilityMessageSummary {
+  totalIdsCount: number
+  successIdsCount: number
+  errorIdsCount: number
+  errorIds: string[]
 }
 
 export interface FacilityStatistics {
-  recordsWithErrors: number
-  patientRecords: TotalDayPrev
-  errors: TotalDayPrev
+  lastUpdated: string
+  patientRecords: number
+  messages: FacilityMessageSummary
 }
 
 export interface Facility extends FacilitySummary {
   statistics: FacilityStatistics
+}
+
+export interface ErrorHistoryItem {
+  time: string
+  count: number
 }

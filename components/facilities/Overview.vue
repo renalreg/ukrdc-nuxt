@@ -10,88 +10,99 @@
         </TextL1>
         <SkeleText v-else class="h-4 w-1/2" />
       </div>
-      <!-- New errors -->
-      <GenericCardSplit class="mb-4">
-        <dashStatBlock
-          :value="facility.statistics.errors ? facility.statistics.errors.day : undefined"
-          :previous-value="facility.statistics.errors ? facility.statistics.errors.prev : undefined"
-          :invert="true"
-          title="New Errors"
-        />
 
-        <dashStatBlock
-          :value="facility.statistics.errors ? facility.statistics.errors.total : undefined"
-          title="Total Errors"
-        />
-      </GenericCardSplit>
+      <div v-if="!facility.statistics.lastUpdated">No data available. Please try again in a few minutes.</div>
 
-      <!-- New records -->
-      <GenericCardSplit class="mb-4">
-        <dashStatBlock
-          :value="facility.statistics.patientRecords ? facility.statistics.patientRecords.day : undefined"
-          :previous-value="facility.statistics.patientRecords ? facility.statistics.patientRecords.prev : undefined"
-          :invert="false"
-          title="New Records"
-        />
-
-        <dashStatBlock
-          :value="facility.statistics.patientRecords ? facility.statistics.patientRecords.total : undefined"
-          title="Total Records"
-        />
-      </GenericCardSplit>
-
-      <GenericCard>
-        <!-- Card header -->
-        <GenericCardHeader>
-          <TextH2> Data Quality </TextH2>
-        </GenericCardHeader>
-        <!-- Card content -->
-        <div
-          class="
-            grid grid-cols-1
-            items-center
-            overflow-hidden
-            divide-y divide-gray-200
-            md:grid-cols-2 md:divide-y-0 md:divide-x
-          "
-        >
-          <div class="pl-4 py-4">
-            <div class="mb-4">
-              <dt class="text-base font-normal text-gray-900">Total Patient Records</dt>
-              <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
-                <TextHc>
-                  {{ facility.statistics.patientRecords.total }}
-                </TextHc>
-              </dd>
+      <div v-else>
+        <TextL2 class="mb-2"> Last updated {{ lastUpdatedString }} </TextL2>
+        <!-- Basic stats -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+          <GenericCard>
+            <div class="flex items-center p-4">
+              <div class="flex-shrink-0">
+                <IconUsers />
+              </div>
+              <div class="ml-5 w-0 flex-1">
+                <dl>
+                  <GenericCardDt>Total Records</GenericCardDt>
+                  <dd>
+                    <TextHc>{{ facility.statistics.patientRecords }}</TextHc>
+                  </dd>
+                </dl>
+              </div>
             </div>
+          </GenericCard>
 
-            <div>
-              <dt class="text-base font-normal text-gray-900">Patient Records with Errors</dt>
-              <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
-                <TextHc>
-                  {{ facility.statistics.recordsWithErrors }}
-                </TextHc>
-              </dd>
+          <GenericCard>
+            <div class="flex items-center p-4">
+              <div class="flex-shrink-0">
+                <IconCheck />
+              </div>
+              <div class="ml-5 w-0 flex-1">
+                <dl>
+                  <GenericCardDt>Records Currently Passing</GenericCardDt>
+                  <dd>
+                    <h1 class="text-2xl font-semibold text-green-600">
+                      {{ facility.statistics.messages.successIdsCount }}
+                    </h1>
+                  </dd>
+                </dl>
+              </div>
             </div>
-          </div>
-          <div class="h-full pl-4 flex items-center">
-            <div class="flex-grow">
-              <div class="text-base font-normal text-gray-900">Data Score</div>
-              <DashQualityScore :percent="qualityPct" />
+          </GenericCard>
+
+          <GenericCard>
+            <div class="flex items-center p-4">
+              <div class="flex-shrink-0">
+                <IconExclamation />
+              </div>
+              <div class="ml-5 w-0 flex-1">
+                <dl>
+                  <GenericCardDt>Records Currently Failing</GenericCardDt>
+                  <dd>
+                    <h1
+                      class="text-2xl font-semibold"
+                      :class="facility.statistics.messages.errorIdsCount > 0 ? 'text-red-600' : 'text-green-600'"
+                    >
+                      {{ facility.statistics.messages.errorIdsCount }}
+                    </h1>
+                  </dd>
+                </dl>
+              </div>
             </div>
-            <ChartDoughnut
-              class="w-44 p-4 float-right"
-              :data="[
-                facility.statistics.recordsWithErrors,
-                facility.statistics.patientRecords.total - facility.statistics.recordsWithErrors,
-              ]"
-              :colors="['rgb(239, 68, 68)', 'rgb(16, 185, 129)']"
-              :labels="['Errors', 'No Errors']"
-              :options="{ plugins: { legend: { display: false, position: 'right' } } }"
-            />
-          </div>
+          </GenericCard>
         </div>
-      </GenericCard>
+
+        <!-- Error history -->
+        <GenericCard v-if="facilityErrorsHistory">
+          <GenericCardHeader>
+            <TextH2> Error History </TextH2>
+          </GenericCardHeader>
+          <GenericCardContent class="p-4">
+            <ChartTimeSeries class="h-64" :data="facilityErrorsHistory" label="New Errors" />
+          </GenericCardContent>
+        </GenericCard>
+
+        <!-- Failing NIs -->
+        <GenericCard v-if="facility.statistics.messages.errorIdsCount > 0" class="mt-4">
+          <GenericCardHeader>
+            <TextH2> Records Currently Failing </TextH2>
+          </GenericCardHeader>
+          <ul class="divide-y divide-gray-200">
+            <FacilitiesErrorIdsListItem v-for="ni in errorIdsPage" :key="ni" :ni="ni">
+              {{ ni }}
+            </FacilitiesErrorIdsListItem>
+          </ul>
+          <GenericPaginator
+            class="bg-white border-t border-gray-200"
+            :page="errorIdsPageNumber"
+            :size="errorIdsPageSize"
+            :total="facility.statistics.messages.errorIds.length"
+            @next="errorIdsPageNumber++"
+            @prev="errorIdsPageNumber--"
+          />
+        </GenericCard>
+      </div>
     </div>
   </div>
 </template>
@@ -99,7 +110,8 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
 
-import { Facility } from '@/interfaces/facilities'
+import { DateTime } from 'luxon'
+import { Facility, ErrorHistoryItem } from '@/interfaces/facilities'
 import fetchFacilities from '~/helpers/fetch/fetchFacilities'
 
 export default defineComponent({
@@ -115,30 +127,44 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { fetchFacility } = fetchFacilities()
+    const { fetchFacility, fetchFacilityErrorsHistory } = fetchFacilities()
 
     const facility = ref<Facility>()
+    const facilityErrorsHistory = ref<ErrorHistoryItem[]>()
+
+    const lastUpdatedString = computed(() => {
+      if (!facility.value) {
+        return ''
+      }
+      return DateTime.fromISO(facility.value.statistics.lastUpdated).toLocaleString(DateTime.DATETIME_SHORT)
+    })
+
+    // Failing NIs data
+    const errorIdsPageNumber = ref(1)
+    const errorIdsPageSize = ref(5)
+
+    const errorIdsPage = computed(() => {
+      if (!facility.value || !facility.value?.statistics.messages.errorIds) {
+        return []
+      }
+      const start = (errorIdsPageNumber.value - 1) * errorIdsPageSize.value
+      const end = start + errorIdsPageSize.value
+      return facility.value?.statistics.messages.errorIds.slice(start, end)
+    })
 
     onMounted(async () => {
       facility.value = await fetchFacility(props.code)
-    })
-
-    const qualityPct = computed<number>(() => {
-      if (!facility.value) {
-        return 0
-      }
-      const total = facility.value.statistics.patientRecords.total
-      if (total === 0) {
-        return 100
-      }
-      const bad = facility.value.statistics.recordsWithErrors
-      const good = total - bad
-      return (good / total) * 100
+      facilityErrorsHistory.value = await fetchFacilityErrorsHistory(facility.value)
+      console.log()
     })
 
     return {
+      lastUpdatedString,
       facility,
-      qualityPct,
+      facilityErrorsHistory,
+      errorIdsPage,
+      errorIdsPageNumber,
+      errorIdsPageSize,
     }
   },
 })
