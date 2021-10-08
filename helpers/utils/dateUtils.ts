@@ -1,26 +1,11 @@
-export function todayString(addDays: number = 0): string {
-  const today = new Date()
-  today.setDate(today.getDate() + addDays)
-  return today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
-}
+import { DateTime } from 'luxon'
 
 export function nowString(addDays: number = 0): string {
-  const today = new Date()
-  today.setDate(today.getDate() + addDays)
-  return today.toISOString()
+  return DateTime.now().plus({ days: addDays }).toISO()
 }
 
 export function formatDate(rawDate: string, t: boolean = true): string {
-  const options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-  }
-  if (t === true) {
-    options.hour = '2-digit'
-    options.minute = '2-digit'
-  }
-  return new Date(Date.parse(rawDate)).toLocaleString('en-GB', options)
+  return DateTime.fromISO(rawDate).toLocaleString(t ? DateTime.DATETIME_SHORT : DateTime.DATE_SHORT)
 }
 
 export interface DateRange {
