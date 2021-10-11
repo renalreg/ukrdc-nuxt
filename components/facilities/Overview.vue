@@ -11,7 +11,12 @@
         <SkeleText v-else class="h-4 w-1/2" />
       </div>
 
-      <div v-if="!facility.statistics.lastUpdated">No data available. Please try again in a few minutes.</div>
+      <div v-if="!facility.statistics.lastUpdated">
+        <TextP>
+          No data available. This usually means the service has recently been restarted, and is rebuilding statistics.
+        </TextP>
+        <TextP> Please try again in a few minutes. </TextP>
+      </div>
 
       <div v-else>
         <TextL2 class="mb-2"> Last updated {{ lastUpdatedString }} </TextL2>
