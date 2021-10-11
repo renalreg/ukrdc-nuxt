@@ -92,6 +92,7 @@
         <GenericCard v-if="facility.statistics.messages.errorIdsCount > 0" class="mt-4">
           <GenericCardHeader>
             <TextH2> Records Currently Failing </TextH2>
+            <TextL1>Records where the most recent message received failed to process due to errors.</TextL1>
           </GenericCardHeader>
           <ul class="divide-y divide-gray-200">
             <div v-for="item in errorMessagesPage" :key="item.id" :item="item" class="hover:bg-gray-50">
