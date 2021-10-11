@@ -11,9 +11,16 @@ import { Interval, DateTime } from 'luxon'
 
 import { Chart, LineController, TimeScale, LinearScale, PointElement, LineElement, Tooltip } from 'chart.js'
 import 'chartjs-adapter-luxon'
+
 import { ErrorHistoryItem } from '~/interfaces/facilities'
 
 Chart.register(LineController, TimeScale, LinearScale, PointElement, LineElement, Tooltip)
+
+interface EventElement {
+  datasetIndex: number
+  element: PointElement
+  index: number
+}
 
 export default defineComponent({
   props: {
@@ -35,7 +42,7 @@ export default defineComponent({
     },
   },
 
-  setup(props) {
+  setup(props, { emit }) {
     const dataToUse = ref<{ [key: string]: number }>({})
 
     function* iterateDays(interval: Interval) {
@@ -80,6 +87,11 @@ export default defineComponent({
           ],
         },
         options: {
+          onClick: (_: MouseEvent, activeElements: EventElement[]) => {
+            if (activeElements && activeElements[0]) {
+              emit('click', activeElements[0].element.parsed)
+            }
+          },
           responsive: true,
           maintainAspectRatio: false,
           scales: {
