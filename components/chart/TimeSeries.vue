@@ -5,17 +5,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
 
-import { Chart, ScatterController, TimeScale, LinearScale, PointElement, LineElement, Tooltip } from 'chart.js'
+import { Interval, DateTime } from 'luxon'
+
+import { Chart, LineController, TimeScale, LinearScale, PointElement, LineElement, Tooltip } from 'chart.js'
 import 'chartjs-adapter-luxon'
+import { ErrorHistoryItem } from '~/interfaces/facilities'
 
-Chart.register(ScatterController, TimeScale, LinearScale, PointElement, LineElement, Tooltip)
+Chart.register(LineController, TimeScale, LinearScale, PointElement, LineElement, Tooltip)
 
 export default defineComponent({
   props: {
     data: {
-      type: Array,
+      type: Array as () => ErrorHistoryItem[],
       default: null,
     },
     label: {
@@ -26,31 +29,59 @@ export default defineComponent({
       type: Object,
       default: null,
     },
+    autofillData: {
+      type: Boolean,
+      default: true,
+    },
   },
 
   setup(props) {
+    const dataToUse = ref<{ [key: string]: number }>({})
+
+    function* iterateDays(interval: Interval) {
+      let cursor = interval.start.startOf('day')
+      while (cursor < interval.end) {
+        yield cursor
+        cursor = cursor.plus({ days: 1 })
+      }
+    }
+
+    function populateData() {
+      // Populate base/missing data
+      if (props.autofillData) {
+        const start = DateTime.now().minus({ days: 365 })
+        const end = DateTime.now()
+        const interval = Interval.fromDateTimes(start, end)
+        for (const d of iterateDays(interval)) {
+          dataToUse.value[d.toISODate()] = 0
+        }
+      }
+
+      // Populate real data
+      for (const item of props.data) {
+        dataToUse.value[item.time] = item.count
+      }
+    }
+
     onMounted(() => {
+      populateData()
       const canvas = document.getElementById('time-series') as HTMLCanvasElement
       const options = {
-        type: 'scatter',
+        type: 'line',
         data: {
           datasets: [
             {
-              data: props.data,
+              data: dataToUse.value,
               borderColor: 'rgba(79, 70, 229, 1)',
               backgroundColor: 'rgba(79, 70, 229, 0.5)',
-              pointRadius: 6,
-              hoverRadius: 8,
+              pointRadius: 2,
+              hoverRadius: 5,
             },
           ],
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          parsing: {
-            xAxisKey: 'time',
-            yAxisKey: 'count',
-          },
           scales: {
             x: {
               type: 'time',
@@ -81,6 +112,8 @@ export default defineComponent({
       // @ts-ignore
       return new Chart(canvas, options)
     })
+
+    return { dataToUse }
   },
 })
 </script>
