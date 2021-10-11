@@ -1,3 +1,5 @@
+import { Message } from './messages'
+
 interface FacilityLinks {
   self: string
   errorsHistory: string
@@ -13,7 +15,7 @@ interface FacilityMessageSummary {
   totalIdsCount: number
   successIdsCount: number
   errorIdsCount: number
-  errorIds: string[]
+  errorIdsMessages: Message[]
 }
 
 export interface FacilityStatistics {

@@ -89,17 +89,19 @@
             <TextH2> Records Currently Failing </TextH2>
           </GenericCardHeader>
           <ul class="divide-y divide-gray-200">
-            <FacilitiesErrorIdsListItem v-for="ni in errorIdsPage" :key="ni" :ni="ni">
-              {{ ni }}
-            </FacilitiesErrorIdsListItem>
+            <div v-for="item in errorMessagesPage" :key="item.id" :item="item" class="hover:bg-gray-50">
+              <NuxtLink :to="`/messages/${item.id}`">
+                <ErrorsListItem :item="item" />
+              </NuxtLink>
+            </div>
           </ul>
           <GenericPaginator
             class="bg-white border-t border-gray-200"
-            :page="errorIdsPageNumber"
-            :size="errorIdsPageSize"
-            :total="facility.statistics.messages.errorIds.length"
-            @next="errorIdsPageNumber++"
-            @prev="errorIdsPageNumber--"
+            :page="errorMessagesPageNumber"
+            :size="errorMessagesPageSize"
+            :total="facility.statistics.messages.errorIdsCount"
+            @next="errorMessagesPageNumber++"
+            @prev="errorMessagesPageNumber--"
           />
         </GenericCard>
       </div>
@@ -111,8 +113,9 @@
 import { computed, defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
 
 import { DateTime } from 'luxon'
-import { Facility, ErrorHistoryItem } from '@/interfaces/facilities'
+import { Facility, ErrorHistoryItem } from '~/interfaces/facilities'
 import fetchFacilities from '~/helpers/fetch/fetchFacilities'
+import { Message } from '~/interfaces/messages'
 
 export default defineComponent({
   props: {
@@ -140,16 +143,16 @@ export default defineComponent({
     })
 
     // Failing NIs data
-    const errorIdsPageNumber = ref(1)
-    const errorIdsPageSize = ref(5)
+    const errorMessagesPageNumber = ref(1)
+    const errorMessagesPageSize = ref(5)
 
-    const errorIdsPage = computed(() => {
-      if (!facility.value || !facility.value?.statistics.messages.errorIds) {
+    const errorMessagesPage = computed((): Message[] => {
+      if (!facility.value || !facility.value?.statistics.messages.errorIdsMessages) {
         return []
       }
-      const start = (errorIdsPageNumber.value - 1) * errorIdsPageSize.value
-      const end = start + errorIdsPageSize.value
-      return facility.value?.statistics.messages.errorIds.slice(start, end)
+      const start = (errorMessagesPageNumber.value - 1) * errorMessagesPageSize.value
+      const end = start + errorMessagesPageSize.value
+      return facility.value?.statistics.messages.errorIdsMessages.slice(start, end)
     })
 
     onMounted(async () => {
@@ -162,9 +165,9 @@ export default defineComponent({
       lastUpdatedString,
       facility,
       facilityErrorsHistory,
-      errorIdsPage,
-      errorIdsPageNumber,
-      errorIdsPageSize,
+      errorMessagesPage,
+      errorMessagesPageNumber,
+      errorMessagesPageSize,
     }
   },
 })
