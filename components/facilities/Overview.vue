@@ -79,7 +79,12 @@
             <TextH2> Error History </TextH2>
           </GenericCardHeader>
           <GenericCardContent class="p-4">
-            <ChartTimeSeries class="h-64" :data="facilityErrorsHistory" label="New Errors" />
+            <ChartTimeSeries
+              class="h-64"
+              :data="facilityErrorsHistory"
+              label="New Errors"
+              @click="historyPointClickHandler"
+            />
           </GenericCardContent>
         </GenericCard>
 
@@ -110,12 +115,17 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref, useRouter } from '@nuxtjs/composition-api'
 
 import { DateTime } from 'luxon'
 import { Facility, ErrorHistoryItem } from '~/interfaces/facilities'
 import fetchFacilities from '~/helpers/fetch/fetchFacilities'
 import { Message } from '~/interfaces/messages'
+
+interface ErrorHistoryPointEvent {
+  x: number
+  y: number
+}
 
 export default defineComponent({
   props: {
@@ -130,6 +140,7 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const router = useRouter()
     const { fetchFacility, fetchFacilityErrorsHistory } = fetchFacilities()
 
     const facility = ref<Facility>()
@@ -155,6 +166,17 @@ export default defineComponent({
       return facility.value?.statistics.messages.errorIdsMessages.slice(start, end)
     })
 
+    // History plot click handler
+
+    function historyPointClickHandler(point: ErrorHistoryPointEvent) {
+      const startDate = DateTime.fromMillis(point.x)
+      const endDate = startDate.plus({ days: 1 })
+      router.push({
+        path: '/messages',
+        query: { since: startDate.toISO(), until: endDate.toISO(), facility: props.code },
+      })
+    }
+
     onMounted(async () => {
       facility.value = await fetchFacility(props.code)
       facilityErrorsHistory.value = await fetchFacilityErrorsHistory(facility.value)
@@ -168,6 +190,7 @@ export default defineComponent({
       errorMessagesPage,
       errorMessagesPageNumber,
       errorMessagesPageSize,
+      historyPointClickHandler,
     }
   },
 })
