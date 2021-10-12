@@ -14,8 +14,7 @@ export default function ({ $axios, $auth }: Context) {
       // which would mean that if the user navigates to another page, the router middleware
       // added by Nuxt-Auth will redirect to the login page, however Axios requests don't
       // trigger the router middleware, so we need to manually redirect here.
-      $auth.redirect('login')
-      throw thisError
+      $auth.loginWith('okta')
     }
   })
 }
