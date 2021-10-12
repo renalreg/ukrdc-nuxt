@@ -32,6 +32,9 @@
       <div class="flex-shrink-0 flex items-center px-4 mb-2">
         <img class="w-full h-auto" src="~/assets/UKKA_UKRDC.svg" alt="Workflow" />
       </div>
+      <div v-if="$config.deploymentEnv !== 'production'" class="capitalize py-2 text-center bg-yellow-700 text-white">
+        {{ $config.deploymentEnv }}
+      </div>
       <nav class="mt-6 px-2 space-y-1">
         <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
 
