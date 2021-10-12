@@ -55,9 +55,7 @@
           </GenericDi>
           <GenericDi>
             <TextDt>Facility</TextDt>
-            <TextDd v-if="error">
-              {{ error.facility }}
-            </TextDd>
+            <LinkSendingFacility v-if="error" :code="error.facility" />
             <SkeleText v-else class="h-6 w-full" />
           </GenericDi>
           <GenericDi>

@@ -20,7 +20,7 @@
       </div>
       <!-- Recieved  -->
       <div class="col-span-2 lg:col-span-1">
-        <TextP>From {{ item.facility }}</TextP>
+        <TextP>From <LinkSendingFacility class="inline" :code="item.facility" /></TextP>
         <TextP class="mt-2">
           {{ formatDate(item.received) }}
         </TextP>
