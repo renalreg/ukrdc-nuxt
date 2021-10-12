@@ -1,5 +1,6 @@
 <template>
   <input
+    ref="textBoxRef"
     class="
       block
       bg-white
@@ -20,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
@@ -28,6 +29,22 @@ export default defineComponent({
       default: '',
       type: String,
     },
+    focus: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+  },
+  setup(props) {
+    const textBoxRef = ref<HTMLFormElement>()
+
+    onMounted(() => {
+      if (props.focus) {
+        textBoxRef.value?.focus()
+      }
+    })
+
+    return { textBoxRef }
   },
 })
 </script>

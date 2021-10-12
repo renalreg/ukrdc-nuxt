@@ -21,7 +21,14 @@
             </svg>
           </div>
           <form @submit.prevent="$emit('submit')">
-            <FormTextBox class="pl-10 w-full" placeholder="Search" type="search" :value="value" v-on="$listeners" />
+            <FormTextBox
+              :focus="true"
+              class="pl-10 w-full"
+              placeholder="Search"
+              type="search"
+              :value="value"
+              v-on="$listeners"
+            />
           </form>
         </div>
       </div>
@@ -30,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
@@ -43,18 +50,6 @@ export default defineComponent({
       required: false,
       default: false,
     },
-  },
-
-  setup(props) {
-    const searchBoxRef = ref<HTMLFormElement>()
-
-    onMounted(() => {
-      if (props.focus) {
-        searchBoxRef.value?.focus()
-      }
-    })
-
-    return { searchBoxRef }
   },
 })
 </script>
