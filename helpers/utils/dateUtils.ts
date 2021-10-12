@@ -5,7 +5,9 @@ export function nowString(addDays: number = 0): string {
 }
 
 export function formatDate(rawDate: string, t: boolean = true): string {
-  return DateTime.fromISO(rawDate).toLocaleString(t ? DateTime.DATETIME_SHORT : DateTime.DATE_SHORT)
+  return DateTime.fromISO(rawDate)
+    .setLocale('en-GB')
+    .toLocaleString(t ? DateTime.DATETIME_SHORT : DateTime.DATE_SHORT)
 }
 
 export interface DateRange {
