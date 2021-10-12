@@ -36,8 +36,6 @@
         {{ $config.deploymentEnv }}
       </div>
       <nav class="mt-6 px-2 space-y-1">
-        <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
-
         <div v-for="item in pages" :key="item.title">
           <div v-if="item.visible && item.url">
             <NuxtLink
@@ -50,8 +48,6 @@
               ]"
               @click.native="$emit('toggle')"
             >
-              <!-- Current: "text-gray-500", Default: "text-gray-400 group-hover:text-gray-500" -->
-              <!-- Heroicon name: outline/home -->
               <svg
                 class="text-gray-500 mr-4 h-6 w-6"
                 xmlns="http://www.w3.org/2000/svg"
