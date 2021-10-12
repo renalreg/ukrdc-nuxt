@@ -4,9 +4,7 @@
       <div class="px-4 py-4 sm:px-6 min-w-0 grid grid-cols-3 lg:grid-cols-4 md:gap-4 w-full">
         <!-- Name, DoB, gender -->
         <div>
-          <TextL1c class="capitalize truncate">
-            {{ item.sendingfacility }}
-          </TextL1c>
+          <LinkSendingFacility class="font-medium" :code="item.sendingfacility" />
           <TextP class="mt-2"> via {{ item.sendingextract }} </TextP>
         </div>
         <!-- National ID -->

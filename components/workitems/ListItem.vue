@@ -46,7 +46,7 @@
       </div>
       <!-- Last updated (small and up) -->
       <div class="hidden lg:block">
-        <TextP>{{ facility }} via {{ extract }}</TextP>
+        <TextP><LinkSendingFacility class="inline" :code="facility" /> via {{ extract }}</TextP>
         <TextP class="mt-2">
           {{ formatDate(item.creationDate) }}
         </TextP>
