@@ -1,6 +1,6 @@
 <template>
   <div class="min-w-0 flex-1 xl:col-span-6">
-    <div class="flex items-center pb-4 md:mx-auto">
+    <div class="flex gap-2 items-center pb-4 md:mx-auto">
       <div class="w-full">
         <label for="search" class="sr-only">Search</label>
         <div class="relative">
@@ -21,16 +21,24 @@
             </svg>
           </div>
           <form @submit.prevent="$emit('submit')">
-            <FormTextBox class="pl-10 w-full" placeholder="Search" type="search" :value="value" v-on="$listeners" />
+            <FormTextBox
+              :focus="true"
+              class="pl-10 w-full"
+              placeholder="Search"
+              type="search"
+              :value="value"
+              v-on="$listeners"
+            />
           </form>
         </div>
       </div>
+      <GenericButton @click="$emit('submit')">Search</GenericButton>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
@@ -43,18 +51,6 @@ export default defineComponent({
       required: false,
       default: false,
     },
-  },
-
-  setup(props) {
-    const searchBoxRef = ref<HTMLFormElement>()
-
-    onMounted(() => {
-      if (props.focus) {
-        searchBoxRef.value?.focus()
-      }
-    })
-
-    return { searchBoxRef }
   },
 })
 </script>
