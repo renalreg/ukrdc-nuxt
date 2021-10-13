@@ -29,6 +29,7 @@
       <div class="flex items-center gap-4 col-span-3 lg:col-span-1">
         <GenericButtonRound
           v-if="showPatientFilter"
+          :class="!item.ni ? 'invisible' : ''"
           class="opacity-0 group-hover:opacity-100"
           :to="{ path: '/messages', query: { nationalid: item.ni } }"
           tooltip="Filter errors by this patient"
@@ -38,7 +39,7 @@
         <div class="flex-grow">
           <TextL1>Patient Number</TextL1>
           <TextP class="mt-2">
-            {{ item.ni }}
+            {{ item.ni || 'None Found' }}
           </TextP>
         </div>
       </div>
