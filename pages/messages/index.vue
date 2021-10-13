@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="max-w-7xl mx-auto mb-4">
-      <h1 class="text-2xl font-semibold text-gray-900">Errors</h1>
+      <h1 class="text-2xl font-semibold text-gray-900">Messages</h1>
     </div>
 
     <div class="mb-4 flex flex-col">
@@ -55,7 +55,7 @@
       <ul v-else class="divide-y divide-gray-200">
         <div v-for="item in messages" :key="item.id" class="hover:bg-gray-50">
           <NuxtLink :to="`/messages/${item.id}`">
-            <ErrorsListItem :item="item" />
+            <MessagesListItem :item="item" />
           </NuxtLink>
         </div>
       </ul>

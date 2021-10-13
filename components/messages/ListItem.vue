@@ -12,7 +12,7 @@
           </TextL1>
         </div>
         <div class="mt-2 flex">
-          <ErrorsStatusBadge class="flex-shrink mr-2" :message="item" />
+          <MessagesStatusBadge class="flex-shrink mr-2" :message="item" />
           <TextP class="flex-grow line-clamp-1">
             {{ itemDescription }}
           </TextP>

@@ -7,7 +7,7 @@
     <ul class="divide-y divide-gray-200">
       <div v-for="item in relatedErrors" :key="item.id" :item="item" class="hover:bg-gray-50">
         <NuxtLink :to="`/messages/${item.id}`">
-          <ErrorsListItem :item="item" />
+          <MessagesListItem :item="item" />
         </NuxtLink>
       </div>
     </ul>
