@@ -80,7 +80,7 @@ export default defineComponent({
     // Data refs
 
     const workitems = ref<WorkItem[]>()
-    const statuses = arrayQuery('status', ['1'], true)
+    const statuses = arrayQuery('status', ['1'], true, true)
 
     // Data fetching
 

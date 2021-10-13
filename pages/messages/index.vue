@@ -14,19 +14,13 @@
         :labels="facilityLabels"
         hint="Select a facility..."
       />
-      <div class="flex gap-2 flex-row-reverse">
-        <GenericButtonMini @click="toggleOrder">
-          <div v-show="orderAscending" class="flex">
-            <TextP>Oldest - Newest</TextP><IconMiniSortAscending class="ml-2" />
-          </div>
-          <div v-show="!orderAscending" class="flex">
-            <TextP>Newest - Oldest</TextP><IconMiniSortDescending class="ml-2" />
-          </div>
-        </GenericButtonMini>
-
-        <GenericButtonMini v-show="nationalId" @click="$router.push({ query: { nationalid: null } })"
-          >Show Results From All Patients</GenericButtonMini
-        >
+      <div class="flex items-center gap-2">
+        <div class="flex-grow flex items-center">
+          <FormCheckbox v-model="statuses" label="Stored" value="STORED" />
+          <FormCheckbox v-model="statuses" label="Received" value="RECEIVED" />
+          <FormCheckbox v-model="statuses" label="Error" value="ERROR" />
+          <FormCheckbox v-model="statuses" label="Resolved" value="RESOLVED" />
+        </div>
 
         <form v-show="!nationalId" class="flex" @submit.prevent="nationalId = nationalIdSearchString.trim()">
           <FormTextBoxMini
@@ -36,6 +30,19 @@
           ></FormTextBoxMini>
           <GenericButtonMini class="z-10" anchor="left" type="submit">Go</GenericButtonMini>
         </form>
+
+        <GenericButtonMini v-show="nationalId" @click="$router.push({ query: { nationalid: null } })"
+          >Show Results From All Patients</GenericButtonMini
+        >
+
+        <GenericButtonMini @click="toggleOrder">
+          <div v-show="orderAscending" class="flex">
+            <TextP>Oldest - Newest</TextP><IconMiniSortAscending class="ml-2" />
+          </div>
+          <div v-show="!orderAscending" class="flex">
+            <TextP>Newest - Oldest</TextP><IconMiniSortDescending class="ml-2" />
+          </div>
+        </GenericButtonMini>
       </div>
     </div>
 
@@ -84,7 +91,7 @@ export default defineComponent({
 
     const { page, total, size } = usePagination()
     const { makeDateRange } = useDateRange()
-    const { stringQuery } = useQuery()
+    const { stringQuery, arrayQuery } = useQuery()
     const { facilities, facilityIds, facilityLabels, selectedFacility } = useFacilities()
     const { orderAscending, orderBy, toggleOrder } = useSortBy()
     const { fetchInProgress, fetchMessagesPage } = fetchMessages()
@@ -98,6 +105,7 @@ export default defineComponent({
 
     // Data refs
     const messages = ref<Message[]>()
+    const statuses = arrayQuery('status', ['ERROR'], true, true)
 
     // Data fetching
     async function getMessages() {
@@ -105,7 +113,7 @@ export default defineComponent({
         page.value || 0,
         size.value,
         orderBy.value,
-        null, // Status filter
+        statuses.value, // Status filter
         dateRange.value.start,
         dateRange.value.end,
         selectedFacility.value,
@@ -132,6 +140,7 @@ export default defineComponent({
       size,
       dateRange,
       messages,
+      statuses,
       facilities,
       facilityIds,
       facilityLabels,
