@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="mb-4 flex flex-col">
+      <GenericDateRange v-model="dateRange" />
       <div class="flex gap-2 flex-row-reverse">
         <GenericButtonMini @click="toggleOrder">
           <div v-show="orderAscending" class="flex">
@@ -41,6 +42,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, useRoute, watch } from '@nuxtjs/composition-api'
 
+import { nowString } from '@/helpers/utils/dateUtils'
 import usePagination from '~/helpers/query/usePagination'
 import useSortBy from '~/helpers/query/useSortBy'
 
@@ -48,6 +50,7 @@ import fetchMasterRecords from '@/helpers/fetch/fetchMasterRecords'
 
 import { Message } from '~/interfaces/messages'
 import { MasterRecord, MasterRecordStatistics } from '~/interfaces/masterrecord'
+import useDateRange from '~/helpers/query/useDateRange'
 
 export default defineComponent({
   props: {
@@ -65,11 +68,14 @@ export default defineComponent({
     const route = useRoute()
 
     const { page, total, size } = usePagination()
+    const { makeDateRange } = useDateRange()
     const { orderAscending, orderBy, toggleOrder } = useSortBy()
     const { fetchMasterRecordMessagesPage } = fetchMasterRecords()
 
-    // Data refs
+    // Set initial date dateRange
+    const dateRange = makeDateRange(nowString(-365), nowString(0), true)
 
+    // Data refs
     const messages = ref<Message[]>()
 
     // Data fetching
@@ -81,8 +87,8 @@ export default defineComponent({
         size.value,
         orderBy.value,
         null, // Status filter
-        null, // Since filter
-        null // Until filter
+        dateRange.value.start,
+        dateRange.value.end
       )
 
       messages.value = messagesPage.items
@@ -103,6 +109,7 @@ export default defineComponent({
       page,
       total,
       size,
+      dateRange,
       messages,
       orderAscending,
       orderBy,
