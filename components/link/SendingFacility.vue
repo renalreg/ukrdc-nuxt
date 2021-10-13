@@ -1,6 +1,7 @@
 <template>
   <p class="capitalize truncate">
-    <NuxtLink class="hover:underline" :to="`/facilities/${code}`">{{ code }}</NuxtLink>
+    <NuxtLink v-if="code" class="hover:underline" :to="`/facilities/${code}`">{{ code }}</NuxtLink>
+    <span v-else>Unknown Facility</span>
   </p>
 </template>
 
@@ -11,7 +12,8 @@ export default defineComponent({
   props: {
     code: {
       type: String,
-      required: true,
+      required: false,
+      default: null,
     },
   },
 })

@@ -23,7 +23,7 @@
       <ul v-else class="divide-y divide-gray-200">
         <div v-for="item in messages" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/messages/${item.id}`">
-            <ErrorsListItem :show-patient-filter="false" :item="item" />
+            <MessagesListItem :show-patient-filter="false" :item="item" />
           </NuxtLink>
         </div>
       </ul>
@@ -86,7 +86,7 @@ export default defineComponent({
         page.value || 0,
         size.value,
         orderBy.value,
-        null, // Status filter
+        [], // Status filter
         dateRange.value.start,
         dateRange.value.end
       )

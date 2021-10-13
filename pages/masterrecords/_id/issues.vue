@@ -25,7 +25,7 @@
       <ul class="divide-y divide-gray-200">
         <div v-for="item in relatedErrors" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/messages/${item.id}`">
-            <ErrorsListItem :item="item" />
+            <MessagesListItem :item="item" />
           </NuxtLink>
         </div>
       </ul>
@@ -93,7 +93,7 @@ export default defineComponent({
         relatedErrorsPage.value || 0,
         relatedErrorsSize.value,
         'desc',
-        'ERROR', // Status filter
+        ['ERROR'], // Status filter
         null, // Since filter
         null // Until filter
       )

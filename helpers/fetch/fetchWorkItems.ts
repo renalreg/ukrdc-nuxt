@@ -62,13 +62,13 @@ export default function () {
     page: number,
     size: number,
     orderBy: string | null,
-    status: string | null,
+    statuses: (string | null)[],
     since: string | null,
     until: string | null
   ): Promise<MessagePage> {
     let path = `${workItem.links.messages}?page=${page}&size=${size}&sort_by=received`
     // Filter by status and date
-    path = path + buildCommonMessageQuery(orderBy, status, since, until)
+    path = path + buildCommonMessageQuery(orderBy, statuses, since, until)
     return (await $axios.$get(path)) as MessagePage
   }
 

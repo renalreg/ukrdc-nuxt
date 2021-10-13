@@ -12,7 +12,7 @@
           </TextL1>
         </div>
         <div class="mt-2 flex">
-          <ErrorsStatusBadge class="flex-shrink mr-2" :message="item" />
+          <MessagesStatusBadge class="flex-shrink mr-2" :message="item" />
           <TextP class="flex-grow line-clamp-1">
             {{ itemDescription }}
           </TextP>
@@ -29,6 +29,7 @@
       <div class="flex items-center gap-4 col-span-3 lg:col-span-1">
         <GenericButtonRound
           v-if="showPatientFilter"
+          :class="!item.ni ? 'invisible' : ''"
           class="opacity-0 group-hover:opacity-100"
           :to="{ path: '/messages', query: { nationalid: item.ni } }"
           tooltip="Filter errors by this patient"
@@ -38,7 +39,7 @@
         <div class="flex-grow">
           <TextL1>Patient Number</TextL1>
           <TextP class="mt-2">
-            {{ item.ni }}
+            {{ item.ni || 'None Found' }}
           </TextP>
         </div>
       </div>
@@ -65,7 +66,7 @@ export default defineComponent({
   },
   setup(props) {
     const itemDescription = computed(() => {
-      if (props.item.msgStatus === 'ERROR') {
+      if (props.item.msgStatus === 'ERROR' || props.item.msgStatus === 'RESOLVED') {
         return props.item.error ? props.item.error : 'No error message recorded'
       }
       if (props.item.msgStatus === 'STORED') {

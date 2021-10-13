@@ -14,7 +14,7 @@ export interface MessagePage {
 
 export function buildCommonMessageQuery(
   orderBy: string | null,
-  status: string | null,
+  statuses: (string | null)[],
   since: string | null,
   until: string | null
 ): string {
@@ -26,9 +26,10 @@ export function buildCommonMessageQuery(
   // Filter by since-until if it exists
   path = path + buildCommonDateRangeQuery(since, until)
   // Filter by message status
-  if (status) {
+  for (const status of statuses) {
     path = path + `&status=${status}`
   }
+
   return path
 }
 
@@ -41,7 +42,7 @@ export default function () {
     page: number,
     size: number,
     orderBy: string | null,
-    status: string | null,
+    statuses: (string | null)[],
     since: string | null,
     until: string | null,
     facility: string | null,
@@ -50,7 +51,7 @@ export default function () {
     let path = `${$config.apiBase}/v1/messages/?page=${page}&size=${size}&sort_by=received`
 
     // Filter by status and date
-    path = path + buildCommonMessageQuery(orderBy, status || 'ERROR', since, until)
+    path = path + buildCommonMessageQuery(orderBy, statuses || ['ERROR'], since, until)
 
     // Filter by facility if it exists
     if (facility) {
