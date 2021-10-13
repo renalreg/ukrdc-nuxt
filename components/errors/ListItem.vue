@@ -65,7 +65,7 @@ export default defineComponent({
   },
   setup(props) {
     const itemDescription = computed(() => {
-      if (props.item.msgStatus === 'ERROR') {
+      if (props.item.msgStatus === 'ERROR' || props.item.msgStatus === 'RESOLVED') {
         return props.item.error ? props.item.error : 'No error message recorded'
       }
       if (props.item.msgStatus === 'STORED') {
