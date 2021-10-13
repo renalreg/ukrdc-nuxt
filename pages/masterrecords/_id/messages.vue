@@ -86,7 +86,7 @@ export default defineComponent({
         page.value || 0,
         size.value,
         orderBy.value,
-        null, // Status filter
+        [], // Status filter
         dateRange.value.start,
         dateRange.value.end
       )

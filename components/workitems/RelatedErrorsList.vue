@@ -39,11 +39,6 @@ export default defineComponent({
       required: false,
       default: 10,
     },
-    status: {
-      type: String,
-      required: false,
-      default: 'ERROR',
-    },
   },
   setup(props) {
     // Dependencies
@@ -61,7 +56,7 @@ export default defineComponent({
         relatedErrorsPage.value,
         relatedErrorsSize.value,
         null,
-        props.status,
+        ['ERROR'],
         null,
         null
       )

@@ -93,7 +93,7 @@ export default defineComponent({
         relatedErrorsPage.value || 0,
         relatedErrorsSize.value,
         'desc',
-        'ERROR', // Status filter
+        ['ERROR'], // Status filter
         null, // Since filter
         null // Until filter
       )

@@ -26,11 +26,10 @@ export function buildCommonMessageQuery(
   // Filter by since-until if it exists
   path = path + buildCommonDateRangeQuery(since, until)
   // Filter by message status
-  if (statuses) {
-    for (const status of statuses) {
-      path = path + `&status=${status}`
-    }
+  for (const status of statuses) {
+    path = path + `&status=${status}`
   }
+
   return path
 }
 
