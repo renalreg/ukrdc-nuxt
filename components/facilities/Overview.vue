@@ -124,6 +124,8 @@
 import { computed, defineComponent, onMounted, ref, useRouter } from '@nuxtjs/composition-api'
 
 import { DateTime } from 'luxon'
+import { formatDate } from '@/helpers/utils/dateUtils'
+
 import { Facility, ErrorHistoryItem } from '~/interfaces/facilities'
 import fetchFacilities from '~/helpers/fetch/fetchFacilities'
 import { Message } from '~/interfaces/messages'
@@ -156,7 +158,7 @@ export default defineComponent({
       if (!facility.value) {
         return ''
       }
-      return DateTime.fromISO(facility.value.statistics.lastUpdated).toLocaleString(DateTime.DATETIME_SHORT)
+      return formatDate(facility.value.statistics.lastUpdated, true)
     })
 
     // Failing NIs data
