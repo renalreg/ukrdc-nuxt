@@ -5,7 +5,7 @@
     </div>
 
     <div class="mb-4 flex flex-col">
-      <GenericDateRange v-model="dateRange" />
+      <GenericDateRange v-model="dateRange" class="mb-4" />
       <GenericSearchableSelect
         v-if="facilityIds.length > 1"
         v-model="selectedFacility"

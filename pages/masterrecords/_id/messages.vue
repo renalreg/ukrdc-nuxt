@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="mb-4 flex flex-col">
-      <GenericDateRange v-model="dateRange" />
-      <div class="flex gap-2 flex-row-reverse">
-        <GenericButtonMini @click="toggleOrder">
+      <div class="flex gap-2 flex-row">
+        <GenericDateRange v-model="dateRange" class="flex-1" />
+        <GenericButtonMini class="flex-none" @click="toggleOrder">
           <div v-show="orderAscending" class="flex">
             <TextP>Oldest - Newest</TextP><IconMiniSortAscending class="ml-2" />
           </div>

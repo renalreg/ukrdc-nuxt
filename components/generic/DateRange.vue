@@ -1,6 +1,6 @@
 <template>
   <client-only>
-    <div class="mb-4 flex flex-col lg:flex-row gap-4">
+    <div class="flex flex-col lg:flex-row gap-4">
       <div class="flex gap-2 flex-none">
         <GenericButtonMini :colour="lastNDays === 7 ? 'indigo-outline' : 'white'" @click="setLastNDays(7)">
           Last 7 days

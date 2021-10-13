@@ -1,6 +1,6 @@
 <template>
   <div>
-    <GenericDateRange v-model="dateRange" />
+    <GenericDateRange v-model="dateRange" class="mb-4" />
     <GenericSearchableSelect
       v-model="selectedService"
       class="mb-4"
