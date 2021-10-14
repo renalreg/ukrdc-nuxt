@@ -5,7 +5,7 @@
         <th scope="col" class="px-6 py-3 text-left">
           <div class="flex">
             <TextTh>Code</TextTh>
-            <IconDynamicSort :active="sortBy === 'id'" :asc="idOrderAscending" @toggle="toggleId" />
+            <IconDynamicSort :active="sortBy === 'id'" :asc="isAscending['id']" @toggle="toggleSort('id')" />
           </div>
         </th>
         <th scope="col" class="px-6 py-3 text-left hidden md:block"><TextTh>Name</TextTh></th>
@@ -14,8 +14,8 @@
             <TextTh>Total Records</TextTh>
             <IconDynamicSort
               :active="sortBy === 'statistics.patient_records'"
-              :asc="totalOrderAscending"
-              @toggle="toggleTotal"
+              :asc="isAscending['statistics.patient_records']"
+              @toggle="toggleSort('statistics.patient_records')"
             />
           </div>
         </th>
@@ -24,8 +24,8 @@
             <TextTh>Failing Records</TextTh>
             <IconDynamicSort
               :active="sortBy === 'statistics.error_IDs_count'"
-              :asc="failingOrderAscending"
-              @toggle="toggleFailing"
+              :asc="isAscending['statistics.error_IDs_count']"
+              @toggle="toggleSort('statistics.error_IDs_count')"
             />
           </div>
         </th>
@@ -54,56 +54,52 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
+import fetchFacilities from '~/helpers/fetch/fetchFacilities'
 import { FacilitySummary } from '~/interfaces/facilities'
 
+interface IsAscending {
+  [key: string]: boolean | null
+}
+
 export default defineComponent({
-  props: {
-    facilities: {
-      type: Array as () => FacilitySummary[],
-      required: false,
-      default: null,
-    },
-  },
-  setup(_, { emit }) {
+  setup() {
+    const { fetchFacilitiesList } = fetchFacilities()
+
+    const facilities = ref<FacilitySummary[]>()
+
     const sortBy = ref<string | null>(null)
 
-    const idOrderAscending = ref(true)
-    const totalOrderAscending = ref(false)
-    const failingOrderAscending = ref(false)
+    // Set initial order for id sorting. Other columns left as default
+    const isAscending = ref<IsAscending>({
+      id: true,
+    })
 
-    function toggleId() {
-      if (sortBy.value === 'id') {
-        idOrderAscending.value = !idOrderAscending.value
-      }
-      sortBy.value = 'id'
-      emit('sort', { sortBy: sortBy.value, orderBy: idOrderAscending.value ? 'asc' : 'desc' })
+    async function fetchTable() {
+      const currentisAscending: null | boolean = isAscending.value[sortBy.value || 'default'] || null
+      const currentOrderBy: string = currentisAscending ? 'asc' : 'desc'
+      facilities.value = await fetchFacilitiesList(sortBy.value, currentOrderBy, false)
     }
 
-    function toggleTotal() {
-      if (sortBy.value === 'statistics.patient_records') {
-        totalOrderAscending.value = !totalOrderAscending.value
+    async function toggleSort(key: string) {
+      // Only reverse order if we're sorting by this key already
+      if (sortBy.value === key) {
+        // !null is true, so this should work always
+        isAscending.value[key] = !isAscending.value[key]
       }
-      sortBy.value = 'statistics.patient_records'
-      emit('sort', { sortBy: sortBy.value, orderBy: totalOrderAscending.value ? 'asc' : 'desc' })
+      sortBy.value = key
+      await fetchTable()
     }
 
-    function toggleFailing() {
-      if (sortBy.value === 'statistics.error_IDs_count') {
-        failingOrderAscending.value = !failingOrderAscending.value
-      }
-      sortBy.value = 'statistics.error_IDs_count'
-      emit('sort', { sortBy: sortBy.value, orderBy: totalOrderAscending.value ? 'asc' : 'desc' })
-    }
+    onMounted(async () => {
+      await fetchTable()
+    })
 
     return {
-      idOrderAscending,
-      totalOrderAscending,
-      failingOrderAscending,
+      facilities,
+      isAscending,
       sortBy,
-      toggleId,
-      toggleTotal,
-      toggleFailing,
+      toggleSort,
     }
   },
 })
