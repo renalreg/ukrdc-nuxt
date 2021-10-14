@@ -41,7 +41,13 @@
         <GenericTableCell class="font-medium text-gray-900">{{ facility.id }}</GenericTableCell>
         <GenericTableCell class="hidden md:block">{{ facility.description }}</GenericTableCell>
         <GenericTableCell>{{ facility.statistics.patientRecords }}</GenericTableCell>
-        <GenericTableCell>{{ facility.statistics.errorIdsCount }}</GenericTableCell>
+        <GenericTableCell class="flex items-center">
+          <IconCircle
+            class="inline"
+            :class="facility.statistics.errorIdsCount > 0 ? 'text-red-700' : 'text-green-600'"
+          />
+          <p>{{ facility.statistics.errorIdsCount }}</p>
+        </GenericTableCell>
       </tr>
     </tbody>
   </GenericTable>
