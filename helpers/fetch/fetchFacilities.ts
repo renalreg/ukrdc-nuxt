@@ -4,8 +4,19 @@ import { FacilitySummary, Facility, ErrorHistoryItem } from '~/interfaces/facili
 export default function () {
   const { $axios, $config } = useContext()
 
-  async function fetchFacilitiesList(): Promise<FacilitySummary[]> {
-    return (await $axios.$get(`${$config.apiBase}/v1/facilities/`)) as FacilitySummary[]
+  async function fetchFacilitiesList(
+    sortBy: string | null = null,
+    orderBy: string | null = null,
+    includeEmpty: boolean = true
+  ): Promise<FacilitySummary[]> {
+    let path = `${$config.apiBase}/v1/facilities/?include_empty=${includeEmpty}`
+    if (sortBy) {
+      path = path + `&sort_by=${sortBy}`
+    }
+    if (orderBy) {
+      path = path + `&order_by=${orderBy}`
+    }
+    return (await $axios.$get(path)) as FacilitySummary[]
   }
 
   async function fetchFacility(code: string): Promise<Facility> {
