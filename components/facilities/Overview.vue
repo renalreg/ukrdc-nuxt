@@ -181,7 +181,12 @@ export default defineComponent({
       const endDate = startDate.plus({ days: 1 })
       router.push({
         path: '/messages',
-        query: { since: startDate.toISO(), until: endDate.toISO(), facility: props.code },
+        query: {
+          since: startDate.toISO(),
+          until: endDate.toISO(),
+          facility: props.code,
+          status: ['ERROR', 'RESOLVED'],
+        },
       })
     }
 
