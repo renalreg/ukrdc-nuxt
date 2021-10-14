@@ -43,6 +43,7 @@
         <GenericTableCell>{{ facility.statistics.patientRecords }}</GenericTableCell>
         <GenericTableCell class="flex items-center">
           <IconCircle
+            v-if="facility.statistics.lastUpdated"
             class="inline"
             :class="facility.statistics.errorIdsCount > 0 ? 'text-red-700' : 'text-green-600'"
           />
