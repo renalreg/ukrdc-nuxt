@@ -1,14 +1,13 @@
 <template>
   <tr>
-    <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">{{ item.observationDesc }} {{ item.prePost }}</td>
-    <td class="px-6 py-4 whitespace-nowrap text-gray-500">{{ item.observationValue }} {{ item.observationUnits }}</td>
-    <td class="px-6 py-4 whitespace-nowrap text-gray-500">
-      <p>{{ item.enteredAt }}</p>
-      <p>{{ item.enteredAtDescription }}</p>
-    </td>
-    <td class="px-6 py-4 whitespace-nowrap text-gray-500">
+    <GenericTableCell class="font-medium text-gray-900">{{ item.observationDesc }} {{ item.prePost }}</GenericTableCell>
+    <GenericTableCell>{{ item.observationValue }} {{ item.observationUnits }}</GenericTableCell>
+    <GenericTableCell>
+      <p>{{ item.enteredAt }} / {{ item.enteredAtDescription }}</p>
+    </GenericTableCell>
+    <GenericTableCell>
       {{ formatDate(item.observationTime) }}
-    </td>
+    </GenericTableCell>
   </tr>
 </template>
 

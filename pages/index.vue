@@ -1,14 +1,14 @@
 <template>
   <div>
-    <div v-if="warnings.length > 0 || messages.length > 0" class="mb-8">
-      <genericAlertWarning v-for="message in warnings" :key="message" :message="message"> </genericAlertWarning>
+    <div v-if="dash && (dash.warnings.length > 0 || dash.messages.length > 0)" class="mb-8">
+      <genericAlertWarning v-for="message in dash.warnings" :key="message" :message="message"> </genericAlertWarning>
 
-      <genericAlertInfo v-for="message in messages" :key="message" :message="message"> </genericAlertInfo>
+      <genericAlertInfo v-for="message in dash.messages" :key="message" :message="message"> </genericAlertInfo>
     </div>
 
     <!-- Admins will get workitems and records stats -->
-    <div v-if="response.workitems && response.ukrdcrecords" class="max-w-7xl mx-auto mb-8">
-      <dashStats :workitems="response.workitems" :ukrdcrecords="response.ukrdcrecords" />
+    <div v-if="dash && dash.workitems && dash.ukrdcrecords" class="max-w-7xl mx-auto mb-8">
+      <dashStats :workitems="dash.workitems" :ukrdcrecords="dash.ukrdcrecords" />
     </div>
 
     <div v-if="facilities">
@@ -20,9 +20,11 @@
           :options="facilityIds"
           :labels="facilityLabels"
           hint="Select a facility..."
-          :mount-opened="true"
-          :closable="false"
+          :mount-opened="false"
+          :closable="true"
         />
+
+        <FacilitiesTable @select="selectTable" />
       </div>
 
       <FacilitiesOverview v-else-if="facilities.length > 0" :code="facilities[0].id" />
@@ -44,22 +46,13 @@ export default defineComponent({
 
     // Data refs
 
-    const response = ref({} as DashResponse)
-    const messages = ref([] as string[])
-    const warnings = ref([] as string[])
+    const dash = ref<DashResponse>()
 
-    const error = ref('')
-
-    // Data fetching
-
-    async function getDash() {
-      const dashResponse = await fetchDashboard()
-      // Fetch the dashboard response from our API server
-      response.value = dashResponse
-      messages.value = dashResponse.messages
-      warnings.value = dashResponse.warnings
+    function selectTable(id: string) {
+      selectedFacility.value = id
     }
 
+    // Data fetching
     watch(selectedFacility, () => {
       // Our facility selector applies a query param when a facility is selected
       // We watch this query param, and if it changes, we navigate to that facilities page
@@ -68,8 +61,8 @@ export default defineComponent({
       }
     })
 
-    onMounted(() => {
-      getDash()
+    onMounted(async () => {
+      dash.value = await fetchDashboard()
     })
 
     return {
@@ -77,10 +70,8 @@ export default defineComponent({
       facilityIds,
       facilityLabels,
       selectedFacility,
-      response,
-      messages,
-      warnings,
-      error,
+      selectTable,
+      dash,
     }
   },
 

@@ -5,25 +5,24 @@ interface FacilityLinks {
   errorsHistory: string
 }
 
-export interface FacilitySummary {
-  id: string
-  description: string
-  links: FacilityLinks
+export interface FacilityStatisticsSummary {
+  lastUpdated: string
+  patientRecords: number
+  errorIdsCount: number
 }
 
-interface FacilityMessageSummary {
+export interface FacilityStatistics extends FacilityStatisticsSummary {
   totalIdsCount: number
   successIdsCount: number
-  errorIdsCount: number
   errorIdsMessages: Message[]
 }
 
-export interface FacilityStatistics {
-  lastUpdated: string
-  patientRecords: number
-  messages: FacilityMessageSummary
+export interface FacilitySummary {
+  id: string
+  description: string
+  statistics: FacilityStatisticsSummary
+  links: FacilityLinks
 }
-
 export interface Facility extends FacilitySummary {
   statistics: FacilityStatistics
 }

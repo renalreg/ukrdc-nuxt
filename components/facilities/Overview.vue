@@ -48,7 +48,7 @@
                   <GenericCardDt>Records Currently Passing</GenericCardDt>
                   <dd>
                     <h1 class="text-2xl font-semibold text-green-600">
-                      {{ facility.statistics.messages.successIdsCount }}
+                      {{ facility.statistics.successIdsCount }}
                     </h1>
                   </dd>
                 </dl>
@@ -67,9 +67,9 @@
                   <dd>
                     <h1
                       class="text-2xl font-semibold"
-                      :class="facility.statistics.messages.errorIdsCount > 0 ? 'text-red-600' : 'text-green-600'"
+                      :class="facility.statistics.errorIdsCount > 0 ? 'text-red-600' : 'text-green-600'"
                     >
-                      {{ facility.statistics.messages.errorIdsCount }}
+                      {{ facility.statistics.errorIdsCount }}
                     </h1>
                   </dd>
                 </dl>
@@ -94,7 +94,7 @@
         </GenericCard>
 
         <!-- Failing NIs -->
-        <GenericCard v-if="facility.statistics.messages.errorIdsCount > 0" class="mt-4">
+        <GenericCard v-if="facility.statistics.errorIdsCount > 0" class="mt-4">
           <GenericCardHeader>
             <TextH2> Records Currently Failing </TextH2>
             <TextL1>Records where the most recent message received failed to process due to errors.</TextL1>
@@ -110,7 +110,7 @@
             class="bg-white border-t border-gray-200"
             :page="errorMessagesPageNumber"
             :size="errorMessagesPageSize"
-            :total="facility.statistics.messages.errorIdsCount"
+            :total="facility.statistics.errorIdsCount"
             @next="errorMessagesPageNumber++"
             @prev="errorMessagesPageNumber--"
           />
@@ -166,12 +166,12 @@ export default defineComponent({
     const errorMessagesPageSize = ref(5)
 
     const errorMessagesPage = computed((): Message[] => {
-      if (!facility.value || !facility.value?.statistics.messages.errorIdsMessages) {
+      if (!facility.value || !facility.value?.statistics.errorIdsMessages) {
         return []
       }
       const start = (errorMessagesPageNumber.value - 1) * errorMessagesPageSize.value
       const end = start + errorMessagesPageSize.value
-      return facility.value?.statistics.messages.errorIdsMessages.slice(start, end)
+      return facility.value?.statistics.errorIdsMessages.slice(start, end)
     })
 
     // History plot click handler
