@@ -18,18 +18,20 @@
 
         <ul class="my-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <li v-for="item in group.channels" :key="item.channelId" class="col-span-1">
-            <GenericCardMini v-if="item.statistics" class="px-4 py-2">
+            <GenericCardMini class="px-4 py-2">
               <TextH3 class="truncate">
                 {{ item.name }}
               </TextH3>
               <TextL1> Rev. {{ item.revision }} </TextL1>
-              <TextP> {{ item.statistics.received }} received </TextP>
+              <TextP> {{ item.statistics ? item.statistics.received : 'Unknown' }} received </TextP>
               <span
-                v-if="item.statistics.error === 0"
+                v-if="item.statistics && item.statistics.error === 0"
                 class="inline-block px-2 py-0.5 text-green-800 text-sm font-medium bg-green-100 rounded-sm mt-2"
                 >No errors</span
               >
-              <span v-else class="inline-block px-2 py-0.5 text-red-800 text-sm font-medium bg-red-100 rounded-sm mt-2"
+              <span
+                v-else-if="item.statistics && item.statistics.error > 0"
+                class="inline-block px-2 py-0.5 text-red-800 text-sm font-medium bg-red-100 rounded-sm mt-2"
                 >{{ item.statistics.error }} errors</span
               >
             </GenericCardMini>
