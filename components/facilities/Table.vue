@@ -1,5 +1,6 @@
 <template>
-  <GenericTable>
+  <LoadingIndicator v-if="!facilities"></LoadingIndicator>
+  <GenericTable v-else>
     <thead class="bg-gray-50">
       <tr>
         <th scope="col" class="px-6 py-3 text-left">
