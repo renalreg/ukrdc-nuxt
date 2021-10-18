@@ -265,7 +265,7 @@ export default defineComponent({
 
     function requestMerge() {
       if (superseded.value && superseding.value) {
-        PostEMPIMerge(superseded.value.id, superseding.value.id)
+        PostEMPIMerge(superseding.value.id, superseded.value.id)
           .then(() => {
             $toast.show({
               type: 'success',
