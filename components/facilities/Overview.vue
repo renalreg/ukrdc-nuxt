@@ -36,6 +36,9 @@
                 </dl>
               </div>
             </div>
+            <div class="bg-gray-50 text-gray-500 px-4 py-2 text-sm">
+              Total patient records stored in the UKRDC for this facility
+            </div>
           </GenericCard>
 
           <GenericCard>
@@ -45,7 +48,7 @@
               </div>
               <div class="ml-5 w-0 flex-1">
                 <dl>
-                  <GenericCardDt>Records Currently Passing</GenericCardDt>
+                  <GenericCardDt>Active Passing Records</GenericCardDt>
                   <dd>
                     <h1 class="text-2xl font-semibold text-green-600">
                       {{ facility.statistics.successIdsCount }}
@@ -53,6 +56,9 @@
                   </dd>
                 </dl>
               </div>
+            </div>
+            <div class="bg-gray-50 text-gray-500 px-4 py-2 text-sm">
+              Records with active data files being successfully received
             </div>
           </GenericCard>
 
@@ -63,7 +69,7 @@
               </div>
               <div class="ml-5 w-0 flex-1">
                 <dl>
-                  <GenericCardDt>Records Currently Failing</GenericCardDt>
+                  <GenericCardDt>Active Failing Records</GenericCardDt>
                   <dd>
                     <h1
                       class="text-2xl font-semibold"
@@ -74,6 +80,9 @@
                   </dd>
                 </dl>
               </div>
+            </div>
+            <div class="bg-gray-50 text-gray-500 px-4 py-2 text-sm">
+              Records with active data files currently failing due to errors
             </div>
           </GenericCard>
         </div>
