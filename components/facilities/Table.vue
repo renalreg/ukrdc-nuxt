@@ -14,9 +14,9 @@
           <div class="flex">
             <TextTh>Total Records</TextTh>
             <IconDynamicSort
-              :active="sortBy === 'statistics.patient_records'"
-              :asc="isAscending['statistics.patient_records']"
-              @toggle="toggleSort('statistics.patient_records')"
+              :active="sortBy === 'statistics.total_patients'"
+              :asc="isAscending['statistics.total_patients']"
+              @toggle="toggleSort('statistics.total_patients')"
             />
           </div>
         </th>
@@ -24,9 +24,9 @@
           <div class="flex">
             <TextTh>Failing Records</TextTh>
             <IconDynamicSort
-              :active="sortBy === 'statistics.error_IDs_count'"
-              :asc="isAscending['statistics.error_IDs_count']"
-              @toggle="toggleSort('statistics.error_IDs_count')"
+              :active="sortBy === 'statistics.patients_receiving_message_error'"
+              :asc="isAscending['statistics.patients_receiving_message_error']"
+              @toggle="toggleSort('statistics.patients_receiving_message_error')"
             />
           </div>
         </th>
@@ -41,14 +41,14 @@
       >
         <GenericTableCell class="font-medium text-gray-900">{{ facility.id }}</GenericTableCell>
         <GenericTableCell class="hidden md:block">{{ facility.description }}</GenericTableCell>
-        <GenericTableCell>{{ facility.statistics.patientRecords }}</GenericTableCell>
+        <GenericTableCell>{{ facility.statistics.totalPatients }}</GenericTableCell>
         <GenericTableCell class="flex items-center">
           <IconCircle
             v-if="facility.statistics.lastUpdated"
             class="inline"
-            :class="facility.statistics.errorIdsCount > 0 ? 'text-red-700' : 'text-green-600'"
+            :class="facility.statistics.patientsReceivingMessageError > 0 ? 'text-red-700' : 'text-green-600'"
           />
-          <p>{{ facility.statistics.errorIdsCount }}</p>
+          <p>{{ facility.statistics.patientsReceivingMessageError }}</p>
         </GenericTableCell>
       </tr>
     </tbody>

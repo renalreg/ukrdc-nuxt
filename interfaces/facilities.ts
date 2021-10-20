@@ -7,14 +7,14 @@ interface FacilityLinks {
 
 export interface FacilityStatisticsSummary {
   lastUpdated: string
-  patientRecords: number
-  errorIdsCount: number
+  totalPatients: number
+  patientsReceivingMessages: number
+  patientsReceivingMessageSuccess: number
+  patientsReceivingMessageError: number
 }
 
 export interface FacilityStatistics extends FacilityStatisticsSummary {
-  totalIdsCount: number
-  successIdsCount: number
-  errorIdsMessages: Message[]
+  patientsLatestErrors: Message[]
 }
 
 export interface FacilitySummary {
