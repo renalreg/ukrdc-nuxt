@@ -78,9 +78,6 @@ export default defineComponent({
     async function fetchRecord() {
       record.value = await fetchMasterRecord(route.value.params.id)
 
-      // Update title
-      title.value = `${record.value.givenname} ${record.value.surname}`
-
       // Get basic record statistics
       stats.value = await fetchMasterRecordStatistics(record.value)
       issueMessage.value = buildErrorMessage(stats.value)

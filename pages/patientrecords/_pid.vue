@@ -55,9 +55,6 @@ export default defineComponent({
     async function getRecord() {
       record.value = await fetchPatientRecord(route.value.params.pid)
       related.value = await fetchPatientRecordRelated(record.value)
-
-      // Update title
-      title.value = `${fullName.value} from ${record.value.sendingfacility}`
     }
 
     onMounted(() => {
