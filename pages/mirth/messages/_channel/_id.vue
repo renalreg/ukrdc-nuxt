@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useRoute } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, useMeta, useRoute } from '@nuxtjs/composition-api'
 import fetchMirth from '~/helpers/fetch/fetchMirth'
 
 import { ChannelMessage } from '@/interfaces/mirth'
@@ -23,6 +23,11 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const { fetchMirthMessage } = fetchMirth()
+
+    // Head
+
+    const { title } = useMeta()
+    title.value = `Mirth message ${route.value.params.id}`
 
     // Data refs
     const message = ref<ChannelMessage>()
@@ -35,6 +40,9 @@ export default defineComponent({
     return {
       message,
     }
+  },
+  head: {
+    title: 'Mirth Message',
   },
 })
 </script>
