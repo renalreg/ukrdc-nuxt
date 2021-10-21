@@ -152,7 +152,7 @@
             <span
               v-else
               class="flex-shrink-0 inline-block px-2 py-0.5 text-red-800 text-sm font-medium bg-red-100 rounded-sm mt-2"
-              >Inactive since {{ formatDate(item.toTime, (t = false)) }}</span
+              >Closed on {{ formatDate(item.toTime, (t = false)) }}</span
             >
           </GenericCardMini>
         </li>
