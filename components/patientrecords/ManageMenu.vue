@@ -10,10 +10,10 @@
         <GenericMenuItem @click="copyPID"> Copy PID </GenericMenuItem>
         <GenericMenuDivider />
         <div v-if="hasPermission('ukrdc:mirth:write')">
-          <GenericMenuItem @click="actionExport('pv')"> Export Record to PatientView </GenericMenuItem>
-          <GenericMenuItem @click="actionExport('docs')"> Export Docs to PatientView </GenericMenuItem>
-          <GenericMenuItem @click="actionExport('tests')"> Export Tests to PatientView </GenericMenuItem>
-          <GenericMenuItem @click="actionExport('RADAR')"> Export Record to RADAR </GenericMenuItem>
+          <GenericMenuItem @click="actionExport('pv')"> Sync Record to PatientView </GenericMenuItem>
+          <GenericMenuItem @click="actionExport('docs')"> Sync Docs to PatientView </GenericMenuItem>
+          <GenericMenuItem @click="actionExport('tests')"> Sync Tests to PatientView </GenericMenuItem>
+          <GenericMenuItem @click="actionExport('RADAR')"> Sync Record to RADAR </GenericMenuItem>
           <GenericMenuDivider />
         </div>
         <GenericMenuItem v-if="hasPermission('ukrdc:records:delete')" @click="showDeleteModal">
