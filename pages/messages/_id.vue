@@ -226,7 +226,7 @@ export default defineComponent({
     }
   },
   head: {
-    title: 'Error',
+    title: 'Message',
   },
 })
 </script>
