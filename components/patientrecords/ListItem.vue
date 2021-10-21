@@ -34,7 +34,14 @@
               Open Record
             </GenericButtonMini>
           </div>
-          <div class="flex-grow-0 pl-2"><PatientrecordsManageMenu :item="item" @deleted="$emit('deleted')" /></div>
+          <div class="flex-grow-0 pl-2">
+            <PatientrecordsManageMenu
+              :show-pv-sync="showPvSync"
+              :show-radar-sync="showRadarSync"
+              :item="item"
+              @deleted="$emit('deleted')"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -56,6 +63,16 @@ export default defineComponent({
     item: {
       type: Object as () => PatientRecordSummary,
       required: true,
+    },
+    showPvSync: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    showRadarSync: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   setup() {

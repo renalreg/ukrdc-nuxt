@@ -10,11 +10,13 @@
         <GenericMenuItem @click="copyPID"> Copy PID </GenericMenuItem>
         <GenericMenuDivider />
         <div v-if="hasPermission('ukrdc:mirth:write')">
-          <GenericMenuItem @click="actionExport('pv')"> Sync Record to PatientView </GenericMenuItem>
-          <GenericMenuItem @click="actionExport('docs')"> Sync Docs to PatientView </GenericMenuItem>
-          <GenericMenuItem @click="actionExport('tests')"> Sync Tests to PatientView </GenericMenuItem>
-          <GenericMenuItem @click="actionExport('RADAR')"> Sync Record to RADAR </GenericMenuItem>
-          <GenericMenuDivider />
+          <GenericMenuItem v-if="showPvSync" @click="actionExport('pv')"> Sync Record to PatientView </GenericMenuItem>
+          <GenericMenuItem v-if="showPvSync" @click="actionExport('docs')"> Sync Docs to PatientView </GenericMenuItem>
+          <GenericMenuItem v-if="showPvSync" @click="actionExport('tests')">
+            Sync Tests to PatientView
+          </GenericMenuItem>
+          <GenericMenuItem v-if="showRadarSync" @click="actionExport('RADAR')"> Sync Record to RADAR </GenericMenuItem>
+          <GenericMenuDivider v-if="showPvSync || showRadarSync" />
         </div>
         <GenericMenuItem v-if="hasPermission('ukrdc:records:delete')" @click="showDeleteModal">
           Delete Record
@@ -36,6 +38,16 @@ export default defineComponent({
     item: {
       type: Object as () => PatientRecordSummary,
       required: true,
+    },
+    showPvSync: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    showRadarSync: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   setup(props) {
