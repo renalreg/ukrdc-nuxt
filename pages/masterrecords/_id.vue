@@ -15,10 +15,7 @@
     </div>
 
     <div v-if="record" class="mb-2">
-      <TextH1 v-if="record.givenname" class="capitalize">
-        {{ record.givenname.toLowerCase() }}
-        {{ record.surname.toLowerCase() }}
-      </TextH1>
+      <TextNameH1 :forename="record.givenname" :surname="record.surname" />
       <TextL1> {{ record.nationalidType }} record </TextL1>
     </div>
 

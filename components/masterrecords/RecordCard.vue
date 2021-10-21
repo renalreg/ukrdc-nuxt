@@ -1,13 +1,12 @@
 <template>
   <GenericCard class="border-2 border-indigo-500">
     <div class="px-4 sm:px-6 h-24 flex flex-col justify-center">
-      <h3
-        class="text-lg leading-6 font-medium text-gray-900 capitalize"
+      <TextNameH2
         :class="highlight.includes('name') ? highlightClasses : []"
-      >
-        {{ record.givenname.toLowerCase() }}
-        {{ record.surname.toLowerCase() }}
-      </h3>
+        :forename="record.givenname"
+        :surname="record.surname"
+        :highlight="highlight"
+      />
       <p class="mt-1 max-w-2xl text-gray-500">
         {{ label ? label : `Master Record ${record.id}` }}
       </p>

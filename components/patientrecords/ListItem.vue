@@ -9,9 +9,7 @@
         </div>
         <!-- National ID -->
         <div>
-          <TextL1 class="capitalize truncate">
-            {{ item.patient.names[0].given.toLowerCase() }} {{ item.patient.names[0].family.toLowerCase() }}
-          </TextL1>
+          <TextNameL1 :forename="item.patient.names[0].given" :surname="item.patient.names[0].family" />
           <TextP class="mt-2 flex items-center">
             {{ formatDate(item.patient.birthTime, (t = false)) }}
             <b class="ml-1"> {{ formatGenderCharacter(item.patient.gender) }}</b>

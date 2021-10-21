@@ -1,13 +1,8 @@
 <template>
   <GenericCard class="border-2 border-red-500">
     <div class="px-4 sm:px-6 h-24 flex flex-col justify-center">
-      <span
-        :class="highlight.includes('givenname') || highlight.includes('surname') ? highlightClasses : ['text-gray-900']"
-      >
-        <h3 class="text-lg leading-6 font-medium capitalize">
-          {{ record.givenname.toLowerCase() }}
-          {{ record.surname.toLowerCase() }}
-        </h3>
+      <span>
+        <TextNameH2 :forename="record.givenname" :surname="record.surname" :highlight="highlight" />
       </span>
 
       <p class="mt-1 max-w-2xl text-gray-500">
@@ -90,7 +85,7 @@ export default defineComponent({
       default: null,
     },
     highlight: {
-      type: Array,
+      type: Array as () => string[],
       required: false,
       default: () => [],
     },

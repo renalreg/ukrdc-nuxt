@@ -7,10 +7,7 @@
     >
       <!-- Name, DoB, gender -->
       <div>
-        <TextL1c class="capitalize truncate">
-          {{ item.givenname.toLowerCase() }}
-          {{ item.surname.toLowerCase() }}
-        </TextL1c>
+        <TextNameL1 :forename="item.givenname" :surname="item.surname" />
         <TextP class="mt-2 flex items-center">
           {{ formatDate(item.dateOfBirth, (t = false)) }}
           <b class="ml-1"> {{ formatGenderCharacter(item.gender) }}</b>

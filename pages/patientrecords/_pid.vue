@@ -2,7 +2,7 @@
   <div>
     <div v-if="record && record.patient" class="md:flex items-center mb-2">
       <div class="flex-grow text-center sm:text-left mb-4 md:mb-0">
-        <TextH1>{{ fullName }}</TextH1>
+        <TextNameH1 :forename="forename" :surname="surname" />
       </div>
       <div class="flex">
         <div v-if="record.masterRecord">
@@ -78,12 +78,12 @@ export default defineComponent({
 
     // Dynamic UI elements
 
-    const fullName = computed(() => {
-      if (record) {
-        return `${record.value?.patient.names[0].given} ${record.value?.patient.names[0].family}`
-      } else {
-        return ''
-      }
+    const forename = computed(() => {
+      return record ? record.value?.patient.names[0].given : ''
+    })
+
+    const surname = computed(() => {
+      return record ? record.value?.patient.names[0].family : ''
     })
 
     // Navigation
@@ -124,7 +124,8 @@ export default defineComponent({
       related,
       relatedDataRecords,
       selectedPid,
-      fullName,
+      forename,
+      surname,
       tabs,
     }
   },
