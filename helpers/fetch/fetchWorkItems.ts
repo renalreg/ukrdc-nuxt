@@ -1,5 +1,6 @@
 import { ref, useContext } from '@nuxtjs/composition-api'
 import { buildCommonMessageQuery, MessagePage } from './fetchMessages'
+import { buildCommonDateRangeQuery } from './common'
 import { WorkItem, WorkItemExtended } from '~/interfaces/workitem'
 
 interface WorkItemPage {
@@ -19,7 +20,9 @@ export default function () {
     size: number,
     orderBy: string,
     statuses: (string | null)[] = [],
-    facility: string | null
+    facility: string | null,
+    since: string | null,
+    until: string | null
   ): Promise<WorkItemPage> {
     let path = `${$config.apiBase}/v1/workitems/?page=${page}&size=${size}&sort_by=last_updated&order_by=${orderBy}`
     // Pass selected statuses to the API
@@ -30,6 +33,8 @@ export default function () {
     if (facility) {
       path = path + `&facility=${facility}`
     }
+    // Filter by since-until if it exists
+    path = path + buildCommonDateRangeQuery(since, until)
 
     fetchInProgress.value = true
     const response: WorkItemPage = await $axios.$get(path)
