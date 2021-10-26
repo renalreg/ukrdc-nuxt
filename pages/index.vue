@@ -5,11 +5,6 @@
       <genericAlertInfo v-for="message in dash.messages" :key="message" :message="message"> </genericAlertInfo>
     </div>
 
-    <!-- Admins will get workitems and records stats -->
-    <div v-if="dash && dash.workitems && dash.ukrdcrecords" class="max-w-7xl mx-auto mb-8">
-      <dashStats :workitems="dash.workitems" :ukrdcrecords="dash.ukrdcrecords" />
-    </div>
-
     <AdminDashboard v-if="isAdmin" class="mb-6" />
 
     <div v-if="facilities">

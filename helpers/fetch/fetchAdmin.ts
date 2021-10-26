@@ -1,6 +1,7 @@
 import { useContext } from '@nuxtjs/composition-api'
 import { buildCommonMessageQuery } from './fetchMessages'
 import { HistoryItem } from '~/interfaces/common'
+import { AdminCounts } from '~/interfaces/admin'
 
 export default function () {
   const { $axios, $config } = useContext()
@@ -21,8 +22,13 @@ export default function () {
     return (await $axios.$get(path)) as HistoryItem[]
   }
 
+  async function fetchAdminCounts(): Promise<AdminCounts> {
+    return (await $axios.$get(`${$config.apiBase}/v1/admin/counts/`)) as AdminCounts
+  }
+
   return {
     fetchWorkItemsHistory,
     fetchErrorsHistory,
+    fetchAdminCounts,
   }
 }
