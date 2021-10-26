@@ -1,6 +1,6 @@
 <template>
   <div>
-    <canvas id="time-series" />
+    <canvas :id="id" />
   </div>
 </template>
 
@@ -40,6 +40,10 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    id: {
+      type: String,
+      default: 'time-series',
+    },
   },
 
   setup(props, { emit }) {
@@ -72,7 +76,7 @@ export default defineComponent({
 
     onMounted(() => {
       populateData()
-      const canvas = document.getElementById('time-series') as HTMLCanvasElement
+      const canvas = document.getElementById(props.id) as HTMLCanvasElement
       const options = {
         type: 'line',
         data: {

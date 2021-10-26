@@ -6,7 +6,13 @@
         <TextH2> Error History </TextH2>
       </GenericCardHeader>
       <GenericCardContent class="p-4">
-        <ChartTimeSeries class="h-64" :data="errorsHistory" label="New Errors" @click="errorHistoryPointClickHandler" />
+        <ChartTimeSeries
+          id="error-history-time-series"
+          class="h-64"
+          :data="errorsHistory"
+          label="New Errors"
+          @click="errorHistoryPointClickHandler"
+        />
       </GenericCardContent>
     </GenericCard>
     <!-- WorkItems history -->
@@ -16,6 +22,7 @@
       </GenericCardHeader>
       <GenericCardContent class="p-4">
         <ChartTimeSeries
+          id="workitem-history-time-series"
           class="h-64"
           :data="workitemsHistory"
           label="New Work Items"
