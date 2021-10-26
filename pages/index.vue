@@ -2,7 +2,6 @@
   <div>
     <div v-if="dash && (dash.warnings.length > 0 || dash.messages.length > 0)" class="mb-8">
       <genericAlertWarning v-for="message in dash.warnings" :key="message" :message="message"> </genericAlertWarning>
-
       <genericAlertInfo v-for="message in dash.messages" :key="message" :message="message"> </genericAlertInfo>
     </div>
 
@@ -10,6 +9,8 @@
     <div v-if="dash && dash.workitems && dash.ukrdcrecords" class="max-w-7xl mx-auto mb-8">
       <dashStats :workitems="dash.workitems" :ukrdcrecords="dash.ukrdcrecords" />
     </div>
+
+    <AdminDashboard v-if="isAdmin" class="mb-6" />
 
     <div v-if="facilities">
       <div v-if="facilities.length > 1">
@@ -37,12 +38,15 @@ import { defineComponent, onMounted, ref, useRouter, watch } from '@nuxtjs/compo
 import useFacilities from '@/helpers/useFacilities'
 import { DashResponse } from '@/interfaces/dash'
 import fetchDash from '~/helpers/fetch/fetchDash'
+import usePermissions from '~/helpers/usePermissions'
 
 export default defineComponent({
   setup() {
     const router = useRouter()
     const { facilities, facilityIds, facilityLabels, selectedFacility } = useFacilities()
     const { fetchDashboard } = fetchDash()
+
+    const { isAdmin } = usePermissions()
 
     // Data refs
 
@@ -72,6 +76,7 @@ export default defineComponent({
       selectedFacility,
       selectTable,
       dash,
+      isAdmin,
     }
   },
 

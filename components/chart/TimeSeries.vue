@@ -12,7 +12,7 @@ import { Interval, DateTime } from 'luxon'
 import { Chart, LineController, TimeScale, LinearScale, PointElement, LineElement, Tooltip } from 'chart.js'
 import 'chartjs-adapter-luxon'
 
-import { ErrorHistoryItem } from '~/interfaces/facilities'
+import { HistoryItem } from '~/interfaces/common'
 
 Chart.register(LineController, TimeScale, LinearScale, PointElement, LineElement, Tooltip)
 
@@ -25,7 +25,7 @@ interface EventElement {
 export default defineComponent({
   props: {
     data: {
-      type: Array as () => ErrorHistoryItem[],
+      type: Array as () => HistoryItem[],
       default: null,
     },
     label: {

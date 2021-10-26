@@ -5,6 +5,7 @@
     </div>
 
     <div class="mb-4 flex flex-col">
+      <GenericDateRange v-model="dateRange" class="mb-4" />
       <GenericSearchableSelect
         v-if="facilityIds.length > 1"
         v-model="selectedFacility"
@@ -66,12 +67,14 @@ import useFacilities from '~/helpers/useFacilities'
 import useSortBy from '~/helpers/query/useSortBy'
 
 import fetchWorkItems from '~/helpers/fetch/fetchWorkItems'
+import useDateRange from '~/helpers/query/useDateRange'
 
 export default defineComponent({
   setup() {
     const route = useRoute()
 
     const { page, total, size } = usePagination()
+    const { makeDateRange } = useDateRange()
     const { arrayQuery } = useQuery()
     const { facilities, facilityIds, facilityLabels, selectedFacility } = useFacilities()
     const { orderAscending, orderBy, toggleOrder } = useSortBy()
@@ -82,6 +85,9 @@ export default defineComponent({
     const workitems = ref<WorkItem[]>()
     const statuses = arrayQuery('status', ['1'], true, true)
 
+    // Set initial date dateRange
+    const dateRange = makeDateRange(null, null, true, true)
+
     // Data fetching
 
     async function getWorkitems() {
@@ -90,7 +96,9 @@ export default defineComponent({
         size.value,
         orderBy.value || 'desc',
         statuses.value,
-        selectedFacility.value
+        selectedFacility.value,
+        dateRange.value.start,
+        dateRange.value.end
       )
 
       workitems.value = itemsPage.items
@@ -112,6 +120,7 @@ export default defineComponent({
       page,
       total,
       size,
+      dateRange,
       workitems,
       statuses,
       facilities,

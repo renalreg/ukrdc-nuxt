@@ -26,8 +26,3 @@ export interface FacilitySummary {
 export interface Facility extends FacilitySummary {
   statistics: FacilityStatistics
 }
-
-export interface ErrorHistoryItem {
-  time: string
-  count: number
-}

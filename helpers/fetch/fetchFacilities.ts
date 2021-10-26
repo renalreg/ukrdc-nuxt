@@ -1,5 +1,6 @@
 import { useContext } from '@nuxtjs/composition-api'
-import { FacilitySummary, Facility, ErrorHistoryItem } from '~/interfaces/facilities'
+import { FacilitySummary, Facility } from '~/interfaces/facilities'
+import { HistoryItem } from '~/interfaces/common'
 
 export default function () {
   const { $axios, $config } = useContext()
@@ -23,8 +24,8 @@ export default function () {
     return (await $axios.$get(`${$config.apiBase}/v1/facilities/${code}`)) as Facility
   }
 
-  async function fetchFacilityErrorsHistory(facility: Facility): Promise<ErrorHistoryItem[]> {
-    return (await $axios.$get(facility.links.errorsHistory)) as ErrorHistoryItem[]
+  async function fetchFacilityErrorsHistory(facility: Facility): Promise<HistoryItem[]> {
+    return (await $axios.$get(facility.links.errorsHistory)) as HistoryItem[]
   }
 
   return { fetchFacilitiesList, fetchFacility, fetchFacilityErrorsHistory }

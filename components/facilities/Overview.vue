@@ -132,17 +132,16 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useRouter } from '@nuxtjs/composition-api'
 
-import { DateTime } from 'luxon'
 import { formatDate } from '@/helpers/utils/dateUtils'
 
-import { Facility, ErrorHistoryItem } from '~/interfaces/facilities'
+import { Facility } from '~/interfaces/facilities'
+import { HistoryItem } from '~/interfaces/common'
+
 import fetchFacilities from '~/helpers/fetch/fetchFacilities'
 import { Message } from '~/interfaces/messages'
+import { HistoryPointEvent } from '~/interfaces/charts'
 
-interface ErrorHistoryPointEvent {
-  x: number
-  y: number
-}
+import { getPointDateRange } from '@/helpers/utils/chartUtils'
 
 export default defineComponent({
   props: {
@@ -161,7 +160,7 @@ export default defineComponent({
     const { fetchFacility, fetchFacilityErrorsHistory } = fetchFacilities()
 
     const facility = ref<Facility>()
-    const facilityErrorsHistory = ref<ErrorHistoryItem[]>()
+    const facilityErrorsHistory = ref<HistoryItem[]>()
 
     const lastUpdatedString = computed(() => {
       if (!facility.value) {
@@ -185,14 +184,13 @@ export default defineComponent({
 
     // History plot click handler
 
-    function historyPointClickHandler(point: ErrorHistoryPointEvent) {
-      const startDate = DateTime.fromMillis(point.x)
-      const endDate = startDate.plus({ days: 1 })
+    function historyPointClickHandler(point: HistoryPointEvent) {
+      const pointRange = getPointDateRange(point)
       router.push({
         path: '/messages',
         query: {
-          since: startDate.toISO(),
-          until: endDate.toISO(),
+          since: pointRange.since,
+          until: pointRange.until,
           facility: props.code,
           status: ['ERROR', 'RESOLVED'],
         },

@@ -1,4 +1,4 @@
-import { useContext } from '@nuxtjs/composition-api'
+import { useContext, computed } from '@nuxtjs/composition-api'
 
 export default function () {
   const { $auth, $config } = useContext()
@@ -26,5 +26,7 @@ export default function () {
     return []
   }
 
-  return { hasPermission, getPermissions }
+  const isAdmin = computed(() => hasPermission('ukrdc:unit:*'))
+
+  return { hasPermission, getPermissions, isAdmin }
 }
