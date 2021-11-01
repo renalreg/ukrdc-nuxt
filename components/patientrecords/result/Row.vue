@@ -10,7 +10,7 @@
       </NuxtLink>
     </td>
     <td class="px-6 py-4 whitespace-nowrap text-gray-500">
-      {{ formatDate(item.observationTime) }}
+      {{ item.observationTime ? formatDate(item.observationTime) : 'No Observation Time' }}
     </td>
   </tr>
 </template>
