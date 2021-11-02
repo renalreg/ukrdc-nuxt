@@ -117,11 +117,13 @@
           </ul>
           <GenericPaginator
             class="bg-white border-t border-gray-200"
+            :jump-to-top="false"
             :page="errorMessagesPageNumber"
             :size="errorMessagesPageSize"
             :total="facility.statistics.patientsReceivingMessageError"
             @next="errorMessagesPageNumber++"
             @prev="errorMessagesPageNumber--"
+            @jump="errorMessagesPageNumber = $event"
           />
         </GenericCard>
       </div>
