@@ -1,6 +1,6 @@
 import { ref, useContext } from '@nuxtjs/composition-api'
 import { buildCommonDateRangeQuery } from './common'
-import { LabOrderShort, ResultItem } from '~/interfaces/laborder'
+import { LabOrder, LabOrderShort, ResultItem } from '~/interfaces/laborder'
 import { LinkRecordSummary } from '~/interfaces/linkrecords'
 import { MasterRecord } from '~/interfaces/masterrecord'
 import { Medication } from '~/interfaces/medication'
@@ -122,6 +122,10 @@ export default function () {
     return (await $axios.$get(`${record.links.laborders}?page=${page}&size=${size}`)) as LabOrdersPage
   }
 
+  async function fetchPatientRecordLabOrder(record: PatientRecord, orderId: string): Promise<LabOrder> {
+    return (await $axios.$get(`${record.links.laborders}${orderId}`)) as LabOrder
+  }
+
   async function deletePatientRecordLabOrder(order: LabOrderShort): Promise<void> {
     await $axios.$delete(order.links.self)
   }
@@ -226,6 +230,7 @@ export default function () {
     deletePatientRecordResultItem,
     fetchPatientRecordResultServices,
     fetchPatientRecordLabOrdersPage,
+    fetchPatientRecordLabOrder,
     deletePatientRecordLabOrder,
     fetchPatientRecordObservationsPage,
     fetchPatientRecordObservationCodes,

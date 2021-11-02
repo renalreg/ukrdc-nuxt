@@ -10,6 +10,15 @@
       @cancel="cancelDeleteResultItem"
     />
 
+    <GenericModalConfirm
+      ref="deleteOrderAlert"
+      title="Delete Lab Order"
+      message="Are you sure you want to delete this lab order and all associated result items?"
+      icon="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+      :danger="true"
+      @confirm="deleteLabOrder"
+    />
+
     <GenericDateRange v-model="dateRange" class="mb-4" />
     <GenericSearchableSelect
       v-model="selectedService"
@@ -19,13 +28,16 @@
       hint="Select a service..."
     />
 
-    <div class="mb-4 flex flex-grow items-center">
+    <div class="mb-4 flex flex-grow items-center gap-2">
       <NuxtLink :to="'./laborders'">
         <GenericButton>View Orders</GenericButton>
       </NuxtLink>
-      <NuxtLink v-if="selectedOrderId" :to="{ query: { order_id: null } }" class="ml-2">
+      <NuxtLink v-if="selectedOrderId" :to="{ query: { order_id: null } }">
         <GenericButton>Show Results From All Orders</GenericButton>
       </NuxtLink>
+      <GenericButton v-if="selectedOrderId && selectedOrder" colour="red" @click="deleteOrderAlert.show()"
+        >Delete Lab Order</GenericButton
+      >
     </div>
 
     <!-- Small data card display -->
@@ -78,7 +90,7 @@
 import { computed, defineComponent, onMounted, ref, useContext, useRoute, watch } from '@nuxtjs/composition-api'
 
 import { PatientRecord } from '@/interfaces/patientrecord'
-import { ResultItem } from '@/interfaces/laborder'
+import { LabOrder, ResultItem } from '@/interfaces/laborder'
 
 import { formatDate } from '@/helpers/utils/dateUtils'
 
@@ -102,8 +114,13 @@ export default defineComponent({
     const { page, total, size } = usePagination()
     const { makeDateRange } = useDateRange()
     const { stringQuery } = useQuery()
-    const { fetchPatientRecordResultsPage, fetchPatientRecordResultServices, deletePatientRecordResultItem } =
-      fetchPatientRecords()
+    const {
+      fetchPatientRecordResultsPage,
+      fetchPatientRecordResultServices,
+      deletePatientRecordResultItem,
+      fetchPatientRecordLabOrder,
+      deletePatientRecordLabOrder,
+    } = fetchPatientRecords()
 
     // Set initial date dateRange
     const dateRange = makeDateRange(null, null, true, false)
@@ -135,9 +152,19 @@ export default defineComponent({
       }
     }
 
+    const selectedOrder = ref<LabOrder>()
+
+    async function fetchLabOrder() {
+      if (selectedOrderId.value) {
+        selectedOrder.value = await fetchPatientRecordLabOrder(props.record, selectedOrderId.value)
+      }
+    }
+
     // Data deletion
 
     const deleteResultAlert = ref<modalInterface>()
+    const deleteOrderAlert = ref<modalInterface>()
+
     const itemToDelete = ref<ResultItem | null>(null)
 
     function showDeleteResultItemModal(item: ResultItem) {
@@ -160,18 +187,37 @@ export default defineComponent({
           timeout: 10,
           classTimeout: 'bg-green-600',
         })
+        await fetchResults()
+        itemToDelete.value = null
+        deleteResultAlert.value?.hide()
       }
-      await fetchResults()
-      itemToDelete.value = null
-      deleteResultAlert.value?.hide()
+    }
+
+    async function deleteLabOrder() {
+      if (selectedOrder.value) {
+        await deletePatientRecordLabOrder(selectedOrder.value)
+        $toast.show({
+          type: 'success',
+          title: 'Success',
+          message: 'Lab Order deleted',
+          timeout: 10,
+          classTimeout: 'bg-green-600',
+        })
+        selectedOrderId.value = null
+        await fetchResults()
+        await fetchLabOrder()
+        deleteOrderAlert.value?.hide()
+      }
     }
 
     onMounted(() => {
       fetchResults()
+      fetchLabOrder()
     })
 
     watch(route, () => {
       fetchResults()
+      fetchLabOrder()
     })
 
     // Result item services
@@ -199,15 +245,18 @@ export default defineComponent({
       dateRange,
       results,
       deleteResultAlert,
+      deleteOrderAlert,
       itemToDelete,
       showDeleteResultItemModal,
       cancelDeleteResultItem,
       deleteResultItem,
+      deleteLabOrder,
       availableServicesMap,
       availableServicesIds,
       availableServicesLabels,
       selectedService,
       selectedOrderId,
+      selectedOrder,
       formatDate,
     }
   },
