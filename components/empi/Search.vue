@@ -28,6 +28,7 @@
           :total="total"
           @next="page++"
           @prev="page--"
+          @jump="page = $event"
         />
       </GenericCard>
     </div>

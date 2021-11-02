@@ -46,7 +46,14 @@
 
       <div v-if="observations && observations.length > 0" class="mt-4">
         <GenericCard>
-          <GenericPaginator :page="page" :size="size" :total="total" @next="page++" @prev="page--" />
+          <GenericPaginator
+            :page="page"
+            :size="size"
+            :total="total"
+            @next="page++"
+            @prev="page--"
+            @jump="page = $event"
+          />
         </GenericCard>
       </div>
     </div>

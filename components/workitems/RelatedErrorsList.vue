@@ -13,11 +13,13 @@
     </ul>
     <GenericPaginator
       class="bg-white border-t border-gray-200"
+      :jump-to-top="false"
       :page="relatedErrorsPage"
       :size="relatedErrorsSize"
       :total="relatedErrorsTotal"
       @next="relatedErrorsPage++"
       @prev="relatedErrorsPage--"
+      @jump="relatedErrorsPage = $event"
     />
   </GenericCard>
 </template>
