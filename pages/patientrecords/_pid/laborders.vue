@@ -47,6 +47,7 @@ export default defineComponent({
     const { fetchPatientRecordLabOrdersPage } = fetchPatientRecords()
 
     // Data refs
+    size.value = 9 // Fetch a multiple of our row length
     const orders = ref([] as LabOrderShort[])
 
     // Data fetching
