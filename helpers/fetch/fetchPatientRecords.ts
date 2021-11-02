@@ -110,12 +110,20 @@ export default function () {
     return (await $axios.$get(record.links.resultServices)) as ResultService[]
   }
 
+  async function deletePatientRecordResultItem(item: ResultItem): Promise<void> {
+    await $axios.$delete(item.links.self)
+  }
+
   async function fetchPatientRecordLabOrdersPage(
     record: PatientRecord,
     page: number,
     size: number
   ): Promise<LabOrdersPage> {
     return (await $axios.$get(`${record.links.laborders}?page=${page}&size=${size}`)) as LabOrdersPage
+  }
+
+  async function deletePatientRecordLabOrder(order: LabOrderShort): Promise<void> {
+    await $axios.$delete(order.links.self)
   }
 
   async function fetchPatientRecordObservationsPage(
@@ -215,8 +223,10 @@ export default function () {
     fetchPatientRecordMedications,
     fetchPatientRecordTreatments,
     fetchPatientRecordResultsPage,
+    deletePatientRecordResultItem,
     fetchPatientRecordResultServices,
     fetchPatientRecordLabOrdersPage,
+    deletePatientRecordLabOrder,
     fetchPatientRecordObservationsPage,
     fetchPatientRecordObservationCodes,
     fetchPatientRecordDocumentsPage,

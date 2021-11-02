@@ -1,5 +1,15 @@
 <template>
   <div>
+    <GenericModalConfirm
+      ref="deleteResultAlert"
+      title="Delete Result Item"
+      message="Are you sure you want to delete this result item?"
+      icon="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+      :danger="true"
+      @confirm="deleteResultItem"
+      @cancel="cancelDeleteResultItem"
+    />
+
     <GenericDateRange v-model="dateRange" class="mb-4" />
     <GenericSearchableSelect
       v-model="selectedService"
@@ -20,7 +30,12 @@
 
     <!-- Small data card display -->
     <div class="lg:hidden">
-      <PatientrecordsResultCard v-for="(item, index) in results" :key="`${index}-card`" :item="item" />
+      <PatientrecordsResultCard
+        v-for="(item, index) in results"
+        :key="`${index}-card`"
+        :item="item"
+        @delete="showDeleteResultItemModal"
+      />
     </div>
     <!-- Large table display -->
     <GenericTable class="hidden lg:block">
@@ -38,10 +53,16 @@
           <th scope="col" class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
             Entered On
           </th>
+          <th scope="col" class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider"></th>
         </tr>
       </thead>
       <tbody class="bg-white divide-y divide-gray-200">
-        <PatientrecordsResultRow v-for="(item, index) in results" :key="index" :item="item" />
+        <PatientrecordsResultRow
+          v-for="(item, index) in results"
+          :key="index"
+          :item="item"
+          @delete="showDeleteResultItemModal"
+        />
       </tbody>
     </GenericTable>
 
@@ -54,7 +75,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useRoute, watch } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref, useContext, useRoute, watch } from '@nuxtjs/composition-api'
 
 import { PatientRecord } from '@/interfaces/patientrecord'
 import { ResultItem } from '@/interfaces/laborder'
@@ -66,6 +87,7 @@ import useQuery from '~/helpers/query/useQuery'
 import useDateRange from '~/helpers/query/useDateRange'
 
 import fetchPatientRecords, { ResultService } from '~/helpers/fetch/fetchPatientRecords'
+import { modalInterface } from '~/interfaces/modal'
 
 export default defineComponent({
   props: {
@@ -76,10 +98,12 @@ export default defineComponent({
   },
   setup(props) {
     const route = useRoute()
+    const { $toast } = useContext()
     const { page, total, size } = usePagination()
     const { makeDateRange } = useDateRange()
     const { stringQuery } = useQuery()
-    const { fetchPatientRecordResultsPage, fetchPatientRecordResultServices } = fetchPatientRecords()
+    const { fetchPatientRecordResultsPage, fetchPatientRecordResultServices, deletePatientRecordResultItem } =
+      fetchPatientRecords()
 
     // Set initial date dateRange
     const dateRange = makeDateRange(null, null, true, false)
@@ -109,6 +133,37 @@ export default defineComponent({
       if (availableServicesMap.value.length === 0) {
         availableServicesMap.value = await fetchPatientRecordResultServices(props.record)
       }
+    }
+
+    // Data deletion
+
+    const deleteResultAlert = ref<modalInterface>()
+    const itemToDelete = ref<ResultItem | null>(null)
+
+    function showDeleteResultItemModal(item: ResultItem) {
+      itemToDelete.value = item
+      deleteResultAlert.value?.show()
+    }
+
+    function cancelDeleteResultItem() {
+      itemToDelete.value = null
+      deleteResultAlert.value?.hide()
+    }
+
+    async function deleteResultItem() {
+      if (itemToDelete.value) {
+        await deletePatientRecordResultItem(itemToDelete.value)
+        $toast.show({
+          type: 'success',
+          title: 'Success',
+          message: 'Result Item deleted',
+          timeout: 10,
+          classTimeout: 'bg-green-600',
+        })
+      }
+      await fetchResults()
+      itemToDelete.value = null
+      deleteResultAlert.value?.hide()
     }
 
     onMounted(() => {
@@ -143,6 +198,11 @@ export default defineComponent({
       total,
       dateRange,
       results,
+      deleteResultAlert,
+      itemToDelete,
+      showDeleteResultItemModal,
+      cancelDeleteResultItem,
+      deleteResultItem,
       availableServicesMap,
       availableServicesIds,
       availableServicesLabels,

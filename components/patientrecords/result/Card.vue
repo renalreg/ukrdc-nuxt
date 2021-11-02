@@ -12,6 +12,9 @@
     </div>
     <div class="text-sm font-medium text-gray-500 uppercase tracking-wider col-span-1">Entered On</div>
     <TextP class="col-span-2">{{ formatDate(item.observationTime) }}</TextP>
+    <GenericButton tooltip="Delete this result item" label="Delete this result item" @click="$emit('delete', item)">
+      Delete</GenericButton
+    >
   </GenericCardFlat>
 </template>
 
