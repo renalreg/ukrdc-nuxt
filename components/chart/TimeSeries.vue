@@ -44,6 +44,16 @@ export default defineComponent({
       type: String,
       default: 'time-series',
     },
+    start: {
+      type: String,
+      required: false,
+      default: null,
+    },
+    end: {
+      type: String,
+      required: false,
+      default: null,
+    },
   },
 
   setup(props, { emit }) {
@@ -60,8 +70,8 @@ export default defineComponent({
     function populateData() {
       // Populate base/missing data
       if (props.autofillData) {
-        const start = DateTime.now().minus({ days: 365 })
-        const end = DateTime.now()
+        const start = props.start ? DateTime.fromISO(props.start) : DateTime.now().minus({ days: 365 })
+        const end = props.end ? DateTime.fromISO(props.end) : DateTime.now()
         const interval = Interval.fromDateTimes(start, end)
         for (const d of iterateDays(interval)) {
           dataToUse.value[d.toISODate()] = 0
