@@ -91,7 +91,9 @@
       <GenericCardContent>
         <GenericDl>
           <GenericDi>
-            <TextDt>Sending data to Patients Know Best</TextDt>
+            <TextDt>
+              Sending data to <a href="https://patientsknowbest.com/" target="blank">Patients Know Best</a>
+            </TextDt>
             <TextDd>
               <div v-if="facility && facility.dataFlow.pkbOut" class="flex items-center gap-2">
                 <div>Yes</div>
@@ -101,7 +103,9 @@
             </TextDd>
           </GenericDi>
           <GenericDi>
-            <TextDt>Receiving data from Patients Know Best</TextDt>
+            <TextDt>
+              Receiving data from <a href="https://patientsknowbest.com/" target="blank">Patients Know Best</a>
+            </TextDt>
             <TextDd>
               <div v-if="facility && facility.dataFlow.pkbIn" class="flex items-center gap-2">
                 <div>Yes</div>
@@ -111,7 +115,9 @@
             </TextDd>
           </GenericDi>
           <GenericDi>
-            <TextDt>Excluding data from Patients Know Best</TextDt>
+            <TextDt>
+              Excluding data from <a href="https://patientsknowbest.com/" target="blank">Patients Know Best</a>
+            </TextDt>
             <TextDd>
               <div v-if="facility && facility.dataFlow.pkbMessageExclusions.length > 0" class="flex items-center gap-2">
                 <div>{{ facility.dataFlow.pkbMessageExclusions.join(', ') }}</div>
