@@ -1,37 +1,9 @@
 import { ref, useContext } from '@nuxtjs/composition-api'
-import { buildCommonDateRangeQuery } from './common'
+import { buildCommonMessageQuery, MessagePage } from './common'
 import { MasterRecord } from '~/interfaces/masterrecord'
 import { ErrorSource, Message } from '~/interfaces/messages'
 import { ChannelMessage } from '~/interfaces/mirth'
 import { WorkItem } from '~/interfaces/workitem'
-
-export interface MessagePage {
-  items: Message[]
-  total: number
-  page: number
-  size: number
-}
-
-export function buildCommonMessageQuery(
-  orderBy: string | null,
-  statuses: (string | null)[],
-  since: string | null,
-  until: string | null
-): string {
-  let path = ''
-  // Order results
-  if (orderBy) {
-    path = path + `&order_by=${orderBy}`
-  }
-  // Filter by since-until if it exists
-  path = path + buildCommonDateRangeQuery(since, until)
-  // Filter by message status
-  for (const status of statuses) {
-    path = path + `&status=${status}`
-  }
-
-  return path
-}
 
 export default function () {
   const { $axios, $config } = useContext()

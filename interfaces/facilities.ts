@@ -1,11 +1,10 @@
-import { Message } from './messages'
-
 interface FacilityLinks {
   self: string
   errorsHistory: string
+  patientsLatestErrors: string
 }
 
-export interface FacilityStatisticsSummary {
+export interface FacilityStatistics {
   lastUpdated: string
   totalPatients: number
   patientsReceivingMessages: number
@@ -13,16 +12,19 @@ export interface FacilityStatisticsSummary {
   patientsReceivingMessageError: number
 }
 
-export interface FacilityStatistics extends FacilityStatisticsSummary {
-  patientsLatestErrors: Message[]
-}
-
 export interface FacilitySummary {
   id: string
   description: string
-  statistics: FacilityStatisticsSummary
+  statistics: FacilityStatistics
   links: FacilityLinks
 }
+
+interface FacilityDataFlowSchema {
+  pkbIn: boolean
+  pkbOut: boolean
+  pkbMessageExclusions: string[]
+}
+
 export interface Facility extends FacilitySummary {
-  statistics: FacilityStatistics
+  dataFlow: FacilityDataFlowSchema
 }

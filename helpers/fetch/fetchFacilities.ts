@@ -1,4 +1,5 @@
 import { useContext } from '@nuxtjs/composition-api'
+import { buildCommonMessageQuery, MessagePage } from './common'
 import { FacilitySummary, Facility } from '~/interfaces/facilities'
 import { HistoryItem } from '~/interfaces/common'
 
@@ -28,5 +29,17 @@ export default function () {
     return (await $axios.$get(facility.links.errorsHistory)) as HistoryItem[]
   }
 
-  return { fetchFacilitiesList, fetchFacility, fetchFacilityErrorsHistory }
+  async function fetchFacilityPatientsLatestErrorsPage(
+    facility: Facility,
+    page: number,
+    size: number,
+    orderBy: string | null
+  ): Promise<MessagePage> {
+    let path = `${facility.links.patientsLatestErrors}?page=${page}&size=${size}&sort_by=received`
+    // Filter by status and date
+    path = path + buildCommonMessageQuery(orderBy, null, null, null)
+    return (await $axios.$get(path)) as MessagePage
+  }
+
+  return { fetchFacilitiesList, fetchFacility, fetchFacilityErrorsHistory, fetchFacilityPatientsLatestErrorsPage }
 }

@@ -1,3 +1,12 @@
+import { Message } from '~/interfaces/messages'
+
+export interface MessagePage {
+  items: Message[]
+  total: number
+  page: number
+  size: number
+}
+
 export function buildCommonDateRangeQuery(since: string | null, until: string | null): string {
   let path = ''
   // Filter by since if it exists
@@ -12,5 +21,28 @@ export function buildCommonDateRangeQuery(since: string | null, until: string | 
     // In this case we want to only show that one day, not a dateRange
     path = path + `&until=${encodeURIComponent(since)}`
   }
+  return path
+}
+
+export function buildCommonMessageQuery(
+  orderBy: string | null,
+  statuses: (string | null)[] | null,
+  since: string | null,
+  until: string | null
+): string {
+  let path = ''
+  // Order results
+  if (orderBy) {
+    path = path + `&order_by=${orderBy}`
+  }
+  // Filter by since-until if it exists
+  path = path + buildCommonDateRangeQuery(since, until)
+  // Filter by message status
+  if (statuses) {
+    for (const status of statuses) {
+      path = path + `&status=${status}`
+    }
+  }
+
   return path
 }

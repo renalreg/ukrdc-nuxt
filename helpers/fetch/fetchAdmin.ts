@@ -1,5 +1,5 @@
 import { useContext } from '@nuxtjs/composition-api'
-import { buildCommonMessageQuery } from './fetchMessages'
+import { buildCommonMessageQuery } from './common'
 import { HistoryItem } from '~/interfaces/common'
 import { AdminCounts } from '~/interfaces/admin'
 
