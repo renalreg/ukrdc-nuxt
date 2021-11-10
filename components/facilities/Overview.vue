@@ -109,7 +109,7 @@
             <TextL1>Records where the most recent message received failed to process due to errors.</TextL1>
           </GenericCardHeader>
           <ul class="divide-y divide-gray-200">
-            <div v-for="item in errorMessagesPage" :key="item.id" :item="item" class="hover:bg-gray-50">
+            <div v-for="item in errorMessages" :key="item.id" :item="item" class="hover:bg-gray-50">
               <NuxtLink :to="`/messages/${item.id}`">
                 <MessagesListItem :item="item" />
               </NuxtLink>
@@ -118,12 +118,12 @@
           <GenericPaginator
             class="bg-white border-t border-gray-200"
             :jump-to-top="false"
-            :page="errorMessagesPageNumber"
-            :size="errorMessagesPageSize"
-            :total="facility.statistics.patientsReceivingMessageError"
-            @next="errorMessagesPageNumber++"
-            @prev="errorMessagesPageNumber--"
-            @jump="errorMessagesPageNumber = $event"
+            :page="errorMessagesPage"
+            :size="errorMessagesSize"
+            :total="errorMessagesTotal"
+            @next="errorMessagesPage++"
+            @prev="errorMessagesPage--"
+            @jump="errorMessagesPage = $event"
           />
         </GenericCard>
       </div>
@@ -132,7 +132,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useRouter } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref, useRouter, watch } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/helpers/utils/dateUtils'
 
@@ -159,11 +159,12 @@ export default defineComponent({
   },
   setup(props) {
     const router = useRouter()
-    const { fetchFacility, fetchFacilityErrorsHistory } = fetchFacilities()
+    const { fetchFacility, fetchFacilityErrorsHistory, fetchFacilityPatientsLatestErrorsPage } = fetchFacilities()
 
     const facility = ref<Facility>()
     const facilityErrorsHistory = ref<HistoryItem[]>()
 
+    // Computed string for statistics last updated time
     const lastUpdatedString = computed(() => {
       if (!facility.value) {
         return ''
@@ -172,17 +173,10 @@ export default defineComponent({
     })
 
     // Failing NIs data
-    const errorMessagesPageNumber = ref(1)
-    const errorMessagesPageSize = ref(5)
-
-    const errorMessagesPage = computed((): Message[] => {
-      if (!facility.value || !facility.value?.statistics.patientsLatestErrors) {
-        return []
-      }
-      const start = (errorMessagesPageNumber.value - 1) * errorMessagesPageSize.value
-      const end = start + errorMessagesPageSize.value
-      return facility.value?.statistics.patientsLatestErrors.slice(start, end)
-    })
+    const errorMessages = ref([] as Message[])
+    const errorMessagesPage = ref(1)
+    const errorMessagesSize = ref(5)
+    const errorMessagesTotal = ref(0)
 
     // History plot click handler
 
@@ -199,19 +193,50 @@ export default defineComponent({
       })
     }
 
-    onMounted(async () => {
-      facility.value = await fetchFacility(props.code)
-      facilityErrorsHistory.value = await fetchFacilityErrorsHistory(facility.value)
-      console.log()
+    // Data fetching
+
+    async function updateErrorMessages(): Promise<void> {
+      if (facility.value) {
+        const errorsPage = await fetchFacilityPatientsLatestErrorsPage(
+          facility.value,
+          errorMessagesPage.value,
+          errorMessagesSize.value,
+          null
+        )
+        // Set related errors
+        errorMessages.value = errorsPage.items
+        errorMessagesPage.value = errorsPage.page
+        errorMessagesSize.value = errorsPage.size
+        errorMessagesTotal.value = errorsPage.total
+      }
+    }
+
+    async function updateErrorsHistory(): Promise<void> {
+      if (facility.value) {
+        facilityErrorsHistory.value = await fetchFacilityErrorsHistory(facility.value)
+      }
+    }
+
+    onMounted(() => {
+      fetchFacility(props.code).then((response) => {
+        facility.value = response
+        updateErrorMessages()
+        updateErrorsHistory()
+      })
+    })
+
+    watch(errorMessagesPage, () => {
+      updateErrorMessages()
     })
 
     return {
       lastUpdatedString,
       facility,
       facilityErrorsHistory,
+      errorMessages,
       errorMessagesPage,
-      errorMessagesPageNumber,
-      errorMessagesPageSize,
+      errorMessagesSize,
+      errorMessagesTotal,
       historyPointClickHandler,
     }
   },

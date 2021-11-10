@@ -1,6 +1,5 @@
 import { ref, useContext } from '@nuxtjs/composition-api'
-import { buildCommonMessageQuery, MessagePage } from './fetchMessages'
-import { buildCommonDateRangeQuery } from './common'
+import { buildCommonMessageQuery, MessagePage, buildCommonDateRangeQuery } from './common'
 import { WorkItem, WorkItemExtended } from '~/interfaces/workitem'
 
 interface WorkItemPage {

@@ -1,5 +1,5 @@
 import { useContext } from '@nuxtjs/composition-api'
-import { buildCommonMessageQuery, MessagePage } from './fetchMessages'
+import { buildCommonMessageQuery, MessagePage } from './common'
 import { MasterRecord, MasterRecordStatistics } from '~/interfaces/masterrecord'
 import { MinimalMessage } from '~/interfaces/messages'
 import { PatientRecordSummary } from '~/interfaces/patientrecord'
