@@ -102,6 +102,7 @@
               <div v-else>No</div>
             </TextDd>
           </GenericDi>
+          <!-- TODO: Add this back in once PKB in is relevant
           <GenericDi>
             <TextDt>
               Receiving data from <a href="https://patientsknowbest.com/" target="blank">Patients Know Best</a>
@@ -114,6 +115,7 @@
               <div v-else>No</div>
             </TextDd>
           </GenericDi>
+          -->
           <GenericDi>
             <TextDt>
               Excluding data from <a href="https://patientsknowbest.com/" target="blank">Patients Know Best</a>
