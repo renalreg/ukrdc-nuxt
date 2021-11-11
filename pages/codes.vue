@@ -16,7 +16,7 @@
     </div>
 
     <div>
-      <SearchBar v-model="searchboxString" :focus="false" />
+      <SearchBar v-model="searchboxString" :focus="false" :show-button="false" />
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">

@@ -32,7 +32,7 @@
           </form>
         </div>
       </div>
-      <GenericButton @click="$emit('submit')">Search</GenericButton>
+      <GenericButton v-if="showButton" @click="$emit('submit')">Search</GenericButton>
     </div>
   </div>
 </template>
@@ -50,6 +50,11 @@ export default defineComponent({
       type: Boolean,
       required: false,
       default: false,
+    },
+    showButton: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
   },
 })
