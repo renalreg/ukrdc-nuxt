@@ -1,7 +1,7 @@
 <template>
   <LoadingIndicator v-if="!facilities"></LoadingIndicator>
   <div v-else>
-    <SearchBar v-model="searchboxString" :focus="false" />
+    <SearchBar v-model="searchboxString" :focus="false" :show-button="false" />
     <GenericTable>
       <thead class="bg-gray-50">
         <tr>
@@ -35,11 +35,7 @@
           <th scope="col" class="px-6 py-3 text-left">
             <div class="flex">
               <TextTh>Sending to PKB</TextTh>
-              <IconDynamicSort
-                :active="sortBy === 'data_flow.pkb_out'"
-                :asc="isAscending['data_flow.pkb_out']"
-                @toggle="toggleSort('data_flow.pkb_out')"
-              />
+              <IconDynamicFilter :active="filterByPkbOut" @toggle="filterByPkbOut = !filterByPkbOut" />
             </div>
           </th>
         </tr>
@@ -94,12 +90,20 @@ export default defineComponent({
     const facilities = ref<Facility[]>()
     const searchboxString = ref('')
 
+    const filterByPkbOut = ref(false)
+
     const filteredFacilities = computed(() => {
       if (!facilities.value) return []
-      return facilities.value.filter(
-        (option) =>
-          option.id.toLowerCase().startsWith(searchboxString.value.toLowerCase()) ||
-          option.description.toLowerCase().startsWith(searchboxString.value.toLowerCase())
+      return (
+        facilities.value
+          // Filter by search term
+          .filter(
+            (option) =>
+              option.id.toLowerCase().startsWith(searchboxString.value.toLowerCase()) ||
+              option.description.toLowerCase().startsWith(searchboxString.value.toLowerCase())
+          )
+          // Filter by additional filters, such as PkbOut
+          .filter((option) => (filterByPkbOut.value ? option.dataFlow.pkbOut : true))
       )
     })
 
@@ -135,6 +139,7 @@ export default defineComponent({
     return {
       facilities,
       searchboxString,
+      filterByPkbOut,
       filteredFacilities,
       isAscending,
       sortBy,
