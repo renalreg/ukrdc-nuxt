@@ -29,9 +29,6 @@ export default {
     { ssr: false, src: '~/plugins/vue-clickaway.ts' },
   ],
 
-  // Disable built-in loading bar
-  loading: false,
-
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
