@@ -1,13 +1,13 @@
 import { computed, onMounted, ref } from '@nuxtjs/composition-api'
 import fetchFacilities from './fetch/fetchFacilities'
 import useQuery from '~/helpers/query/useQuery'
-import { FacilitySummary } from '~/interfaces/facilities'
+import { Facility } from '~/interfaces/facilities'
 
 export default function () {
   const { stringQuery } = useQuery()
   const { fetchFacilitiesList } = fetchFacilities()
 
-  const facilities = ref([] as FacilitySummary[])
+  const facilities = ref([] as Facility[])
   const facilityIds = computed(() => {
     return facilities.value.map(({ id }) => id)
   })

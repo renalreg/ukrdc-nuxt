@@ -12,19 +12,17 @@ export interface FacilityStatistics {
   patientsReceivingMessageError: number
 }
 
-export interface FacilitySummary {
-  id: string
-  description: string
-  statistics: FacilityStatistics
-  links: FacilityLinks
-}
-
 interface FacilityDataFlowSchema {
   pkbIn: boolean
   pkbOut: boolean
   pkbMessageExclusions: string[]
 }
 
-export interface Facility extends FacilitySummary {
+export interface Facility {
+  id: string
+  description: string
+  statistics: FacilityStatistics
   dataFlow: FacilityDataFlowSchema
+
+  links: FacilityLinks
 }

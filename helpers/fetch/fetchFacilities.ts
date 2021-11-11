@@ -1,6 +1,6 @@
 import { useContext } from '@nuxtjs/composition-api'
 import { buildCommonMessageQuery, MessagePage } from './common'
-import { FacilitySummary, Facility } from '~/interfaces/facilities'
+import { Facility } from '~/interfaces/facilities'
 import { HistoryItem } from '~/interfaces/common'
 
 export default function () {
@@ -10,7 +10,7 @@ export default function () {
     sortBy: string | null = null,
     orderBy: string | null = null,
     includeEmpty: boolean = true
-  ): Promise<FacilitySummary[]> {
+  ): Promise<Facility[]> {
     let path = `${$config.apiBase}/v1/facilities/?include_empty=${includeEmpty}`
     if (sortBy) {
       path = path + `&sort_by=${sortBy}`
@@ -18,7 +18,7 @@ export default function () {
     if (orderBy) {
       path = path + `&order_by=${orderBy}`
     }
-    return (await $axios.$get(path)) as FacilitySummary[]
+    return (await $axios.$get(path)) as Facility[]
   }
 
   async function fetchFacility(code: string): Promise<Facility> {

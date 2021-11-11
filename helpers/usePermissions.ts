@@ -26,7 +26,19 @@ export default function () {
     return []
   }
 
+  function getFacilities(): string[] {
+    if ($auth.loggedIn && $auth.user) {
+      const permissions = getPermissions()
+      return permissions
+        .filter((option) => option.toLowerCase().startsWith('ukrdc:unit:') && option.toLowerCase() !== 'ukrdc:unit:*')
+        .map((option) => option.replace('ukrdc:unit:', ''))
+    }
+    return []
+  }
+
   const isAdmin = computed(() => hasPermission('ukrdc:unit:*'))
 
-  return { hasPermission, getPermissions, isAdmin }
+  const hasMultipleFacilities = computed(() => getFacilities().length > 1 || isAdmin.value)
+
+  return { hasPermission, getPermissions, getFacilities, hasMultipleFacilities, isAdmin }
 }
