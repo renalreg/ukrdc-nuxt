@@ -1,7 +1,7 @@
 <template>
   <li>
-    <div class="min-w-0 flex items-center">
-      <div class="flex-1 pl-4 py-4 sm:pl-6 min-w-0 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:gap-4 w-full">
+    <div class="min-w-0 flex items-center gap-2">
+      <div class="flex-1 pl-4 py-4 sm:pl-6 min-w-0 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 w-full">
         <!-- Name, DoB, gender -->
         <div>
           <LinkSendingFacility class="font-medium" :code="item.sendingfacility" />
@@ -16,9 +16,9 @@
           </TextP>
         </div>
         <!-- MRN (medium breakpoint only) -->
-        <div class="hidden md:block">
-          <TextL1>{{ firstMRN.label }} Number</TextL1>
-          <TextP class="mt-2">
+        <div class="hidden sm:block">
+          <TextL1 class="truncate">{{ firstMRN.label }} Number</TextL1>
+          <TextP class="mt-2 truncate">
             {{ firstMRN.number }}
           </TextP>
         </div>
