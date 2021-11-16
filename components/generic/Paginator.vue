@@ -13,7 +13,7 @@
     </div>
     <div class="flex-1 flex gap-1 items-center justify-between sm:justify-end">
       <GenericButton :class="{ invisible: page <= 1 }" @click="prev()"> Previous </GenericButton>
-      <div v-if="showPages">
+      <div v-if="showPages" class="flex gap-1 items-center justify-between sm:justify-end">
         <div v-for="(pageLink, index) in paginationElements" :key="'paginator-' + index">
           <span v-if="pageLink === '...'" class="hidden lg:block font-medium px-2"> ... </span>
           <GenericButton
@@ -69,6 +69,9 @@ export default defineComponent({
 
   setup(props, { emit }) {
     function pagination(current: number, total: number): Pages {
+      if (total <= 1) {
+        return []
+      }
       const center: Pages = [current - 2, current - 1, current, current + 1, current + 2]
       const filteredCenter = center.filter((p) => p > 1 && p < total)
 
