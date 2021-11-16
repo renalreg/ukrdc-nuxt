@@ -1,7 +1,7 @@
 <template>
   <li>
-    <div class="min-w-0 flex-1 flex items-center">
-      <div class="px-4 py-4 sm:px-6 min-w-0 grid grid-cols-3 lg:grid-cols-4 md:gap-4 w-full">
+    <div class="min-w-0 flex items-center">
+      <div class="flex-1 pl-4 py-4 sm:pl-6 min-w-0 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:gap-4 w-full">
         <!-- Name, DoB, gender -->
         <div>
           <LinkSendingFacility class="font-medium" :code="item.sendingfacility" />
@@ -15,6 +15,13 @@
             <b class="ml-1"> {{ formatGenderCharacter(item.patient.gender) }}</b>
           </TextP>
         </div>
+        <!-- MRN (medium breakpoint only) -->
+        <div class="hidden md:block">
+          <TextL1>{{ firstMRN.label }} Number</TextL1>
+          <TextP class="mt-2">
+            {{ firstMRN.number }}
+          </TextP>
+        </div>
         <!-- UKRDC ID (large breakpoint only) -->
         <div class="hidden lg:block">
           <TextL1>UKRDC ID</TextL1>
@@ -22,24 +29,22 @@
             {{ item.ukrdcid }}
           </TextP>
         </div>
-        <!-- Record links -->
-        <div class="flex items-center gap-2">
-          <div class="flex flex-grow flex-col-reverse xl:flex-row gap-2">
-            <GenericButtonMini class="flex-1 h-8 truncate" @click="showDetail = !showDetail">
-              {{ showDetail ? 'Hide Record' : 'Peek Record' }}
-            </GenericButtonMini>
-            <GenericButtonMini :to="`/patientrecords/${item.pid}`" class="flex-1 h-8 truncate">
-              Open Record
-            </GenericButtonMini>
-          </div>
-          <div class="flex-grow-0 pl-2">
-            <PatientrecordsManageMenu
-              :show-pv-sync="showPvSync"
-              :show-radar-sync="showRadarSync"
-              :item="item"
-              @deleted="$emit('deleted')"
-            />
-          </div>
+      </div>
+      <!-- Record links -->
+      <div class="flex-shrink-0 flex items-center gap-2 pr-2">
+        <div class="flex flex-grow flex-col-reverse xl:flex-row gap-2">
+          <GenericButtonMini class="h-8 truncate" @click="showDetail = !showDetail">
+            {{ showDetail ? 'Hide Record' : 'Peek Record' }}
+          </GenericButtonMini>
+          <GenericButtonMini :to="`/patientrecords/${item.pid}`" class="h-8 truncate"> Open Record </GenericButtonMini>
+        </div>
+        <div class="flex-grow-0">
+          <PatientrecordsManageMenu
+            :show-pv-sync="showPvSync"
+            :show-radar-sync="showRadarSync"
+            :item="item"
+            @deleted="$emit('deleted')"
+          />
         </div>
       </div>
     </div>
@@ -51,10 +56,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
 import { formatDate } from '@/helpers/utils/dateUtils'
 import { formatGenderCharacter } from '@/helpers/utils/codeUtils'
 import { PatientRecordSummary } from '@/interfaces/patientrecord'
+import { PatientNumber } from '~/interfaces/patient'
+
+interface localNumber {
+  label: string
+  number: string
+}
 
 export default defineComponent({
   props: {
@@ -73,9 +84,24 @@ export default defineComponent({
       default: false,
     },
   },
-  setup() {
+  setup(props) {
     const showDetail = ref(false)
-    return { showDetail, formatDate, formatGenderCharacter }
+
+    const firstMRN = computed<localNumber>(() => {
+      const mrn = props.item.patient.numbers.find((i: PatientNumber) => i.numbertype === 'MRN')
+      if (mrn) {
+        return {
+          label: mrn.organization === 'LOCALHOSP' ? 'Hospital' : mrn.organization,
+          number: mrn.patientid,
+        }
+      }
+      return {
+        label: '',
+        number: '',
+      }
+    })
+
+    return { showDetail, formatDate, formatGenderCharacter, firstMRN }
   },
 })
 </script>
