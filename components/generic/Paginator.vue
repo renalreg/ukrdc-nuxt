@@ -13,16 +13,18 @@
     </div>
     <div class="flex-1 flex gap-1 items-center justify-between sm:justify-end">
       <GenericButton :class="{ invisible: page <= 1 }" @click="prev()"> Previous </GenericButton>
-      <div v-for="(pageLink, index) in paginationElements" :key="'paginator-' + index">
-        <span v-if="pageLink === '...'" class="hidden lg:block font-medium px-2"> ... </span>
-        <GenericButton
-          v-else
-          :colour="pageLink === page ? 'indigo' : 'white'"
-          class="hidden lg:block"
-          @click="jump(pageLink)"
-        >
-          {{ pageLink }}
-        </GenericButton>
+      <div v-if="showPages">
+        <div v-for="(pageLink, index) in paginationElements" :key="'paginator-' + index">
+          <span v-if="pageLink === '...'" class="hidden lg:block font-medium px-2"> ... </span>
+          <GenericButton
+            v-else
+            :colour="pageLink === page ? 'indigo' : 'white'"
+            class="hidden lg:block"
+            @click="jump(pageLink)"
+          >
+            {{ pageLink }}
+          </GenericButton>
+        </div>
       </div>
       <GenericButton :class="{ invisible: page * size >= total }" @click="next()"> Next </GenericButton>
     </div>
@@ -54,6 +56,11 @@ export default defineComponent({
       default: 'main',
     },
     jumpToTop: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+    showPages: {
       type: Boolean,
       required: false,
       default: true,
