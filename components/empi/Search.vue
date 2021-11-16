@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mb-4">
-      <SearchBar v-model="searchboxString" :focus="true" @submit="searchSubmit" />
+      <SearchBar v-model="searchboxString" :focus="true" :show-button="false" @submit="searchSubmit" />
     </div>
 
     <div v-if="masterrecords.length > 0">

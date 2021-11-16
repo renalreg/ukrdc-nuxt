@@ -10,12 +10,34 @@
             <dl>
               <GenericCardDt>Total UKRDC Records</GenericCardDt>
               <dd>
-                <TextHc>{{ counts.UKRDCRecords }}</TextHc>
+                <h1 class="text-2xl font-semibold text-green-600">{{ counts.UKRDCRecords }}</h1>
               </dd>
             </dl>
           </div>
         </div>
         <div class="bg-gray-50 text-gray-500 px-4 py-2 text-sm">Total distinct UKRDC IDs in the database</div>
+      </GenericCard>
+
+      <GenericCard>
+        <div class="flex items-center p-4">
+          <div class="flex-shrink-0">
+            <IconLink />
+          </div>
+          <div class="ml-5 w-0 flex-1">
+            <dl>
+              <GenericCardDt>Open Work Items</GenericCardDt>
+              <dd>
+                <h1
+                  class="text-2xl font-semibold"
+                  :class="counts.openWorkitems > 0 ? 'text-yellow-600' : 'text-green-600'"
+                >
+                  {{ counts.openWorkitems }}
+                </h1>
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <div class="bg-gray-50 text-gray-500 px-4 py-2 text-sm">Work Items currently open or WIP</div>
       </GenericCard>
 
       <GenericCard>
@@ -40,28 +62,6 @@
         <div class="bg-gray-50 text-gray-500 px-4 py-2 text-sm">
           Records with active data files currently failing due to errors
         </div>
-      </GenericCard>
-
-      <GenericCard>
-        <div class="flex items-center p-4">
-          <div class="flex-shrink-0">
-            <IconLink />
-          </div>
-          <div class="ml-5 w-0 flex-1">
-            <dl>
-              <GenericCardDt>Open Work Items</GenericCardDt>
-              <dd>
-                <h1
-                  class="text-2xl font-semibold"
-                  :class="counts.openWorkitems > 0 ? 'text-yellow-600' : 'text-green-600'"
-                >
-                  {{ counts.openWorkitems }}
-                </h1>
-              </dd>
-            </dl>
-          </div>
-        </div>
-        <div class="bg-gray-50 text-gray-500 px-4 py-2 text-sm">Work Items currently open or WIP</div>
       </GenericCard>
     </div>
     <!-- Graphs -->

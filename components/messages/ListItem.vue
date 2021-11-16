@@ -4,9 +4,9 @@
       <!-- Heading -->
       <div class="col-span-5 lg:col-span-3">
         <div class="truncate">
-          <TextL1c class="md:inline truncate">
+          <TextL1 class="md:inline truncate">
             {{ item.filename || 'No filename found' }}
-          </TextL1c>
+          </TextL1>
           <TextL1 class="md:inline truncate">
             {{ item.channel ? `on ${item.channel}` : '' }}
           </TextL1>

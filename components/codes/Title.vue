@@ -1,9 +1,9 @@
 <template>
   <div>
-    <TextL1 class="capitalize truncate inline"> {{ codingStandard }} / </TextL1>
-    <TextL1c class="capitalize truncate inline">
+    <p class="font-medium text-gray-500 capitalize truncate inline">{{ codingStandard }} /</p>
+    <p class="font-medium text-gray-800 capitalize truncate inline">
       {{ code }}
-    </TextL1c>
+    </p>
   </div>
 </template>
 

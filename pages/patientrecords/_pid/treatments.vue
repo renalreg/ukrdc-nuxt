@@ -54,7 +54,7 @@
                   <TextP v-if="treatment.isDischarge" class="inline">
                     Discharged from
                     {{ treatment.admitReasonDesc ? treatment.admitReasonDesc : treatment.admitReasonCode }} at
-                    <TextL1c class="inline">{{ treatment.healthCareFacilityCode }}</TextL1c>
+                    <TextL1 class="inline">{{ treatment.healthCareFacilityCode }}</TextL1>
                     {{
                       treatment.dischargeReasonDesc
                         ? `(${treatment.dischargeReasonDesc})`
@@ -65,7 +65,7 @@
                   </TextP>
                   <TextP v-else class="inline">
                     {{ treatment.time }} - Admitted to
-                    <TextL1c class="inline">{{ treatment.healthCareFacilityCode }}</TextL1c> for
+                    <TextL1 class="inline">{{ treatment.healthCareFacilityCode }}</TextL1> for
                     {{ treatment.admitReasonDesc ? treatment.admitReasonDesc : treatment.admitReasonCode }}
                   </TextP>
                 </div>

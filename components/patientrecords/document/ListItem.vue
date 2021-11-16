@@ -4,9 +4,9 @@
       <!-- File -->
       <div class="col-span-1 lg:col-span-2">
         <div class="truncate">
-          <TextL1c class="md:inline truncate">
+          <TextL1 class="md:inline truncate">
             {{ item.documentname || item.id }}
-          </TextL1c>
+          </TextL1>
           <TextL1 class="md:inline truncate">
             {{ item.channel ? `on ${item.channel}` : '' }}
           </TextL1>
