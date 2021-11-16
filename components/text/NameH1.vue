@@ -1,7 +1,7 @@
 <template>
   <span>
     <TextH1 class="inline capitalize">{{ forename.toLowerCase() }}</TextH1>
-    <TextH1 class="inline capitalize text-indigo-600">{{ surname.toLowerCase() }}</TextH1>
+    <TextH1 class="inline capitalize italic">{{ surname.toLowerCase() }}</TextH1>
   </span>
 </template>
 

@@ -3,7 +3,7 @@
     <TextH2 class="inline capitalize" :class="highlight.includes('givenname') ? highlightClasses : []">{{
       forename.toLowerCase()
     }}</TextH2>
-    <TextH2 class="inline capitalize" :class="highlight.includes('surname') ? highlightClasses : ['text-indigo-600']">{{
+    <TextH2 class="inline capitalize italic" :class="highlight.includes('surname') ? highlightClasses : []">{{
       surname.toLowerCase()
     }}</TextH2>
   </span>
