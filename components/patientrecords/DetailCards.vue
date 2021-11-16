@@ -85,9 +85,7 @@
             <TextP v-if="item.county">
               {{ item.county }}
             </TextP>
-            <TextP v-if="item.postcode">
-              {{ item.postcode }}
-            </TextP>
+            <LinkPostCode v-if="item.postcode" :code="item.postcode" />
             <TextP v-if="item.countryDescription">
               {{ item.countryDescription }}
             </TextP>
@@ -175,7 +173,7 @@
             <TextB>{{ info.type }} Information</TextB>
             <TextP>{{ info.gpname || 'GP name not known' }}</TextP>
             <TextP>{{ info.street }}</TextP>
-            <TextP>{{ info.postcode }}</TextP>
+            <LinkPostCode v-if="info.postcode" :code="info.postcode" />
             <TextP>Contact {{ info.contactvalue }}</TextP>
           </GenericCardMini>
         </li>
@@ -184,7 +182,7 @@
             <TextB>GP Information</TextB>
             <TextP>{{ record.patient.familydoctor.gpname || 'GP name not known' }}</TextP>
             <TextP>{{ record.patient.familydoctor.street }}</TextP>
-            <TextP>{{ record.patient.familydoctor.postcode }}</TextP>
+            <LinkPostCode v-if="record.patient.familydoctor.postcode" :code="record.patient.familydoctor.postcodee" />
             <TextP>Contact {{ record.patient.familydoctor.contactvalue }}</TextP>
           </GenericCardMini>
         </li>
