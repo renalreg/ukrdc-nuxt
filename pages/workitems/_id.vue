@@ -9,7 +9,13 @@
 
       <div class="flex justify-end">
         <GenericButton @click="addCommentModal.hide()">Cancel</GenericButton>
-        <GenericButton colour="indigo" class="ml-2" type="submit" @click="updateWorkItemComment()">
+        <GenericButton
+          :disabled="!customComment"
+          colour="indigo"
+          class="ml-2"
+          type="submit"
+          @click="updateWorkItemComment()"
+        >
           Save
         </GenericButton>
       </div>
@@ -29,7 +35,13 @@
 
       <div class="flex justify-end">
         <GenericButton @click="closeModal.hide()"> Cancel </GenericButton>
-        <GenericButton type="submit" class="ml-3" colour="red" @click="handleCloseWorkItem()">
+        <GenericButton
+          :disabled="!customComment"
+          type="submit"
+          class="ml-3"
+          colour="red"
+          @click="handleCloseWorkItem()"
+        >
           Close Work Item
         </GenericButton>
       </div>
