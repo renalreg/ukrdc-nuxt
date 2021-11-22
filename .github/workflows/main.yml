@@ -1,11 +1,8 @@
 name: Publish Docker image
 
 on:
-  workflow_dispatch:
-    inputs:
-      deployment_env:
-        description: 'Deployment environment'
-        default: 'staging'
+  push:
+  pull_request:
 
 jobs:
   test:
@@ -30,11 +27,17 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
 
-    environment: ${{github.event.inputs.deployment_env}}
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ghcr.io/renalreg/ukrdc-nuxt
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
@@ -46,12 +49,13 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          push: true
+          push: ${{ github.event_name != 'pull_request' }}
           build-args: |
             GITHUB_SHA=${{ github.sha }}
             GITHUB_REF=${{ github.ref }}
             SENTRY_DSN=${{ secrets.SENTRY_DSN }}
-          tags: ghcr.io/renalreg/ukrdc-nuxt:${{github.event.inputs.deployment_env}}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
 
       - name: Create Sentry release
         uses: getsentry/action-release@v1
