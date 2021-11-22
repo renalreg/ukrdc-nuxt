@@ -1,7 +1,7 @@
 <template>
   <div>
     <p class="font-medium text-gray-500 capitalize truncate inline">{{ codingStandard }} /</p>
-    <p class="font-medium text-gray-800 capitalize truncate inline">
+    <p class="font-medium text-gray-800 truncate inline">
       {{ code }}
     </p>
   </div>
