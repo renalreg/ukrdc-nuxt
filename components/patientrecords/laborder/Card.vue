@@ -5,8 +5,11 @@
         {{ item.id }}
       </TextH3>
       <TextP class="truncate">
-        Collected
-        {{ formatDate(item.specimenCollectedTime, (t = true)) }}
+        {{
+          item.specimenCollectedTime
+            ? `Collected ${formatDate(item.specimenCollectedTime, (t = true))}`
+            : 'No collection time found'
+        }}
       </TextP>
     </div>
     <div class="flex-shrink-0">
