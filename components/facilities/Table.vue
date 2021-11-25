@@ -82,7 +82,14 @@ interface IsAscending {
 }
 
 export default defineComponent({
-  setup() {
+  props: {
+    includeEmpty: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
+  },
+  setup(props) {
     const { fetchFacilitiesList } = fetchFacilities()
 
     // Facility list and filters
@@ -119,7 +126,7 @@ export default defineComponent({
     async function fetchTable() {
       const currentisAscending: null | boolean = isAscending.value[sortBy.value || 'default'] || null
       const currentOrderBy: string = currentisAscending ? 'asc' : 'desc'
-      facilities.value = await fetchFacilitiesList(sortBy.value, currentOrderBy, false)
+      facilities.value = await fetchFacilitiesList(sortBy.value, currentOrderBy, props.includeEmpty)
     }
 
     async function toggleSort(key: string) {
