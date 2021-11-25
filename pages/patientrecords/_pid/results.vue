@@ -63,7 +63,7 @@
             Order ID
           </th>
           <th scope="col" class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-            Entered On
+            Observation Time
           </th>
           <th scope="col" class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider"></th>
         </tr>
