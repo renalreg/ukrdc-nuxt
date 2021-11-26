@@ -6,14 +6,16 @@
       <thead class="bg-gray-50">
         <tr>
           <th scope="col" class="px-6 py-3 text-left">
-            <div class="flex">
+            <div class="flex items-center">
               <TextTh>Code</TextTh>
               <IconDynamicSort :active="sortBy === 'id'" :asc="isAscending['id']" @toggle="toggleSort('id')" />
             </div>
           </th>
-          <th scope="col" class="px-6 py-3 text-left hidden md:block"><TextTh>Name</TextTh></th>
+          <th scope="col" class="px-6 py-3 text-left hidden lg:table-cell">
+            <TextTh>Name</TextTh>
+          </th>
           <th scope="col" class="px-6 py-3 text-left">
-            <div class="flex">
+            <div class="flex items-center">
               <TextTh>Total Records</TextTh>
               <IconDynamicSort
                 :active="sortBy === 'statistics.total_patients'"
@@ -23,7 +25,7 @@
             </div>
           </th>
           <th scope="col" class="px-6 py-3 text-left">
-            <div class="flex">
+            <div class="flex items-center">
               <TextTh>Failing Records</TextTh>
               <IconDynamicSort
                 :active="sortBy === 'statistics.patients_receiving_message_error'"
@@ -33,7 +35,7 @@
             </div>
           </th>
           <th scope="col" class="px-6 py-3 text-left">
-            <div class="flex">
+            <div class="flex items-center">
               <TextTh>Sending to PKB</TextTh>
               <IconDynamicFilter :active="filterByPkbOut" @toggle="filterByPkbOut = !filterByPkbOut" />
             </div>
@@ -48,7 +50,7 @@
           @click="$emit('select', facility.id)"
         >
           <GenericTableCell class="font-medium text-gray-900">{{ facility.id }}</GenericTableCell>
-          <GenericTableCell class="hidden md:block">{{ facility.description }}</GenericTableCell>
+          <GenericTableCell class="hidden lg:table-cell max-w-sm truncate">{{ facility.description }}</GenericTableCell>
           <GenericTableCell>{{ facility.statistics.totalPatients }}</GenericTableCell>
           <GenericTableCell>
             <div class="flex items-center">
@@ -106,8 +108,8 @@ export default defineComponent({
           // Filter by search term
           .filter(
             (option) =>
-              option.id.toLowerCase().startsWith(searchboxString.value.toLowerCase()) ||
-              option.description.toLowerCase().startsWith(searchboxString.value.toLowerCase())
+              option.id.toLowerCase().includes(searchboxString.value.toLowerCase()) ||
+              option.description.toLowerCase().includes(searchboxString.value.toLowerCase())
           )
           // Filter by additional filters, such as PkbOut
           .filter((option) => (filterByPkbOut.value ? option.dataFlow.pkbOut : true))
