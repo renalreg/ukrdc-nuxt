@@ -4,10 +4,17 @@
       {{ item.serviceId }} ({{ item.serviceIdDescription }})
     </td>
     <td class="px-6 py-4 whitespace-nowrap text-gray-500">{{ item.value }} {{ item.valueUnits }}</td>
-    <td class="px-6 py-4 whitespace-nowrap text-gray-500 underline truncate">
-      <NuxtLink :to="{ query: { order_id: item.orderId } }">
+    <td class="flex gap-2 items-center px-6 py-4 whitespace-nowrap">
+      <GenericButtonRound
+        class="opacity-0 group-hover:opacity-100"
+        tooltip="Filter by this lab order"
+        label="Filter by this lab order"
+        :to="{ query: { order_id: item.orderId } }"
+        ><IconMiniFilter
+      /></GenericButtonRound>
+      <div class="text-gray-500 truncate">
         {{ item.orderId }}
-      </NuxtLink>
+      </div>
     </td>
     <td class="px-6 py-4 whitespace-nowrap text-gray-500">
       {{ item.observationTime ? formatDate(item.observationTime) : 'No Observation Time' }}
