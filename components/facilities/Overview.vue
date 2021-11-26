@@ -20,24 +20,26 @@
       <TextL2 class="mb-2 -mt-4 text-right"> Last updated {{ lastUpdatedString }} </TextL2>
       <!-- Basic stats -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-        <GenericCard>
-          <div class="flex items-center p-4">
-            <div class="flex-shrink-0">
-              <IconUsers />
+        <NuxtLink class="group" :to="{ path: `/masterrecords/`, query: { search: [`facility=${code}`, ''] } }">
+          <GenericCard>
+            <div class="flex items-center p-4">
+              <div class="flex-shrink-0">
+                <IconUsers />
+              </div>
+              <div class="ml-5 w-0 flex-1">
+                <dl>
+                  <GenericCardDt>Total Patients</GenericCardDt>
+                  <dd>
+                    <TextHc class="group-hover:underline">{{ facility.statistics.totalPatients }}</TextHc>
+                  </dd>
+                </dl>
+              </div>
             </div>
-            <div class="ml-5 w-0 flex-1">
-              <dl>
-                <GenericCardDt>Total Patients</GenericCardDt>
-                <dd>
-                  <TextHc>{{ facility.statistics.totalPatients }}</TextHc>
-                </dd>
-              </dl>
+            <div class="bg-gray-50 text-gray-500 px-4 py-2 text-sm">
+              Total patients ever stored in the UKRDC for this facility
             </div>
-          </div>
-          <div class="bg-gray-50 text-gray-500 px-4 py-2 text-sm">
-            Total patients ever stored in the UKRDC for this facility
-          </div>
-        </GenericCard>
+          </GenericCard>
+        </NuxtLink>
 
         <GenericCard>
           <div class="flex items-center p-4">
@@ -92,7 +94,8 @@
         <GenericDl>
           <GenericDi>
             <TextDt>
-              Sending data to <a href="https://patientsknowbest.com/" target="blank">Patients Know Best</a>
+              Sending data to
+              <a class="hover:underline" href="https://patientsknowbest.com/" target="blank">Patients Know Best</a>
             </TextDt>
             <TextDd>
               <div v-if="facility && facility.dataFlow.pkbOut" class="flex items-center gap-2">
@@ -105,7 +108,7 @@
           <!-- TODO: Add this back in once PKB in is relevant
           <GenericDi>
             <TextDt>
-              Receiving data from <a href="https://patientsknowbest.com/" target="blank">Patients Know Best</a>
+              Receiving data from <a class="hover:underline" href="https://patientsknowbest.com/" target="blank">Patients Know Best</a>
             </TextDt>
             <TextDd>
               <div v-if="facility && facility.dataFlow.pkbIn" class="flex items-center gap-2">
@@ -118,7 +121,8 @@
           -->
           <GenericDi>
             <TextDt>
-              Excluding data from <a href="https://patientsknowbest.com/" target="blank">Patients Know Best</a>
+              Excluding data from
+              <a class="hover:underline" href="https://patientsknowbest.com/" target="blank">Patients Know Best</a>
             </TextDt>
             <TextDd>
               <div v-if="facility && facility.dataFlow.pkbMessageExclusions.length > 0" class="flex items-center gap-2">
