@@ -134,6 +134,7 @@ export default defineComponent({
 html {
   font-size: 14px;
 }
+
 .tooltip {
   @apply text-sm;
   display: block !important;
