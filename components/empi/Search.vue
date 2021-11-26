@@ -26,6 +26,7 @@
           :page="page"
           :size="size"
           :total="total"
+          :show-pages="false"
           @next="page++"
           @prev="page--"
           @jump="page = $event"
