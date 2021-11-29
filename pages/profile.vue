@@ -78,11 +78,6 @@
           </span>
         </div>
       </div>
-      <div>
-        <NuxtLink to="/system" class="flex gap-1 items-center">
-          <TextH3 class="flex-shrink"> System Configuration</TextH3><IconMiniArrowRight class="flex-shrink mx-0" />
-        </NuxtLink>
-      </div>
     </div>
   </div>
 </template>

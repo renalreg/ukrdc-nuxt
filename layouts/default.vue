@@ -96,8 +96,8 @@
           </button>
         </div>
 
-        <div class="flex-shrink-0 flex mr-4">
-          <ProfileBadge :right-to-left="true" />
+        <div class="flex-shrink-0 flex mr-1">
+          <ProfileBadge :right-to-left="true" :top-to-bottom="true" />
         </div>
       </div>
 

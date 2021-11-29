@@ -6,21 +6,21 @@
         <IconMiniDotsVertical class="text-gray-400 hover:text-gray-800" />
       </GenericButtonRaw>
 
-      <GenericMenu class="top-0 right-0 z-10" :show="showMenu">
+      <GenericMenu class="top-0 right-0 z-10 mx-2 my-2" :show="showMenu">
         <GenericMenuItem @click="copyPID"> Copy PID </GenericMenuItem>
-        <GenericMenuDivider />
         <div v-if="hasPermission('ukrdc:mirth:write')">
+          <GenericMenuDivider />
           <GenericMenuItem v-if="showPvSync" @click="actionExport('pv')"> Sync Record to PatientView </GenericMenuItem>
           <GenericMenuItem v-if="showPvSync" @click="actionExport('docs')"> Sync Docs to PatientView </GenericMenuItem>
           <GenericMenuItem v-if="showPvSync" @click="actionExport('tests')">
             Sync Tests to PatientView
           </GenericMenuItem>
           <GenericMenuItem v-if="showRadarSync" @click="actionExport('RADAR')"> Sync Record to RADAR </GenericMenuItem>
-          <GenericMenuDivider v-if="showPvSync || showRadarSync" />
         </div>
-        <GenericMenuItem v-if="hasPermission('ukrdc:records:delete')" @click="showDeleteModal">
-          Delete Record
-        </GenericMenuItem>
+        <div v-if="hasPermission('ukrdc:records:delete')">
+          <GenericMenuDivider />
+          <GenericMenuItem @click="showDeleteModal"> Delete Record </GenericMenuItem>
+        </div>
       </GenericMenu>
     </div>
   </div>

@@ -1,13 +1,43 @@
 <template>
-  <span
-    class="block px-4 py-2 text-sm"
+  <router-link v-if="to" v-slot="{ navigate }" custom :to="to">
+    <span
+      class="menu-item-base"
+      :class="classes"
+      role="menuitem"
+      :tabindex="disabled ? -1 : 0"
+      @click="navigate"
+      @keydown.enter.prevent="navigate"
+    >
+      <slot />
+    </span>
+  </router-link>
+  <a
+    v-else-if="href"
+    :href="href"
+    :target="target"
+    class="menu-item-base"
     :class="classes"
     role="menuitem"
     :tabindex="disabled ? -1 : 0"
-    @click="$emit('click')"
-    @keydown.enter.prevent="$emit('click')"
   >
-    <slot></slot>
+    <slot />
+  </a>
+  <span
+    v-else
+    class="menu-item-base"
+    :class="classes"
+    role="menuitem"
+    :tabindex="disabled ? -1 : 0"
+    @click="
+      $emit('click')
+      $emit('close')
+    "
+    @keydown.enter.prevent="
+      $emit('click')
+      $emit('close')
+    "
+  >
+    <slot />
   </span>
 </template>
 
@@ -20,6 +50,21 @@ export default defineComponent({
       type: Boolean,
       required: false,
       default: false,
+    },
+    to: {
+      type: [Object, String],
+      required: false,
+      default: null,
+    },
+    href: {
+      type: String,
+      required: false,
+      default: null,
+    },
+    target: {
+      type: String,
+      required: false,
+      default: null,
     },
   },
 
@@ -43,3 +88,9 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="postcss">
+.menu-item-base {
+  @apply block px-4 py-2 text-sm;
+}
+</style>

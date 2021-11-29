@@ -73,7 +73,7 @@
       </nav>
     </div>
 
-    <div v-if="showProfile" class="flex-shrink-0 flex border-t border-gray-200 p-4">
+    <div v-if="showProfile" class="flex-shrink-0 flex border-t border-gray-200 p-1">
       <ProfileBadge />
     </div>
   </div>

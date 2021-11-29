@@ -1,6 +1,20 @@
 <template>
   <div>
-    <TextH1 class="mb-4">System Configuration</TextH1>
+    <TextH1 class="mb-4">Support</TextH1>
+    <TextH3>UK Renal Registry users</TextH3>
+    <TextP>
+      Please use the
+      <a href="https://renalregistry.atlassian.net/jira/software/c/projects/UI/issues" target="blank"
+        >Jira issue tracker</a
+      >
+      to report issues with this application.
+    </TextP>
+    <TextP>Where possible, please include the configuration report shown below.</TextP>
+
+    <TextH3 class="mt-2">External users</TextH3>
+    <TextP>Support lines for external users are yet to be confirmed. </TextP>
+
+    <TextH2 class="my-4">System Configuration</TextH2>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
       <GenericCard>
         <GenericCardHeader>
