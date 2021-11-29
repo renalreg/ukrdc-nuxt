@@ -50,6 +50,7 @@
 <script lang="ts">
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 import { formatDate } from '@/helpers/utils/dateUtils'
+import { MessageSummary } from '@/helpers/utils/messageUtils'
 import { Message } from '@/interfaces/messages'
 
 export default defineComponent({
@@ -66,15 +67,7 @@ export default defineComponent({
   },
   setup(props) {
     const itemDescription = computed(() => {
-      if (props.item.msgStatus === 'ERROR' || props.item.msgStatus === 'RESOLVED') {
-        return props.item.error ? props.item.error : 'No error message recorded'
-      }
-      if (props.item.msgStatus === 'STORED') {
-        return 'Stored without error'
-      }
-      if (props.item.msgStatus === 'RECEIVED') {
-        return 'Received without error'
-      }
+      return MessageSummary(props.item)
     })
     return { itemDescription, formatDate }
   },

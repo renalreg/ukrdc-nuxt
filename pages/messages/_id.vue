@@ -1,6 +1,8 @@
 <template>
   <div>
-    <GenericModalMaxSlot ref="errorSourceGenericModalMaxSlot">
+    <LoadingIndicatorFull :visible="downloadSourceInProgress || fetchSourceInProgress" />
+
+    <GenericModalMaxSlot ref="messageSourceGenericModalMaxSlot">
       <GenericCodeReader
         v-if="source && source.content"
         :content="source.content"
@@ -14,19 +16,14 @@
 
     <div class="mb-6 flex items-end gap-4">
       <div class="flex-grow">
-        <TextH1 v-if="error">
-          {{ error.msgStatus === 'ERROR' ? 'Error' : 'Message' }} {{ error.id }} from {{ error.facility }}
+        <TextH1 v-if="message">
+          {{ message.msgStatus === 'ERROR' ? 'Error' : 'Message' }} {{ message.id }} from {{ message.facility }}
         </TextH1>
         <SkeleText v-else class="h-8 w-1/4 mb-2" />
-        <TextL1 v-if="error" class="line-clamp-1">
-          {{ error.error }}
+        <TextL1 v-if="message" class="line-clamp-1">
+          {{ messageSummary }}
         </TextL1>
         <SkeleText v-else class="h-4 w-1/2" />
-      </div>
-      <div>
-        <GenericButton :disabled="fetchSourceInProgress" class="w-48" @click="fetchAndShowSource">{{
-          fetchSourceInProgress ? 'Loading...' : 'Show Source'
-        }}</GenericButton>
       </div>
     </div>
 
@@ -35,44 +32,58 @@
       <GenericCardContent>
         <GenericDl>
           <GenericDi>
-            <TextDt>Channel</TextDt>
-            <TextDd v-if="error">
-              {{ error.channel ? error.channel : error.channelId }}
+            <TextDt>Status</TextDt>
+            <TextDd v-if="message">
+              <MessagesStatusBadge class="flex-shrink mr-2" :message="message" />
             </TextDd>
             <SkeleText v-else class="h-6 w-full" />
           </GenericDi>
           <GenericDi>
             <TextDt>Recieved</TextDt>
-            <TextDd v-if="error"> {{ error.received ? formatDate(error.received) : 'Unknown' }}</TextDd>
-            <SkeleText v-else class="h-6 w-full" />
-          </GenericDi>
-          <GenericDi>
-            <TextDt>Filename</TextDt>
-            <TextDd v-if="error">
-              {{ error.filename }}
-            </TextDd>
+            <TextDd v-if="message"> {{ message.received ? formatDate(message.received) : 'Unknown' }}</TextDd>
             <SkeleText v-else class="h-6 w-full" />
           </GenericDi>
           <GenericDi>
             <TextDt>Facility</TextDt>
-            <LinkSendingFacility v-if="error" :code="error.facility" />
+            <LinkSendingFacility v-if="message" :code="message.facility" />
             <SkeleText v-else class="h-6 w-full" />
           </GenericDi>
+
           <GenericDi>
-            <TextDt>Status</TextDt>
-            <TextDd v-if="error">
-              {{ error.msgStatus }}
-            </TextDd>
-            <SkeleText v-else class="h-6 w-full" />
-          </GenericDi>
-          <GenericDi v-if="error && error.error" class="sm:col-span-2">
-            <TextDt>Error Message</TextDt>
-            <TextDd v-if="error">
-              {{ error.error }}
+            <TextDt>Channel</TextDt>
+            <TextDd v-if="message" class="flex items-center gap-1">
+              <span>{{ message.channel ? message.channel : message.channelId }}</span>
+              <GenericInfoIcon class="inline">
+                <p>This is the internal UKRDC channel responsible for processing this message.</p>
+                <p>The channel may be important when debugging unexpected errors.</p>
+              </GenericInfoIcon>
             </TextDd>
             <SkeleText v-else class="h-6 w-full" />
           </GenericDi>
         </GenericDl>
+      </GenericCardContent>
+    </GenericCard>
+
+    <GenericCard v-if="message" class="mb-4">
+      <GenericCardHeader>
+        <TextH2>Files</TextH2>
+      </GenericCardHeader>
+      <GenericCardContent>
+        <GenericCardMini class="w-2/3">
+          <GenericAttachment :filename="message.filename || `${message.facility}-{message.id}.txt`">
+            <TextLink @click="fetchAndShowSource"> View </TextLink>
+            <TextLink @click="downloadMessageSource(message)"> Download </TextLink>
+          </GenericAttachment>
+        </GenericCardMini>
+      </GenericCardContent>
+    </GenericCard>
+
+    <GenericCard v-if="message && message.error" class="mb-4">
+      <GenericCardHeader>
+        <TextH2>Error message</TextH2>
+      </GenericCardHeader>
+      <GenericCardContent>
+        <div class="whitespace-pre-wrap font-mono">{{ message.error.trim() }}</div>
       </GenericCardContent>
     </GenericCard>
 
@@ -120,16 +131,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useContext, useMeta, useRoute } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref, useContext, useMeta, useRoute } from '@nuxtjs/composition-api'
 
 import { ErrorSource, Message } from '@/interfaces/messages'
 import { ChannelMessage } from '@/interfaces/mirth'
 import { MasterRecord } from '@/interfaces/masterrecord'
 import { WorkItem } from '@/interfaces/workitem'
+import { modalInterface } from '~/interfaces/modal'
 
 import { formatDate } from '@/helpers/utils/dateUtils'
 import { isEmptyObject } from '@/helpers/utils/objectUtils'
-import { modalInterface } from '~/interfaces/modal'
+import { MessageSummary } from '@/helpers/utils/messageUtils'
 
 import usePermissions from '~/helpers/usePermissions'
 import fetchMessages from '~/helpers/fetch/fetchMessages'
@@ -146,6 +158,8 @@ export default defineComponent({
       fetchMessageMirth,
       fetchMessageSource,
       fetchSourceInProgress,
+      downloadMessageSource,
+      downloadSourceInProgress,
     } = fetchMessages()
 
     // Head
@@ -155,29 +169,36 @@ export default defineComponent({
 
     // Data refs
 
-    const error = ref<Message>()
+    const message = ref<Message>()
     const source = ref<ErrorSource>()
     const mirthMessage = ref<ChannelMessage | null | undefined>(undefined)
     const workItems = ref([] as WorkItem[])
     const masterRecords = ref([] as MasterRecord[])
 
+    const messageSummary = computed(() => {
+      if (message.value) {
+        return MessageSummary(message.value)
+      }
+      return ''
+    })
+
     // Data fetching
 
     async function getMessageData() {
-      error.value = await fetchMessage(route.value.params.id)
+      message.value = await fetchMessage(route.value.params.id)
 
       // Get auxilalry record data
       if (hasPermission('ukrdc:records:read')) {
-        masterRecords.value = await fetchMessageMasterRecords(error.value)
+        masterRecords.value = await fetchMessageMasterRecords(message.value)
       }
       if (hasPermission('ukrdc:workitems:read')) {
-        workItems.value = await fetchMessageWorkItems(error.value)
+        workItems.value = await fetchMessageWorkItems(message.value)
       }
 
       // Conditionally get the Mirth message data
       if (hasPermission('ukrdc:mirth:read')) {
         try {
-          mirthMessage.value = await fetchMessageMirth(error.value)
+          mirthMessage.value = await fetchMessageMirth(message.value)
         } catch (e) {
           mirthMessage.value = null
         }
@@ -190,15 +211,15 @@ export default defineComponent({
 
     // Modal visibility
 
-    const errorSourceGenericModalMaxSlot = ref<modalInterface>()
+    const messageSourceGenericModalMaxSlot = ref<modalInterface>()
 
     async function fetchAndShowSource() {
-      if (error.value) {
+      if (message.value) {
         try {
-          source.value = await fetchMessageSource(error.value)
-          errorSourceGenericModalMaxSlot.value?.show()
-        } catch (e) {
-          if (e.response.status === 404) {
+          source.value = await fetchMessageSource(message.value)
+          messageSourceGenericModalMaxSlot.value?.show()
+        } catch (e: any) {
+          if (e.response?.status === 404) {
             $toast.show({
               type: 'danger',
               title: 'Error',
@@ -212,16 +233,19 @@ export default defineComponent({
     }
 
     return {
-      error,
+      message,
+      messageSummary,
       source,
       mirthMessage,
       workItems,
       masterRecords,
       isEmptyObject,
       formatDate,
-      errorSourceGenericModalMaxSlot,
+      messageSourceGenericModalMaxSlot,
       fetchSourceInProgress,
       fetchAndShowSource,
+      downloadMessageSource,
+      downloadSourceInProgress,
       hasPermission,
     }
   },

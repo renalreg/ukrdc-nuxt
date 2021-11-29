@@ -1,6 +1,9 @@
 import Vue from 'vue'
-import { VClosePopover, VPopover, VTooltip } from 'v-tooltip'
+import { VTooltip, VClosePopper, Dropdown, Tooltip, Menu } from 'v-tooltip'
 
 Vue.directive('tooltip', VTooltip)
-Vue.directive('close-popover', VClosePopover)
-Vue.component('VPopover', VPopover)
+Vue.directive('close-popper', VClosePopper)
+
+Vue.component('VDropdown', Dropdown)
+Vue.component('VTooltip', Tooltip)
+Vue.component('VMenu', Menu)

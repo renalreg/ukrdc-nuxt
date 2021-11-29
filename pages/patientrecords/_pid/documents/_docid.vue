@@ -1,5 +1,7 @@
 <template>
   <div>
+    <LoadingIndicatorFull :visible="documentDownloadInProgress" />
+
     <GenericCard>
       <GenericCardHeader>
         <div class="mb-1">
@@ -57,26 +59,15 @@
           </GenericDi>
           <GenericDi v-if="patientDocument && patientDocument.notetext" class="sm:col-span-3">
             <TextDt>Note</TextDt>
-            <TextDd class="whitespace-pre-wrap font-mono">
-              {{ patientDocument.notetext }}
-            </TextDd>
+            <TextDd class="whitespace-pre-wrap font-mono">{{ patientDocument.notetext }}</TextDd>
           </GenericDi>
           <div v-if="patientDocument" class="sm:col-span-2">
             <TextDt>Attachments</TextDt>
             <TextDd>
               <GenericCardMini>
-                <ul role="list">
-                  <li class="pl-3 pr-4 py-3 flex items-center justify-between">
-                    <div class="w-0 flex-1 flex items-center">
-                      <IconMiniPaperClip class="mr-2" />
-                      <TextP class="flex-1 w-0 truncate"> {{ filename }} </TextP>
-                    </div>
-                    <div class="ml-4 flex-shrink-0">
-                      <LoadingIndicator v-if="documentDownloadInProgress" class="h-4"></LoadingIndicator>
-                      <TextLink v-else @click="downloadPatientRecordDocument(patientDocument)"> Download </TextLink>
-                    </div>
-                  </li>
-                </ul>
+                <GenericAttachment :filename="filename">
+                  <TextLink @click="downloadPatientRecordDocument(patientDocument)"> Download </TextLink>
+                </GenericAttachment>
               </GenericCardMini>
             </TextDd>
           </div>

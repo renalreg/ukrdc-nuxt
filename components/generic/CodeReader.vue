@@ -29,7 +29,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const formatMessage = ref(true)
+    const formatMessage = ref(false)
     const formattedMessage = computed(() => {
       return formatMessageToXML(props.content)
     })

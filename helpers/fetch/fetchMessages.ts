@@ -68,6 +68,25 @@ export default function () {
     }
   }
 
+  const downloadSourceInProgress = ref(false)
+
+  function downloadMessageSource(message: Message): void {
+    downloadSourceInProgress.value = true
+    $axios({
+      url: message.links.source,
+      method: 'GET',
+      responseType: 'blob',
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]))
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', message.filename || `${message.facility}-{message.id}.txt`)
+      document.body.appendChild(link)
+      link.click()
+      downloadSourceInProgress.value = false
+    })
+  }
+
   return {
     fetchInProgress,
     fetchMessagesPage,
@@ -77,5 +96,7 @@ export default function () {
     fetchMessageMirth,
     fetchMessageSource,
     fetchSourceInProgress,
+    downloadMessageSource,
+    downloadSourceInProgress,
   }
 }
