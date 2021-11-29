@@ -4,7 +4,10 @@
     <TextH3>UK Renal Registry users</TextH3>
     <TextP>
       Please use the
-      <a href="https://renalregistry.atlassian.net/jira/software/c/projects/UI/issues" target="blank"
+      <a
+        class="font-medium text-indigo-600 hover:text-indigo-500"
+        href="https://renalregistry.atlassian.net/jira/software/c/projects/UI/issues"
+        target="blank"
         >Jira issue tracker</a
       >
       to report issues with this application.
