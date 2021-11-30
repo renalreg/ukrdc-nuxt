@@ -11,39 +11,14 @@
         <TransitionModal>
           <div
             v-show="visible"
-            class="
-              inline-block
-              align-bottom
-              bg-white
-              rounded-lg
-              px-4
-              pt-5
-              pb-4
-              text-left
-              overflow-hidden
-              shadow-xl
-              transform
-              transition-all
-              w-full
-              sm:w-3/4 sm:max-w-3xl sm:my-8 sm:align-middle sm:p-6
-            "
+            class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all w-full sm:w-3/4 sm:max-w-3xl sm:my-8 sm:align-middle sm:p-6"
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-headline"
           >
             <div class="sm:flex sm:items-start">
               <div
-                class="
-                  bg-red-100
-                  mx-auto
-                  flex-shrink-0 flex
-                  items-center
-                  justify-center
-                  h-12
-                  w-12
-                  rounded-full
-                  sm:mx-0 sm:h-10 sm:w-10
-                "
+                class="bg-red-100 mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10"
               >
                 <!-- Heroicon name: outline/exclamation -->
                 <svg

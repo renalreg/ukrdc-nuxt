@@ -48,19 +48,7 @@
 
       <div
         v-show="isOpen"
-        class="
-          absolute
-          top-0
-          bg-white
-          rounded-md
-          shadow-lg
-          ring-1 ring-black ring-opacity-5
-          pin-x
-          px-2
-          pt-2
-          z-50
-          w-full
-        "
+        class="absolute top-0 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 pin-x px-2 pt-2 z-50 w-full"
       >
         <input
           ref="searchInput"

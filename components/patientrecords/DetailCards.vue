@@ -46,16 +46,7 @@
         >
           <GenericCardMini class="flex w-full">
             <div
-              class="
-                flex-shrink-0 flex
-                items-center
-                justify-center
-                w-16
-                bg-indigo-600
-                text-white
-                font-medium
-                rounded-l-md
-              "
+              class="flex-shrink-0 flex items-center justify-center w-16 bg-indigo-600 text-white font-medium rounded-l-md"
             >
               {{ item.numbertype }}
             </div>
@@ -92,17 +83,7 @@
             <TextP v-if="item.fromTime">Since {{ formatDate(item.fromTime, (t = false)) }}</TextP>
             <span
               v-if="!item.toTime"
-              class="
-                flex-shrink-0
-                inline-block
-                px-2
-                py-0.5
-                text-green-800 text-sm
-                font-medium
-                bg-green-100
-                rounded-sm
-                mt-2
-              "
+              class="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-sm font-medium bg-green-100 rounded-sm mt-2"
               >Active</span
             >
             <span
@@ -134,17 +115,7 @@
             <TextP v-if="item.fromTime">Since {{ formatDate(item.fromTime, (t = false)) }}</TextP>
             <span
               v-if="!item.toTime"
-              class="
-                flex-shrink-0
-                inline-block
-                px-2
-                py-0.5
-                text-green-800 text-sm
-                font-medium
-                bg-green-100
-                rounded-sm
-                mt-2
-              "
+              class="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-sm font-medium bg-green-100 rounded-sm mt-2"
               >Active</span
             >
             <span

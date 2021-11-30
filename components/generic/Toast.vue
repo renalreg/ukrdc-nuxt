@@ -33,14 +33,7 @@
               </div>
               <div class="ml-4 flex-shrink-0 flex">
                 <button
-                  class="
-                    inline-flex
-                    text-gray-400
-                    transition
-                    ease-in-out
-                    duration-150
-                    focus:outline-none focus:text-gray-500
-                  "
+                  class="inline-flex text-gray-400 transition ease-in-out duration-150 focus:outline-none focus:text-gray-500"
                   @click="destroy"
                 >
                   <svg
@@ -85,26 +78,7 @@
             <div class="-ml-px flex flex-col">
               <div class="h-0 flex-1 flex border-b border-gray-200">
                 <button
-                  class="
-                    -mb-px
-                    flex
-                    items-center
-                    justify-center
-                    w-full
-                    rounded-tr-lg
-                    border border-transparent
-                    px-4
-                    py-3
-                    leading-5
-                    font-medium
-                    text-indigo-600
-                    transition
-                    ease-in-out
-                    duration-150
-                    hover:text-indigo-500
-                    focus:outline-none focus:shadow-outline-blue focus:border-blue-300
-                    active:text-indigo-700 active:bg-gray-50
-                  "
+                  class="-mb-px flex items-center justify-center w-full rounded-tr-lg border border-transparent px-4 py-3 leading-5 font-medium text-indigo-600 transition ease-in-out duration-150 hover:text-indigo-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-indigo-700 active:bg-gray-50"
                   @click="primaryAction"
                 >
                   {{ primary.label }}
@@ -112,25 +86,7 @@
               </div>
               <div class="-mt-px h-0 flex-1 flex">
                 <button
-                  class="
-                    flex
-                    items-center
-                    justify-center
-                    w-full
-                    rounded-br-lg
-                    border border-transparent
-                    px-4
-                    py-3
-                    leading-5
-                    font-medium
-                    text-gray-700
-                    transition
-                    ease-in-out
-                    duration-150
-                    hover:text-gray-500
-                    focus:outline-none focus:shadow-outline-blue focus:border-blue-300
-                    active:text-gray-800 active:bg-gray-50
-                  "
+                  class="flex items-center justify-center w-full rounded-br-lg border border-transparent px-4 py-3 leading-5 font-medium text-gray-700 transition ease-in-out duration-150 hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50"
                   @click="secondaryAction"
                 >
                   {{ secondary.label }}
@@ -157,18 +113,7 @@
               <div class="w-0 flex-1 flex justify-between">
                 <p class="w-0 flex-1 leading-5">{{ message }}</p>
                 <button
-                  class="
-                    ml-3
-                    flex-shrink-0
-                    leading-5
-                    font-medium
-                    text-indigo-600
-                    hover:text-indigo-500
-                    focus:outline-none focus:underline
-                    transition
-                    ease-in-out
-                    duration-150
-                  "
+                  class="ml-3 flex-shrink-0 leading-5 font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150"
                   @click="primaryAction"
                 >
                   {{ primary.label }}
@@ -176,14 +121,7 @@
               </div>
               <div class="ml-4 flex-shrink-0 flex">
                 <button
-                  class="
-                    inline-flex
-                    text-gray-400
-                    focus:outline-none focus:text-gray-500
-                    transition
-                    ease-in-out
-                    duration-150
-                  "
+                  class="inline-flex text-gray-400 focus:outline-none focus:text-gray-500 transition ease-in-out duration-150"
                   @click="destroy"
                 >
                   <svg

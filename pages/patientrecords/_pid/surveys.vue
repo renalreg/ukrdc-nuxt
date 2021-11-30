@@ -24,16 +24,7 @@
 
           <div class="mt-2">
             <span
-              class="
-                flex-shrink-0
-                inline-block
-                px-2
-                py-0.5
-                text-indigo-800 text-sm
-                font-medium
-                bg-indigo-100
-                rounded-sm
-              "
+              class="flex-shrink-0 inline-block px-2 py-0.5 text-indigo-800 text-sm font-medium bg-indigo-100 rounded-sm"
               >{{ item.questions.length }} questions</span
             >
             <genericButtonMini class="float-right" @click="$refs.surveyViewerModal.show(item)">

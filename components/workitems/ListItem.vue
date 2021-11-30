@@ -5,18 +5,7 @@
       <div class="col-span-2">
         <span
           v-if="item.status == 3"
-          class="
-            inline-flex
-            items-center
-            h-5
-            px-2.5
-            py-0.5
-            rounded-full
-            text-sm
-            font-medium
-            bg-green-100
-            text-green-800
-          "
+          class="inline-flex items-center h-5 px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800"
         >
           Closed
         </span>

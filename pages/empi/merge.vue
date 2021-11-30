@@ -38,21 +38,7 @@
         <div class="flex-shrink">
           <button
             v-tooltip="'Switch Records'"
-            class="
-              w-8
-              block
-              mx-auto
-              rounded-md
-              shadow-sm
-              font-medium
-              focus:outline-none focus:ring-2 focus:ring-offset-2
-              border
-              bg-white
-              hover:bg-gray-50
-              focus:ring-indigo-500
-              border-gray-300
-              text-gray-700
-            "
+            class="w-8 block mx-auto rounded-md shadow-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 border bg-white hover:bg-gray-50 focus:ring-indigo-500 border-gray-300 text-gray-700"
             @click="switchRecords"
           >
             <IconSwitchH class="hidden lg:block my-2" /><IconSwitchV class="block lg:hidden my-2" />

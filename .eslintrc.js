@@ -7,5 +7,5 @@ module.exports = {
   extends: ['@nuxtjs/eslint-config-typescript', 'prettier', 'plugin:prettier/recommended', 'plugin:nuxt/recommended'],
   plugins: ['prettier'],
   // add your custom rules here
-  rules: { 'no-console': 'off' },
+  rules: { 'no-console': 'off', 'vue/multi-word-component-names': 'off' },
 }
