@@ -1,3 +1,3 @@
 <template>
-  <div class="py-5 px-4 sm:px-6 bottom-0"><slot></slot></div>
+  <div class="bg-gray-50 text-gray-600 px-4 py-2 text-sm"><slot></slot></div>
 </template>

@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div class="mb-6"><GenericNavigationTabsLine :tabs="tabs" /></div>
+    <div class="mb-6"><GenericTabsNavigation :tabs="tabs" /></div>
 
     <NuxtChild v-if="record" :record="record" />
   </div>

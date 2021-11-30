@@ -1,3 +1,7 @@
+<!--
+Single item of the codes list used in the Codes page.
+-->
+
 <template>
   <li>
     <div class="px-4 py-4 sm:px-6 min-w-0 grid grid-cols-2 lg:grid-cols-3 md:gap-4 w-full">

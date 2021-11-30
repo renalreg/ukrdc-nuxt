@@ -1,3 +1,5 @@
+<!-- Given a postcode, creates and formats a link to open the postcode in Google Maps -->
+
 <template>
   <TextP>
     <a :href="'http://google.com/maps?' + urlQuery" target="_blank">

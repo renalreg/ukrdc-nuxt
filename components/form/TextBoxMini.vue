@@ -1,3 +1,8 @@
+<!-- 
+Mini text box component used for things like little inline filter components.<template>
+E.g. used in the Filter by Patient Number component in Data Files
+-->
+
 <template>
   <input
     class="

@@ -1,7 +1,7 @@
 <template>
   <GenericModalMaxSlot ref="messageViewerGenericModalMaxSlot">
     <div class="flex flex-col h-full">
-      <GenericTabs v-model="currentTab" class="flex-0 w-full px-4 py-2 border-b border-gray-200" :tabs="tabs" />
+      <GenericTabsMini v-model="currentTab" class="flex-0 w-full px-4 py-2 border-b border-gray-200" :tabs="tabs" />
       <div class="flex-1 w-full min-h-0 overflow-scroll">
         <div v-if="currentTab == 'metadata'" id="viewerMetadata" class="p-4">
           <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">

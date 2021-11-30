@@ -1,3 +1,5 @@
+<!-- Tabs component formatted as a tab line. Tab elements include a name and href, and trigger router navigation on click. -->
+
 <template>
   <div>
     <div class="sm:hidden">

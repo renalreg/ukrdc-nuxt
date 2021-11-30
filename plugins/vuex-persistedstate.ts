@@ -4,6 +4,9 @@ import cookie from 'cookie'
 
 import { Context } from '@nuxt/types'
 
+// We use cookies to store the state of the vuex store, allowing SSR to work correctly
+// See https://github.com/robinvdvleuten/vuex-persistedstate#using-cookies-universal-client--server-side
+
 export default ({ store, isDev, req }: Context) => {
   createPersistedState({
     key: 'vuex.persisted_state.prefs',

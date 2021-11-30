@@ -24,6 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+// eslint-disable-next-line import/named
 import Vue, { VNode } from 'vue'
 import { DirectiveBinding } from 'vue/types/options'
 

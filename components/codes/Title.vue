@@ -1,3 +1,7 @@
+<!--
+Re-usable formatted code title component.
+-->
+
 <template>
   <div>
     <p class="font-medium text-gray-500 capitalize truncate inline">{{ codingStandard }} /</p>

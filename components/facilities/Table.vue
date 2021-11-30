@@ -1,3 +1,7 @@
+<!--
+Table of facilities and their basic statistics
+-->
+
 <template>
   <LoadingIndicator v-if="!facilities"></LoadingIndicator>
   <div v-else>
@@ -86,6 +90,7 @@ interface IsAscending {
 export default defineComponent({
   props: {
     includeEmpty: {
+      // Should facilities with no UKRDC records be included in the list?
       type: Boolean,
       default: false,
       required: false,

@@ -1,3 +1,7 @@
+<!--
+Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
+-->
+
 <template>
   <div>
     <div v-if="counts" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
@@ -7,15 +11,11 @@
             <IconUsers />
           </div>
           <div class="ml-5 w-0 flex-1">
-            <dl>
-              <GenericCardDt>Total UKRDC Records</GenericCardDt>
-              <dd>
-                <h1 class="text-2xl font-semibold text-green-600">{{ counts.UKRDCRecords }}</h1>
-              </dd>
-            </dl>
+            <TextL1>Total UKRDC Records</TextL1>
+            <h1 class="text-2xl font-semibold text-green-600">{{ counts.UKRDCRecords }}</h1>
           </div>
         </div>
-        <div class="bg-gray-50 text-gray-500 px-4 py-2 text-sm">Total distinct UKRDC IDs in the database</div>
+        <GenericCardFooter>Total distinct UKRDC IDs in the database</GenericCardFooter>
       </GenericCard>
 
       <GenericCard>
@@ -24,20 +24,13 @@
             <IconLink />
           </div>
           <div class="ml-5 w-0 flex-1">
-            <dl>
-              <GenericCardDt>Open Work Items</GenericCardDt>
-              <dd>
-                <h1
-                  class="text-2xl font-semibold"
-                  :class="counts.openWorkitems > 0 ? 'text-yellow-600' : 'text-green-600'"
-                >
-                  {{ counts.openWorkitems }}
-                </h1>
-              </dd>
-            </dl>
+            <TextL1>Open Work Items</TextL1>
+            <h1 class="text-2xl font-semibold" :class="counts.openWorkitems > 0 ? 'text-yellow-600' : 'text-green-600'">
+              {{ counts.openWorkitems }}
+            </h1>
           </div>
         </div>
-        <div class="bg-gray-50 text-gray-500 px-4 py-2 text-sm">Work Items currently open or WIP</div>
+        <GenericCardFooter>Work Items currently open or WIP</GenericCardFooter>
       </GenericCard>
 
       <GenericCard>
@@ -46,22 +39,16 @@
             <IconExclamation />
           </div>
           <div class="ml-5 w-0 flex-1">
-            <dl>
-              <GenericCardDt>Active Failing Records</GenericCardDt>
-              <dd>
-                <h1
-                  class="text-2xl font-semibold"
-                  :class="counts.patientsReceivingErrors > 0 ? 'text-red-600' : 'text-green-600'"
-                >
-                  {{ counts.patientsReceivingErrors }}
-                </h1>
-              </dd>
-            </dl>
+            <TextL1>Active Failing Records</TextL1>
+            <h1
+              class="text-2xl font-semibold"
+              :class="counts.patientsReceivingErrors > 0 ? 'text-red-600' : 'text-green-600'"
+            >
+              {{ counts.patientsReceivingErrors }}
+            </h1>
           </div>
         </div>
-        <div class="bg-gray-50 text-gray-500 px-4 py-2 text-sm">
-          Records with active data files currently failing due to errors
-        </div>
+        <GenericCardFooter>Records with active data files currently failing due to errors </GenericCardFooter>
       </GenericCard>
     </div>
     <!-- Graphs -->

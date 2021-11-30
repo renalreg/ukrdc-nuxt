@@ -1,3 +1,7 @@
+<!--
+Mini (half-width) search bar and results pages used in the EMPI Merge page.
+-->
+
 <template>
   <div>
     <div class="mb-4">

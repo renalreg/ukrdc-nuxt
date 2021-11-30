@@ -1,3 +1,7 @@
+<!--
+Big link cards used in the EMPI page, to direct to Merge etc.
+-->
+
 <template>
   <GenericCard class="relative group p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-cyan-500">
     <div>

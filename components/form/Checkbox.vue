@@ -1,3 +1,8 @@
+<!--
+Checkbox component, able to v-model onto either a single boolean value,
+or an array of values when multiple instances are v-model'd onto the same array.
+-->
+
 <template>
   <label class="wrapper flex items-center font-medium text-gray-500 mr-4">
     <input

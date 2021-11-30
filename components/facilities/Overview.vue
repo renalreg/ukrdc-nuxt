@@ -1,3 +1,8 @@
+<!--
+Overview (statistics etc) of a single Facility. Used by both the Facilities
+page (for multi-facility users), and the homepage (for single-facility users).
+-->
+
 <template>
   <div>
     <div class="mb-4">
