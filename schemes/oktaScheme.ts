@@ -9,6 +9,7 @@ export default class RuntimeConfigurableOktaScheme extends RuntimeConfigurableOa
   // Instead we redirect to the user management logout page, which in turn redirects
   // to our apps logout page, which resets the auth state.
   logout() {
+    this.$auth.reset()
     if (this.options.endpoints.logout) {
       const opts = {
         client_id: this.options.clientId,
