@@ -8,7 +8,7 @@
 
       <GenericMenu class="top-0 right-0 z-10 mx-2 my-2" :show="showMenu">
         <GenericMenuItem @click="copyPID"> Copy PID </GenericMenuItem>
-        <div v-if="hasPermission('ukrdc:mirth:write')">
+        <div v-if="hasPermission('ukrdc:records:export')">
           <GenericMenuDivider />
           <GenericMenuItem v-if="showPvSync" @click="actionExport('pv')"> Sync Record to PatientView </GenericMenuItem>
           <GenericMenuItem v-if="showPvSync" @click="actionExport('docs')"> Sync Docs to PatientView </GenericMenuItem>
