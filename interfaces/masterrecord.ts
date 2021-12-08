@@ -9,6 +9,7 @@ interface MasterRecordLinks {
   persons: string
   workitems: string
   patientrecords: string
+  audit: string
 }
 
 export interface MasterRecordStatistics {
