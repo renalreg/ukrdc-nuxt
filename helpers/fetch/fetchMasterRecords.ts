@@ -1,5 +1,5 @@
 import { useContext } from '@nuxtjs/composition-api'
-import { buildCommonMessageQuery, MessagePage } from './common'
+import { buildCommonMessageQuery, MessagePage, AuditPage, buildCommonDateRangeQuery } from './common'
 import { MasterRecord, MasterRecordStatistics } from '~/interfaces/masterrecord'
 import { MinimalMessage } from '~/interfaces/messages'
 import { PatientRecordSummary } from '~/interfaces/patientrecord'
@@ -52,6 +52,18 @@ export default function () {
     return (await $axios.$get(masterRecord.links.workitems)) as WorkItem[]
   }
 
+  async function fetchMasterRecordAuditPage(
+    masterRecord: MasterRecord,
+    page: number,
+    size: number,
+    since: string | null,
+    until: string | null
+  ): Promise<AuditPage> {
+    let path = `${masterRecord.links.audit}?page=${page}&size=${size}`
+    path = path + buildCommonDateRangeQuery(since, until)
+    return (await $axios.$get(path)) as AuditPage
+  }
+
   return {
     fetchMasterRecord,
     fetchMasterRecordRelated,
@@ -61,5 +73,6 @@ export default function () {
     fetchMasterRecordPatientRecords,
     fetchMasterRecordLinkRecords,
     fetchMasterRecordWorkItems,
+    fetchMasterRecordAuditPage,
   }
 }
