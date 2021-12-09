@@ -5,10 +5,8 @@
         <TextNameH1 :forename="forename" :surname="surname" />
       </div>
       <div class="flex">
-        <div v-if="record.masterRecord">
-          <GenericButton :to="`/masterrecords/${record.masterRecord.id}`" class="truncate">
-            View Master Record
-          </GenericButton>
+        <div v-if="record.masterId">
+          <GenericButton :to="`/masterrecords/${record.masterId}`" class="truncate"> View Master Record </GenericButton>
         </div>
         <div v-if="related" class="ml-2">
           <GenericSelect v-model="selectedPid">
