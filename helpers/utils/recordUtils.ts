@@ -1,8 +1,14 @@
+import { PatientNumber } from '~/interfaces/patient'
 import { PatientRecordSummary } from '~/interfaces/patientrecord'
 
 const ukrdcMembershipFacilities = ['PV', 'PKB']
 const membershipExtracts = ['RADAR']
 const migratedExtracts = ['PVMIG', 'HSMIG']
+
+export interface localNumber {
+  label: string
+  number: string
+}
 
 export function isData(record: PatientRecordSummary): boolean {
   if (record.sendingextract === 'PV') {
@@ -47,4 +53,26 @@ export function isTracing(record: PatientRecordSummary) {
     return true
   }
   return false
+}
+
+export function firstForename(record: PatientRecordSummary): string {
+  return record.patient.names[0]?.given || ''
+}
+
+export function firstSurname(record: PatientRecordSummary): string {
+  return record.patient.names[0]?.family || ''
+}
+
+export function firstMRN(record: PatientRecordSummary): localNumber {
+  const mrn = record.patient.numbers.find((i: PatientNumber) => i.numbertype === 'MRN')
+  if (mrn) {
+    return {
+      label: mrn.organization === 'LOCALHOSP' ? 'Hospital' : mrn.organization,
+      number: mrn.patientid,
+    }
+  }
+  return {
+    label: '',
+    number: '',
+  }
 }
