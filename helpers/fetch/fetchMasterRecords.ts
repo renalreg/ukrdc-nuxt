@@ -56,11 +56,16 @@ export default function () {
     masterRecord: MasterRecord,
     page: number,
     size: number,
+    orderBy: string | null,
     since: string | null,
     until: string | null
   ): Promise<AuditPage> {
     let path = `${masterRecord.links.audit}?page=${page}&size=${size}`
     path = path + buildCommonDateRangeQuery(since, until)
+    // Order results
+    if (orderBy) {
+      path = path + `&order_by=${orderBy}`
+    }
     return (await $axios.$get(path)) as AuditPage
   }
 
