@@ -1,7 +1,7 @@
 <template>
   <li>
     <div :class="isChild ? ['bg-gray-50'] : []">
-      <div class="flex items-center gap-2 min-w-0 w-full h-20 lg:h-12">
+      <div class="flex items-center gap-2 min-w-0 w-full min-h-20 lg:min-h-12">
         <div class="w-8 h-full" :class="isChild ? ['border-l-4', 'border-indigo-400'] : []">
           <div
             v-show="item.children.length > 0"
@@ -17,7 +17,7 @@
           <TextP class="col-span-1 truncate">{{ formatDate(item.accessEvent.time) }}</TextP>
           <TextP class="col-span-2"> {{ item.accessEvent.userEmail }} </TextP>
           <TextP class="col-span-1"> {{ item.operation }} </TextP>
-          <AuditResourceBadge class="col-span-2 mr-2" :resource="item.resource" :resource-id="item.resourceId" />
+          <AuditResourceBadge class="col-span-2 mr-2 my-2" :item="item" />
         </div>
       </div>
       <ul

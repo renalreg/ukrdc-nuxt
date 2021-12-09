@@ -21,4 +21,6 @@ export interface AuditEvent {
   operation: string
 
   children: AuditEvent[]
+
+  identifiers: string[]
 }
