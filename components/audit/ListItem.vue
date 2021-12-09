@@ -1,8 +1,8 @@
 <template>
   <li>
-    <div :class="isChild ? ['bg-gray-50'] : []">
+    <div :class="isChild ? ['bg-gray-100'] : []">
       <div class="flex items-center gap-2 min-w-0 w-full min-h-20 lg:min-h-12">
-        <div class="w-8 h-full" :class="isChild ? ['border-l-4', 'border-indigo-400'] : []">
+        <div class="w-8 h-full">
           <div
             v-show="item.children.length > 0"
             class="flex flex-none items-center justify-center self-stretch h-full cursor-pointer"
