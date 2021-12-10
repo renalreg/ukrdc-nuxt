@@ -30,15 +30,18 @@ import { defineComponent, onMounted, ref, useMeta, useRoute } from '@nuxtjs/comp
 
 import { formatDate } from '@/helpers/utils/dateUtils'
 import { formatGender } from '@/helpers/utils/codeUtils'
+import { insertIf } from '@/helpers/utils/arrayUtils'
 import fetchMasterRecords from '@/helpers/fetch/fetchMasterRecords'
 
 import { MasterRecord, MasterRecordStatistics } from '@/interfaces/masterrecord'
 import { TabItem } from '@/interfaces/tabs'
+import usePermissions from '~/helpers/usePermissions'
 
 export default defineComponent({
   setup() {
     const route = useRoute()
     const { fetchMasterRecord, fetchMasterRecordStatistics } = fetchMasterRecords()
+    const { hasPermission } = usePermissions()
 
     // Head
     const { title } = useMeta()
@@ -51,10 +54,10 @@ export default defineComponent({
         name: 'Overview',
         href: `/masterrecords/${route.value.params.id}`,
       },
-      {
+      ...insertIf(hasPermission('ukrdc:messages:read'), {
         name: 'Messages',
         href: `/masterrecords/${route.value.params.id}/messages`,
-      },
+      }),
       {
         name: 'Link Records',
         href: `/masterrecords/${route.value.params.id}/linkrecords`,
@@ -63,6 +66,10 @@ export default defineComponent({
         name: 'Issues',
         href: `/masterrecords/${route.value.params.id}/issues`,
       },
+      ...insertIf(hasPermission('ukrdc:audit:records:read'), {
+        name: 'Audit',
+        href: `/masterrecords/${route.value.params.id}/audit`,
+      }),
     ] as TabItem[]
 
     // Data refs

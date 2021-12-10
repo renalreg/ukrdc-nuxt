@@ -16,15 +16,13 @@
 
     <GenericCard>
       <!-- Skeleton results -->
-      <ul v-if="!messages" class="divide-y divide-gray-200">
+      <ul v-if="!events" class="divide-y divide-gray-200">
         <SkeleListItem v-for="n in 10" :key="n" />
       </ul>
       <!-- Real results -->
       <ul v-else class="divide-y divide-gray-200">
-        <div v-for="item in messages" :key="item.id" :item="item" class="hover:bg-gray-50">
-          <NuxtLink :to="`/messages/${item.id}`">
-            <MessagesListItem :show-patient-filter="false" :item="item" />
-          </NuxtLink>
+        <div v-for="item in events" :key="item.id" :item="item">
+          <AuditListItem :item="item" />
         </div>
       </ul>
       <GenericPaginator
@@ -50,19 +48,14 @@ import useDateRange from '~/helpers/query/useDateRange'
 
 import fetchMasterRecords from '@/helpers/fetch/fetchMasterRecords'
 
-import { Message } from '~/interfaces/messages'
-import { MasterRecord, MasterRecordStatistics } from '~/interfaces/masterrecord'
+import { AuditEvent } from '~/interfaces/audit'
+import { MasterRecord } from '~/interfaces/masterrecord'
 
 export default defineComponent({
   props: {
     record: {
       type: Object as () => MasterRecord,
       required: true,
-    },
-    stats: {
-      type: Object as () => MasterRecordStatistics,
-      required: false,
-      default: null,
     },
   },
   setup(props) {
@@ -71,39 +64,38 @@ export default defineComponent({
     const { page, total, size } = usePagination()
     const { makeDateRange } = useDateRange()
     const { orderAscending, orderBy, toggleOrder } = useSortBy()
-    const { fetchMasterRecordMessagesPage } = fetchMasterRecords()
+    const { fetchMasterRecordAuditPage } = fetchMasterRecords()
 
     // Set initial date dateRange
-    const dateRange = makeDateRange(nowString(-365), nowString(0), true)
+    const dateRange = makeDateRange(nowString(-30), nowString(0), true)
 
     // Data refs
-    const messages = ref<Message[]>()
+    const events = ref<AuditEvent[]>()
 
     // Data fetching
 
-    async function fetchMessages() {
-      const messagesPage = await fetchMasterRecordMessagesPage(
+    async function fetchEvents() {
+      const eventsPage = await fetchMasterRecordAuditPage(
         props.record,
         page.value || 0,
         size.value,
         orderBy.value,
-        [], // Status filter
         dateRange.value.start,
         dateRange.value.end
       )
 
-      messages.value = messagesPage.items
-      total.value = messagesPage.total
-      page.value = messagesPage.page
-      size.value = messagesPage.size
+      events.value = eventsPage.items
+      total.value = eventsPage.total
+      page.value = eventsPage.page
+      size.value = eventsPage.size
     }
 
     onMounted(() => {
-      fetchMessages()
+      fetchEvents()
     })
 
     watch(route, () => {
-      fetchMessages()
+      fetchEvents()
     })
 
     return {
@@ -111,7 +103,7 @@ export default defineComponent({
       total,
       size,
       dateRange,
-      messages,
+      events,
       orderAscending,
       orderBy,
       toggleOrder,

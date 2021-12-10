@@ -5,10 +5,8 @@
         <TextNameH1 :forename="forename" :surname="surname" />
       </div>
       <div class="flex">
-        <div v-if="record.masterRecord">
-          <GenericButton :to="`/masterrecords/${record.masterRecord.id}`" class="truncate">
-            View Master Record
-          </GenericButton>
+        <div v-if="record.masterId">
+          <GenericButton :to="`/masterrecords/${record.masterId}`" class="truncate"> View Master Record </GenericButton>
         </div>
         <div v-if="related" class="ml-2">
           <GenericSelect v-model="selectedPid">
@@ -32,7 +30,7 @@ import { computed, defineComponent, onMounted, ref, useMeta, useRoute, useRouter
 import { PatientRecord, PatientRecordSummary } from '@/interfaces/patientrecord'
 import { TabItem } from '@/interfaces/tabs'
 
-import { isMembership } from '@/helpers/utils/recordUtils'
+import { firstForename, firstSurname, isMembership } from '@/helpers/utils/recordUtils'
 import fetchPatientRecords from '~/helpers/fetch/fetchPatientRecords'
 
 export default defineComponent({
@@ -79,11 +77,11 @@ export default defineComponent({
     // Dynamic UI elements
 
     const forename = computed(() => {
-      return record ? record.value?.patient.names[0].given : ''
+      return record.value ? firstForename(record.value) : ''
     })
 
     const surname = computed(() => {
-      return record ? record.value?.patient.names[0].family : ''
+      return record.value ? firstSurname(record.value) : ''
     })
 
     // Navigation

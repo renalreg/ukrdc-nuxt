@@ -1,7 +1,15 @@
+import { AuditEvent } from '~/interfaces/audit'
 import { Message } from '~/interfaces/messages'
 
 export interface MessagePage {
   items: Message[]
+  total: number
+  page: number
+  size: number
+}
+
+export interface AuditPage {
+  items: AuditEvent[]
   total: number
   page: number
   size: number

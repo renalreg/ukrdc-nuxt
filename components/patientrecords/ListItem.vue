@@ -17,9 +17,9 @@
         </div>
         <!-- MRN (medium breakpoint only) -->
         <div class="hidden sm:block">
-          <TextL1 class="truncate">{{ firstMRN.label }} Number</TextL1>
+          <TextL1 class="truncate">{{ firstMRNObject.label }} Number</TextL1>
           <TextP class="mt-2 truncate">
-            {{ firstMRN.number }}
+            {{ firstMRNObject.number }}
           </TextP>
         </div>
         <!-- UKRDC ID (large breakpoint only) -->
@@ -60,7 +60,7 @@ import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
 import { formatDate } from '@/helpers/utils/dateUtils'
 import { formatGenderCharacter } from '@/helpers/utils/codeUtils'
 import { PatientRecordSummary } from '@/interfaces/patientrecord'
-import { PatientNumber } from '~/interfaces/patient'
+import { firstMRN } from '~/helpers/utils/recordUtils'
 
 interface localNumber {
   label: string
@@ -87,21 +87,11 @@ export default defineComponent({
   setup(props) {
     const showDetail = ref(false)
 
-    const firstMRN = computed<localNumber>(() => {
-      const mrn = props.item.patient.numbers.find((i: PatientNumber) => i.numbertype === 'MRN')
-      if (mrn) {
-        return {
-          label: mrn.organization === 'LOCALHOSP' ? 'Hospital' : mrn.organization,
-          number: mrn.patientid,
-        }
-      }
-      return {
-        label: '',
-        number: '',
-      }
+    const firstMRNObject = computed<localNumber>(() => {
+      return firstMRN(props.item)
     })
 
-    return { showDetail, formatDate, formatGenderCharacter, firstMRN }
+    return { showDetail, formatDate, formatGenderCharacter, firstMRNObject }
   },
 })
 </script>
