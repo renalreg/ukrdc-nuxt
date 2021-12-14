@@ -138,6 +138,7 @@ export default {
 
   privateRuntimeConfig: {
     // Axios SSR-specific config
+    // This could be removed as we don't make API calls server-side, but it's here for completeness
     axios: {
       baseURL: process.env.BASE_URL,
     },
