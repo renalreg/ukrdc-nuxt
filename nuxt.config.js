@@ -99,9 +99,9 @@ export default {
 
   // Runtime configuration variables
   publicRuntimeConfig: {
+    baseURL: process.env.APP_BASE || '/',
     // API root, used to construct API URLs within components
     apiBase: process.env.API_BASE || '/api',
-    appBase: process.env.APP_BASE || '/',
     // Nuxt-Auth user key containing an array of permission group strings
     userPermissionKey: process.env.USER_PERMISSION_KEY || 'org.ukrdc.permissions',
     // Okta domain

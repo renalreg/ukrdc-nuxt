@@ -13,7 +13,7 @@ export default class RuntimeConfigurableOauth2Scheme extends Oauth2Scheme {
     // Fix runtime-configurable redirects
     // See https://github.com/nuxt-community/auth-module/issues/1070
     $auth.onRedirect((to: string, _: string): string => {
-      const basePath = $auth.ctx.$config.appBase || $auth.ctx.base
+      const basePath = $auth.ctx.$config.baseURL || $auth.ctx.base
       if (!process.server) return to
       if (to.startsWith(decodeURI(basePath))) return to
       return urljoin(basePath, to)
