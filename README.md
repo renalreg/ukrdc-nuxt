@@ -28,6 +28,16 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 
 ## Developer notes
 
+### Server-side rendering
+
+In order to enable runtime-configueration, we make use of Nuxt server-side rendering. However, some of our components are not compatible with server-side rendering at all (e.g. the date picker component), and more importantly some plugins (nuxt-auth) can cause issues when async attributed are used to conditionally render components (e.g. `<div v-if="$auth.loggedIn">`). 
+
+Unfortunately, we can't just disable `ssr` in Nuxt, as this causes issues with runtime-configuration of the applications base URL. When SSR is disabled, Nuxt hard-codes the URL to our webpack bundled JavaScript (at `/_nuxt/****.js`), either due to a bug or an oversight (see [various](https://github.com/nuxt/nuxt.js/issues/8509) [issues](https://github.com/nuxt/nuxt.js/issues/9170)).
+
+We work around this by forcing our default layout to render client-side, by wrapping the entirity of `/layouts/default.vue` in a `<client-only>` tag.
+
+Eventually, I'd like to find a way to just disable SSR completely but keep runtime-configured base paths, but in the meantime, this seems to work fine.
+
 ### Server-side fetching
 
 In order to enable runtime-configueration, we make use of Nuxt server-side rendering. However, generally we want data fetching to happen client-side. This is particularly important for pages where mutliple API routes are called, populating the page in "chunks". We don't want the user to have to wait for every chunk to finish before showing anything (as is the case with full server-side fetching).
