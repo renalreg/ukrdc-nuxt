@@ -21,12 +21,12 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { ssr: true, src: '~/plugins/vuex-persistedstate.ts' },
-    { ssr: false, src: '~/plugins/v-calendar.ts' },
-    { ssr: false, src: '~/plugins/v-tooltip.ts' },
-    { ssr: false, src: '~/plugins/toast.ts' },
-    { ssr: true, src: '~/plugins/axios.ts' },
-    { ssr: false, src: '~/plugins/vue-clickaway.ts' },
+    '~/plugins/axios.ts',
+    '~/plugins/vuex-persistedstate.client.ts',
+    '~/plugins/v-calendar.client.ts',
+    '~/plugins/v-tooltip.client.ts',
+    '~/plugins/toast.client.ts',
+    '~/plugins/vue-clickaway.client.ts',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
