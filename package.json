@@ -18,8 +18,6 @@
     "@sentry/tracing": "^6.13.2",
     "chart.js": "^3.5.1",
     "chartjs-adapter-luxon": "^1.1.0",
-    "cookie": "^0.4.1",
-    "js-cookie": "^3.0.0",
     "luxon": "^2.0.2",
     "nuxt": "^2.15.7",
     "v-calendar": "^2.3.1",
