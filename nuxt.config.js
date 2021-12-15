@@ -88,7 +88,7 @@ export default {
 
   // Router and middleware configuration
   router: {
-    middleware: ['auth'],
+    middleware: ['check-ie', 'auth'],
     base: process.env.APP_BASE || '/',
   },
 

@@ -3200,6 +3200,11 @@ chartjs-adapter-luxon@^1.1.0:
   resolved "https://registry.yarnpkg.com/chartjs-adapter-luxon/-/chartjs-adapter-luxon-1.1.0.tgz#0a0d9213db5de0ad3285fae896b4c4b74db9007b"
   integrity sha512-CS+xBWEyXYVLBZ3dSY/MwlSXhz8er4JjkApazY84ft/++oOLsmkt6TaXBCsUFudum7QdoYmpxiL/gSp20+emkw==
 
+check-ie@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/check-ie/-/check-ie-2.0.1.tgz#e35b792e5671028b30d7f9e52e8b191a0742ad21"
+  integrity sha512-7qwZ8XwHaOln3DhqN9x/s5+0fTF+68TAeE/a+ICMuVs0fxLSd5HlaQcnBfS2gHYRLdqn+YHrJuFlA5euR3+InA==
+
 chokidar@^2.1.8:
   version "2.1.8"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-2.1.8.tgz#804b3a7b6a99358c3c5c61e71d8728f041cff917"
