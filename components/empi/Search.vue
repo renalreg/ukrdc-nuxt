@@ -48,7 +48,7 @@ Mini (half-width) search bar and results pages used in the EMPI Merge page.
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useRoute, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
 
 import usePagination from '~/helpers/query/usePagination'
 import { MasterRecord } from '@/interfaces/masterrecord'
@@ -67,8 +67,6 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const route = useRoute()
-
     const { page, total, size } = usePagination()
     const { showUKRDC } = useUserPrefs()
     const { searchQueryIsPopulated, searchboxString, searchSubmit, apiQueryString } = useRecordSearch()
@@ -97,7 +95,7 @@ export default defineComponent({
       fetchResults()
     })
 
-    watch([route, showUKRDC], () => {
+    watch([apiQueryString, page, showUKRDC], () => {
       fetchResults()
     })
 

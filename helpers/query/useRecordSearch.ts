@@ -1,9 +1,7 @@
-import { computed, onMounted, ref, useRoute, watch } from '@nuxtjs/composition-api'
+import { computed, onMounted, ref, watch } from '@nuxtjs/composition-api'
 import useQuery from '~/helpers/query/useQuery'
 
 export default function () {
-  const route = useRoute()
-
   const { arrayQuery } = useQuery()
 
   // Array of individual search terms as an array of strings from the URL query
@@ -104,7 +102,7 @@ export default function () {
     return buildAPIQueryStringFromArray(searchTermArray.value)
   })
 
-  watch([route], () => {
+  watch(searchTermArray, () => {
     searchApply()
   })
 

@@ -57,7 +57,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useRoute, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
 
 import { MasterRecord } from '@/interfaces/masterrecord'
 import usePagination from '~/helpers/query/usePagination'
@@ -69,8 +69,6 @@ import fetchSearchResults from '~/helpers/fetch/fetchSearchResults'
 
 export default defineComponent({
   setup() {
-    const route = useRoute()
-
     const { page, total, size } = usePagination()
     const { showUKRDC } = useUserPrefs()
     const { searchQueryIsPopulated, searchboxString, searchSubmit, apiQueryString } = useRecordSearch()
@@ -92,8 +90,8 @@ export default defineComponent({
         )
 
         masterrecords.value = resultsPage.items
-        total.value = resultsPage.total
         page.value = resultsPage.page
+        total.value = resultsPage.total
         size.value = resultsPage.size
       }
     }
@@ -102,7 +100,7 @@ export default defineComponent({
       getResults()
     })
 
-    watch([route, showUKRDC], () => {
+    watch([apiQueryString, page, showUKRDC], () => {
       getResults()
     })
 

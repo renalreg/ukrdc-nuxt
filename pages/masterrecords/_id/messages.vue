@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useRoute, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
 
 import { nowString } from '@/helpers/utils/dateUtils'
 import usePagination from '~/helpers/query/usePagination'
@@ -66,8 +66,6 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const route = useRoute()
-
     const { page, total, size } = usePagination()
     const { makeDateRange } = useDateRange()
     const { orderAscending, orderBy, toggleOrder } = useSortBy()
@@ -102,7 +100,7 @@ export default defineComponent({
       fetchMessages()
     })
 
-    watch(route, () => {
+    watch([page, dateRange, orderBy], () => {
       fetchMessages()
     })
 

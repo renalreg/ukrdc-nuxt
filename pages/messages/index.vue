@@ -73,7 +73,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useRoute, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
 
 import { nowString } from '@/helpers/utils/dateUtils'
 import { Message } from '@/interfaces/messages'
@@ -88,8 +88,6 @@ import fetchMessages from '~/helpers/fetch/fetchMessages'
 
 export default defineComponent({
   setup() {
-    const route = useRoute()
-
     const { page, total, size } = usePagination()
     const { makeDateRange } = useDateRange()
     const { stringQuery, arrayQuery } = useQuery()
@@ -130,7 +128,7 @@ export default defineComponent({
       getMessages()
     })
 
-    watch(route, () => {
+    watch([page, orderBy, statuses, dateRange, selectedFacility, nationalId], () => {
       getMessages()
     })
 

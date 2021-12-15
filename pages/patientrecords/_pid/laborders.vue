@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useRoute, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
 
 import { formatDate } from '@/helpers/utils/dateUtils'
 
@@ -49,7 +49,6 @@ export default defineComponent({
   },
 
   setup(props) {
-    const route = useRoute()
     const { page, total, size } = usePagination()
     const { fetchPatientRecordLabOrdersPage } = fetchPatientRecords()
 
@@ -71,7 +70,7 @@ export default defineComponent({
       fetchOrders()
     })
 
-    watch(route, () => {
+    watch([page], () => {
       fetchOrders()
     })
 
