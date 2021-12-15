@@ -101,15 +101,8 @@ export default defineComponent({
       getCodes()
     })
 
-    watch([page, selectedStandard, searchboxString], (curr, prev) => {
-      // When we change page, the query object gets written to,
-      // triggering this event even if the values themselves
-      // don't change. We need to compare them before deciding
-      // to fetch, otherwise the list of codes will refresh
-      // every time you click on a code and change page.
-      if (!(curr[0] === prev[0] && curr[1] === prev[1] && curr[2] === prev[2])) {
-        getCodes()
-      }
+    watch([page, selectedStandard, searchboxString], () => {
+      getCodes()
     })
 
     return {

@@ -241,9 +241,17 @@ export default defineComponent({
       fetchLabOrder()
     })
 
-    watch([page, selectedService, selectedOrderId, dateRange], () => {
-      fetchResults()
-    })
+    watch(
+      [
+        page,
+        selectedService,
+        selectedOrderId,
+        () => JSON.stringify(dateRange.value), // Stringify to watch for actual value changes
+      ],
+      () => {
+        fetchResults()
+      }
+    )
 
     watch(selectedOrderId, () => {
       fetchLabOrder()
