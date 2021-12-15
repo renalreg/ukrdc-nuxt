@@ -37,7 +37,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ghcr.io/renalreg/ukyarn buirdc-nuxt
+          images: ghcr.io/renalreg/ukrdc-nuxt
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
