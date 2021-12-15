@@ -84,7 +84,7 @@ export default defineComponent({
     async function fetchMessages() {
       const messagesPage = await fetchMasterRecordMessagesPage(
         props.record,
-        page.value || 0,
+        page.value || 1,
         size.value,
         orderBy.value,
         [], // Status filter

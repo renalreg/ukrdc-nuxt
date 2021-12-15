@@ -106,7 +106,7 @@ export default defineComponent({
 
       const observationsPage = await fetchPatientRecordObservationsPage(
         props.record,
-        page.value || 0,
+        page.value || 1,
         size.value,
         selectedCodes.value
       )

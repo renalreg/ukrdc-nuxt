@@ -141,7 +141,7 @@ export default defineComponent({
     async function fetchResults() {
       const resultsPage = await fetchPatientRecordResultsPage(
         props.record,
-        page.value || 0,
+        page.value || 1,
         size.value,
         selectedService.value,
         selectedOrderId.value,

@@ -93,7 +93,7 @@ export default defineComponent({
 
     async function getWorkitems() {
       const itemsPage = await fetchWorkItemsPage(
-        page.value || 0,
+        page.value || 1,
         size.value,
         orderBy.value || 'desc',
         statuses.value,

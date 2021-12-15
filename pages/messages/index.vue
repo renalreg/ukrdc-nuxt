@@ -111,7 +111,7 @@ export default defineComponent({
     // Data fetching
     async function getMessages() {
       const messagesPage = await fetchMessagesPage(
-        page.value || 0,
+        page.value || 1,
         size.value,
         orderBy.value,
         statuses.value, // Status filter

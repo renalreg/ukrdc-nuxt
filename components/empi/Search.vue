@@ -80,7 +80,7 @@ export default defineComponent({
       if (searchQueryIsPopulated) {
         const results = await fetchSearchResultsPage(
           apiQueryString.value,
-          page.value || 0,
+          page.value || 1,
           size.value,
           true,
           props.onlyUkrdc

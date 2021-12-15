@@ -64,7 +64,7 @@ export default defineComponent({
     // Data fetching
 
     async function getDocuments() {
-      const documentsPage = await fetchPatientRecordDocumentsPage(props.record, page.value || 0, size.value)
+      const documentsPage = await fetchPatientRecordDocumentsPage(props.record, page.value || 1, size.value)
       documents.value = documentsPage.items
       total.value = documentsPage.total
       page.value = documentsPage.page

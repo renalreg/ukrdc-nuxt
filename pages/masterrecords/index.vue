@@ -86,7 +86,7 @@ export default defineComponent({
       if (searchQueryIsPopulated.value) {
         const resultsPage = await fetchSearchResultsPage(
           apiQueryString.value,
-          page.value || 0,
+          page.value || 1,
           size.value,
           showUKRDC.value
         )

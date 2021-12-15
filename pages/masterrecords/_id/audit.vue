@@ -77,7 +77,7 @@ export default defineComponent({
     async function fetchEvents() {
       const eventsPage = await fetchMasterRecordAuditPage(
         props.record,
-        page.value || 0,
+        page.value || 1,
         size.value,
         orderBy.value,
         dateRange.value.start,

@@ -60,7 +60,7 @@ export default defineComponent({
     // Data fetching
 
     async function fetchOrders() {
-      const ordersPage = await fetchPatientRecordLabOrdersPage(props.record, page.value || 0, size.value)
+      const ordersPage = await fetchPatientRecordLabOrdersPage(props.record, page.value || 1, size.value)
       orders.value = ordersPage.items
       total.value = ordersPage.total
       page.value = ordersPage.page

@@ -92,7 +92,7 @@ export default defineComponent({
     async function updateRelatedErrors(): Promise<void> {
       const res = await fetchMasterRecordMessagesPage(
         props.record,
-        relatedErrorsPage.value || 0,
+        relatedErrorsPage.value || 1,
         relatedErrorsSize.value,
         'desc',
         ['ERROR'], // Status filter
