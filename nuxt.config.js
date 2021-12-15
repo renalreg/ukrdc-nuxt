@@ -39,16 +39,25 @@ export default {
   modules: ['@nuxtjs/axios', '@nuxtjs/auth-next', '@nuxtjs/sentry'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-    extend(config) {
-      config.devtool = 'source-map'
-    },
-  },
+  build: {},
 
   // Sentry Configuration: https://sentry.nuxtjs.org/guide/setup
   sentry: {
     dsn: process.env.SENTRY_DSN,
-    publishRelease: false,
+    publishRelease: {
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      org: process.env.SENTRY_ORG,
+      project: process.env.SENTRY_PROJECT,
+      // Attach commits to the release (requires that the build triggered within a git repository).
+      setCommits: {
+        auto: true,
+      },
+      deploy: {
+        // The release's environment name.
+        env: process.env.DEPLOYEMNT_ENV || 'development',
+      },
+    },
+    sourceMapStyle: 'hidden-source-map',
     tracing: {
       tracesSampleRate: 1.0,
       vueOptions: {

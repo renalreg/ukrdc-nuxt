@@ -1,5 +1,11 @@
 FROM node:16-alpine as builder
 
+# Environment variables used for building and Sentry release
+ARG SENTRY_ORG
+ARG SENTRY_PROJECT
+ARG SENTRY_AUTH_TOKEN
+ARG DEPLOYEMNT_ENV
+
 ARG GITHUB_SHA
 ARG GITHUB_REF
 ARG SENTRY_DSN
