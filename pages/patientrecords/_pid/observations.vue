@@ -96,17 +96,9 @@ export default defineComponent({
     // Data fetching
 
     async function fetchObservations() {
-      let path = `${props.record.links.observations}?page=${page.value}&size=${size.value}`
-
-      for (const code of selectedCodes.value) {
-        if (code) {
-          path = path + `&code=${code}`
-        }
-      }
-
       const observationsPage = await fetchPatientRecordObservationsPage(
         props.record,
-        page.value || 0,
+        page.value || 1,
         size.value,
         selectedCodes.value
       )
@@ -125,7 +117,7 @@ export default defineComponent({
       fetchObservations()
     })
 
-    watch(route, () => {
+    watch([page, selectedCodes], () => {
       fetchObservations()
     })
 

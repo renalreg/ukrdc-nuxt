@@ -58,7 +58,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useRoute, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
 
 import { WorkItem } from '@/interfaces/workitem'
 import usePagination from '~/helpers/query/usePagination'
@@ -72,8 +72,6 @@ import useDateRange from '~/helpers/query/useDateRange'
 
 export default defineComponent({
   setup() {
-    const route = useRoute()
-
     const { page, total, size } = usePagination()
     const { makeDateRange } = useDateRange()
     const { arrayQuery } = useQuery()
@@ -93,7 +91,7 @@ export default defineComponent({
 
     async function getWorkitems() {
       const itemsPage = await fetchWorkItemsPage(
-        page.value || 0,
+        page.value || 1,
         size.value,
         orderBy.value || 'desc',
         statuses.value,
@@ -103,8 +101,8 @@ export default defineComponent({
       )
 
       workitems.value = itemsPage.items
-      total.value = itemsPage.total
       page.value = itemsPage.page
+      total.value = itemsPage.total
       size.value = itemsPage.size
     }
 
@@ -112,7 +110,7 @@ export default defineComponent({
       getWorkitems()
     })
 
-    watch(route, () => {
+    watch([page, dateRange, statuses, selectedFacility, orderBy], () => {
       getWorkitems()
     })
 

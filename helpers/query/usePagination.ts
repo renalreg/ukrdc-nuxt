@@ -12,6 +12,7 @@ export default function () {
     console.warn('changePage is deprecated. Directly set page value instead')
     page.value = newPage
   }
+
   return {
     page,
     total,

@@ -102,9 +102,12 @@ export default defineComponent({
       getCode()
     })
 
-    watch(route, () => {
-      getCode()
-    })
+    watch(
+      () => route.value.params.id,
+      () => {
+        getCode()
+      }
+    )
 
     // External code links
 

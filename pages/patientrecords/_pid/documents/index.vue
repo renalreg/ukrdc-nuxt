@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useRoute, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
 
 import { PatientRecord } from '@/interfaces/patientrecord'
 import { PatientDocumentSummary } from '@/interfaces/document'
@@ -49,7 +49,6 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const route = useRoute()
     const { page, total, size } = usePagination()
     const { makeDateRange } = useDateRange()
     const { fetchPatientRecordDocumentsPage } = fetchPatientRecords()
@@ -64,7 +63,7 @@ export default defineComponent({
     // Data fetching
 
     async function getDocuments() {
-      const documentsPage = await fetchPatientRecordDocumentsPage(props.record, page.value || 0, size.value)
+      const documentsPage = await fetchPatientRecordDocumentsPage(props.record, page.value || 1, size.value)
       documents.value = documentsPage.items
       total.value = documentsPage.total
       page.value = documentsPage.page
@@ -75,7 +74,7 @@ export default defineComponent({
       getDocuments()
     })
 
-    watch(route, () => {
+    watch(page, () => {
       getDocuments()
     })
 

@@ -89,7 +89,7 @@ export default defineComponent({
 
     // Data fetching
     async function getCodes() {
-      const codesPage = await fetchCodesPage(page.value || 0, size.value, selectedStandard.value, searchboxString.value)
+      const codesPage = await fetchCodesPage(page.value || 1, size.value, selectedStandard.value, searchboxString.value)
       codes.value = codesPage.items
       total.value = codesPage.total
       page.value = codesPage.page

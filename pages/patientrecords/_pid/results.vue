@@ -94,7 +94,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useContext, useRoute, watch } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref, useContext, watch } from '@nuxtjs/composition-api'
 
 import { PatientRecord } from '@/interfaces/patientrecord'
 import { LabOrder, ResultItem } from '@/interfaces/laborder'
@@ -116,7 +116,6 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const route = useRoute()
     const { $toast } = useContext()
     const { page, total, size } = usePagination()
     const { makeDateRange } = useDateRange()
@@ -141,7 +140,7 @@ export default defineComponent({
     async function fetchResults() {
       const resultsPage = await fetchPatientRecordResultsPage(
         props.record,
-        page.value || 0,
+        page.value || 1,
         size.value,
         selectedService.value,
         selectedOrderId.value,
@@ -217,16 +216,6 @@ export default defineComponent({
       }
     }
 
-    onMounted(() => {
-      fetchResults()
-      fetchLabOrder()
-    })
-
-    watch(route, () => {
-      fetchResults()
-      fetchLabOrder()
-    })
-
     // Result item services
 
     const availableServicesMap = ref([] as ResultService[])
@@ -244,6 +233,21 @@ export default defineComponent({
     // Lab order filter
 
     const selectedOrderId = stringQuery('order_id', null, true, true)
+
+    // Data lifecycle
+
+    onMounted(() => {
+      fetchResults()
+      fetchLabOrder()
+    })
+
+    watch([page, selectedService, selectedOrderId, dateRange], () => {
+      fetchResults()
+    })
+
+    watch(selectedOrderId, () => {
+      fetchLabOrder()
+    })
 
     return {
       page,
