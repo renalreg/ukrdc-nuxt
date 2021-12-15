@@ -103,7 +103,7 @@ export default defineComponent({
     })
 
     watch(
-      () => route.value.params.id,
+      () => route.value.params.id, // Watch the computed (reactive) value of params.id
       () => {
         getCode()
       }

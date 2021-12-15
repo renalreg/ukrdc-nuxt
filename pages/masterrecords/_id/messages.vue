@@ -100,9 +100,16 @@ export default defineComponent({
       fetchMessages()
     })
 
-    watch([page, dateRange, orderBy], () => {
-      fetchMessages()
-    })
+    watch(
+      [
+        page,
+        orderBy,
+        () => JSON.stringify(dateRange), // Stringify to watch for actual value changes
+      ],
+      () => {
+        fetchMessages()
+      }
+    )
 
     return {
       page,

@@ -117,9 +117,15 @@ export default defineComponent({
       fetchObservations()
     })
 
-    watch([page, selectedCodes], () => {
-      fetchObservations()
-    })
+    watch(
+      [
+        page,
+        () => JSON.stringify(selectedCodes), // Stringify to watch for actual value changes
+      ],
+      () => {
+        fetchObservations()
+      }
+    )
 
     // Observation code filter
 

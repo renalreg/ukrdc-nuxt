@@ -128,9 +128,21 @@ export default defineComponent({
       getMessages()
     })
 
-    watch([page, orderBy, statuses, dateRange, selectedFacility, nationalId], () => {
-      getMessages()
-    })
+    watch(
+      [
+        page,
+        orderBy,
+        selectedFacility,
+        nationalId,
+        () => JSON.stringify(dateRange), // Stringify to watch for actual value changes
+        () => JSON.stringify(statuses), // Stringify to watch for actual value changes
+      ],
+      (current, old) => {
+        console.log(current)
+        console.log(old)
+        getMessages()
+      }
+    )
 
     return {
       fetchInProgress,

@@ -70,7 +70,7 @@ export default defineComponent({
       fetchOrders()
     })
 
-    watch([page], () => {
+    watch(page, () => {
       fetchOrders()
     })
 
