@@ -8,7 +8,6 @@
     - [helpers/fetch](#helpers-fetch)
     - [helpers/query](#helpers-query)
   - [components](#components)
-    - [components/dash](#components-dash)
     - [components/navigation](#components-navigation)
     - [components/masterrecords](#components-masterrecords)
     - [components/profile](#components-profile)
@@ -19,6 +18,7 @@
   - [layouts](#layouts)
   - [assets](#assets)
   - [pages](#pages)
+  - [middleware](#middleware)
 
 <a name="interfaces"></a>
 
@@ -41,8 +41,6 @@ More information about the usage of this directory in [the documentation](https:
 <a name="store"></a>
 
 ## STORE
-
-**This directory is not required, you can delete it if you don't want to use it.**
 
 This directory contains your Vuex Store files.
 Vuex Store option is implemented in the Nuxt.js framework.
@@ -99,12 +97,6 @@ components/
 
 will be auto-imported as `<BaseFooButton />`
 
-<a name="components-dash"></a>
-
-### DASH
-
-This folder contains components used in the application dashboard.
-
 <a name="components-navigation"></a>
 
 ### NAVIGATION
@@ -138,8 +130,6 @@ Contains generic reusable components, pre-styled, and with working Vue interacti
 <a name="plugins"></a>
 
 ## PLUGINS
-
-**This directory is not required, you can delete it if you don't want to use it.**
 
 This directory contains Javascript plugins that you want to run before mounting the root Vue.js application.
 
@@ -177,3 +167,12 @@ This directory contains your Application Views and Routes.
 The framework reads all the `*.vue` files inside this directory and creates the router of your application.
 
 More information about the usage of this directory in [the documentation](https://nuxtjs.org/guide/routing).
+
+<a name="middleware"></a>
+
+## MIDDLEWARE
+
+This directory contains your application middleware.
+Middleware let you define custom functions that can be run before rendering either a page or a group of pages.
+
+More information about the usage of this directory in [the documentation](https://nuxtjs.org/guide/routing#middleware).

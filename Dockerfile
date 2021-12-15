@@ -6,6 +6,7 @@ ARG SENTRY_PROJECT
 ARG SENTRY_AUTH_TOKEN
 ARG DEPLOYEMNT_ENV
 
+# Environment variables used for building and at runtime
 ARG GITHUB_SHA
 ARG GITHUB_REF
 ARG SENTRY_DSN
@@ -22,6 +23,7 @@ RUN yarn build
 
 FROM node:16-alpine
 
+# Environment variables used at runtime
 ARG GITHUB_SHA
 ARG GITHUB_REF
 ARG SENTRY_DSN
