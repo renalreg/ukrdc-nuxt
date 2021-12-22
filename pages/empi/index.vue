@@ -1,20 +1,21 @@
 <template>
   <div>
-    <TextH1 class="mb-6">EMPI Management</TextH1>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <TextH2 class="mb-4">EMPI Management</TextH2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
       <EmpiQuickLink
         title="Merge"
         description="Merge Master Records within the EMPI, moving all Patient Records to a combined Master Record"
         icon="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
         :href="'/empi/merge'"
       />
+    </div>
+    <TextH2 class="mb-4">EMPI Health</TextH2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
       <EmpiQuickLink
-        class="hidden"
-        title="Unlink"
-        description="Unlink Person Records and Patient Records from their Master Records within the EMPI"
-        icon="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
-        :href="'/empi/unlink'"
+        title="Multiple UKRDC IDs"
+        description="View and manage patients with multiple UKRDC IDs"
+        icon="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+        :href="'/empi/multipleids'"
       />
     </div>
   </div>

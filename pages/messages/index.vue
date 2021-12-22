@@ -137,9 +137,7 @@ export default defineComponent({
         () => JSON.stringify(dateRange), // Stringify to watch for actual value changes
         () => JSON.stringify(statuses), // Stringify to watch for actual value changes
       ],
-      (current, old) => {
-        console.log(current)
-        console.log(old)
+      () => {
         getMessages()
       }
     )
