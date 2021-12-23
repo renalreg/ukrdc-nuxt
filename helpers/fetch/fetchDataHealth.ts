@@ -1,12 +1,5 @@
 import { useContext } from '@nuxtjs/composition-api'
-import { MasterRecord } from '~/interfaces/masterrecord'
-
-export interface MultipleUKRDCIDsPage {
-  items: MasterRecord[][]
-  total: number
-  page: number
-  size: number
-}
+import { MultipleUKRDCIDsPage } from '~/interfaces/datahealth'
 
 export default function () {
   const { $axios, $config } = useContext()
