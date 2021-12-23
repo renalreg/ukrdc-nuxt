@@ -1,4 +1,4 @@
-import { ref, useContext } from '@nuxtjs/composition-api'
+import { useContext } from '@nuxtjs/composition-api'
 import { Code, ExtendedCode } from '@/interfaces/codes'
 
 interface CodesPage {
@@ -17,15 +17,12 @@ export default function () {
     return standardsResponse
   }
 
-  const fetchInProgress = ref(false)
-
   async function fetchCodesPage(
     page: number,
     size: number,
     standard: string | null,
     search: string | null
   ): Promise<CodesPage> {
-    fetchInProgress.value = true
     // Fetch code list
     let path = `${$config.apiBase}/v1/codes/list/?page=${page}&size=${size}`
     // Filter by service if it exists
@@ -36,14 +33,12 @@ export default function () {
     if (search) {
       path = path + `&search=${encodeURIComponent(search)}`
     }
-    const codesResponse = (await $axios.$get(path)) as CodesPage
-    fetchInProgress.value = false
-    return codesResponse
+    return (await $axios.$get(path)) as CodesPage
   }
 
   async function fetchCode(code: string): Promise<ExtendedCode> {
     return (await $axios.$get(`${$config.apiBase}/v1/codes/list/${code}/`)) as ExtendedCode
   }
 
-  return { fetchCodingStandards, fetchCodesPage, fetchCode, fetchInProgress }
+  return { fetchCodingStandards, fetchCodesPage, fetchCode }
 }

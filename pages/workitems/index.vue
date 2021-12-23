@@ -77,12 +77,14 @@ export default defineComponent({
     const { arrayQuery } = useQuery()
     const { facilities, facilityIds, facilityLabels, selectedFacility } = useFacilities()
     const { orderAscending, orderBy, toggleOrder } = useSortBy()
-    const { fetchInProgress, fetchWorkItemsPage } = fetchWorkItems()
+    const { fetchWorkItemsPage } = fetchWorkItems()
 
     // Data refs
 
     const workitems = ref<WorkItem[]>()
     const statuses = arrayQuery('status', ['1'], true, true)
+
+    const fetchInProgress = ref(false)
 
     // Set initial date dateRange
     const dateRange = makeDateRange(null, null, true, true)
@@ -90,6 +92,8 @@ export default defineComponent({
     // Data fetching
 
     async function getWorkitems() {
+      fetchInProgress.value = true
+
       const itemsPage = await fetchWorkItemsPage(
         page.value || 1,
         size.value,
@@ -104,6 +108,8 @@ export default defineComponent({
       page.value = itemsPage.page
       total.value = itemsPage.total
       size.value = itemsPage.size
+
+      fetchInProgress.value = false
     }
 
     onMounted(() => {

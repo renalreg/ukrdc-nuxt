@@ -8,8 +8,6 @@ import { WorkItem } from '~/interfaces/workitem'
 export default function () {
   const { $axios, $config } = useContext()
 
-  const fetchInProgress = ref(false)
-
   async function fetchMessagesPage(
     page: number,
     size: number,
@@ -34,9 +32,7 @@ export default function () {
       path = path + `&ni=${nationalId}`
     }
 
-    fetchInProgress.value = true
     const response: MessagePage = await $axios.$get(path)
-    fetchInProgress.value = false
     return response
   }
 
@@ -88,7 +84,6 @@ export default function () {
   }
 
   return {
-    fetchInProgress,
     fetchMessagesPage,
     fetchMessage,
     fetchMessageMasterRecords,
