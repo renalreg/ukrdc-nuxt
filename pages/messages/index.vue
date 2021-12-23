@@ -93,7 +93,7 @@ export default defineComponent({
     const { stringQuery, arrayQuery } = useQuery()
     const { facilities, facilityIds, facilityLabels, selectedFacility } = useFacilities()
     const { orderAscending, orderBy, toggleOrder } = useSortBy()
-    const { fetchInProgress, fetchMessagesPage } = fetchMessages()
+    const { fetchMessagesPage } = fetchMessages()
 
     // Set up URL query params for additional filters
     const nationalId = stringQuery('nationalid', null, true, true)
@@ -106,8 +106,12 @@ export default defineComponent({
     const messages = ref<Message[]>()
     const statuses = arrayQuery('status', ['ERROR'], true, true)
 
+    const fetchInProgress = ref(false)
+
     // Data fetching
     async function getMessages() {
+      fetchInProgress.value = true
+
       const messagesPage = await fetchMessagesPage(
         page.value || 1,
         size.value,
@@ -122,6 +126,8 @@ export default defineComponent({
       total.value = messagesPage.total
       page.value = messagesPage.page
       size.value = messagesPage.size
+
+      fetchInProgress.value = false
     }
 
     onMounted(() => {
@@ -137,9 +143,7 @@ export default defineComponent({
         () => JSON.stringify(dateRange), // Stringify to watch for actual value changes
         () => JSON.stringify(statuses), // Stringify to watch for actual value changes
       ],
-      (current, old) => {
-        console.log(current)
-        console.log(old)
+      () => {
         getMessages()
       }
     )

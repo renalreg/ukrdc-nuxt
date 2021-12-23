@@ -75,7 +75,7 @@ export default defineComponent({
   setup() {
     const { page, total, size } = usePagination()
     const { stringQuery } = useQuery()
-    const { fetchCodingStandards, fetchCodesPage, fetchInProgress } = fetchCodes()
+    const { fetchCodingStandards, fetchCodesPage } = fetchCodes()
 
     // Data refs
 
@@ -87,13 +87,19 @@ export default defineComponent({
 
     const searchboxString = stringQuery('search', null, true, true)
 
+    const fetchInProgress = ref(false)
+
     // Data fetching
     async function getCodes() {
+      fetchInProgress.value = true
+
       const codesPage = await fetchCodesPage(page.value || 1, size.value, selectedStandard.value, searchboxString.value)
       codes.value = codesPage.items
       total.value = codesPage.total
       page.value = codesPage.page
       size.value = codesPage.size
+
+      fetchInProgress.value = false
     }
 
     onMounted(async () => {
