@@ -1,10 +1,7 @@
 <template>
   <li>
     <!-- Content container -->
-    <div
-      class="px-4 py-4 sm:px-6 min-w-0 grid grid-cols-3 md:gap-4 w-full"
-      :class="showRecordId ? 'lg:grid-cols-4' : 'col-span-2'"
-    >
+    <div class="px-4 py-4 sm:px-6 min-w-0 grid grid-cols-3 lg:grid-cols-4 md:gap-4 w-full">
       <!-- Name, DoB, gender -->
       <div>
         <TextNameL1 :forename="item.givenname" :surname="item.surname" />
@@ -13,8 +10,8 @@
           <b class="ml-1"> {{ formatGenderCharacter(item.gender) }}</b>
         </TextP>
       </div>
-      <!-- Record ID (large breakpoint only) -->
-      <div v-show="showRecordId" class="hidden lg:block">
+      <!-- Record ID (large breakpoint only if a detail column is given) -->
+      <div :class="detailsValue ? 'hidden lg:block' : ''">
         <TextL1>Record ID</TextL1>
         <TextP class="mt-2">
           {{ item.id }}
@@ -27,11 +24,11 @@
         </TextP>
         <masterrecordsNationalIdTypeTag class="mt-2" :nationalid-type="item.nationalidType" />
       </div>
-      <!-- Details  -->
-      <div>
-        <TextL1>Last updated</TextL1>
+      <!-- Details, defaults to record updated time, but can be overridden by props  -->
+      <div v-if="detailsValue">
+        <TextL1>{{ detailsLabel }}</TextL1>
         <TextP class="mt-2">
-          {{ formatDate(item.lastUpdated) }}
+          {{ detailsValue }}
         </TextP>
       </div>
     </div>
@@ -50,10 +47,20 @@ export default defineComponent({
       type: Object as () => MasterRecord,
       required: true,
     },
-    showRecordId: {
-      type: Boolean,
+
+    // Override details data label
+    // E.g. in lists of records where we want a different timestamp shown,
+    // such as the multiple UKRDC ID viewer, where we show the last checked time.
+    detailsLabel: {
+      type: String,
       required: false,
-      default: true,
+      default: 'Details',
+    },
+    // Override details data value, see above
+    detailsValue: {
+      type: String,
+      required: false,
+      default: null,
     },
   },
 
