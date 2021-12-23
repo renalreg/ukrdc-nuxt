@@ -16,7 +16,7 @@
         />
       </svg>
       <div class="ml-3 flex-1 md:flex md:justify-between">
-        <p class="text-gray-700">Loading data. Please wait...</p>
+        <p class="text-gray-700">Loading latest data file. Please wait...</p>
       </div>
     </div>
   </div>
