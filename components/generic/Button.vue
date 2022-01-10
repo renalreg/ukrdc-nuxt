@@ -5,7 +5,7 @@
       :aria-label="label"
       type="button"
       :disabled="disabled"
-      :class="[primary ? `btn-${colour}-primary` : `btn-${colour}`, disabled ? 'btn-disabled' : '']"
+      :class="[primary ? `btn-${colour}-primary` : `btn-${colour}`, { 'btn-disabled': disabled }]"
       @click="navigate"
     >
       <slot />
