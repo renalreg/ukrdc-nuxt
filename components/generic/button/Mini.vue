@@ -4,11 +4,13 @@
       v-tooltip="{ content: tooltip, delay: { show: 500, hide: 0 } }"
       :aria-label="label"
       type="button"
+      :disabled="disabled"
       :class="[
         `btn-mini-${colour}`,
         anchor !== 'left' ? 'rounded-l-md' : 'border-l-0',
         anchor !== 'right' ? 'rounded-r-md' : 'border-r-0',
         'border',
+        { 'btn-mini-disabled': disabled },
       ]"
       @click="navigate"
     >
@@ -20,11 +22,13 @@
     v-tooltip="{ content: tooltip, delay: { show: 500, hide: 0 } }"
     :aria-label="label"
     type="button"
+    :disabled="disabled"
     :class="[
       `btn-mini-${colour}`,
       anchor !== 'left' ? 'rounded-l-md' : 'border-l-0',
       anchor !== 'right' ? 'rounded-r-md' : 'border-r-0',
       'border',
+      { 'btn-mini-disabled': disabled },
     ]"
     @click="$emit('click')"
   >
@@ -56,6 +60,11 @@ export default defineComponent({
       required: false,
       default: null,
     },
+    disabled: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     anchor: {
       type: String,
       required: false,
@@ -66,6 +75,9 @@ export default defineComponent({
 </script>
 
 <style lang="postcss">
+.btn-mini-disabled {
+  @apply opacity-50 cursor-default;
+}
 .btn-mini-white {
   @apply btn-mini-base bg-white hover:bg-gray-50 focus:ring-indigo-500 border-gray-300 text-gray-700;
 }
