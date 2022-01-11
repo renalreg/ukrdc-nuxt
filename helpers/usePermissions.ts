@@ -3,17 +3,17 @@ import useAuth from './useAuth'
 
 export default function () {
   const { $config } = useContext()
-  const { loggedIn, getUser } = useAuth()
+  const { loggedIn, getAccessToken } = useAuth()
 
   function getPermissions(): string[] {
-    if (loggedIn()) {
-      getUser().then((user) => {
-        console.log(user)
-        // Obtain the user key containing the permissions array
-        const permissionKey = $config.userPermissionKey || 'permission'
-        return user[permissionKey] as string[]
-      })
+    const token = getAccessToken()
+    if (token) {
+      console.log(token)
+      // Obtain the user key containing the permissions array
+      const permissionKey = $config.userPermissionKey || 'permission'
+      return token.payload[permissionKey] as string[]
     }
+
     return []
   }
 
@@ -29,7 +29,7 @@ export default function () {
   }
 
   function getFacilities(): string[] {
-    if (loggedIn() && getUser()) {
+    if (loggedIn()) {
       const permissions = getPermissions()
       if (permissions) {
         return permissions

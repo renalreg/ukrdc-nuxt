@@ -118,7 +118,7 @@ export default {
       responseType: 'code',
       pkce: true,
       // Extra options
-      scopes: ['openid', 'profile', 'picture', 'email', 'offline_access'],
+      scopes: ['openid', 'profile', 'email', 'offline_access'],
     },
   },
 

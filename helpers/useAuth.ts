@@ -6,7 +6,7 @@ always destroyed before new components are created, we can be sure
 that the background service will be running when we need it.
 */
 
-import { onBeforeUnmount, ref, useContext, useRouter } from '@nuxtjs/composition-api'
+import { computed, onBeforeUnmount, ref, useContext, useRouter } from '@nuxtjs/composition-api'
 
 import { OktaAuth, AuthState, toRelativeUrl } from '@okta/okta-auth-js'
 
@@ -14,7 +14,6 @@ export default function () {
   const { $okta } = useContext()
   const router = useRouter()
 
-  // const authState = ref($okta.authStateManager.getAuthState())
   const oktaAuth = $okta
   const authState = ref($okta.authStateManager.getAuthState())
 
@@ -66,9 +65,16 @@ export default function () {
     oktaAuth.start()
   }
 
-  function loggedIn() {
-    return authState.value && authState.value.isAuthenticated
+  async function signOut() {
+    // TODO: Get postLogoutRedirectUri from router
+    await oktaAuth.signOut({ postLogoutRedirectUri: '/login' })
   }
+
+  function loggedIn(): boolean {
+    return (authState.value && authState.value.isAuthenticated) || false
+  }
+
+  const isLoggedIn = computed(() => loggedIn())
 
   function getAccessToken() {
     if (loggedIn()) {
@@ -97,6 +103,7 @@ export default function () {
     // Auth states
     oktaAuth,
     authState,
+    isLoggedIn,
     loggedIn,
     // Token and user info
     getAccessToken,
@@ -106,5 +113,7 @@ export default function () {
     signInWithRedirect,
     isLoginRedirect,
     handleLoginRedirect,
+    // Sign out functionality
+    signOut,
   }
 }
