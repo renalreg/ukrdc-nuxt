@@ -27,6 +27,7 @@ export default {
     '~/plugins/v-tooltip.client.ts',
     '~/plugins/toast.client.ts',
     '~/plugins/vue-clickaway.client.ts',
+    '~/plugins/okta-auth.client.ts',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -36,10 +37,12 @@ export default {
   buildModules: ['@nuxt/typescript-build', '@nuxtjs/composition-api/module', '@nuxtjs/tailwindcss'],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@nuxtjs/axios', '@nuxtjs/auth-next', '@nuxtjs/sentry'],
+  modules: ['@nuxtjs/axios', '@nuxtjs/sentry'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    transpile: [],
+  },
 
   // Sentry Configuration: https://sentry.nuxtjs.org/guide/setup
   sentry: {
@@ -72,32 +75,9 @@ export default {
     },
   },
 
-  // Auth Configuration: https://auth.nuxtjs.org/api/options
-  auth: {
-    plugins: ['~/plugins/axios-auth.ts'],
-    strategies: {
-      okta: {
-        scheme: '~/schemes/oktaScheme.ts',
-        responseType: 'code',
-        grantType: 'authorization_code',
-        scope: ['openid', 'profile', 'email', 'offline_access'],
-        codeChallengeMethod: 'S256',
-      },
-    },
-    redirect: {
-      login: '/login',
-      logout: '/logout',
-      callback: '/login',
-      home: '/',
-    },
-    // Error will occur if you refresh once Okta has expired your session
-    // In this case, we need to logout and re-authenticate with Okta
-    resetOnError: true,
-  },
-
   // Router and middleware configuration
   router: {
-    middleware: ['check-ie', 'auth'],
+    middleware: ['check-ie'],
     base: process.env.APP_BASE || '/',
   },
 
@@ -129,19 +109,16 @@ export default {
         environment: process.env.DEPLOYMENT_ENV || 'development',
       },
     },
-    // Nuxt-Auth public runtime config
-    auth: {
-      strategies: {
-        okta: {
-          endpoints: {
-            authorization: process.env.OAUTH_ISSUER + '/v1/authorize',
-            token: process.env.OAUTH_ISSUER + '/v1/token',
-            userInfo: process.env.OAUTH_ISSUER + '/v1/userinfo',
-            logout: process.env.OKTA_DOMAIN + '/login/signout',
-          },
-          clientId: process.env.APP_CLIENT_ID,
-        },
-      },
+    // Okta JS runtime config
+    okta: {
+      issuer: process.env.OAUTH_ISSUER,
+      clientId: process.env.APP_CLIENT_ID,
+      redirectUri: process.env.APP_BASE + '/login',
+      // Use authorization_code flow
+      responseType: 'code',
+      pkce: true,
+      // Extra options
+      scopes: ['openid', 'profile', 'picture', 'email', 'offline_access'],
     },
   },
 

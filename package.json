@@ -11,10 +11,10 @@
     "lint": "yarn lint:js"
   },
   "dependencies": {
-    "@nuxtjs/auth-next": "^5.0.0-1637745161.ea53f98",
     "@nuxtjs/axios": "^5.13.1",
     "@nuxtjs/composition-api": "^0.31.0",
     "@nuxtjs/sentry": "^5.1.2",
+    "@okta/okta-auth-js": "^5.10.0",
     "@sentry/tracing": "^6.13.2",
     "chart.js": "^3.5.1",
     "chartjs-adapter-luxon": "^1.1.0",
