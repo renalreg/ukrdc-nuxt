@@ -6,12 +6,13 @@ always destroyed before new components are created, we can be sure
 that the background service will be running when we need it.
 */
 
-import { computed, onBeforeUnmount, ref, useContext } from '@nuxtjs/composition-api'
+import { onBeforeUnmount, ref, useContext, useRoute } from '@nuxtjs/composition-api'
 
 import { OktaAuth, AuthState } from '@okta/okta-auth-js'
 
 export default function () {
   const { $okta, $config } = useContext()
+  const route = useRoute()
 
   const oktaAuth: OktaAuth = $okta
   const authState = ref($okta.authStateManager.getAuthState())
@@ -32,8 +33,7 @@ export default function () {
   })
 
   function signInWithRedirect() {
-    // TODO: Get originalUri from router
-    oktaAuth.signInWithRedirect({ originalUri: '/login' })
+    oktaAuth.signInWithRedirect({ originalUri: route.value.fullPath })
   }
 
   function isLoginRedirect() {
@@ -45,7 +45,6 @@ export default function () {
   }
 
   async function signOut() {
-    // TODO: Get postLogoutRedirectUri from router
     await oktaAuth.signOut({
       postLogoutRedirectUri: `${window.location.origin}${$config.okta.redirectUri}`,
     })
@@ -54,8 +53,6 @@ export default function () {
   function loggedIn(): boolean {
     return (authState.value && authState.value.isAuthenticated) || false
   }
-
-  const isLoggedIn = computed(() => loggedIn())
 
   function getAccessToken() {
     if (loggedIn()) {
@@ -80,11 +77,25 @@ export default function () {
     return await oktaAuth.getUser()
   }
 
+  // Routing middleware functionality
+  // Note: In a normal Vue app this would likely be a vue-router middleware,
+  // however in Nuxt, router middleware gets executed server-side, and we don't
+  // know the auth state at that stage. Instead, we use this "mixin" within pages
+  // that require auth. We cannot apply this to the default template, as that is
+  // rendered on the server-side, with the page content then loaded client-side.
+  function requireAuth() {
+    const requiresAuth = !/^\/login(\/|$)/.test(route.value.fullPath)
+    if (requiresAuth) {
+      if (!loggedIn()) {
+        signInWithRedirect()
+      }
+    }
+  }
+
   return {
     // Auth states
     oktaAuth,
     authState,
-    isLoggedIn,
     loggedIn,
     // Token and user info
     getAccessToken,
@@ -96,5 +107,7 @@ export default function () {
     handleLoginRedirect,
     // Sign out functionality
     signOut,
+    // Routing middleware functionality
+    requireAuth,
   }
 }
