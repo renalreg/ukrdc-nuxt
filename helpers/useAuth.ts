@@ -6,29 +6,15 @@ always destroyed before new components are created, we can be sure
 that the background service will be running when we need it.
 */
 
-import { computed, onBeforeUnmount, ref, useContext, useRouter } from '@nuxtjs/composition-api'
+import { computed, onBeforeUnmount, ref, useContext } from '@nuxtjs/composition-api'
 
-import { OktaAuth, AuthState, toRelativeUrl } from '@okta/okta-auth-js'
+import { OktaAuth, AuthState } from '@okta/okta-auth-js'
 
 export default function () {
-  const { $okta } = useContext()
-  const router = useRouter()
+  const { $okta, $config } = useContext()
 
-  const oktaAuth = $okta
+  const oktaAuth: OktaAuth = $okta
   const authState = ref($okta.authStateManager.getAuthState())
-
-  // Enable restore original URI
-  if (!oktaAuth.options.restoreOriginalUri) {
-    // eslint-disable-next-line require-await
-    oktaAuth.options.restoreOriginalUri = async (_: OktaAuth, originalUri: string) => {
-      console.log('restoring URI')
-      // If a router is available, provide a default implementation
-      if (router && originalUri) {
-        const path = toRelativeUrl(originalUri, window.location.origin)
-        router.replace({ path })
-      }
-    }
-  }
 
   // HANDLE STATE CHANGES
 
@@ -39,16 +25,10 @@ export default function () {
 
   // Subscribe to auth state changes
   oktaAuth.authStateManager.subscribe(_handleAuthStateUpdate)
-  if (!oktaAuth.token.isLoginRedirect()) {
-    // Calculates initial auth state and fires change event for listeners
-    // Also starts the token auto-renew service
-    oktaAuth.start()
-  }
 
   // Unsubscribe from auth state changes when component is destroyed
   onBeforeUnmount(() => {
     oktaAuth.authStateManager.unsubscribe(_handleAuthStateUpdate)
-    oktaAuth.stop()
   })
 
   function signInWithRedirect() {
@@ -62,12 +42,13 @@ export default function () {
 
   async function handleLoginRedirect() {
     await oktaAuth.handleLoginRedirect()
-    oktaAuth.start()
   }
 
   async function signOut() {
     // TODO: Get postLogoutRedirectUri from router
-    await oktaAuth.signOut({ postLogoutRedirectUri: '/login' })
+    await oktaAuth.signOut({
+      postLogoutRedirectUri: `${window.location.origin}${$config.okta.redirectUri}`,
+    })
   }
 
   function loggedIn(): boolean {
