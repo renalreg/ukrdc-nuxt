@@ -9,11 +9,11 @@
         <div class="h-10 w-10">
           <span
             class="inline-block h-10 w-10 rounded-full overflow-hidden"
-            :class="loggedIn() ? 'bg-indigo-100' : 'bg-gray-100'"
+            :class="signedIn() ? 'bg-indigo-100' : 'bg-gray-100'"
           >
             <svg
               class="h-full w-full"
-              :class="loggedIn() ? 'text-indigo-300' : 'text-gray-300'"
+              :class="signedIn() ? 'text-indigo-300' : 'text-gray-300'"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -44,7 +44,7 @@
     </GenericButtonRaw>
 
     <GenericMenu
-      v-if="loggedIn()"
+      v-if="signedIn()"
       class="z-10 w-full"
       :class="topToBottom ? 'top-16 right-0' : 'bottom-16 left-0 mb-1'"
       :show="showMenu"
@@ -78,7 +78,7 @@ export default defineComponent({
     },
   },
   setup() {
-    const { loggedIn, getIdToken, signOut } = useAuth()
+    const { signedIn, getIdToken, signOut } = useAuth()
 
     const showMenu = ref(false)
 
@@ -95,7 +95,7 @@ export default defineComponent({
     })
 
     return {
-      loggedIn,
+      signedIn,
       displayName,
       showMenu,
       closeMenu,

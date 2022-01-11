@@ -14,7 +14,7 @@ export default defineComponent({
   auth: false,
 
   setup() {
-    const { oktaAuth, loggedIn, signInWithRedirect, isLoginRedirect, handleLoginRedirect } = useAuth()
+    const { oktaAuth, signIn, isLoginRedirect, handleLoginRedirect } = useAuth()
 
     onBeforeMount(() => {
       if (isLoginRedirect()) {
@@ -23,13 +23,12 @@ export default defineComponent({
     })
 
     onMounted(() => {
-      if (!loggedIn() && !isLoginRedirect()) {
-        signInWithRedirect()
+      if (!isLoginRedirect()) {
+        signIn()
       }
     })
 
     return {
-      signInWithRedirect,
       oktaAuth,
     }
   },

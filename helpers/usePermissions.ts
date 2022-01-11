@@ -3,7 +3,7 @@ import useAuth from './useAuth'
 
 export default function () {
   const { $config } = useContext()
-  const { loggedIn, getAccessToken } = useAuth()
+  const { signedIn, getAccessToken } = useAuth()
 
   function getPermissions(): string[] {
     const token = getAccessToken()
@@ -18,7 +18,7 @@ export default function () {
   }
 
   function hasPermission(key: string): boolean {
-    if (loggedIn()) {
+    if (signedIn()) {
       // Fetch permissions array from the access token
       const permissions = getPermissions()
       if (permissions && permissions.includes(key)) {
@@ -29,7 +29,7 @@ export default function () {
   }
 
   function getFacilities(): string[] {
-    if (loggedIn()) {
+    if (signedIn()) {
       const permissions = getPermissions()
       if (permissions) {
         return permissions

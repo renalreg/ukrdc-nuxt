@@ -1,17 +1,17 @@
 <template>
   <div>
     <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
-      <div v-if="loggedIn()" class="max-w-3xl lg:flex lg:items-center lg:justify-between lg:space-x-5 lg:max-w-7xl">
+      <div v-if="signedIn()" class="max-w-3xl lg:flex lg:items-center lg:justify-between lg:space-x-5 lg:max-w-7xl">
         <div class="flex items-center space-x-5 mb-4">
           <div class="flex-shrink-0">
             <div class="relative">
               <span
                 class="inline-block h-16 w-16 rounded-full overflow-hidden"
-                :class="loggedIn() ? 'bg-indigo-100' : 'bg-gray-100'"
+                :class="signedIn() ? 'bg-indigo-100' : 'bg-gray-100'"
               >
                 <svg
                   class="h-full w-full"
-                  :class="loggedIn() ? 'text-indigo-300' : 'text-gray-300'"
+                  :class="signedIn() ? 'text-indigo-300' : 'text-gray-300'"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -73,7 +73,7 @@ import usePermissions from '~/helpers/usePermissions'
 
 export default defineComponent({
   setup() {
-    const { getUser, signOut, loggedIn } = useAuth()
+    const { getUser, signOut, signedIn } = useAuth()
     const { getPermissions } = usePermissions()
 
     // User info
@@ -107,7 +107,7 @@ export default defineComponent({
     return {
       user,
       perms,
-      loggedIn,
+      signedIn,
       logout,
       classesForPermissions,
     }

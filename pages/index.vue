@@ -26,12 +26,12 @@ import useAuth from '~/helpers/useAuth'
 
 export default defineComponent({
   setup() {
-    const { requireAuth, loggedIn } = useAuth()
-    requireAuth()
-
+    const { signedIn, signIn } = useAuth()
+    const { isAdmin, getFacilities, hasMultipleFacilities } = usePermissions()
     const { fetchDashboard } = fetchDash()
 
-    const { isAdmin, getFacilities, hasMultipleFacilities } = usePermissions()
+    // Prerequisites
+    signIn()
 
     // Data refs
 
@@ -42,7 +42,7 @@ export default defineComponent({
     })
 
     onMounted(async () => {
-      if (loggedIn()) {
+      if (signedIn()) {
         dash.value = await fetchDashboard()
       }
     })
