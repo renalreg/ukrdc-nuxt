@@ -25,13 +25,12 @@ import usePermissions from '~/helpers/usePermissions'
 import useAuth from '~/helpers/useAuth'
 
 export default defineComponent({
+  auth: false,
+
   setup() {
-    const { signedIn, signIn } = useAuth()
+    const { signedIn } = useAuth()
     const { isAdmin, getFacilities, hasMultipleFacilities } = usePermissions()
     const { fetchDashboard } = fetchDash()
-
-    // Prerequisites
-    signIn()
 
     // Data refs
 

@@ -8,7 +8,6 @@ export default function () {
   function getPermissions(): string[] {
     const token = getAccessToken()
     if (token) {
-      console.log(token)
       // Obtain the user key containing the permissions array
       const permissionKey = $config.userPermissionKey || 'permission'
       return token.payload[permissionKey] as string[]

@@ -1,4 +1,7 @@
 export default {
+  // Disable SSR, and build as an SPA
+  ssr: false,
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'ukrdc-nuxt',
@@ -47,19 +50,22 @@ export default {
   // Sentry Configuration: https://sentry.nuxtjs.org/guide/setup
   sentry: {
     dsn: process.env.SENTRY_DSN,
-    publishRelease: {
-      authToken: process.env.SENTRY_AUTH_TOKEN,
-      org: process.env.SENTRY_ORG,
-      project: process.env.SENTRY_PROJECT,
-      // Attach commits to the release (requires that the build triggered within a git repository).
-      setCommits: {
-        auto: true,
-      },
-      deploy: {
-        // The release's environment name.
-        env: process.env.DEPLOYEMNT_ENV || 'development',
-      },
-    },
+    // Skip publish if no DSN is found at build-time
+    publishRelease: process.env.SENTRY_DSN
+      ? {
+          authToken: process.env.SENTRY_AUTH_TOKEN,
+          org: process.env.SENTRY_ORG,
+          project: process.env.SENTRY_PROJECT,
+          // Attach commits to the release (requires that the build triggered within a git repository).
+          setCommits: {
+            auto: true,
+          },
+          deploy: {
+            // The release's environment name.
+            env: process.env.DEPLOYEMNT_ENV || 'development',
+          },
+        }
+      : false,
     sourceMapStyle: 'hidden-source-map',
     tracing: {
       tracesSampleRate: 1.0,
@@ -77,20 +83,14 @@ export default {
 
   // Router and middleware configuration
   router: {
-    middleware: ['check-ie'],
-    base: process.env.APP_BASE || '/',
-  },
-
-  // Basic axios configuration
-  axios: {
-    baseURL: 'http://localhost:8000', // Used as fallback if no runtime config is provided
+    middleware: ['check-ie', 'okta-auth'],
+    base: process.env.APP_BASE_URL || '/new/app',
   },
 
   // Runtime configuration variables
   publicRuntimeConfig: {
-    baseURL: process.env.APP_BASE || '/',
     // API root, used to construct API URLs within components
-    apiBase: process.env.API_BASE || '/api',
+    apiBase: process.env.API_BASE_URL || process.env.API_BASE || '/new/api',
     // Nuxt-Auth user key containing an array of permission group strings
     userPermissionKey: process.env.USER_PERMISSION_KEY || 'org.ukrdc.permissions',
     // Okta domain
@@ -99,10 +99,6 @@ export default {
     githubRef: process.env.GITHUB_REF || 'Not Available',
     githubSha: process.env.GITHUB_SHA || 'Not Available',
     deploymentEnv: process.env.DEPLOYMENT_ENV || 'development',
-    // Axios public runtime config
-    axios: {
-      browserBaseURL: process.env.BROWSER_BASE_URL,
-    },
     // Sentry public runtime config, see https://sentry.nuxtjs.org/sentry/runtime-config/
     sentry: {
       config: {
@@ -113,20 +109,13 @@ export default {
     okta: {
       issuer: process.env.OAUTH_ISSUER,
       clientId: process.env.APP_CLIENT_ID,
-      redirectUri: process.env.APP_BASE + '/login',
+      redirectUri: '/login',
+      postLogoutRedirectUri: '/login',
       // Use authorization_code flow
       responseType: 'code',
       pkce: true,
       // Extra options
       scopes: ['openid', 'profile', 'email', 'offline_access'],
-    },
-  },
-
-  privateRuntimeConfig: {
-    // Axios SSR-specific config
-    // This could be removed as we don't make API calls server-side, but it's here for completeness
-    axios: {
-      baseURL: process.env.BASE_URL,
     },
   },
 }

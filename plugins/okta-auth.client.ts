@@ -5,7 +5,8 @@ allowing components to interact with a shared OktaAuth instance.
 
 import { Plugin } from '@nuxt/types'
 
-import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js'
+import { OktaAuth } from '@okta/okta-auth-js'
+import { urljoin } from '~/helpers/utils/pathUtils'
 
 declare module 'vue/types/vue' {
   interface Vue {
@@ -21,8 +22,22 @@ declare module '@nuxt/types' {
 }
 
 const oktaPlugin: Plugin = (_ctx, inject) => {
+  // Common variables
+  const router = _ctx.app.router
+  const basePath = router?.options.base || '/'
+
   // Fetch (runtime) config from context
   const configOptions = _ctx.$config.okta
+
+  // Assert router base is prepended to callback URLs
+  if (configOptions.postLogoutRedirectUri) {
+    configOptions.postLogoutRedirectUri = urljoin(basePath, configOptions.postLogoutRedirectUri)
+  }
+  if (configOptions.redirectUri) {
+    configOptions.redirectUri = urljoin(basePath, configOptions.redirectUri)
+  }
+
+  console.log(configOptions)
 
   // Create OktaAuth instance
   const oktaAuth = new OktaAuth(configOptions)
@@ -32,15 +47,14 @@ const oktaPlugin: Plugin = (_ctx, inject) => {
   oktaAuth.start()
 
   // Look for a router instance to handle URI restoration
-  const router = _ctx.app.router
   if (!oktaAuth.options.restoreOriginalUri) {
     // eslint-disable-next-line require-await
     oktaAuth.options.restoreOriginalUri = async (_: OktaAuth, originalUri: string) => {
-      console.log('restoring URI')
       // If a router is available, provide a default implementation
       if (router && originalUri) {
-        const path = toRelativeUrl(originalUri, window.location.origin)
-        router.replace({ path })
+        // Our originalUri will always be a router path (i.e. route.value.fullPath, see useAuth.ts),
+        // so we can pass it straight through to the router without any further modifications.
+        router.replace({ path: originalUri })
       }
     }
   }
