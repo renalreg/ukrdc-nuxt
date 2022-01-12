@@ -50,7 +50,7 @@
       :show="showMenu"
     >
       <GenericMenuItem to="/profile"> View Profile </GenericMenuItem>
-      <GenericMenuItem :href="$config.oktaDomain + '/app/UserHome'" target="blank"> Manage Account </GenericMenuItem>
+      <GenericMenuItem :href="$config.manageAccountUrl" target="blank"> Manage Account </GenericMenuItem>
       <GenericMenuDivider />
       <GenericMenuItem to="/system"> Support </GenericMenuItem>
       <GenericMenuDivider />

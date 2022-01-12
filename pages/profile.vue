@@ -41,7 +41,7 @@
           class="mb-8 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 lg:mt-0 lg:flex-row lg:space-x-3"
         >
           <a
-            :href="$config.oktaDomain + '/app/UserHome'"
+            :href="$config.manageAccountUrl"
             target="blank"
             type="button"
             class="text-center px-3 py-2 border border-gray-300 shadow-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

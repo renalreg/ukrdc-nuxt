@@ -107,7 +107,7 @@ export default {
     // Nuxt-Auth user key containing an array of permission group strings
     userPermissionKey: process.env.USER_PERMISSION_KEY || 'org.ukrdc.permissions',
     // Okta domain
-    oktaDomain: process.env.OKTA_DOMAIN || 'https://renalregistry.okta.com',
+    manageAccountUrl: process.env.MANAGE_ACCOUNT_URL || 'https://renalregistry.okta.com/app/UserHome',
     // Deployment environment
     deploymentEnv: process.env.DEPLOYMENT_ENV || 'development',
     // Sentry public runtime config, see https://sentry.nuxtjs.org/sentry/runtime-config/
