@@ -25,8 +25,6 @@ import usePermissions from '~/helpers/usePermissions'
 import useAuth from '~/helpers/useAuth'
 
 export default defineComponent({
-  auth: false,
-
   setup() {
     const { signedIn } = useAuth()
     const { isAdmin, getFacilities, hasMultipleFacilities } = usePermissions()
