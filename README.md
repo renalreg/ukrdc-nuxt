@@ -28,35 +28,50 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 
 ## Developer notes
 
-### Server-side rendering
+### (No) Server-side rendering
 
-In order to enable runtime-configueration, we make use of Nuxt server-side rendering. However, some of our components are not compatible with server-side rendering at all (e.g. the date picker component), and more importantly some plugins (nuxt-auth) can cause issues when async attributes are used to conditionally render components (e.g. `<div v-if="$auth.loggedIn">`). 
+One often cited advantage to using Nuxt over Vue is server-side rendering. However, we don't use it in this project.
+SSR offers no significant advantage to us, since we don't care about SEO, and disabling it massively simplifies the code.
+This is because Nuxt modules/plugins need to support both client and server-side rendering.
 
-Unfortunately, we can't just disable `ssr` in Nuxt, as this causes issues with runtime-configuration of the applications base URL. When SSR is disabled, Nuxt hard-codes the URL to our webpack bundled JavaScript (at `/_nuxt/****.js`), either due to a bug or an oversight (see [various](https://github.com/nuxt/nuxt.js/issues/8509) [issues](https://github.com/nuxt/nuxt.js/issues/9170)).
+Take, for example, authentication. Okta offer a really nice JS library to simplify authentication with their service, however making this library compatible with SSR would be a huge amount of work. This is why Nuxt modules like nuxt-auth exist. Authentication states need to be passed to the server, for example as cookies, so that the server can then send API requests as the user, render the content, and send the rendered page back to the client.
 
-We work around this by forcing our default layout to render client-side, by wrapping the entirity of `/layouts/default.vue` in a `<client-only>` tag.
+Enabling SSR would essentially limit us to using libraries that have been converted into universal Nuxt modules, and in the case of nuxt-auth (for example), this caused more problems than it solved.
 
-Eventually, I'd like to find a way to just disable SSR completely but keep runtime-configured base paths, but in the meantime, this seems to work fine.
+Instead, we disable SSR entirely, and make use of the wealth of client-side JS libraries throughout our code.
+Removing our reliance on Nuxt modules is an ongoing process, but has already been useful.
 
-### Server-side fetching
+Although we disable server-side rendering and build a "traditional" Vue single-page application, we make use of the internal Nuxt server to allow runtime configuration of the application. The Nuxt server essentially populates the SPA with runtime variables before serving it unrendered to the client, just like a normal Vue application.
 
-**Note:** *This section was written before we switched to client-side rendering by default, however the content still largely stands*
+### Authentication flow
 
-In order to enable runtime-configueration, we make use of Nuxt server-side rendering. However, generally we want data fetching to happen client-side. This is particularly important for pages where mutliple API routes are called, populating the page in "chunks". We don't want the user to have to wait for every chunk to finish before showing anything (as is the case with full server-side fetching).
+Our authentication code is split over 3 main files:
 
-A primary example of this is when viewing a Master Record. While most record data loads quickly, some queries such as finding related records and messages take longer to run. We want to render data as soon as it's available, so we use client-side fetching to allow this. Similarly, some API routes slow down occasionally due to upstream load, e.g. Mirth message information. We'd rather show users that the data is being loaded rather than just hanging waiting for the page to load at all. By moving fetching to the client-side we can render loading messages/animations and handle timeouts more gracefully.
+#### `plugins/okta-auth.client.ts`
 
-Additionally, the built-in Nuxt `$fetch` and `$asyncData` functions are likely to change significantly in Nuxt 3, and given that we get essentially no benefit from using them over a "normal" Vue data fetching paradigm, we don't use them.
+This plugin provides the bare minimum required to boostrap our authentication flow. It creates an instance of `OktaAuth` from the excellent `@okta/okta-auth-js` library, and injects this object as `$okta` into the application context and Vue instance. It additionally starts the Oktra authentication background service responsible for automatic token refreshing, and sets up functionality for restoring URLs after login callback using the Nuxt router.
 
-Instead, we create a custom data fetch function that gets called from the Vue `onMounted` hook, as well as optionally from `watch` hooks and custom refresh functions.
+#### `middleware/okta-auth.ts`
 
-Now, the server will render the DOM, send this to the client, and the client will then call the API to populate page data.
+This router middleware provides auth-guard functionality, and is used to ensure that the user is authenticated before accessing any route. If the user is not authenticated, it records the current URL in the session, and redirects the user to the login page.
 
-This should also help to smooth the eventual transition from Nuxt 2 to Nuxt 3.
+The auth-guard can be disabled on a page by adding `auth: false` to the page's component, see `pages/login.vue` for example.
+
+#### `helpers/useAuth.ts`
+
+This "use" module provides a simple way to access authentication functionality from within the application. It is essentially a composition API "mixin" providing Vue data refs and functions to simplify interaction with the `$okta` object.
+
+### UKRDC API
+
+We automatically handle adding authentication headers to UKRDC API requests by making all API requests from a custom Axios instance, created in `plugins/axios-ukrdc-api.client.ts`. This custom instance is injected into the application context and Vue instance as `$api`.
+
+As well as adding authentication headers, `$api` also ensures that all API calls include the correct base path and API hostname.
+
+An additional plugin `plugins/axios-error-handlers.ts` adds error handling to the `$api` instance.
 
 ### Upcoming Nuxt 3 changes
 
-Once Nuxt 3 has launched and is stable, we will begin migration from Nuxt 2 to Nuxt 3. We will need to wait for a couple of Nuxt modules to confirm compatibility, but otherwise the transition should be fairly straightforward.
+Once Nuxt 3 has launched and is stable, we will begin migration from Nuxt 2 to Nuxt 3. We will need to wait for a couple of Nuxt modules to confirm compatibility (or remove our dependence on them), but otherwise the transition should be fairly straightforward.
 
 Thanks to [Headless UI](https://headlessui.dev/) and [@heroicons/vue](https://www.npmjs.com/package/@heroicons/vue) we can replace a lot of our custom components with pre-built components from those libraries, significantly reducing the amount of code we need to maintain.
 
