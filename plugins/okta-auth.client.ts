@@ -8,6 +8,8 @@ import { Plugin } from '@nuxt/types'
 import { OktaAuth } from '@okta/okta-auth-js'
 import { urljoin } from '~/helpers/utils/pathUtils'
 
+// Add our injected $okta into the Vue instance and context interfaces
+
 declare module 'vue/types/vue' {
   interface Vue {
     $okta: OktaAuth
@@ -15,11 +17,12 @@ declare module 'vue/types/vue' {
 }
 
 declare module '@nuxt/types' {
-  // nuxtContext.$myInjectedFunction
   interface Context {
     $okta: OktaAuth
   }
 }
+
+// Create a new OktaAuth instance and inject it into the Vue instance and context
 
 const oktaPlugin: Plugin = (_ctx, inject) => {
   // Common variables
