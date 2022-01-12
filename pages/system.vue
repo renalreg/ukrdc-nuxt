@@ -26,15 +26,15 @@
         <GenericCardDl>
           <GenericCardDi>
             <GenericCardDt>Environment</GenericCardDt>
-            <GenericCardDd>{{ $config.deploymentEnv }}</GenericCardDd>
+            <GenericCardDd>{{ clientInfo.deploymentEnv }}</GenericCardDd>
           </GenericCardDi>
           <GenericCardDi>
             <GenericCardDt>Version Reference</GenericCardDt>
-            <GenericCardDd>{{ $config.githubRef }}</GenericCardDd>
+            <GenericCardDd>{{ clientInfo.githubRef }}</GenericCardDd>
           </GenericCardDi>
           <GenericCardDi>
             <GenericCardDt>Version Hash</GenericCardDt>
-            <GenericCardDd>{{ $config.githubSha }}</GenericCardDd>
+            <GenericCardDd>{{ clientInfo.githubSha }}</GenericCardDd>
           </GenericCardDi>
         </GenericCardDl>
       </GenericCard>
@@ -85,6 +85,11 @@ export default defineComponent({
     // Data refs
 
     const serverInfo = ref<serverSystemInfo>()
+    const clientInfo = ref({
+      deploymentEnv: $config.deploymentEnv,
+      githubRef: process.env.githubRef,
+      githubSha: process.env.githubSha,
+    })
 
     // Data fetching
 
@@ -98,11 +103,7 @@ export default defineComponent({
       return JSON.stringify(
         {
           server: serverInfo.value,
-          client: {
-            deploymentEnv: $config.deploymentEnv,
-            githubRef: $config.githubRef,
-            githubSha: $config.githubSha,
-          },
+          client: clientInfo.value,
         },
         null,
         4
@@ -123,6 +124,7 @@ export default defineComponent({
 
     return {
       serverInfo,
+      clientInfo,
       copyConfigReport,
     }
   },

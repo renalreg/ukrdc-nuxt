@@ -1,6 +1,8 @@
 export default {
   // Disable SSR, and build as an SPA
   ssr: false,
+  // Use the Nuxt server to serve the SPA, allowing runtime config
+  target: 'server',
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -88,6 +90,13 @@ export default {
     base: process.env.APP_BASE_URL || '/new/app',
   },
 
+  // Build-time variables. These are resolved during the build process,
+  // and can be accessed via `process.env.VAR_NAME` in the code.
+  env: {
+    githubRef: process.env.GITHUB_REF || 'Not Available',
+    githubSha: process.env.GITHUB_SHA || 'Not Available',
+  },
+
   // Runtime configuration variables
   publicRuntimeConfig: {
     // Custom UKRDC API config
@@ -99,9 +108,7 @@ export default {
     userPermissionKey: process.env.USER_PERMISSION_KEY || 'org.ukrdc.permissions',
     // Okta domain
     oktaDomain: process.env.OKTA_DOMAIN || 'https://renalregistry.okta.com',
-    // System info variables
-    githubRef: process.env.GITHUB_REF || 'Not Available',
-    githubSha: process.env.GITHUB_SHA || 'Not Available',
+    // Deployment environment
     deploymentEnv: process.env.DEPLOYMENT_ENV || 'development',
     // Sentry public runtime config, see https://sentry.nuxtjs.org/sentry/runtime-config/
     sentry: {
