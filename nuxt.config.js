@@ -24,13 +24,14 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '~/plugins/axios.ts',
     '~/plugins/vuex-persistedstate.client.ts',
     '~/plugins/v-calendar.client.ts',
     '~/plugins/v-tooltip.client.ts',
     '~/plugins/toast.client.ts',
     '~/plugins/vue-clickaway.client.ts',
     '~/plugins/okta-auth.client.ts',
+    '~/plugins/axios-ukrdc-api.client.ts',
+    '~/plugins/axios-error-handlers.ts',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -89,8 +90,11 @@ export default {
 
   // Runtime configuration variables
   publicRuntimeConfig: {
-    // API root, used to construct API URLs within components
-    apiBase: process.env.API_BASE_URL || process.env.API_BASE || '/new/api',
+    // Custom UKRDC API config
+    api: {
+      host: process.env.API_HOST,
+      base: process.env.API_BASE_URL || '/new/api',
+    },
     // Nuxt-Auth user key containing an array of permission group strings
     userPermissionKey: process.env.USER_PERMISSION_KEY || 'org.ukrdc.permissions',
     // Okta domain

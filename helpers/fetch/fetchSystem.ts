@@ -7,10 +7,10 @@ interface serverSystemInfo {
 }
 
 export default function () {
-  const { $axios, $config } = useContext()
+  const { $api } = useContext()
 
   async function fetchServerInfo(): Promise<serverSystemInfo> {
-    return (await $axios.$get(`${$config.apiBase}/v1/system/info/`)) as serverSystemInfo
+    return (await $api.$get('/v1/system/info/')) as serverSystemInfo
   }
 
   return { fetchServerInfo }

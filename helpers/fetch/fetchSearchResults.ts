@@ -9,7 +9,7 @@ interface MasterRecordPage {
 }
 
 export default function () {
-  const { $axios, $config } = useContext()
+  const { $api } = useContext()
 
   const searchInProgress = ref(false)
 
@@ -20,7 +20,7 @@ export default function () {
     showUKRDC: boolean = false,
     onlyUKRDC: boolean = false
   ): Promise<MasterRecordPage> {
-    let path = `${$config.apiBase}/v1/search/?${queryString}&page=${page}&size=${size}`
+    let path = `/v1/search/?${queryString}&page=${page}&size=${size}`
     if (showUKRDC) {
       path = path + '&include_ukrdc=true'
     }
@@ -30,7 +30,7 @@ export default function () {
 
     // Fetch the search results from our API server
     searchInProgress.value = true
-    const results: MasterRecordPage = await $axios.$get(path)
+    const results: MasterRecordPage = await $api.$get(path)
     searchInProgress.value = false
     return results
   }

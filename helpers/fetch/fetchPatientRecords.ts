@@ -63,22 +63,22 @@ export interface DeletePIDResponseSchema {
 }
 
 export default function () {
-  const { $axios, $config } = useContext()
+  const { $api } = useContext()
 
   async function fetchPatientRecord(pid: string): Promise<PatientRecord> {
-    return (await $axios.$get(`${$config.apiBase}/v1/patientrecords/${pid}/`)) as PatientRecord
+    return (await $api.$get(`/v1/patientrecords/${pid}/`)) as PatientRecord
   }
 
   async function fetchPatientRecordRelated(record: PatientRecord): Promise<PatientRecordSummary[]> {
-    return (await $axios.$get(record.links.related)) as PatientRecordSummary[]
+    return (await $api.$get(record.links.related)) as PatientRecordSummary[]
   }
 
   async function fetchPatientRecordMedications(record: PatientRecord): Promise<Medication[]> {
-    return (await $axios.$get(record.links.medications)) as Medication[]
+    return (await $api.$get(record.links.medications)) as Medication[]
   }
 
   async function fetchPatientRecordTreatments(record: PatientRecord): Promise<Treatment[]> {
-    return (await $axios.$get(record.links.treatments)) as Treatment[]
+    return (await $api.$get(record.links.treatments)) as Treatment[]
   }
 
   async function fetchPatientRecordResultsPage(
@@ -103,15 +103,15 @@ export default function () {
       path = path + `&order_id=${orderId}`
     }
 
-    return (await $axios.$get(path)) as ResultsPage
+    return (await $api.$get(path)) as ResultsPage
   }
 
   async function fetchPatientRecordResultServices(record: PatientRecord): Promise<ResultService[]> {
-    return (await $axios.$get(record.links.resultServices)) as ResultService[]
+    return (await $api.$get(record.links.resultServices)) as ResultService[]
   }
 
   async function deletePatientRecordResultItem(item: ResultItem): Promise<void> {
-    await $axios.$delete(item.links.self)
+    await $api.$delete(item.links.self)
   }
 
   async function fetchPatientRecordLabOrdersPage(
@@ -119,15 +119,15 @@ export default function () {
     page: number,
     size: number
   ): Promise<LabOrdersPage> {
-    return (await $axios.$get(`${record.links.laborders}?page=${page}&size=${size}`)) as LabOrdersPage
+    return (await $api.$get(`${record.links.laborders}?page=${page}&size=${size}`)) as LabOrdersPage
   }
 
   async function fetchPatientRecordLabOrder(record: PatientRecord, orderId: string): Promise<LabOrder> {
-    return (await $axios.$get(`${record.links.laborders}${orderId}`)) as LabOrder
+    return (await $api.$get(`${record.links.laborders}${orderId}`)) as LabOrder
   }
 
   async function deletePatientRecordLabOrder(order: LabOrderShort): Promise<void> {
-    await $axios.$delete(order.links.self)
+    await $api.$delete(order.links.self)
   }
 
   async function fetchPatientRecordObservationsPage(
@@ -144,15 +144,15 @@ export default function () {
         }
       }
     }
-    return (await $axios.$get(path)) as ObservationPage
+    return (await $api.$get(path)) as ObservationPage
   }
 
   async function fetchPatientRecordObservationCodes(record: PatientRecord): Promise<string[]> {
-    return (await $axios.$get(record.links.observationCodes)) as string[]
+    return (await $api.$get(record.links.observationCodes)) as string[]
   }
 
   async function fetchPatientRecordSurveys(record: PatientRecord): Promise<Survey[]> {
-    return (await $axios.$get(record.links.surveys)) as Survey[]
+    return (await $api.$get(record.links.surveys)) as Survey[]
   }
 
   async function fetchPatientRecordDocumentsPage(
@@ -160,18 +160,18 @@ export default function () {
     page: number,
     size: number
   ): Promise<DocumentsPage> {
-    return (await $axios.$get(`${record.links.documents}?page=${page}&size=${size}`)) as DocumentsPage
+    return (await $api.$get(`${record.links.documents}?page=${page}&size=${size}`)) as DocumentsPage
   }
 
   async function fetchPatientRecordDocument(record: PatientRecord, docId: string): Promise<PatientDocument> {
-    return (await $axios.$get(`${record.links.documents}${docId}/`)) as PatientDocument
+    return (await $api.$get(`${record.links.documents}${docId}/`)) as PatientDocument
   }
 
   const documentDownloadInProgress = ref(false)
 
   function downloadPatientRecordDocument(patientDocument: PatientDocument): void {
     documentDownloadInProgress.value = true
-    $axios({
+    $api({
       url: patientDocument.links.download,
       method: 'GET',
       responseType: 'blob',
@@ -209,14 +209,14 @@ export default function () {
         throw new Error('Invalid scope')
       }
     }
-    return await $axios.$post(path)
+    return await $api.$post(path)
   }
 
   async function postPatientRecordDelete(
     record: PatientRecordSummary,
     confirmationHash: string | null
   ): Promise<DeletePIDResponseSchema> {
-    return (await $axios.$post(record.links.delete, {
+    return (await $api.$post(record.links.delete, {
       hash: confirmationHash,
     })) as DeletePIDResponseSchema
   }

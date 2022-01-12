@@ -18,8 +18,8 @@ function decodePydanticErrors(errors: PydanticError[]) {
   return errorMessage
 }
 
-export default function ({ error, app, $axios, $sentry }: Context) {
-  $axios.onError((thisError) => {
+export default function ({ error, app, $api, $sentry }: Context) {
+  $api.onError((thisError) => {
     // Let nuxt-auth handle logging out on ExpiredAuthSessionError
     // Using `thisError instanceof ExpiredAuthSessionError` doesn't seem to work, possibly
     // due to something like https://github.com/microsoft/TypeScript/issues/13965
