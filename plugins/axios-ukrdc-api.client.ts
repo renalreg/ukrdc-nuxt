@@ -55,7 +55,6 @@ declare module '@nuxt/types' {
 // Create a new Axios instance and inject it into the Vue instance and context
 
 export default function ({ $axios, $okta, $config }: Context, inject: Function) {
-  console.log({ $axios, $okta })
   // Create a custom axios instance
   const api = $axios.create({
     headers: {

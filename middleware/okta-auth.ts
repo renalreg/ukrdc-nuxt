@@ -20,7 +20,6 @@ function routeOption(route: Route, key: string, value: string | boolean): boolea
 
 export default function ({ route, redirect, $okta }: Context) {
   const skipAuth = routeOption(route as unknown as Route, 'auth', false)
-  console.log({ skipAuth })
   if (!skipAuth) {
     const authState = $okta.authStateManager.getAuthState()
     const signedIn = authState && authState.isAuthenticated

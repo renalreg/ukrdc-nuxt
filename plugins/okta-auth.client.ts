@@ -40,8 +40,6 @@ const oktaPlugin: Plugin = (_ctx, inject) => {
     configOptions.redirectUri = urljoin(basePath, configOptions.redirectUri)
   }
 
-  console.log(configOptions)
-
   // Create OktaAuth instance
   const oktaAuth = new OktaAuth(configOptions)
 
