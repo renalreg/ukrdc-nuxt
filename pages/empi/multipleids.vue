@@ -11,24 +11,7 @@
 
     <div v-if="groups">
       <div v-for="group in groups" :key="`group-${group.groupId}`">
-        <GenericCard class="mb-8">
-          <ul class="divide-y divide-gray-200">
-            <div
-              v-for="item in group.records"
-              :key="`record-${group.groupId}-${item.masterRecord.id}`"
-              class="hover:bg-gray-50"
-            >
-              <SkeleListItem v-if="fetchInProgress" />
-              <NuxtLink v-else :to="`/masterrecords/${item.masterRecord.id}`">
-                <MasterrecordsListItem
-                  :item="item.masterRecord"
-                  details-label="Last checked"
-                  :details-value="formatDate(item.lastUpdated)"
-                />
-              </NuxtLink>
-            </div>
-          </ul>
-        </GenericCard>
+        <empiMultipleIDItem :group="group" :fetch-in-progress="fetchInProgress" />
       </div>
 
       <GenericCard>
