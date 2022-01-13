@@ -75,6 +75,25 @@ Once Nuxt 3 has launched and is stable, we will begin migration from Nuxt 2 to N
 
 Thanks to [Headless UI](https://headlessui.dev/) and [@heroicons/vue](https://www.npmjs.com/package/@heroicons/vue) we can replace a lot of our custom components with pre-built components from those libraries, significantly reducing the amount of code we need to maintain.
 
+#### Nuxt3 migration todo
+
+It may be simpler to start a fresh Nuxt 3 project and add the application back in bits at a time until we have a fully working project.
+
+- Wait for nuxtjs/sentry module to support Nuxt 3 (or replace with normal Sentry Vue integration)
+  - See https://github.com/nuxt-community/sentry-module/issues/358
+- Wait for nuxtjs/axios module to support Nuxt 3 (or replace with normal Axios and a custom plugin)
+  - See https://github.com/nuxt-community/axios-module/issues/536
+- Replace Tailwind module with "normal" Tailwind
+  - See https://github.com/nuxt-community/tailwindcss-module/issues/387
+- Update requirements to Vue 3 compatible versions
+  - `v-calendar` to `v-calendar@next`
+  - `v-tooltip` to `v-tooltip@vue3`
+- Update Vue 3 comptible dependency initialisation
+  - `vuex-persistedstate`
+    - See https://github.com/robinvdvleuten/vuex-persistedstate/releases/tag/v4.0.0-beta.1
+- Migrate to Nuxt Bridge
+  - See https://v3.nuxtjs.org/getting-started/bridge/
+
 ### Framework rationale
 
 #### Vue
