@@ -68,10 +68,9 @@ export default function ({ $axios, $okta, $config }: Context, inject: Function) 
   // on a different port or server) then we need to set the baseURL to
   // the new host so that all request URLs are prefixed by the new host.
   // NB: This is only really relevant for local development, in production
-  // the user-facing app and API run on the same host and port.
-  if ($config.api.host) {
-    api.setBaseURL($config.api.host)
-  }
+  // the user-facing app and API run on the same host and port, so we set
+  // the baseURL to / (i.e. the current host the user is connected to).
+  api.setBaseURL($config.api.host || '/')
 
   // Request interceptor to handle API base paths and authentication
   api.interceptors.request.use((config) => {
