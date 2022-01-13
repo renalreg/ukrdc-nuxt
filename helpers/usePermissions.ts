@@ -1,14 +1,25 @@
 import { useContext, computed } from '@nuxtjs/composition-api'
+import useAuth from './useAuth'
 
 export default function () {
-  const { $auth, $config } = useContext()
+  const { $config } = useContext()
+  const { signedIn, getAccessToken } = useAuth()
 
-  function hasPermission(key: string): boolean {
-    if ($auth.loggedIn && $auth.user) {
+  function getPermissions(): string[] {
+    const token = getAccessToken()
+    if (token) {
       // Obtain the user key containing the permissions array
       const permissionKey = $config.userPermissionKey || 'permission'
+      return token.payload[permissionKey] as string[]
+    }
+
+    return []
+  }
+
+  function hasPermission(key: string): boolean {
+    if (signedIn()) {
       // Fetch permissions array from the access token
-      const permissions = $auth.user[permissionKey] as string[]
+      const permissions = getPermissions()
       if (permissions && permissions.includes(key)) {
         return true
       }
@@ -16,22 +27,14 @@ export default function () {
     return false
   }
 
-  function getPermissions(): string[] {
-    if ($auth.loggedIn && $auth.user) {
-      // Obtain the user key containing the permissions array
-      const permissionKey = $config.userPermissionKey || 'permission'
-      // Fetch permissions array from the access token
-      return $auth.user[permissionKey] as string[]
-    }
-    return []
-  }
-
   function getFacilities(): string[] {
-    if ($auth.loggedIn && $auth.user) {
+    if (signedIn()) {
       const permissions = getPermissions()
-      return permissions
-        .filter((option) => option.toLowerCase().startsWith('ukrdc:unit:') && option.toLowerCase() !== 'ukrdc:unit:*')
-        .map((option) => option.replace('ukrdc:unit:', ''))
+      if (permissions) {
+        return permissions
+          .filter((option) => option.toLowerCase().startsWith('ukrdc:unit:') && option.toLowerCase() !== 'ukrdc:unit:*')
+          .map((option) => option.replace('ukrdc:unit:', ''))
+      }
     }
     return []
   }

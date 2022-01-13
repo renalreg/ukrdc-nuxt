@@ -18,14 +18,17 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
 import { DashResponse } from '@/interfaces/dash'
+
 import fetchDash from '~/helpers/fetch/fetchDash'
+
 import usePermissions from '~/helpers/usePermissions'
+import useAuth from '~/helpers/useAuth'
 
 export default defineComponent({
   setup() {
-    const { fetchDashboard } = fetchDash()
-
+    const { signedIn } = useAuth()
     const { isAdmin, getFacilities, hasMultipleFacilities } = usePermissions()
+    const { fetchDashboard } = fetchDash()
 
     // Data refs
 
@@ -36,7 +39,9 @@ export default defineComponent({
     })
 
     onMounted(async () => {
-      dash.value = await fetchDashboard()
+      if (signedIn()) {
+        dash.value = await fetchDashboard()
+      }
     })
 
     return {

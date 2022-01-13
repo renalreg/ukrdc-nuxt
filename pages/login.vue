@@ -5,36 +5,48 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, useContext, useRoute } from '@nuxtjs/composition-api'
+import { defineComponent, onBeforeMount, useRouter } from '@nuxtjs/composition-api'
+
+import useAuth from '~/helpers/useAuth'
 
 export default defineComponent({
+  // Override auth middleware. We handle redirects here ourselves in mounted()
   auth: false,
 
   setup() {
-    const route = useRoute()
-    const { $auth } = useContext()
+    const { oktaAuth, signedIn } = useAuth()
+    const router = useRouter()
 
-    onMounted(() => {
-      // If we're not logged in, either start logging in,
-      // or wait for login flow to finish before redirecting home.
-      if (!$auth.loggedIn) {
-        // If we're here with a code parameter,
-        // let the Auth module finish the PKCE flow without redirecting again.
-        // Otherwise, start the Okta login flow.
-        if (!route.value.query.code) {
-          $auth.loginWith('okta')
+    onBeforeMount(() => {
+      const originalUri = oktaAuth.getOriginalUri()
+      if (oktaAuth.isLoginRedirect()) {
+        // If we're in the middle of a sign-in flow
+        // Fetch tokens and redirect back to originalUri
+        oktaAuth.handleLoginRedirect()
+      } else if (!signedIn()) {
+        // If we're not currently signed in
+        // Check if we were redirected here from another page
+        if (!originalUri) {
+          // If we weren't redirected here from another page,
+          // redirect back to the home page after login
+          oktaAuth.setOriginalUri('/')
         }
-        // If we are logged in and don't have a code parameter
-      } else if (!route.value.query.code) {
-        // Use $auth.redirect so rewriteRedirects works properly
-        // I.e. if we were sent to /login by another page because
-        // our token expired, we want to go back to that page, not
-        // home. $auth.redirect handles checking where we came from,
-        // so we know where to go. Something something cotton-eye Joe.
-        $auth.redirect('home')
+        // Start sign-in flow
+        oktaAuth.signInWithRedirect()
+      } else if (originalUri) {
+        // If we're signed in and an originalUri somehow exists
+        router.replace({ path: originalUri })
+      } else {
+        // If we're signed in and no originalUri exists
+        // Redirect to home
+        router.replace({ path: '/' })
       }
     })
-  }, // Override auth middleware. We handle redirects here ourselves in mounted()
+
+    return {
+      oktaAuth,
+    }
+  },
   head: {
     title: 'Login',
   },

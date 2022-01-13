@@ -1,4 +1,9 @@
 export default {
+  // Disable SSR, and build as an SPA
+  ssr: false,
+  // Use the Nuxt server to serve the SPA, allowing runtime config
+  target: 'server',
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'ukrdc-nuxt',
@@ -21,12 +26,14 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '~/plugins/axios.ts',
     '~/plugins/vuex-persistedstate.client.ts',
     '~/plugins/v-calendar.client.ts',
     '~/plugins/v-tooltip.client.ts',
     '~/plugins/toast.client.ts',
     '~/plugins/vue-clickaway.client.ts',
+    '~/plugins/okta-auth.client.ts',
+    '~/plugins/axios-ukrdc-api.client.ts',
+    '~/plugins/axios-error-handlers.ts',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -36,27 +43,32 @@ export default {
   buildModules: ['@nuxt/typescript-build', '@nuxtjs/composition-api/module', '@nuxtjs/tailwindcss'],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@nuxtjs/axios', '@nuxtjs/auth-next', '@nuxtjs/sentry'],
+  modules: ['@nuxtjs/axios', '@nuxtjs/sentry'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    transpile: [],
+  },
 
   // Sentry Configuration: https://sentry.nuxtjs.org/guide/setup
   sentry: {
     dsn: process.env.SENTRY_DSN,
-    publishRelease: {
-      authToken: process.env.SENTRY_AUTH_TOKEN,
-      org: process.env.SENTRY_ORG,
-      project: process.env.SENTRY_PROJECT,
-      // Attach commits to the release (requires that the build triggered within a git repository).
-      setCommits: {
-        auto: true,
-      },
-      deploy: {
-        // The release's environment name.
-        env: process.env.DEPLOYEMNT_ENV || 'development',
-      },
-    },
+    // Skip publish if no DSN is found at build-time
+    publishRelease: process.env.SENTRY_DSN
+      ? {
+          authToken: process.env.SENTRY_AUTH_TOKEN,
+          org: process.env.SENTRY_ORG,
+          project: process.env.SENTRY_PROJECT,
+          // Attach commits to the release (requires that the build triggered within a git repository).
+          setCommits: {
+            auto: true,
+          },
+          deploy: {
+            // The release's environment name.
+            env: process.env.DEPLOYEMNT_ENV || 'development',
+          },
+        }
+      : false,
     sourceMapStyle: 'hidden-source-map',
     tracing: {
       tracesSampleRate: 1.0,
@@ -72,84 +84,49 @@ export default {
     },
   },
 
-  // Auth Configuration: https://auth.nuxtjs.org/api/options
-  auth: {
-    plugins: ['~/plugins/axios-auth.ts'],
-    strategies: {
-      okta: {
-        scheme: '~/schemes/oktaScheme.ts',
-        responseType: 'code',
-        grantType: 'authorization_code',
-        scope: ['openid', 'profile', 'email', 'offline_access'],
-        codeChallengeMethod: 'S256',
-      },
-    },
-    redirect: {
-      login: '/login',
-      logout: '/logout',
-      callback: '/login',
-      home: '/',
-    },
-    // Error will occur if you refresh once Okta has expired your session
-    // In this case, we need to logout and re-authenticate with Okta
-    resetOnError: true,
-  },
-
   // Router and middleware configuration
   router: {
-    middleware: ['check-ie', 'auth'],
-    base: process.env.APP_BASE || '/',
+    middleware: ['check-ie', 'okta-auth'],
+    base: process.env.APP_BASE_URL || '/new/app',
   },
 
-  // Basic axios configuration
-  axios: {
-    baseURL: 'http://localhost:8000', // Used as fallback if no runtime config is provided
+  // Build-time variables. These are resolved during the build process,
+  // and can be accessed via `process.env.VAR_NAME` in the code.
+  env: {
+    githubRef: process.env.GITHUB_REF || 'Not Available',
+    githubSha: process.env.GITHUB_SHA || 'Not Available',
   },
 
   // Runtime configuration variables
   publicRuntimeConfig: {
-    baseURL: process.env.APP_BASE || '/',
-    // API root, used to construct API URLs within components
-    apiBase: process.env.API_BASE || '/api',
+    // Custom UKRDC API config
+    api: {
+      host: process.env.API_HOST,
+      base: process.env.API_BASE_URL || '/new/api',
+    },
     // Nuxt-Auth user key containing an array of permission group strings
     userPermissionKey: process.env.USER_PERMISSION_KEY || 'org.ukrdc.permissions',
     // Okta domain
-    oktaDomain: process.env.OKTA_DOMAIN || 'https://renalregistry.okta.com',
-    // System info variables
-    githubRef: process.env.GITHUB_REF || 'Not Available',
-    githubSha: process.env.GITHUB_SHA || 'Not Available',
+    manageAccountUrl: process.env.MANAGE_ACCOUNT_URL || 'https://renalregistry.okta.com/app/UserHome',
+    // Deployment environment
     deploymentEnv: process.env.DEPLOYMENT_ENV || 'development',
-    // Axios public runtime config
-    axios: {
-      browserBaseURL: process.env.BROWSER_BASE_URL,
-    },
     // Sentry public runtime config, see https://sentry.nuxtjs.org/sentry/runtime-config/
     sentry: {
       config: {
         environment: process.env.DEPLOYMENT_ENV || 'development',
       },
     },
-    // Nuxt-Auth public runtime config
-    auth: {
-      strategies: {
-        okta: {
-          endpoints: {
-            authorization: process.env.OAUTH_ISSUER + '/v1/authorize',
-            token: process.env.OAUTH_ISSUER + '/v1/token',
-            userInfo: process.env.OAUTH_ISSUER + '/v1/userinfo',
-            logout: process.env.OKTA_DOMAIN + '/login/signout',
-          },
-          clientId: process.env.APP_CLIENT_ID,
-        },
-      },
-    },
-  },
-
-  privateRuntimeConfig: {
-    // Axios SSR-specific config
-    // This could be removed as we don't make API calls server-side, but it's here for completeness
-    axios: {
-      baseURL: process.env.BASE_URL,
+    // Okta JS runtime config
+    okta: {
+      issuer: process.env.OAUTH_ISSUER,
+      clientId: process.env.APP_CLIENT_ID,
+      redirectUri: '/login',
+      postLogoutRedirectUri: '/login',
+      // Use authorization_code flow
+      responseType: 'code',
+      pkce: true,
+      // Extra options
+      scopes: ['openid', 'profile', 'email', 'offline_access'],
     },
   },
 }

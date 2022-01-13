@@ -262,8 +262,7 @@ export default defineComponent({
         try {
           // Fetch the delete preview and confirmation hash
           previewResponse.value = await postPatientRecordDelete(props.item, null)
-          console.log(previewResponse.value)
-        } catch (error) {
+        } catch (error: any) {
           // Populate error message if preview fails
           if (error.response.status === 400) {
             previewErrorMessage.value = error.response.data.detail

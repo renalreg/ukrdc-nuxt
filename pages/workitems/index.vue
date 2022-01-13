@@ -124,9 +124,7 @@ export default defineComponent({
         () => JSON.stringify(dateRange.value), // Stringify to watch for actual value changes
         () => JSON.stringify(statuses.value), // Stringify to watch for actual value changes
       ],
-      (current, old) => {
-        console.log(old)
-        console.log(current)
+      () => {
         getWorkitems()
       }
     )

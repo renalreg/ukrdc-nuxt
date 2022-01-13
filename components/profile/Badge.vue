@@ -7,20 +7,13 @@
     >
       <div class="flex gap-4 items-center" :class="{ 'flex-row-reverse': rightToLeft }">
         <div class="h-10 w-10">
-          <img
-            v-if="loggedIn && $auth.user.picture"
-            class="inline-block h-10 w-10 rounded-full"
-            :src="$auth.user.picture"
-            alt=""
-          />
           <span
-            v-else
             class="inline-block h-10 w-10 rounded-full overflow-hidden"
-            :class="loggedIn ? 'bg-indigo-100' : 'bg-gray-100'"
+            :class="signedIn() ? 'bg-indigo-100' : 'bg-gray-100'"
           >
             <svg
               class="h-full w-full"
-              :class="loggedIn ? 'text-indigo-300' : 'text-gray-300'"
+              :class="signedIn() ? 'text-indigo-300' : 'text-gray-300'"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -35,7 +28,7 @@
             :class="rightToLeft ? 'text-right' : 'text-left'"
             class="text-base font-medium text-gray-700 group-hover:text-gray-900"
           >
-            {{ loggedIn ? $auth.user.name : 'Signed out' }}
+            {{ displayName }}
           </p>
         </div>
         <div v-show="!rightToLeft" class="flex-0">
@@ -51,23 +44,25 @@
     </GenericButtonRaw>
 
     <GenericMenu
-      v-if="loggedIn"
+      v-if="signedIn()"
       class="z-10 w-full"
       :class="topToBottom ? 'top-16 right-0' : 'bottom-16 left-0 mb-1'"
       :show="showMenu"
     >
       <GenericMenuItem to="/profile"> View Profile </GenericMenuItem>
-      <GenericMenuItem :href="$config.oktaDomain + '/app/UserHome'" target="blank"> Manage Account </GenericMenuItem>
+      <GenericMenuItem :href="$config.manageAccountUrl" target="blank"> Manage Account </GenericMenuItem>
       <GenericMenuDivider />
       <GenericMenuItem to="/system"> Support </GenericMenuItem>
       <GenericMenuDivider />
-      <GenericMenuItem @click="$auth.logout()"> Logout </GenericMenuItem>
+      <GenericMenuItem @click="signOut"> Logout </GenericMenuItem>
     </GenericMenu>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, useContext } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
+
+import useAuth from '~/helpers/useAuth'
 
 export default defineComponent({
   props: {
@@ -83,24 +78,28 @@ export default defineComponent({
     },
   },
   setup() {
-    const { $auth } = useContext()
+    const { signedIn, getIdToken, signOut } = useAuth()
 
     const showMenu = ref(false)
-
-    const loggedIn = computed(() => {
-      // !! to force boolean
-      // We use this computed property as a workaround for https://github.com/nuxt/nuxt.js/issues/5800#issuecomment-619535385
-      return !!$auth?.loggedIn
-    })
 
     function closeMenu() {
       showMenu.value = false
     }
 
+    const displayName = computed(() => {
+      const idToken = getIdToken()
+      if (idToken) {
+        return idToken.payload.name
+      }
+      return 'Signed Out'
+    })
+
     return {
-      loggedIn,
+      signedIn,
+      displayName,
       showMenu,
       closeMenu,
+      signOut,
     }
   },
 })

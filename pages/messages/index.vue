@@ -80,6 +80,7 @@ import { Message } from '@/interfaces/messages'
 import usePagination from '~/helpers/query/usePagination'
 import useDateRange from '~/helpers/query/useDateRange'
 
+import usePermissions from '~/helpers/usePermissions'
 import useFacilities from '~/helpers/useFacilities'
 import useQuery from '~/helpers/query/useQuery'
 import useSortBy from '~/helpers/query/useSortBy'
@@ -94,13 +95,14 @@ export default defineComponent({
     const { facilities, facilityIds, facilityLabels, selectedFacility } = useFacilities()
     const { orderAscending, orderBy, toggleOrder } = useSortBy()
     const { fetchMessagesPage } = fetchMessages()
+    const { isAdmin } = usePermissions()
 
     // Set up URL query params for additional filters
     const nationalId = stringQuery('nationalid', null, true, true)
     const nationalIdSearchString = ref<string | null>(null)
 
     // Set initial date dateRange
-    const dateRange = makeDateRange(nowString(-365), nowString(0), true)
+    const dateRange = makeDateRange(isAdmin ? nowString(-30) : nowString(-365), nowString(0), true)
 
     // Data refs
     const messages = ref<Message[]>()

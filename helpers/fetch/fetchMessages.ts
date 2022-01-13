@@ -6,7 +6,7 @@ import { ChannelMessage } from '~/interfaces/mirth'
 import { WorkItem } from '~/interfaces/workitem'
 
 export default function () {
-  const { $axios, $config } = useContext()
+  const { $api } = useContext()
 
   async function fetchMessagesPage(
     page: number,
@@ -18,7 +18,7 @@ export default function () {
     facility: string | null,
     nationalId: string | null
   ): Promise<MessagePage> {
-    let path = `${$config.apiBase}/v1/messages/?page=${page}&size=${size}&sort_by=received`
+    let path = `/v1/messages/?page=${page}&size=${size}&sort_by=received`
 
     // Filter by status and date
     path = path + buildCommonMessageQuery(orderBy, statuses || ['ERROR'], since, until)
@@ -32,24 +32,24 @@ export default function () {
       path = path + `&ni=${nationalId}`
     }
 
-    const response: MessagePage = await $axios.$get(path)
+    const response: MessagePage = await $api.$get(path)
     return response
   }
 
   async function fetchMessage(id: string): Promise<Message> {
-    return (await $axios.$get(`${$config.apiBase}/v1/messages/${id}`)) as Message
+    return (await $api.$get(`/v1/messages/${id}`)) as Message
   }
 
   async function fetchMessageMasterRecords(message: Message): Promise<MasterRecord[]> {
-    return (await $axios.$get(message.links.masterrecords)) as MasterRecord[]
+    return (await $api.$get(message.links.masterrecords)) as MasterRecord[]
   }
 
   async function fetchMessageWorkItems(message: Message): Promise<WorkItem[]> {
-    return (await $axios.$get(message.links.workitems)) as WorkItem[]
+    return (await $api.$get(message.links.workitems)) as WorkItem[]
   }
 
   async function fetchMessageMirth(message: Message): Promise<ChannelMessage> {
-    return (await $axios.$get(message.links.mirth)) as ChannelMessage
+    return (await $api.$get(message.links.mirth)) as ChannelMessage
   }
 
   const fetchSourceInProgress = ref(false)
@@ -57,7 +57,7 @@ export default function () {
   async function fetchMessageSource(message: Message): Promise<ErrorSource> {
     fetchSourceInProgress.value = true
     try {
-      const source: ErrorSource = await $axios.$get(message.links.source)
+      const source: ErrorSource = await $api.$get(message.links.source)
       return source
     } finally {
       fetchSourceInProgress.value = false
@@ -68,7 +68,7 @@ export default function () {
 
   function downloadMessageSource(message: Message): void {
     downloadSourceInProgress.value = true
-    $axios({
+    $api({
       url: message.links.source,
       method: 'GET',
       responseType: 'blob',

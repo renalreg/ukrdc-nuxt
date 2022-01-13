@@ -66,7 +66,6 @@ export default defineComponent({
     function doUnlink() {
       PostEMPIUnlink(props.record.person.id, props.record.masterRecord.id, unlinkComment.value)
         .then((response: LinkRecord) => {
-          console.log(response)
           $toast.show({
             type: 'success',
             title: 'Success',
