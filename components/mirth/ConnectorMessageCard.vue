@@ -17,7 +17,12 @@
           class="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-sm font-medium bg-green-100 rounded-sm"
           >Success</span
         >
-        <genericButtonMini class="float-right" @click="$emit('viewSourceClick')"> View message </genericButtonMini>
+        <genericButtonMini
+          class="float-right"
+          :to="`/mirth/messages/${message.channelId}/${message.messageId}/${message.orderId}`"
+        >
+          View message
+        </genericButtonMini>
       </div>
     </div>
   </genericCardMini>
@@ -26,6 +31,7 @@
 <script lang="ts">
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 import { ConnectorMessage } from '@/interfaces/mirth'
+import { connectorMessageError } from '~/helpers/utils/mirthUtils'
 
 export default defineComponent({
   props: {
@@ -37,12 +43,7 @@ export default defineComponent({
 
   setup(props) {
     const errorMessage = computed(() => {
-      if (props.message.metaDataMap?.ERROR) {
-        return props.message.metaDataMap.ERROR
-      } else if (props.message.errorCode !== 0) {
-        return `Error code ${props.message.errorCode}`
-      }
-      return null
+      return connectorMessageError(props.message)
     })
 
     return { errorMessage }

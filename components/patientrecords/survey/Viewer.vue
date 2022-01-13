@@ -1,14 +1,15 @@
 <template>
-  <GenericModalSlot ref="surveyViewerGenericModalMaxSlot">
-    <div v-if="availableToOpen" class="px-0 py-0 w-full h-full box-border overflow-y-scroll overflow-x-hidden">
-      <div class="overflow-hidden sm:rounded-lg">
-        <div class="px-4 py-5">
+  <GenericModalSlot ref="surveyViewerModal">
+    <div v-if="availableToOpen">
+      <div class="sm:rounded-lg">
+        <div class="mb-4">
           <h3 class="text-lg leading-6 font-medium text-gray-900">Survey Information</h3>
           <p class="mt-1 max-w-2xl text-gray-500">
             {{ survey.id }}
           </p>
         </div>
-        <div class="border-t border-gray-200 px-4 py-5">
+
+        <div class="border-t border-gray-200 mb-6">
           <GenericCardDl>
             <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
               <dt class="font-medium text-gray-500">Entered On</dt>
@@ -39,13 +40,11 @@
       </div>
 
       <div v-for="(questions, group) in groupedQuestions" :key="group">
-        <div class="overflow-hidden sm:rounded-lg mb-6">
-          <div class="px-4 py-4">
-            <h3 class="text-lg leading-6 font-medium text-gray-900">
-              {{ group !== 'null' ? group : 'Ungrouped' }}
-            </h3>
-          </div>
-          <div class="border-t border-gray-200 px-4">
+        <div class="sm:rounded-lg mb-6">
+          <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
+            {{ group !== 'null' ? group : 'Ungrouped' }}
+          </h3>
+          <div class="border-t border-gray-200">
             <GenericCardDl>
               <div v-for="question in questions" :key="question.id" class="flex items-center py-4">
                 <div class="mr-4 font-medium text-gray-900">
@@ -100,23 +99,23 @@ export default defineComponent({
       return groups
     })
 
-    const surveyViewerGenericModalMaxSlot = ref<modalInterface>()
+    const surveyViewerModal = ref<modalInterface>()
     function hide(): void {
-      surveyViewerGenericModalMaxSlot.value?.hide()
+      surveyViewerModal.value?.hide()
     }
     function toggle(): void {
-      surveyViewerGenericModalMaxSlot.value?.toggle()
+      surveyViewerModal.value?.toggle()
     }
     function show(surveyToShow: Survey): void {
       survey.value = surveyToShow
-      surveyViewerGenericModalMaxSlot.value?.show()
+      surveyViewerModal.value?.show()
     }
 
     return {
       survey,
       availableToOpen,
       groupedQuestions,
-      surveyViewerGenericModalMaxSlot,
+      surveyViewerModal,
       hide,
       toggle,
       show,

@@ -1,8 +1,5 @@
 <template>
   <div>
-    <!-- XML viewer modal -->
-    <MirthMessageViewer ref="messageViewerModal" class="max-h-full" />
-
     <!-- Chain grid -->
     <div>
       <div v-for="(messages, index) in chain" :key="index">
@@ -11,7 +8,6 @@
             v-for="item in messages"
             :key="item.channelName + item.connectorName"
             :message="item"
-            @viewSourceClick="messageViewerModal.show(item)"
           />
         </div>
 
@@ -24,9 +20,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from '@nuxtjs/composition-api'
 
-import { messageViewerModalInterface } from '@/interfaces/modal'
 import { ChainMap, ChannelMessage, ConnectorMessage } from '@/interfaces/mirth'
 
 import { isEmptyObject } from '@/helpers/utils/objectUtils'
@@ -39,9 +34,6 @@ export default defineComponent({
     },
   },
   setup(props) {
-    // Template refs
-    const messageViewerModal = ref<messageViewerModalInterface>()
-
     const chain = computed(() => {
       const currentChain = {} as ChainMap
       if (props.message.connectorMessages) {
@@ -59,7 +51,6 @@ export default defineComponent({
     })
 
     return {
-      messageViewerModal,
       chain,
       isEmptyObject,
     }

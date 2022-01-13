@@ -46,7 +46,7 @@ export interface ChannelMessage {
   channelId: string
   processed: boolean
 
-  connectorMessages: connectorMessagesMap
+  connectorMessages: { [key: number]: ConnectorMessage }
 
   links: ChannelMessageLinks
 }
