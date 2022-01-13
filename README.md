@@ -79,20 +79,21 @@ Thanks to [Headless UI](https://headlessui.dev/) and [@heroicons/vue](https://ww
 
 It may be simpler to start a fresh Nuxt 3 project and add the application back in bits at a time until we have a fully working project.
 
-- Wait for nuxtjs/sentry module to support Nuxt 3 (or replace with normal Sentry Vue integration)
-  - See https://github.com/nuxt-community/sentry-module/issues/358
-- Wait for nuxtjs/axios module to support Nuxt 3 (or replace with normal Axios and a custom plugin)
-  - See https://github.com/nuxt-community/axios-module/issues/536
-- Replace Tailwind module with "normal" Tailwind
-  - See https://github.com/nuxt-community/tailwindcss-module/issues/387
-- Update requirements to Vue 3 compatible versions
-  - `v-calendar` to `v-calendar@next`
-  - `v-tooltip` to `v-tooltip@vue3`
-- Update Vue 3 comptible dependency initialisation
-  - `vuex-persistedstate`
-    - See https://github.com/robinvdvleuten/vuex-persistedstate/releases/tag/v4.0.0-beta.1
-- Migrate to Nuxt Bridge
-  - See https://v3.nuxtjs.org/getting-started/bridge/
+- Phase 1: Migrate to [Nuxt Bridge](https://v3.nuxtjs.org/getting-started/bridge/)
+  - Wait for nuxtjs/sentry module to support Nuxt 3/Bridge (or replace with normal Sentry Vue integration)
+    - See https://github.com/nuxt-community/sentry-module/issues/358
+  - Wait for nuxtjs/axios module to support Nuxt 3/Bridge (or replace with normal Axios and a custom plugin)
+    - See https://github.com/nuxt-community/axios-module/issues/536
+  - Migrate to using Nuxt Bridge
+- Phase 2: Migrate to [Nuxt 3](https://v3.nuxtjs.org/guide/getting-started/)
+  - Replace Tailwind module with "normal" Tailwind
+    - See https://github.com/nuxt-community/tailwindcss-module/issues/387
+  - Update requirements to Vue 3 compatible versions
+    - `v-calendar` to `v-calendar@next`
+    - `v-tooltip` to `v-tooltip@vue3`
+  - Update Vue 3 comptible dependency initialisation
+    - `vuex-persistedstate`
+      - See https://github.com/robinvdvleuten/vuex-persistedstate/releases/tag/v4.0.0-beta.1
 
 ### Framework rationale
 
