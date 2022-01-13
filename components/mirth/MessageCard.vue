@@ -1,5 +1,5 @@
 <template>
-  <GenericCard class="mb-8">
+  <GenericCard>
     <GenericCardContent>
       <GenericDl>
         <GenericDi>

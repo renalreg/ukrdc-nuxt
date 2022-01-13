@@ -6,10 +6,9 @@
     </div>
 
     <!-- Header card -->
-    <MirthMessageCard :message="message" />
+    <MirthMessageCard class="mb-6" :message="message" />
 
-    <!-- Chain grid -->
-    <MirthMessageChain v-if="message" :message="message" />
+    <NuxtChild v-if="message" :message="message" />
   </div>
 </template>
 
