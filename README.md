@@ -82,6 +82,8 @@ It may be simpler to start a fresh Nuxt 3 project and add the application back i
 - Phase 1: Migrate to [Nuxt Bridge](https://v3.nuxtjs.org/getting-started/bridge/)
   - Wait for nuxtjs/sentry module to support Nuxt 3/Bridge (or replace with normal Sentry Vue integration)
     - See https://github.com/nuxt-community/sentry-module/issues/358
+  - Wait for `ssr: false` support in Bridge
+    - See https://github.com/nuxt/framework/issues/886
   - Migrate to using Nuxt Bridge
 - Phase 2: Migrate to [Nuxt 3](https://v3.nuxtjs.org/guide/getting-started/)
   - Wait for nuxtjs/axios module to support Nuxt 3 (or replace with normal Axios and a custom plugin)
