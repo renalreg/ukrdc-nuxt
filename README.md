@@ -85,6 +85,7 @@ It may be simpler to start a fresh Nuxt 3 project and add the application back i
   - Wait for `ssr: false` support in Bridge
     - See https://github.com/nuxt/framework/issues/886
   - Migrate to using Nuxt Bridge
+    - See https://github.com/renalreg/ukrdc-nuxt/tree/bridge
 - Phase 2: Migrate to [Nuxt 3](https://v3.nuxtjs.org/guide/getting-started/)
   - Wait for nuxtjs/axios module to support Nuxt 3 (or replace with normal Axios and a custom plugin)
     - See https://github.com/nuxt-community/axios-module/issues/536
