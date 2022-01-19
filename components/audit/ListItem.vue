@@ -13,11 +13,11 @@
           </div>
         </div>
 
-        <div class="flex-grow grid grid-cols-3 lg:grid-cols-6 gap-2 items-center">
-          <TextP class="col-span-1 truncate">{{ formatDate(item.accessEvent.time) }}</TextP>
-          <TextP class="col-span-2"> {{ item.accessEvent.userEmail }} </TextP>
-          <TextP class="col-span-1"> {{ item.operation }} </TextP>
-          <AuditResourceBadge class="col-span-2 mr-2 my-2" :item="item" />
+        <div class="flex-grow grid grid-cols-6 lg:grid-cols-12 gap-2 items-center pr-2 py-2">
+          <TextP class="col-span-2 lg:col-span-3 truncate">{{ formatDate(item.accessEvent.time, true, true) }}</TextP>
+          <TextP class="col-span-4 lg:col-span-4"> {{ item.accessEvent.userEmail }} </TextP>
+          <TextP class="col-span-2 lg:col-span-1"> <BadgeCrud :operation="item.operation" /> </TextP>
+          <AuditResourceBadge class="col-span-4 lg:col-span-4" :item="item" />
         </div>
       </div>
       <ul
