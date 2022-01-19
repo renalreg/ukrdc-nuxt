@@ -104,7 +104,14 @@ export default defineComponent({
         options: {
           onClick: (_: MouseEvent, activeElements: EventElement[]) => {
             if (activeElements && activeElements[0]) {
-              emit('click', activeElements[0].element.parsed)
+              const pointEl = activeElements[0].element
+              // @ts-ignore
+              // TODO: We only used to need pointEl.parsed, but as of chart.js 3.7.0,
+              // it's always returning undefined. pointEl.$context.parsed seems to work,
+              // but it's not documented, and doesn't appear in the TypeScript definitions,
+              // so we'll just use it for now and ignore TS for this line.
+              const parsed = pointEl.parsed || pointEl.$context.parsed
+              emit('click', parsed)
             }
           },
           responsive: true,
