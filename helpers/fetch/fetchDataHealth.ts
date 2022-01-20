@@ -1,4 +1,5 @@
 import { useContext } from '@nuxtjs/composition-api'
+import { LastRunTime } from '~/interfaces/admin'
 import { MultipleUKRDCIDsPage } from '~/interfaces/datahealth'
 
 export default function () {
@@ -10,7 +11,12 @@ export default function () {
     )) as MultipleUKRDCIDsPage
   }
 
+  async function fetchMultipleUKRDCIDsLastRun(): Promise<LastRunTime> {
+    return (await $api.$get(`/v1/admin/datahealth/multiple_ukrdcids/last_run`)) as LastRunTime
+  }
+
   return {
     fetchMultipleUKRDCIDsPage,
+    fetchMultipleUKRDCIDsLastRun,
   }
 }

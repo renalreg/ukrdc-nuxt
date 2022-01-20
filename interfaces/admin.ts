@@ -3,3 +3,7 @@ export interface AdminCounts {
   UKRDCRecords: number
   patientsReceivingErrors: number
 }
+
+export interface LastRunTime {
+  lastRunTime: string
+}
