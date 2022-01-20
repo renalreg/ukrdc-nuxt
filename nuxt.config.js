@@ -53,8 +53,8 @@ export default {
   // Sentry Configuration: https://sentry.nuxtjs.org/guide/setup
   sentry: {
     dsn: process.env.SENTRY_DSN,
-    // Skip publish if no DSN is found at build-time
-    publishRelease: process.env.SENTRY_DSN
+    // Skip publish if no Sentry auth token is found at build-time
+    publishRelease: process.env.SENTRY_AUTH_TOKEN
       ? {
           authToken: process.env.SENTRY_AUTH_TOKEN,
           org: process.env.SENTRY_ORG,
@@ -62,10 +62,6 @@ export default {
           // Attach commits to the release (requires that the build triggered within a git repository).
           setCommits: {
             auto: true,
-          },
-          deploy: {
-            // The release's environment name.
-            env: process.env.DEPLOYEMNT_ENV || 'development',
           },
         }
       : false,
