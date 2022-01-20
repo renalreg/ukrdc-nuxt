@@ -3,6 +3,12 @@
     <div v-if="stats && stats.errors == 0 && stats.workitems == 0" class="text-center">
       <TextP>No issues on record</TextP>
     </div>
+
+    <!-- Multiple UKRDC IDs -->
+    <GenericCard v-if="ukrdcIdGroup" class="mb-4">
+      <empiMultipleIDItem :group="ukrdcIdGroup" heading="Multiple UKRDC IDs" />
+    </GenericCard>
+
     <!-- Related Work Items card -->
     <GenericCard v-if="workItems && workItems.length > 0" class="mt-4">
       <GenericCardHeader>
@@ -51,6 +57,7 @@ import { formatGender } from '@/helpers/utils/codeUtils'
 
 import { MasterRecord, MasterRecordStatistics } from '@/interfaces/masterrecord'
 import { WorkItem } from '@/interfaces/workitem'
+import { MultipleUKRDCIDsGroup } from '@/interfaces/datahealth'
 
 import usePermissions from '~/helpers/usePermissions'
 import { Message } from '~/interfaces/messages'
@@ -69,7 +76,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { fetchMasterRecordMessagesPage, fetchMasterRecordWorkItems } = fetchMasterRecords()
+    const { fetchMasterRecordRelated, fetchMasterRecordMessagesPage, fetchMasterRecordWorkItems } = fetchMasterRecords()
     const { hasPermission } = usePermissions()
 
     // Data refs
@@ -80,6 +87,9 @@ export default defineComponent({
     const relatedErrorsSize = ref(5)
     const relatedErrorsTotal = ref(0)
 
+    const ukrdcIdGroup = ref<MultipleUKRDCIDsGroup>()
+    const hasMultipleUKRDCIDs = ref(false)
+
     // Data fetching
 
     async function fetchWorkItems() {
@@ -89,7 +99,7 @@ export default defineComponent({
       }
     }
 
-    async function updateRelatedErrors(): Promise<void> {
+    async function updateRelatedErrors() {
       const res = await fetchMasterRecordMessagesPage(
         props.record,
         relatedErrorsPage.value || 1,
@@ -106,7 +116,38 @@ export default defineComponent({
       relatedErrorsTotal.value = res.total
     }
 
+    function fetchMultipleUKRDCIds() {
+      // If we haven't already fetched the multiple records, and multiple records exist
+      if (!hasMultipleUKRDCIDs.value && props.stats?.ukrdcids > 1) {
+        // Stop the request from triggering again
+        hasMultipleUKRDCIDs.value = true
+
+        fetchMasterRecordRelated(props.record, false).then((records) => {
+          // Filter related records to UKRDC records
+          const ukrdcRecords = records.filter((record) => {
+            return record.nationalidType.startsWith('UKRDC')
+          })
+
+          // Create a "synthetic" MultipleUKRDCIDsGroup
+          // We do this so that we can re-use the component used in the EMPI Data Health page
+          const multipleIdsGroup = {
+            groupId: null,
+            records: [],
+          } as MultipleUKRDCIDsGroup
+
+          for (const record of ukrdcRecords) {
+            multipleIdsGroup.records.push({
+              lastUpdated: null,
+              masterRecord: record,
+            })
+          }
+          ukrdcIdGroup.value = multipleIdsGroup
+        })
+      }
+    }
+
     onMounted(async () => {
+      fetchMultipleUKRDCIds()
       fetchWorkItems()
       await updateRelatedErrors()
     })
@@ -115,14 +156,22 @@ export default defineComponent({
       updateRelatedErrors()
     })
 
+    watch(
+      () => props.stats,
+      () => {
+        fetchMultipleUKRDCIds()
+      }
+    )
+
     return {
       workItems,
-      formatGender,
-      formatDate,
       relatedErrors,
       relatedErrorsPage,
       relatedErrorsSize,
       relatedErrorsTotal,
+      ukrdcIdGroup,
+      formatGender,
+      formatDate,
     }
   },
 })

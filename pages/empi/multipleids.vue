@@ -31,7 +31,7 @@
             <TextDd v-if="lastRunTime">
               {{ formatDate(lastRunTime, true) }}
             </TextDd>
-            <SkeleText v-else class="h-6 w-8 mt-2" />
+            <SkeleText v-else class="h-6 w-1/4 mt-2" />
           </GenericDi>
         </GenericDl>
       </GenericCardContent>
@@ -39,7 +39,9 @@
 
     <div v-if="groups">
       <div v-for="group in groups" :key="`group-${group.groupId}`">
-        <empiMultipleIDItem :group="group" :fetch-in-progress="fetchInProgress" />
+        <GenericCard class="mb-4">
+          <empiMultipleIDItem :group="group" :fetch-in-progress="fetchInProgress" />
+        </GenericCard>
       </div>
 
       <GenericCard>
