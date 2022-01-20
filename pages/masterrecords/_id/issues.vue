@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="stats && stats.errors == 0 && stats.workitems == 0" class="text-center">
+    <div v-if="stats && stats.errors == 0 && stats.workitems == 0 && stats.ukrdcids == 1" class="text-center">
       <TextP>No issues on record</TextP>
     </div>
 
