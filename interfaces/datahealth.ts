@@ -1,12 +1,12 @@
 import { MasterRecord } from './masterrecord'
 
 interface MultipleUKRDCIDsGroupItem {
-  lastUpdated: string
+  lastUpdated: string | null
   masterRecord: MasterRecord
 }
 
 export interface MultipleUKRDCIDsGroup {
-  groupId: number
+  groupId: number | null
   records: MultipleUKRDCIDsGroupItem[]
 }
 

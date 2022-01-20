@@ -1,13 +1,16 @@
 <template>
   <div>
-    <GenericCard class="flex items-center p-2 mb-2">
+    <div class="flex items-center gap-2 p-4 border-b">
       <div class="flex-grow pl-2">
-        <SkeleText v-if="fetchInProgress" class="h-6 w-1/4" />
-        <TextL1 v-else>Record Group {{ group.groupId }}</TextL1>
+        <div>
+          <TextH2 v-if="heading"> {{ heading }} </TextH2>
+          <TextL1 v-if="group && group.groupId">Record Group {{ group.groupId }}</TextL1>
+        </div>
       </div>
       <div class="flex-shrink">
-        <div v-if="group.records.length == 2 && !fetchInProgress">
+        <div v-if="!fetchInProgress">
           <GenericButtonMini
+            v-if="group.records.length == 2"
             :to="{
               path: '/empi/merge',
               query: {
@@ -18,31 +21,27 @@
             }"
             >Start Merge</GenericButtonMini
           >
-        </div>
-        <div v-else>
-          <GenericButtonMini :disabled="true">Start Merge</GenericButtonMini>
+          <GenericButtonMini v-else :disabled="true">Can't automatically merge more than two records</GenericButtonMini>
         </div>
       </div>
-    </GenericCard>
+    </div>
 
-    <GenericCard class="mb-8">
-      <ul class="divide-y divide-gray-200">
-        <div
-          v-for="item in group.records"
-          :key="`record-${group.groupId}-${item.masterRecord.id}`"
-          class="hover:bg-gray-50"
-        >
-          <SkeleListItem v-if="fetchInProgress" />
-          <NuxtLink v-else :to="`/masterrecords/${item.masterRecord.id}`">
-            <MasterrecordsListItem
-              :item="item.masterRecord"
-              details-label="Last checked"
-              :details-value="formatDate(item.lastUpdated)"
-            />
-          </NuxtLink>
-        </div>
-      </ul>
-    </GenericCard>
+    <ul class="divide-y divide-gray-200">
+      <div
+        v-for="item in group.records"
+        :key="`record-${group.groupId}-${item.masterRecord.id}`"
+        class="hover:bg-gray-50"
+      >
+        <SkeleListItem v-if="fetchInProgress" />
+        <NuxtLink v-else :to="`/masterrecords/${item.masterRecord.id}`">
+          <MasterrecordsListItem
+            :item="item.masterRecord"
+            :details-label="item.lastUpdated ? 'Last checked' : null"
+            :details-value="item.lastUpdated ? formatDate(item.lastUpdated) : null"
+          />
+        </NuxtLink>
+      </div>
+    </ul>
   </div>
 </template>
 
@@ -60,7 +59,13 @@ export default defineComponent({
     },
     fetchInProgress: {
       type: Boolean,
-      required: true,
+      required: false,
+      default: false,
+    },
+    heading: {
+      type: String,
+      required: false,
+      default: null,
     },
   },
   setup() {

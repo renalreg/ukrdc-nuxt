@@ -13,8 +13,11 @@ export default function () {
     return (await $api.$get(`/v1/masterrecords/${masterRecordId}/`)) as MasterRecord
   }
 
-  async function fetchMasterRecordRelated(masterRecord: MasterRecord): Promise<MasterRecord[]> {
-    return (await $api.$get(masterRecord.links.related)) as MasterRecord[]
+  async function fetchMasterRecordRelated(
+    masterRecord: MasterRecord,
+    excludeSelf: boolean = true
+  ): Promise<MasterRecord[]> {
+    return (await $api.$get(`${masterRecord.links.related}?exclude_self=${excludeSelf}`)) as MasterRecord[]
   }
 
   async function fetchMasterRecordStatistics(masterRecord: MasterRecord): Promise<MasterRecordStatistics> {
