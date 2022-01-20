@@ -49,6 +49,9 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
+          # Use path context instead of Git context since we need .git 
+          # in the build step for automatic Sentry versioning
+          context: .
           push: ${{ github.event_name != 'pull_request' }}
           build-args: |
             GITHUB_SHA=${{ github.sha }}
