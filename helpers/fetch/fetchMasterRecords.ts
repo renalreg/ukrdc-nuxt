@@ -15,9 +15,14 @@ export default function () {
 
   async function fetchMasterRecordRelated(
     masterRecord: MasterRecord,
-    excludeSelf: boolean = true
+    excludeSelf: boolean = true,
+    nationalIdType: string | null = null
   ): Promise<MasterRecord[]> {
-    return (await $api.$get(`${masterRecord.links.related}?exclude_self=${excludeSelf}`)) as MasterRecord[]
+    let path = `${masterRecord.links.related}?exclude_self=${excludeSelf}`
+    if (nationalIdType) {
+      path = path + `&nationalid_type=${nationalIdType}`
+    }
+    return (await $api.$get(path)) as MasterRecord[]
   }
 
   async function fetchMasterRecordStatistics(masterRecord: MasterRecord): Promise<MasterRecordStatistics> {
