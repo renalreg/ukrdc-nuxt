@@ -122,12 +122,7 @@ export default defineComponent({
         // Stop the request from triggering again
         hasMultipleUKRDCIDs.value = true
 
-        fetchMasterRecordRelated(props.record, false).then((records) => {
-          // Filter related records to UKRDC records
-          const ukrdcRecords = records.filter((record) => {
-            return record.nationalidType.startsWith('UKRDC')
-          })
-
+        fetchMasterRecordRelated(props.record, false, 'UKRDC').then((records) => {
           // Create a "synthetic" MultipleUKRDCIDsGroup
           // We do this so that we can re-use the component used in the EMPI Data Health page
           const multipleIdsGroup = {
@@ -135,7 +130,7 @@ export default defineComponent({
             records: [],
           } as MultipleUKRDCIDsGroup
 
-          for (const record of ukrdcRecords) {
+          for (const record of records) {
             multipleIdsGroup.records.push({
               lastUpdated: null,
               masterRecord: record,
