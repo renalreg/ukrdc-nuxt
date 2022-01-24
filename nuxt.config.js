@@ -34,6 +34,7 @@ export default {
     '~/plugins/okta-auth.client.ts',
     '~/plugins/axios-ukrdc-api.client.ts',
     '~/plugins/axios-error-handlers.ts',
+    '~/plugins/sentry-usercontext.client.ts',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
