@@ -20,7 +20,10 @@
           @keydown.enter.prevent="open"
         >
           <div class="flex-grow truncate">
-            <span v-if="value" class="truncate line-clamp-1">{{ `${value} (${labelFor(value)})` }}</span>
+            <span v-if="value && labelFor(value)" class="truncate line-clamp-1">{{
+              `${value} (${labelFor(value)})`
+            }}</span>
+            <span v-else-if="value" class="truncate line-clamp-1">{{ value }}</span>
             <span v-else class="truncate line-clamp-1 text-grey-dark text-base">{{ hint }}</span>
           </div>
 
@@ -76,7 +79,7 @@
             :class="[i === highlightedIndex ? 'bg-indigo-50' : 'hover:bg-grey-darker']"
             @click="select(i)"
           >
-            {{ labels && labels.length === options.length ? `${option} (${labelFor(option)})` : option }}
+            {{ labels && labelFor(option) ? `${option} (${labelFor(option)})` : option }}
           </li>
         </ul>
         <div v-show="filteredOptions.length === 0" class="px-3 py-2 text-grey">No results found for "{{ search }}"</div>
@@ -96,11 +99,11 @@ export default defineComponent({
       default: null,
     },
     options: {
-      type: Array as () => String[],
+      type: Array as () => string[],
       required: true,
     },
     labels: {
-      type: Array as () => String[],
+      type: Array as () => string[],
       required: false,
       default: null,
     },
@@ -137,7 +140,7 @@ export default defineComponent({
       return props.options.filter(
         (option, index) =>
           option.toLowerCase().startsWith(search.value.toLowerCase()) ||
-          props.labels[index].toLowerCase().startsWith(search.value.toLowerCase())
+          props.labels[index]?.toLowerCase().startsWith(search.value.toLowerCase())
       )
     })
 
@@ -191,14 +194,14 @@ export default defineComponent({
       highlight(highlightedIndex.value + 1 >= filteredOptions.value.length ? 0 : highlightedIndex.value + 1)
     }
 
-    function labelFor(value: string) {
+    function labelFor(value: string): string | null {
       if (props.labels) {
         const index = props.options.indexOf(value)
         if (index) {
           return props.labels[index]
         }
       }
-      return value
+      return null
     }
 
     onMounted(() => {
