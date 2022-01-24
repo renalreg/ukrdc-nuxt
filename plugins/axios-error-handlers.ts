@@ -20,13 +20,12 @@ function decodePydanticErrors(errors: PydanticError[]) {
 
 export default function ({ error, app, $api, $sentry }: Context) {
   $api.onError((thisError) => {
-    // Let nuxt-auth handle logging out on ExpiredAuthSessionError
-    // Using `thisError instanceof ExpiredAuthSessionError` doesn't seem to work, possibly
-    // due to something like https://github.com/microsoft/TypeScript/issues/13965
-    if (thisError.name === 'ExpiredAuthSessionError') {
-      // Return early to let @/plugins/axios-auth.ts handle the error
-      // We can't handle it here, as we need to access the $auth object which is only
-      // available in the context of plugins added to auth.plugins in nuxt.config.js
+    // A 401 error from the API means unauthenticated, which usually only happens if the user
+    // has started a new session and the API Axios instance has sent a request before Okta has
+    // had chance to refresh. In this case we just want to exit the request early and let Okta
+    // handle the refresh.
+    if (thisError.response?.status === 401) {
+      // Return early
       throw thisError
     }
 
