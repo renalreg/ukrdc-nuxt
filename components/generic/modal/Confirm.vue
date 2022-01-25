@@ -2,7 +2,7 @@
   <GenericModalSlot ref="confirmModal">
     <div class="sm:flex sm:items-start">
       <div
-        class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10"
+        class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full sm:mx-0 sm:h-10 sm:w-10"
         :class="danger ? 'bg-red-100' : 'bg-indigo-100'"
       >
         <!-- Heroicon name: outline/exclamation -->
@@ -19,7 +19,7 @@
         </svg>
       </div>
       <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-        <h3 id="modal-headline" class="text-lg leading-6 font-medium text-gray-900">
+        <h3 id="modal-headline" class="text-lg font-medium leading-6 text-gray-900">
           {{ title }}
         </h3>
         <div class="mt-2">

@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
-      <div v-if="signedIn()" class="max-w-3xl lg:flex lg:items-center lg:justify-between lg:space-x-5 lg:max-w-7xl">
-        <div class="flex items-center space-x-5 mb-4">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 md:px-8">
+      <div v-if="signedIn()" class="max-w-3xl lg:flex lg:max-w-7xl lg:items-center lg:justify-between lg:space-x-5">
+        <div class="mb-4 flex items-center space-x-5">
           <div class="flex-shrink-0">
             <div class="relative">
               <span
-                class="inline-block h-16 w-16 rounded-full overflow-hidden"
+                class="inline-block h-16 w-16 overflow-hidden rounded-full"
                 :class="signedIn() ? 'bg-indigo-100' : 'bg-gray-100'"
               >
                 <svg
@@ -20,7 +20,7 @@
                   />
                 </svg>
               </span>
-              <span class="absolute inset-0 shadow-inner rounded-full" aria-hidden="true"></span>
+              <span class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></span>
             </div>
           </div>
           <div v-if="user">
@@ -33,18 +33,18 @@
             </p>
           </div>
           <div v-else>
-            <SkeleText class="h-8 w-24 mb-2" />
+            <SkeleText class="mb-2 h-8 w-24" />
             <SkeleText class="h-6 w-32" />
           </div>
         </div>
         <div
-          class="mb-8 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 lg:mt-0 lg:flex-row lg:space-x-3"
+          class="justify-stretch mb-8 flex flex-col-reverse space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-y-0 sm:space-x-3 sm:space-x-reverse lg:mt-0 lg:flex-row lg:space-x-3"
         >
           <a
             :href="$config.manageAccountUrl"
             target="blank"
             type="button"
-            class="text-center px-3 py-2 border border-gray-300 shadow-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            class="focus:outline-none rounded-md border border-gray-300 bg-white px-3 py-2 text-center font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >Manage Account</a
           >
           <GenericButton @click="logout"> Sign out </GenericButton>
@@ -54,7 +54,7 @@
         <TextH3 class="mb-2">Permissions</TextH3>
         <div v-for="group in perms" :key="group" class="inline">
           <span
-            class="inline-flex items-center px-3 py-0.5 rounded-full font-medium mr-2 mb-2"
+            class="mr-2 mb-2 inline-flex items-center rounded-full px-3 py-0.5 font-medium"
             :class="classesForPermissions(group)"
           >
             {{ group }}

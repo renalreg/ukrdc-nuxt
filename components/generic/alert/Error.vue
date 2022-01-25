@@ -3,7 +3,7 @@
     <div class="flex items-center">
       <!-- Heroicon name: solid/exclamation -->
       <svg
-        class="h-5 w-5 text-red-400 flex-shrink-0"
+        class="h-5 w-5 flex-shrink-0 text-red-400"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
         fill="currentColor"

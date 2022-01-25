@@ -1,28 +1,28 @@
 <template>
   <transition :duration="200">
-    <div v-show="visible" class="fixed z-10 inset-0 overflow-y-auto">
-      <div class="flex items-end justify-center min-h-screen w-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <div v-show="visible" class="fixed inset-0 z-10 overflow-y-auto">
+      <div class="flex min-h-screen w-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
         <!-- Background overlay, show/hide based on modal state. -->
         <GenericBlackout :visible="visible" @click="hide()" />
 
         <!-- This element is to trick the browser into centering the modal contents. -->
-        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <span class="hidden sm:inline-block sm:h-screen sm:align-middle" aria-hidden="true">&#8203;</span>
         <!-- Modal panel, show/hide based on modal state. -->
         <TransitionModal>
           <div
             v-show="visible"
-            class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all w-full sm:w-3/4 sm:max-w-3xl sm:my-8 sm:align-middle sm:p-6"
+            class="inline-block w-full transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-3/4 sm:max-w-3xl sm:p-6 sm:align-middle"
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-headline"
           >
             <div class="sm:flex sm:items-start">
               <div
-                class="bg-red-100 mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10"
+                class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"
               >
                 <!-- Heroicon name: outline/exclamation -->
                 <svg
-                  class="text-red-600 h-6 w-6"
+                  class="h-6 w-6 text-red-600"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -37,8 +37,8 @@
                   />
                 </svg>
               </div>
-              <div class="mt-3 sm:mt-0 ml-8 sm:ml-4 text-left">
-                <h3 id="modal-headline" class="text-lg leading-6 font-medium text-gray-900">
+              <div class="mt-3 ml-8 text-left sm:mt-0 sm:ml-4">
+                <h3 id="modal-headline" class="text-lg font-medium leading-6 text-gray-900">
                   {{ previewErrorMessage ? 'Unable to delete patient record' : 'Delete patient record' }}
                 </h3>
                 <div class="mt-2 mb-4">
@@ -52,10 +52,10 @@
                         Patient record {{ previewResponse.patientRecord.pid }} - UKRDCID
                         {{ previewResponse.patientRecord.ukrdcid }} - Created
                         {{ formatDate(previewResponse.patientRecord.repositoryCreationDate, (t = false)) }}
-                        <ul class="list-disc ml-4">
+                        <ul class="ml-4 list-disc">
                           <li v-if="previewResponse.patientRecord.programMemberships.length > 0">
                             {{ previewResponse.patientRecord.programMemberships.length }} program memberships
-                            <ul class="list-disc ml-4">
+                            <ul class="ml-4 list-disc">
                               <li
                                 v-for="membership in previewResponse.patientRecord.programMemberships"
                                 :key="membership.programName"
@@ -103,7 +103,7 @@
                           <li v-if="previewResponse.patientRecord.patient">
                             Patient - Date of Birth
                             {{ formatDate(previewResponse.patientRecord.patient.birthTime, (t = false)) }}
-                            <ul class="list-disc ml-4">
+                            <ul class="ml-4 list-disc">
                               <li
                                 v-for="name in previewResponse.patientRecord.patient.names"
                                 :key="name.given + name.family"
@@ -111,7 +111,7 @@
                                 Patient Name {{ name.given }} {{ name.family }}
                               </li>
                             </ul>
-                            <ul class="list-disc ml-4">
+                            <ul class="ml-4 list-disc">
                               <li
                                 v-for="number in previewResponse.patientRecord.patient.numbers"
                                 :key="number.organization + number.numbertype + number.patientid"
@@ -124,7 +124,7 @@
                       </li>
                       <li v-if="previewResponse.empi.masterRecords.length > 0">
                         {{ previewResponse.empi.masterRecords.length }} Master Records
-                        <ul class="list-disc ml-4">
+                        <ul class="ml-4 list-disc">
                           <li v-for="masterRecord in previewResponse.empi.masterRecords" :key="masterRecord.id">
                             Master Record {{ masterRecord.id }} - {{ masterRecord.givenname }}
                             {{ masterRecord.surname }} - Date of Birth
@@ -135,7 +135,7 @@
 
                       <li v-if="previewResponse.empi.persons.length > 0">
                         {{ previewResponse.empi.persons.length }} Person Records
-                        <ul class="list-disc ml-4">
+                        <ul class="ml-4 list-disc">
                           <li v-for="person in previewResponse.empi.persons" :key="person.id">
                             Person {{ person.id }} - {{ person.givenname }} {{ person.surname }} - Date of Birth
                             {{ formatDate(person.dateOfBirth, (t = false)) }}
@@ -145,7 +145,7 @@
 
                       <li v-if="previewResponse.empi.linkRecords.length > 0">
                         {{ previewResponse.empi.linkRecords.length }} Link Records
-                        <ul class="list-disc ml-4">
+                        <ul class="ml-4 list-disc">
                           <li v-for="linkRecord in previewResponse.empi.linkRecords" :key="linkRecord.id">
                             Link Record {{ linkRecord.id }} - Person {{ linkRecord.personId }} linked to Master Record
                             {{ linkRecord.masterId }}
@@ -155,7 +155,7 @@
 
                       <li v-if="previewResponse.empi.pidxrefs.length > 0">
                         {{ previewResponse.empi.pidxrefs.length }} PID Cross References
-                        <ul class="list-disc ml-4">
+                        <ul class="ml-4 list-disc">
                           <li v-for="pidXRef in previewResponse.empi.pidxrefs" :key="pidXRef.id">
                             PIDXRef {{ pidXRef.id }} - {{ pidXRef.sendingFacility }} via {{ pidXRef.sendingExtract }}:
                             {{ pidXRef.localid }}

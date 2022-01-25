@@ -3,7 +3,7 @@
     <!-- Chain grid -->
     <div>
       <div v-for="(messages, index) in chain" :key="index">
-        <div class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-2 justify-center">
+        <div class="mt-3 grid grid-cols-1 justify-center gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-2">
           <MirthConnectorMessageCard
             v-for="item in messages"
             :key="item.channelName + item.connectorName"

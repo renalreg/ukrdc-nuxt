@@ -48,16 +48,16 @@ export default defineComponent({
 
 <style lang="postcss">
 .btn-round-base {
-  @apply inline-flex
+  @apply focus:outline-none
+      inline-flex
       items-center
-      p-1
-      border border-gray-300
-      rounded-full
-      shadow-sm
-      text-gray-400
-      hover:text-gray-500
+      rounded-full border
+      border-gray-300
       bg-white
+      p-1
+      text-gray-400
+      shadow-sm
       hover:bg-gray-50
-      focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
+      hover:text-gray-500 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2;
 }
 </style>

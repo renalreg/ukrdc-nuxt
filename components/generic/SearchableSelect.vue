@@ -8,7 +8,7 @@
       <div class="flex w-full">
         <div
           ref="mainInput"
-          class="flex items-center truncate w-full border px-3 py-2 shadow-sm sm: border-gray-300 rounded-md"
+          class="sm: flex w-full items-center truncate rounded-md border border-gray-300 px-3 py-2 shadow-sm"
           :class="{
             invisible: isOpen,
           }"
@@ -24,10 +24,10 @@
               `${value} (${labelFor(value)})`
             }}</span>
             <span v-else-if="value" class="truncate line-clamp-1">{{ value }}</span>
-            <span v-else class="truncate line-clamp-1 text-grey-dark text-base">{{ hint }}</span>
+            <span v-else class="text-grey-dark truncate text-base line-clamp-1">{{ hint }}</span>
           </div>
 
-          <div class="flex-shrink items-center pointer-events-none">
+          <div class="pointer-events-none flex-shrink items-center">
             <!-- Heroicon name: solid/selector -->
             <svg
               class="h-5 w-5 text-gray-400"
@@ -51,13 +51,13 @@
 
       <div
         v-show="isOpen"
-        class="absolute top-0 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 pin-x px-2 pt-2 z-50 w-full"
+        class="pin-x absolute top-0 z-50 w-full rounded-md bg-white px-2 pt-2 shadow-lg ring-1 ring-black ring-opacity-5"
       >
         <input
           ref="searchInput"
           v-model="search"
           type="text"
-          class="block w-full px-3 py-2 bg-grey-darker rounded"
+          class="bg-grey-darker block w-full rounded px-3 py-2"
           style="outline: 0"
           @keydown.up="highlightPrev"
           @keydown.down="highlightNext"
@@ -75,14 +75,14 @@
             v-for="(option, i) in filteredOptions"
             ref="optionElement"
             :key="option"
-            class="px-3 py-2 cursor-pointer rounded"
+            class="cursor-pointer rounded px-3 py-2"
             :class="[i === highlightedIndex ? 'bg-indigo-50' : 'hover:bg-grey-darker']"
             @click="select(i)"
           >
             {{ labels && labelFor(option) ? `${option} (${labelFor(option)})` : option }}
           </li>
         </ul>
-        <div v-show="filteredOptions.length === 0" class="px-3 py-2 text-grey">No results found for "{{ search }}"</div>
+        <div v-show="filteredOptions.length === 0" class="text-grey px-3 py-2">No results found for "{{ search }}"</div>
       </div>
     </div>
   </transition>

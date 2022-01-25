@@ -53,22 +53,22 @@
     <GenericTable class="hidden lg:block">
       <thead class="bg-gray-50">
         <tr>
-          <th scope="col" class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+          <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
             Type
           </th>
-          <th scope="col" class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+          <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
             Value
           </th>
-          <th scope="col" class="pl-16 px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+          <th scope="col" class="px-6 py-3 pl-16 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
             Order ID
           </th>
-          <th scope="col" class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+          <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
             Observation Time
           </th>
-          <th scope="col" class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider"></th>
+          <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500"></th>
         </tr>
       </thead>
-      <tbody class="bg-white divide-y divide-gray-200">
+      <tbody class="divide-y divide-gray-200 bg-white">
         <PatientrecordsResultRow
           v-for="(item, index) in results"
           :key="index"

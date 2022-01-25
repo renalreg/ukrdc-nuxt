@@ -1,12 +1,12 @@
 <template>
-  <div class="pl-3 pr-4 py-3 flex items-center justify-between">
-    <div class="w-0 flex-1 flex items-center">
+  <div class="flex items-center justify-between py-3 pl-3 pr-4">
+    <div class="flex w-0 flex-1 items-center">
       <IconMiniPaperClip class="mr-2" />
-      <TextP class="flex-1 w-0 truncate">
+      <TextP class="w-0 flex-1 truncate">
         {{ filename }}
       </TextP>
     </div>
-    <div class="flex gap-4 ml-4 flex-shrink-0">
+    <div class="ml-4 flex flex-shrink-0 gap-4">
       <slot />
     </div>
   </div>

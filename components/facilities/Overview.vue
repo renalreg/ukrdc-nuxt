@@ -7,7 +7,7 @@ page (for multi-facility users), and the homepage (for single-facility users).
   <div>
     <div class="mb-4">
       <TextH1 v-if="facility"> {{ facility.description }} </TextH1>
-      <SkeleText v-else class="h-8 w-1/4 mb-2" />
+      <SkeleText v-else class="mb-2 h-8 w-1/4" />
       <TextL1 v-if="facility">
         {{ facility.id }}
       </TextL1>
@@ -24,7 +24,7 @@ page (for multi-facility users), and the homepage (for single-facility users).
     <div v-else-if="facility && facility.statistics.lastUpdated">
       <TextL2 class="mb-2 -mt-4 text-right"> Last updated {{ lastUpdatedString }} </TextL2>
       <!-- Basic stats -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+      <div class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-3">
         <NuxtLink class="group" :to="{ path: `/masterrecords/`, query: { search: [`facility=${code}`, ''] } }">
           <GenericCard>
             <div class="flex items-center p-4">
@@ -40,7 +40,7 @@ page (for multi-facility users), and the homepage (for single-facility users).
                 </dl>
               </div>
             </div>
-            <div class="bg-gray-50 text-gray-500 px-4 py-2 text-sm">
+            <div class="bg-gray-50 px-4 py-2 text-sm text-gray-500">
               Total patients ever stored in the UKRDC for this facility
             </div>
           </GenericCard>
@@ -62,7 +62,7 @@ page (for multi-facility users), and the homepage (for single-facility users).
               </dl>
             </div>
           </div>
-          <div class="bg-gray-50 text-gray-500 px-4 py-2 text-sm">
+          <div class="bg-gray-50 px-4 py-2 text-sm text-gray-500">
             Records with active data files being successfully received
           </div>
         </GenericCard>
@@ -86,7 +86,7 @@ page (for multi-facility users), and the homepage (for single-facility users).
               </dl>
             </div>
           </div>
-          <div class="bg-gray-50 text-gray-500 px-4 py-2 text-sm">
+          <div class="bg-gray-50 px-4 py-2 text-sm text-gray-500">
             Records with active data files currently failing due to errors
           </div>
         </GenericCard>
@@ -169,7 +169,7 @@ page (for multi-facility users), and the homepage (for single-facility users).
         </div>
       </ul>
       <GenericPaginator
-        class="bg-white border-t border-gray-200"
+        class="border-t border-gray-200 bg-white"
         :jump-to-top="false"
         :page="errorMessagesPage"
         :size="errorMessagesSize"

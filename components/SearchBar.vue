@@ -1,10 +1,10 @@
 <template>
   <div class="min-w-0 flex-1 xl:col-span-6">
-    <div class="flex gap-2 items-center pb-4 md:mx-auto">
+    <div class="flex items-center gap-2 pb-4 md:mx-auto">
       <div class="w-full">
         <label for="search" class="sr-only">Search</label>
         <div class="relative">
-          <div class="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
+          <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
             <!-- Heroicon name: solid/search -->
             <svg
               class="h-5 w-5 text-gray-400"
@@ -23,7 +23,7 @@
           <form @submit.prevent="$emit('submit')">
             <FormTextBox
               :focus="true"
-              class="pl-10 w-full"
+              class="w-full pl-10"
               placeholder="Search"
               type="search"
               :value="value"

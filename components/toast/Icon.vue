@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="type === 'success'" class="text-green-400 p-1">
+    <div v-if="type === 'success'" class="p-1 text-green-400">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path
           stroke-linecap="round"
@@ -10,7 +10,7 @@
         />
       </svg>
     </div>
-    <div v-if="type === 'info'" class="text-blue-400 p-1">
+    <div v-if="type === 'info'" class="p-1 text-blue-400">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path
           stroke-linecap="round"
@@ -20,7 +20,7 @@
         />
       </svg>
     </div>
-    <div v-if="type === 'warning'" class="text-yellow-400 p-1">
+    <div v-if="type === 'warning'" class="p-1 text-yellow-400">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path
           stroke-linecap="round"
@@ -30,7 +30,7 @@
         />
       </svg>
     </div>
-    <div v-if="type === 'danger'" class="text-red-400 p-1">
+    <div v-if="type === 'danger'" class="p-1 text-red-400">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path
           stroke-linecap="round"
@@ -40,7 +40,7 @@
         />
       </svg>
     </div>
-    <div v-if="type === 'denied'" class="text-red-400 p-1">
+    <div v-if="type === 'denied'" class="p-1 text-red-400">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path
           stroke-linecap="round"
@@ -51,7 +51,7 @@
       </svg>
     </div>
     <div v-if="icon !== false">
-      <component :is="icon" class="w-6 h-6"></component>
+      <component :is="icon" class="h-6 w-6"></component>
     </div>
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <ul class="divide-y divide-gray-200">
-    <div v-if="groupedRecords.data.length > 0" class="bg-gray-50 pl-4 sm:pl-6 py-1">
+    <div v-if="groupedRecords.data.length > 0" class="bg-gray-50 py-1 pl-4 sm:pl-6">
       <TextH4>Data feeds</TextH4>
     </div>
     <patientrecordsListItem
@@ -12,7 +12,7 @@
       @deleted="$emit('refresh')"
     />
 
-    <div v-if="groupedRecords.surveys.length > 0" class="bg-gray-50 pl-4 sm:pl-6 py-1">
+    <div v-if="groupedRecords.surveys.length > 0" class="bg-gray-50 py-1 pl-4 sm:pl-6">
       <TextH4>Survey feeds</TextH4>
     </div>
     <patientrecordsListItem
@@ -24,7 +24,7 @@
       @deleted="$emit('refresh')"
     />
 
-    <div v-if="groupedRecords.migrated.length > 0" class="bg-gray-50 pl-4 sm:pl-6 py-1">
+    <div v-if="groupedRecords.migrated.length > 0" class="bg-gray-50 py-1 pl-4 sm:pl-6">
       <TextH4>Historic Migrated Data</TextH4>
     </div>
     <patientrecordsListItem
@@ -36,7 +36,7 @@
       @deleted="$emit('refresh')"
     />
 
-    <div v-if="groupedRecords.memberships.length > 0" class="bg-gray-50 pl-4 sm:pl-6 py-1">
+    <div v-if="groupedRecords.memberships.length > 0" class="bg-gray-50 py-1 pl-4 sm:pl-6">
       <TextH4>Membership Records</TextH4>
     </div>
     <patientrecordsListItem
@@ -46,7 +46,7 @@
       @deleted="$emit('refresh')"
     />
 
-    <div v-if="groupedRecords.tracing.length > 0" class="bg-gray-50 pl-4 sm:pl-6 py-1">
+    <div v-if="groupedRecords.tracing.length > 0" class="bg-gray-50 py-1 pl-4 sm:pl-6">
       <TextH4>Tracing Records</TextH4>
     </div>
     <patientrecordsListItem

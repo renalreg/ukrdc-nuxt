@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col h-full items-center justify-center">
-    <div class="block sm:flex items-center justify-center">
+  <div class="flex h-full flex-col items-center justify-center">
+    <div class="block items-center justify-center sm:flex">
       <TextHcxl class="sm:mr-8">{{ error.statusCode || 'Error' }}</TextHcxl>
       <div class="sm:border-l sm:pl-8">
         <TextH1 class="whitespace-pre">{{ errorTitle }}</TextH1>

@@ -1,7 +1,7 @@
 <template>
   <li>
-    <div class="min-w-0 flex items-center gap-2">
-      <div class="flex-1 pl-4 py-4 sm:pl-6 min-w-0 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 w-full">
+    <div class="flex min-w-0 items-center gap-2">
+      <div class="grid w-full min-w-0 flex-1 grid-cols-2 gap-2 py-4 pl-4 sm:grid-cols-3 sm:pl-6 lg:grid-cols-4">
         <!-- Name, DoB, gender -->
         <div>
           <LinkSendingFacility class="font-medium" :code="item.sendingfacility" />
@@ -31,8 +31,8 @@
         </div>
       </div>
       <!-- Record links -->
-      <div class="flex-shrink-0 flex items-center gap-2 pr-2">
-        <div class="flex flex-grow flex-col-reverse xl:flex-row gap-2">
+      <div class="flex flex-shrink-0 items-center gap-2 pr-2">
+        <div class="flex flex-grow flex-col-reverse gap-2 xl:flex-row">
           <GenericButtonMini class="h-8 truncate" @click="showDetail = !showDetail">
             {{ showDetail ? 'Hide Record' : 'Peek Record' }}
           </GenericButtonMini>
@@ -49,7 +49,7 @@
       </div>
     </div>
     <!-- Collapsible details -->
-    <div v-show="showDetail" class="px-4 sm:px-6 mb-4">
+    <div v-show="showDetail" class="mb-4 px-4 sm:px-6">
       <PatientrecordsDetailCards :record="item" />
     </div>
   </li>

@@ -1,11 +1,11 @@
 <template>
   <li>
-    <div class="px-4 py-4 sm:px-6 min-w-0 grid grid-cols-3 lg:grid-cols-4 md:gap-4 w-full">
+    <div class="grid w-full min-w-0 grid-cols-3 px-4 py-4 sm:px-6 md:gap-4 lg:grid-cols-4">
       <!-- IDs and description -->
       <div class="col-span-2">
         <span
           v-if="item.status == 3"
-          class="inline-flex items-center h-5 px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800"
+          class="inline-flex h-5 items-center rounded-full bg-green-100 px-2.5 py-0.5 text-sm font-medium text-green-800"
         >
           Closed
         </span>
@@ -16,7 +16,7 @@
           :forename="item.masterRecord.givenname"
           :surname="item.masterRecord.surname"
         />
-        <TextL1 v-else class="capitalize truncate inline text-red-800"> Missing Record </TextL1>
+        <TextL1 v-else class="inline truncate capitalize text-red-800"> Missing Record </TextL1>
         <TextP class="mt-2 truncate"> {{ item.type }}: {{ item.description }} </TextP>
       </div>
       <!-- National ID -->

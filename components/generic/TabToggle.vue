@@ -1,9 +1,9 @@
 <template>
   <div>
-    <nav class="grid grid-cols-2 group rounded-lg bg-gray-100 hover:bg-gray-200 text-sm font-medium" aria-label="Tabs">
+    <nav class="group grid grid-cols-2 rounded-lg bg-gray-100 text-sm font-medium hover:bg-gray-200" aria-label="Tabs">
       <!-- Current: "text-gray-900", Default: "text-gray-500 hover:text-gray-700" -->
       <button
-        class="rounded-md focus:outline-none focus:ring-offset-gray-100 truncate"
+        class="focus:outline-none truncate rounded-md focus:ring-offset-gray-100"
         :class="!value ? 'tab-active' : 'tab-inactive'"
         @click="$emit('input', false)"
       >
@@ -11,7 +11,7 @@
       </button>
 
       <button
-        class="rounded-md focus:outline-none focus:ring-offset-gray-100 truncate"
+        class="focus:outline-none truncate rounded-md focus:ring-offset-gray-100"
         :class="value ? 'tab-active' : 'tab-inactive'"
         @click="$emit('input', true)"
       >
@@ -47,7 +47,7 @@ export default defineComponent({
 
 <style lang="postcss">
 .tab-active {
-  @apply border border-gray-300 focus:border-indigo-500 p-1.5 rounded-md bg-white shadow-sm;
+  @apply rounded-md border border-gray-300 bg-white p-1.5 shadow-sm focus:border-indigo-500;
 }
 .tab-inactive {
 }

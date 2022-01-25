@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div v-if="record && record.patient" class="md:flex items-center mb-2">
-      <div class="flex-grow text-center sm:text-left mb-4 md:mb-0">
+    <div v-if="record && record.patient" class="mb-2 items-center md:flex">
+      <div class="mb-4 flex-grow text-center sm:text-left md:mb-0">
         <TextNameH1 :forename="forename" :surname="surname" />
       </div>
       <div class="flex">

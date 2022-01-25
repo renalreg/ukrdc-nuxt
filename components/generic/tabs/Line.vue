@@ -7,7 +7,7 @@
       <select
         id="tabs"
         name="tabs"
-        class="block w-full focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+        class="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
         @change="$emit('input', $event.target.value)"
       >
         <option v-for="tab in tabs" :key="tab">{{ tab }}</option>
@@ -20,11 +20,11 @@
             v-for="tab in tabs"
             :key="tab"
             role="tab"
-            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium"
+            class="whitespace-nowrap border-b-2 py-4 px-1 font-medium"
             :class="
               value === tab
                 ? 'border-indigo-500 text-indigo-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
             "
             :aria-selected="value === tab"
             @click="$emit('input', tab)"

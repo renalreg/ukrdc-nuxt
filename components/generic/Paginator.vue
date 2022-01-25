@@ -1,5 +1,5 @@
 <template>
-  <nav class="px-4 py-3 flex items-center justify-between sm:px-6" aria-label="Pagination">
+  <nav class="flex items-center justify-between px-4 py-3 sm:px-6" aria-label="Pagination">
     <div class="hidden sm:block">
       <p class="text-gray-700">
         Showing
@@ -11,11 +11,11 @@
         results
       </p>
     </div>
-    <div class="flex-1 flex gap-1 items-center justify-between sm:justify-end">
+    <div class="flex flex-1 items-center justify-between gap-1 sm:justify-end">
       <GenericButton :class="{ invisible: page <= 1 }" @click="prev()"> Previous </GenericButton>
-      <div v-if="showPages" class="flex gap-1 items-center justify-between sm:justify-end">
+      <div v-if="showPages" class="flex items-center justify-between gap-1 sm:justify-end">
         <div v-for="(pageLink, index) in paginationElements" :key="'paginator-' + index">
-          <span v-if="pageLink === '...'" class="hidden lg:block font-medium px-2"> ... </span>
+          <span v-if="pageLink === '...'" class="hidden px-2 font-medium lg:block"> ... </span>
           <GenericButton
             v-else
             :colour="pageLink === page ? 'indigo' : 'white'"

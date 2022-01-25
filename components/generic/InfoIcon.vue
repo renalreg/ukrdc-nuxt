@@ -1,6 +1,6 @@
 <template>
   <VMenu class="flex items-center">
-    <button class="text-gray-500 hover:text-gray-800 cursor-pointer">
+    <button class="cursor-pointer text-gray-500 hover:text-gray-800">
       <IconMiniInformationCircle />
     </button>
 

@@ -2,7 +2,7 @@
   <div class="flex gap-2">
     <button
       type="button"
-      class="flex items-start gap-1 px-2 py-1 border border-gray-300 shadow-sm rounded-full bg-white hover:bg-gray-50 text-gray-500 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      class="focus:outline-none flex items-start gap-1 rounded-full border border-gray-300 bg-white px-2 py-1 text-gray-500 shadow-sm hover:bg-gray-50 hover:text-gray-600 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
       @click="$emit('click')"
     >
       <TextL1>Close</TextL1>

@@ -1,7 +1,7 @@
 <template>
   <GenericCardMini class="px-4 py-2">
     <div class="mb-2">
-      <p class="text-gray-900 font-medium hover:text-gray-600 line-clamp-2">
+      <p class="font-medium text-gray-900 line-clamp-2 hover:text-gray-600">
         {{ item.drugProductGeneric }}
       </p>
       <p v-if="item.comment" class="text-gray-500">
@@ -16,10 +16,10 @@
     <p v-if="item.fromTime" class="text-gray-500">Since {{ formatDate(item.fromTime, (t = false)) }}</p>
     <span
       v-if="!item.toTime"
-      class="inline-block px-2 py-0.5 text-green-800 text-sm font-medium bg-green-100 rounded-sm mt-2"
+      class="mt-2 inline-block rounded-sm bg-green-100 px-2 py-0.5 text-sm font-medium text-green-800"
       >Active</span
     >
-    <span v-else class="inline-block px-2 py-0.5 text-red-800 text-sm font-medium bg-red-100 rounded-sm mt-2"
+    <span v-else class="mt-2 inline-block rounded-sm bg-red-100 px-2 py-0.5 text-sm font-medium text-red-800"
       >Inactive since {{ formatDate(item.toTime, (t = false)) }}</span
     >
   </GenericCardMini>

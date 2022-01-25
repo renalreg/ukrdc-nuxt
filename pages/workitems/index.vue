@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="max-w-7xl mx-auto mb-4">
+    <div class="mx-auto mb-4 max-w-7xl">
       <h1 class="text-2xl font-semibold text-gray-900">Work Items</h1>
     </div>
 
@@ -15,7 +15,7 @@
         hint="Select a facility..."
       />
       <div class="flex items-center">
-        <div class="flex-grow flex items-center">
+        <div class="flex flex-grow items-center">
           <FormCheckbox v-model="statuses" label="Open" :value="1" />
           <FormCheckbox v-model="statuses" label="WIP" :value="2" />
           <FormCheckbox v-model="statuses" label="Closed" :value="3" />
@@ -45,7 +45,7 @@
         </div>
       </ul>
       <GenericPaginator
-        class="bg-white border-t border-gray-200"
+        class="border-t border-gray-200 bg-white"
         :page="page"
         :size="size"
         :total="total"

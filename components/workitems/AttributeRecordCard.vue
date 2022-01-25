@@ -1,10 +1,10 @@
 <template>
   <GenericCard class="border-2 border-green-500">
-    <div class="px-4 sm:px-6 h-24 flex flex-col justify-center">
+    <div class="flex h-24 flex-col justify-center px-4 sm:px-6">
       <div class="text-gray-500" :class="highlight.includes('givenname') ? highlightClasses : []">
         {{ record.givenname ? formatAttributeValue(record.givenname) : 'Given Name not specified' }}
       </div>
-      <div class="text-gray-500 mt-1" :class="highlight.includes('surname') ? highlightClasses : []">
+      <div class="mt-1 text-gray-500" :class="highlight.includes('surname') ? highlightClasses : []">
         {{ record.surname ? formatAttributeValue(record.surname) : 'Surname not specified' }}
       </div>
     </div>

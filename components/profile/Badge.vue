@@ -1,14 +1,14 @@
 <template>
-  <div v-click-away="closeMenu" class="w-full relative justify-self-end">
+  <div v-click-away="closeMenu" class="relative w-full justify-self-end">
     <GenericButtonRaw
       label="Manage profile"
-      class="w-full group block hover:bg-gray-100 rounded-md px-4 py-2"
+      class="group block w-full rounded-md px-4 py-2 hover:bg-gray-100"
       @click="showMenu = !showMenu"
     >
-      <div class="flex gap-4 items-center" :class="{ 'flex-row-reverse': rightToLeft }">
+      <div class="flex items-center gap-4" :class="{ 'flex-row-reverse': rightToLeft }">
         <div class="h-10 w-10">
           <span
-            class="inline-block h-10 w-10 rounded-full overflow-hidden"
+            class="inline-block h-10 w-10 overflow-hidden rounded-full"
             :class="signedIn() ? 'bg-indigo-100' : 'bg-gray-100'"
           >
             <svg

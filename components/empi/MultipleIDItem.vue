@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex items-center gap-2 p-4 border-b">
+    <div class="flex items-center gap-2 border-b p-4">
       <div class="flex-grow pl-2">
         <div>
           <TextH2 v-if="heading"> {{ heading }} </TextH2>

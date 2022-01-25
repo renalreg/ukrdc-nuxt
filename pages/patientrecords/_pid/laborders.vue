@@ -1,14 +1,14 @@
 <template>
   <div>
     <TextP v-if="orders.length <= 0" class="text-center"> No lab orders on record </TextP>
-    <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <ul class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
       <li v-for="item in orders" :key="item.id">
         <NuxtLink
           :to="{
             path: `./results`,
             query: { order_id: item.id },
           }"
-          class="col-span-1 flex shadow-sm rounded-md"
+          class="col-span-1 flex rounded-md shadow-sm"
         >
           <PatientrecordsLaborderCard :item="item" class="w-full" />
         </NuxtLink>

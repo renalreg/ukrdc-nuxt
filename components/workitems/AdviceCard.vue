@@ -14,8 +14,8 @@
         </li>
         <li v-if="workItemAdvices.includes(5)">
           <TextP class="mb-1">
-            Check the <span class="text-indigo-600 font-bold">Proposed Merge</span> below, then click
-            <span class="text-yellow-600 font-bold">Merge Master Records</span> if the link is valid.
+            Check the <span class="font-bold text-indigo-600">Proposed Merge</span> below, then click
+            <span class="font-bold text-yellow-600">Merge Master Records</span> if the link is valid.
           </TextP>
           <TextP>
             You may need to use PatientView, RaDaR, or DemoGraphicGenerator.exe to issue a demographic update before
@@ -25,7 +25,7 @@
         <li v-if="workItemAdvices.includes(6)">
           <TextP>
             This Work Item was recently merged, and can now be
-            <span class="text-green-600 font-bold">closed</span>.
+            <span class="font-bold text-green-600">closed</span>.
           </TextP>
         </li>
         <li v-if="workItemAdvices.includes(7)">
@@ -56,14 +56,14 @@
             already.
           </TextP>
           <TextP>
-            This Work item can likely be <span class="text-green-600 font-bold">closed</span> without further action.
+            This Work item can likely be <span class="font-bold text-green-600">closed</span> without further action.
           </TextP>
         </li>
       </ul>
       <div v-else>
-        <SkeleText class="h-6 mb-2 w-full" />
-        <SkeleText class="h-6 mb-2 w-1/2" />
-        <SkeleText class="h-6 mb-2 w-3/4" />
+        <SkeleText class="mb-2 h-6 w-full" />
+        <SkeleText class="mb-2 h-6 w-1/2" />
+        <SkeleText class="mb-2 h-6 w-3/4" />
       </div>
     </GenericCardContent>
   </GenericCard>

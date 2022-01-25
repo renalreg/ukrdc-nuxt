@@ -1,6 +1,6 @@
 <template>
   <GenericCard class="border-2 border-indigo-500">
-    <div class="px-4 sm:px-6 h-24 flex flex-col justify-center">
+    <div class="flex h-24 flex-col justify-center px-4 sm:px-6">
       <TextNameH2
         :class="highlight.includes('name') ? highlightClasses : []"
         :forename="record.givenname"

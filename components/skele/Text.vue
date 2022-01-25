@@ -1,3 +1,3 @@
 <template>
-  <div class="animate-pulse bg-gray-200 rounded"></div>
+  <div class="animate-pulse rounded bg-gray-200"></div>
 </template>

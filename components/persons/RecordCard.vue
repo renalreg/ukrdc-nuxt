@@ -1,6 +1,6 @@
 <template>
   <GenericCard class="border-2 border-red-500">
-    <div class="px-4 sm:px-6 h-24 flex flex-col justify-center">
+    <div class="flex h-24 flex-col justify-center px-4 sm:px-6">
       <span>
         <TextNameH2 :forename="record.givenname" :surname="record.surname" :highlight="highlight" />
       </span>
@@ -31,7 +31,7 @@
         <GenericCardDi>
           <GenericCardDt>Date of Birth</GenericCardDt>
           <dd
-            class="mt-1 text-gray-900 sm:mt-0 sm:col-span-2"
+            class="mt-1 text-gray-900 sm:col-span-2 sm:mt-0"
             :class="highlight.includes('dateOfBirth') ? highlightClasses : []"
           >
             {{ formatDate(record.dateOfBirth, (t = false)) }}
@@ -40,7 +40,7 @@
         <GenericCardDi>
           <GenericCardDt>Assigned Gender</GenericCardDt>
           <dd
-            class="mt-1 text-gray-900 sm:mt-0 sm:col-span-2"
+            class="mt-1 text-gray-900 sm:col-span-2 sm:mt-0"
             :class="highlight.includes('gender') ? highlightClasses : []"
           >
             {{ formatGender(record.gender) }}
@@ -49,7 +49,7 @@
         <GenericCardDi>
           <GenericCardDt>Date of Death</GenericCardDt>
           <dd
-            class="mt-1 text-gray-900 sm:mt-0 sm:col-span-2"
+            class="mt-1 text-gray-900 sm:col-span-2 sm:mt-0"
             :class="highlight.includes('dateOfDeath') ? highlightClasses : []"
           >
             {{ record.dateOfDeath ? formatDate(record.dateOfDeath, (t = false)) : 'N/A' }}

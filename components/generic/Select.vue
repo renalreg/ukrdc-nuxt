@@ -1,7 +1,7 @@
 <template>
   <select
     :value="value"
-    class="block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm: border-gray-300 rounded-md"
+    class="sm: block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
     @input="$emit('input', $event.target.value)"
   >
     <slot />

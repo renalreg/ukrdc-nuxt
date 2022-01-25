@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="max-w-7xl mx-auto mb-4">
+    <div class="mx-auto mb-4 max-w-7xl">
       <TextH1>Multiple UKRDC IDs</TextH1>
       <TextP>Results of a scan that detect patients with more than one UKRDC Master Record.</TextP>
     </div>
@@ -14,7 +14,7 @@
             <TextDd v-if="total">
               {{ total }}
             </TextDd>
-            <SkeleText v-else class="h-6 w-8 mt-2" />
+            <SkeleText v-else class="mt-2 h-6 w-8" />
           </GenericDi>
 
           <GenericDi>
@@ -31,7 +31,7 @@
             <TextDd v-if="lastRunTime">
               {{ formatDate(lastRunTime, true) }}
             </TextDd>
-            <SkeleText v-else class="h-6 w-1/4 mt-2" />
+            <SkeleText v-else class="mt-2 h-6 w-1/4" />
           </GenericDi>
         </GenericDl>
       </GenericCardContent>

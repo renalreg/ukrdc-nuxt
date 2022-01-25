@@ -16,7 +16,7 @@
       </ul>
       <GenericPaginator
         v-if="documents && documents.length > 0"
-        class="bg-white border-t border-gray-200"
+        class="border-t border-gray-200 bg-white"
         :page="page"
         :size="size"
         :total="total"
