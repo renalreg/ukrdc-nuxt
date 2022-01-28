@@ -3,9 +3,9 @@ Big link cards used in the EMPI page, to direct to Merge etc.
 -->
 
 <template>
-  <GenericCard class="relative group p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-cyan-500">
+  <GenericCard class="group focus-within:ring-cyan-500 relative p-6 focus-within:ring-2 focus-within:ring-inset">
     <div>
-      <span class="rounded-lg inline-flex p-3 bg-indigo-50 text-indigo-700 ring-4 ring-white">
+      <span class="inline-flex rounded-lg bg-indigo-50 p-3 text-indigo-700 ring-4 ring-white">
         <!-- Heroicon name: outline/link -->
         <svg
           class="h-6 w-6"

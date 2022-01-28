@@ -22,12 +22,12 @@
             <TextDd v-if="connectorMessage">
               <span
                 v-if="errorMessage"
-                class="flex-shrink-0 inline-block px-2 py-0.5 text-red-800 text-sm font-medium bg-red-100 rounded-sm"
+                class="inline-block flex-shrink-0 rounded-sm bg-red-100 px-2 py-0.5 text-sm font-medium text-red-800"
                 >Error</span
               >
               <span
                 v-else
-                class="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-sm font-medium bg-green-100 rounded-sm"
+                class="inline-block flex-shrink-0 rounded-sm bg-green-100 px-2 py-0.5 text-sm font-medium text-green-800"
                 >Success</span
               >
             </TextDd>
@@ -45,10 +45,10 @@
           <GenericCardFlat
             v-for="(value, key) in nonNullMetadata"
             :key="key"
-            class="relative px-4 py-4 flex items-center space-x-2"
+            class="relative flex items-center space-x-2 px-4 py-4"
             :class="key.includes('ERROR') ? 'border-2 border-red-500' : ''"
           >
-            <div class="flex-1 min-w-0">
+            <div class="min-w-0 flex-1">
               <span class="absolute inset-0" aria-hidden="true" />
               <p class="font-medium text-gray-900">{{ key }}</p>
               <p class="text-gray-500 line-clamp-3">

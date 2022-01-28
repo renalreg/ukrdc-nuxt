@@ -9,7 +9,7 @@
           <GenericDi>
             <TextDt>Status</TextDt>
             <TextDd v-if="message">
-              <MessagesStatusBadge class="flex-shrink mr-2" :message="message" />
+              <MessagesStatusBadge class="mr-2 flex-shrink" :message="message" />
             </TextDd>
             <SkeleText v-else class="h-6 w-full" />
           </GenericDi>

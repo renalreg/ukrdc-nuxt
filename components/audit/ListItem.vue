@@ -1,11 +1,11 @@
 <template>
   <li>
     <div :class="isChild ? ['bg-gray-100'] : []">
-      <div class="flex items-center gap-2 min-w-0 w-full min-h-20 lg:min-h-12">
-        <div class="w-8 h-full">
+      <div class="min-h-20 lg:min-h-12 flex w-full min-w-0 items-center gap-2">
+        <div class="h-full w-8">
           <div
             v-show="item.children.length > 0"
-            class="flex flex-none items-center justify-center self-stretch h-full cursor-pointer"
+            class="flex h-full flex-none cursor-pointer items-center justify-center self-stretch"
             @click="showChildren = !showChildren"
           >
             <IconChevronDown v-show="showChildren" />
@@ -13,8 +13,8 @@
           </div>
         </div>
 
-        <div class="flex-grow grid grid-cols-6 lg:grid-cols-12 gap-2 items-center pr-2 py-2">
-          <TextP class="col-span-2 lg:col-span-3 truncate">{{ formatDate(item.accessEvent.time, true, true) }}</TextP>
+        <div class="grid flex-grow grid-cols-6 items-center gap-2 py-2 pr-2 lg:grid-cols-12">
+          <TextP class="col-span-2 truncate lg:col-span-3">{{ formatDate(item.accessEvent.time, true, true) }}</TextP>
           <TextP class="col-span-4 lg:col-span-4"> {{ item.accessEvent.userEmail }} </TextP>
           <TextP class="col-span-2 lg:col-span-1"> <BadgeCrud :operation="item.operation" /> </TextP>
           <AuditResourceBadge class="col-span-4 lg:col-span-4" :item="item" />

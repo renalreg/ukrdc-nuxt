@@ -12,7 +12,7 @@
       </div>
     </ul>
     <GenericPaginator
-      class="bg-white border-t border-gray-200"
+      class="border-t border-gray-200 bg-white"
       :jump-to-top="false"
       :page="relatedErrorsPage"
       :size="relatedErrorsSize"

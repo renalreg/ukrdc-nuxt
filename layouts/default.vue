@@ -1,11 +1,11 @@
 <template>
   <!-- This example requires Tailwind CSS v2.0+ -->
-  <div class="h-screen flex overflow-hidden bg-white">
+  <div class="flex h-screen overflow-hidden bg-white">
     <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
 
     <transition :duration="300">
       <div v-show="sbOpen" class="md:hidden">
-        <div class="fixed inset-0 flex z-40">
+        <div class="fixed inset-0 z-40 flex">
           <!--Off-canvas menu overlay, show/hide based on off-canvas menu state.-->
           <transition
             enter-active-class="transition-opacity ease-linear"
@@ -33,7 +33,7 @@
               v-show="sbOpen"
               :show-close-button="true"
               :show-profile="false"
-              class="relative flex-1 flex flex-col max-w-xs w-full"
+              class="relative flex w-full max-w-xs flex-1 flex-col"
               @toggle="toggle()"
             />
           </transition>
@@ -46,7 +46,7 @@
             leave-class="translate-x-0"
             leave-to-class="-translate-x-full"
           >
-            <div v-show="sbOpen" class="flex-shrink-0 w-14"></div>
+            <div v-show="sbOpen" class="w-14 flex-shrink-0"></div>
           </transition>
         </div>
       </div>
@@ -54,19 +54,19 @@
 
     <!-- Static sidebar for desktop -->
     <div class="hidden md:flex md:flex-shrink-0">
-      <div class="flex flex-col w-64">
-        <NavigationSidebar class="flex flex-col h-0 flex-1 border-r border-gray-200" />
+      <div class="flex w-64 flex-col">
+        <NavigationSidebar class="flex h-0 flex-1 flex-col border-r border-gray-200" />
       </div>
     </div>
 
     <!-- Main page -->
-    <div class="flex flex-col w-0 flex-1 overflow-hidden">
+    <div class="flex w-0 flex-1 flex-col overflow-hidden">
       <!-- Mobile menu bar -->
-      <div class="md:hidden z-10 h-16 flex-shrink-0 flex items-center bg-white border-b border-gray-200">
+      <div class="z-10 flex h-16 flex-shrink-0 items-center border-b border-gray-200 bg-white md:hidden">
         <!-- Sidebar menu button -->
-        <div class="inline-flex items-center justify-left flex-grow">
+        <div class="justify-left inline-flex flex-grow items-center">
           <button
-            class="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+            class="focus:outline-none -ml-0.5 -mt-0.5 inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-500"
             @click="toggle()"
           >
             <span class="sr-only">Open sidebar</span>
@@ -84,14 +84,14 @@
           </button>
         </div>
 
-        <div class="flex-shrink-0 flex mr-1">
+        <div class="mr-1 flex flex-shrink-0">
           <ProfileBadge :right-to-left="true" :top-to-bottom="true" />
         </div>
       </div>
 
       <!-- Main page content -->
-      <main class="flex-1 relative z-0 overflow-y-auto focus:outline-none" tabindex="0">
-        <Nuxt class="py-6 max-w-7xl mx-auto px-4 sm:px-6 md:px-8" />
+      <main class="focus:outline-none relative z-0 flex-1 overflow-y-auto" tabindex="0">
+        <Nuxt class="mx-auto max-w-7xl py-6 px-4 sm:px-6 md:px-8" />
       </main>
     </div>
   </div>
@@ -129,6 +129,6 @@ html {
 }
 
 .v-popper--theme-dropdown .v-popper__inner {
-  @apply border border-gray-300 shadow-sm rounded-md p-4;
+  @apply rounded-md border border-gray-300 p-4 shadow-sm;
 }
 </style>

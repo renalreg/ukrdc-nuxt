@@ -1,8 +1,8 @@
 <template>
   <li>
     <div class="flex items-center px-4 py-4 sm:px-6">
-      <div class="min-w-0 flex-1 flex items-center">
-        <div class="min-w-0 grid grid-cols-2 lg:grid-cols-3 lg:gap-4 w-full">
+      <div class="flex min-w-0 flex-1 items-center">
+        <div class="grid w-full min-w-0 grid-cols-2 lg:grid-cols-3 lg:gap-4">
           <!-- Heading -->
           <div class="col-span-1 lg:col-span-2">
             <TextL1 class="truncate"> Message ID {{ message.messageId }} </TextL1>

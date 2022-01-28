@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="max-w-7xl mx-auto mb-4">
+    <div class="mx-auto mb-4 max-w-7xl">
       <h1 class="text-2xl font-semibold text-gray-900">Renal Facilities</h1>
     </div>
 

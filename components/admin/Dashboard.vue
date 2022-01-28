@@ -4,7 +4,7 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
 
 <template>
   <div>
-    <div v-if="counts" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+    <div v-if="counts" class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-3">
       <GenericCard>
         <div class="flex items-center p-4">
           <div class="flex-shrink-0">

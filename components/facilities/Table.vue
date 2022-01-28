@@ -15,7 +15,7 @@ Table of facilities and their basic statistics
               <IconDynamicSort :active="sortBy === 'id'" :asc="isAscending['id']" @toggle="toggleSort('id')" />
             </div>
           </th>
-          <th scope="col" class="px-6 py-3 text-left hidden lg:table-cell">
+          <th scope="col" class="hidden px-6 py-3 text-left lg:table-cell">
             <TextTh>Name</TextTh>
           </th>
           <th scope="col" class="px-6 py-3 text-left">
@@ -46,15 +46,15 @@ Table of facilities and their basic statistics
           </th>
         </tr>
       </thead>
-      <tbody class="bg-white divide-y divide-gray-200">
+      <tbody class="divide-y divide-gray-200 bg-white">
         <tr
           v-for="facility in filteredFacilities"
           :key="facility.id"
-          class="hover:bg-gray-50 cursor-pointer"
+          class="cursor-pointer hover:bg-gray-50"
           @click="$emit('select', facility.id)"
         >
           <GenericTableCell class="font-medium text-gray-900">{{ facility.id }}</GenericTableCell>
-          <GenericTableCell class="hidden lg:table-cell max-w-sm truncate">{{ facility.description }}</GenericTableCell>
+          <GenericTableCell class="hidden max-w-sm truncate lg:table-cell">{{ facility.description }}</GenericTableCell>
           <GenericTableCell>{{ facility.statistics.totalPatients }}</GenericTableCell>
           <GenericTableCell>
             <div class="flex items-center">

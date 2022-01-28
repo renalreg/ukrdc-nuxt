@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col lg:flex-row gap-4">
-    <div class="flex gap-2 flex-none">
+  <div class="flex flex-col gap-4 lg:flex-row">
+    <div class="flex flex-none gap-2">
       <GenericButtonMini :colour="lastNDays === 7 ? 'indigo-outline' : 'white'" @click="setLastNDays(7)">
         Last 7 days
       </GenericButtonMini>
@@ -18,7 +18,7 @@
       </GenericButtonMini>
       <GenericButtonMini colour="red-outline" @click="clear()"> Clear </GenericButtonMini>
     </div>
-    <div v-show="showCustom" class="flex w-full h-8 flex-1">
+    <div v-show="showCustom" class="flex h-8 w-full flex-1">
       <v-date-picker
         class="w-full"
         :value="value"
@@ -32,10 +32,10 @@
         v-on="$listeners"
       >
         <template #default="{ inputValue, inputEvents, showPopover }">
-          <div class="flex flex-row justify-start items-center h-full" @click="showPopover">
-            <div class="relative flex-grow w-full h-full">
+          <div class="flex h-full flex-row items-center justify-start" @click="showPopover">
+            <div class="relative h-full w-full flex-grow">
               <svg
-                class="text-gray-600 w-4 h-full mx-2 absolute pointer-events-none"
+                class="pointer-events-none absolute mx-2 h-full w-4 text-gray-600"
                 fill="none"
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -47,14 +47,14 @@
               </svg>
               <input :class="textBoxClasses" :value="inputValue.start" v-on="inputEvents.start" />
             </div>
-            <span class="flex-shrink-0 m-2">
-              <svg class="w-4 h-4 stroke-current text-gray-600" viewBox="0 0 24 24">
+            <span class="m-2 flex-shrink-0">
+              <svg class="h-4 w-4 stroke-current text-gray-600" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </span>
-            <div class="relative flex-grow w-full h-full">
+            <div class="relative h-full w-full flex-grow">
               <svg
-                class="text-gray-600 w-4 h-full mx-2 absolute pointer-events-none"
+                class="pointer-events-none absolute mx-2 h-full w-4 text-gray-600"
                 fill="none"
                 stroke-linecap="round"
                 stroke-linejoin="round"

@@ -9,11 +9,11 @@
       @confirm="requestMerge()"
     />
 
-    <div class="max-w-7xl mx-auto mb-4">
+    <div class="mx-auto mb-4 max-w-7xl">
       <TextH1>Merge Records</TextH1>
     </div>
 
-    <div class="block lg:flex gap-2 mb-6">
+    <div class="mb-6 block gap-2 lg:flex">
       <div class="flex-1">
         <div v-if="superseded">
           <GenericButton class="w-full" @click="clearSuperceeded"> Change Superseded Record </GenericButton>
@@ -34,17 +34,17 @@
         </div>
       </div>
 
-      <div class="flex-none flex flex-row lg:flex-col my-4 lg:my-0 lg:w-8 mb-2 justify-center lg:justify-start">
+      <div class="my-4 mb-2 flex flex-none flex-row justify-center lg:my-0 lg:w-8 lg:flex-col lg:justify-start">
         <div class="flex-shrink">
           <button
             v-tooltip="'Switch Records'"
-            class="w-8 block mx-auto rounded-md shadow-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 border bg-white hover:bg-gray-50 focus:ring-indigo-500 border-gray-300 text-gray-700"
+            class="focus:outline-none mx-auto block w-8 rounded-md border border-gray-300 bg-white font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             @click="switchRecords"
           >
-            <IconSwitchH class="hidden lg:block my-2" /><IconSwitchV class="block lg:hidden my-2" />
+            <IconSwitchH class="my-2 hidden lg:block" /><IconSwitchV class="my-2 block lg:hidden" />
           </button>
         </div>
-        <div class="hidden lg:flex flex-col flex-grow justify-center">
+        <div class="hidden flex-grow flex-col justify-center lg:flex">
           <div v-show="superseded && superseding" class="h-8"><IconArrowRight /></div>
         </div>
       </div>

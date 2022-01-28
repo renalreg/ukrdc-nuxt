@@ -76,37 +76,37 @@ export default defineComponent({
 
 <style lang="postcss">
 .btn-mini-disabled {
-  @apply opacity-50 cursor-default;
+  @apply cursor-default opacity-50;
 }
 .btn-mini-white {
-  @apply btn-mini-base bg-white hover:bg-gray-50 focus:ring-indigo-500 border-gray-300 text-gray-700;
+  @apply btn-mini-base border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-indigo-500;
 }
 .btn-mini-indigo {
-  @apply btn-mini-base bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 border-transparent text-white;
+  @apply btn-mini-base border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500;
 }
 .btn-mini-indigo-outline {
-  @apply btn-mini-base bg-white hover:bg-gray-50 focus:ring-indigo-500 border-indigo-600 text-indigo-600;
+  @apply btn-mini-base border-indigo-600 bg-white text-indigo-600 hover:bg-gray-50 focus:ring-indigo-500;
 }
 .btn-mini-green {
-  @apply btn-mini-base bg-green-600 hover:bg-green-700 focus:ring-green-500 border-transparent text-white;
+  @apply btn-mini-base border-transparent bg-green-600 text-white hover:bg-green-700 focus:ring-green-500;
 }
 .btn-mini-yellow {
-  @apply btn-mini-base bg-yellow-600 hover:bg-yellow-700 focus:ring-yellow-500 border-transparent text-white;
+  @apply btn-mini-base border-transparent bg-yellow-600 text-white hover:bg-yellow-700 focus:ring-yellow-500;
 }
 .btn-mini-red {
-  @apply btn-mini-base bg-red-600 hover:bg-red-700 focus:ring-red-500 border-transparent text-white;
+  @apply btn-mini-base border-transparent bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
 }
 .btn-mini-red-outline {
-  @apply btn-mini-base bg-white hover:bg-gray-50 focus:ring-red-500 border-red-600 text-red-600;
+  @apply btn-mini-base border-red-600 bg-white text-red-600 hover:bg-gray-50 focus:ring-red-500;
 }
 .btn-mini-base {
   min-height: 2rem;
-  @apply items-center
+  @apply focus:outline-none
+      items-center
       px-2
       py-1
-      shadow-sm
       text-sm
       font-medium
-      focus:outline-none focus:ring-1;
+      shadow-sm focus:ring-1;
 }
 </style>

@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div v-if="contentType === 'XML'" class="pl-8 pb-3 pt-3 border-b border-gray-200">
+    <div v-if="contentType === 'XML'" class="border-b border-gray-200 pl-8 pb-3 pt-3">
       <GenericToggle v-model="formatMessage" label="Format XML" />
     </div>
 
-    <div v-if="content" class="font-mono text-sm text-left px-4 box-border">
-      <code class="whitespace-pre block mt-2">{{ formattedMessage }}</code>
+    <div v-if="content" class="box-border px-4 text-left font-mono text-sm">
+      <code class="mt-2 block whitespace-pre">{{ formattedMessage }}</code>
     </div>
     <div v-else>Empty file</div>
   </div>

@@ -3,7 +3,7 @@
     <textarea
       :value="value"
       :maxLength="maxLength"
-      class="max-w-lg shadow-sm block w-full mb-4 focus:ring-indigo-500 focus:border-indigo-500 sm: border-gray-300 rounded-md"
+      class="sm: mb-4 block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
       @input="$emit('input', $event.target.value)"
     ></textarea>
     <div v-if="maxLength">

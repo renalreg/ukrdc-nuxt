@@ -5,12 +5,12 @@
       <GenericCodeReader
         :content="source.content"
         :content-type="source.contentType"
-        class="h-full box-border flex flex-col overflow-x-scroll"
+        class="box-border flex h-full flex-col overflow-x-scroll"
       />
     </GenericCard>
 
-    <div v-else class="w-full h-full flex">
-      <div class="w-full text-center mb-auto mt-auto">Missing or empty source file</div>
+    <div v-else class="flex h-full w-full">
+      <div class="mb-auto mt-auto w-full text-center">Missing or empty source file</div>
     </div>
   </div>
 </template>

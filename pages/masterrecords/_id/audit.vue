@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mb-4 flex flex-col">
-      <div class="flex gap-2 flex-row">
+      <div class="flex flex-row gap-2">
         <GenericDateRange v-model="dateRange" class="flex-1" />
         <GenericButtonMini class="flex-none" @click="toggleOrder">
           <div v-show="orderAscending" class="flex">
@@ -26,7 +26,7 @@
         </div>
       </ul>
       <GenericPaginator
-        class="bg-white border-t border-gray-200"
+        class="border-t border-gray-200 bg-white"
         :page="page"
         :size="size"
         :total="total"

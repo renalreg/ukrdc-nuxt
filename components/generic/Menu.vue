@@ -9,7 +9,7 @@
   >
     <div
       v-show="show"
-      class="absolute w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+      class="focus:outline-none absolute w-56 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5"
       role="menu"
       aria-orientation="vertical"
       aria-labelledby="option-menu-button"

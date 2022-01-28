@@ -18,7 +18,7 @@
     <TextP>Support lines for external users are yet to be confirmed. </TextP>
 
     <TextH2 class="my-4">System Configuration</TextH2>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+    <div class="mb-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
       <GenericCard>
         <GenericCardHeader>
           <TextH2>Client</TextH2>
@@ -47,17 +47,17 @@
           <GenericCardDi>
             <GenericCardDt>Environment</GenericCardDt>
             <GenericCardDd v-if="serverInfo">{{ serverInfo.deploymentEnv }}</GenericCardDd>
-            <SkeleText v-else class="h-6 mb-2 w-3/4" />
+            <SkeleText v-else class="mb-2 h-6 w-3/4" />
           </GenericCardDi>
           <GenericCardDi>
             <GenericCardDt>Version Reference</GenericCardDt>
             <GenericCardDd v-if="serverInfo">{{ serverInfo.githubRef }}</GenericCardDd>
-            <SkeleText v-else class="h-6 mb-2 w-3/4" />
+            <SkeleText v-else class="mb-2 h-6 w-3/4" />
           </GenericCardDi>
           <GenericCardDi>
             <GenericCardDt>Version Hash</GenericCardDt>
             <GenericCardDd v-if="serverInfo">{{ serverInfo.githubSha }}</GenericCardDd>
-            <SkeleText v-else class="h-6 mb-2 w-3/4" />
+            <SkeleText v-else class="mb-2 h-6 w-3/4" />
           </GenericCardDi>
         </GenericCardDl>
       </GenericCard>

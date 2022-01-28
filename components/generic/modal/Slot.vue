@@ -1,9 +1,9 @@
 <template>
   <transition :duration="200">
-    <div v-show="visible" class="fixed z-10 inset-0 overflow-y-auto">
+    <div v-show="visible" class="fixed inset-0 z-10 overflow-y-auto">
       <!-- Use padding to push modal out from underneath the navbar and provide a region to close on small displays -->
       <div
-        class="flex items-end sm:items-center justify-center px-4 pb-4 pt-32 md:px-4 md:py-4 text-center h-screen content-box"
+        class="content-box flex h-screen items-end justify-center px-4 pb-4 pt-32 text-center sm:items-center md:px-4 md:py-4"
       >
         <!-- Background overlay, show/hide based on modal state. -->
         <GenericBlackout :visible="visible" @click="hide()" />
@@ -12,7 +12,7 @@
         <TransitionModal>
           <div
             v-show="visible"
-            class="inline-block align-bottom bg-white rounded-lg p-4 sm:p-6 text-left shadow-xl transform transition-all sm:align-middle sm:max-w-xl w-full max-h-full overflow-auto"
+            class="inline-block max-h-full w-full transform overflow-auto rounded-lg bg-white p-4 text-left align-bottom shadow-xl transition-all sm:max-w-xl sm:p-6 sm:align-middle"
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-headline"

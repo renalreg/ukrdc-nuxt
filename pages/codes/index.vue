@@ -1,3 +1,3 @@
 <template>
-  <div class="text-center mb-4">Select a code</div>
+  <div class="mb-4 text-center">Select a code</div>
 </template>

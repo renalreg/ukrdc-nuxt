@@ -1,7 +1,7 @@
 <template>
   <transition :duration="200">
-    <div v-show="visible" class="fixed z-10 inset-0 overflow-y-auto">
-      <div class="flex items-center justify-center min-h-screen text-center">
+    <div v-show="visible" class="fixed inset-0 z-10 overflow-y-auto">
+      <div class="flex min-h-screen items-center justify-center text-center">
         <GenericBlackout :visible="visible" />
         <LoadingIndicator colour="white" class="h-4"></LoadingIndicator>
       </div>
