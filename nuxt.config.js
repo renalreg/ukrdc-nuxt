@@ -10,8 +10,7 @@ export default {
     htmlAttrs: {
       lang: 'en',
     },
-    meta: [
-      {
+    meta: [{
         charset: 'utf-8',
       },
       {
@@ -31,7 +30,9 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: [
+    '@/assets/css/main.css',
+  ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
@@ -50,31 +51,38 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: ['@nuxt/typescript-build', '@nuxtjs/composition-api/module', '@nuxtjs/tailwindcss'],
+  buildModules: [
+    '@nuxt/typescript-build',
+    '@nuxtjs/composition-api/module',
+    '@nuxt/postcss8' // Required for TailwindCSS
+  ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: ['@nuxtjs/axios', '@nuxtjs/sentry'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    transpile: [],
+    postcss: {
+      plugins: {
+        tailwindcss: {},
+        autoprefixer: {},
+      },
+    },
   },
 
   // Sentry Configuration: https://sentry.nuxtjs.org/guide/setup
   sentry: {
     dsn: process.env.SENTRY_DSN,
     // Skip publish if no Sentry auth token is found at build-time
-    publishRelease: process.env.SENTRY_AUTH_TOKEN
-      ? {
-          authToken: process.env.SENTRY_AUTH_TOKEN,
-          org: process.env.SENTRY_ORG,
-          project: process.env.SENTRY_PROJECT,
-          // Attach commits to the release (requires that the build triggered within a git repository).
-          setCommits: {
-            auto: true,
-          },
-        }
-      : false,
+    publishRelease: process.env.SENTRY_AUTH_TOKEN ? {
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      org: process.env.SENTRY_ORG,
+      project: process.env.SENTRY_PROJECT,
+      // Attach commits to the release (requires that the build triggered within a git repository).
+      setCommits: {
+        auto: true,
+      },
+    } : false,
     sourceMapStyle: 'hidden-source-map',
     tracing: {
       tracesSampleRate: 1.0,
