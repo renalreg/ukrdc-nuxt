@@ -1,6 +1,6 @@
 <template>
   <span
-    class="inline-flex items-center h-5 px-2.5 py-0.5 rounded-full text-sm font-medium"
+    class="inline-flex h-5 items-center rounded-full px-2.5 py-0.5 text-sm font-medium"
     :class="TagClass(nationalidType)"
   >
     {{ nationalidType.trim() }}

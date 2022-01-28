@@ -2,7 +2,7 @@
   <div class="bg-gray-50">
     <div v-if="showCloseButton" class="absolute top-0 right-0 -mr-12 pt-2">
       <button
-        class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+        class="focus:outline-none ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:ring-2 focus:ring-inset focus:ring-white"
         @click="$emit('toggle')"
       >
         <span class="sr-only">Close sidebar</span>
@@ -19,19 +19,19 @@
         </svg>
       </button>
     </div>
-    <div class="flex-1 h-0 pt-6 pb-4 overflow-y-auto">
-      <div class="flex-shrink-0 flex items-center px-4 mb-2">
-        <img class="w-full h-auto" src="~/assets/UKKA_UKRDC.svg" alt="Workflow" />
+    <div class="h-0 flex-1 overflow-y-auto pt-6 pb-4">
+      <div class="mb-2 flex flex-shrink-0 items-center px-4">
+        <img class="h-auto w-full" src="~/assets/UKKA_UKRDC.svg" alt="Workflow" />
       </div>
-      <div v-if="$config.deploymentEnv !== 'production'" class="capitalize py-2 text-center bg-yellow-700 text-white">
+      <div v-if="$config.deploymentEnv !== 'production'" class="bg-yellow-700 py-2 text-center capitalize text-white">
         {{ $config.deploymentEnv }}
       </div>
-      <nav class="mt-6 px-2 space-y-1">
+      <nav class="mt-6 space-y-1 px-2">
         <div v-for="item in pages" :key="item.title">
           <div v-if="item.visible && item.url">
             <NuxtLink
               :to="item.url"
-              class="group flex items-center px-2 py-2 font-medium rounded-md text-lg"
+              class="group flex items-center rounded-md px-2 py-2 text-lg font-medium"
               :class="[
                 $route.path == item.url
                   ? ['bg-gray-100', 'text-gray-900']
@@ -40,7 +40,7 @@
               @click.native="$emit('toggle')"
             >
               <svg
-                class="text-gray-500 mr-4 h-6 w-6"
+                class="mr-4 h-6 w-6 text-gray-500"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -55,7 +55,7 @@
           <div v-else-if="item.visible">
             <h3
               :id="item.title + '_Heading'"
-              class="px-3 mt-5 mb-3 text-sm font-semibold text-gray-500 uppercase tracking-wider"
+              class="mt-5 mb-3 px-3 text-sm font-semibold uppercase tracking-wider text-gray-500"
             >
               {{ item.title }}
             </h3>
@@ -64,7 +64,7 @@
       </nav>
     </div>
 
-    <div v-if="showProfile" class="flex-shrink-0 flex border-t border-gray-200 p-1">
+    <div v-if="showProfile" class="flex flex-shrink-0 border-t border-gray-200 p-1">
       <ProfileBadge />
     </div>
   </div>

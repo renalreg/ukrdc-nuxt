@@ -1,5 +1,5 @@
 <template>
-  <div ref="toastRootElement" class="max-w-sm w-full">
+  <div ref="toastRootElement" class="w-full max-w-sm">
     <transition
       enter-active-class="transform ease-out duration-300 transition"
       enter-class="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
@@ -11,7 +11,7 @@
       <div
         v-if="active && primary === undefined"
         :class="classToastAll"
-        class="shadow-lg rounded-lg pointer-events-auto relative mb-4 overflow-hidden"
+        class="pointer-events-auto relative mb-4 overflow-hidden rounded-lg shadow-lg"
       >
         <div
           v-if="progress && timeout"
@@ -19,21 +19,21 @@
           class="absolute left-0 bottom-0 right-0 h-1 rounded"
           :style="progressStyle"
         ></div>
-        <div class="rounded-lg shadow-xs overflow-hidden z-100">
+        <div class="shadow-xs z-100 overflow-hidden rounded-lg">
           <div class="p-4">
             <div class="flex items-start">
               <toastIcon class="flex-shrink-0" :type="type" :icon="icon" />
               <div class="ml-3 w-0 flex-1 pt-0.5">
-                <p v-if="title" :class="classTitle" class="leading-5 font-medium">
+                <p v-if="title" :class="classTitle" class="font-medium leading-5">
                   {{ title }}
                 </p>
                 <p :class="[classMessage, { 'mt-1': title }]" class="leading-5">
                   {{ message }}
                 </p>
               </div>
-              <div class="ml-4 flex-shrink-0 flex">
+              <div class="ml-4 flex flex-shrink-0">
                 <button
-                  class="inline-flex text-gray-400 transition ease-in-out duration-150 focus:outline-none focus:text-gray-500"
+                  class="focus:outline-none inline-flex text-gray-400 transition duration-150 ease-in-out focus:text-gray-500"
                   @click="destroy"
                 >
                   <svg
@@ -55,18 +55,18 @@
       <div
         v-if="active && primary !== undefined && secondary !== undefined"
         :class="classToastAll"
-        class="max-w-md w-full shadow-lg rounded-lg pointer-events-auto mb-4"
+        class="pointer-events-auto mb-4 w-full max-w-md rounded-lg shadow-lg"
       >
         <div
           v-if="progress && timeout"
           class="absolute left-0 bottom-0 right-0 h-1 rounded bg-gray-100"
           :style="progressStyle"
         ></div>
-        <div class="flex rounded-lg shadow-xs">
-          <div class="w-0 flex-1 flex items-center p-4">
-            <toastIcon class="flex-shrink-0 mr-4" :type="type" :icon="icon" />
+        <div class="shadow-xs flex rounded-lg">
+          <div class="flex w-0 flex-1 items-center p-4">
+            <toastIcon class="mr-4 flex-shrink-0" :type="type" :icon="icon" />
             <div class="w-full">
-              <p v-if="title" :class="classTitle" class="leading-5 font-medium">
+              <p v-if="title" :class="classTitle" class="font-medium leading-5">
                 {{ title }}
               </p>
               <p :class="[classMessage, { 'mt-1': title }]" class="leading-5">
@@ -76,17 +76,17 @@
           </div>
           <div class="flex border-l border-gray-200">
             <div class="-ml-px flex flex-col">
-              <div class="h-0 flex-1 flex border-b border-gray-200">
+              <div class="flex h-0 flex-1 border-b border-gray-200">
                 <button
-                  class="-mb-px flex items-center justify-center w-full rounded-tr-lg border border-transparent px-4 py-3 leading-5 font-medium text-indigo-600 transition ease-in-out duration-150 hover:text-indigo-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-indigo-700 active:bg-gray-50"
+                  class="focus:outline-none focus:shadow-outline-blue -mb-px flex w-full items-center justify-center rounded-tr-lg border border-transparent px-4 py-3 font-medium leading-5 text-indigo-600 transition duration-150 ease-in-out hover:text-indigo-500 focus:border-blue-300 active:bg-gray-50 active:text-indigo-700"
                   @click="primaryAction"
                 >
                   {{ primary.label }}
                 </button>
               </div>
-              <div class="-mt-px h-0 flex-1 flex">
+              <div class="-mt-px flex h-0 flex-1">
                 <button
-                  class="flex items-center justify-center w-full rounded-br-lg border border-transparent px-4 py-3 leading-5 font-medium text-gray-700 transition ease-in-out duration-150 hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50"
+                  class="focus:outline-none focus:shadow-outline-blue flex w-full items-center justify-center rounded-br-lg border border-transparent px-4 py-3 font-medium leading-5 text-gray-700 transition duration-150 ease-in-out hover:text-gray-500 focus:border-blue-300 active:bg-gray-50 active:text-gray-800"
                   @click="secondaryAction"
                 >
                   {{ secondary.label }}
@@ -99,29 +99,29 @@
       <div
         v-if="active && primary !== undefined && secondary === undefined"
         :class="classToastAll"
-        class="max-w-md w-full shadow-lg rounded-lg pointer-events-auto mb-4"
+        class="pointer-events-auto mb-4 w-full max-w-md rounded-lg shadow-lg"
       >
         <div
           v-if="progress && timeout"
           class="absolute left-0 bottom-0 right-0 h-1 rounded bg-gray-100"
           :style="progressStyle"
         ></div>
-        <div class="rounded-lg shadow-xs overflow-hidden">
+        <div class="shadow-xs overflow-hidden rounded-lg">
           <div class="p-4">
             <div class="flex items-center">
-              <toastIcon class="flex-shrink-0 mr-4" :type="type" :icon="icon" />
-              <div class="w-0 flex-1 flex justify-between">
+              <toastIcon class="mr-4 flex-shrink-0" :type="type" :icon="icon" />
+              <div class="flex w-0 flex-1 justify-between">
                 <p class="w-0 flex-1 leading-5">{{ message }}</p>
                 <button
-                  class="ml-3 flex-shrink-0 leading-5 font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150"
+                  class="focus:outline-none ml-3 flex-shrink-0 font-medium leading-5 text-indigo-600 transition duration-150 ease-in-out hover:text-indigo-500 focus:underline"
                   @click="primaryAction"
                 >
                   {{ primary.label }}
                 </button>
               </div>
-              <div class="ml-4 flex-shrink-0 flex">
+              <div class="ml-4 flex flex-shrink-0">
                 <button
-                  class="inline-flex text-gray-400 focus:outline-none focus:text-gray-500 transition ease-in-out duration-150"
+                  class="focus:outline-none inline-flex text-gray-400 transition duration-150 ease-in-out focus:text-gray-500"
                   @click="destroy"
                 >
                   <svg

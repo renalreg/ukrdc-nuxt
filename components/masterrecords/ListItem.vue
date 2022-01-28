@@ -1,7 +1,7 @@
 <template>
   <li>
     <!-- Content container -->
-    <div class="px-4 py-4 sm:px-6 min-w-0 grid grid-cols-3 lg:grid-cols-4 md:gap-4 w-full">
+    <div class="grid w-full min-w-0 grid-cols-3 px-4 py-4 sm:px-6 md:gap-4 lg:grid-cols-4">
       <!-- Name, DoB, gender -->
       <div>
         <TextNameL1 :forename="item.givenname" :surname="item.surname" />

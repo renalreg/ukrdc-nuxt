@@ -4,8 +4,11 @@ module.exports = {
     browser: true,
     node: true,
   },
-  extends: ['@nuxtjs/eslint-config-typescript', 'prettier', 'plugin:prettier/recommended', 'plugin:nuxt/recommended'],
-  plugins: ['prettier'],
+  // Extend prettier config to disable rules that conflict with prettier
+  extends: ['@nuxtjs/eslint-config-typescript', 'prettier', 'plugin:nuxt/recommended'],
   // add your custom rules here
-  rules: { 'no-console': 'off', 'vue/multi-word-component-names': 'off' },
+  rules: {
+    'no-console': 'off',
+    'vue/multi-word-component-names': 'off',
+  },
 }

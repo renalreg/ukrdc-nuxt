@@ -1,15 +1,15 @@
 <template>
-  <GenericCardFlat class="grid grid-cols-3 gap-2 mb-4 px-4 py-4">
-    <div class="text-sm font-medium text-gray-500 uppercase tracking-wider col-span-1">Type</div>
+  <GenericCardFlat class="mb-4 grid grid-cols-3 gap-2 px-4 py-4">
+    <div class="col-span-1 text-sm font-medium uppercase tracking-wider text-gray-500">Type</div>
     <TextP class="col-span-2 font-medium text-gray-900">{{ item.observationDesc }} {{ item.prePost }}</TextP>
-    <div class="text-sm font-medium text-gray-500 uppercase tracking-wider col-span-1">Value</div>
+    <div class="col-span-1 text-sm font-medium uppercase tracking-wider text-gray-500">Value</div>
     <TextP class="col-span-2">{{ item.observationValue }} {{ item.observationUnits }}</TextP>
-    <div class="text-sm font-medium text-gray-500 uppercase tracking-wider col-span-1">Entered At</div>
+    <div class="col-span-1 text-sm font-medium uppercase tracking-wider text-gray-500">Entered At</div>
     <div class="col-span-2">
       <TextP>{{ item.enteredAt }}</TextP>
       <TextP>{{ item.enteredAtDescription }}</TextP>
     </div>
-    <div class="text-sm font-medium text-gray-500 uppercase tracking-wider col-span-1">Entered On</div>
+    <div class="col-span-1 text-sm font-medium uppercase tracking-wider text-gray-500">Entered On</div>
     <TextP class="col-span-2">{{ formatDate(item.observationTime) }}</TextP>
   </GenericCardFlat>
 </template>

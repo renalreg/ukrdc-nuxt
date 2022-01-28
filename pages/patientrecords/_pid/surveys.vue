@@ -1,18 +1,18 @@
 <template>
   <div>
-    <patientrecordsSurveyViewer ref="surveyViewerModal" class="w-full md:w-large" />
+    <patientrecordsSurveyViewer ref="surveyViewerModal" class="md:w-large w-full" />
 
     <LoadingIndicator v-if="!surveys"></LoadingIndicator>
     <TextP v-if="surveys && surveys.length <= 0" class="text-center">No surveys on record</TextP>
 
-    <div v-if="surveys" class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-2 justify-center">
+    <div v-if="surveys" class="mt-3 grid grid-cols-1 justify-center gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-2">
       <genericCardMini
         v-for="item in surveys"
         :key="item.id"
         class="col-span-1 flex items-center justify-between truncate"
       >
-        <div class="flex-1 px-4 py-2 truncate">
-          <p class="text-gray-900 font-medium hover:text-gray-600 mb-2">
+        <div class="flex-1 truncate px-4 py-2">
+          <p class="mb-2 font-medium text-gray-900 hover:text-gray-600">
             {{ formatDate(item.surveytime, (t = false)) }}
           </p>
           <p class="text-gray-500">Type: {{ item.surveytypecode }}</p>
@@ -24,7 +24,7 @@
 
           <div class="mt-2">
             <span
-              class="flex-shrink-0 inline-block px-2 py-0.5 text-indigo-800 text-sm font-medium bg-indigo-100 rounded-sm"
+              class="inline-block flex-shrink-0 rounded-sm bg-indigo-100 px-2 py-0.5 text-sm font-medium text-indigo-800"
               >{{ item.questions.length }} questions</span
             >
             <genericButtonMini class="float-right" @click="$refs.surveyViewerModal.show(item)">

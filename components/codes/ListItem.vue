@@ -4,7 +4,7 @@ Single item of the codes list used in the Codes page.
 
 <template>
   <li>
-    <div class="px-4 py-4 sm:px-6 min-w-0 grid grid-cols-2 lg:grid-cols-3 md:gap-4 w-full">
+    <div class="grid w-full min-w-0 grid-cols-2 px-4 py-4 sm:px-6 md:gap-4 lg:grid-cols-3">
       <!-- Heading -->
       <div class="col-span-2">
         <CodesTitle :code="code.code" :coding-standard="code.codingStandard" />
@@ -13,7 +13,7 @@ Single item of the codes list used in the Codes page.
         </TextP>
       </div>
       <!-- Extra fields  -->
-      <div class="hidden lg:block col-span-1">
+      <div class="col-span-1 hidden lg:block">
         <div>
           <TextL1 class="inline">Type: </TextL1><TextP class="inline">{{ code.objectType || 'None' }} </TextP>
         </div>

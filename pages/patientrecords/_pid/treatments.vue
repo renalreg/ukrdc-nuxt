@@ -13,7 +13,7 @@
             ></span>
             <div class="relative flex space-x-3">
               <div v-if="treatment.isDischarge">
-                <span class="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center ring-8 ring-white">
+                <span class="flex h-8 w-8 items-center justify-center rounded-full bg-green-500 ring-8 ring-white">
                   <!-- Heroicon name: solid/check -->
                   <svg
                     class="h-5 w-5 text-white"
@@ -31,7 +31,7 @@
                 </span>
               </div>
               <div v-else>
-                <span class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center ring-8 ring-white">
+                <span class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-500 ring-8 ring-white">
                   <!-- Heroicon name: solid/login -->
                   <svg
                     class="h-5 w-5 text-white"
@@ -46,9 +46,9 @@
                   </svg>
                 </span>
               </div>
-              <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+              <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
                 <div>
-                  <TextP class="inline mr-2 font-bold">
+                  <TextP class="mr-2 inline font-bold">
                     <time :datetime="treatment.time">{{ treatment.time }}</time>
                   </TextP>
                   <TextP v-if="treatment.isDischarge" class="inline">

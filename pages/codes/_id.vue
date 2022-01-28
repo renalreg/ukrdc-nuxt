@@ -38,7 +38,7 @@
     <div v-if="code.mapsTo.length > 0 || code.mappedBy.length > 0">
       <!-- Maps to  -->
       <div v-if="code.mapsTo.length > 0">
-        <div class="bg-gray-50 pl-4 sm:pl-6 py-1 border-t border-b">
+        <div class="border-t border-b bg-gray-50 py-1 pl-4 sm:pl-6">
           <TextH4>Maps To</TextH4>
         </div>
         <ul class="divide-y divide-gray-200">
@@ -52,7 +52,7 @@
 
       <!-- Mapped by  -->
       <div v-if="code.mappedBy.length > 0">
-        <div class="bg-gray-50 pl-4 sm:pl-6 py-1 border-t border-b">
+        <div class="border-t border-b bg-gray-50 py-1 pl-4 sm:pl-6">
           <TextH4>Mapped By</TextH4>
         </div>
         <ul class="divide-y divide-gray-200">

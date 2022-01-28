@@ -50,7 +50,7 @@
     <!-- Header -->
     <div class="mb-6">
       <TextH1 v-if="record"> Work Item {{ record.id }} {{ statusString }} </TextH1>
-      <SkeleText v-else class="h-8 w-1/4 mb-2" />
+      <SkeleText v-else class="mb-2 h-8 w-1/4" />
       <TextL1 v-if="record">
         {{ record.description }}
       </TextL1>
@@ -58,7 +58,7 @@
     </div>
 
     <!-- Info Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+    <div class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
       <!-- Work Item Details -->
       <WorkitemsDetailCard :item="record" />
       <!-- Work Item Advice -->
@@ -68,13 +68,13 @@
     <!-- Action Buttons -->
     <div
       v-if="hasPermission('ukrdc:workitems:write') && record"
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
+      class="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
     >
       <GenericButton
         v-if="availableActions.comment"
         :primary="true"
         colour="indigo"
-        class="inline-flex items-center justify-center w-full"
+        class="inline-flex w-full items-center justify-center"
         @click="addCommentModal.show()"
       >
         <IconPencil />
@@ -84,7 +84,7 @@
       <GenericButton
         v-if="availableActions.close && record.status !== 3"
         :primary="true"
-        class="inline-flex items-center justify-center w-full"
+        class="inline-flex w-full items-center justify-center"
         colour="green"
         @click="closeModal.show()"
       >
@@ -104,7 +104,7 @@
             callback: $route.fullPath + '?justMerged=true',
           },
         }"
-        class="inline-flex items-center justify-center w-full"
+        class="inline-flex w-full items-center justify-center"
         colour="yellow"
       >
         <IconMiniExternalLink />
@@ -114,7 +114,7 @@
 
     <!-- Work Item Trigger -->
     <div v-if="record" class="mb-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div id="incomingCard">
           <!-- Attribute toggle -->
           <GenericTabToggle
@@ -140,7 +140,7 @@
             :full="showDestinationPersons"
           />
           <!-- Missing incoming person card -->
-          <div v-else class="rounded-md bg-red-50 font-medium text-red-800 p-4">No incoming Person record</div>
+          <div v-else class="rounded-md bg-red-50 p-4 font-medium text-red-800">No incoming Person record</div>
         </div>
 
         <div id="destinationCard">
@@ -170,13 +170,13 @@
             />
           </NuxtLink>
           <!-- Missing destination record card -->
-          <div v-else class="rounded-md bg-red-50 text-red-800 p-4">
+          <div v-else class="rounded-md bg-red-50 p-4 text-red-800">
             <p class="font-medium">Destination record no longer exists</p>
             <p>The record may have been merged or delete already</p>
           </div>
         </div>
       </div>
-      <GenericCard v-if="showDestinationPersons && record.destination.persons.length > 1" class="pl-4 mt-2">
+      <GenericCard v-if="showDestinationPersons && record.destination.persons.length > 1" class="mt-2 pl-4">
         <GenericItemPaginator
           v-model="relatedPersonsIndex"
           :total="record.destination.persons.length"
@@ -189,7 +189,7 @@
       <TextH2 class="mb-4">Proposed Merge</TextH2>
 
       <div v-if="record" class="mb-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
           <!-- Incoming records card -->
           <NuxtLink
             v-if="record.incoming.masterRecords.length > 0"
@@ -201,12 +201,12 @@
             />
           </NuxtLink>
           <!-- Empty incoming records card -->
-          <div v-else class="rounded-md bg-red-50 font-medium text-red-800 p-4">No new incoming Master Records</div>
+          <div v-else class="rounded-md bg-red-50 p-4 font-medium text-red-800">No new incoming Master Records</div>
           <NuxtLink v-if="record.destination.masterRecord" :to="`/masterrecords/${record.destination.masterRecord.id}`">
             <masterrecordsRecordCard :record="record.destination.masterRecord" label="Destination Master Record" />
           </NuxtLink>
         </div>
-        <GenericCard v-if="record.incoming.masterRecords.length > 1" class="pl-4 mt-2">
+        <GenericCard v-if="record.incoming.masterRecords.length > 1" class="mt-2 pl-4">
           <GenericItemPaginator
             v-model="relatedRecordsIndex"
             :total="record.incoming.masterRecords.length"

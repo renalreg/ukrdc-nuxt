@@ -28,6 +28,24 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 
 ## Developer notes
 
+## ESLint and Prettier
+
+ESLint and Prettier should be handled separately.
+
+To check your code without changing anything, run:
+
+```
+yarn eslint:check
+yarn prettier:check
+```
+
+To fix the issues, run:
+
+```
+yarn eslint:fix
+yarn prettier:fix
+```
+
 ### (No) Server-side rendering
 
 One often cited advantage to using Nuxt over Vue is server-side rendering. However, we don't use it in this project.

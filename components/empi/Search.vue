@@ -21,7 +21,7 @@ Mini (half-width) search bar and results pages used in the EMPI Merge page.
           </div>
         </ul>
         <GenericPaginator
-          class="bg-white border-t border-gray-200"
+          class="border-t border-gray-200 bg-white"
           :page="page"
           :size="size"
           :total="total"
@@ -32,7 +32,7 @@ Mini (half-width) search bar and results pages used in the EMPI Merge page.
         />
       </GenericCard>
     </div>
-    <div v-else class="mt-2 text-gray-500 text-center">
+    <div v-else class="mt-2 text-center text-gray-500">
       <LoadingIndicator v-if="searchQueryIsPopulated && searchInProgress"></LoadingIndicator>
       <div v-else-if="searchQueryIsPopulated && !searchInProgress">No results found</div>
       <div v-else>

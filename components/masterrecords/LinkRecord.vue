@@ -19,7 +19,7 @@ Includes a header with the Link Record ID and functionality to Unlink the record
       </div>
     </GenericModalSlot>
 
-    <GenericCard class="flex items-center p-2 mb-2">
+    <GenericCard class="mb-2 flex items-center p-2">
       <div class="flex-grow pl-2">
         <TextL1>Link Record {{ record.id }}</TextL1>
       </div>
@@ -28,7 +28,7 @@ Includes a header with the Link Record ID and functionality to Unlink the record
       </div>
     </GenericCard>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
       <PersonsRecordCard :record="record.person" />
       <NuxtLink :to="`/masterrecords/${record.masterRecord.id}`">
         <masterrecordsRecordCard :record="record.masterRecord" />

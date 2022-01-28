@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="max-w-7xl mx-auto mb-4">
+    <div class="mx-auto mb-4 max-w-7xl">
       <h1 class="text-2xl font-semibold text-gray-900">Data Files</h1>
     </div>
 
@@ -15,7 +15,7 @@
         hint="Select a facility..."
       />
       <div class="flex items-center gap-2">
-        <div class="flex-grow flex items-center">
+        <div class="flex flex-grow items-center">
           <FormCheckbox v-model="statuses" label="Stored" value="STORED" />
           <FormCheckbox v-model="statuses" label="Received" value="RECEIVED" />
           <FormCheckbox v-model="statuses" label="Error" value="ERROR" />
@@ -25,7 +25,7 @@
         <form v-show="!nationalId" class="flex" @submit.prevent="nationalId = nationalIdSearchString.trim()">
           <FormTextBoxMini
             v-model="nationalIdSearchString"
-            class="rounded-r-none z-20"
+            class="z-20 rounded-r-none"
             placeholder="Filter by Patient Number"
           ></FormTextBoxMini>
           <GenericButtonMini class="z-10" anchor="left" type="submit">Go</GenericButtonMini>
@@ -60,7 +60,7 @@
         </div>
       </ul>
       <GenericPaginator
-        class="bg-white border-t border-gray-200"
+        class="border-t border-gray-200 bg-white"
         :page="page"
         :size="size"
         :total="total"

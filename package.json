@@ -6,9 +6,12 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate",
-    "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
-    "lint": "yarn lint:js"
+    "eslint": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
+    "prettier": "prettier .",
+    "eslint:check": "yarn eslint",
+    "eslint:fix": "yarn eslint --fix",
+    "prettier:check": "yarn prettier --check",
+    "prettier:fix": "yarn prettier --write"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.1",
@@ -40,8 +43,8 @@
     "eslint": "^8.3.0",
     "eslint-config-prettier": "^8.2.0",
     "eslint-plugin-nuxt": "^3.1.0",
-    "eslint-plugin-prettier": "^4.0.0",
     "postcss": "^8.3.7",
-    "prettier": "^2.4.1"
+    "prettier": "^2.4.1",
+    "prettier-plugin-tailwindcss": "^0.1.3"
   }
 }

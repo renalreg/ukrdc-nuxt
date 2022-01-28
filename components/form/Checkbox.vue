@@ -4,10 +4,10 @@ or an array of values when multiple instances are v-model'd onto the same array.
 -->
 
 <template>
-  <label class="wrapper flex items-center font-medium text-gray-500 mr-4">
+  <label class="wrapper mr-4 flex items-center font-medium text-gray-500">
     <input
       v-model="proxyChecked"
-      class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 mr-2 rounded"
+      class="mr-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
       :class="{ 'opacity-50': disabled }"
       type="checkbox"
       :disabled="disabled"

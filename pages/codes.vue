@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="max-w-7xl mx-auto mb-4">
+    <div class="mx-auto mb-4 max-w-7xl">
       <h1 class="text-2xl font-semibold text-gray-900">Codes List</h1>
     </div>
 
@@ -19,7 +19,7 @@
       <SearchBar v-model="searchboxString" :focus="false" :show-button="false" />
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
       <!-- Code list -->
       <div :class="$route.params.id ? 'hidden lg:block' : 'block'">
         <GenericCard>
@@ -36,7 +36,7 @@
             </div>
           </ul>
           <GenericPaginator
-            class="bg-white border-t border-gray-200"
+            class="border-t border-gray-200 bg-white"
             :page="page"
             :size="size"
             :total="total"
@@ -51,7 +51,7 @@
       <div>
         <GenericButton
           v-show="$route.params.id"
-          class="lg:hidden mb-4 w-full"
+          class="mb-4 w-full lg:hidden"
           :to="{ path: `/codes/`, query: $route.query }"
           >Back to List</GenericButton
         >

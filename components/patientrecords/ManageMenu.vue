@@ -1,7 +1,7 @@
 <template>
   <div>
     <PatientrecordsDeleteModal ref="deleteModal" :item="item" @deleted="$emit('deleted')" />
-    <div v-click-away="closeMenu" class="relative justify-self-end flex items-center">
+    <div v-click-away="closeMenu" class="relative flex items-center justify-self-end">
       <GenericButtonRaw label="Manage record" class="z-0" @click="showMenu = !showMenu">
         <IconMiniDotsVertical class="text-gray-400 hover:text-gray-800" />
       </GenericButtonRaw>

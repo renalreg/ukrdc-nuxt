@@ -1,18 +1,18 @@
 <template>
   <li>
-    <div class="group px-4 py-4 sm:px-6 min-w-0 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 w-full">
+    <div class="group grid w-full min-w-0 grid-cols-2 gap-2 px-4 py-4 sm:grid-cols-3 sm:px-6 lg:grid-cols-5">
       <!-- Heading -->
       <div class="col-span-5 lg:col-span-3">
         <div class="truncate">
-          <TextL1 class="md:inline truncate">
+          <TextL1 class="truncate md:inline">
             {{ item.filename || 'No filename found' }}
           </TextL1>
-          <TextL1 class="md:inline truncate">
+          <TextL1 class="truncate md:inline">
             {{ item.channel ? `on ${item.channel}` : '' }}
           </TextL1>
         </div>
         <div class="mt-2 flex">
-          <MessagesStatusBadge class="flex-shrink mr-2" :message="item" />
+          <MessagesStatusBadge class="mr-2 flex-shrink" :message="item" />
           <TextP class="flex-grow line-clamp-1">
             {{ itemDescription }}
           </TextP>
@@ -26,7 +26,7 @@
         </TextP>
       </div>
       <!-- Identifiers  -->
-      <div class="flex items-center gap-4 col-span-3 lg:col-span-1">
+      <div class="col-span-3 flex items-center gap-4 lg:col-span-1">
         <GenericButtonRound
           v-if="showPatientFilter"
           :class="!item.ni ? 'invisible' : ''"

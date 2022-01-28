@@ -4,9 +4,9 @@ Basic code map description, used in the maps sections of a Code pane.
 
 <template>
   <li>
-    <div class="px-4 sm:px-6 py-4 min-w-0 w-full">
+    <div class="w-full min-w-0 px-4 py-4 sm:px-6">
       <CodesTitle class="inline" :code="map.sourceCode" :coding-standard="map.sourceCodingStandard" />
-      <TextL1 class="inline mx-2">→</TextL1>
+      <TextL1 class="mx-2 inline">→</TextL1>
       <CodesTitle
         class="inline truncate"
         :code="map.destinationCode"

@@ -2,7 +2,7 @@
   <div>
     <div class="mb-6">
       <TextH1 v-if="message"> Message {{ message.messageId }} </TextH1>
-      <SkeleText v-else class="h-8 w-1/4 mb-2" />
+      <SkeleText v-else class="mb-2 h-8 w-1/4" />
     </div>
 
     <!-- Header card -->

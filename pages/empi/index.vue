@@ -1,7 +1,7 @@
 <template>
   <div>
     <TextH2 class="mb-4">EMPI Management</TextH2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+    <div class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
       <EmpiQuickLink
         title="Merge"
         description="Merge Master Records within the EMPI, moving all Patient Records to a combined Master Record"
@@ -10,7 +10,7 @@
       />
     </div>
     <TextH2 class="mb-4">EMPI Health</TextH2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+    <div class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
       <EmpiQuickLink
         title="Multiple UKRDC IDs"
         description="View and manage patients with multiple UKRDC IDs"

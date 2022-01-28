@@ -7,7 +7,7 @@
       <select
         id="tabs"
         name="tabs"
-        class="block w-full focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+        class="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
         @change="switchTab($event.target.value)"
       >
         <option v-for="tab in tabs" :key="tab.name" :value="tab.href" :selected="urlCompare($route.path, tab.href)">
@@ -23,11 +23,11 @@
             :key="tab.name"
             :to="tab.href"
             role="tab"
-            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium"
+            class="whitespace-nowrap border-b-2 py-4 px-1 font-medium"
             :class="[
               urlCompare($route.path, tab.href)
                 ? 'border-indigo-500 text-indigo-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+                : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
             ]"
             :aria-current="urlCompare($route.path, tab.href) ? 'page' : undefined"
             @click="$emit('input', tab)"

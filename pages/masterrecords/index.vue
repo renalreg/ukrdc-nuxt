@@ -24,7 +24,7 @@
           </div>
         </ul>
         <GenericPaginator
-          class="bg-white border-t border-gray-200"
+          class="border-t border-gray-200 bg-white"
           :page="page"
           :size="size"
           :total="total"
@@ -34,7 +34,7 @@
         />
       </GenericCard>
     </div>
-    <div v-else class="mt-2 text-gray-500 text-center">
+    <div v-else class="mt-2 text-center text-gray-500">
       <LoadingIndicator v-if="searchQueryIsPopulated && searchInProgress"></LoadingIndicator>
       <div v-else-if="searchQueryIsPopulated && !searchInProgress">No results found</div>
       <div v-else>
@@ -42,14 +42,14 @@
         <p><b>Tip: </b>Refine your search by joining terms,</p>
         <p class="mb-4">
           For example,
-          <span class="inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-800">
+          <span class="inline-flex items-center rounded bg-gray-100 px-2 py-0.5 text-gray-800">
             john && 1/12/1980
           </span>
         </p>
         <p>Search for an exact name using quote marks,</p>
         <p>
           For example,
-          <span class="inline-flex items-center px-2 py-0.5 rounded bg-gray-100 text-gray-800"> "jon" </span>
+          <span class="inline-flex items-center rounded bg-gray-100 px-2 py-0.5 text-gray-800"> "jon" </span>
         </p>
       </div>
     </div>
