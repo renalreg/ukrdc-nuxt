@@ -4,7 +4,15 @@ Utility functions to simplify interacting with the Okta Auth SDK.
 
 import { onBeforeUnmount, ref, useContext } from '@nuxtjs/composition-api'
 
-import { OktaAuth, AuthState } from '@okta/okta-auth-js'
+import { OktaAuth, AuthState, UserClaims, JWTObject } from '@okta/okta-auth-js'
+
+export interface UKRDCClaims {
+  'org.ukrdc.permissions': string[]
+}
+
+export interface UKRDCJWTObject extends JWTObject{
+  payload: UserClaims<UKRDCClaims>
+}
 
 export default function () {
   const { $okta, $config } = useContext()
@@ -37,21 +45,21 @@ export default function () {
     return (authState.value && authState.value.isAuthenticated) || false
   }
 
-  function getAccessToken() {
+  function getAccessToken(): UKRDCJWTObject | null {
     if (signedIn()) {
       const rawAccessToken = oktaAuth.getAccessToken()
-      return rawAccessToken ? oktaAuth.token.decode(rawAccessToken) : null
+      return rawAccessToken ? oktaAuth.token.decode(rawAccessToken) as UKRDCJWTObject : null
     } else {
-      return undefined
+      return null
     }
   }
 
-  function getIdToken() {
+  function getIdToken(): JWTObject | null {
     if (signedIn()) {
       const rawIdToken = oktaAuth.getIdToken()
       return rawIdToken ? oktaAuth.token.decode(rawIdToken) : null
     } else {
-      return undefined
+      return null
     }
   }
 

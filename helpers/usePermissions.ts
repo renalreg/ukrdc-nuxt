@@ -1,16 +1,15 @@
-import { useContext, computed } from '@nuxtjs/composition-api'
-import useAuth from './useAuth'
+import { computed } from '@nuxtjs/composition-api'
+import { UserClaims } from '@okta/okta-auth-js'
+import useAuth, { UKRDCClaims } from './useAuth'
 
 export default function () {
-  const { $config } = useContext()
   const { signedIn, getAccessToken } = useAuth()
 
   function getPermissions(): string[] {
     const token = getAccessToken()
     if (token) {
-      // Obtain the user key containing the permissions array
-      const permissionKey = $config.userPermissionKey || 'permission'
-      return token.payload[permissionKey] as string[]
+      const payload: UserClaims<UKRDCClaims> = token.payload
+      return payload['org.ukrdc.permissions'] as string[]
     }
 
     return []
