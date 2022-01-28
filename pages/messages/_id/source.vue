@@ -16,10 +16,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
-import fetchMessages from '~/helpers/fetch/fetchMessages'
+import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
+import fetchMessages from "~/helpers/fetch/fetchMessages";
 
-import { ErrorSource, Message } from '~/interfaces/messages'
+import { ErrorSource, Message } from "~/interfaces/messages";
 
 export default defineComponent({
   props: {
@@ -29,24 +29,24 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { fetchMessageSource, fetchSourceInProgress } = fetchMessages()
+    const { fetchMessageSource, fetchSourceInProgress } = fetchMessages();
 
-    const source = ref<ErrorSource>()
-    const error = ref<string>()
+    const source = ref<ErrorSource>();
+    const error = ref<string>();
 
     onMounted(async () => {
       try {
-        source.value = await fetchMessageSource(props.message)
+        source.value = await fetchMessageSource(props.message);
       } catch (e: any) {
-        error.value = e.response.data.detail
+        error.value = e.response.data.detail;
       }
-    })
+    });
 
     return {
       fetchSourceInProgress,
       source,
       error,
-    }
+    };
   },
-})
+});
 </script>

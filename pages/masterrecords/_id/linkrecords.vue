@@ -8,15 +8,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
-import { formatDate } from '@/helpers/utils/dateUtils'
-import { formatGender } from '@/helpers/utils/codeUtils'
+import { formatDate } from "@/helpers/utils/dateUtils";
+import { formatGender } from "@/helpers/utils/codeUtils";
 
-import fetchMasterRecords from '@/helpers/fetch/fetchMasterRecords'
+import fetchMasterRecords from "@/helpers/fetch/fetchMasterRecords";
 
-import { MasterRecord, MasterRecordStatistics } from '@/interfaces/masterrecord'
-import { LinkRecord } from '@/interfaces/linkrecords'
+import { MasterRecord, MasterRecordStatistics } from "@/interfaces/masterrecord";
+import { LinkRecord } from "@/interfaces/linkrecords";
 
 export default defineComponent({
   props: {
@@ -31,24 +31,24 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { fetchMasterRecordLinkRecords } = fetchMasterRecords()
+    const { fetchMasterRecordLinkRecords } = fetchMasterRecords();
 
     // Data refs
 
-    const linkRecords = ref<LinkRecord[]>()
+    const linkRecords = ref<LinkRecord[]>();
 
     // Data fetching
     onMounted(async () => {
-      linkRecords.value = await fetchMasterRecordLinkRecords(props.record)
-    })
+      linkRecords.value = await fetchMasterRecordLinkRecords(props.record);
+    });
 
     return {
       linkRecords,
       formatGender,
       formatDate,
-    }
+    };
   },
-})
+});
 </script>
 
 <style></style>

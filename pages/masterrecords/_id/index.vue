@@ -105,17 +105,17 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
-import { formatDate } from '@/helpers/utils/dateUtils'
-import { formatGender } from '@/helpers/utils/codeUtils'
-import { isTracing } from '@/helpers/utils/recordUtils'
+import { formatDate } from "@/helpers/utils/dateUtils";
+import { formatGender } from "@/helpers/utils/codeUtils";
+import { isTracing } from "@/helpers/utils/recordUtils";
 
-import fetchMasterRecords from '@/helpers/fetch/fetchMasterRecords'
+import fetchMasterRecords from "@/helpers/fetch/fetchMasterRecords";
 
-import { MasterRecord, MasterRecordStatistics } from '@/interfaces/masterrecord'
-import { PatientRecordSummary } from '@/interfaces/patientrecord'
-import { MinimalMessage } from '~/interfaces/messages'
+import { MasterRecord, MasterRecordStatistics } from "@/interfaces/masterrecord";
+import { PatientRecordSummary } from "@/interfaces/patientrecord";
+import { MinimalMessage } from "~/interfaces/messages";
 
 export default defineComponent({
   props: {
@@ -132,92 +132,92 @@ export default defineComponent({
 
   setup(props) {
     const { fetchMasterRecordRelated, fetchMasterRecordLatestMessage, fetchMasterRecordPatientRecords } =
-      fetchMasterRecords()
+      fetchMasterRecords();
 
     // Data refs
 
-    const relatedRecords = ref<MasterRecord[]>()
-    const patientRecords = ref<PatientRecordSummary[]>()
-    const latestMessage = ref<MinimalMessage | null | undefined>(undefined)
+    const relatedRecords = ref<MasterRecord[]>();
+    const patientRecords = ref<PatientRecordSummary[]>();
+    const latestMessage = ref<MinimalMessage | null | undefined>(undefined);
 
     // Data fetching
     function fetchRelatedRecordData() {
       fetchMasterRecordPatientRecords(props.record).then((records) => {
-        patientRecords.value = records
-      })
+        patientRecords.value = records;
+      });
 
       fetchMasterRecordRelated(props.record).then((records) => {
-        relatedRecords.value = records
-      })
+        relatedRecords.value = records;
+      });
 
       fetchMasterRecordLatestMessage(props.record).then((message) => {
-        latestMessage.value = message
-      })
+        latestMessage.value = message;
+      });
     }
 
     onMounted(() => {
-      fetchRelatedRecordData()
-    })
+      fetchRelatedRecordData();
+    });
 
     function refreshRecords() {
-      fetchRelatedRecordData()
+      fetchRelatedRecordData();
     }
 
     // Tracing record matching
 
     const tracingRecord = computed<PatientRecordSummary | null>(() => {
-      const tracings = patientRecords.value?.filter(isTracing)
+      const tracings = patientRecords.value?.filter(isTracing);
       if (!tracings || (tracings && tracings.length < 1)) {
-        return null
+        return null;
       }
-      return tracings[0]
-    })
+      return tracings[0];
+    });
 
     function givenNameMatchesTracing() {
       if (!tracingRecord.value) {
-        return false
+        return false;
       }
       for (const name of tracingRecord.value.patient.names) {
         if (props.record.givenname.toLowerCase() === name.given.toLowerCase()) {
-          return true
+          return true;
         }
       }
-      return false
+      return false;
     }
 
     function surnameMatchesTracing() {
       if (!tracingRecord.value) {
-        return false
+        return false;
       }
       for (const name of tracingRecord.value.patient.names) {
         if (props.record.surname.toLowerCase() === name.family.toLowerCase()) {
-          return true
+          return true;
         }
       }
-      return false
+      return false;
     }
 
     const nameMatchesTracing = computed(() => {
-      return givenNameMatchesTracing() && surnameMatchesTracing()
-    })
+      return givenNameMatchesTracing() && surnameMatchesTracing();
+    });
 
     // Dynamic UI elements
 
     const latestMessageInfo = computed(() => {
       if (!latestMessage.value) {
-        return null
+        return null;
       }
-      if (latestMessage.value.msgStatus === 'ERROR') {
+      if (latestMessage.value.msgStatus === "ERROR") {
         return `Latest file ${latestMessage.value.filename} failed from ${latestMessage.value.facility} on ${formatDate(
           latestMessage.value.received,
           false
-        )}`
+        )}`;
       }
       return `Latest file ${latestMessage.value.filename} recieved from ${latestMessage.value.facility} on ${formatDate(
         latestMessage.value.received,
         false
-      )}`
-    })
+      )}`;
+    });
 
     return {
       patientRecords,
@@ -229,9 +229,9 @@ export default defineComponent({
       formatGender,
       formatDate,
       nameMatchesTracing,
-    }
+    };
   },
-})
+});
 </script>
 
 <style></style>

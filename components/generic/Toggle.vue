@@ -3,7 +3,7 @@
     <!-- Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" -->
     <button
       type="button"
-      class="focus:outline-none relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-gray-200 transition-colors duration-200 ease-in-out focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+      class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-gray-200 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
       :class="{ 'bg-green-400': value }"
       aria-pressed="false"
       aria-labelledby="toggle-label"
@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from "@nuxtjs/composition-api";
 
 export default defineComponent({
   props: {
@@ -40,10 +40,10 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     function toggle() {
-      emit('input', !props.value)
+      emit("input", !props.value);
     }
 
-    return { toggle }
+    return { toggle };
   },
-})
+});
 </script>

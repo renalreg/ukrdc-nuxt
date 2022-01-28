@@ -1,31 +1,31 @@
-import { computed, onMounted, ref } from '@nuxtjs/composition-api'
-import fetchFacilities from './fetch/fetchFacilities'
-import useQuery from '~/helpers/query/useQuery'
-import { Facility } from '~/interfaces/facilities'
+import { computed, onMounted, ref } from "@nuxtjs/composition-api";
+import fetchFacilities from "./fetch/fetchFacilities";
+import useQuery from "~/helpers/query/useQuery";
+import { Facility } from "~/interfaces/facilities";
 
 export default function () {
-  const { stringQuery } = useQuery()
-  const { fetchFacilitiesList } = fetchFacilities()
+  const { stringQuery } = useQuery();
+  const { fetchFacilitiesList } = fetchFacilities();
 
-  const facilities = ref([] as Facility[])
+  const facilities = ref([] as Facility[]);
   const facilityIds = computed(() => {
-    return facilities.value.map(({ id }) => id)
-  })
+    return facilities.value.map(({ id }) => id);
+  });
   const facilityLabels = computed(() => {
-    return facilities.value.map(({ description }) => description)
-  })
-  const selectedFacility = stringQuery('facility', null, true)
+    return facilities.value.map(({ description }) => description);
+  });
+  const selectedFacility = stringQuery("facility", null, true);
 
   async function setFacilities() {
     // If we don't already have a list of available facilties, fetch one
     if (facilities.value.length === 0) {
-      facilities.value = await fetchFacilitiesList()
+      facilities.value = await fetchFacilitiesList();
     }
   }
 
   onMounted(() => {
-    setFacilities()
-  })
+    setFacilities();
+  });
 
   return {
     facilities,
@@ -33,5 +33,5 @@ export default function () {
     facilityLabels,
     selectedFacility,
     fetchFacilities,
-  }
+  };
 }

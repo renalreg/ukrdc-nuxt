@@ -1,4 +1,4 @@
 export interface HistoryItem {
-  time: string
-  count: number
+  time: string;
+  count: number;
 }

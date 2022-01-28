@@ -88,62 +88,62 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useRouter } from '@nuxtjs/composition-api'
-import { HistoryItem } from '~/interfaces/common'
-import { HistoryPointEvent } from '~/interfaces/charts'
-import fetchAdmin from '@/helpers/fetch/fetchAdmin'
-import { getPointDateRange } from '@/helpers/utils/chartUtils'
-import { AdminCounts } from '~/interfaces/admin'
+import { defineComponent, onMounted, ref, useRouter } from "@nuxtjs/composition-api";
+import { HistoryItem } from "~/interfaces/common";
+import { HistoryPointEvent } from "~/interfaces/charts";
+import fetchAdmin from "@/helpers/fetch/fetchAdmin";
+import { getPointDateRange } from "@/helpers/utils/chartUtils";
+import { AdminCounts } from "~/interfaces/admin";
 
 export default defineComponent({
   setup() {
-    const router = useRouter()
-    const { fetchWorkItemsHistory, fetchErrorsHistory, fetchAdminCounts } = fetchAdmin()
+    const router = useRouter();
+    const { fetchWorkItemsHistory, fetchErrorsHistory, fetchAdminCounts } = fetchAdmin();
 
-    const errorsHistory = ref<HistoryItem[]>()
-    const workitemsHistory = ref<HistoryItem[]>()
-    const counts = ref<AdminCounts>()
+    const errorsHistory = ref<HistoryItem[]>();
+    const workitemsHistory = ref<HistoryItem[]>();
+    const counts = ref<AdminCounts>();
 
     function fetchAdminDashboard() {
       fetchWorkItemsHistory(null, null).then((response: HistoryItem[]) => {
-        workitemsHistory.value = response
-      })
+        workitemsHistory.value = response;
+      });
       fetchErrorsHistory(null, null).then((response: HistoryItem[]) => {
-        errorsHistory.value = response
-      })
+        errorsHistory.value = response;
+      });
       fetchAdminCounts().then((response: AdminCounts) => {
-        counts.value = response
-      })
+        counts.value = response;
+      });
     }
 
     // History plot click handler
 
     function errorHistoryPointClickHandler(point: HistoryPointEvent) {
-      const pointRange = getPointDateRange(point)
+      const pointRange = getPointDateRange(point);
       router.push({
-        path: '/messages',
+        path: "/messages",
         query: {
           since: pointRange.since,
           until: pointRange.until,
-          status: ['ERROR', 'RESOLVED'],
+          status: ["ERROR", "RESOLVED"],
         },
-      })
+      });
     }
 
     function workitemHistoryPointClickHandler(point: HistoryPointEvent) {
-      const pointRange = getPointDateRange(point)
+      const pointRange = getPointDateRange(point);
       router.push({
-        path: '/workitems',
+        path: "/workitems",
         query: {
           since: pointRange.since,
           until: pointRange.until,
         },
-      })
+      });
     }
 
     onMounted(() => {
-      fetchAdminDashboard()
-    })
+      fetchAdminDashboard();
+    });
 
     return {
       errorsHistory,
@@ -151,7 +151,7 @@ export default defineComponent({
       counts,
       errorHistoryPointClickHandler,
       workitemHistoryPointClickHandler,
-    }
+    };
   },
-})
+});
 </script>

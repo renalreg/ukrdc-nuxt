@@ -8,7 +8,7 @@
         {{
           item.specimenCollectedTime
             ? `Collected ${formatDate(item.specimenCollectedTime, (t = true))}`
-            : 'No collection time found'
+            : "No collection time found"
         }}
       </TextP>
     </div>
@@ -20,11 +20,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from "@nuxtjs/composition-api";
 
-import { formatDate } from '@/helpers/utils/dateUtils'
+import { formatDate } from "@/helpers/utils/dateUtils";
 
-import { LabOrderShort } from '~/interfaces/laborder'
+import { LabOrderShort } from "~/interfaces/laborder";
 
 export default defineComponent({
   props: {
@@ -34,7 +34,7 @@ export default defineComponent({
     },
   },
   setup() {
-    return { formatDate }
+    return { formatDate };
   },
-})
+});
 </script>

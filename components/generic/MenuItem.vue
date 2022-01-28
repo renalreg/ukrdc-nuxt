@@ -29,12 +29,12 @@
     role="menuitem"
     :tabindex="disabled ? -1 : 0"
     @click="
-      $emit('click')
-      $emit('close')
+      $emit('click');
+      $emit('close');
     "
     @keydown.enter.prevent="
-      $emit('click')
-      $emit('close')
+      $emit('click');
+      $emit('close');
     "
   >
     <slot />
@@ -42,7 +42,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from "@nuxtjs/composition-api";
 
 export default defineComponent({
   props: {
@@ -71,22 +71,22 @@ export default defineComponent({
   setup(props) {
     const classes = computed(() => {
       if (props.disabled) {
-        return ['text-gray-400']
+        return ["text-gray-400"];
       } else {
         return [
-          'text-gray-700',
-          'hover:bg-gray-100',
-          'hover:text-gray-900',
-          'focus:bg-indigo-100',
-          'focus:text-gray-900',
-          'cursor-pointer',
-        ]
+          "text-gray-700",
+          "hover:bg-gray-100",
+          "hover:text-gray-900",
+          "focus:bg-indigo-100",
+          "focus:text-gray-900",
+          "cursor-pointer",
+        ];
       }
-    })
+    });
 
-    return { classes }
+    return { classes };
   },
-})
+});
 </script>
 
 <style lang="postcss">

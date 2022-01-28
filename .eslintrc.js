@@ -5,10 +5,10 @@ module.exports = {
     node: true,
   },
   // Extend prettier config to disable rules that conflict with prettier
-  extends: ['@nuxtjs/eslint-config-typescript', 'prettier', 'plugin:nuxt/recommended'],
+  extends: ["@nuxtjs/eslint-config-typescript", "prettier", "plugin:nuxt/recommended"],
   // add your custom rules here
   rules: {
-    'no-console': 'off',
-    'vue/multi-word-component-names': 'off',
+    "no-console": "off",
+    "vue/multi-word-component-names": "off",
   },
-}
+};

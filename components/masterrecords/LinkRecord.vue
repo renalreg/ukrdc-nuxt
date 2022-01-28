@@ -38,15 +38,15 @@ Includes a header with the Link Record ID and functionality to Unlink the record
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, useRouter } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext, useRouter } from "@nuxtjs/composition-api";
 
-import { formatDate } from '@/helpers/utils/dateUtils'
-import { formatGender } from '@/helpers/utils/codeUtils'
+import { formatDate } from "@/helpers/utils/dateUtils";
+import { formatGender } from "@/helpers/utils/codeUtils";
 
-import fetchEMPI from '~/helpers/fetch/fetchEMPI'
+import fetchEMPI from "~/helpers/fetch/fetchEMPI";
 
-import { LinkRecord } from '@/interfaces/linkrecords'
-import { modalInterface } from '~/interfaces/modal'
+import { LinkRecord } from "@/interfaces/linkrecords";
+import { modalInterface } from "~/interfaces/modal";
 
 export default defineComponent({
   props: {
@@ -56,28 +56,28 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const router = useRouter()
-    const { $toast } = useContext()
-    const { PostEMPIUnlink } = fetchEMPI()
+    const router = useRouter();
+    const { $toast } = useContext();
+    const { PostEMPIUnlink } = fetchEMPI();
 
-    const unlinkModal = ref<modalInterface>()
-    const unlinkComment = ref('')
+    const unlinkModal = ref<modalInterface>();
+    const unlinkComment = ref("");
 
     function doUnlink() {
       PostEMPIUnlink(props.record.person.id, props.record.masterRecord.id, unlinkComment.value)
         .then((response: LinkRecord) => {
           $toast.show({
-            type: 'success',
-            title: 'Success',
-            message: 'Record unlink request sent successfully',
+            type: "success",
+            title: "Success",
+            message: "Record unlink request sent successfully",
             timeout: 10,
-            classTimeout: 'bg-green-600',
-          })
-          router.push({ path: `/masterrecords/${response.masterRecord.id}` })
+            classTimeout: "bg-green-600",
+          });
+          router.push({ path: `/masterrecords/${response.masterRecord.id}` });
         })
         .finally(() => {
-          unlinkModal.value?.hide()
-        })
+          unlinkModal.value?.hide();
+        });
     }
 
     return {
@@ -86,9 +86,9 @@ export default defineComponent({
       doUnlink,
       formatGender,
       formatDate,
-    }
+    };
   },
-})
+});
 </script>
 
 <style></style>

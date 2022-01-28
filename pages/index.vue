@@ -16,44 +16,44 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
-import { DashResponse } from '@/interfaces/dash'
+import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
+import { DashResponse } from "@/interfaces/dash";
 
-import fetchDash from '~/helpers/fetch/fetchDash'
+import fetchDash from "~/helpers/fetch/fetchDash";
 
-import usePermissions from '~/helpers/usePermissions'
-import useAuth from '~/helpers/useAuth'
+import usePermissions from "~/helpers/usePermissions";
+import useAuth from "~/helpers/useAuth";
 
 export default defineComponent({
   setup() {
-    const { signedIn } = useAuth()
-    const { isAdmin, getFacilities, hasMultipleFacilities } = usePermissions()
-    const { fetchDashboard } = fetchDash()
+    const { signedIn } = useAuth();
+    const { isAdmin, getFacilities, hasMultipleFacilities } = usePermissions();
+    const { fetchDashboard } = fetchDash();
 
     // Data refs
 
-    const dash = ref<DashResponse>()
+    const dash = ref<DashResponse>();
 
     const availableFacilities = computed(() => {
-      return getFacilities()
-    })
+      return getFacilities();
+    });
 
     onMounted(async () => {
       if (signedIn()) {
-        dash.value = await fetchDashboard()
+        dash.value = await fetchDashboard();
       }
-    })
+    });
 
     return {
       dash,
       hasMultipleFacilities,
       availableFacilities,
       isAdmin,
-    }
+    };
   },
 
   head: {
-    title: 'Dashboard',
+    title: "Dashboard",
   },
-})
+});
 </script>

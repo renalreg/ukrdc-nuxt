@@ -33,7 +33,7 @@
               </div>
               <div class="ml-4 flex flex-shrink-0">
                 <button
-                  class="focus:outline-none inline-flex text-gray-400 transition duration-150 ease-in-out focus:text-gray-500"
+                  class="inline-flex text-gray-400 transition duration-150 ease-in-out focus:text-gray-500 focus:outline-none"
                   @click="destroy"
                 >
                   <svg
@@ -78,7 +78,7 @@
             <div class="-ml-px flex flex-col">
               <div class="flex h-0 flex-1 border-b border-gray-200">
                 <button
-                  class="focus:outline-none focus:shadow-outline-blue -mb-px flex w-full items-center justify-center rounded-tr-lg border border-transparent px-4 py-3 font-medium leading-5 text-indigo-600 transition duration-150 ease-in-out hover:text-indigo-500 focus:border-blue-300 active:bg-gray-50 active:text-indigo-700"
+                  class="focus:shadow-outline-blue -mb-px flex w-full items-center justify-center rounded-tr-lg border border-transparent px-4 py-3 font-medium leading-5 text-indigo-600 transition duration-150 ease-in-out hover:text-indigo-500 focus:border-blue-300 focus:outline-none active:bg-gray-50 active:text-indigo-700"
                   @click="primaryAction"
                 >
                   {{ primary.label }}
@@ -86,7 +86,7 @@
               </div>
               <div class="-mt-px flex h-0 flex-1">
                 <button
-                  class="focus:outline-none focus:shadow-outline-blue flex w-full items-center justify-center rounded-br-lg border border-transparent px-4 py-3 font-medium leading-5 text-gray-700 transition duration-150 ease-in-out hover:text-gray-500 focus:border-blue-300 active:bg-gray-50 active:text-gray-800"
+                  class="focus:shadow-outline-blue flex w-full items-center justify-center rounded-br-lg border border-transparent px-4 py-3 font-medium leading-5 text-gray-700 transition duration-150 ease-in-out hover:text-gray-500 focus:border-blue-300 focus:outline-none active:bg-gray-50 active:text-gray-800"
                   @click="secondaryAction"
                 >
                   {{ secondary.label }}
@@ -113,7 +113,7 @@
               <div class="flex w-0 flex-1 justify-between">
                 <p class="w-0 flex-1 leading-5">{{ message }}</p>
                 <button
-                  class="focus:outline-none ml-3 flex-shrink-0 font-medium leading-5 text-indigo-600 transition duration-150 ease-in-out hover:text-indigo-500 focus:underline"
+                  class="ml-3 flex-shrink-0 font-medium leading-5 text-indigo-600 transition duration-150 ease-in-out hover:text-indigo-500 focus:underline focus:outline-none"
                   @click="primaryAction"
                 >
                   {{ primary.label }}
@@ -121,7 +121,7 @@
               </div>
               <div class="ml-4 flex flex-shrink-0">
                 <button
-                  class="focus:outline-none inline-flex text-gray-400 transition duration-150 ease-in-out focus:text-gray-500"
+                  class="inline-flex text-gray-400 transition duration-150 ease-in-out focus:text-gray-500 focus:outline-none"
                   @click="destroy"
                 >
                   <svg
@@ -145,11 +145,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
-import { removeElement } from '@/helpers/utils/domUtils'
+import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
+import { removeElement } from "@/helpers/utils/domUtils";
 
 interface Action {
-  action(): void
+  action(): void;
 }
 
 export default defineComponent({
@@ -162,15 +162,15 @@ export default defineComponent({
     message: {
       type: String,
       required: false,
-      default: 'Please specify a <b>message</b>',
+      default: "Please specify a <b>message</b>",
     },
     type: {
       type: String,
       required: false,
       validate: (type: string) => {
-        return ['success', 'info', 'danger', 'warning', 'denied'].includes(type)
+        return ["success", "info", "danger", "warning", "denied"].includes(type);
       },
-      default: '',
+      default: "",
     },
     progress: {
       type: Boolean,
@@ -200,27 +200,27 @@ export default defineComponent({
     classToast: {
       type: String,
       required: false,
-      default: 'bg-white border border-gray-300',
+      default: "bg-white border border-gray-300",
     },
     classTitle: {
       type: String,
       required: false,
-      default: 'text-gray-900',
+      default: "text-gray-900",
     },
     classMessage: {
       type: String,
       required: false,
-      default: 'text-gray-500',
+      default: "text-gray-500",
     },
     classClose: {
       type: String,
       required: false,
-      default: 'text-gray-400',
+      default: "text-gray-400",
     },
     classTimeout: {
       type: String,
       required: false,
-      default: 'bg-gray-200',
+      default: "bg-gray-200",
     },
     defaults: {
       type: Object,
@@ -230,65 +230,65 @@ export default defineComponent({
   },
 
   setup(props) {
-    const toastRootElement = ref()
+    const toastRootElement = ref();
 
-    const active = ref(false)
-    const interval = ref()
-    const timeLeft = ref()
-    const speed = ref(100)
+    const active = ref(false);
+    const interval = ref();
+    const timeLeft = ref();
+    const speed = ref(100);
 
     const classToastAll = computed(() => {
       if (props.defaults && props.defaults.classToast) {
-        return [props.classToast, props.defaults.classToast]
+        return [props.classToast, props.defaults.classToast];
       }
-      if (props.classToast) return [props.classToast]
-      return []
-    })
+      if (props.classToast) return [props.classToast];
+      return [];
+    });
 
     const timeLeftPercent = computed(() => {
       if (!props.timeout) {
-        return 0
+        return 0;
       }
-      return Math.round((((timeLeft.value * 100) / (props.timeout * 1000)) * 100) / 100)
-    })
+      return Math.round((((timeLeft.value * 100) / (props.timeout * 1000)) * 100) / 100);
+    });
 
     const progressStyle = computed(() => {
-      return `width: ${timeLeftPercent.value}%; transition: width 0.1s linear;`
-    })
+      return `width: ${timeLeftPercent.value}%; transition: width 0.1s linear;`;
+    });
 
     function updateTime() {
-      timeLeft.value -= speed.value
+      timeLeft.value -= speed.value;
       if (timeLeft.value === 0) {
-        destroy()
+        destroy();
       }
     }
 
     function destroy() {
-      active.value = false
-      clearInterval(interval.value)
+      active.value = false;
+      clearInterval(interval.value);
       setTimeout(() => {
-        destroy()
-        removeElement(toastRootElement.value)
-      }, 1000)
+        destroy();
+        removeElement(toastRootElement.value);
+      }, 1000);
     }
 
     function primaryAction() {
-      props.primary.action()
-      destroy()
+      props.primary.action();
+      destroy();
     }
 
     function secondaryAction() {
-      props.secondary.action()
-      destroy()
+      props.secondary.action();
+      destroy();
     }
 
     onMounted(() => {
-      active.value = true
+      active.value = true;
       if (props.timeout > 0) {
-        timeLeft.value = props.timeout * 1000
-        interval.value = setInterval(() => updateTime(), speed.value)
+        timeLeft.value = props.timeout * 1000;
+        interval.value = setInterval(() => updateTime(), speed.value);
       }
-    })
+    });
 
     return {
       toastRootElement,
@@ -302,7 +302,7 @@ export default defineComponent({
       destroy,
       primaryAction,
       secondaryAction,
-    }
+    };
   },
-})
+});
 </script>

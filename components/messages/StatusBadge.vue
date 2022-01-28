@@ -5,8 +5,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@nuxtjs/composition-api'
-import { Message } from '@/interfaces/messages'
+import { computed, defineComponent } from "@nuxtjs/composition-api";
+import { Message } from "@/interfaces/messages";
 
 export default defineComponent({
   props: {
@@ -17,14 +17,14 @@ export default defineComponent({
   },
   setup(props) {
     const classes = computed(() => {
-      if (props.message.msgStatus === 'ERROR') {
-        return ['bg-red-100', 'text-red-800']
-      } else if (props.message.msgStatus === 'RECEIVED') {
-        return ['bg-yellow-100', 'text-yellow-800']
+      if (props.message.msgStatus === "ERROR") {
+        return ["bg-red-100", "text-red-800"];
+      } else if (props.message.msgStatus === "RECEIVED") {
+        return ["bg-yellow-100", "text-yellow-800"];
       }
-      return ['bg-green-100', 'text-green-800']
-    })
-    return { classes }
+      return ["bg-green-100", "text-green-800"];
+    });
+    return { classes };
   },
-})
+});
 </script>

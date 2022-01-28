@@ -1,4 +1,4 @@
 export interface HistoryPointEvent {
-  x: number
-  y: number
+  x: number;
+  y: number;
 }

@@ -60,9 +60,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
 
-import useAuth from '~/helpers/useAuth'
+import useAuth from "~/helpers/useAuth";
 
 export default defineComponent({
   props: {
@@ -78,21 +78,21 @@ export default defineComponent({
     },
   },
   setup() {
-    const { signedIn, getIdToken, signOut } = useAuth()
+    const { signedIn, getIdToken, signOut } = useAuth();
 
-    const showMenu = ref(false)
+    const showMenu = ref(false);
 
     function closeMenu() {
-      showMenu.value = false
+      showMenu.value = false;
     }
 
     const displayName = computed(() => {
-      const idToken = getIdToken()
+      const idToken = getIdToken();
       if (idToken) {
-        return idToken.payload.name
+        return idToken.payload.name;
       }
-      return 'Signed Out'
-    })
+      return "Signed Out";
+    });
 
     return {
       signedIn,
@@ -100,9 +100,9 @@ export default defineComponent({
       showMenu,
       closeMenu,
       signOut,
-    }
+    };
   },
-})
+});
 </script>
 
 <style></style>

@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from "@nuxtjs/composition-api";
 
 export default defineComponent({
   props: {
@@ -21,14 +21,14 @@ export default defineComponent({
   },
   setup(props) {
     const urlQuery = computed(() => {
-      const { code } = props
+      const { code } = props;
       if (code) {
-        return `q=${encodeURIComponent(code)}`
+        return `q=${encodeURIComponent(code)}`;
       }
-      return ''
-    })
+      return "";
+    });
 
-    return { urlQuery }
+    return { urlQuery };
   },
-})
+});
 </script>

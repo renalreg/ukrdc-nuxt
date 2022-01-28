@@ -12,8 +12,8 @@
           <div class="col-span-1">
             <TextP> {{ connectorMessagesArray.length }} messages in chain</TextP>
             <TextP class="mt-2 line-clamp-2">
-              {{ message.processed ? 'Processed' : 'Failed' }}
-              {{ hasErrors ? ' with errors' : '' }}
+              {{ message.processed ? "Processed" : "Failed" }}
+              {{ hasErrors ? " with errors" : "" }}
             </TextP>
           </div>
         </div>
@@ -26,12 +26,12 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from "@nuxtjs/composition-api";
 
-import { ChannelMessage } from '@/interfaces/mirth'
+import { ChannelMessage } from "@/interfaces/mirth";
 
-import { isEmptyObject } from '@/helpers/utils/objectUtils'
-import { messageHasErrors } from '@/helpers/utils/mirthUtils'
+import { isEmptyObject } from "@/helpers/utils/objectUtils";
+import { messageHasErrors } from "@/helpers/utils/mirthUtils";
 
 export default defineComponent({
   props: {
@@ -42,25 +42,25 @@ export default defineComponent({
   },
   setup(props) {
     const connectorMessagesArray = computed(() => {
-      return Object.values(props.message.connectorMessages)
-    })
+      return Object.values(props.message.connectorMessages);
+    });
     const channelName = computed(() => {
-      let name: string = ''
+      let name: string = "";
       for (const msg of connectorMessagesArray.value) {
         if (!name.includes(msg.channelName)) {
-          name = name + '/' + msg.channelName
+          name = name + "/" + msg.channelName;
         }
       }
-      return name.substring(1)
-    })
+      return name.substring(1);
+    });
 
     const hasErrors = computed((): boolean => {
-      return messageHasErrors(props.message)
-    })
+      return messageHasErrors(props.message);
+    });
 
-    return { connectorMessagesArray, channelName, hasErrors, isEmptyObject }
+    return { connectorMessagesArray, channelName, hasErrors, isEmptyObject };
   },
-})
+});
 </script>
 
 <style scoped></style>

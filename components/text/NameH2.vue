@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from "@nuxtjs/composition-api";
 
 export default defineComponent({
   props: {
@@ -29,11 +29,11 @@ export default defineComponent({
     },
   },
   setup() {
-    const highlightClasses = ['bg-red-100', 'text-red-800', 'font-medium', 'rounded-md']
+    const highlightClasses = ["bg-red-100", "text-red-800", "font-medium", "rounded-md"];
 
     return {
       highlightClasses,
-    }
+    };
   },
-})
+});
 </script>

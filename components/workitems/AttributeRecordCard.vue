@@ -2,10 +2,10 @@
   <GenericCard class="border-2 border-green-500">
     <div class="flex h-24 flex-col justify-center px-4 sm:px-6">
       <div class="text-gray-500" :class="highlight.includes('givenname') ? highlightClasses : []">
-        {{ record.givenname ? formatAttributeValue(record.givenname) : 'Given Name not specified' }}
+        {{ record.givenname ? formatAttributeValue(record.givenname) : "Given Name not specified" }}
       </div>
       <div class="mt-1 text-gray-500" :class="highlight.includes('surname') ? highlightClasses : []">
-        {{ record.surname ? formatAttributeValue(record.surname) : 'Surname not specified' }}
+        {{ record.surname ? formatAttributeValue(record.surname) : "Surname not specified" }}
       </div>
     </div>
     <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
@@ -13,17 +13,17 @@
         <GenericCardDi>
           <GenericCardDt>Local ID</GenericCardDt>
           <GenericCardDd :class="highlight.includes('localid') ? highlightClasses : []">
-            {{ record.localid ? formatAttributeValue(record.localid) : 'Not specified' }}
+            {{ record.localid ? formatAttributeValue(record.localid) : "Not specified" }}
           </GenericCardDd>
         </GenericCardDi>
         <GenericCardDi>
           <GenericCardDt>Sender</GenericCardDt>
           <GenericCardDd>
             <span :class="highlight.includes('sendingFacility') ? highlightClasses : []">{{
-              record.sendingFacility ? record.sendingFacility : ''
+              record.sendingFacility ? record.sendingFacility : ""
             }}</span>
             <span :class="highlight.includes('sendingExtract') ? highlightClasses : []">{{
-              record.sendingExtract ? 'via ' + record.sendingExtract : 'Not specified'
+              record.sendingExtract ? "via " + record.sendingExtract : "Not specified"
             }}</span>
           </GenericCardDd>
         </GenericCardDi>
@@ -51,13 +51,13 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from "@nuxtjs/composition-api";
 
-import { formatDate } from '@/helpers/utils/dateUtils'
-import { formatGender } from '@/helpers/utils/codeUtils'
-import { formatAttributeValue } from '@/helpers/utils/workItemUtils'
+import { formatDate } from "@/helpers/utils/dateUtils";
+import { formatGender } from "@/helpers/utils/codeUtils";
+import { formatAttributeValue } from "@/helpers/utils/workItemUtils";
 
-import { WorkItemAttributes } from '~/interfaces/workitem'
+import { WorkItemAttributes } from "~/interfaces/workitem";
 
 export default defineComponent({
   props: {
@@ -78,39 +78,39 @@ export default defineComponent({
   },
   setup(props) {
     const highlightClasses = [
-      'bg-red-100',
-      'text-red-800',
-      'font-medium',
-      'rounded-md',
-      'pl-2',
-      '-ml-2',
-      'pr-2',
-      'mr-2',
-    ]
+      "bg-red-100",
+      "text-red-800",
+      "font-medium",
+      "rounded-md",
+      "pl-2",
+      "-ml-2",
+      "pr-2",
+      "mr-2",
+    ];
 
     const formattedDoB = computed(() => {
       return props.record.dateOfBirth
         ? `
-        ${formatDate(props.record.dateOfBirth.split(':')[0], false)} →
-        ${formatDate(props.record.dateOfBirth.split(':')[1], false)}`
-        : 'Not specified'
-    })
+        ${formatDate(props.record.dateOfBirth.split(":")[0], false)} →
+        ${formatDate(props.record.dateOfBirth.split(":")[1], false)}`
+        : "Not specified";
+    });
 
     const formattedDoD = computed(() => {
       return props.record.dateOfDeath
         ? `
-        ${formatDate(props.record.dateOfDeath.split(':')[0], false)} →
-        ${formatDate(props.record.dateOfDeath.split(':')[1], false)}`
-        : 'Not specified'
-    })
+        ${formatDate(props.record.dateOfDeath.split(":")[0], false)} →
+        ${formatDate(props.record.dateOfDeath.split(":")[1], false)}`
+        : "Not specified";
+    });
 
     const formattedGender = computed(() => {
       return props.record.gender
         ? `
-        ${formatGender(props.record.gender.split(':')[0])} →
-        ${formatGender(props.record.gender.split(':')[1])}`
-        : 'Not specified'
-    })
+        ${formatGender(props.record.gender.split(":")[0])} →
+        ${formatGender(props.record.gender.split(":")[1])}`
+        : "Not specified";
+    });
 
     return {
       formattedDoB,
@@ -120,9 +120,9 @@ export default defineComponent({
       formatGender,
       formatAttributeValue,
       highlightClasses,
-    }
+    };
   },
-})
+});
 </script>
 
 <style scoped></style>

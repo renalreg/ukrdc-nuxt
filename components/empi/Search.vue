@@ -43,15 +43,15 @@ Mini (half-width) search bar and results pages used in the EMPI Merge page.
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
-import usePagination from '~/helpers/query/usePagination'
-import { MasterRecord } from '@/interfaces/masterrecord'
+import usePagination from "~/helpers/query/usePagination";
+import { MasterRecord } from "@/interfaces/masterrecord";
 
-import useUserPrefs from '~/helpers/useUserPrefs'
-import useRecordSearch from '~/helpers/query/useRecordSearch'
+import useUserPrefs from "~/helpers/useUserPrefs";
+import useRecordSearch from "~/helpers/query/useRecordSearch";
 
-import fetchSearchResults from '~/helpers/fetch/fetchSearchResults'
+import fetchSearchResults from "~/helpers/fetch/fetchSearchResults";
 
 export default defineComponent({
   props: {
@@ -62,12 +62,12 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { page, total, size } = usePagination()
-    const { showUKRDC } = useUserPrefs()
-    const { searchQueryIsPopulated, searchboxString, searchSubmit, apiQueryString } = useRecordSearch()
-    const { fetchSearchResultsPage, searchInProgress } = fetchSearchResults()
+    const { page, total, size } = usePagination();
+    const { showUKRDC } = useUserPrefs();
+    const { searchQueryIsPopulated, searchboxString, searchSubmit, apiQueryString } = useRecordSearch();
+    const { fetchSearchResultsPage, searchInProgress } = fetchSearchResults();
 
-    const masterrecords = ref([] as MasterRecord[])
+    const masterrecords = ref([] as MasterRecord[]);
 
     async function fetchResults() {
       if (searchQueryIsPopulated) {
@@ -77,22 +77,22 @@ export default defineComponent({
           size.value,
           true,
           props.onlyUkrdc
-        )
+        );
 
-        masterrecords.value = results.items
-        total.value = results.total
-        page.value = results.page
-        size.value = results.size
+        masterrecords.value = results.items;
+        total.value = results.total;
+        page.value = results.page;
+        size.value = results.size;
       }
     }
 
     onMounted(() => {
-      fetchResults()
-    })
+      fetchResults();
+    });
 
     watch([apiQueryString, page, showUKRDC], () => {
-      fetchResults()
-    })
+      fetchResults();
+    });
 
     return {
       masterrecords,
@@ -104,10 +104,10 @@ export default defineComponent({
       page,
       size,
       total,
-    }
+    };
   },
   head: {
-    title: 'Master Records',
+    title: "Master Records",
   },
-})
+});
 </script>

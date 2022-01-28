@@ -1,9 +1,9 @@
 export interface AdminCounts {
-  openWorkitems: number
-  UKRDCRecords: number
-  patientsReceivingErrors: number
+  openWorkitems: number;
+  UKRDCRecords: number;
+  patientsReceivingErrors: number;
 }
 
 export interface LastRunTime {
-  lastRunTime: string
+  lastRunTime: string;
 }

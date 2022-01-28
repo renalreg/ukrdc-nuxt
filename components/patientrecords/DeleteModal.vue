@@ -39,7 +39,7 @@
               </div>
               <div class="mt-3 ml-8 text-left sm:mt-0 sm:ml-4">
                 <h3 id="modal-headline" class="text-lg font-medium leading-6 text-gray-900">
-                  {{ previewErrorMessage ? 'Unable to delete patient record' : 'Delete patient record' }}
+                  {{ previewErrorMessage ? "Unable to delete patient record" : "Delete patient record" }}
                 </h3>
                 <div class="mt-2 mb-4">
                   <div v-if="previewErrorMessage">
@@ -201,30 +201,30 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, watch } from '@nuxtjs/composition-api'
-import useModal from '@/helpers/useModal'
-import { formatDate } from '@/helpers/utils/dateUtils'
-import { PatientRecord, PatientRecordFull } from '~/interfaces/patientrecord'
-import { MasterRecord } from '~/interfaces/masterrecord'
-import { Person, PidXRef } from '~/interfaces/persons'
-import { WorkItem } from '~/interfaces/workitem'
-import { LinkRecordSummary } from '~/interfaces/linkrecords'
-import fetchPatientRecords from '~/helpers/fetch/fetchPatientRecords'
+import { defineComponent, ref, useContext, watch } from "@nuxtjs/composition-api";
+import useModal from "@/helpers/useModal";
+import { formatDate } from "@/helpers/utils/dateUtils";
+import { PatientRecord, PatientRecordFull } from "~/interfaces/patientrecord";
+import { MasterRecord } from "~/interfaces/masterrecord";
+import { Person, PidXRef } from "~/interfaces/persons";
+import { WorkItem } from "~/interfaces/workitem";
+import { LinkRecordSummary } from "~/interfaces/linkrecords";
+import fetchPatientRecords from "~/helpers/fetch/fetchPatientRecords";
 
 interface DeletePIDFromEMPISchema {
-  persons: Person[]
-  masterRecords: MasterRecord[]
-  pidxrefs: PidXRef[]
-  workItems: WorkItem[]
-  linkRecords: LinkRecordSummary[]
+  persons: Person[];
+  masterRecords: MasterRecord[];
+  pidxrefs: PidXRef[];
+  workItems: WorkItem[];
+  linkRecords: LinkRecordSummary[];
 }
 
 interface DeletePIDResponseSchema {
-  hash: string
-  committed: boolean
+  hash: string;
+  committed: boolean;
 
-  patientRecord: PatientRecordFull
-  empi: DeletePIDFromEMPISchema
+  patientRecord: PatientRecordFull;
+  empi: DeletePIDFromEMPISchema;
 }
 
 export default defineComponent({
@@ -236,65 +236,65 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const { $toast } = useContext()
-    const { visible, show, hide, toggle } = useModal()
-    const { postPatientRecordDelete } = fetchPatientRecords()
+    const { $toast } = useContext();
+    const { visible, show, hide, toggle } = useModal();
+    const { postPatientRecordDelete } = fetchPatientRecords();
 
-    const confirmChecked = ref(false)
-    const previewResponse = ref<DeletePIDResponseSchema>()
-    const deleteResponse = ref<DeletePIDResponseSchema>()
-    const previewErrorMessage = ref<string>()
-    const deleteInProgress = ref(false)
+    const confirmChecked = ref(false);
+    const previewResponse = ref<DeletePIDResponseSchema>();
+    const deleteResponse = ref<DeletePIDResponseSchema>();
+    const previewErrorMessage = ref<string>();
+    const deleteInProgress = ref(false);
 
     function cancel(): void {
-      emit('cancel')
-      hide()
+      emit("cancel");
+      hide();
     }
 
     watch(visible, async () => {
       // If the modal becomes visible
       if (visible.value) {
         // Reset the modal each time it's is shown.
-        confirmChecked.value = false
-        previewResponse.value = undefined
-        deleteResponse.value = undefined
+        confirmChecked.value = false;
+        previewResponse.value = undefined;
+        deleteResponse.value = undefined;
 
         try {
           // Fetch the delete preview and confirmation hash
-          previewResponse.value = await postPatientRecordDelete(props.item, null)
+          previewResponse.value = await postPatientRecordDelete(props.item, null);
         } catch (error: any) {
           // Populate error message if preview fails
           if (error.response.status === 400) {
-            previewErrorMessage.value = error.response.data.detail
+            previewErrorMessage.value = error.response.data.detail;
           }
         }
       }
-    })
+    });
 
     async function doRealDelete() {
       // Emit confirm event (currently unused)
-      emit('confirm')
+      emit("confirm");
       // If the checkbox is checked and we have a preview response
       if (confirmChecked.value && previewResponse.value) {
         // Start the delete spinner
-        deleteInProgress.value = true
+        deleteInProgress.value = true;
         // Request an actual delete by sending the confirmation hash
-        previewResponse.value = await postPatientRecordDelete(props.item, previewResponse.value.hash)
+        previewResponse.value = await postPatientRecordDelete(props.item, previewResponse.value.hash);
       }
       // Remove the delete spinner
-      deleteInProgress.value = false
+      deleteInProgress.value = false;
       // Hide the modal
-      hide()
+      hide();
       // Emit an event notifying parents that a record has been deleted
-      emit('deleted')
+      emit("deleted");
       // Show success toast
       $toast.show({
-        type: 'success',
-        title: 'Success',
-        message: 'Record deleted',
+        type: "success",
+        title: "Success",
+        message: "Record deleted",
         timeout: 5,
-        classTimeout: 'bg-green-600',
-      })
+        classTimeout: "bg-green-600",
+      });
     }
 
     return {
@@ -310,7 +310,7 @@ export default defineComponent({
       hide,
       toggle,
       formatDate,
-    }
+    };
   },
-})
+});
 </script>

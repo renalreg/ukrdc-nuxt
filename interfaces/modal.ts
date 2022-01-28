@@ -1,8 +1,8 @@
-import Vue from 'vue'
+import Vue from "vue";
 
 export interface modalInterface extends Vue {
-  show: () => void
-  hide: () => void
-  toggle: () => void
-  visible: boolean
+  show: () => void;
+  hide: () => void;
+  toggle: () => void;
+  visible: boolean;
 }

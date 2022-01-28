@@ -1,84 +1,84 @@
-import { ref, useContext } from '@nuxtjs/composition-api'
-import { buildCommonDateRangeQuery } from './common'
-import { LabOrder, LabOrderShort, ResultItem } from '~/interfaces/laborder'
-import { LinkRecordSummary } from '~/interfaces/linkrecords'
-import { MasterRecord } from '~/interfaces/masterrecord'
-import { Medication } from '~/interfaces/medication'
-import { Observation } from '~/interfaces/observation'
-import { PatientRecord, PatientRecordSummary, PatientRecordFull } from '~/interfaces/patientrecord'
-import { Person, PidXRef } from '~/interfaces/persons'
-import { Survey } from '~/interfaces/survey'
-import { Treatment } from '~/interfaces/treatment'
-import { WorkItem } from '~/interfaces/workitem'
-import { PatientDocumentSummary, PatientDocument } from '~/interfaces/document'
+import { ref, useContext } from "@nuxtjs/composition-api";
+import { buildCommonDateRangeQuery } from "./common";
+import { LabOrder, LabOrderShort, ResultItem } from "~/interfaces/laborder";
+import { LinkRecordSummary } from "~/interfaces/linkrecords";
+import { MasterRecord } from "~/interfaces/masterrecord";
+import { Medication } from "~/interfaces/medication";
+import { Observation } from "~/interfaces/observation";
+import { PatientRecord, PatientRecordSummary, PatientRecordFull } from "~/interfaces/patientrecord";
+import { Person, PidXRef } from "~/interfaces/persons";
+import { Survey } from "~/interfaces/survey";
+import { Treatment } from "~/interfaces/treatment";
+import { WorkItem } from "~/interfaces/workitem";
+import { PatientDocumentSummary, PatientDocument } from "~/interfaces/document";
 
 export interface ResultsPage {
-  items: ResultItem[]
-  total: number
-  page: number
-  size: number
+  items: ResultItem[];
+  total: number;
+  page: number;
+  size: number;
 }
 
 export interface ResultService {
-  id: string
-  description: string
-  standard: string
+  id: string;
+  description: string;
+  standard: string;
 }
 
 export interface LabOrdersPage {
-  items: LabOrderShort[]
-  total: number
-  page: number
-  size: number
+  items: LabOrderShort[];
+  total: number;
+  page: number;
+  size: number;
 }
 
 export interface ObservationPage {
-  items: Observation[]
-  total: number
-  page: number
-  size: number
+  items: Observation[];
+  total: number;
+  page: number;
+  size: number;
 }
 
 export interface DocumentsPage {
-  items: PatientDocumentSummary[]
-  total: number
-  page: number
-  size: number
+  items: PatientDocumentSummary[];
+  total: number;
+  page: number;
+  size: number;
 }
 
 export interface DeletePIDFromEMPISchema {
-  persons: Person[]
-  masterRecords: MasterRecord[]
-  pidxrefs: PidXRef[]
-  workItems: WorkItem[]
-  linkRecords: LinkRecordSummary[]
+  persons: Person[];
+  masterRecords: MasterRecord[];
+  pidxrefs: PidXRef[];
+  workItems: WorkItem[];
+  linkRecords: LinkRecordSummary[];
 }
 
 export interface DeletePIDResponseSchema {
-  hash: string
-  committed: boolean
+  hash: string;
+  committed: boolean;
 
-  patientRecord: PatientRecordFull
-  empi: DeletePIDFromEMPISchema
+  patientRecord: PatientRecordFull;
+  empi: DeletePIDFromEMPISchema;
 }
 
 export default function () {
-  const { $api } = useContext()
+  const { $api } = useContext();
 
   async function fetchPatientRecord(pid: string): Promise<PatientRecord> {
-    return (await $api.$get(`/v1/patientrecords/${pid}/`)) as PatientRecord
+    return (await $api.$get(`/v1/patientrecords/${pid}/`)) as PatientRecord;
   }
 
   async function fetchPatientRecordRelated(record: PatientRecord): Promise<PatientRecordSummary[]> {
-    return (await $api.$get(record.links.related)) as PatientRecordSummary[]
+    return (await $api.$get(record.links.related)) as PatientRecordSummary[];
   }
 
   async function fetchPatientRecordMedications(record: PatientRecord): Promise<Medication[]> {
-    return (await $api.$get(record.links.medications)) as Medication[]
+    return (await $api.$get(record.links.medications)) as Medication[];
   }
 
   async function fetchPatientRecordTreatments(record: PatientRecord): Promise<Treatment[]> {
-    return (await $api.$get(record.links.treatments)) as Treatment[]
+    return (await $api.$get(record.links.treatments)) as Treatment[];
   }
 
   async function fetchPatientRecordResultsPage(
@@ -90,28 +90,28 @@ export default function () {
     since: string | null,
     until: string | null
   ): Promise<ResultsPage> {
-    let path = `${record.links.results}?page=${page}&size=${size}`
+    let path = `${record.links.results}?page=${page}&size=${size}`;
 
     // Filter by service if it exists
     if (serviceId) {
-      path = path + `&service_id=${serviceId}`
+      path = path + `&service_id=${serviceId}`;
     }
     // Filter by since-until if it exists
-    path = path + buildCommonDateRangeQuery(since, until)
+    path = path + buildCommonDateRangeQuery(since, until);
     // Filter by order ID if it exists
     if (orderId) {
-      path = path + `&order_id=${orderId}`
+      path = path + `&order_id=${orderId}`;
     }
 
-    return (await $api.$get(path)) as ResultsPage
+    return (await $api.$get(path)) as ResultsPage;
   }
 
   async function fetchPatientRecordResultServices(record: PatientRecord): Promise<ResultService[]> {
-    return (await $api.$get(record.links.resultServices)) as ResultService[]
+    return (await $api.$get(record.links.resultServices)) as ResultService[];
   }
 
   async function deletePatientRecordResultItem(item: ResultItem): Promise<void> {
-    await $api.$delete(item.links.self)
+    await $api.$delete(item.links.self);
   }
 
   async function fetchPatientRecordLabOrdersPage(
@@ -119,15 +119,15 @@ export default function () {
     page: number,
     size: number
   ): Promise<LabOrdersPage> {
-    return (await $api.$get(`${record.links.laborders}?page=${page}&size=${size}`)) as LabOrdersPage
+    return (await $api.$get(`${record.links.laborders}?page=${page}&size=${size}`)) as LabOrdersPage;
   }
 
   async function fetchPatientRecordLabOrder(record: PatientRecord, orderId: string): Promise<LabOrder> {
-    return (await $api.$get(`${record.links.laborders}${orderId}`)) as LabOrder
+    return (await $api.$get(`${record.links.laborders}${orderId}`)) as LabOrder;
   }
 
   async function deletePatientRecordLabOrder(order: LabOrderShort): Promise<void> {
-    await $api.$delete(order.links.self)
+    await $api.$delete(order.links.self);
   }
 
   async function fetchPatientRecordObservationsPage(
@@ -136,23 +136,23 @@ export default function () {
     size: number,
     codes: string[] | null
   ): Promise<ObservationPage> {
-    let path = `${record.links.observations}?page=${page}&size=${size}`
+    let path = `${record.links.observations}?page=${page}&size=${size}`;
     if (codes) {
       for (const code of codes) {
         if (code) {
-          path = path + `&code=${code}`
+          path = path + `&code=${code}`;
         }
       }
     }
-    return (await $api.$get(path)) as ObservationPage
+    return (await $api.$get(path)) as ObservationPage;
   }
 
   async function fetchPatientRecordObservationCodes(record: PatientRecord): Promise<string[]> {
-    return (await $api.$get(record.links.observationCodes)) as string[]
+    return (await $api.$get(record.links.observationCodes)) as string[];
   }
 
   async function fetchPatientRecordSurveys(record: PatientRecord): Promise<Survey[]> {
-    return (await $api.$get(record.links.surveys)) as Survey[]
+    return (await $api.$get(record.links.surveys)) as Survey[];
   }
 
   async function fetchPatientRecordDocumentsPage(
@@ -160,56 +160,56 @@ export default function () {
     page: number,
     size: number
   ): Promise<DocumentsPage> {
-    return (await $api.$get(`${record.links.documents}?page=${page}&size=${size}`)) as DocumentsPage
+    return (await $api.$get(`${record.links.documents}?page=${page}&size=${size}`)) as DocumentsPage;
   }
 
   async function fetchPatientRecordDocument(record: PatientRecord, docId: string): Promise<PatientDocument> {
-    return (await $api.$get(`${record.links.documents}${docId}/`)) as PatientDocument
+    return (await $api.$get(`${record.links.documents}${docId}/`)) as PatientDocument;
   }
 
-  const documentDownloadInProgress = ref(false)
+  const documentDownloadInProgress = ref(false);
 
   function downloadPatientRecordDocument(patientDocument: PatientDocument): void {
-    documentDownloadInProgress.value = true
+    documentDownloadInProgress.value = true;
     $api({
       url: patientDocument.links.download,
-      method: 'GET',
-      responseType: 'blob',
+      method: "GET",
+      responseType: "blob",
     }).then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]))
-      const link = document.createElement('a')
-      link.href = url
-      link.setAttribute('download', patientDocument.filename || `${patientDocument.documentname}.txt`)
-      document.body.appendChild(link)
-      link.click()
-      documentDownloadInProgress.value = false
-    })
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", patientDocument.filename || `${patientDocument.documentname}.txt`);
+      document.body.appendChild(link);
+      link.click();
+      documentDownloadInProgress.value = false;
+    });
   }
 
   async function postPatientRecordExport(record: PatientRecordSummary, scope: string | null): Promise<void> {
-    let path: string
+    let path: string;
     switch (scope) {
-      case null || 'pv': {
-        path = record.links.exportPV
-        break
+      case null || "pv": {
+        path = record.links.exportPV;
+        break;
       }
-      case 'docs': {
-        path = record.links.exportPVDocs
-        break
+      case "docs": {
+        path = record.links.exportPVDocs;
+        break;
       }
-      case 'tests': {
-        path = record.links.exportPVTests
-        break
+      case "tests": {
+        path = record.links.exportPVTests;
+        break;
       }
-      case 'RADAR': {
-        path = record.links.exportRADAR
-        break
+      case "RADAR": {
+        path = record.links.exportRADAR;
+        break;
       }
       default: {
-        throw new Error('Invalid scope')
+        throw new Error("Invalid scope");
       }
     }
-    return await $api.$post(path)
+    return await $api.$post(path);
   }
 
   async function postPatientRecordDelete(
@@ -218,7 +218,7 @@ export default function () {
   ): Promise<DeletePIDResponseSchema> {
     return (await $api.$post(record.links.delete, {
       hash: confirmationHash,
-    })) as DeletePIDResponseSchema
+    })) as DeletePIDResponseSchema;
   }
 
   return {
@@ -241,5 +241,5 @@ export default function () {
     fetchPatientRecordSurveys,
     postPatientRecordExport,
     postPatientRecordDelete,
-  }
+  };
 }

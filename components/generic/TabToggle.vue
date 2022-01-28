@@ -3,7 +3,7 @@
     <nav class="group grid grid-cols-2 rounded-lg bg-gray-100 text-sm font-medium hover:bg-gray-200" aria-label="Tabs">
       <!-- Current: "text-gray-900", Default: "text-gray-500 hover:text-gray-700" -->
       <button
-        class="focus:outline-none truncate rounded-md focus:ring-offset-gray-100"
+        class="truncate rounded-md focus:outline-none focus:ring-offset-gray-100"
         :class="!value ? 'tab-active' : 'tab-inactive'"
         @click="$emit('input', false)"
       >
@@ -11,7 +11,7 @@
       </button>
 
       <button
-        class="focus:outline-none truncate rounded-md focus:ring-offset-gray-100"
+        class="truncate rounded-md focus:outline-none focus:ring-offset-gray-100"
         :class="value ? 'tab-active' : 'tab-inactive'"
         @click="$emit('input', true)"
       >
@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from "@nuxtjs/composition-api";
 
 export default defineComponent({
   props: {
@@ -40,9 +40,9 @@ export default defineComponent({
     },
   },
   setup() {
-    return {}
+    return {};
   },
-})
+});
 </script>
 
 <style lang="postcss">

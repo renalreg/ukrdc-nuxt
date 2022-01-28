@@ -73,46 +73,46 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
-import { nowString } from '@/helpers/utils/dateUtils'
-import { Message } from '@/interfaces/messages'
-import usePagination from '~/helpers/query/usePagination'
-import useDateRange from '~/helpers/query/useDateRange'
+import { nowString } from "@/helpers/utils/dateUtils";
+import { Message } from "@/interfaces/messages";
+import usePagination from "~/helpers/query/usePagination";
+import useDateRange from "~/helpers/query/useDateRange";
 
-import usePermissions from '~/helpers/usePermissions'
-import useFacilities from '~/helpers/useFacilities'
-import useQuery from '~/helpers/query/useQuery'
-import useSortBy from '~/helpers/query/useSortBy'
+import usePermissions from "~/helpers/usePermissions";
+import useFacilities from "~/helpers/useFacilities";
+import useQuery from "~/helpers/query/useQuery";
+import useSortBy from "~/helpers/query/useSortBy";
 
-import fetchMessages from '~/helpers/fetch/fetchMessages'
+import fetchMessages from "~/helpers/fetch/fetchMessages";
 
 export default defineComponent({
   setup() {
-    const { page, total, size } = usePagination()
-    const { makeDateRange } = useDateRange()
-    const { stringQuery, arrayQuery } = useQuery()
-    const { facilities, facilityIds, facilityLabels, selectedFacility } = useFacilities()
-    const { orderAscending, orderBy, toggleOrder } = useSortBy()
-    const { fetchMessagesPage } = fetchMessages()
-    const { isAdmin } = usePermissions()
+    const { page, total, size } = usePagination();
+    const { makeDateRange } = useDateRange();
+    const { stringQuery, arrayQuery } = useQuery();
+    const { facilities, facilityIds, facilityLabels, selectedFacility } = useFacilities();
+    const { orderAscending, orderBy, toggleOrder } = useSortBy();
+    const { fetchMessagesPage } = fetchMessages();
+    const { isAdmin } = usePermissions();
 
     // Set up URL query params for additional filters
-    const nationalId = stringQuery('nationalid', null, true, true)
-    const nationalIdSearchString = ref<string | null>(null)
+    const nationalId = stringQuery("nationalid", null, true, true);
+    const nationalIdSearchString = ref<string | null>(null);
 
     // Set initial date dateRange
-    const dateRange = makeDateRange(isAdmin ? nowString(-30) : nowString(-365), nowString(0), true)
+    const dateRange = makeDateRange(isAdmin ? nowString(-30) : nowString(-365), nowString(0), true);
 
     // Data refs
-    const messages = ref<Message[]>()
-    const statuses = arrayQuery('status', ['ERROR'], true, true)
+    const messages = ref<Message[]>();
+    const statuses = arrayQuery("status", ["ERROR"], true, true);
 
-    const fetchInProgress = ref(false)
+    const fetchInProgress = ref(false);
 
     // Data fetching
     async function getMessages() {
-      fetchInProgress.value = true
+      fetchInProgress.value = true;
 
       const messagesPage = await fetchMessagesPage(
         page.value || 1,
@@ -123,18 +123,18 @@ export default defineComponent({
         dateRange.value.end,
         selectedFacility.value,
         nationalId.value
-      )
-      messages.value = messagesPage.items
-      total.value = messagesPage.total
-      page.value = messagesPage.page
-      size.value = messagesPage.size
+      );
+      messages.value = messagesPage.items;
+      total.value = messagesPage.total;
+      page.value = messagesPage.page;
+      size.value = messagesPage.size;
 
-      fetchInProgress.value = false
+      fetchInProgress.value = false;
     }
 
     onMounted(() => {
-      getMessages()
-    })
+      getMessages();
+    });
 
     watch(
       [
@@ -146,9 +146,9 @@ export default defineComponent({
         () => JSON.stringify(statuses), // Stringify to watch for actual value changes
       ],
       () => {
-        getMessages()
+        getMessages();
       }
-    )
+    );
 
     return {
       fetchInProgress,
@@ -167,11 +167,11 @@ export default defineComponent({
       orderAscending,
       orderBy,
       toggleOrder,
-    }
+    };
   },
 
   head: {
-    title: 'Data Files',
+    title: "Data Files",
   },
-})
+});
 </script>

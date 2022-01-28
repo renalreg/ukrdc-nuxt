@@ -15,12 +15,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from "@nuxtjs/composition-api";
 
 export default defineComponent({
   props: {
     value: {
-      default: '',
+      default: "",
       type: String,
     },
     maxLength: {
@@ -29,5 +29,5 @@ export default defineComponent({
       required: false,
     },
   },
-})
+});
 </script>

@@ -38,7 +38,7 @@
         <div class="flex-shrink">
           <button
             v-tooltip="'Switch Records'"
-            class="focus:outline-none mx-auto block w-8 rounded-md border border-gray-300 bg-white font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            class="mx-auto block w-8 rounded-md border border-gray-300 bg-white font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             @click="switchRecords"
           >
             <IconSwitchH class="my-2 hidden lg:block" /><IconSwitchV class="my-2 block lg:hidden" />
@@ -107,144 +107,144 @@
 </template>
 
 <script lang="ts">
-import { computed, ref, useContext, useRoute, useRouter, watch } from '@nuxtjs/composition-api'
-import { defineComponent, onMounted } from '@vue/composition-api'
+import { computed, ref, useContext, useRoute, useRouter, watch } from "@nuxtjs/composition-api";
+import { defineComponent, onMounted } from "@vue/composition-api";
 
-import useQuery from '~/helpers/query/useQuery'
-import fetchEMPI from '~/helpers/fetch/fetchEMPI'
-import fetchMasterRecords from '@/helpers/fetch/fetchMasterRecords'
+import useQuery from "~/helpers/query/useQuery";
+import fetchEMPI from "~/helpers/fetch/fetchEMPI";
+import fetchMasterRecords from "@/helpers/fetch/fetchMasterRecords";
 
-import { modalInterface } from '~/interfaces/modal'
-import { MasterRecord } from '~/interfaces/masterrecord'
+import { modalInterface } from "~/interfaces/modal";
+import { MasterRecord } from "~/interfaces/masterrecord";
 
 enum Direction {
-  superseding = 'superseding',
-  Superceeded = 'superseded',
+  superseding = "superseding",
+  Superceeded = "superseded",
 }
 
 export default defineComponent({
   setup() {
-    const route = useRoute()
-    const router = useRouter()
-    const { $toast } = useContext()
-    const { stringQuery } = useQuery()
-    const { PostEMPIMerge } = fetchEMPI()
-    const { fetchMasterRecord } = fetchMasterRecords()
+    const route = useRoute();
+    const router = useRouter();
+    const { $toast } = useContext();
+    const { stringQuery } = useQuery();
+    const { PostEMPIMerge } = fetchEMPI();
+    const { fetchMasterRecord } = fetchMasterRecords();
 
     // Modals
 
-    const beginMergeAlert = ref<modalInterface>()
+    const beginMergeAlert = ref<modalInterface>();
 
     // Data refs
 
-    const supersededId = stringQuery('superseded', null, true, false)
-    const supersedingId = stringQuery('superseding', null, true, false)
-    const callbackPath = stringQuery('callback', null)
+    const supersededId = stringQuery("superseded", null, true, false);
+    const supersedingId = stringQuery("superseding", null, true, false);
+    const callbackPath = stringQuery("callback", null);
 
-    const superseded = ref<MasterRecord>()
-    const superseding = ref<MasterRecord>()
+    const superseded = ref<MasterRecord>();
+    const superseding = ref<MasterRecord>();
 
-    const searchingFor = ref<Direction>()
+    const searchingFor = ref<Direction>();
 
     const readyToMerge = computed(() => {
-      return superseded.value?.id && superseding.value?.id && superseded.value?.id !== superseding.value?.id
-    })
+      return superseded.value?.id && superseding.value?.id && superseded.value?.id !== superseding.value?.id;
+    });
 
     const mergeBlockDescription = computed(() => {
       if (superseded.value?.id && superseding.value?.id) {
         if (superseded.value?.id === superseding.value?.id) {
-          return 'A record cannot be merged into itself. Please select a different record on one side.'
+          return "A record cannot be merged into itself. Please select a different record on one side.";
         }
         if (superseded.value?.nationalidType !== superseding.value?.nationalidType) {
-          return `You are about to merge a ${superseded.value?.nationalidType} record into a ${superseding.value?.nationalidType} record.`
+          return `You are about to merge a ${superseded.value?.nationalidType} record into a ${superseding.value?.nationalidType} record.`;
         }
       }
-      return ''
-    })
+      return "";
+    });
 
     // Data fetching
     async function fetchRecords() {
       if (supersededId.value) {
-        superseded.value = await fetchMasterRecord(supersededId.value)
+        superseded.value = await fetchMasterRecord(supersededId.value);
       }
       if (supersedingId.value) {
-        superseding.value = await fetchMasterRecord(supersedingId.value)
+        superseding.value = await fetchMasterRecord(supersedingId.value);
       }
     }
 
     onMounted(() => {
-      fetchRecords()
-    })
+      fetchRecords();
+    });
 
     watch([supersededId, supersedingId], () => {
-      fetchRecords()
-    })
+      fetchRecords();
+    });
 
     // Record card style
 
     const highlightSections = computed<string[]>(() => {
       if (!(superseding.value && superseded.value)) {
-        return []
+        return [];
       }
-      const highlight = []
+      const highlight = [];
       if (
         superseding.value.givenname !== superseded.value.givenname ||
         superseding.value.surname !== superseded.value.surname
       ) {
-        highlight.push('name')
+        highlight.push("name");
       }
       if (superseding.value.dateOfBirth !== superseded.value.dateOfBirth) {
-        highlight.push('dateOfBirth')
+        highlight.push("dateOfBirth");
       }
       if (superseding.value.gender !== superseded.value.gender) {
-        highlight.push('gender')
+        highlight.push("gender");
       }
-      return highlight
-    })
+      return highlight;
+    });
 
     // Edit merge functions
 
     function switchRecords() {
-      const newQuery = Object.assign({}, route.value.query)
-      newQuery.superseded = [supersedingId.value]
-      newQuery.superseding = [supersededId.value]
+      const newQuery = Object.assign({}, route.value.query);
+      newQuery.superseded = [supersedingId.value];
+      newQuery.superseding = [supersededId.value];
       router.push({
         path: route.value.path,
         query: newQuery,
-      })
+      });
     }
 
     function clearMerge() {
-      superseding.value = undefined
-      superseded.value = undefined
-      searchingFor.value = undefined
-      const newQuery = Object.assign({}, route.value.query)
-      newQuery.superseded = [null]
-      newQuery.superseding = [null]
+      superseding.value = undefined;
+      superseded.value = undefined;
+      searchingFor.value = undefined;
+      const newQuery = Object.assign({}, route.value.query);
+      newQuery.superseded = [null];
+      newQuery.superseding = [null];
       router.push({
         path: route.value.path,
         query: newQuery,
-      })
+      });
     }
 
     function clearsuperseding() {
-      superseding.value = undefined
-      supersedingId.value = null
-      searchingFor.value = Direction.superseding
+      superseding.value = undefined;
+      supersedingId.value = null;
+      searchingFor.value = Direction.superseding;
     }
 
     function clearSuperceeded() {
-      superseded.value = undefined
-      supersededId.value = null
-      searchingFor.value = Direction.Superceeded
+      superseded.value = undefined;
+      supersededId.value = null;
+      searchingFor.value = Direction.Superceeded;
     }
 
     function selectsuperseding(id: string) {
-      supersedingId.value = id
+      supersedingId.value = id;
     }
 
     function selectSuperceeded(id: string) {
-      supersededId.value = id
+      supersededId.value = id;
     }
 
     // Do merge
@@ -254,21 +254,21 @@ export default defineComponent({
         PostEMPIMerge(superseding.value.id, superseded.value.id)
           .then(() => {
             $toast.show({
-              type: 'success',
-              title: 'Success',
-              message: 'Record merge request sent successfully',
+              type: "success",
+              title: "Success",
+              message: "Record merge request sent successfully",
               timeout: 10,
-              classTimeout: 'bg-green-600',
-            })
-            clearMerge()
+              classTimeout: "bg-green-600",
+            });
+            clearMerge();
             if (callbackPath.value) {
-              router.push(callbackPath.value)
+              router.push(callbackPath.value);
             }
           })
           .finally(() => {
-            const el = beginMergeAlert.value as modalInterface
-            el.hide()
-          })
+            const el = beginMergeAlert.value as modalInterface;
+            el.hide();
+          });
       }
     }
 
@@ -289,7 +289,7 @@ export default defineComponent({
       readyToMerge,
       mergeBlockDescription,
       requestMerge,
-    }
+    };
   },
-})
+});
 </script>

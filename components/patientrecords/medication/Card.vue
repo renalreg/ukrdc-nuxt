@@ -26,12 +26,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from "@nuxtjs/composition-api";
 
-import { formatDate } from '@/helpers/utils/dateUtils'
-import { formatGender } from '@/helpers/utils/codeUtils'
+import { formatDate } from "@/helpers/utils/dateUtils";
+import { formatGender } from "@/helpers/utils/codeUtils";
 
-import { Medication } from '@/interfaces/medication'
+import { Medication } from "@/interfaces/medication";
 
 export default defineComponent({
   props: {
@@ -41,7 +41,7 @@ export default defineComponent({
     },
   },
   setup() {
-    return { formatDate, formatGender }
+    return { formatDate, formatGender };
   },
-})
+});
 </script>

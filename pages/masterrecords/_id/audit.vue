@@ -39,17 +39,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
-import { nowString } from '@/helpers/utils/dateUtils'
-import usePagination from '~/helpers/query/usePagination'
-import useSortBy from '~/helpers/query/useSortBy'
-import useDateRange from '~/helpers/query/useDateRange'
+import { nowString } from "@/helpers/utils/dateUtils";
+import usePagination from "~/helpers/query/usePagination";
+import useSortBy from "~/helpers/query/useSortBy";
+import useDateRange from "~/helpers/query/useDateRange";
 
-import fetchMasterRecords from '@/helpers/fetch/fetchMasterRecords'
+import fetchMasterRecords from "@/helpers/fetch/fetchMasterRecords";
 
-import { AuditEvent } from '~/interfaces/audit'
-import { MasterRecord } from '~/interfaces/masterrecord'
+import { AuditEvent } from "~/interfaces/audit";
+import { MasterRecord } from "~/interfaces/masterrecord";
 
 export default defineComponent({
   props: {
@@ -59,16 +59,16 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { page, total, size } = usePagination()
-    const { makeDateRange } = useDateRange()
-    const { orderAscending, orderBy, toggleOrder } = useSortBy()
-    const { fetchMasterRecordAuditPage } = fetchMasterRecords()
+    const { page, total, size } = usePagination();
+    const { makeDateRange } = useDateRange();
+    const { orderAscending, orderBy, toggleOrder } = useSortBy();
+    const { fetchMasterRecordAuditPage } = fetchMasterRecords();
 
     // Set initial date dateRange
-    const dateRange = makeDateRange(nowString(-30), nowString(0), true)
+    const dateRange = makeDateRange(nowString(-30), nowString(0), true);
 
     // Data refs
-    const events = ref<AuditEvent[]>()
+    const events = ref<AuditEvent[]>();
 
     // Data fetching
 
@@ -80,17 +80,17 @@ export default defineComponent({
         orderBy.value,
         dateRange.value.start,
         dateRange.value.end
-      )
+      );
 
-      events.value = eventsPage.items
-      total.value = eventsPage.total
-      page.value = eventsPage.page
-      size.value = eventsPage.size
+      events.value = eventsPage.items;
+      total.value = eventsPage.total;
+      page.value = eventsPage.page;
+      size.value = eventsPage.size;
     }
 
     onMounted(() => {
-      fetchEvents()
-    })
+      fetchEvents();
+    });
 
     watch(
       [
@@ -99,9 +99,9 @@ export default defineComponent({
         () => JSON.stringify(dateRange), // Stringify to watch for actual value changes
       ],
       () => {
-        fetchEvents()
+        fetchEvents();
       }
-    )
+    );
 
     return {
       page,
@@ -112,7 +112,7 @@ export default defineComponent({
       orderAscending,
       orderBy,
       toggleOrder,
-    }
+    };
   },
-})
+});
 </script>

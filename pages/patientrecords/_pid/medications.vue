@@ -25,11 +25,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
-import { Medication } from '@/interfaces/medication'
-import { PatientRecord } from '@/interfaces/patientrecord'
-import fetchPatientRecords from '~/helpers/fetch/fetchPatientRecords'
+import { Medication } from "@/interfaces/medication";
+import { PatientRecord } from "@/interfaces/patientrecord";
+import fetchPatientRecords from "~/helpers/fetch/fetchPatientRecords";
 
 export default defineComponent({
   props: {
@@ -40,36 +40,36 @@ export default defineComponent({
   },
 
   setup(props) {
-    const { fetchPatientRecordMedications } = fetchPatientRecords()
+    const { fetchPatientRecordMedications } = fetchPatientRecords();
 
     // Data refs
-    const medications = ref<Medication[]>()
+    const medications = ref<Medication[]>();
 
     // Data fetching
     onMounted(async () => {
-      medications.value = await fetchPatientRecordMedications(props.record)
-    })
+      medications.value = await fetchPatientRecordMedications(props.record);
+    });
 
     // Split active and inactive medications
 
     const activeMedications = computed(() => {
-      if (!medications.value) return []
+      if (!medications.value) return [];
       return medications.value?.filter(function (item: Medication) {
-        return item.toTime === null
-      })
-    })
+        return item.toTime === null;
+      });
+    });
     const inactiveMedications = computed(() => {
-      if (!medications.value) return []
+      if (!medications.value) return [];
       return medications.value?.filter(function (item: Medication) {
-        return item.toTime !== null
-      })
-    })
+        return item.toTime !== null;
+      });
+    });
 
     return {
       activeMedications,
       inactiveMedications,
       medications,
-    }
+    };
   },
-})
+});
 </script>

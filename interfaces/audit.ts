@@ -1,26 +1,26 @@
 interface AccessEvent {
-  id: number
-  time: string
+  id: number;
+  time: string;
 
-  userId: string
-  clientId: string
-  userEmail: string
+  userId: string;
+  clientId: string;
+  userEmail: string;
 
-  path: string
-  method: string
-  body: string
+  path: string;
+  method: string;
+  body: string;
 }
 
 export interface AuditEvent {
-  id: number
-  accessEvent: AccessEvent
+  id: number;
+  accessEvent: AccessEvent;
 
-  resource: string
-  resourceId: string
+  resource: string;
+  resourceId: string;
 
-  operation: string
+  operation: string;
 
-  children: AuditEvent[]
+  children: AuditEvent[];
 
-  identifiers: string[]
+  identifiers: string[];
 }

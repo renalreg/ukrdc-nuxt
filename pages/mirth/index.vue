@@ -23,7 +23,7 @@
                 {{ item.name }}
               </TextH3>
               <TextL1> Rev. {{ item.revision }} </TextL1>
-              <TextP> {{ item.statistics ? item.statistics.received : 'Unknown' }} received </TextP>
+              <TextP> {{ item.statistics ? item.statistics.received : "Unknown" }} received </TextP>
               <span
                 v-if="item.statistics && item.statistics.error === 0"
                 class="mt-2 inline-block rounded-sm bg-green-100 px-2 py-0.5 text-sm font-medium text-green-800"
@@ -43,30 +43,30 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
-import fetchMirth from '~/helpers/fetch/fetchMirth'
+import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
+import fetchMirth from "~/helpers/fetch/fetchMirth";
 
-import { ChannelGroup } from '@/interfaces/mirth'
+import { ChannelGroup } from "@/interfaces/mirth";
 
 export default defineComponent({
   setup() {
-    const { fetchMirthGroups } = fetchMirth()
+    const { fetchMirthGroups } = fetchMirth();
 
     // Data refs
-    const mirthGroups = ref<ChannelGroup[]>()
+    const mirthGroups = ref<ChannelGroup[]>();
 
     // Data fetching
     onMounted(async () => {
-      mirthGroups.value = await fetchMirthGroups()
-    })
+      mirthGroups.value = await fetchMirthGroups();
+    });
 
     return {
       mirthGroups,
-    }
+    };
   },
 
   head: {
-    title: 'Mirth Channels',
+    title: "Mirth Channels",
   },
-})
+});
 </script>

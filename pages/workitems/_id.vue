@@ -23,7 +23,7 @@
 
     <GenericModalSlot v-if="hasPermission('ukrdc:workitems:write')" ref="closeModal">
       <div class="text-left">
-        <div class="mb-4">{{ closeMessageOverride ? closeMessageOverride : 'Close the Work Item' }}</div>
+        <div class="mb-4">{{ closeMessageOverride ? closeMessageOverride : "Close the Work Item" }}</div>
 
         <div>
           <FormLabel>
@@ -238,79 +238,79 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useContext, useMeta, useRoute } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref, useContext, useMeta, useRoute } from "@nuxtjs/composition-api";
 
-import { formatDate } from '@/helpers/utils/dateUtils'
-import { formatGender } from '@/helpers/utils/codeUtils'
-import { isEmptyObject } from '@/helpers/utils/objectUtils'
-import { delay } from '@/helpers/utils/timeUtils'
-import { workItemIsMergable } from '@/helpers/utils/workItemUtils'
+import { formatDate } from "@/helpers/utils/dateUtils";
+import { formatGender } from "@/helpers/utils/codeUtils";
+import { isEmptyObject } from "@/helpers/utils/objectUtils";
+import { delay } from "@/helpers/utils/timeUtils";
+import { workItemIsMergable } from "@/helpers/utils/workItemUtils";
 
-import { WorkItem, WorkItemExtended } from '@/interfaces/workitem'
-import { modalInterface } from '@/interfaces/modal'
+import { WorkItem, WorkItemExtended } from "@/interfaces/workitem";
+import { modalInterface } from "@/interfaces/modal";
 
-import usePermissions from '~/helpers/usePermissions'
-import fetchWorkItems from '~/helpers/fetch/fetchWorkItems'
+import usePermissions from "~/helpers/usePermissions";
+import fetchWorkItems from "~/helpers/fetch/fetchWorkItems";
 
 interface AvailableActions {
-  close: boolean
-  comment: boolean
-  merge: boolean
-  unlink: boolean
+  close: boolean;
+  comment: boolean;
+  merge: boolean;
+  unlink: boolean;
 }
 
 export default defineComponent({
   setup() {
     // Dependencies
-    const route = useRoute()
-    const { $toast } = useContext()
-    const { hasPermission } = usePermissions()
-    const { fetchWorkItem, closeWorkItem, putWorkItemComment, fetchWorkItemCollection } = fetchWorkItems()
+    const route = useRoute();
+    const { $toast } = useContext();
+    const { hasPermission } = usePermissions();
+    const { fetchWorkItem, closeWorkItem, putWorkItemComment, fetchWorkItemCollection } = fetchWorkItems();
 
     // Head
-    const { title } = useMeta()
-    title.value = `Work Item ${route.value.params.id}`
+    const { title } = useMeta();
+    title.value = `Work Item ${route.value.params.id}`;
 
     // Work item record data
-    const record = ref<WorkItemExtended>()
-    const customComment = ref('')
+    const record = ref<WorkItemExtended>();
+    const customComment = ref("");
 
     // Related persons data
-    const workItemCollection = ref([] as WorkItem[])
+    const workItemCollection = ref([] as WorkItem[]);
 
     // Related record paginator data
-    const relatedRecordsIndex = ref(0)
-    const relatedPersonsIndex = ref(0)
+    const relatedRecordsIndex = ref(0);
+    const relatedPersonsIndex = ref(0);
 
     // Data fetching
 
     async function getWorkItem() {
-      record.value = await fetchWorkItem(route.value.params.id)
-      workItemCollection.value = await fetchWorkItemCollection(record.value)
+      record.value = await fetchWorkItem(route.value.params.id);
+      workItemCollection.value = await fetchWorkItemCollection(record.value);
 
       // Apply existing comment
-      customComment.value = record.value?.updateDescription || ''
+      customComment.value = record.value?.updateDescription || "";
 
       // Check if the workitem has already been merged and is ready to be closed
-      checkMerged()
+      checkMerged();
     }
 
     onMounted(() => {
-      getWorkItem()
-    })
+      getWorkItem();
+    });
 
     // Trigger dynamic modals
 
     function checkMerged() {
       if (
         record.value?.status === 1 &&
-        record.value?.destination.masterRecord?.nationalidType === 'UKRDC' &&
+        record.value?.destination.masterRecord?.nationalidType === "UKRDC" &&
         record.value?.incoming.masterRecords.length <= 0 &&
-        route.value.query.justMerged === 'true'
+        route.value.query.justMerged === "true"
       ) {
         closeMessageOverride.value =
-          'It looks like the incoming Master Record for this Work Item has been merged. Close the Work Item?'
-        closeModal.value?.show()
+          "It looks like the incoming Master Record for this Work Item has been merged. Close the Work Item?";
+        closeModal.value?.show();
       }
     }
 
@@ -318,19 +318,19 @@ export default defineComponent({
 
     const statusString = computed(() => {
       if (record.value?.status === 1) {
-        return ''
+        return "";
       } else if (record.value?.status === 2) {
-        return '(WIP)'
+        return "(WIP)";
       } else if (record.value?.status === 3) {
-        return '(Closed)'
+        return "(Closed)";
       } else {
-        return '(Unknown status)'
+        return "(Unknown status)";
       }
-    })
+    });
 
-    const showIncomingAttributes = ref(false)
+    const showIncomingAttributes = ref(false);
 
-    const showDestinationPersons = ref(false)
+    const showDestinationPersons = ref(false);
 
     const availableActions = computed<AvailableActions>(() => {
       return {
@@ -342,76 +342,76 @@ export default defineComponent({
         merge: record.value ? workItemIsMergable(record.value) : false,
         // Currently Unlink never makes sense, so ignore for now. Maybe remove entirely?
         unlink: false,
-      } as AvailableActions
-    })
+      } as AvailableActions;
+    });
 
-    const closeMessageOverride = ref<String>()
+    const closeMessageOverride = ref<String>();
 
     // Template refs
-    const addCommentModal = ref<modalInterface>()
-    const closeModal = ref<modalInterface>()
+    const addCommentModal = ref<modalInterface>();
+    const closeModal = ref<modalInterface>();
 
     // Workitem actions
     function updateWorkItemComment() {
       putWorkItemComment(route.value.params.id, customComment.value)
         .then(() => {
           $toast.show({
-            type: 'success',
-            title: 'Success',
-            message: 'Comment added',
-            classTimeout: 'bg-green-600',
-          })
+            type: "success",
+            title: "Success",
+            message: "Comment added",
+            classTimeout: "bg-green-600",
+          });
         })
         .catch((error) => {
           $toast.show({
-            type: 'danger',
-            title: 'Error',
+            type: "danger",
+            title: "Error",
             message: error.response.data.detail,
             timeout: 10,
-            classTimeout: 'bg-red-600',
-          })
-          throw error
+            classTimeout: "bg-red-600",
+          });
+          throw error;
         })
         .finally(() => {
           // Delay fetch to allow JTRACE time to process
           delay(1000).then(() => {
-            getWorkItem()
-          })
-        })
+            getWorkItem();
+          });
+        });
 
-      const el = addCommentModal.value as modalInterface
-      el.toggle()
+      const el = addCommentModal.value as modalInterface;
+      el.toggle();
     }
 
     function handleCloseWorkItem() {
       closeWorkItem(route.value.params.id, customComment.value)
         .then(() => {
           $toast.show({
-            type: 'success',
-            title: 'Success',
-            message: 'Work Item closed',
-            classTimeout: 'bg-green-600',
-          })
+            type: "success",
+            title: "Success",
+            message: "Work Item closed",
+            classTimeout: "bg-green-600",
+          });
         })
         .catch((error) => {
           $toast.show({
-            type: 'danger',
-            title: 'Error',
+            type: "danger",
+            title: "Error",
             message: error.response.data.detail,
             timeout: 10,
-            classTimeout: 'bg-red-600',
-          })
-          throw error
+            classTimeout: "bg-red-600",
+          });
+          throw error;
         })
         .finally(() => {
           // Delay fetch to allow JTRACE time to process
           delay(1000).then(() => {
-            getWorkItem()
-          })
-        })
+            getWorkItem();
+          });
+        });
 
-      const el = closeModal.value as modalInterface
-      el.toggle()
+      const el = closeModal.value as modalInterface;
+      el.toggle();
     }
 
     return {
@@ -433,10 +433,10 @@ export default defineComponent({
       updateWorkItemComment,
       handleCloseWorkItem,
       hasPermission,
-    }
+    };
   },
   head: {
-    title: 'Work Item',
+    title: "Work Item",
   },
-})
+});
 </script>

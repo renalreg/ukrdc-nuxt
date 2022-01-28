@@ -15,7 +15,7 @@
           </GenericDi>
           <GenericDi>
             <TextDt>Recieved</TextDt>
-            <TextDd v-if="message"> {{ message.received ? formatDate(message.received) : 'Unknown' }}</TextDd>
+            <TextDd v-if="message"> {{ message.received ? formatDate(message.received) : "Unknown" }}</TextDd>
             <SkeleText v-else class="h-6 w-full" />
           </GenericDi>
           <GenericDi>
@@ -106,17 +106,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
-import { Message } from '@/interfaces/messages'
-import { ChannelMessage } from '~/interfaces/mirth'
-import { WorkItem } from '~/interfaces/workitem'
-import { MasterRecord } from '~/interfaces/masterrecord'
+import { Message } from "@/interfaces/messages";
+import { ChannelMessage } from "~/interfaces/mirth";
+import { WorkItem } from "~/interfaces/workitem";
+import { MasterRecord } from "~/interfaces/masterrecord";
 
-import { formatDate } from '@/helpers/utils/dateUtils'
+import { formatDate } from "@/helpers/utils/dateUtils";
 
-import fetchMessages from '~/helpers/fetch/fetchMessages'
-import usePermissions from '~/helpers/usePermissions'
+import fetchMessages from "~/helpers/fetch/fetchMessages";
+import usePermissions from "~/helpers/usePermissions";
 
 export default defineComponent({
   props: {
@@ -126,44 +126,44 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { hasPermission } = usePermissions()
+    const { hasPermission } = usePermissions();
     const {
       fetchMessageMasterRecords,
       fetchMessageWorkItems,
       fetchMessageMirth,
       downloadMessageSource,
       downloadSourceInProgress,
-    } = fetchMessages()
+    } = fetchMessages();
 
     // Data refs
-    const mirthMessage = ref<ChannelMessage | null | undefined>(undefined)
-    const workItems = ref([] as WorkItem[])
-    const masterRecords = ref([] as MasterRecord[])
+    const mirthMessage = ref<ChannelMessage | null | undefined>(undefined);
+    const workItems = ref([] as WorkItem[]);
+    const masterRecords = ref([] as MasterRecord[]);
 
     // Data fetching
 
     async function getMessageData() {
       // Get auxilalry record data
-      if (hasPermission('ukrdc:records:read')) {
-        masterRecords.value = await fetchMessageMasterRecords(props.message)
+      if (hasPermission("ukrdc:records:read")) {
+        masterRecords.value = await fetchMessageMasterRecords(props.message);
       }
-      if (hasPermission('ukrdc:workitems:read')) {
-        workItems.value = await fetchMessageWorkItems(props.message)
+      if (hasPermission("ukrdc:workitems:read")) {
+        workItems.value = await fetchMessageWorkItems(props.message);
       }
 
       // Conditionally get the Mirth message data
-      if (hasPermission('ukrdc:mirth:read')) {
+      if (hasPermission("ukrdc:mirth:read")) {
         try {
-          mirthMessage.value = await fetchMessageMirth(props.message)
+          mirthMessage.value = await fetchMessageMirth(props.message);
         } catch (e) {
-          mirthMessage.value = null
+          mirthMessage.value = null;
         }
       }
     }
 
     onMounted(() => {
-      getMessageData()
-    })
+      getMessageData();
+    });
 
     return {
       masterRecords,
@@ -173,7 +173,7 @@ export default defineComponent({
       downloadMessageSource,
       downloadSourceInProgress,
       hasPermission,
-    }
+    };
   },
-})
+});
 </script>

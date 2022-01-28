@@ -25,97 +25,106 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useMeta, useRoute, useRouter, watch } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  ref,
+  useMeta,
+  useRoute,
+  useRouter,
+  watch,
+} from "@nuxtjs/composition-api";
 
-import { PatientRecord, PatientRecordSummary } from '@/interfaces/patientrecord'
-import { TabItem } from '@/interfaces/tabs'
+import { PatientRecord, PatientRecordSummary } from "@/interfaces/patientrecord";
+import { TabItem } from "@/interfaces/tabs";
 
-import { firstForename, firstSurname, isMembership } from '@/helpers/utils/recordUtils'
-import fetchPatientRecords from '~/helpers/fetch/fetchPatientRecords'
+import { firstForename, firstSurname, isMembership } from "@/helpers/utils/recordUtils";
+import fetchPatientRecords from "~/helpers/fetch/fetchPatientRecords";
 
 export default defineComponent({
   setup() {
-    const route = useRoute()
-    const router = useRouter()
-    const { fetchPatientRecord, fetchPatientRecordRelated } = fetchPatientRecords()
+    const route = useRoute();
+    const router = useRouter();
+    const { fetchPatientRecord, fetchPatientRecordRelated } = fetchPatientRecords();
 
     // Head
-    const { title } = useMeta()
-    title.value = `Record ${route.value.params.pid}`
+    const { title } = useMeta();
+    title.value = `Record ${route.value.params.pid}`;
 
     // Data refs
 
-    const record = ref<PatientRecord>()
-    const related = ref<PatientRecordSummary[]>()
+    const record = ref<PatientRecord>();
+    const related = ref<PatientRecordSummary[]>();
 
     // Data fetching
 
     async function getRecord() {
-      record.value = await fetchPatientRecord(route.value.params.pid)
-      related.value = await fetchPatientRecordRelated(record.value)
+      record.value = await fetchPatientRecord(route.value.params.pid);
+      related.value = await fetchPatientRecordRelated(record.value);
     }
 
     onMounted(() => {
-      getRecord()
-    })
+      getRecord();
+    });
 
     // PID Switcher UI
 
     const relatedDataRecords = computed<PatientRecordSummary[]>(() => {
       if (related.value) {
-        return related.value.filter((record) => !isMembership(record))
+        return related.value.filter((record) => !isMembership(record));
       }
-      return []
-    })
+      return [];
+    });
 
-    const selectedPid = ref(route.value.params.pid)
+    const selectedPid = ref(route.value.params.pid);
 
     watch(selectedPid, (value: string) => {
-      router.push({ name: route.value.name!, params: { pid: value } })
-    })
+      router.push({ name: route.value.name!, params: { pid: value } });
+    });
 
     // Dynamic UI elements
 
     const forename = computed(() => {
-      return record.value ? firstForename(record.value) : ''
-    })
+      return record.value ? firstForename(record.value) : "";
+    });
 
     const surname = computed(() => {
-      return record.value ? firstSurname(record.value) : ''
-    })
+      return record.value ? firstSurname(record.value) : "";
+    });
 
     // Navigation
 
     const tabs = [
       {
-        name: 'Overview',
+        name: "Overview",
         href: `/patientrecords/${route.value.params.pid}`,
       },
       {
-        name: 'Medications',
+        name: "Medications",
         href: `/patientrecords/${route.value.params.pid}/medications`,
       },
       {
-        name: 'Treatments',
+        name: "Treatments",
         href: `/patientrecords/${route.value.params.pid}/treatments`,
       },
       {
-        name: 'Results',
+        name: "Results",
         href: `/patientrecords/${route.value.params.pid}/results`,
       },
       {
-        name: 'Observations',
+        name: "Observations",
         href: `/patientrecords/${route.value.params.pid}/observations`,
       },
       {
-        name: 'Documents',
+        name: "Documents",
         href: `/patientrecords/${route.value.params.pid}/documents`,
       },
       {
-        name: 'Surveys',
+        name: "Surveys",
         href: `/patientrecords/${route.value.params.pid}/surveys`,
       },
-    ] as TabItem[]
+    ] as TabItem[];
 
     return {
       record,
@@ -125,10 +134,10 @@ export default defineComponent({
       forename,
       surname,
       tabs,
-    }
+    };
   },
   head: {
-    title: 'Patient Record',
+    title: "Patient Record",
   },
-})
+});
 </script>

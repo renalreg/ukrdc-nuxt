@@ -5,21 +5,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
-import { Interval, DateTime } from 'luxon'
+import { Interval, DateTime } from "luxon";
 
-import { Chart, LineController, TimeScale, LinearScale, PointElement, LineElement, Tooltip } from 'chart.js'
-import 'chartjs-adapter-luxon'
+import { Chart, LineController, TimeScale, LinearScale, PointElement, LineElement, Tooltip } from "chart.js";
+import "chartjs-adapter-luxon";
 
-import { HistoryItem } from '~/interfaces/common'
+import { HistoryItem } from "~/interfaces/common";
 
-Chart.register(LineController, TimeScale, LinearScale, PointElement, LineElement, Tooltip)
+Chart.register(LineController, TimeScale, LinearScale, PointElement, LineElement, Tooltip);
 
 interface EventElement {
-  datasetIndex: number
-  element: PointElement
-  index: number
+  datasetIndex: number;
+  element: PointElement;
+  index: number;
 }
 
 export default defineComponent({
@@ -30,7 +30,7 @@ export default defineComponent({
     },
     label: {
       type: String,
-      default: '',
+      default: "",
     },
     options: {
       type: Object,
@@ -42,7 +42,7 @@ export default defineComponent({
     },
     id: {
       type: String,
-      default: 'time-series',
+      default: "time-series",
     },
     start: {
       type: String,
@@ -57,44 +57,44 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const dataToUse = ref<{ [key: string]: number }>({})
+    const dataToUse = ref<{ [key: string]: number }>({});
 
     function* iterateDays(interval: Interval) {
-      let cursor = interval.start.startOf('day')
+      let cursor = interval.start.startOf("day");
       while (cursor < interval.end) {
-        yield cursor
-        cursor = cursor.plus({ days: 1 })
+        yield cursor;
+        cursor = cursor.plus({ days: 1 });
       }
     }
 
     function populateData() {
       // Populate base/missing data
       if (props.autofillData) {
-        const start = props.start ? DateTime.fromISO(props.start) : DateTime.now().minus({ days: 365 })
-        const end = props.end ? DateTime.fromISO(props.end) : DateTime.now()
-        const interval = Interval.fromDateTimes(start, end)
+        const start = props.start ? DateTime.fromISO(props.start) : DateTime.now().minus({ days: 365 });
+        const end = props.end ? DateTime.fromISO(props.end) : DateTime.now();
+        const interval = Interval.fromDateTimes(start, end);
         for (const d of iterateDays(interval)) {
-          dataToUse.value[d.toISODate()] = 0
+          dataToUse.value[d.toISODate()] = 0;
         }
       }
 
       // Populate real data
       for (const item of props.data) {
-        dataToUse.value[item.time] = item.count
+        dataToUse.value[item.time] = item.count;
       }
     }
 
     onMounted(() => {
-      populateData()
-      const canvas = document.getElementById(props.id) as HTMLCanvasElement
+      populateData();
+      const canvas = document.getElementById(props.id) as HTMLCanvasElement;
       const options = {
-        type: 'line',
+        type: "line",
         data: {
           datasets: [
             {
               data: dataToUse.value,
-              borderColor: 'rgba(79, 70, 229, 1)',
-              backgroundColor: 'rgba(79, 70, 229, 0.5)',
+              borderColor: "rgba(79, 70, 229, 1)",
+              backgroundColor: "rgba(79, 70, 229, 0.5)",
               pointRadius: 0,
               hitRadius: 5,
               hoverRadius: 5,
@@ -104,29 +104,29 @@ export default defineComponent({
         options: {
           onClick: (_: MouseEvent, activeElements: EventElement[]) => {
             if (activeElements && activeElements[0]) {
-              const pointEl = activeElements[0].element
+              const pointEl = activeElements[0].element;
               // @ts-ignore
               // TODO: We only used to need pointEl.parsed, but as of chart.js 3.7.0,
               // it's always returning undefined. pointEl.$context.parsed seems to work,
               // but it's not documented, and doesn't appear in the TypeScript definitions,
               // so we'll just use it for now and ignore TS for this line.
-              const parsed = pointEl.parsed || pointEl.$context.parsed
-              emit('click', parsed)
+              const parsed = pointEl.parsed || pointEl.$context.parsed;
+              emit("click", parsed);
             }
           },
           responsive: true,
           maintainAspectRatio: false,
           scales: {
             x: {
-              type: 'time',
+              type: "time",
               time: {
-                format: 'YYYY-MM-DD',
+                format: "YYYY-MM-DD",
                 displayFormats: {
-                  quarter: 'MMM YYYY',
+                  quarter: "MMM YYYY",
                 },
               },
               ticks: {
-                source: 'auto',
+                source: "auto",
                 autoSkip: true,
               },
             },
@@ -142,12 +142,12 @@ export default defineComponent({
             },
           },
         },
-      }
+      };
       // @ts-ignore
-      return new Chart(canvas, options)
-    })
+      return new Chart(canvas, options);
+    });
 
-    return { dataToUse }
+    return { dataToUse };
   },
-})
+});
 </script>

@@ -19,11 +19,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from "@nuxtjs/composition-api";
 
-import { formatDate } from '@/helpers/utils/dateUtils'
+import { formatDate } from "@/helpers/utils/dateUtils";
 
-import { ResultItem } from '~/interfaces/laborder'
+import { ResultItem } from "~/interfaces/laborder";
 
 export default defineComponent({
   props: {
@@ -33,7 +33,7 @@ export default defineComponent({
     },
   },
   setup() {
-    return { formatDate }
+    return { formatDate };
   },
-})
+});
 </script>

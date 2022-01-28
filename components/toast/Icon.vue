@@ -63,9 +63,9 @@ export default {
       type: String,
       required: false,
       validate: (type) => {
-        return ['success', 'info', 'danger', 'warning', 'denied'].includes(type)
+        return ["success", "info", "danger", "warning", "denied"].includes(type);
       },
-      default: '',
+      default: "",
     },
     icon: {
       type: [Boolean, String],
@@ -73,5 +73,5 @@ export default {
       default: false,
     },
   },
-}
+};
 </script>

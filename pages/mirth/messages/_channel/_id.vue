@@ -13,35 +13,35 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useMeta, useRoute } from '@nuxtjs/composition-api'
-import fetchMirth from '~/helpers/fetch/fetchMirth'
+import { defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
+import fetchMirth from "~/helpers/fetch/fetchMirth";
 
-import { ChannelMessage } from '@/interfaces/mirth'
+import { ChannelMessage } from "@/interfaces/mirth";
 
 export default defineComponent({
   setup() {
-    const route = useRoute()
-    const { fetchMirthMessage } = fetchMirth()
+    const route = useRoute();
+    const { fetchMirthMessage } = fetchMirth();
 
     // Head
 
-    const { title } = useMeta()
-    title.value = `Mirth message ${route.value.params.id}`
+    const { title } = useMeta();
+    title.value = `Mirth message ${route.value.params.id}`;
 
     // Data refs
-    const message = ref<ChannelMessage>()
+    const message = ref<ChannelMessage>();
 
     // Data fetching
     onMounted(async () => {
-      message.value = await fetchMirthMessage(route.value.params.channel, route.value.params.id)
-    })
+      message.value = await fetchMirthMessage(route.value.params.channel, route.value.params.id);
+    });
 
     return {
       message,
-    }
+    };
   },
   head: {
-    title: 'Mirth Message',
+    title: "Mirth Message",
   },
-})
+});
 </script>

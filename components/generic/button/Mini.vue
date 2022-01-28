@@ -36,7 +36,7 @@
   </button>
 </template>
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from "@nuxtjs/composition-api";
 
 export default defineComponent({
   props: {
@@ -48,7 +48,7 @@ export default defineComponent({
     colour: {
       type: String,
       required: false,
-      default: 'white',
+      default: "white",
     },
     tooltip: {
       type: String,
@@ -71,7 +71,7 @@ export default defineComponent({
       default: null,
     },
   },
-})
+});
 </script>
 
 <style lang="postcss">
@@ -101,12 +101,12 @@ export default defineComponent({
 }
 .btn-mini-base {
   min-height: 2rem;
-  @apply focus:outline-none
-      items-center
+  @apply items-center
       px-2
       py-1
       text-sm
       font-medium
-      shadow-sm focus:ring-1;
+      shadow-sm
+      focus:outline-none focus:ring-1;
 }
 </style>

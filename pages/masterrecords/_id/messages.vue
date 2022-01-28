@@ -41,17 +41,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
-import { nowString } from '@/helpers/utils/dateUtils'
-import usePagination from '~/helpers/query/usePagination'
-import useSortBy from '~/helpers/query/useSortBy'
-import useDateRange from '~/helpers/query/useDateRange'
+import { nowString } from "@/helpers/utils/dateUtils";
+import usePagination from "~/helpers/query/usePagination";
+import useSortBy from "~/helpers/query/useSortBy";
+import useDateRange from "~/helpers/query/useDateRange";
 
-import fetchMasterRecords from '@/helpers/fetch/fetchMasterRecords'
+import fetchMasterRecords from "@/helpers/fetch/fetchMasterRecords";
 
-import { Message } from '~/interfaces/messages'
-import { MasterRecord, MasterRecordStatistics } from '~/interfaces/masterrecord'
+import { Message } from "~/interfaces/messages";
+import { MasterRecord, MasterRecordStatistics } from "~/interfaces/masterrecord";
 
 export default defineComponent({
   props: {
@@ -66,16 +66,16 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { page, total, size } = usePagination()
-    const { makeDateRange } = useDateRange()
-    const { orderAscending, orderBy, toggleOrder } = useSortBy()
-    const { fetchMasterRecordMessagesPage } = fetchMasterRecords()
+    const { page, total, size } = usePagination();
+    const { makeDateRange } = useDateRange();
+    const { orderAscending, orderBy, toggleOrder } = useSortBy();
+    const { fetchMasterRecordMessagesPage } = fetchMasterRecords();
 
     // Set initial date dateRange
-    const dateRange = makeDateRange(nowString(-365), nowString(0), true)
+    const dateRange = makeDateRange(nowString(-365), nowString(0), true);
 
     // Data refs
-    const messages = ref<Message[]>()
+    const messages = ref<Message[]>();
 
     // Data fetching
 
@@ -88,17 +88,17 @@ export default defineComponent({
         [], // Status filter
         dateRange.value.start,
         dateRange.value.end
-      )
+      );
 
-      messages.value = messagesPage.items
-      total.value = messagesPage.total
-      page.value = messagesPage.page
-      size.value = messagesPage.size
+      messages.value = messagesPage.items;
+      total.value = messagesPage.total;
+      page.value = messagesPage.page;
+      size.value = messagesPage.size;
     }
 
     onMounted(() => {
-      fetchMessages()
-    })
+      fetchMessages();
+    });
 
     watch(
       [
@@ -107,9 +107,9 @@ export default defineComponent({
         () => JSON.stringify(dateRange), // Stringify to watch for actual value changes
       ],
       () => {
-        fetchMessages()
+        fetchMessages();
       }
-    )
+    );
 
     return {
       page,
@@ -120,7 +120,7 @@ export default defineComponent({
       orderAscending,
       orderBy,
       toggleOrder,
-    }
+    };
   },
-})
+});
 </script>

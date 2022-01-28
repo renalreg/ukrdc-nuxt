@@ -9,7 +9,7 @@
   >
     <div
       v-show="show"
-      class="focus:outline-none absolute w-56 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5"
+      class="absolute w-56 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
       role="menu"
       aria-orientation="vertical"
       aria-labelledby="option-menu-button"
@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from "@nuxtjs/composition-api";
 
 export default defineComponent({
   props: {
@@ -33,5 +33,5 @@ export default defineComponent({
       default: false,
     },
   },
-})
+});
 </script>

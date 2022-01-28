@@ -33,9 +33,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
-import { formatDate } from '@/helpers/utils/dateUtils'
-import { AuditEvent } from '@/interfaces/audit'
+import { defineComponent, ref } from "@nuxtjs/composition-api";
+import { formatDate } from "@/helpers/utils/dateUtils";
+import { AuditEvent } from "@/interfaces/audit";
 
 export default defineComponent({
   props: {
@@ -55,8 +55,8 @@ export default defineComponent({
     },
   },
   setup(_) {
-    const showChildren = ref(false)
-    return { showChildren, formatDate }
+    const showChildren = ref(false);
+    return { showChildren, formatDate };
   },
-})
+});
 </script>
