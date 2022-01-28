@@ -21,10 +21,10 @@ jobs:
         run: yarn install
 
       - name: ESLint
-        run: yarn lint
+        run: yarn lint:check
 
       - name: Prettier
-        run: yarn prettier --check
+        run: yarn prettier:check
 
   publish:
     runs-on: ubuntu-latest

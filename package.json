@@ -8,8 +8,10 @@
     "start": "nuxt start",
     "eslint": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "prettier": "prettier .",
-    "lint:check": "yarn eslint && yarn prettier --check",
-    "lint:fix": "yarn eslint --fix && yarn prettier --write"
+    "eslint:check": "yarn eslint",
+    "eslint:fix": "yarn eslint --fix",
+    "prettier:check": "yarn prettier --check",
+    "prettier:fix": "yarn prettier --write"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.1",

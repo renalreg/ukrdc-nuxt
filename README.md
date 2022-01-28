@@ -35,13 +35,15 @@ ESLint and Prettier should be handled separately.
 To check your code without changing anything, run:
 
 ```
-yarn lint:check
+yarn eslint:check
+yarn prettier:check
 ```
 
 To fix the issues, run:
 
 ```
-yarn lint:fix
+yarn eslint:fix
+yarn prettier:fix
 ```
 
 ### (No) Server-side rendering
