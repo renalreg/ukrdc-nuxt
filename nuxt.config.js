@@ -10,17 +10,18 @@ export default {
     htmlAttrs: {
       lang: 'en',
     },
-    meta: [{
-        charset: 'utf-8'
+    meta: [
+      {
+        charset: 'utf-8',
       },
       {
         name: 'viewport',
-        content: 'width=device-width, initial-scale=1'
+        content: 'width=device-width, initial-scale=1',
       },
       {
         hid: 'description',
         name: 'description',
-        content: ''
+        content: '',
       },
     ],
   },
@@ -63,17 +64,17 @@ export default {
   sentry: {
     dsn: process.env.SENTRY_DSN,
     // Skip publish if no Sentry auth token is found at build-time
-    publishRelease: process.env.SENTRY_AUTH_TOKEN ?
-      {
-        authToken: process.env.SENTRY_AUTH_TOKEN,
-        org: process.env.SENTRY_ORG,
-        project: process.env.SENTRY_PROJECT,
-        // Attach commits to the release (requires that the build triggered within a git repository).
-        setCommits: {
-          auto: true,
-        },
-      } :
-      false,
+    publishRelease: process.env.SENTRY_AUTH_TOKEN
+      ? {
+          authToken: process.env.SENTRY_AUTH_TOKEN,
+          org: process.env.SENTRY_ORG,
+          project: process.env.SENTRY_PROJECT,
+          // Attach commits to the release (requires that the build triggered within a git repository).
+          setCommits: {
+            auto: true,
+          },
+        }
+      : false,
     sourceMapStyle: 'hidden-source-map',
     tracing: {
       tracesSampleRate: 1.0,

@@ -10,7 +10,7 @@ export interface UKRDCClaims {
   'org.ukrdc.permissions': string[]
 }
 
-export interface UKRDCJWTObject extends JWTObject{
+export interface UKRDCJWTObject extends JWTObject {
   payload: UserClaims<UKRDCClaims>
 }
 
@@ -48,7 +48,7 @@ export default function () {
   function getAccessToken(): UKRDCJWTObject | null {
     if (signedIn()) {
       const rawAccessToken = oktaAuth.getAccessToken()
-      return rawAccessToken ? oktaAuth.token.decode(rawAccessToken) as UKRDCJWTObject : null
+      return rawAccessToken ? (oktaAuth.token.decode(rawAccessToken) as UKRDCJWTObject) : null
     } else {
       return null
     }
