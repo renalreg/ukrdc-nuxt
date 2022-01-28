@@ -21,12 +21,5 @@ module.exports = {
       "6xl": "4rem",
     },
   },
-  variants: {
-    variants: {
-      extend: {
-        opacity: ["disabled"],
-      },
-    },
-  },
   plugins: [require("@tailwindcss/forms"), require("@tailwindcss/line-clamp")],
 };
