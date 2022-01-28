@@ -25,50 +25,50 @@ SOFTWARE.
 */
 
 // eslint-disable-next-line import/named
-import Vue, { VNode } from 'vue'
-import { DirectiveBinding } from 'vue/types/options'
+import Vue, { VNode } from "vue";
+import { DirectiveBinding } from "vue/types/options";
 
-const clickEventType = document.ontouchstart !== null ? 'click' : 'touchstart'
+const clickEventType = document.ontouchstart !== null ? "click" : "touchstart";
 
 interface ClickAwayElement extends HTMLElement {
   // eslint-disable-next-line camelcase
-  __vue_click_away__?: (event: Event) => void
+  __vue_click_away__?: (event: Event) => void;
 }
 
 const onMounted = (el: ClickAwayElement, binding: DirectiveBinding, vnode: VNode) => {
   // Remove any existing clickaway callbacks
-  onUnmounted(el)
+  onUnmounted(el);
 
-  const vm = vnode.context
-  const callback = binding.value
+  const vm = vnode.context;
+  const callback = binding.value;
 
-  let nextTick = false
+  let nextTick = false;
   setTimeout(function () {
-    nextTick = true
-  }, 0)
+    nextTick = true;
+  }, 0);
 
   el.__vue_click_away__ = (event: Event) => {
-    if ((!el || !el.contains(event.target as Node)) && callback && nextTick && typeof callback === 'function') {
-      return callback.call(vm, event)
+    if ((!el || !el.contains(event.target as Node)) && callback && nextTick && typeof callback === "function") {
+      return callback.call(vm, event);
     }
-  }
+  };
 
-  document.addEventListener(clickEventType, el.__vue_click_away__, false)
-}
+  document.addEventListener(clickEventType, el.__vue_click_away__, false);
+};
 
 const onUnmounted = (el: ClickAwayElement) => {
   if (el.__vue_click_away__) {
-    document.removeEventListener(clickEventType, el.__vue_click_away__, false)
-    delete el.__vue_click_away__
+    document.removeEventListener(clickEventType, el.__vue_click_away__, false);
+    delete el.__vue_click_away__;
   }
-}
+};
 
 const onUpdated = (el: ClickAwayElement, binding: DirectiveBinding, vnode: VNode) => {
   if (binding.value === binding.oldValue) {
-    return
+    return;
   }
-  onMounted(el, binding, vnode)
-}
+  onMounted(el, binding, vnode);
+};
 
 const directive = {
   inserted: onMounted,
@@ -78,6 +78,6 @@ const directive = {
   // mounted: onMounted,
   // updated: onUpdated,
   // unmounted: onUnmounted,
-}
+};
 
-Vue.directive('click-away', directive)
+Vue.directive("click-away", directive);

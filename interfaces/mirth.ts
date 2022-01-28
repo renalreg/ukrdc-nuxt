@@ -1,85 +1,85 @@
 interface ChannelMessageLinks {
-  self: string
+  self: string;
 }
 
 export interface ConnectorMessageData {
-  channelId: string
-  content: string
-  contentType: string
-  dataType: string
-  encrypted: boolean
-  messageId: string
-  messageDataId: string
+  channelId: string;
+  content: string;
+  contentType: string;
+  dataType: string;
+  encrypted: boolean;
+  messageId: string;
+  messageDataId: string;
 }
 
 export interface MetaDataMap {
-  [key: string]: string
+  [key: string]: string;
 }
 
 export interface ConnectorMessage {
-  chainId: number
-  orderId: number
-  serverId: string
-  channelId: string
-  channelName: string
-  connectorName: string
+  chainId: number;
+  orderId: number;
+  serverId: string;
+  channelId: string;
+  channelName: string;
+  connectorName: string;
 
-  messageId: string
-  errorCode: number
-  sendAttempts: number
+  messageId: string;
+  errorCode: number;
+  sendAttempts: number;
 
-  raw: ConnectorMessageData
-  encoded: ConnectorMessageData
-  sent: ConnectorMessageData
-  response: ConnectorMessageData
+  raw: ConnectorMessageData;
+  encoded: ConnectorMessageData;
+  sent: ConnectorMessageData;
+  response: ConnectorMessageData;
 
-  metaDataMap: MetaDataMap
+  metaDataMap: MetaDataMap;
 }
 
 export interface connectorMessagesMap {
-  [key: number]: ConnectorMessage
+  [key: number]: ConnectorMessage;
 }
 
 export interface ChannelMessage {
-  messageId: number
-  serverId: string
-  channelId: string
-  processed: boolean
+  messageId: number;
+  serverId: string;
+  channelId: string;
+  processed: boolean;
 
-  connectorMessages: { [key: number]: ConnectorMessage }
+  connectorMessages: { [key: number]: ConnectorMessage };
 
-  links: ChannelMessageLinks
+  links: ChannelMessageLinks;
 }
 
 export interface MirthMessageResponse {
-  status: string
-  message: string
+  status: string;
+  message: string;
 }
 
 export interface ChannelStatistics {
-  received: number
-  sent: number
-  error: number
-  filtered: number
-  queued: number
+  received: number;
+  sent: number;
+  error: number;
+  filtered: number;
+  queued: number;
 }
 
 export interface Channel {
-  id: string
-  name: string
-  description: string
-  revision: string
-  statistics: ChannelStatistics
+  id: string;
+  name: string;
+  description: string;
+  revision: string;
+  statistics: ChannelStatistics;
 }
 
 export interface ChannelGroup {
-  id: string
-  name: string
-  description: string
-  revision: string
-  channels: Channel[]
+  id: string;
+  name: string;
+  description: string;
+  revision: string;
+  channels: Channel[];
 }
 
 export interface ChainMap {
-  [key: number]: ConnectorMessage[]
+  [key: number]: ConnectorMessage[];
 }

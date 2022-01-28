@@ -37,36 +37,36 @@ by the same event, which can be resolved without the others.
 
 */
 
-import { WorkItem, WorkItemExtended } from '~/interfaces/workitem'
+import { WorkItem, WorkItemExtended } from "~/interfaces/workitem";
 
 export function workItemIsOpen(item: WorkItem): Boolean {
-  return item?.status !== 3
+  return item?.status !== 3;
 }
 
 export function workItemIsUKRDC(item: WorkItem) {
-  return item?.type === 3 || item?.type === 6
+  return item?.type === 3 || item?.type === 6;
 }
 
 export function workItemIsMergable(item: WorkItemExtended): Boolean {
   // Check if a workitem can be merged (incoming and destination UKRDC records)
-  return workItemIsUKRDC(item) && item.incoming.masterRecords.length > 0 && !!item.destination.masterRecord
+  return workItemIsUKRDC(item) && item.incoming.masterRecords.length > 0 && !!item.destination.masterRecord;
 }
 
 export function workItemIsSecondary(item: WorkItemExtended, related: WorkItem[]) {
   // Check if a workitem should be treated as secondary to others in the collection
   if (workItemIsMergable(item)) {
     // Mergable workitems are always "primary"
-    return false
+    return false;
   }
   // For each related Work Item in the collection
   for (const relatedItem of related) {
     // If the related Work Item is a mergable UKRDC Work Item
     if (workItemIsUKRDC(relatedItem) && workItemIsOpen(relatedItem)) {
-      return true
+      return true;
     }
   }
   // If no items in the collection need to be resolved, this is a "primary" workitem
-  return false
+  return false;
 }
 
 export function collectionIsUnresolved(related: WorkItem[]) {
@@ -74,17 +74,17 @@ export function collectionIsUnresolved(related: WorkItem[]) {
   for (const relatedItem of related) {
     // If the related Work Item is a mergable UKRDC Work Item
     if (workItemIsOpen(relatedItem)) {
-      return true
+      return true;
     }
   }
-  return false
+  return false;
 }
 
 export function formatAttributeValue(attributeString: String) {
-  const splitString = attributeString.split(':')
+  const splitString = attributeString.split(":");
   if (splitString.length > 1) {
-    return `${attributeString.split(':')[1]} → ${attributeString.split(':')[0]}`
+    return `${attributeString.split(":")[1]} → ${attributeString.split(":")[0]}`;
   } else {
-    return attributeString.split(':')[0]
+    return attributeString.split(":")[0];
   }
 }

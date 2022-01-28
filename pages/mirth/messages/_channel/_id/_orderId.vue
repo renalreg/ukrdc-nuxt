@@ -69,16 +69,16 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, useRoute, watch } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref, useRoute, watch } from "@nuxtjs/composition-api";
 
-import { ChannelMessage, ConnectorMessage, ConnectorMessageData, MetaDataMap } from '@/interfaces/mirth'
-import { connectorMessageError } from '~/helpers/utils/mirthUtils'
+import { ChannelMessage, ConnectorMessage, ConnectorMessageData, MetaDataMap } from "@/interfaces/mirth";
+import { connectorMessageError } from "~/helpers/utils/mirthUtils";
 
 interface ConnectorMessageDataTabs {
-  raw: ConnectorMessageData
-  encoded: ConnectorMessageData
-  sent: ConnectorMessageData
-  response: ConnectorMessageData
+  raw: ConnectorMessageData;
+  encoded: ConnectorMessageData;
+  sent: ConnectorMessageData;
+  response: ConnectorMessageData;
 }
 
 export default defineComponent({
@@ -89,57 +89,57 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const route = useRoute()
+    const route = useRoute();
 
     // Data refs
     const connectorMessage = computed(() => {
-      const orderId = parseInt(route.value.params.orderId)
-      return props.message.connectorMessages[orderId] as ConnectorMessage
-    })
-    const formatconnectorMessage = ref(true)
+      const orderId = parseInt(route.value.params.orderId);
+      return props.message.connectorMessages[orderId] as ConnectorMessage;
+    });
+    const formatconnectorMessage = ref(true);
 
     // Manage viewer tabs
-    const currentTab = ref('metadata')
+    const currentTab = ref("metadata");
 
     const tabs = computed(() => {
-      return ['metadata'].concat(Object.keys(availableconnectorMessageData.value))
-    })
+      return ["metadata"].concat(Object.keys(availableconnectorMessageData.value));
+    });
 
     watch(connectorMessage, () => {
-      currentTab.value = tabs.value[0]
-    })
+      currentTab.value = tabs.value[0];
+    });
 
     // Handle connectorMessage and metadata
     const availableconnectorMessageData = computed<ConnectorMessageDataTabs>(() => {
-      const tabs = {} as ConnectorMessageDataTabs
+      const tabs = {} as ConnectorMessageDataTabs;
       if (connectorMessage.value) {
         if (connectorMessage.value.raw !== null) {
-          tabs.raw = connectorMessage.value.raw
+          tabs.raw = connectorMessage.value.raw;
         }
         if (connectorMessage.value.encoded !== null) {
-          tabs.encoded = connectorMessage.value.encoded
+          tabs.encoded = connectorMessage.value.encoded;
         }
         if (connectorMessage.value.sent !== null) {
-          tabs.sent = connectorMessage.value.sent
+          tabs.sent = connectorMessage.value.sent;
         }
         if (connectorMessage.value.response !== null) {
-          tabs.response = connectorMessage.value.response
+          tabs.response = connectorMessage.value.response;
         }
       }
-      return tabs
-    })
+      return tabs;
+    });
 
     const nonNullMetadata = computed<MetaDataMap>(() => {
       if (connectorMessage.value?.metaDataMap) {
-        return Object.fromEntries(Object.entries(connectorMessage.value.metaDataMap).filter(([_, v]) => v != null))
+        return Object.fromEntries(Object.entries(connectorMessage.value.metaDataMap).filter(([_, v]) => v != null));
       } else {
-        return {}
+        return {};
       }
-    })
+    });
 
     const errorMessage = computed(() => {
-      return connectorMessage.value ? connectorMessageError(connectorMessage.value) : null
-    })
+      return connectorMessage.value ? connectorMessageError(connectorMessage.value) : null;
+    });
 
     return {
       connectorMessage,
@@ -149,10 +149,10 @@ export default defineComponent({
       availableconnectorMessageData,
       formatconnectorMessage,
       errorMessage,
-    }
+    };
   },
   head: {
-    title: 'Mirth Message',
+    title: "Mirth Message",
   },
-})
+});
 </script>

@@ -1,18 +1,18 @@
-import { MasterRecord } from './masterrecord'
+import { MasterRecord } from "./masterrecord";
 
 interface MultipleUKRDCIDsGroupItem {
-  lastUpdated: string | null
-  masterRecord: MasterRecord
+  lastUpdated: string | null;
+  masterRecord: MasterRecord;
 }
 
 export interface MultipleUKRDCIDsGroup {
-  groupId: number | null
-  records: MultipleUKRDCIDsGroupItem[]
+  groupId: number | null;
+  records: MultipleUKRDCIDsGroupItem[];
 }
 
 export interface MultipleUKRDCIDsPage {
-  items: MultipleUKRDCIDsGroup[]
-  total: number
-  page: number
-  size: number
+  items: MultipleUKRDCIDsGroup[];
+  total: number;
+  page: number;
+  size: number;
 }

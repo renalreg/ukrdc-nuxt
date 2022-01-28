@@ -42,7 +42,7 @@
       <div v-for="(questions, group) in groupedQuestions" :key="group">
         <div class="mb-6 sm:rounded-lg">
           <h3 class="mb-4 text-lg font-medium leading-6 text-gray-900">
-            {{ group !== 'null' ? group : 'Ungrouped' }}
+            {{ group !== "null" ? group : "Ungrouped" }}
           </h3>
           <div class="border-t border-gray-200">
             <GenericCardDl>
@@ -68,47 +68,47 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
 
-import { formatDate } from '@/helpers/utils/dateUtils'
+import { formatDate } from "@/helpers/utils/dateUtils";
 
-import { Survey, SurveyQuestion } from '@/interfaces/survey'
-import { modalInterface } from '@/interfaces/modal'
+import { Survey, SurveyQuestion } from "@/interfaces/survey";
+import { modalInterface } from "@/interfaces/modal";
 
 interface GroupedQuestions {
-  [key: string]: SurveyQuestion[]
+  [key: string]: SurveyQuestion[];
 }
 
 export default defineComponent({
   setup() {
-    const survey = ref({} as Survey)
+    const survey = ref({} as Survey);
     const availableToOpen = computed(() => {
-      return !(Object.keys(survey.value).length === 0)
-    })
+      return !(Object.keys(survey.value).length === 0);
+    });
     const groupedQuestions = computed(() => {
       if (!survey.value.questions) {
-        return {}
+        return {};
       }
-      const groups = {} as GroupedQuestions
+      const groups = {} as GroupedQuestions;
       for (const question of survey.value.questions) {
         if (!(question.questionGroup in groups)) {
-          groups[question.questionGroup] = []
+          groups[question.questionGroup] = [];
         }
-        groups[question.questionGroup].push(question)
+        groups[question.questionGroup].push(question);
       }
-      return groups
-    })
+      return groups;
+    });
 
-    const surveyViewerModal = ref<modalInterface>()
+    const surveyViewerModal = ref<modalInterface>();
     function hide(): void {
-      surveyViewerModal.value?.hide()
+      surveyViewerModal.value?.hide();
     }
     function toggle(): void {
-      surveyViewerModal.value?.toggle()
+      surveyViewerModal.value?.toggle();
     }
     function show(surveyToShow: Survey): void {
-      survey.value = surveyToShow
-      surveyViewerModal.value?.show()
+      survey.value = surveyToShow;
+      surveyViewerModal.value?.show();
     }
 
     return {
@@ -120,9 +120,9 @@ export default defineComponent({
       toggle,
       show,
       formatDate,
-    }
+    };
   },
-})
+});
 </script>
 
 <style scoped>

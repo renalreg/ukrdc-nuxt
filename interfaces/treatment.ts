@@ -1,16 +1,16 @@
 export interface Treatment {
-  id: string
+  id: string;
 
-  fromTime: string
-  toTime: string
+  fromTime: string;
+  toTime: string;
 
-  admitReasonCode: string
-  admitReasonCodeStd: string
-  admitReasonDesc: string
+  admitReasonCode: string;
+  admitReasonCodeStd: string;
+  admitReasonDesc: string;
 
-  dischargeReasonCode: string
-  dischargeReasonCodeStd: string
-  dischargeReasonDesc: string
+  dischargeReasonCode: string;
+  dischargeReasonCodeStd: string;
+  dischargeReasonDesc: string;
 
-  healthCareFacilityCode: string
+  healthCareFacilityCode: string;
 }

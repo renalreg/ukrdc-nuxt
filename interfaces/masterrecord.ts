@@ -1,33 +1,33 @@
 interface MasterRecordLinks {
-  self: string
-  latestMessage: string
-  statistics: string
-  related: string
-  messages: string
-  errors: string
-  linkrecords: string
-  persons: string
-  workitems: string
-  patientrecords: string
-  audit: string
+  self: string;
+  latestMessage: string;
+  statistics: string;
+  related: string;
+  messages: string;
+  errors: string;
+  linkrecords: string;
+  persons: string;
+  workitems: string;
+  patientrecords: string;
+  audit: string;
 }
 
 export interface MasterRecordStatistics {
-  workitems: number
-  errors: number
-  ukrdcids: number
+  workitems: number;
+  errors: number;
+  ukrdcids: number;
 }
 
 export interface MasterRecord {
-  id: number
-  nationalid: string
-  nationalidType: string
-  lastUpdated: string
-  dateOfBirth: string
-  gender: string
-  givenname: string
-  surname: string
-  status: number
-  effectiveDate: string
-  links: MasterRecordLinks
+  id: number;
+  nationalid: string;
+  nationalidType: string;
+  lastUpdated: string;
+  dateOfBirth: string;
+  gender: string;
+  givenname: string;
+  surname: string;
+  status: number;
+  effectiveDate: string;
+  links: MasterRecordLinks;
 }

@@ -69,7 +69,7 @@ Table of facilities and their basic statistics
           <GenericTableCell>
             <div class="flex items-center">
               <IconCircle class="inline" :class="facility.dataFlow.pkbOut ? 'text-green-600' : 'text-red-700'" />
-              <p>{{ facility.dataFlow.pkbOut ? 'Yes' : 'No' }}</p>
+              <p>{{ facility.dataFlow.pkbOut ? "Yes" : "No" }}</p>
             </div>
           </GenericTableCell>
         </tr>
@@ -79,12 +79,12 @@ Table of facilities and their basic statistics
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
-import fetchFacilities from '~/helpers/fetch/fetchFacilities'
-import { Facility } from '~/interfaces/facilities'
+import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
+import fetchFacilities from "~/helpers/fetch/fetchFacilities";
+import { Facility } from "~/interfaces/facilities";
 
 interface IsAscending {
-  [key: string]: boolean | null
+  [key: string]: boolean | null;
 }
 
 export default defineComponent({
@@ -97,17 +97,17 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { fetchFacilitiesList } = fetchFacilities()
+    const { fetchFacilitiesList } = fetchFacilities();
 
     // Facility list and filters
 
-    const facilities = ref<Facility[]>()
-    const searchboxString = ref('')
+    const facilities = ref<Facility[]>();
+    const searchboxString = ref("");
 
-    const filterByPkbOut = ref(false)
+    const filterByPkbOut = ref(false);
 
     const filteredFacilities = computed(() => {
-      if (!facilities.value) return []
+      if (!facilities.value) return [];
       return (
         facilities.value
           // Filter by search term
@@ -118,37 +118,37 @@ export default defineComponent({
           )
           // Filter by additional filters, such as PkbOut
           .filter((option) => (filterByPkbOut.value ? option.dataFlow.pkbOut : true))
-      )
-    })
+      );
+    });
 
     // Sorting
 
-    const sortBy = ref<string | null>(null)
+    const sortBy = ref<string | null>(null);
 
     // Set initial order for id sorting. Other columns left as default
     const isAscending = ref<IsAscending>({
       id: true,
-    })
+    });
 
     async function fetchTable() {
-      const currentisAscending: null | boolean = isAscending.value[sortBy.value || 'default'] || null
-      const currentOrderBy: string = currentisAscending ? 'asc' : 'desc'
-      facilities.value = await fetchFacilitiesList(sortBy.value, currentOrderBy, props.includeEmpty)
+      const currentisAscending: null | boolean = isAscending.value[sortBy.value || "default"] || null;
+      const currentOrderBy: string = currentisAscending ? "asc" : "desc";
+      facilities.value = await fetchFacilitiesList(sortBy.value, currentOrderBy, props.includeEmpty);
     }
 
     async function toggleSort(key: string) {
       // Only reverse order if we're sorting by this key already
       if (sortBy.value === key) {
         // !null is true, so this should work always
-        isAscending.value[key] = !isAscending.value[key]
+        isAscending.value[key] = !isAscending.value[key];
       }
-      sortBy.value = key
-      await fetchTable()
+      sortBy.value = key;
+      await fetchTable();
     }
 
     onMounted(async () => {
-      await fetchTable()
-    })
+      await fetchTable();
+    });
 
     return {
       facilities,
@@ -158,7 +158,7 @@ export default defineComponent({
       isAscending,
       sortBy,
       toggleSort,
-    }
+    };
   },
-})
+});
 </script>

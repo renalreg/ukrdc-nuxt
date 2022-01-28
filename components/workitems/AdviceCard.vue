@@ -70,15 +70,15 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, useRoute } from '@nuxtjs/composition-api'
-import { WorkItem, WorkItemExtended } from '@/interfaces/workitem'
+import { computed, defineComponent, useRoute } from "@nuxtjs/composition-api";
+import { WorkItem, WorkItemExtended } from "@/interfaces/workitem";
 import {
   collectionIsUnresolved,
   workItemIsMergable,
   workItemIsOpen,
   workItemIsSecondary,
   workItemIsUKRDC,
-} from '@/helpers/utils/workItemUtils'
+} from "@/helpers/utils/workItemUtils";
 
 export default defineComponent({
   props: {
@@ -95,13 +95,13 @@ export default defineComponent({
   },
   setup(props) {
     const workItemAdvices = computed(() => {
-      const route = useRoute()
+      const route = useRoute();
 
-      const advices: number[] = []
+      const advices: number[] = [];
 
       // If we have no Work Item record, return early
       if (!props.item) {
-        return []
+        return [];
       }
 
       // If workitem is closed
@@ -109,47 +109,47 @@ export default defineComponent({
         // If items in the collection are still open
         if (collectionIsUnresolved(props.related)) {
           // Advise to close related items
-          advices.push(11)
+          advices.push(11);
         } else {
           // Advise no further action
-          advices.push(10)
+          advices.push(10);
         }
         // If item is an open type 9
       } else if (props.item.type === 9) {
         // Advise link to type 9 documentation
-        advices.push(9)
+        advices.push(9);
         // If item is an open type 3 or 6
       } else if (workItemIsUKRDC(props.item)) {
         // If the workitem has records to merge
         if (workItemIsMergable(props.item)) {
           // Advise to check/update demographics, then merge and close
-          advices.push(5)
+          advices.push(5);
           // If the workitem has no records to merge, but was just merged
-        } else if (route.value.query.justMerged === 'true') {
+        } else if (route.value.query.justMerged === "true") {
           // Advise to close the workitem
-          advices.push(6)
+          advices.push(6);
           // If the workitem has no destination record, but was not just merged
         } else if (!props.item.masterRecord) {
           // Advise that the records may have been previously deleted or merged
-          advices.push(12)
+          advices.push(12);
           // If the workitem has no records to merge, but was NOT just merged
         } else {
           // Advise that merge may have been completed with incorrect data
-          advices.push(7)
+          advices.push(7);
         }
         // If item is an open type 4 or 7, and is secondary to others in the collection
       } else if (workItemIsSecondary(props.item, props.related)) {
         // Advise to close related UKRDC items first
-        advices.push(2)
+        advices.push(2);
       } else {
-        advices.push(4)
+        advices.push(4);
       }
 
-      return advices
-    })
-    return { workItemAdvices }
+      return advices;
+    });
+    return { workItemAdvices };
   },
-})
+});
 </script>
 
 <style lang="postcss">

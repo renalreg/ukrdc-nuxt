@@ -131,7 +131,7 @@ page (for multi-facility users), and the homepage (for single-facility users).
             </TextDt>
             <TextDd>
               <div v-if="facility && facility.dataFlow.pkbMessageExclusions.length > 0" class="flex items-center gap-2">
-                <div>{{ facility.dataFlow.pkbMessageExclusions.join(', ') }}</div>
+                <div>{{ facility.dataFlow.pkbMessageExclusions.join(", ") }}</div>
               </div>
               <div v-else>None</div>
             </TextDd>
@@ -183,18 +183,18 @@ page (for multi-facility users), and the homepage (for single-facility users).
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useRouter, watch } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref, useRouter, watch } from "@nuxtjs/composition-api";
 
-import { formatDate } from '@/helpers/utils/dateUtils'
+import { formatDate } from "@/helpers/utils/dateUtils";
 
-import { Facility } from '~/interfaces/facilities'
-import { HistoryItem } from '~/interfaces/common'
+import { Facility } from "~/interfaces/facilities";
+import { HistoryItem } from "~/interfaces/common";
 
-import fetchFacilities from '~/helpers/fetch/fetchFacilities'
-import { Message } from '~/interfaces/messages'
-import { HistoryPointEvent } from '~/interfaces/charts'
+import fetchFacilities from "~/helpers/fetch/fetchFacilities";
+import { Message } from "~/interfaces/messages";
+import { HistoryPointEvent } from "~/interfaces/charts";
 
-import { getPointDateRange } from '@/helpers/utils/chartUtils'
+import { getPointDateRange } from "@/helpers/utils/chartUtils";
 
 export default defineComponent({
   props: {
@@ -204,39 +204,39 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const router = useRouter()
-    const { fetchFacility, fetchFacilityErrorsHistory, fetchFacilityPatientsLatestErrorsPage } = fetchFacilities()
+    const router = useRouter();
+    const { fetchFacility, fetchFacilityErrorsHistory, fetchFacilityPatientsLatestErrorsPage } = fetchFacilities();
 
-    const facility = ref<Facility>()
-    const facilityErrorsHistory = ref<HistoryItem[]>()
+    const facility = ref<Facility>();
+    const facilityErrorsHistory = ref<HistoryItem[]>();
 
     // Computed string for statistics last updated time
     const lastUpdatedString = computed(() => {
       if (!facility.value) {
-        return ''
+        return "";
       }
-      return formatDate(facility.value.statistics.lastUpdated, true)
-    })
+      return formatDate(facility.value.statistics.lastUpdated, true);
+    });
 
     // Failing NIs data
-    const errorMessages = ref([] as Message[])
-    const errorMessagesPage = ref(1)
-    const errorMessagesSize = ref(5)
-    const errorMessagesTotal = ref(0)
+    const errorMessages = ref([] as Message[]);
+    const errorMessagesPage = ref(1);
+    const errorMessagesSize = ref(5);
+    const errorMessagesTotal = ref(0);
 
     // History plot click handler
 
     function historyPointClickHandler(point: HistoryPointEvent) {
-      const pointRange = getPointDateRange(point)
+      const pointRange = getPointDateRange(point);
       router.push({
-        path: '/messages',
+        path: "/messages",
         query: {
           since: pointRange.since,
           until: pointRange.until,
           facility: props.code,
-          status: ['ERROR', 'RESOLVED'],
+          status: ["ERROR", "RESOLVED"],
         },
-      })
+      });
     }
 
     // Data fetching
@@ -248,32 +248,32 @@ export default defineComponent({
           errorMessagesPage.value,
           errorMessagesSize.value,
           null
-        )
+        );
         // Set related errors
-        errorMessages.value = errorsPage.items
-        errorMessagesPage.value = errorsPage.page
-        errorMessagesSize.value = errorsPage.size
-        errorMessagesTotal.value = errorsPage.total
+        errorMessages.value = errorsPage.items;
+        errorMessagesPage.value = errorsPage.page;
+        errorMessagesSize.value = errorsPage.size;
+        errorMessagesTotal.value = errorsPage.total;
       }
     }
 
     async function updateErrorsHistory(): Promise<void> {
       if (facility.value) {
-        facilityErrorsHistory.value = await fetchFacilityErrorsHistory(facility.value)
+        facilityErrorsHistory.value = await fetchFacilityErrorsHistory(facility.value);
       }
     }
 
     onMounted(() => {
       fetchFacility(props.code).then((response) => {
-        facility.value = response
-        updateErrorMessages()
-        updateErrorsHistory()
-      })
-    })
+        facility.value = response;
+        updateErrorMessages();
+        updateErrorsHistory();
+      });
+    });
 
     watch(errorMessagesPage, () => {
-      updateErrorMessages()
-    })
+      updateErrorMessages();
+    });
 
     return {
       lastUpdatedString,
@@ -284,7 +284,7 @@ export default defineComponent({
       errorMessagesSize,
       errorMessagesTotal,
       historyPointClickHandler,
-    }
+    };
   },
-})
+});
 </script>

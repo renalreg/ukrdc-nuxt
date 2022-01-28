@@ -89,7 +89,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, nextTick, onMounted, ref } from '@nuxtjs/composition-api'
+import { computed, defineComponent, nextTick, onMounted, ref } from "@nuxtjs/composition-api";
 
 export default defineComponent({
   props: {
@@ -110,7 +110,7 @@ export default defineComponent({
     hint: {
       type: String,
       required: false,
-      default: 'Select an item...',
+      default: "Select an item...",
     },
     mountOpened: {
       type: Boolean,
@@ -125,90 +125,90 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const search = ref('')
-    const isOpen = ref(false)
-    const highlightedIndex = ref(0)
+    const search = ref("");
+    const isOpen = ref(false);
+    const highlightedIndex = ref(0);
 
-    const searchInput = ref()
-    const mainInput = ref()
-    const optionElement = ref()
+    const searchInput = ref();
+    const mainInput = ref();
+    const optionElement = ref();
 
     const filteredOptions = computed(() => {
       if (!props.labels) {
-        return props.options.filter((option) => option.toLowerCase().startsWith(search.value.toLowerCase()))
+        return props.options.filter((option) => option.toLowerCase().startsWith(search.value.toLowerCase()));
       }
       return props.options.filter(
         (option, index) =>
           option.toLowerCase().startsWith(search.value.toLowerCase()) ||
           props.labels[index]?.toLowerCase().startsWith(search.value.toLowerCase())
-      )
-    })
+      );
+    });
 
     function open() {
-      isOpen.value = true
+      isOpen.value = true;
       nextTick(() => {
-        searchInput.value.focus()
-      })
+        searchInput.value.focus();
+      });
     }
 
     function close() {
       if (props.closable) {
-        isOpen.value = false
+        isOpen.value = false;
         nextTick(() => {
-          mainInput.value.focus()
-        })
+          mainInput.value.focus();
+        });
       }
     }
 
     function cancel() {
-      close()
+      close();
     }
 
     function commitSelection() {
-      close()
-      emit('input', filteredOptions.value[highlightedIndex.value])
+      close();
+      emit("input", filteredOptions.value[highlightedIndex.value]);
     }
 
     function select(index: number) {
-      highlightedIndex.value = index
-      commitSelection()
+      highlightedIndex.value = index;
+      commitSelection();
     }
 
     function clear() {
-      highlightedIndex.value = 0
-      emit('input', null)
-      close()
+      highlightedIndex.value = 0;
+      emit("input", null);
+      close();
     }
 
     function highlight(index: number) {
-      open()
-      highlightedIndex.value = index
-      optionElement.value[index].scrollIntoView({ block: 'nearest' })
+      open();
+      highlightedIndex.value = index;
+      optionElement.value[index].scrollIntoView({ block: "nearest" });
     }
 
     function highlightPrev() {
-      highlight(highlightedIndex.value - 1 < 0 ? filteredOptions.value.length - 1 : highlightedIndex.value - 1)
+      highlight(highlightedIndex.value - 1 < 0 ? filteredOptions.value.length - 1 : highlightedIndex.value - 1);
     }
 
     function highlightNext() {
-      highlight(highlightedIndex.value + 1 >= filteredOptions.value.length ? 0 : highlightedIndex.value + 1)
+      highlight(highlightedIndex.value + 1 >= filteredOptions.value.length ? 0 : highlightedIndex.value + 1);
     }
 
     function labelFor(value: string): string | null {
       if (props.labels) {
-        const index = props.options.indexOf(value)
+        const index = props.options.indexOf(value);
         if (index) {
-          return props.labels[index]
+          return props.labels[index];
         }
       }
-      return null
+      return null;
     }
 
     onMounted(() => {
       if (props.mountOpened) {
-        open()
+        open();
       }
-    })
+    });
 
     return {
       searchInput,
@@ -227,7 +227,7 @@ export default defineComponent({
       clear,
       commitSelection,
       labelFor,
-    }
+    };
   },
-})
+});
 </script>

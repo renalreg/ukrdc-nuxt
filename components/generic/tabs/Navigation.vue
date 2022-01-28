@@ -41,12 +41,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, useRouter } from '@nuxtjs/composition-api'
-import { urlCompare } from '@/helpers/utils/pathUtils'
+import { defineComponent, useRouter } from "@nuxtjs/composition-api";
+import { urlCompare } from "@/helpers/utils/pathUtils";
 
 export interface Tabs {
-  name: string
-  href: string
+  name: string;
+  href: string;
 }
 
 export default defineComponent({
@@ -57,13 +57,13 @@ export default defineComponent({
     },
   },
   setup(_, { emit }) {
-    const router = useRouter()
+    const router = useRouter();
 
     function switchTab(href: string) {
-      router.push({ path: href })
-      emit('input', href)
+      router.push({ path: href });
+      emit("input", href);
     }
-    return { urlCompare, switchTab }
+    return { urlCompare, switchTab };
   },
-})
+});
 </script>

@@ -1,16 +1,16 @@
-import { ref } from '@nuxtjs/composition-api'
+import { ref } from "@nuxtjs/composition-api";
 
 export default function () {
-  const visible = ref(false)
+  const visible = ref(false);
 
   function show(): void {
-    visible.value = true
+    visible.value = true;
   }
   function hide(): void {
-    visible.value = false
+    visible.value = false;
   }
   function toggle(): void {
-    visible.value = !visible.value
+    visible.value = !visible.value;
   }
 
   return {
@@ -18,5 +18,5 @@ export default function () {
     show,
     hide,
     toggle,
-  }
+  };
 }

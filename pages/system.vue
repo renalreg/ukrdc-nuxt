@@ -67,35 +67,35 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useContext } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
 
-import fetchSystem from '~/helpers/fetch/fetchSystem'
+import fetchSystem from "~/helpers/fetch/fetchSystem";
 
 interface serverSystemInfo {
-  githubRef: string
-  githubSha: string
-  deploymentEnv: string
+  githubRef: string;
+  githubSha: string;
+  deploymentEnv: string;
 }
 
 export default defineComponent({
   setup() {
-    const { $config, $toast } = useContext()
-    const { fetchServerInfo } = fetchSystem()
+    const { $config, $toast } = useContext();
+    const { fetchServerInfo } = fetchSystem();
 
     // Data refs
 
-    const serverInfo = ref<serverSystemInfo>()
+    const serverInfo = ref<serverSystemInfo>();
     const clientInfo = ref({
       deploymentEnv: $config.deploymentEnv,
       githubRef: process.env.githubRef,
       githubSha: process.env.githubSha,
-    })
+    });
 
     // Data fetching
 
     onMounted(async () => {
-      serverInfo.value = await fetchServerInfo()
-    })
+      serverInfo.value = await fetchServerInfo();
+    });
 
     // Config reports
 
@@ -107,29 +107,29 @@ export default defineComponent({
         },
         null,
         4
-      )
-    })
+      );
+    });
 
     function copyConfigReport() {
       navigator.clipboard.writeText(configReportJSON.value).then(() => {
         $toast.show({
-          type: 'success',
-          title: 'Success',
-          message: 'Configuration Report copied to clipboard',
+          type: "success",
+          title: "Success",
+          message: "Configuration Report copied to clipboard",
           timeout: 5,
-          classTimeout: 'bg-green-600',
-        })
-      })
+          classTimeout: "bg-green-600",
+        });
+      });
     }
 
     return {
       serverInfo,
       clientInfo,
       copyConfigReport,
-    }
+    };
   },
   head: {
-    title: 'System Configuration',
+    title: "System Configuration",
   },
-})
+});
 </script>

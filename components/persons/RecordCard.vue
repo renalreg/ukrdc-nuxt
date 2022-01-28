@@ -24,7 +24,7 @@
               `${realLocalID.sendingFacility ? realLocalID.sendingFacility : record.localidType}`
             }}</span>
             <span :class="highlight.includes('sendingExtract') ? highlightClasses : []">{{
-              `${realLocalID.sendingExtract ? 'via ' + realLocalID.sendingExtract : ''}`
+              `${realLocalID.sendingExtract ? "via " + realLocalID.sendingExtract : ""}`
             }}</span>
           </GenericCardDd>
         </GenericCardDi>
@@ -52,7 +52,7 @@
             class="mt-1 text-gray-900 sm:col-span-2 sm:mt-0"
             :class="highlight.includes('dateOfDeath') ? highlightClasses : []"
           >
-            {{ record.dateOfDeath ? formatDate(record.dateOfDeath, (t = false)) : 'N/A' }}
+            {{ record.dateOfDeath ? formatDate(record.dateOfDeath, (t = false)) : "N/A" }}
           </dd>
         </GenericCardDi>
       </GenericCardDl>
@@ -61,16 +61,16 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@nuxtjs/composition-api'
-import { formatDate } from '@/helpers/utils/dateUtils'
-import { formatGender } from '@/helpers/utils/codeUtils'
+import { computed, defineComponent } from "@nuxtjs/composition-api";
+import { formatDate } from "@/helpers/utils/dateUtils";
+import { formatGender } from "@/helpers/utils/codeUtils";
 
-import { Person } from '@/interfaces/persons'
+import { Person } from "@/interfaces/persons";
 
 interface realLocalId {
-  localid: string
-  sendingExtract?: string
-  sendingFacility?: string
+  localid: string;
+  sendingExtract?: string;
+  sendingFacility?: string;
 }
 
 export default defineComponent({
@@ -93,21 +93,21 @@ export default defineComponent({
 
   setup(props) {
     const highlightClasses = [
-      'bg-red-100',
-      'text-red-800',
-      'font-medium',
-      'rounded-md',
-      'pl-2',
-      '-ml-2',
-      'pr-2',
-      'mr-2',
-    ]
+      "bg-red-100",
+      "text-red-800",
+      "font-medium",
+      "rounded-md",
+      "pl-2",
+      "-ml-2",
+      "pr-2",
+      "mr-2",
+    ];
 
     const realLocalID = computed<realLocalId>(() => {
-      if (props.record.localidType !== 'CLPID') {
+      if (props.record.localidType !== "CLPID") {
         return {
           localid: props.record.localid,
-        }
+        };
       }
       for (const xref of props.record.xrefEntries) {
         if (xref.pid === props.record.localid) {
@@ -115,15 +115,15 @@ export default defineComponent({
             localid: xref.localid,
             sendingExtract: xref.sendingExtract,
             sendingFacility: xref.sendingFacility,
-          }
+          };
         }
       }
       return {
         localid: props.record.localid,
-      }
-    })
+      };
+    });
 
-    return { formatDate, formatGender, highlightClasses, realLocalID }
+    return { formatDate, formatGender, highlightClasses, realLocalID };
   },
-})
+});
 </script>

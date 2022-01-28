@@ -74,9 +74,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
+import { defineComponent, ref, computed } from "@nuxtjs/composition-api";
 
-import { DateRange, nowString } from '@/helpers/utils/dateUtils'
+import { DateRange, nowString } from "@/helpers/utils/dateUtils";
 
 export default defineComponent({
   props: {
@@ -89,46 +89,46 @@ export default defineComponent({
       required: false,
       default: () => ({
         start: {
-          type: 'string',
-          mask: 'iso',
+          type: "string",
+          mask: "iso",
         },
         end: {
-          type: 'string',
-          mask: 'iso',
+          type: "string",
+          mask: "iso",
         },
       }),
     },
   },
   setup(props, { emit }) {
-    const showCustom = ref(false)
+    const showCustom = ref(false);
 
     const textBoxClasses =
-      'flex-grow pl-8 pr-2 py-1 w-full h-full bg-white border border-gray-300 rounded-md placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 truncate'
+      "flex-grow pl-8 pr-2 py-1 w-full h-full bg-white border border-gray-300 rounded-md placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 truncate";
 
     function clear(): void {
-      showCustom.value = false
-      emit('input', { start: null, end: null })
+      showCustom.value = false;
+      emit("input", { start: null, end: null });
     }
 
     const lastNDays = computed((): number | null => {
       if (showCustom.value) {
-        return null
+        return null;
       }
       if (props.value.start && props.value.end) {
-        return Math.round((Date.parse(props.value.end) - Date.parse(props.value.start)) / (1000 * 3600 * 24))
+        return Math.round((Date.parse(props.value.end) - Date.parse(props.value.start)) / (1000 * 3600 * 24));
       }
-      return null
-    })
+      return null;
+    });
 
     function setLastNDays(daysAgo: number): void {
-      showCustom.value = false
-      const newRange: DateRange = { start: nowString(-daysAgo), end: nowString(0) }
-      emit('input', newRange)
+      showCustom.value = false;
+      const newRange: DateRange = { start: nowString(-daysAgo), end: nowString(0) };
+      emit("input", newRange);
     }
 
-    return { showCustom, textBoxClasses, lastNDays, setLastNDays, clear }
+    return { showCustom, textBoxClasses, lastNDays, setLastNDays, clear };
   },
-})
+});
 </script>
 
 <style scoped>

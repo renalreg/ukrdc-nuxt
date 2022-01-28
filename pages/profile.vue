@@ -29,7 +29,7 @@
             </h1>
             <p class="font-medium text-gray-500">
               {{ user.email }}
-              {{ user.email_verified ? '(Verified)' : '(Unverified)' }}
+              {{ user.email_verified ? "(Verified)" : "(Unverified)" }}
             </p>
           </div>
           <div v-else>
@@ -44,7 +44,7 @@
             :href="$config.manageAccountUrl"
             target="blank"
             type="button"
-            class="focus:outline-none rounded-md border border-gray-300 bg-white px-3 py-2 text-center font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            class="rounded-md border border-gray-300 bg-white px-3 py-2 text-center font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >Manage Account</a
           >
           <GenericButton @click="logout"> Sign out </GenericButton>
@@ -66,42 +66,42 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
-import useAuth from '~/helpers/useAuth'
-import usePermissions from '~/helpers/usePermissions'
+import useAuth from "~/helpers/useAuth";
+import usePermissions from "~/helpers/usePermissions";
 
 export default defineComponent({
   setup() {
-    const { getUser, signOut, signedIn } = useAuth()
-    const { getPermissions } = usePermissions()
+    const { getUser, signOut, signedIn } = useAuth();
+    const { getPermissions } = usePermissions();
 
     // User info
 
-    const user = ref()
+    const user = ref();
 
     onMounted(async () => {
-      user.value = await getUser()
-    })
+      user.value = await getUser();
+    });
 
     // Permissions
 
-    const perms = computed(() => getPermissions())
+    const perms = computed(() => getPermissions());
 
     function classesForPermissions(permission: string): string[] {
-      if (permission.includes('read')) {
-        return ['bg-green-100', 'text-green-800']
-      } else if (permission.includes('write')) {
-        return ['bg-red-100', 'text-red-800']
+      if (permission.includes("read")) {
+        return ["bg-green-100", "text-green-800"];
+      } else if (permission.includes("write")) {
+        return ["bg-red-100", "text-red-800"];
       } else {
-        return ['bg-indigo-100', 'text-indigo-800']
+        return ["bg-indigo-100", "text-indigo-800"];
       }
     }
 
     // Functions
 
     async function logout() {
-      await signOut()
+      await signOut();
     }
 
     return {
@@ -110,12 +110,12 @@ export default defineComponent({
       signedIn,
       logout,
       classesForPermissions,
-    }
+    };
   },
   head: {
-    title: 'Profile',
+    title: "Profile",
   },
-})
+});
 </script>
 
 <style></style>

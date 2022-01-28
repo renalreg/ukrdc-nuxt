@@ -1,2 +1,2 @@
-declare module 'v-calendar'
-declare module 'v-tooltip'
+declare module "v-calendar";
+declare module "v-tooltip";

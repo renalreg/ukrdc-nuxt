@@ -29,17 +29,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
-import { PatientRecord } from '@/interfaces/patientrecord'
-import { PatientDocumentSummary } from '@/interfaces/document'
+import { PatientRecord } from "@/interfaces/patientrecord";
+import { PatientDocumentSummary } from "@/interfaces/document";
 
-import { formatDate } from '@/helpers/utils/dateUtils'
+import { formatDate } from "@/helpers/utils/dateUtils";
 
-import usePagination from '~/helpers/query/usePagination'
-import useDateRange from '~/helpers/query/useDateRange'
+import usePagination from "~/helpers/query/usePagination";
+import useDateRange from "~/helpers/query/useDateRange";
 
-import fetchPatientRecords from '~/helpers/fetch/fetchPatientRecords'
+import fetchPatientRecords from "~/helpers/fetch/fetchPatientRecords";
 
 export default defineComponent({
   props: {
@@ -49,34 +49,34 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { page, total, size } = usePagination()
-    const { makeDateRange } = useDateRange()
-    const { fetchPatientRecordDocumentsPage } = fetchPatientRecords()
+    const { page, total, size } = usePagination();
+    const { makeDateRange } = useDateRange();
+    const { fetchPatientRecordDocumentsPage } = fetchPatientRecords();
 
     // Set initial date dateRange
-    const dateRange = makeDateRange(null, null, true, false)
+    const dateRange = makeDateRange(null, null, true, false);
 
     // Data refs
 
-    const documents = ref<PatientDocumentSummary[]>()
+    const documents = ref<PatientDocumentSummary[]>();
 
     // Data fetching
 
     async function getDocuments() {
-      const documentsPage = await fetchPatientRecordDocumentsPage(props.record, page.value || 1, size.value)
-      documents.value = documentsPage.items
-      total.value = documentsPage.total
-      page.value = documentsPage.page
-      size.value = documentsPage.size
+      const documentsPage = await fetchPatientRecordDocumentsPage(props.record, page.value || 1, size.value);
+      documents.value = documentsPage.items;
+      total.value = documentsPage.total;
+      page.value = documentsPage.page;
+      size.value = documentsPage.size;
     }
 
     onMounted(() => {
-      getDocuments()
-    })
+      getDocuments();
+    });
 
     watch(page, () => {
-      getDocuments()
-    })
+      getDocuments();
+    });
 
     return {
       page,
@@ -85,9 +85,9 @@ export default defineComponent({
       dateRange,
       documents,
       formatDate,
-    }
+    };
   },
-})
+});
 </script>
 
 <style scoped></style>

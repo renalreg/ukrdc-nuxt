@@ -66,7 +66,7 @@
         <!-- Sidebar menu button -->
         <div class="justify-left inline-flex flex-grow items-center">
           <button
-            class="focus:outline-none -ml-0.5 -mt-0.5 inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+            class="-ml-0.5 -mt-0.5 inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
             @click="toggle()"
           >
             <span class="sr-only">Open sidebar</span>
@@ -90,7 +90,7 @@
       </div>
 
       <!-- Main page content -->
-      <main class="focus:outline-none relative z-0 flex-1 overflow-y-auto" tabindex="0">
+      <main class="relative z-0 flex-1 overflow-y-auto focus:outline-none" tabindex="0">
         <Nuxt class="mx-auto max-w-7xl py-6 px-4 sm:px-6 md:px-8" />
       </main>
     </div>
@@ -98,25 +98,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, useMeta } from '@nuxtjs/composition-api'
-import 'v-tooltip/dist/v-tooltip.css'
+import { defineComponent, ref, useContext, useMeta } from "@nuxtjs/composition-api";
+import "v-tooltip/dist/v-tooltip.css";
 
 export default defineComponent({
   setup() {
-    const { base } = useContext()
-    const { link } = useMeta()
-    link.value = [{ rel: 'icon', type: 'image/x-icon', href: `${base || '/'}favicon.ico` }]
+    const { base } = useContext();
+    const { link } = useMeta();
+    link.value = [{ rel: "icon", type: "image/x-icon", href: `${base || "/"}favicon.ico` }];
 
-    const sbOpen = ref(false)
+    const sbOpen = ref(false);
 
     function toggle() {
-      sbOpen.value = !sbOpen.value
+      sbOpen.value = !sbOpen.value;
     }
 
-    return { sbOpen, toggle }
+    return { sbOpen, toggle };
   },
   head: {},
-})
+});
 </script>
 
 <style lang="postcss">

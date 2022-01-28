@@ -20,11 +20,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from "@nuxtjs/composition-api";
 
-import { ChainMap, ChannelMessage, ConnectorMessage } from '@/interfaces/mirth'
+import { ChainMap, ChannelMessage, ConnectorMessage } from "@/interfaces/mirth";
 
-import { isEmptyObject } from '@/helpers/utils/objectUtils'
+import { isEmptyObject } from "@/helpers/utils/objectUtils";
 
 export default defineComponent({
   props: {
@@ -35,25 +35,25 @@ export default defineComponent({
   },
   setup(props) {
     const chain = computed(() => {
-      const currentChain = {} as ChainMap
+      const currentChain = {} as ChainMap;
       if (props.message.connectorMessages) {
         for (const msg of Object.values(props.message.connectorMessages)) {
           if (!(msg.chainId in currentChain)) {
-            currentChain[msg.chainId] = []
+            currentChain[msg.chainId] = [];
           }
-          currentChain[msg.chainId].push(msg)
+          currentChain[msg.chainId].push(msg);
         }
         for (const index in currentChain) {
-          currentChain[index].sort((a: ConnectorMessage, b: ConnectorMessage) => (a.orderId > b.orderId ? 1 : -1))
+          currentChain[index].sort((a: ConnectorMessage, b: ConnectorMessage) => (a.orderId > b.orderId ? 1 : -1));
         }
       }
-      return currentChain
-    })
+      return currentChain;
+    });
 
     return {
       chain,
       isEmptyObject,
-    }
+    };
   },
-})
+});
 </script>

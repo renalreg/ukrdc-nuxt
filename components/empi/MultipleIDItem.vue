@@ -46,10 +46,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
-import { formatDate } from '@/helpers/utils/dateUtils'
+import { defineComponent } from "@nuxtjs/composition-api";
+import { formatDate } from "@/helpers/utils/dateUtils";
 
-import { MultipleUKRDCIDsGroup } from '@/interfaces/datahealth'
+import { MultipleUKRDCIDsGroup } from "@/interfaces/datahealth";
 
 export default defineComponent({
   props: {
@@ -71,7 +71,7 @@ export default defineComponent({
   setup() {
     return {
       formatDate,
-    }
+    };
   },
-})
+});
 </script>

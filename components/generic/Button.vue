@@ -35,7 +35,7 @@ export default {
     colour: {
       type: String,
       required: false,
-      default: 'white',
+      default: "white",
     },
     tooltip: {
       type: String,
@@ -58,7 +58,7 @@ export default {
       default: false,
     },
   },
-}
+};
 </script>
 
 <style lang="postcss">
@@ -99,6 +99,6 @@ export default {
   @apply btn-base-primary bg-white hover:bg-gray-50;
 }
 .btn-base-primary {
-  @apply focus:outline-none rounded-md border py-2 px-4 font-medium shadow-sm focus:ring-2 focus:ring-offset-2;
+  @apply rounded-md border py-2 px-4 font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2;
 }
 </style>

@@ -3,18 +3,18 @@ export function singleQuery(query: string | (string | null)[]): string | null {
   // If multiple values are passed as an array,
   // only the zeroth value is returned
   if (Array.isArray(query)) {
-    return query[0]
+    return query[0];
   } else {
-    return query
+    return query;
   }
 }
 
 export function integerQuery(query: string | (string | null)[]): number | null {
-  const queryString = singleQuery(query)
+  const queryString = singleQuery(query);
   if (queryString) {
-    return parseInt(queryString)
+    return parseInt(queryString);
   }
-  return null
+  return null;
 }
 
 export function arrayQuery(query: string | number | (string | number | null)[]): (string | number | null)[] {
@@ -22,8 +22,8 @@ export function arrayQuery(query: string | number | (string | number | null)[]):
   // If a single value is passed,
   // oconvert into a one-element array
   if (!Array.isArray(query)) {
-    return [query]
+    return [query];
   } else {
-    return query
+    return query;
   }
 }

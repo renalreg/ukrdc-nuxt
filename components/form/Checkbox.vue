@@ -18,12 +18,12 @@ or an array of values when multiple instances are v-model'd onto the same array.
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from "@nuxtjs/composition-api";
 
 export default defineComponent({
   model: {
-    prop: 'checked',
-    event: 'change',
+    prop: "checked",
+    event: "change",
   },
   props: {
     label: {
@@ -50,11 +50,11 @@ export default defineComponent({
     const proxyChecked = computed({
       get: () => props.checked,
       set: (value) => {
-        emit('change', value)
+        emit("change", value);
       },
-    })
+    });
 
-    return { proxyChecked }
+    return { proxyChecked };
   },
-})
+});
 </script>

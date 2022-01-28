@@ -49,11 +49,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
-import { formatDate } from '@/helpers/utils/dateUtils'
-import { formatGender } from '@/helpers/utils/codeUtils'
+import { defineComponent } from "@nuxtjs/composition-api";
+import { formatDate } from "@/helpers/utils/dateUtils";
+import { formatGender } from "@/helpers/utils/codeUtils";
 
-import { MasterRecord } from '~/interfaces/masterrecord'
+import { MasterRecord } from "~/interfaces/masterrecord";
 
 export default defineComponent({
   props: {
@@ -74,16 +74,16 @@ export default defineComponent({
   },
   setup() {
     const highlightClasses = [
-      'bg-red-100',
-      'text-red-800',
-      'font-medium',
-      'rounded-md',
-      'pl-2',
-      '-ml-2',
-      'pr-2',
-      'mr-2',
-    ]
-    return { highlightClasses, formatDate, formatGender }
+      "bg-red-100",
+      "text-red-800",
+      "font-medium",
+      "rounded-md",
+      "pl-2",
+      "-ml-2",
+      "pr-2",
+      "mr-2",
+    ];
+    return { highlightClasses, formatDate, formatGender };
   },
-})
+});
 </script>

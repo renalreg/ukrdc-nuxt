@@ -5,7 +5,7 @@
     <GenericCard>
       <GenericCardHeader>
         <div class="mb-1">
-          <TextH2 v-if="patientDocument"> {{ patientDocument.documentname || 'Unnamed Document' }} </TextH2>
+          <TextH2 v-if="patientDocument"> {{ patientDocument.documentname || "Unnamed Document" }} </TextH2>
           <SkeleText v-else class="h-6 w-1/2" />
         </div>
         <div>
@@ -18,21 +18,21 @@
           <GenericDi>
             <TextDt>Entered At</TextDt>
             <TextDd v-if="patientDocument">
-              {{ patientDocument.enteredatdesc || patientDocument.enteredatcode || 'Unknown Facility' }}
+              {{ patientDocument.enteredatdesc || patientDocument.enteredatcode || "Unknown Facility" }}
             </TextDd>
             <SkeleText v-else class="h-6 w-1/2" />
           </GenericDi>
           <GenericDi>
             <TextDt>Entered By</TextDt>
             <TextDd v-if="patientDocument">{{
-              patientDocument.enteredbydesc || patientDocument.enteredbycode || 'Unknown Person'
+              patientDocument.enteredbydesc || patientDocument.enteredbycode || "Unknown Person"
             }}</TextDd>
             <SkeleText v-else class="h-6 w-1/2" />
           </GenericDi>
           <GenericDi>
             <TextDt>Clinician:</TextDt>
             <TextDd v-if="patientDocument">
-              {{ patientDocument.cliniciandesc || patientDocument.cliniciancode || 'Unknown Clinician' }}
+              {{ patientDocument.cliniciandesc || patientDocument.cliniciancode || "Unknown Clinician" }}
             </TextDd>
             <SkeleText v-else class="h-6 w-1/2" />
           </GenericDi>
@@ -78,13 +78,13 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useRoute } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref, useRoute } from "@nuxtjs/composition-api";
 
-import fetchPatientRecords from '~/helpers/fetch/fetchPatientRecords'
-import { formatDate } from '@/helpers/utils/dateUtils'
+import fetchPatientRecords from "~/helpers/fetch/fetchPatientRecords";
+import { formatDate } from "@/helpers/utils/dateUtils";
 
-import { PatientRecord } from '@/interfaces/patientrecord'
-import { PatientDocument } from '~/interfaces/document'
+import { PatientRecord } from "@/interfaces/patientrecord";
+import { PatientDocument } from "~/interfaces/document";
 
 export default defineComponent({
   props: {
@@ -96,24 +96,24 @@ export default defineComponent({
 
   setup(props) {
     const { fetchPatientRecordDocument, downloadPatientRecordDocument, documentDownloadInProgress } =
-      fetchPatientRecords()
-    const route = useRoute()
+      fetchPatientRecords();
+    const route = useRoute();
 
     // Data refs
-    const patientDocument = ref<PatientDocument>()
+    const patientDocument = ref<PatientDocument>();
 
     // Computed properties
     const filename = computed(() => {
       if (!patientDocument.value) {
-        return undefined
+        return undefined;
       }
-      return patientDocument.value.filename || `${patientDocument.value.documentname}.txt`
-    })
+      return patientDocument.value.filename || `${patientDocument.value.documentname}.txt`;
+    });
 
     // Data fetching
     onMounted(async () => {
-      patientDocument.value = await fetchPatientRecordDocument(props.record, route.value.params.docid)
-    })
+      patientDocument.value = await fetchPatientRecordDocument(props.record, route.value.params.docid);
+    });
 
     return {
       patientDocument,
@@ -121,7 +121,7 @@ export default defineComponent({
       formatDate,
       downloadPatientRecordDocument,
       documentDownloadInProgress,
-    }
+    };
   },
-})
+});
 </script>

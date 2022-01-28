@@ -28,106 +28,106 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useMeta, useRoute } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
 
-import { formatDate } from '@/helpers/utils/dateUtils'
-import { formatGender } from '@/helpers/utils/codeUtils'
-import { insertIf } from '@/helpers/utils/arrayUtils'
-import fetchMasterRecords from '@/helpers/fetch/fetchMasterRecords'
+import { formatDate } from "@/helpers/utils/dateUtils";
+import { formatGender } from "@/helpers/utils/codeUtils";
+import { insertIf } from "@/helpers/utils/arrayUtils";
+import fetchMasterRecords from "@/helpers/fetch/fetchMasterRecords";
 
-import { MasterRecord, MasterRecordStatistics } from '@/interfaces/masterrecord'
-import { TabItem } from '@/interfaces/tabs'
-import usePermissions from '~/helpers/usePermissions'
+import { MasterRecord, MasterRecordStatistics } from "@/interfaces/masterrecord";
+import { TabItem } from "@/interfaces/tabs";
+import usePermissions from "~/helpers/usePermissions";
 
 export default defineComponent({
   setup() {
-    const route = useRoute()
-    const { fetchMasterRecord, fetchMasterRecordStatistics } = fetchMasterRecords()
-    const { hasPermission } = usePermissions()
+    const route = useRoute();
+    const { fetchMasterRecord, fetchMasterRecordStatistics } = fetchMasterRecords();
+    const { hasPermission } = usePermissions();
 
     // Head
-    const { title } = useMeta()
-    title.value = `Record ${route.value.params.id}`
+    const { title } = useMeta();
+    title.value = `Record ${route.value.params.id}`;
 
     // Navigation
 
     const tabs = [
       {
-        name: 'Overview',
+        name: "Overview",
         href: `/masterrecords/${route.value.params.id}`,
       },
-      ...insertIf(hasPermission('ukrdc:messages:read'), {
-        name: 'Messages',
+      ...insertIf(hasPermission("ukrdc:messages:read"), {
+        name: "Messages",
         href: `/masterrecords/${route.value.params.id}/messages`,
       }),
       {
-        name: 'Link Records',
+        name: "Link Records",
         href: `/masterrecords/${route.value.params.id}/linkrecords`,
       },
       {
-        name: 'Issues',
+        name: "Issues",
         href: `/masterrecords/${route.value.params.id}/issues`,
       },
-      ...insertIf(hasPermission('ukrdc:audit:records:read'), {
-        name: 'Audit',
+      ...insertIf(hasPermission("ukrdc:audit:records:read"), {
+        name: "Audit",
         href: `/masterrecords/${route.value.params.id}/audit`,
       }),
-    ] as TabItem[]
+    ] as TabItem[];
 
     // Data refs
 
-    const record = ref<MasterRecord>()
-    const stats = ref<MasterRecordStatistics>()
+    const record = ref<MasterRecord>();
+    const stats = ref<MasterRecordStatistics>();
 
     // Data fetching
 
     async function fetchRecord() {
-      record.value = await fetchMasterRecord(route.value.params.id)
+      record.value = await fetchMasterRecord(route.value.params.id);
 
       // Get basic record statistics
-      stats.value = await fetchMasterRecordStatistics(record.value)
-      issueMessage.value = buildErrorMessage(stats.value)
+      stats.value = await fetchMasterRecordStatistics(record.value);
+      issueMessage.value = buildErrorMessage(stats.value);
     }
 
     onMounted(() => {
-      fetchRecord()
-    })
+      fetchRecord();
+    });
 
     // Dynamic UI elements
 
-    const issueMessage = ref<string>()
+    const issueMessage = ref<string>();
 
     function buildErrorMessage(stats?: MasterRecordStatistics): string {
-      let msg = ''
-      let workItemsMsg = ''
-      let errorMsg = ''
+      let msg = "";
+      let workItemsMsg = "";
+      let errorMsg = "";
       if (stats) {
         if (stats?.workitems > 0) {
-          workItemsMsg += `${stats?.workitems} workitem`
+          workItemsMsg += `${stats?.workitems} workitem`;
         }
         if (stats?.workitems > 1) {
-          workItemsMsg += 's'
+          workItemsMsg += "s";
         }
         if (stats?.errors > 0) {
-          errorMsg += `${stats?.errors} error`
+          errorMsg += `${stats?.errors} error`;
         }
         if (stats?.errors > 1) {
-          errorMsg += 's'
+          errorMsg += "s";
         }
       }
       if (workItemsMsg) {
-        msg += workItemsMsg
+        msg += workItemsMsg;
       }
       if (workItemsMsg && errorMsg) {
-        msg += ' and '
+        msg += " and ";
       }
       if (errorMsg) {
-        msg += errorMsg
+        msg += errorMsg;
       }
       if (workItemsMsg || errorMsg) {
-        msg += ' found on record. Click for details.'
+        msg += " found on record. Click for details.";
       }
-      return msg
+      return msg;
     }
 
     return {
@@ -137,12 +137,12 @@ export default defineComponent({
       issueMessage,
       formatGender,
       formatDate,
-    }
+    };
   },
   head: {
-    title: 'Master Record',
+    title: "Master Record",
   },
-})
+});
 </script>
 
 <style></style>

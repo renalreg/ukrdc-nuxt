@@ -22,13 +22,13 @@
             <div>
               <TextL1> Date of Death </TextL1>
               <TextP>
-                {{ record.patient.deathTime ? formatDate(record.patient.deathTime, (t = false)) : 'N/A' }}
+                {{ record.patient.deathTime ? formatDate(record.patient.deathTime, (t = false)) : "N/A" }}
               </TextP>
             </div>
             <div>
               <TextL1> Ethnicity </TextL1>
               <TextP>
-                {{ record.patient.ethnicGroupDescription || record.patient.ethnicGroupCode || 'Unknown' }}
+                {{ record.patient.ethnicGroupDescription || record.patient.ethnicGroupCode || "Unknown" }}
               </TextP>
             </div>
           </GenericCardMini>
@@ -142,7 +142,7 @@
         >
           <GenericCardMini class="w-full px-4 py-2">
             <TextB>{{ info.type }} Information</TextB>
-            <TextP>{{ info.gpname || 'GP name not known' }}</TextP>
+            <TextP>{{ info.gpname || "GP name not known" }}</TextP>
             <TextP>{{ info.street }}</TextP>
             <LinkPostCode v-if="info.postcode" :code="info.postcode" />
             <TextP>Contact {{ info.contactvalue }}</TextP>
@@ -151,7 +151,7 @@
         <li v-if="!record.patient.familydoctor.gpInfo">
           <GenericCardMini class="w-full px-4 py-2">
             <TextB>GP Information</TextB>
-            <TextP>{{ record.patient.familydoctor.gpname || 'GP name not known' }}</TextP>
+            <TextP>{{ record.patient.familydoctor.gpname || "GP name not known" }}</TextP>
             <TextP>{{ record.patient.familydoctor.street }}</TextP>
             <LinkPostCode v-if="record.patient.familydoctor.postcode" :code="record.patient.familydoctor.postcodee" />
             <TextP>Contact {{ record.patient.familydoctor.contactvalue }}</TextP>
@@ -163,13 +163,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from "@nuxtjs/composition-api";
 
-import { formatDate } from '@/helpers/utils/dateUtils'
-import { formatGender } from '@/helpers/utils/codeUtils'
-import { isEmptyObject } from '@/helpers/utils/objectUtils'
+import { formatDate } from "@/helpers/utils/dateUtils";
+import { formatGender } from "@/helpers/utils/codeUtils";
+import { isEmptyObject } from "@/helpers/utils/objectUtils";
 
-import { PatientRecord } from '@/interfaces/patientrecord'
+import { PatientRecord } from "@/interfaces/patientrecord";
 
 export default defineComponent({
   props: {
@@ -188,9 +188,9 @@ export default defineComponent({
       formatDate,
       formatGender,
       isEmptyObject,
-    }
+    };
   },
-})
+});
 </script>
 
 <style scoped></style>

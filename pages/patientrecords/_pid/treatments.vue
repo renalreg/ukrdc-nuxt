@@ -60,7 +60,7 @@
                         ? `(${treatment.dischargeReasonDesc})`
                         : treatment.dischargeReasonCode
                         ? `(${treatment.dischargeReasonCode})`
-                        : ''
+                        : ""
                     }}
                   </TextP>
                   <TextP v-else class="inline">
@@ -79,27 +79,27 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
-import { Treatment } from '@/interfaces/treatment'
-import { PatientRecord } from '@/interfaces/patientrecord'
-import fetchPatientRecords from '~/helpers/fetch/fetchPatientRecords'
+import { Treatment } from "@/interfaces/treatment";
+import { PatientRecord } from "@/interfaces/patientrecord";
+import fetchPatientRecords from "~/helpers/fetch/fetchPatientRecords";
 
 interface TreatmentEvent {
-  id: string
+  id: string;
 
-  time: string
-  isDischarge: boolean
+  time: string;
+  isDischarge: boolean;
 
-  admitReasonCode: string
-  admitReasonCodeStd: string
-  admitReasonDesc: string
+  admitReasonCode: string;
+  admitReasonCodeStd: string;
+  admitReasonDesc: string;
 
-  dischargeReasonCode: string
-  dischargeReasonCodeStd: string
-  dischargeReasonDesc: string
+  dischargeReasonCode: string;
+  dischargeReasonCodeStd: string;
+  dischargeReasonDesc: string;
 
-  healthCareFacilityCode: string
+  healthCareFacilityCode: string;
 }
 
 export default defineComponent({
@@ -111,19 +111,19 @@ export default defineComponent({
   },
 
   setup(props) {
-    const { fetchPatientRecordTreatments } = fetchPatientRecords()
+    const { fetchPatientRecordTreatments } = fetchPatientRecords();
 
     // Data refs
-    const treatments = ref<Treatment[]>()
+    const treatments = ref<Treatment[]>();
 
     // Data fetching
     onMounted(async () => {
-      treatments.value = await fetchPatientRecordTreatments(props.record)
-    })
+      treatments.value = await fetchPatientRecordTreatments(props.record);
+    });
 
     // Sorted and paired treatment events
     const treatmentEvents = computed(() => {
-      const events: TreatmentEvent[] = []
+      const events: TreatmentEvent[] = [];
       for (const treatment of treatments.value || []) {
         if (treatment.toTime) {
           const event = {
@@ -137,8 +137,8 @@ export default defineComponent({
             dischargeReasonCodeStd: treatment.dischargeReasonCodeStd,
             dischargeReasonDesc: treatment.dischargeReasonDesc,
             healthCareFacilityCode: treatment.healthCareFacilityCode,
-          }
-          events.push(event)
+          };
+          events.push(event);
         }
         const event = {
           id: treatment.id,
@@ -151,8 +151,8 @@ export default defineComponent({
           dischargeReasonCodeStd: treatment.dischargeReasonCodeStd,
           dischargeReasonDesc: treatment.dischargeReasonDesc,
           healthCareFacilityCode: treatment.healthCareFacilityCode,
-        }
-        events.push(event)
+        };
+        events.push(event);
       }
       events.sort(function (a, b) {
         // Turn your strings into dates, and then subtract them
@@ -161,21 +161,21 @@ export default defineComponent({
           // If they're part of the same treatment
           if (a.admitReasonDesc === b.admitReasonDesc) {
             // Admit before discharge
-            return (b.isDischarge ? 1 : 0) - (a.isDischarge ? 1 : 0)
+            return (b.isDischarge ? 1 : 0) - (a.isDischarge ? 1 : 0);
           } else {
             // Discharge before admit
-            return (a.isDischarge ? 1 : 0) - (b.isDischarge ? 1 : 0)
+            return (a.isDischarge ? 1 : 0) - (b.isDischarge ? 1 : 0);
           }
         }
-        return new Date(b.time).getTime() - new Date(a.time).getTime()
-      })
-      return events
-    })
+        return new Date(b.time).getTime() - new Date(a.time).getTime();
+      });
+      return events;
+    });
 
     return {
       treatments,
       treatmentEvents,
-    }
+    };
   },
-})
+});
 </script>

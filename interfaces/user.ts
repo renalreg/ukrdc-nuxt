@@ -1,4 +1,4 @@
 export interface UserInfo {
-  email?: string
-  permissions: string[]
+  email?: string;
+  permissions: string[];
 }

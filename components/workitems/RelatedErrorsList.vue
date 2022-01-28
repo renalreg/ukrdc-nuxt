@@ -25,10 +25,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
-import { Message } from '@/interfaces/messages'
-import { WorkItem } from '~/interfaces/workitem'
-import fetchWorkItems from '~/helpers/fetch/fetchWorkItems'
+import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
+import { Message } from "@/interfaces/messages";
+import { WorkItem } from "~/interfaces/workitem";
+import fetchWorkItems from "~/helpers/fetch/fetchWorkItems";
 
 export default defineComponent({
   props: {
@@ -44,13 +44,13 @@ export default defineComponent({
   },
   setup(props) {
     // Dependencies
-    const { fetchWorkItemMessagesPage } = fetchWorkItems()
+    const { fetchWorkItemMessagesPage } = fetchWorkItems();
 
     // Related errors data
-    const relatedErrors = ref([] as Message[])
-    const relatedErrorsPage = ref(1)
-    const relatedErrorsSize = ref(props.size)
-    const relatedErrorsTotal = ref(0)
+    const relatedErrors = ref([] as Message[]);
+    const relatedErrorsPage = ref(1);
+    const relatedErrorsSize = ref(props.size);
+    const relatedErrorsTotal = ref(0);
 
     async function updateRelatedErrors(): Promise<void> {
       const errorsPage = await fetchWorkItemMessagesPage(
@@ -58,31 +58,31 @@ export default defineComponent({
         relatedErrorsPage.value,
         relatedErrorsSize.value,
         null,
-        ['ERROR'],
+        ["ERROR"],
         null,
         null
-      )
+      );
       // Set related errors
-      relatedErrors.value = errorsPage.items
-      relatedErrorsPage.value = errorsPage.page
-      relatedErrorsSize.value = errorsPage.size
-      relatedErrorsTotal.value = errorsPage.total
+      relatedErrors.value = errorsPage.items;
+      relatedErrorsPage.value = errorsPage.page;
+      relatedErrorsSize.value = errorsPage.size;
+      relatedErrorsTotal.value = errorsPage.total;
     }
 
-    onMounted(updateRelatedErrors)
+    onMounted(updateRelatedErrors);
 
     watch(relatedErrorsPage, () => {
-      updateRelatedErrors()
-    })
+      updateRelatedErrors();
+    });
 
     return {
       relatedErrors,
       relatedErrorsPage,
       relatedErrorsSize,
       relatedErrorsTotal,
-    }
+    };
   },
-})
+});
 </script>
 
 <style scoped></style>

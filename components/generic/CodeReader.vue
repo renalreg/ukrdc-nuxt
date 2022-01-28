@@ -12,9 +12,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
 
-import formatXml from 'xml-formatter'
+import formatXml from "xml-formatter";
 
 export default defineComponent({
   props: {
@@ -29,26 +29,26 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const formatMessage = ref(true)
+    const formatMessage = ref(true);
     const formattedMessage = computed(() => {
-      return formatMessageToXML(props.content)
-    })
+      return formatMessageToXML(props.content);
+    });
 
     function formatMessageToXML(content: string): string {
       if (content === null) {
-        return ''
+        return "";
       }
       if (!formatMessage.value) {
-        return content
+        return content;
       } else {
-        return formatXml(content)
+        return formatXml(content);
       }
     }
 
     return {
       formatMessage,
       formattedMessage,
-    }
+    };
   },
-})
+});
 </script>

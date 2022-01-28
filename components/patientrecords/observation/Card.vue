@@ -15,11 +15,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from "@nuxtjs/composition-api";
 
-import { formatDate } from '@/helpers/utils/dateUtils'
+import { formatDate } from "@/helpers/utils/dateUtils";
 
-import { Observation } from '@/interfaces/observation'
+import { Observation } from "@/interfaces/observation";
 
 export default defineComponent({
   props: {
@@ -29,9 +29,9 @@ export default defineComponent({
     },
   },
   setup() {
-    return { formatDate }
+    return { formatDate };
   },
-})
+});
 </script>
 
 <style scoped></style>

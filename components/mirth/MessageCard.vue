@@ -12,8 +12,8 @@
         <GenericDi>
           <TextDt>Processed</TextDt>
           <TextDd v-if="message && !isEmptyObject(message)">
-            {{ message.processed ? 'Yes' : 'No' }}
-            {{ hasErrors ? '(with errors)' : '' }}
+            {{ message.processed ? "Yes" : "No" }}
+            {{ hasErrors ? "(with errors)" : "" }}
           </TextDd>
           <SkeleText v-else class="h-6 w-full" />
         </GenericDi>
@@ -31,12 +31,12 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from "@nuxtjs/composition-api";
 
-import { ChannelMessage } from '@/interfaces/mirth'
+import { ChannelMessage } from "@/interfaces/mirth";
 
-import { isEmptyObject } from '@/helpers/utils/objectUtils'
-import { messageHasErrors } from '~/helpers/utils/mirthUtils'
+import { isEmptyObject } from "@/helpers/utils/objectUtils";
+import { messageHasErrors } from "~/helpers/utils/mirthUtils";
 
 export default defineComponent({
   props: {
@@ -48,22 +48,22 @@ export default defineComponent({
   },
   setup(props) {
     const channelName = computed(() => {
-      let name: string = ''
+      let name: string = "";
       for (const msg of Object.values(props.message.connectorMessages)) {
         if (!name.includes(msg.channelName)) {
-          name = name + '/' + msg.channelName
+          name = name + "/" + msg.channelName;
         }
       }
-      return name.substring(1)
-    })
+      return name.substring(1);
+    });
 
     const hasErrors = computed((): boolean => {
-      return messageHasErrors(props.message)
-    })
+      return messageHasErrors(props.message);
+    });
 
-    return { channelName, hasErrors, isEmptyObject }
+    return { channelName, hasErrors, isEmptyObject };
   },
-})
+});
 </script>
 
 <style scoped></style>

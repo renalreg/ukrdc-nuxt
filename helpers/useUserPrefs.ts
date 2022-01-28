@@ -1,18 +1,18 @@
-import { computed, useStore } from '@nuxtjs/composition-api'
+import { computed, useStore } from "@nuxtjs/composition-api";
 
 export default function () {
-  const store = useStore()
+  const store = useStore();
 
   const showUKRDC = computed({
     get: () => {
-      return store.getters.searchShowUKRDC
+      return store.getters.searchShowUKRDC;
     },
     set: (newValue: boolean) => {
-      store.commit('changeSearchShowUKRDC', newValue)
+      store.commit("changeSearchShowUKRDC", newValue);
     },
-  })
+  });
 
   return {
     showUKRDC,
-  }
+  };
 }

@@ -94,19 +94,19 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useContext, watch } from '@nuxtjs/composition-api'
+import { computed, defineComponent, onMounted, ref, useContext, watch } from "@nuxtjs/composition-api";
 
-import { PatientRecord } from '@/interfaces/patientrecord'
-import { LabOrder, ResultItem } from '@/interfaces/laborder'
+import { PatientRecord } from "@/interfaces/patientrecord";
+import { LabOrder, ResultItem } from "@/interfaces/laborder";
 
-import { formatDate } from '@/helpers/utils/dateUtils'
+import { formatDate } from "@/helpers/utils/dateUtils";
 
-import usePagination from '~/helpers/query/usePagination'
-import useQuery from '~/helpers/query/useQuery'
-import useDateRange from '~/helpers/query/useDateRange'
+import usePagination from "~/helpers/query/usePagination";
+import useQuery from "~/helpers/query/useQuery";
+import useDateRange from "~/helpers/query/useDateRange";
 
-import fetchPatientRecords, { ResultService } from '~/helpers/fetch/fetchPatientRecords'
-import { modalInterface } from '~/interfaces/modal'
+import fetchPatientRecords, { ResultService } from "~/helpers/fetch/fetchPatientRecords";
+import { modalInterface } from "~/interfaces/modal";
 
 export default defineComponent({
   props: {
@@ -116,24 +116,24 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { $toast } = useContext()
-    const { page, total, size } = usePagination()
-    const { makeDateRange } = useDateRange()
-    const { stringQuery } = useQuery()
+    const { $toast } = useContext();
+    const { page, total, size } = usePagination();
+    const { makeDateRange } = useDateRange();
+    const { stringQuery } = useQuery();
     const {
       fetchPatientRecordResultsPage,
       fetchPatientRecordResultServices,
       deletePatientRecordResultItem,
       fetchPatientRecordLabOrder,
       deletePatientRecordLabOrder,
-    } = fetchPatientRecords()
+    } = fetchPatientRecords();
 
     // Set initial date dateRange
-    const dateRange = makeDateRange(null, null, true, false)
+    const dateRange = makeDateRange(null, null, true, false);
 
     // Data refs
 
-    const results = ref([] as ResultItem[])
+    const results = ref([] as ResultItem[]);
 
     // Data fetching
 
@@ -146,100 +146,100 @@ export default defineComponent({
         selectedOrderId.value,
         dateRange.value.start,
         dateRange.value.end
-      )
-      results.value = resultsPage.items
-      total.value = resultsPage.total
-      page.value = resultsPage.page
-      size.value = resultsPage.size
+      );
+      results.value = resultsPage.items;
+      total.value = resultsPage.total;
+      page.value = resultsPage.page;
+      size.value = resultsPage.size;
 
       // If we don't already have a list of available codes, fetch one
       if (availableServicesMap.value.length === 0) {
-        availableServicesMap.value = await fetchPatientRecordResultServices(props.record)
+        availableServicesMap.value = await fetchPatientRecordResultServices(props.record);
       }
     }
 
-    const selectedOrder = ref<LabOrder>()
+    const selectedOrder = ref<LabOrder>();
 
     async function fetchLabOrder() {
       if (selectedOrderId.value) {
-        selectedOrder.value = await fetchPatientRecordLabOrder(props.record, selectedOrderId.value)
+        selectedOrder.value = await fetchPatientRecordLabOrder(props.record, selectedOrderId.value);
       }
     }
 
     // Data deletion
 
-    const deleteResultAlert = ref<modalInterface>()
-    const deleteOrderAlert = ref<modalInterface>()
+    const deleteResultAlert = ref<modalInterface>();
+    const deleteOrderAlert = ref<modalInterface>();
 
-    const itemToDelete = ref<ResultItem | null>(null)
+    const itemToDelete = ref<ResultItem | null>(null);
 
     function showDeleteResultItemModal(item: ResultItem) {
-      itemToDelete.value = item
-      deleteResultAlert.value?.show()
+      itemToDelete.value = item;
+      deleteResultAlert.value?.show();
     }
 
     function cancelDeleteResultItem() {
-      itemToDelete.value = null
-      deleteResultAlert.value?.hide()
+      itemToDelete.value = null;
+      deleteResultAlert.value?.hide();
     }
 
     async function deleteResultItem() {
       if (itemToDelete.value) {
-        await deletePatientRecordResultItem(itemToDelete.value)
+        await deletePatientRecordResultItem(itemToDelete.value);
         $toast.show({
-          type: 'success',
-          title: 'Success',
-          message: 'Result Item deleted',
+          type: "success",
+          title: "Success",
+          message: "Result Item deleted",
           timeout: 10,
-          classTimeout: 'bg-green-600',
-        })
-        await fetchResults()
-        itemToDelete.value = null
-        deleteResultAlert.value?.hide()
+          classTimeout: "bg-green-600",
+        });
+        await fetchResults();
+        itemToDelete.value = null;
+        deleteResultAlert.value?.hide();
       }
     }
 
     async function deleteLabOrder() {
       if (selectedOrder.value) {
-        await deletePatientRecordLabOrder(selectedOrder.value)
+        await deletePatientRecordLabOrder(selectedOrder.value);
         $toast.show({
-          type: 'success',
-          title: 'Success',
-          message: 'Lab Order deleted',
+          type: "success",
+          title: "Success",
+          message: "Lab Order deleted",
           timeout: 10,
-          classTimeout: 'bg-green-600',
-        })
-        selectedOrderId.value = null
-        await fetchResults()
-        await fetchLabOrder()
-        deleteOrderAlert.value?.hide()
+          classTimeout: "bg-green-600",
+        });
+        selectedOrderId.value = null;
+        await fetchResults();
+        await fetchLabOrder();
+        deleteOrderAlert.value?.hide();
       }
     }
 
     // Result item services
 
-    const availableServicesMap = ref([] as ResultService[])
+    const availableServicesMap = ref([] as ResultService[]);
 
     const availableServicesIds = computed(() => {
-      return availableServicesMap.value.map(({ id }) => id)
-    })
+      return availableServicesMap.value.map(({ id }) => id);
+    });
 
     const availableServicesLabels = computed(() => {
-      return availableServicesMap.value.map(({ description }) => description)
-    })
+      return availableServicesMap.value.map(({ description }) => description);
+    });
 
-    const selectedService = stringQuery('service_id', null, true, true)
+    const selectedService = stringQuery("service_id", null, true, true);
 
     // Lab order filter
 
-    const selectedOrderId = stringQuery('order_id', null, true, true)
+    const selectedOrderId = stringQuery("order_id", null, true, true);
 
     // Data lifecycle
 
     onMounted(() => {
-      fetchResults()
-      fetchLabOrder()
-    })
+      fetchResults();
+      fetchLabOrder();
+    });
 
     watch(
       [
@@ -249,13 +249,13 @@ export default defineComponent({
         () => JSON.stringify(dateRange.value), // Stringify to watch for actual value changes
       ],
       () => {
-        fetchResults()
+        fetchResults();
       }
-    )
+    );
 
     watch(selectedOrderId, () => {
-      fetchLabOrder()
-    })
+      fetchLabOrder();
+    });
 
     return {
       page,
@@ -277,9 +277,9 @@ export default defineComponent({
       selectedOrderId,
       selectedOrder,
       formatDate,
-    }
+    };
   },
-})
+});
 </script>
 
 <style scoped></style>

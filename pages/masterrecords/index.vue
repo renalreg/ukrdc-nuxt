@@ -57,26 +57,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
-import { MasterRecord } from '@/interfaces/masterrecord'
-import usePagination from '~/helpers/query/usePagination'
+import { MasterRecord } from "@/interfaces/masterrecord";
+import usePagination from "~/helpers/query/usePagination";
 
-import useUserPrefs from '~/helpers/useUserPrefs'
-import useRecordSearch from '~/helpers/query/useRecordSearch'
+import useUserPrefs from "~/helpers/useUserPrefs";
+import useRecordSearch from "~/helpers/query/useRecordSearch";
 
-import fetchSearchResults from '~/helpers/fetch/fetchSearchResults'
+import fetchSearchResults from "~/helpers/fetch/fetchSearchResults";
 
 export default defineComponent({
   setup() {
-    const { page, total, size } = usePagination()
-    const { showUKRDC } = useUserPrefs()
-    const { searchQueryIsPopulated, searchboxString, searchSubmit, apiQueryString } = useRecordSearch()
-    const { fetchSearchResultsPage, searchInProgress } = fetchSearchResults()
+    const { page, total, size } = usePagination();
+    const { showUKRDC } = useUserPrefs();
+    const { searchQueryIsPopulated, searchboxString, searchSubmit, apiQueryString } = useRecordSearch();
+    const { fetchSearchResultsPage, searchInProgress } = fetchSearchResults();
 
     // Data refs
 
-    const masterrecords = ref([] as MasterRecord[])
+    const masterrecords = ref([] as MasterRecord[]);
 
     // Data fetching
 
@@ -87,22 +87,22 @@ export default defineComponent({
           page.value || 1,
           size.value,
           showUKRDC.value
-        )
+        );
 
-        masterrecords.value = resultsPage.items
-        page.value = resultsPage.page
-        total.value = resultsPage.total
-        size.value = resultsPage.size
+        masterrecords.value = resultsPage.items;
+        page.value = resultsPage.page;
+        total.value = resultsPage.total;
+        size.value = resultsPage.size;
       }
     }
 
     onMounted(() => {
-      getResults()
-    })
+      getResults();
+    });
 
     watch([apiQueryString, page, showUKRDC], () => {
-      getResults()
-    })
+      getResults();
+    });
 
     return {
       masterrecords,
@@ -114,10 +114,10 @@ export default defineComponent({
       page,
       size,
       total,
-    }
+    };
   },
   head: {
-    title: 'Master Records',
+    title: "Master Records",
   },
-})
+});
 </script>

@@ -24,12 +24,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref } from "@nuxtjs/composition-api";
 
 export default defineComponent({
   model: {
-    prop: 'open',
-    event: 'change',
+    prop: "open",
+    event: "change",
   },
   props: {
     label: {
@@ -38,16 +38,16 @@ export default defineComponent({
     },
   },
   setup() {
-    const isOpen = ref(false)
+    const isOpen = ref(false);
 
     function toggle(): void {
-      isOpen.value = !isOpen.value
+      isOpen.value = !isOpen.value;
     }
 
     return {
       isOpen,
       toggle,
-    }
+    };
   },
-})
+});
 </script>

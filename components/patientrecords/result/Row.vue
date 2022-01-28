@@ -17,7 +17,7 @@
       </div>
     </td>
     <td class="whitespace-nowrap px-6 py-4 text-gray-500">
-      {{ item.observationTime ? formatDate(item.observationTime) : 'No Observation Time' }}
+      {{ item.observationTime ? formatDate(item.observationTime) : "No Observation Time" }}
     </td>
     <td class="text-gray-500">
       <GenericButtonRound
@@ -32,11 +32,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from "@nuxtjs/composition-api";
 
-import { formatDate } from '@/helpers/utils/dateUtils'
+import { formatDate } from "@/helpers/utils/dateUtils";
 
-import { ResultItem } from '~/interfaces/laborder'
+import { ResultItem } from "~/interfaces/laborder";
 
 export default defineComponent({
   props: {
@@ -46,7 +46,7 @@ export default defineComponent({
     },
   },
   setup() {
-    return { formatDate }
+    return { formatDate };
   },
-})
+});
 </script>

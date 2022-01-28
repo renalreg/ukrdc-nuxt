@@ -18,8 +18,8 @@
           <p class="text-gray-500">Type: {{ item.surveytypecode }}</p>
           <p class="text-gray-500">
             Entered at
-            {{ item.enteredatcode ? item.enteredatcode : 'unknown location' }}
-            by {{ item.enteredbycode ? item.enteredbycode : 'unknown person' }}
+            {{ item.enteredatcode ? item.enteredatcode : "unknown location" }}
+            by {{ item.enteredbycode ? item.enteredbycode : "unknown person" }}
           </p>
 
           <div class="mt-2">
@@ -38,13 +38,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
-import { formatDate } from '@/helpers/utils/dateUtils'
+import { formatDate } from "@/helpers/utils/dateUtils";
 
-import { Survey } from '@/interfaces/survey'
-import { PatientRecord } from '@/interfaces/patientrecord'
-import fetchPatientRecords from '~/helpers/fetch/fetchPatientRecords'
+import { Survey } from "@/interfaces/survey";
+import { PatientRecord } from "@/interfaces/patientrecord";
+import fetchPatientRecords from "~/helpers/fetch/fetchPatientRecords";
 
 export default defineComponent({
   props: {
@@ -55,20 +55,20 @@ export default defineComponent({
   },
 
   setup(props) {
-    const { fetchPatientRecordSurveys } = fetchPatientRecords()
+    const { fetchPatientRecordSurveys } = fetchPatientRecords();
 
     // Data refs
-    const surveys = ref<Survey[]>()
+    const surveys = ref<Survey[]>();
 
     // Data fetching
     onMounted(async () => {
-      surveys.value = await fetchPatientRecordSurveys(props.record)
-    })
+      surveys.value = await fetchPatientRecordSurveys(props.record);
+    });
 
     return {
       surveys,
       formatDate,
-    }
+    };
   },
-})
+});
 </script>

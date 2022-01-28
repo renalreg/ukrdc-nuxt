@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from "@nuxtjs/composition-api";
 
 export default defineComponent({
   props: {
@@ -43,21 +43,21 @@ export default defineComponent({
       default: null,
     },
   },
-})
+});
 </script>
 
 <style lang="postcss">
 .btn-round-base {
-  @apply focus:outline-none
-      inline-flex
+  @apply inline-flex
       items-center
-      rounded-full border
-      border-gray-300
+      rounded-full
+      border border-gray-300
       bg-white
       p-1
       text-gray-400
       shadow-sm
       hover:bg-gray-50
-      hover:text-gray-500 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2;
+      hover:text-gray-500
+      focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2;
 }
 </style>

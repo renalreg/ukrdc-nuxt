@@ -5,11 +5,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted } from "@nuxtjs/composition-api";
 
-import { ArcElement, Chart, DoughnutController } from 'chart.js'
+import { ArcElement, Chart, DoughnutController } from "chart.js";
 
-Chart.register(DoughnutController, ArcElement)
+Chart.register(DoughnutController, ArcElement);
 
 export default defineComponent({
   props: {
@@ -33,9 +33,9 @@ export default defineComponent({
 
   setup(props) {
     onMounted(() => {
-      const canvas = document.getElementById('doughnut') as HTMLCanvasElement
+      const canvas = document.getElementById("doughnut") as HTMLCanvasElement;
       const options = {
-        type: 'doughnut',
+        type: "doughnut",
         data: {
           datasets: [
             {
@@ -47,10 +47,10 @@ export default defineComponent({
           labels: props.labels,
         },
         options: props.options,
-      }
+      };
       // @ts-ignore
-      return new Chart(canvas, options)
-    })
+      return new Chart(canvas, options);
+    });
   },
-})
+});
 </script>

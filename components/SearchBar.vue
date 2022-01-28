@@ -38,13 +38,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from "@nuxtjs/composition-api";
 
 export default defineComponent({
   props: {
     value: {
       type: String,
-      default: '',
+      default: "",
     },
     focus: {
       type: Boolean,
@@ -57,5 +57,5 @@ export default defineComponent({
       default: true,
     },
   },
-})
+});
 </script>

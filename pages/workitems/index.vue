@@ -58,63 +58,63 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
-import { WorkItem } from '@/interfaces/workitem'
-import usePagination from '~/helpers/query/usePagination'
+import { WorkItem } from "@/interfaces/workitem";
+import usePagination from "~/helpers/query/usePagination";
 
-import useQuery from '~/helpers/query/useQuery'
-import useFacilities from '~/helpers/useFacilities'
-import useSortBy from '~/helpers/query/useSortBy'
+import useQuery from "~/helpers/query/useQuery";
+import useFacilities from "~/helpers/useFacilities";
+import useSortBy from "~/helpers/query/useSortBy";
 
-import fetchWorkItems from '~/helpers/fetch/fetchWorkItems'
-import useDateRange from '~/helpers/query/useDateRange'
+import fetchWorkItems from "~/helpers/fetch/fetchWorkItems";
+import useDateRange from "~/helpers/query/useDateRange";
 
 export default defineComponent({
   setup() {
-    const { page, total, size } = usePagination()
-    const { makeDateRange } = useDateRange()
-    const { arrayQuery } = useQuery()
-    const { facilities, facilityIds, facilityLabels, selectedFacility } = useFacilities()
-    const { orderAscending, orderBy, toggleOrder } = useSortBy()
-    const { fetchWorkItemsPage } = fetchWorkItems()
+    const { page, total, size } = usePagination();
+    const { makeDateRange } = useDateRange();
+    const { arrayQuery } = useQuery();
+    const { facilities, facilityIds, facilityLabels, selectedFacility } = useFacilities();
+    const { orderAscending, orderBy, toggleOrder } = useSortBy();
+    const { fetchWorkItemsPage } = fetchWorkItems();
 
     // Data refs
 
-    const workitems = ref<WorkItem[]>()
-    const statuses = arrayQuery('status', ['1'], true, true)
+    const workitems = ref<WorkItem[]>();
+    const statuses = arrayQuery("status", ["1"], true, true);
 
-    const fetchInProgress = ref(false)
+    const fetchInProgress = ref(false);
 
     // Set initial date dateRange
-    const dateRange = makeDateRange(null, null, true, true)
+    const dateRange = makeDateRange(null, null, true, true);
 
     // Data fetching
 
     async function getWorkitems() {
-      fetchInProgress.value = true
+      fetchInProgress.value = true;
 
       const itemsPage = await fetchWorkItemsPage(
         page.value || 1,
         size.value,
-        orderBy.value || 'desc',
+        orderBy.value || "desc",
         statuses.value,
         selectedFacility.value,
         dateRange.value.start,
         dateRange.value.end
-      )
+      );
 
-      workitems.value = itemsPage.items
-      page.value = itemsPage.page
-      total.value = itemsPage.total
-      size.value = itemsPage.size
+      workitems.value = itemsPage.items;
+      page.value = itemsPage.page;
+      total.value = itemsPage.total;
+      size.value = itemsPage.size;
 
-      fetchInProgress.value = false
+      fetchInProgress.value = false;
     }
 
     onMounted(() => {
-      getWorkitems()
-    })
+      getWorkitems();
+    });
 
     watch(
       [
@@ -125,9 +125,9 @@ export default defineComponent({
         () => JSON.stringify(statuses.value), // Stringify to watch for actual value changes
       ],
       () => {
-        getWorkitems()
+        getWorkitems();
       }
-    )
+    );
 
     return {
       fetchInProgress,
@@ -144,12 +144,12 @@ export default defineComponent({
       orderAscending,
       orderBy,
       toggleOrder,
-    }
+    };
   },
   head: {
-    title: 'Work Items',
+    title: "Work Items",
   },
-})
+});
 </script>
 
 <style></style>

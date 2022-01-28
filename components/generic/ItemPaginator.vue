@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from "@nuxtjs/composition-api";
 
 export default defineComponent({
   props: {
@@ -43,22 +43,22 @@ export default defineComponent({
     itemLabel: {
       type: String,
       required: false,
-      default: 'Item',
+      default: "Item",
     },
   },
 
   setup(props, { emit }) {
     function next(): void {
-      emit('input', props.value + 1)
+      emit("input", props.value + 1);
     }
 
     function prev(): void {
-      emit('input', props.value - 1)
+      emit("input", props.value - 1);
     }
 
-    return { next, prev }
+    return { next, prev };
   },
-})
+});
 </script>
 
 <style></style>

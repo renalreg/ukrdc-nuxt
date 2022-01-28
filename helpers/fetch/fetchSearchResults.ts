@@ -1,17 +1,17 @@
-import { ref, useContext } from '@nuxtjs/composition-api'
-import { MasterRecord } from '~/interfaces/masterrecord'
+import { ref, useContext } from "@nuxtjs/composition-api";
+import { MasterRecord } from "~/interfaces/masterrecord";
 
 interface MasterRecordPage {
-  items: MasterRecord[]
-  total: number
-  page: number
-  size: number
+  items: MasterRecord[];
+  total: number;
+  page: number;
+  size: number;
 }
 
 export default function () {
-  const { $api } = useContext()
+  const { $api } = useContext();
 
-  const searchInProgress = ref(false)
+  const searchInProgress = ref(false);
 
   async function fetchSearchResultsPage(
     queryString: string,
@@ -20,20 +20,20 @@ export default function () {
     showUKRDC: boolean = false,
     onlyUKRDC: boolean = false
   ): Promise<MasterRecordPage> {
-    let path = `/v1/search/?${queryString}&page=${page}&size=${size}`
+    let path = `/v1/search/?${queryString}&page=${page}&size=${size}`;
     if (showUKRDC) {
-      path = path + '&include_ukrdc=true'
+      path = path + "&include_ukrdc=true";
     }
     if (onlyUKRDC) {
-      path = path + `&number_type=UKRDC`
+      path = path + `&number_type=UKRDC`;
     }
 
     // Fetch the search results from our API server
-    searchInProgress.value = true
-    const results: MasterRecordPage = await $api.$get(path)
-    searchInProgress.value = false
-    return results
+    searchInProgress.value = true;
+    const results: MasterRecordPage = await $api.$get(path);
+    searchInProgress.value = false;
+    return results;
   }
 
-  return { fetchSearchResultsPage, searchInProgress }
+  return { fetchSearchResultsPage, searchInProgress };
 }

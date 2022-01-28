@@ -44,9 +44,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@nuxtjs/composition-api'
-import { formatDate } from '@/helpers/utils/dateUtils'
-import { WorkItem } from '@/interfaces/workitem'
+import { computed, defineComponent } from "@nuxtjs/composition-api";
+import { formatDate } from "@/helpers/utils/dateUtils";
+import { WorkItem } from "@/interfaces/workitem";
 
 export default defineComponent({
   props: {
@@ -58,19 +58,19 @@ export default defineComponent({
   setup(props) {
     const facility = computed(() => {
       if (props.item.person?.xrefEntries[0]?.sendingFacility) {
-        return props.item.person?.xrefEntries[0]?.sendingFacility
+        return props.item.person?.xrefEntries[0]?.sendingFacility;
       } else {
-        return 'Unknown Facility'
+        return "Unknown Facility";
       }
-    })
+    });
     const extract = computed(() => {
       if (props.item.person?.xrefEntries[0]?.sendingExtract) {
-        return props.item.person?.xrefEntries[0]?.sendingExtract
+        return props.item.person?.xrefEntries[0]?.sendingExtract;
       } else {
-        return 'Unknown Extract'
+        return "Unknown Extract";
       }
-    })
-    return { formatDate, facility, extract }
+    });
+    return { formatDate, facility, extract };
   },
-})
+});
 </script>

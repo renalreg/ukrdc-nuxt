@@ -31,14 +31,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
-import { formatDate } from '@/helpers/utils/dateUtils'
+import { formatDate } from "@/helpers/utils/dateUtils";
 
-import { LabOrderShort } from '@/interfaces/laborder'
-import { PatientRecord } from '@/interfaces/patientrecord'
-import usePagination from '~/helpers/query/usePagination'
-import fetchPatientRecords from '~/helpers/fetch/fetchPatientRecords'
+import { LabOrderShort } from "@/interfaces/laborder";
+import { PatientRecord } from "@/interfaces/patientrecord";
+import usePagination from "~/helpers/query/usePagination";
+import fetchPatientRecords from "~/helpers/fetch/fetchPatientRecords";
 
 export default defineComponent({
   props: {
@@ -49,32 +49,32 @@ export default defineComponent({
   },
 
   setup(props) {
-    const { page, total, size } = usePagination()
-    const { fetchPatientRecordLabOrdersPage } = fetchPatientRecords()
+    const { page, total, size } = usePagination();
+    const { fetchPatientRecordLabOrdersPage } = fetchPatientRecords();
 
     // Data refs
-    size.value = 18 // Fetch a multiple of our row length
-    const orders = ref([] as LabOrderShort[])
+    size.value = 18; // Fetch a multiple of our row length
+    const orders = ref([] as LabOrderShort[]);
 
     // Data fetching
 
     async function fetchOrders() {
-      const ordersPage = await fetchPatientRecordLabOrdersPage(props.record, page.value || 1, size.value)
-      orders.value = ordersPage.items
-      total.value = ordersPage.total
-      page.value = ordersPage.page
-      size.value = ordersPage.size
+      const ordersPage = await fetchPatientRecordLabOrdersPage(props.record, page.value || 1, size.value);
+      orders.value = ordersPage.items;
+      total.value = ordersPage.total;
+      page.value = ordersPage.page;
+      size.value = ordersPage.size;
     }
 
     onMounted(() => {
-      fetchOrders()
-    })
+      fetchOrders();
+    });
 
     watch(page, () => {
-      fetchOrders()
-    })
+      fetchOrders();
+    });
 
-    return { page, size, total, orders, formatDate }
+    return { page, size, total, orders, formatDate };
   },
-})
+});
 </script>

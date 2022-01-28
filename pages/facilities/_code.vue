@@ -5,24 +5,24 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, useMeta, useRoute } from '@nuxtjs/composition-api'
+import { computed, defineComponent, useMeta, useRoute } from "@nuxtjs/composition-api";
 
 export default defineComponent({
   setup() {
-    const route = useRoute()
+    const route = useRoute();
 
     // Head
-    const { title } = useMeta()
-    title.value = `${route.value.params.code}`
+    const { title } = useMeta();
+    title.value = `${route.value.params.code}`;
 
-    const facilityCode = computed(() => route.value.params.code)
+    const facilityCode = computed(() => route.value.params.code);
     return {
       facilityCode,
-    }
+    };
   },
 
   head: {
-    title: 'Facility',
+    title: "Facility",
   },
-})
+});
 </script>

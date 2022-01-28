@@ -64,52 +64,57 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
-import { Code } from '@/interfaces/codes'
-import useQuery from '~/helpers/query/useQuery'
-import usePagination from '~/helpers/query/usePagination'
-import fetchCodes from '~/helpers/fetch/fetchCodes'
+import { Code } from "@/interfaces/codes";
+import useQuery from "~/helpers/query/useQuery";
+import usePagination from "~/helpers/query/usePagination";
+import fetchCodes from "~/helpers/fetch/fetchCodes";
 
 export default defineComponent({
   setup() {
-    const { page, total, size } = usePagination()
-    const { stringQuery } = useQuery()
-    const { fetchCodingStandards, fetchCodesPage } = fetchCodes()
+    const { page, total, size } = usePagination();
+    const { stringQuery } = useQuery();
+    const { fetchCodingStandards, fetchCodesPage } = fetchCodes();
 
     // Data refs
 
-    const standards = ref<string[]>()
-    const selectedStandard = stringQuery('standard', null, true, true)
+    const standards = ref<string[]>();
+    const selectedStandard = stringQuery("standard", null, true, true);
 
-    const codes = ref([] as Code[])
-    const selectedCode = ref<Code>()
+    const codes = ref([] as Code[]);
+    const selectedCode = ref<Code>();
 
-    const searchboxString = stringQuery('search', null, true, true)
+    const searchboxString = stringQuery("search", null, true, true);
 
-    const fetchInProgress = ref(false)
+    const fetchInProgress = ref(false);
 
     // Data fetching
     async function getCodes() {
-      fetchInProgress.value = true
+      fetchInProgress.value = true;
 
-      const codesPage = await fetchCodesPage(page.value || 1, size.value, selectedStandard.value, searchboxString.value)
-      codes.value = codesPage.items
-      total.value = codesPage.total
-      page.value = codesPage.page
-      size.value = codesPage.size
+      const codesPage = await fetchCodesPage(
+        page.value || 1,
+        size.value,
+        selectedStandard.value,
+        searchboxString.value
+      );
+      codes.value = codesPage.items;
+      total.value = codesPage.total;
+      page.value = codesPage.page;
+      size.value = codesPage.size;
 
-      fetchInProgress.value = false
+      fetchInProgress.value = false;
     }
 
     onMounted(async () => {
-      standards.value = await fetchCodingStandards()
-      getCodes()
-    })
+      standards.value = await fetchCodingStandards();
+      getCodes();
+    });
 
     watch([page, selectedStandard, searchboxString], () => {
-      getCodes()
-    })
+      getCodes();
+    });
 
     return {
       standards,
@@ -122,10 +127,10 @@ export default defineComponent({
       page,
       total,
       size,
-    }
+    };
   },
   head: {
-    title: 'Code List',
+    title: "Code List",
   },
-})
+});
 </script>

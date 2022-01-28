@@ -34,7 +34,7 @@
       <div class="flex flex-shrink-0 items-center gap-2 pr-2">
         <div class="flex flex-grow flex-col-reverse gap-2 xl:flex-row">
           <GenericButtonMini class="h-8 truncate" @click="showDetail = !showDetail">
-            {{ showDetail ? 'Hide Record' : 'Peek Record' }}
+            {{ showDetail ? "Hide Record" : "Peek Record" }}
           </GenericButtonMini>
           <GenericButtonMini :to="`/patientrecords/${item.pid}`" class="h-8 truncate"> Open Record </GenericButtonMini>
         </div>
@@ -56,15 +56,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
-import { formatDate } from '@/helpers/utils/dateUtils'
-import { formatGenderCharacter } from '@/helpers/utils/codeUtils'
-import { PatientRecordSummary } from '@/interfaces/patientrecord'
-import { firstMRN } from '~/helpers/utils/recordUtils'
+import { defineComponent, ref, computed } from "@nuxtjs/composition-api";
+import { formatDate } from "@/helpers/utils/dateUtils";
+import { formatGenderCharacter } from "@/helpers/utils/codeUtils";
+import { PatientRecordSummary } from "@/interfaces/patientrecord";
+import { firstMRN } from "~/helpers/utils/recordUtils";
 
 interface localNumber {
-  label: string
-  number: string
+  label: string;
+  number: string;
 }
 
 export default defineComponent({
@@ -85,13 +85,13 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const showDetail = ref(false)
+    const showDetail = ref(false);
 
     const firstMRNObject = computed<localNumber>(() => {
-      return firstMRN(props.item)
-    })
+      return firstMRN(props.item);
+    });
 
-    return { showDetail, formatDate, formatGenderCharacter, firstMRNObject }
+    return { showDetail, formatDate, formatGenderCharacter, firstMRNObject };
   },
-})
+});
 </script>

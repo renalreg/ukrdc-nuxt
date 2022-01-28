@@ -1,7 +1,7 @@
 <template>
   <div class="flex h-full flex-col items-center justify-center">
     <div class="block items-center justify-center sm:flex">
-      <TextHcxl class="sm:mr-8">{{ error.statusCode || 'Error' }}</TextHcxl>
+      <TextHcxl class="sm:mr-8">{{ error.statusCode || "Error" }}</TextHcxl>
       <div class="sm:border-l sm:pl-8">
         <TextH1 class="whitespace-pre">{{ errorTitle }}</TextH1>
         <NuxtLink to="/">Home page</NuxtLink>
@@ -14,11 +14,11 @@
 </template>
 
 <script lang="ts">
-import { NuxtError } from '@nuxt/types'
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { NuxtError } from "@nuxt/types";
+import { computed, defineComponent } from "@nuxtjs/composition-api";
 
 export default defineComponent({
-  layout: 'error',
+  layout: "error",
   props: {
     error: {
       type: Object as () => NuxtError,
@@ -27,14 +27,14 @@ export default defineComponent({
   },
   setup(props) {
     const errorTitle = computed(() => {
-      return props.error.message?.split('\n')[0] || 'Unknown error'
-    })
+      return props.error.message?.split("\n")[0] || "Unknown error";
+    });
 
     const errorDetail = computed(() => {
-      return props.error.message?.split('\n').slice(1).join('\n') || ''
-    })
+      return props.error.message?.split("\n").slice(1).join("\n") || "";
+    });
 
-    return { errorTitle, errorDetail }
+    return { errorTitle, errorDetail };
   },
-})
+});
 </script>

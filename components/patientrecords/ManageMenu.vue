@@ -27,11 +27,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
-import { PatientRecordSummary } from '@/interfaces/patientrecord'
-import { modalInterface } from '~/interfaces/modal'
-import usePermissions from '~/helpers/usePermissions'
-import fetchPatientRecords from '~/helpers/fetch/fetchPatientRecords'
+import { defineComponent, ref, useContext } from "@nuxtjs/composition-api";
+import { PatientRecordSummary } from "@/interfaces/patientrecord";
+import { modalInterface } from "~/interfaces/modal";
+import usePermissions from "~/helpers/usePermissions";
+import fetchPatientRecords from "~/helpers/fetch/fetchPatientRecords";
 
 export default defineComponent({
   props: {
@@ -51,16 +51,16 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { $toast } = useContext()
-    const { hasPermission } = usePermissions()
-    const { postPatientRecordExport } = fetchPatientRecords()
+    const { $toast } = useContext();
+    const { hasPermission } = usePermissions();
+    const { postPatientRecordExport } = fetchPatientRecords();
 
-    const deleteModal = ref<modalInterface>()
+    const deleteModal = ref<modalInterface>();
 
-    const showMenu = ref(false)
+    const showMenu = ref(false);
 
     function closeMenu() {
-      showMenu.value = false
+      showMenu.value = false;
     }
 
     function copyPID() {
@@ -68,39 +68,39 @@ export default defineComponent({
         .writeText(props.item.pid)
         .then(() => {
           $toast.show({
-            type: 'success',
-            title: 'Success',
-            message: 'PID copied to clipboard',
+            type: "success",
+            title: "Success",
+            message: "PID copied to clipboard",
             timeout: 5,
-            classTimeout: 'bg-green-600',
-          })
+            classTimeout: "bg-green-600",
+          });
         })
         .finally(() => {
-          closeMenu()
-        })
+          closeMenu();
+        });
     }
 
     function actionExport(scope: string) {
       postPatientRecordExport(props.item, scope)
         .then(() => {
           $toast.show({
-            type: 'success',
-            title: 'Success',
-            message: 'Export initiated',
-            classTimeout: 'bg-green-600',
-          })
+            type: "success",
+            title: "Success",
+            message: "Export initiated",
+            classTimeout: "bg-green-600",
+          });
         })
         .finally(() => {
-          closeMenu()
-        })
+          closeMenu();
+        });
     }
 
     function showDeleteModal() {
-      closeMenu()
-      deleteModal.value?.show()
+      closeMenu();
+      deleteModal.value?.show();
     }
 
-    return { deleteModal, showMenu, closeMenu, copyPID, actionExport, showDeleteModal, hasPermission }
+    return { deleteModal, showMenu, closeMenu, copyPID, actionExport, showDeleteModal, hasPermission };
   },
-})
+});
 </script>

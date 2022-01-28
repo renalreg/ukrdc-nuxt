@@ -61,52 +61,52 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
-import { formatDate } from '@/helpers/utils/dateUtils'
+import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
+import { formatDate } from "@/helpers/utils/dateUtils";
 
-import { MultipleUKRDCIDsGroup } from '@/interfaces/datahealth'
-import usePagination from '~/helpers/query/usePagination'
+import { MultipleUKRDCIDsGroup } from "@/interfaces/datahealth";
+import usePagination from "~/helpers/query/usePagination";
 
-import fetchDataHealth from '~/helpers/fetch/fetchDataHealth'
-import { LastRunTime } from '~/interfaces/admin'
+import fetchDataHealth from "~/helpers/fetch/fetchDataHealth";
+import { LastRunTime } from "~/interfaces/admin";
 
 export default defineComponent({
   setup() {
-    const { page, total, size } = usePagination()
-    const { fetchMultipleUKRDCIDsPage, fetchMultipleUKRDCIDsLastRun } = fetchDataHealth()
+    const { page, total, size } = usePagination();
+    const { fetchMultipleUKRDCIDsPage, fetchMultipleUKRDCIDsLastRun } = fetchDataHealth();
 
     // Data refs
-    size.value = 10 // Get 10 groups as we expect a couple of records per group
+    size.value = 10; // Get 10 groups as we expect a couple of records per group
 
-    const groups = ref<MultipleUKRDCIDsGroup[]>()
-    const fetchInProgress = ref(false)
+    const groups = ref<MultipleUKRDCIDsGroup[]>();
+    const fetchInProgress = ref(false);
 
-    const lastRunTime = ref<string>()
+    const lastRunTime = ref<string>();
 
     // Data fetching
     async function getGroups() {
-      fetchInProgress.value = true
+      fetchInProgress.value = true;
 
-      const groupsPage = await fetchMultipleUKRDCIDsPage(page.value || 1, size.value)
-      groups.value = groupsPage.items
-      total.value = groupsPage.total
-      page.value = groupsPage.page
-      size.value = groupsPage.size
+      const groupsPage = await fetchMultipleUKRDCIDsPage(page.value || 1, size.value);
+      groups.value = groupsPage.items;
+      total.value = groupsPage.total;
+      page.value = groupsPage.page;
+      size.value = groupsPage.size;
 
-      fetchInProgress.value = false
+      fetchInProgress.value = false;
     }
 
     onMounted(() => {
-      getGroups()
+      getGroups();
       fetchMultipleUKRDCIDsLastRun().then((response: LastRunTime) => {
-        console.log(response)
-        lastRunTime.value = response.lastRunTime
-      })
-    })
+        console.log(response);
+        lastRunTime.value = response.lastRunTime;
+      });
+    });
 
     watch(page, () => {
-      getGroups()
-    })
+      getGroups();
+    });
 
     return {
       groups,
@@ -116,7 +116,7 @@ export default defineComponent({
       total,
       size,
       formatDate,
-    }
+    };
   },
-})
+});
 </script>

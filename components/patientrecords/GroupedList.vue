@@ -59,18 +59,18 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from "@nuxtjs/composition-api";
 
-import { PatientRecordSummary } from '@/interfaces/patientrecord'
+import { PatientRecordSummary } from "@/interfaces/patientrecord";
 
-import { isData, isMembership, isMigrated, isSurvey, isTracing } from '@/helpers/utils/recordUtils'
+import { isData, isMembership, isMigrated, isSurvey, isTracing } from "@/helpers/utils/recordUtils";
 
 interface PRGroups {
-  data: PatientRecordSummary[]
-  surveys: PatientRecordSummary[]
-  migrated: PatientRecordSummary[]
-  memberships: PatientRecordSummary[]
-  tracing: PatientRecordSummary[]
+  data: PatientRecordSummary[];
+  surveys: PatientRecordSummary[];
+  migrated: PatientRecordSummary[];
+  memberships: PatientRecordSummary[];
+  tracing: PatientRecordSummary[];
 }
 
 export default defineComponent({
@@ -89,7 +89,7 @@ export default defineComponent({
           migrated: [],
           memberships: [],
           tracing: [],
-        } as PRGroups
+        } as PRGroups;
       }
 
       return {
@@ -98,27 +98,27 @@ export default defineComponent({
         migrated: props.records.filter(isMigrated),
         memberships: props.records.filter(isMembership),
         tracing: props.records.filter(isTracing),
-      } as PRGroups
-    })
+      } as PRGroups;
+    });
 
     const hasPVMembership = computed(() => {
-      return props.records.some((r) => r.sendingfacility === 'PV')
-    })
+      return props.records.some((r) => r.sendingfacility === "PV");
+    });
 
     const hasPKBMembership = computed(() => {
-      return props.records.some((r) => r.sendingfacility === 'PKB')
-    })
+      return props.records.some((r) => r.sendingfacility === "PKB");
+    });
 
     const hasRADARMembership = computed(() => {
-      return props.records.some((r) => r.sendingextract === 'RADAR')
-    })
+      return props.records.some((r) => r.sendingextract === "RADAR");
+    });
 
     return {
       groupedRecords,
       hasPVMembership,
       hasPKBMembership,
       hasRADARMembership,
-    }
+    };
   },
-})
+});
 </script>

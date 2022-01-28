@@ -29,9 +29,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@nuxtjs/composition-api'
-import { ConnectorMessage } from '@/interfaces/mirth'
-import { connectorMessageError } from '~/helpers/utils/mirthUtils'
+import { computed, defineComponent } from "@nuxtjs/composition-api";
+import { ConnectorMessage } from "@/interfaces/mirth";
+import { connectorMessageError } from "~/helpers/utils/mirthUtils";
 
 export default defineComponent({
   props: {
@@ -43,10 +43,10 @@ export default defineComponent({
 
   setup(props) {
     const errorMessage = computed(() => {
-      return connectorMessageError(props.message)
-    })
+      return connectorMessageError(props.message);
+    });
 
-    return { errorMessage }
+    return { errorMessage };
   },
-})
+});
 </script>

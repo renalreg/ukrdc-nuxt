@@ -3,22 +3,22 @@ Injects an $okta object into the Vue instance and context,
 allowing components to interact with a shared OktaAuth instance.
 */
 
-import { Plugin } from '@nuxt/types'
+import { Plugin } from "@nuxt/types";
 
-import { OktaAuth } from '@okta/okta-auth-js'
-import { urljoin } from '~/helpers/utils/pathUtils'
+import { OktaAuth } from "@okta/okta-auth-js";
+import { urljoin } from "~/helpers/utils/pathUtils";
 
 // Add our injected $okta into the Vue instance and context interfaces
 
-declare module 'vue/types/vue' {
+declare module "vue/types/vue" {
   interface Vue {
-    $okta: OktaAuth
+    $okta: OktaAuth;
   }
 }
 
-declare module '@nuxt/types' {
+declare module "@nuxt/types" {
   interface Context {
-    $okta: OktaAuth
+    $okta: OktaAuth;
   }
 }
 
@@ -26,26 +26,26 @@ declare module '@nuxt/types' {
 
 const oktaPlugin: Plugin = (_ctx, inject) => {
   // Common variables
-  const router = _ctx.app.router
-  const basePath = router?.options.base || '/'
+  const router = _ctx.app.router;
+  const basePath = router?.options.base || "/";
 
   // Fetch (runtime) config from context
-  const configOptions = _ctx.$config.okta
+  const configOptions = _ctx.$config.okta;
 
   // Assert router base is prepended to callback URLs
   if (configOptions.postLogoutRedirectUri) {
-    configOptions.postLogoutRedirectUri = urljoin(basePath, configOptions.postLogoutRedirectUri)
+    configOptions.postLogoutRedirectUri = urljoin(basePath, configOptions.postLogoutRedirectUri);
   }
   if (configOptions.redirectUri) {
-    configOptions.redirectUri = urljoin(basePath, configOptions.redirectUri)
+    configOptions.redirectUri = urljoin(basePath, configOptions.redirectUri);
   }
 
   // Create OktaAuth instance
-  const oktaAuth = new OktaAuth(configOptions)
+  const oktaAuth = new OktaAuth(configOptions);
 
   // Start the auth background service
-  console.debug('Starting OktaAuth service...')
-  oktaAuth.start()
+  console.debug("Starting OktaAuth service...");
+  oktaAuth.start();
 
   // Look for a router instance to handle URI restoration
   if (!oktaAuth.options.restoreOriginalUri) {
@@ -55,13 +55,13 @@ const oktaPlugin: Plugin = (_ctx, inject) => {
       if (router && originalUri) {
         // Our originalUri will always be a router path (i.e. route.value.fullPath, see useAuth.ts),
         // so we can pass it straight through to the router without any further modifications.
-        router.replace({ path: originalUri })
+        router.replace({ path: originalUri });
       }
-    }
+    };
   }
 
   // Inject oktaAuth into Vue
-  inject('okta', oktaAuth)
-}
+  inject("okta", oktaAuth);
+};
 
-export default oktaPlugin
+export default oktaPlugin;

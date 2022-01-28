@@ -6,9 +6,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from "@nuxtjs/composition-api";
 
-import { ChannelMessage } from '@/interfaces/mirth'
+import { ChannelMessage } from "@/interfaces/mirth";
 
 export default defineComponent({
   props: {
@@ -18,10 +18,10 @@ export default defineComponent({
     },
   },
   setup() {
-    return {}
+    return {};
   },
   head: {
-    title: 'Mirth Message',
+    title: "Mirth Message",
   },
-})
+});
 </script>
