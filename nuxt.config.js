@@ -11,9 +11,18 @@ export default {
       lang: 'en',
     },
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      {
+        charset: 'utf-8',
+      },
+      {
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1',
+      },
+      {
+        hid: 'description',
+        name: 'description',
+        content: '',
+      },
     ],
   },
 
@@ -101,8 +110,6 @@ export default {
       host: process.env.API_HOST,
       base: process.env.API_BASE_URL || '/new/api',
     },
-    // Nuxt-Auth user key containing an array of permission group strings
-    userPermissionKey: process.env.USER_PERMISSION_KEY || 'org.ukrdc.permissions',
     // Okta domain
     manageAccountUrl: process.env.MANAGE_ACCOUNT_URL || 'https://renalregistry.okta.com/app/UserHome',
     // Deployment environment

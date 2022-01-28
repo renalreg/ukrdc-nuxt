@@ -50,7 +50,7 @@ const oktaPlugin: Plugin = (_ctx, inject) => {
   // Look for a router instance to handle URI restoration
   if (!oktaAuth.options.restoreOriginalUri) {
     // eslint-disable-next-line require-await
-    oktaAuth.options.restoreOriginalUri = async (_: OktaAuth, originalUri: string) => {
+    oktaAuth.options.restoreOriginalUri = async (_: OktaAuth, originalUri?: string) => {
       // If a router is available, provide a default implementation
       if (router && originalUri) {
         // Our originalUri will always be a router path (i.e. route.value.fullPath, see useAuth.ts),
