@@ -1,0 +1,11 @@
+{
+  "name": "nuxt-okta-auth",
+  "description": "Basic client-side authentication for Okta",
+  "license": "MIT",
+  "main": "src/module.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "src",
+    "types/*.d.ts"
+  ]
+}

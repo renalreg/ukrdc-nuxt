@@ -65,9 +65,9 @@ Although we disable server-side rendering and build a "traditional" Vue single-p
 
 Our authentication code is split over 3 main files:
 
-#### `plugins/okta-auth.client.ts`
+#### `modules/okta-auth`
 
-This plugin provides the bare minimum required to boostrap our authentication flow. It creates an instance of `OktaAuth` from the excellent `@okta/okta-auth-js` library, and injects this object as `$okta` into the application context and Vue instance. It additionally starts the Oktra authentication background service responsible for automatic token refreshing, and sets up functionality for restoring URLs after login callback using the Nuxt router.
+This module installs a plugin that provides the bare minimum required to boostrap our authentication flow. It creates an instance of `OktaAuth` from the excellent `@okta/okta-auth-js` library, and injects this object as `$okta` into the application context and Vue instance. It additionally starts the Oktra authentication background service responsible for automatic token refreshing, and sets up functionality for restoring URLs after login callback using the Nuxt router.
 
 #### `middleware/okta-auth.ts`
 

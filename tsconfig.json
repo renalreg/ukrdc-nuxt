@@ -15,7 +15,15 @@
       "~/*": ["./*"],
       "@/*": ["./*"]
     },
-    "types": ["@nuxt/types", "@nuxtjs/axios", "@types/node", "@nuxtjs/sentry", "@types/chart.js", "@types/luxon"]
+    "types": [
+      "@nuxt/types",
+      "@nuxtjs/axios",
+      "@types/node",
+      "@nuxtjs/sentry",
+      "@types/chart.js",
+      "@types/luxon",
+      "~/modules/okta-auth"
+    ]
   },
   "exclude": ["node_modules", ".nuxt", "dist"]
 }

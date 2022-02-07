@@ -1,6 +1,6 @@
 import { Context } from "@nuxt/types";
 import { AxiosError, AxiosRequestConfig, AxiosResponse, AxiosStatic } from "axios";
-import { isAbsolute, urljoin } from "~/helpers/utils/pathUtils";
+import { isAbsolute } from "~/helpers/utils/pathUtils";
 
 /* 
 TEMPORARY REDEFINITION OF NuxtAxiosInstance TYPE
@@ -80,7 +80,7 @@ export default function ({ $axios, $okta, $config }: Context, inject: Function) 
       // so we don't need to add it again.
       // Likewise, we assume any absolute URLs are already correct.
       if (!isAbsolute(config.url) && !config.url.startsWith($config.api.base)) {
-        config.url = urljoin($config.api.base, config.url);
+        config.url = $config.api.base + config.url;
       }
     }
 
