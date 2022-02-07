@@ -1,6 +1,7 @@
 import { Context } from "@nuxt/types";
 import { AxiosError, AxiosRequestConfig, AxiosResponse, AxiosStatic } from "axios";
-import { isAbsolute, urljoin } from "~/helpers/utils/pathUtils";
+import urljoin from "url-join";
+import { isAbsolute } from "~/helpers/utils/pathUtils";
 
 /* 
 TEMPORARY REDEFINITION OF NuxtAxiosInstance TYPE

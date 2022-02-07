@@ -40,7 +40,7 @@ export default {
     "~/plugins/v-tooltip.client.ts",
     "~/plugins/toast.client.ts",
     "~/plugins/vue-clickaway.client.ts",
-    "~/plugins/okta-auth.client.ts",
+    // "~/plugins/okta-auth.client.ts",
     "~/plugins/axios-ukrdc-api.client.ts",
     "~/plugins/axios-error-handlers.ts",
     "~/plugins/sentry-usercontext.client.ts",
@@ -57,7 +57,7 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ["@nuxtjs/axios", "@nuxtjs/sentry"],
+  modules: ["~/modules/okta-auth", "@nuxtjs/axios", "@nuxtjs/sentry"],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
@@ -67,6 +67,19 @@ export default {
         autoprefixer: {},
       },
     },
+  },
+
+  // Router and middleware configuration
+  router: {
+    middleware: ["check-ie", "okta-auth"],
+    base: process.env.APP_BASE_URL || "/new/app",
+  },
+
+  // Build-time variables. These are resolved during the build process,
+  // and can be accessed via `process.env.VAR_NAME` in the code.
+  env: {
+    githubRef: process.env.GITHUB_REF || "Not Available",
+    githubSha: process.env.GITHUB_SHA || "Not Available",
   },
 
   // Sentry Configuration: https://sentry.nuxtjs.org/guide/setup
@@ -99,17 +112,15 @@ export default {
     },
   },
 
-  // Router and middleware configuration
-  router: {
-    middleware: ["check-ie", "okta-auth"],
-    base: process.env.APP_BASE_URL || "/new/app",
-  },
-
-  // Build-time variables. These are resolved during the build process,
-  // and can be accessed via `process.env.VAR_NAME` in the code.
-  env: {
-    githubRef: process.env.GITHUB_REF || "Not Available",
-    githubSha: process.env.GITHUB_SHA || "Not Available",
+  // Okta JS config
+  okta: {
+    redirectUri: "/login",
+    postLogoutRedirectUri: "/login",
+    // Use authorization_code flow
+    responseType: "code",
+    pkce: true,
+    // Extra options
+    scopes: ["openid", "profile", "email", "offline_access"],
   },
 
   // Runtime configuration variables
@@ -133,13 +144,6 @@ export default {
     okta: {
       issuer: process.env.OAUTH_ISSUER,
       clientId: process.env.APP_CLIENT_ID,
-      redirectUri: "/login",
-      postLogoutRedirectUri: "/login",
-      // Use authorization_code flow
-      responseType: "code",
-      pkce: true,
-      // Extra options
-      scopes: ["openid", "profile", "email", "offline_access"],
     },
   },
 };
