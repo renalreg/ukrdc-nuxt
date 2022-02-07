@@ -4,6 +4,7 @@ allowing components to interact with a shared OktaAuth instance.
 */
 
 import { OktaAuth } from "@okta/okta-auth-js";
+import urljoin from "url-join";
 
 const oktaPlugin = (_ctx, inject) => {
   // Common variables
@@ -24,10 +25,10 @@ const oktaPlugin = (_ctx, inject) => {
 
   // Assert router base is prepended to callback URLs
   if (configOptions.postLogoutRedirectUri) {
-    configOptions.postLogoutRedirectUri = basePath + configOptions.postLogoutRedirectUri;
+    configOptions.postLogoutRedirectUri = urljoin(basePath, configOptions.postLogoutRedirectUri);
   }
   if (configOptions.redirectUri) {
-    configOptions.redirectUri = basePath + configOptions.redirectUri;
+    configOptions.redirectUri = urljoin(basePath, configOptions.redirectUri);
   }
 
   // Create OktaAuth instance
