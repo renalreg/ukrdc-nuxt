@@ -1,4 +1,6 @@
-export default {
+import { defineNuxtConfig } from "@nuxt/bridge";
+
+export default defineNuxtConfig({
   // Disable SSR, and build as an SPA
   ssr: false,
   // Use the Nuxt server to serve the SPA, allowing runtime config
@@ -51,8 +53,6 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    "@nuxt/typescript-build",
-    "@nuxtjs/composition-api/module",
     "@nuxt/postcss8", // Required for TailwindCSS
   ],
 
@@ -146,4 +146,4 @@ export default {
       clientId: process.env.APP_CLIENT_ID,
     },
   },
-};
+});
