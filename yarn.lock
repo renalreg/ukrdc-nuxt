@@ -976,6 +976,18 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@floating-ui/core@^0.3.0":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@floating-ui/core/-/core-0.3.1.tgz#3dde0ad0724d4b730567c92f49f0950910e18871"
+  integrity sha512-ensKY7Ub59u16qsVIFEo2hwTCqZ/r9oZZFh51ivcLGHfUwTn8l1Xzng8RJUe91H/UP8PeqeBronAGx0qmzwk2g==
+
+"@floating-ui/dom@^0.1.10":
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@floating-ui/dom/-/dom-0.1.10.tgz#ce304136a52c71ef157826d2ebf52d68fa2deed5"
+  integrity sha512-4kAVoogvQm2N0XE0G6APQJuCNuErjOfPW8Ux7DFxh8+AfugWflwVJ5LDlHOwrwut7z/30NUvdtHzQ3zSip4EzQ==
+  dependencies:
+    "@floating-ui/core" "^0.3.0"
+
 "@gar/promisify@^1.0.1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.2.tgz#30aa825f11d438671d585bd44e7fd564535fc210"
@@ -1554,11 +1566,6 @@
   version "1.0.0-next.21"
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
-
-"@popperjs/core@^2.11.0":
-  version "2.11.2"
-  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.2.tgz#830beaec4b4091a9e9398ac50f865ddea52186b9"
-  integrity sha512-92FRmppjjqz29VMJ2dn+xdyXZBrMlE42AV6Kq6BwjWV7CNUW1hs2FtxSNLQE+gJhaZ6AAmYuO9y8dshhcBl7vA==
 
 "@rollup/pluginutils@^4.1.1":
   version "4.1.2"
@@ -4917,6 +4924,14 @@ flatten@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.3.tgz#c1283ac9f27b368abc1e36d1ff7b04501a30356b"
   integrity sha512-dVsPA/UwQ8+2uoFe5GHtiBMu48dWLTdsuEd7CKGlZlD78r1TTWBvDuFaFGKCo/ZfEr95Uk56vZoX86OsHkUeIg==
+
+floating-vue@^1.0.0-beta.9:
+  version "1.0.0-beta.9"
+  resolved "https://registry.yarnpkg.com/floating-vue/-/floating-vue-1.0.0-beta.9.tgz#276fef4fd05edf13df59f96ea688edb9d5373101"
+  integrity sha512-fjub3ca+ttLcHG0E65y6Ft8BYrzK0qlVv+7eSnfjTExVY+4tl6Z6P9Tv1pAn07YD6rUhH6prl1DHl2cbbQlndg==
+  dependencies:
+    "@floating-ui/dom" "^0.1.10"
+    vue-resize "^1.0.0"
 
 flush-write-stream@^1.0.0:
   version "1.1.1"
@@ -9761,14 +9776,6 @@ v-calendar@^2.3.1:
     date-fns "^2.22.1"
     date-fns-tz "^1.1.4"
     lodash "^4.17.21"
-
-v-tooltip@^3.0.0-beta.1:
-  version "3.0.0-beta.20"
-  resolved "https://registry.yarnpkg.com/v-tooltip/-/v-tooltip-3.0.0-beta.20.tgz#d7636ce6684315b2bf949ea13f82fd829ca3d781"
-  integrity sha512-qoOy501P/CCpnWfAtxXiO1FDem8OPtxeubk9+LJU7g9dJTVu53RDimdUtKAtp9inTFVg/vqeRhezj2NfZyWOcg==
-  dependencies:
-    "@popperjs/core" "^2.11.0"
-    vue-resize "^1.0.0"
 
 v8-compile-cache@^2.0.3:
   version "2.3.0"
