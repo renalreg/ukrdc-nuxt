@@ -34,7 +34,7 @@ export default defineComponent({
     // Head
 
     const { title } = useMeta();
-    title.value = `Error ${route.value.params.id}`;
+    title.value = `Message ${route.value.params.id}`;
 
     // Data refs
 
