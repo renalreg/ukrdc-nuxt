@@ -35,12 +35,12 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    "~/plugins/okta-auto-logout.client.ts",
     "~/plugins/vuex-persistedstate.client.ts",
     "~/plugins/v-calendar.client.ts",
     "~/plugins/v-tooltip.client.ts",
     "~/plugins/toast.client.ts",
     "~/plugins/vue-clickaway.client.ts",
-    // "~/plugins/okta-auth.client.ts",
     "~/plugins/axios-ukrdc-api.client.ts",
     "~/plugins/axios-error-handlers.ts",
     "~/plugins/sentry-usercontext.client.ts",

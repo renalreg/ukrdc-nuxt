@@ -15,7 +15,7 @@ export interface UKRDCJWTObject extends JWTObject {
 }
 
 export default function () {
-  const { $okta, $config } = useContext();
+  const { $okta } = useContext();
 
   const oktaAuth: OktaAuth = $okta;
   const authState = ref($okta.authStateManager.getAuthState());
@@ -36,9 +36,7 @@ export default function () {
   });
 
   async function signOut() {
-    await oktaAuth.signOut({
-      postLogoutRedirectUri: `${window.location.origin}${$config.okta.postLogoutRedirectUri}`,
-    });
+    await oktaAuth.signOut();
   }
 
   function signedIn(): boolean {

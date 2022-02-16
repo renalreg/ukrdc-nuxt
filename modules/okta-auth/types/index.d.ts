@@ -1,8 +1,8 @@
 import { OktaAuth } from "@okta/okta-auth-js";
 
 interface oktaAuthOptions {
-  redirectUri: string;
-  postLogoutRedirectUri: string;
+  redirectUri: string; // Post-login redirect URI relative to router base
+  postLogoutRedirectUri: string; // Post-logout redirect URI relative to router base
   responseType: string;
   pkce: boolean;
 
