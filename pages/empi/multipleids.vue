@@ -99,7 +99,6 @@ export default defineComponent({
     onMounted(() => {
       getGroups();
       fetchMultipleUKRDCIDsLastRun().then((response: LastRunTime) => {
-        console.log(response);
         lastRunTime.value = response.lastRunTime;
       });
     });
