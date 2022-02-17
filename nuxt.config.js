@@ -35,7 +35,6 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    "~/plugins/okta-auto-logout.client.ts",
     "~/plugins/vuex-persistedstate.client.ts",
     "~/plugins/v-calendar.client.ts",
     "~/plugins/v-tooltip.client.ts",
@@ -71,7 +70,7 @@ export default {
 
   // Router and middleware configuration
   router: {
-    middleware: ["check-ie", "okta-auth"],
+    middleware: ["check-ie"],
     base: process.env.APP_BASE_URL || "/new/app",
   },
 
@@ -114,12 +113,12 @@ export default {
 
   // Okta JS config
   okta: {
+    defaultProtectRoutes: true,
     redirectUri: "/login",
     postLogoutRedirectUri: "/login",
-    // Use authorization_code flow
+    authExpiredRedirectUri: "/login",
     responseType: "code",
     pkce: true,
-    // Extra options
     scopes: ["openid", "profile", "email", "offline_access"],
   },
 
