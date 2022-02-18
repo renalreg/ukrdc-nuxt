@@ -19,6 +19,9 @@
     <td class="whitespace-nowrap px-6 py-4 text-gray-500">
       {{ item.observationTime ? formatDate(item.observationTime) : "No Observation Time" }}
     </td>
+    <td class="whitespace-nowrap px-4 py-4 text-gray-500">
+      <BadgeBase v-if="item.prePost" class="bg-gray-100 text-gray-800">{{ prePostString }}</BadgeBase>
+    </td>
     <td class="text-gray-500">
       <GenericButtonRound
         class="opacity-0 group-hover:opacity-100"
@@ -32,7 +35,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@nuxtjs/composition-api";
+import { computed, defineComponent } from "@nuxtjs/composition-api";
 
 import { formatDate } from "@/helpers/utils/dateUtils";
 
@@ -45,8 +48,17 @@ export default defineComponent({
       required: true,
     },
   },
-  setup() {
-    return { formatDate };
+  setup(props) {
+    const prePostString = computed(() => {
+      if (props.item.prePost === "PRE") {
+        return "Pre-Dialysis";
+      } else if (props.item.prePost === "POST") {
+        return "Post-Dialysis";
+      } else {
+        return "";
+      }
+    });
+    return { prePostString, formatDate };
   },
 });
 </script>

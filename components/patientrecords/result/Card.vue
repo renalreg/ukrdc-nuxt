@@ -11,7 +11,13 @@
       </NuxtLink>
     </div>
     <div class="col-span-1 text-sm font-medium uppercase tracking-wider text-gray-500">Entered On</div>
-    <TextP class="col-span-2">{{ formatDate(item.observationTime) }}</TextP>
+    <TextP class="col-span-2">
+      {{ formatDate(item.observationTime) }}
+      <br />
+      <BadgeBase v-if="item.prePost" class="mt-2 -ml-1 bg-gray-100 text-gray-800">
+        {{ prePostString }}
+      </BadgeBase>
+    </TextP>
     <GenericButton tooltip="Delete this result item" label="Delete this result item" @click="$emit('delete', item)">
       Delete</GenericButton
     >
@@ -19,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@nuxtjs/composition-api";
+import { computed, defineComponent } from "@nuxtjs/composition-api";
 
 import { formatDate } from "@/helpers/utils/dateUtils";
 
@@ -32,8 +38,17 @@ export default defineComponent({
       required: true,
     },
   },
-  setup() {
-    return { formatDate };
+  setup(props) {
+    const prePostString = computed(() => {
+      if (props.item.prePost === "PRE") {
+        return "Pre-Dialysis";
+      } else if (props.item.prePost === "POST") {
+        return "Post-Dialysis";
+      } else {
+        return "";
+      }
+    });
+    return { prePostString, formatDate };
   },
 });
 </script>

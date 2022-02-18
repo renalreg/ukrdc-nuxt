@@ -21,6 +21,7 @@ export interface ResultItem {
   serviceIdDescription: string;
   value: string;
   valueUnits: string;
+  prePost: string;
   links: ResultItemLinks;
 }
 

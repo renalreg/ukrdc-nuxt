@@ -66,6 +66,7 @@
             Observation Time
           </th>
           <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500"></th>
+          <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500"></th>
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-200 bg-white">
