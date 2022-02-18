@@ -91,8 +91,16 @@
         <TextH2> Linked Master Records </TextH2>
       </GenericCardHeader>
       <ul v-if="relatedRecords" class="divide-y divide-gray-200">
-        <div v-for="item in relatedRecords" :key="item.id" class="hover:bg-gray-50">
-          <NuxtLink :to="`/masterrecords/${item.id}`">
+        <div
+          v-for="item in relatedRecords"
+          :key="item.id"
+          class=""
+          :class="item.id === record.id ? 'bg-gray-50' : 'hover:bg-gray-50'"
+        >
+          <NuxtLink
+            v-tooltip="item.id === record.id ? 'You are currently viewing this record' : null"
+            :to="`/masterrecords/${item.id}`"
+          >
             <MasterrecordsListItem :item="item" />
           </NuxtLink>
         </div>
@@ -146,7 +154,7 @@ export default defineComponent({
         patientRecords.value = records;
       });
 
-      fetchMasterRecordRelated(props.record).then((records) => {
+      fetchMasterRecordRelated(props.record, false).then((records) => {
         relatedRecords.value = records;
       });
 
