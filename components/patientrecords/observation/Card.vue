@@ -10,7 +10,11 @@
       <TextP>{{ item.enteredAtDescription }}</TextP>
     </div>
     <div class="col-span-1 text-sm font-medium uppercase tracking-wider text-gray-500">Entered On</div>
-    <TextP class="col-span-2">{{ formatDate(item.observationTime) }}</TextP>
+    <TextP class="col-span-2">
+      {{ formatDate(item.observationTime) }}
+      <br />
+      <BadgePrePost v-if="item.prePost" class="-ml-1 mt-2" :pre-post="item.prePost" />
+    </TextP>
   </GenericCardFlat>
 </template>
 
