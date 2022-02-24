@@ -25,26 +25,30 @@ page (for multi-facility users), and the homepage (for single-facility users).
       <TextL2 class="mb-2 -mt-4 text-right"> Last updated {{ lastUpdatedString }} </TextL2>
       <!-- Basic stats -->
       <div class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-3">
-        <NuxtLink class="group" :to="{ path: `/masterrecords/`, query: { search: [`facility=${code}`, ''] } }">
-          <GenericCard>
-            <div class="flex items-center p-4">
-              <div class="flex-shrink-0">
-                <IconUsers />
-              </div>
-              <div class="ml-5 w-0 flex-1">
-                <dl>
-                  <GenericCardDt>Total Patients</GenericCardDt>
-                  <dd>
-                    <TextHc class="group-hover:underline">{{ facility.statistics.totalPatients }}</TextHc>
-                  </dd>
-                </dl>
-              </div>
+        <GenericCard>
+          <div class="flex items-center p-4">
+            <div class="flex-shrink-0">
+              <IconUsers />
             </div>
-            <div class="bg-gray-50 px-4 py-2 text-sm text-gray-500">
-              Total patients ever stored in the UKRDC for this facility
+            <div class="ml-5 w-0 flex-1">
+              <dl>
+                <GenericCardDt>Total Patients</GenericCardDt>
+                <dd class="flex items-baseline">
+                  <TextHc class="flex-grow">{{ facility.statistics.totalPatients }}</TextHc>
+                  <NuxtLink
+                    class="hover:underline"
+                    :to="{ path: `/masterrecords/`, query: { search: [`facility=${code}`, ''] } }"
+                  >
+                    Show all patients
+                  </NuxtLink>
+                </dd>
+              </dl>
             </div>
-          </GenericCard>
-        </NuxtLink>
+          </div>
+          <div class="bg-gray-50 px-4 py-2 text-sm text-gray-500">
+            Total patients ever stored in the UKRDC for this facility
+          </div>
+        </GenericCard>
 
         <GenericCard>
           <div class="flex items-center p-4">

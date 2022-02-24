@@ -79,7 +79,7 @@ Table of facilities and their basic statistics
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
+import { computed, defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import fetchFacilities from "~/helpers/fetch/fetchFacilities";
 import { Facility } from "~/interfaces/facilities";
 
@@ -149,6 +149,13 @@ export default defineComponent({
     onMounted(async () => {
       await fetchTable();
     });
+
+    watch(
+      () => props.includeEmpty,
+      async () => {
+        await fetchTable();
+      }
+    );
 
     return {
       facilities,

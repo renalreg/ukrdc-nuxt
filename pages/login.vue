@@ -1,38 +1,31 @@
 <template>
   <div class="justify-center text-center">
-    <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Redirecting to login...</h2>
+    <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Signing you in...</h2>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeMount, useRouter } from "@nuxtjs/composition-api";
-
-import useAuth from "~/helpers/useAuth";
+import { defineComponent, onBeforeMount, useContext, useRouter } from "@nuxtjs/composition-api";
 
 export default defineComponent({
   // Override auth middleware. We handle redirects here ourselves in mounted()
   auth: false,
 
   setup() {
-    const { oktaAuth, signedIn } = useAuth();
+    const { $okta } = useContext();
     const router = useRouter();
 
-    onBeforeMount(() => {
-      const originalUri = oktaAuth.getOriginalUri();
-      if (oktaAuth.isLoginRedirect()) {
+    onBeforeMount(async () => {
+      // If an originalUri was stored before navigating to this page, keep using it
+      const originalUri = $okta.getOriginalUri();
+
+      if ($okta.isLoginRedirect()) {
         // If we're in the middle of a sign-in flow
         // Fetch tokens and redirect back to originalUri
-        oktaAuth.handleLoginRedirect();
-      } else if (!signedIn()) {
-        // If we're not currently signed in
-        // Check if we were redirected here from another page
-        if (!originalUri) {
-          // If we weren't redirected here from another page,
-          // redirect back to the home page after login
-          oktaAuth.setOriginalUri("/");
-        }
+        $okta.handleLoginRedirect();
+      } else if (!(await $okta.isAuthenticated())) {
         // Start sign-in flow
-        oktaAuth.signInWithRedirect();
+        $okta.signInAuto(originalUri || "/");
       } else if (originalUri) {
         // If we're signed in and an originalUri somehow exists
         router.replace({ path: originalUri });
@@ -42,10 +35,6 @@ export default defineComponent({
         router.replace({ path: "/" });
       }
     });
-
-    return {
-      oktaAuth,
-    };
   },
   head: {
     title: "Login",

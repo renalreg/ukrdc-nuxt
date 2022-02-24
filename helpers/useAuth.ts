@@ -1,10 +1,9 @@
 /*
-Utility functions to simplify interacting with the Okta Auth SDK.
+Utility functions to simplify interacting with a reactive Okta Auth state.
 */
 
-import { onBeforeUnmount, ref, useContext } from "@nuxtjs/composition-api";
-
-import { OktaAuth, AuthState, UserClaims, JWTObject } from "@okta/okta-auth-js";
+import { onBeforeUnmount, ref, useContext, computed } from "@nuxtjs/composition-api";
+import { AuthState, UserClaims, JWTObject } from "@okta/okta-auth-js";
 
 export interface UKRDCClaims {
   "org.ukrdc.permissions": string[];
@@ -15,12 +14,8 @@ export interface UKRDCJWTObject extends JWTObject {
 }
 
 export default function () {
-  const { $okta, $config } = useContext();
-
-  const oktaAuth: OktaAuth = $okta;
+  const { $okta } = useContext();
   const authState = ref($okta.authStateManager.getAuthState());
-
-  // HANDLE STATE CHANGES
 
   // When auth state changes, update authState.value
   function _handleAuthStateUpdate(newAuthState: AuthState) {
@@ -28,56 +23,32 @@ export default function () {
   }
 
   // Subscribe to auth state changes
-  oktaAuth.authStateManager.subscribe(_handleAuthStateUpdate);
+  $okta.authStateManager.subscribe(_handleAuthStateUpdate);
 
   // Unsubscribe from auth state changes when component is destroyed
   onBeforeUnmount(() => {
-    oktaAuth.authStateManager.unsubscribe(_handleAuthStateUpdate);
+    $okta.authStateManager.unsubscribe(_handleAuthStateUpdate);
   });
 
-  async function signOut() {
-    await oktaAuth.signOut({
-      postLogoutRedirectUri: `${window.location.origin}${$config.okta.postLogoutRedirectUri}`,
-    });
-  }
-
-  function signedIn(): boolean {
-    return (authState.value && authState.value.isAuthenticated) || false;
-  }
-
-  function getAccessToken(): UKRDCJWTObject | null {
-    if (signedIn()) {
-      const rawAccessToken = oktaAuth.getAccessToken();
-      return rawAccessToken ? (oktaAuth.token.decode(rawAccessToken) as UKRDCJWTObject) : null;
-    } else {
-      return null;
+  // Reactive decoded ID token
+  const idToken = computed((): JWTObject | null => {
+    if (authState.value?.idToken?.idToken) {
+      return $okta.token.decode(authState.value?.idToken?.idToken);
     }
-  }
+    return null;
+  });
 
-  function getIdToken(): JWTObject | null {
-    if (signedIn()) {
-      const rawIdToken = oktaAuth.getIdToken();
-      return rawIdToken ? oktaAuth.token.decode(rawIdToken) : null;
-    } else {
-      return null;
+  // Reactive decoded access token
+  const accessToken = computed(() => {
+    if (authState.value?.accessToken?.accessToken) {
+      return $okta.token.decode(authState.value?.accessToken?.accessToken);
     }
-  }
-
-  async function getUser(): Promise<{ [key: string]: any }> {
-    // Get user info from the /userinfo Okta API endpoint
-    return await oktaAuth.getUser();
-  }
+    return null;
+  });
 
   return {
-    // Auth states
-    oktaAuth,
     authState,
-    signedIn,
-    // Token and user info
-    getAccessToken,
-    getIdToken,
-    getUser,
-    // Sign out functionality
-    signOut,
+    idToken,
+    accessToken,
   };
 }

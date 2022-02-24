@@ -16,17 +16,16 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
+import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
 import { DashResponse } from "@/interfaces/dash";
 
 import fetchDash from "~/helpers/fetch/fetchDash";
 
 import usePermissions from "~/helpers/usePermissions";
-import useAuth from "~/helpers/useAuth";
 
 export default defineComponent({
   setup() {
-    const { signedIn } = useAuth();
+    const { $okta } = useContext();
     const { isAdmin, getFacilities, hasMultipleFacilities } = usePermissions();
     const { fetchDashboard } = fetchDash();
 
@@ -39,7 +38,7 @@ export default defineComponent({
     });
 
     onMounted(async () => {
-      if (signedIn()) {
+      if (await $okta.isAuthenticated()) {
         dash.value = await fetchDashboard();
       }
     });
