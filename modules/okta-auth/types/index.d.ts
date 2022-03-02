@@ -5,6 +5,7 @@ declare class NuxtOktaAuth extends OktaAuth {
   router: VueRouter.default;
   constructor(options: OktaAuthOptions, router: VueRouter.default);
   signInAuto(originalUri?: string): Promise<void>;
+  signOutAuto(): Promise<void>;
 }
 
 interface NuxtOktaAuthOptions extends OktaAuthOptions {

@@ -50,7 +50,7 @@
             class="rounded-md border border-gray-300 bg-white px-3 py-2 text-center font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >Manage Account</a
           >
-          <GenericButton @click="$okta.signOut"> Sign out </GenericButton>
+          <GenericButton @click="$okta.signOutAuto()"> Sign out </GenericButton>
         </div>
       </div>
       <div class="mb-4">

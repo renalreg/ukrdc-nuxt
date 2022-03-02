@@ -54,7 +54,7 @@
       <GenericMenuDivider />
       <GenericMenuItem to="/system"> Support </GenericMenuItem>
       <GenericMenuDivider />
-      <GenericMenuItem @click="$okta.signOut()"> Logout </GenericMenuItem>
+      <GenericMenuItem @click="$okta.signOutAuto()"> Logout </GenericMenuItem>
     </GenericMenu>
   </div>
 </template>
