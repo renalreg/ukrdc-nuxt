@@ -30,9 +30,14 @@ class NuxtOktaAuth extends OktaAuth {
     // Set the originalUri to be restored after sign-in, then sign in with redirect
     if (this.router) {
       this.setOriginalUri(originalUri || this.router.currentRoute.fullPath);
-      console.log(this.getOriginalUri());
       return this.signInWithRedirect();
     }
+  }
+
+  signOutAuto() {
+    return this.signOut({
+      postLogoutRedirectUri: `${window.location.origin}${this.options.postLogoutRedirectUri}`,
+    });
   }
 
   signedIn() {}
