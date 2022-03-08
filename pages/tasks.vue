@@ -2,7 +2,7 @@
   <div>
     <TextH1 class="mb-4">Background Tasks</TextH1>
 
-    <GenericTable>
+    <GenericTable class="mb-4">
       <thead class="bg-gray-50">
         <tr>
           <th scope="col" class="px-6 py-3 text-left">
@@ -43,6 +43,8 @@
         </tr>
       </tbody>
     </GenericTable>
+
+    <GenericButton @click="submitTestTaskHandler">Start test task</GenericButton>
   </div>
 </template>
 
@@ -55,18 +57,36 @@ import { TrackableTask } from "~/interfaces/tasks";
 
 export default defineComponent({
   setup() {
-    const { fetchTasksList } = fetchTasks();
+    const { submitTestTask, fetchTasksList, pollTask } = fetchTasks();
 
     // Data refs
     const tasks = ref([] as TrackableTask[]);
 
     // Data fetching
 
-    onMounted(async () => {
+    async function getTasks() {
       tasks.value = await fetchTasksList();
+    }
+
+    onMounted(async () => {
+      await getTasks();
     });
 
+    // Test functions
+    async function submitTestTaskHandler() {
+      // Submit the task
+      const task = await submitTestTask(5);
+      // Reload task list
+      await getTasks();
+      // Start polling new task
+      pollTask(task, 1).then(() => {
+        // Reload task list when finished
+        getTasks();
+      });
+    }
+
     return {
+      submitTestTaskHandler,
       formatDate,
       tasks,
     };
