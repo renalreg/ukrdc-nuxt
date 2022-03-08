@@ -23,7 +23,7 @@ export default defineComponent({
       if (props.visibility === "public") {
         return ["bg-green-100", "text-green-800"];
       } else if (props.visibility === "private") {
-        return ["bg-red-100", "text-red-800"];
+        return ["bg-blue-100", "text-blue-800"];
       } else {
         return ["bg-gray-100", "text-gray-800"];
       }
