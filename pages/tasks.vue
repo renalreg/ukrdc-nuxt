@@ -44,7 +44,18 @@
       </tbody>
     </GenericTable>
 
-    <GenericButton @click="submitTestTaskHandler">Start test task</GenericButton>
+    <div v-if="tasks && tasks.length > 0" class="mb-4">
+      <GenericCard>
+        <GenericPaginator
+          :page="page"
+          :size="size"
+          :total="total"
+          @next="page++"
+          @prev="page--"
+          @jump="page = $event"
+        />
+      </GenericCard>
+    </div>
   </div>
 </template>
 
@@ -54,10 +65,12 @@ import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import fetchTasks from "~/helpers/fetch/fetchTasks";
 import { TrackableTask } from "~/interfaces/tasks";
+import usePagination from "~/helpers/query/usePagination";
 
 export default defineComponent({
   setup() {
-    const { submitTestTask, fetchTasksList, pollTask } = fetchTasks();
+    const { page, total, size } = usePagination();
+    const { fetchTasksList } = fetchTasks();
 
     // Data refs
     const tasks = ref([] as TrackableTask[]);
@@ -65,29 +78,22 @@ export default defineComponent({
     // Data fetching
 
     async function getTasks() {
-      tasks.value = await fetchTasksList();
+      const tasksPage = await fetchTasksList(page.value || 1, size.value);
+      tasks.value = tasksPage.items;
+      total.value = tasksPage.total;
+      page.value = tasksPage.page;
+      size.value = tasksPage.size;
     }
 
     onMounted(async () => {
       await getTasks();
     });
 
-    // Test functions
-    async function submitTestTaskHandler() {
-      // Submit the task
-      const task = await submitTestTask(5);
-      // Reload task list
-      await getTasks();
-      // Start polling new task
-      pollTask(task, 1).then(() => {
-        // Reload task list when finished
-        getTasks();
-      });
-    }
-
     return {
-      submitTestTaskHandler,
       formatDate,
+      page,
+      total,
+      size,
       tasks,
     };
   },

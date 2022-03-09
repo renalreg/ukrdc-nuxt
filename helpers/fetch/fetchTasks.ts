@@ -1,15 +1,18 @@
 import { useContext } from "@nuxtjs/composition-api";
 import { TrackableTask } from "~/interfaces/tasks";
 
+export interface TasksPage {
+  items: TrackableTask[];
+  total: number;
+  page: number;
+  size: number;
+}
+
 export default function () {
   const { $api } = useContext();
 
-  async function submitTestTask(t: number): Promise<TrackableTask> {
-    return (await $api.$post("/v1/debug/create_task/", { time: t })) as TrackableTask;
-  }
-
-  async function fetchTasksList(): Promise<TrackableTask[]> {
-    return (await $api.$get("/v1/tasks/")) as TrackableTask[];
+  async function fetchTasksList(page: number, size: number): Promise<TasksPage> {
+    return (await $api.$get(`/v1/tasks/?page=${page}&size=${size}`)) as TasksPage;
   }
 
   async function fetchTask(task: TrackableTask, progress: boolean = true): Promise<TrackableTask> {
@@ -40,5 +43,5 @@ export default function () {
     return new Promise(checkCondition);
   }
 
-  return { submitTestTask, fetchTasksList, fetchTask, pollTask };
+  return { fetchTasksList, fetchTask, pollTask };
 }
