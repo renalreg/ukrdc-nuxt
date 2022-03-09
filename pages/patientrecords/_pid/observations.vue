@@ -18,7 +18,7 @@
         />
       </div>
       <!-- Large table display -->
-      <GenericTable class="hidden lg:block">
+      <GenericTable class="mb-4 hidden lg:block">
         <thead class="bg-gray-50">
           <tr>
             <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
@@ -45,7 +45,7 @@
         </tbody>
       </GenericTable>
 
-      <div v-if="observations && observations.length > 0" class="mt-4">
+      <div v-if="observations && observations.length > 0">
         <GenericCard>
           <GenericPaginator
             :page="page"
