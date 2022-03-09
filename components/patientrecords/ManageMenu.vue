@@ -32,6 +32,8 @@ import { PatientRecordSummary } from "@/interfaces/patientrecord";
 import { modalInterface } from "~/interfaces/modal";
 import usePermissions from "~/helpers/usePermissions";
 import fetchPatientRecords from "~/helpers/fetch/fetchPatientRecords";
+import { TrackableTask } from "~/interfaces/tasks";
+import fetchTasks from "~/helpers/fetch/fetchTasks";
 
 export default defineComponent({
   props: {
@@ -54,6 +56,7 @@ export default defineComponent({
     const { $toast } = useContext();
     const { hasPermission } = usePermissions();
     const { postPatientRecordExport } = fetchPatientRecords();
+    const { pollTask } = fetchTasks();
 
     const deleteModal = ref<modalInterface>();
 
@@ -82,13 +85,37 @@ export default defineComponent({
 
     function actionExport(scope: string) {
       postPatientRecordExport(props.item, scope)
-        .then(() => {
+        .then((task: TrackableTask) => {
+          // Notify of task started
           $toast.show({
-            type: "success",
-            title: "Success",
-            message: "Export initiated",
-            classTimeout: "bg-green-600",
+            type: "info",
+            title: "Export Started",
+            message: "Export is now running in the background",
+            timeout: 10,
+            classTimeout: "bg-blue-600",
           });
+          // Start polling new task
+          pollTask(task, 1)
+            .then(() => {
+              // Notify of task finished
+              $toast.show({
+                type: "success",
+                title: "Export Finished",
+                message: "Export completed successfully",
+                timeout: 10,
+                classTimeout: "bg-blue-600",
+              });
+            })
+            .catch((error) => {
+              // Notify of task error
+              $toast.show({
+                type: "error",
+                title: "Export Error",
+                message: error.message,
+                timeout: 10,
+                classTimeout: "bg-red-600",
+              });
+            });
         })
         .finally(() => {
           closeMenu();
