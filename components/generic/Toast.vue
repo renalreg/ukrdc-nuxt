@@ -149,6 +149,7 @@ import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-a
 import { removeElement } from "@/helpers/utils/domUtils";
 
 interface Action {
+  label: string;
   action(): void;
 }
 
