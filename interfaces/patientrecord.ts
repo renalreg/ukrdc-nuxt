@@ -33,6 +33,7 @@ interface PatientRecordLinks {
   exportPVDocs: string;
   exportPVTests: string;
   exportRADAR: string;
+  exportPKB: string;
 }
 
 export interface PatientRecordSummary {

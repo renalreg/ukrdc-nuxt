@@ -29,7 +29,7 @@
             <TextDd>
               <div class="flex items-center gap-2">
                 <div>{{ formatDate(record.dateOfBirth, (t = false)) }}</div>
-                <TracingBadge v-if="tracingRecord" :verified="tracingRecord.patient.birthTime === record.dateOfBirth" />
+                <TracingBadge v-if="tracingRecord" :verified="birthTimeMatchesTracing" />
               </div>
             </TextDd>
           </GenericDi>
@@ -115,7 +115,7 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
-import { formatDate } from "@/helpers/utils/dateUtils";
+import { formatDate, datesAreEqual } from "@/helpers/utils/dateUtils";
 import { formatGender } from "@/helpers/utils/codeUtils";
 import { isTracing } from "@/helpers/utils/recordUtils";
 
@@ -205,6 +205,16 @@ export default defineComponent({
       return false;
     }
 
+    const birthTimeMatchesTracing = computed(() => {
+      if (!tracingRecord.value) {
+        return false;
+      }
+      if (datesAreEqual(props.record.dateOfBirth, tracingRecord.value.patient.birthTime)) {
+        return true;
+      }
+      return false;
+    });
+
     const nameMatchesTracing = computed(() => {
       return givenNameMatchesTracing() && surnameMatchesTracing();
     });
@@ -237,6 +247,7 @@ export default defineComponent({
       formatGender,
       formatDate,
       nameMatchesTracing,
+      birthTimeMatchesTracing,
     };
   },
 });
