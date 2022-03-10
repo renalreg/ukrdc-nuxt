@@ -61,24 +61,6 @@ Removing our reliance on Nuxt modules is an ongoing process, but has already bee
 
 Although we disable server-side rendering and build a "traditional" Vue single-page application, we make use of the internal Nuxt server to allow runtime configuration of the application. The Nuxt server essentially populates the SPA with runtime variables before serving it unrendered to the client, just like a normal Vue application.
 
-### Authentication flow
-
-Our authentication code is split over 3 main files:
-
-#### `modules/okta-auth`
-
-This module installs a plugin that provides the bare minimum required to boostrap our authentication flow. It creates an instance of `OktaAuth` from the excellent `@okta/okta-auth-js` library, and injects this object as `$okta` into the application context and Vue instance. It additionally starts the Oktra authentication background service responsible for automatic token refreshing, and sets up functionality for restoring URLs after login callback using the Nuxt router.
-
-#### `middleware/okta-auth.ts`
-
-This router middleware provides auth-guard functionality, and is used to ensure that the user is authenticated before accessing any route. If the user is not authenticated, it records the current URL in the session, and redirects the user to the login page.
-
-The auth-guard can be disabled on a page by adding `auth: false` to the page's component, see `pages/login.vue` for example.
-
-#### `helpers/useAuth.ts`
-
-This "use" module provides a simple way to access authentication functionality from within the application. It is essentially a composition API "mixin" providing Vue data refs and functions to simplify interaction with the `$okta` object.
-
 ### UKRDC API
 
 We automatically handle adding authentication headers to UKRDC API requests by making all API requests from a custom Axios instance, created in `plugins/axios-ukrdc-api.client.ts`. This custom instance is injected into the application context and Vue instance as `$api`.

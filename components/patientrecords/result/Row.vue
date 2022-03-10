@@ -19,6 +19,9 @@
     <td class="whitespace-nowrap px-6 py-4 text-gray-500">
       {{ item.observationTime ? formatDate(item.observationTime) : "No Observation Time" }}
     </td>
+    <td class="whitespace-nowrap px-4 py-4 text-gray-500">
+      <BadgePrePost v-if="item.prePost" :pre-post="item.prePost" />
+    </td>
     <td class="text-gray-500">
       <GenericButtonRound
         class="opacity-0 group-hover:opacity-100"

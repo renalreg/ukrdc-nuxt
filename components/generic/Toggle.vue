@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center">
+  <div class="flex items-center gap-3" :class="rightToLeft ? 'flex-row-reverse' : 'flex-row'">
     <!-- Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" -->
     <button
       type="button"
@@ -17,7 +17,7 @@
         :class="{ 'translate-x-5': value }"
       ></span>
     </button>
-    <span v-if="label" id="toggle-label" class="ml-3">
+    <span v-if="label" id="toggle-label">
       <span class="font-medium text-gray-900">{{ label }} </span>
     </span>
   </div>
@@ -36,6 +36,11 @@ export default defineComponent({
     value: {
       type: Boolean,
       required: true,
+    },
+    rightToLeft: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   setup(props, { emit }) {

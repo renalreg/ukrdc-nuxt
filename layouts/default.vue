@@ -99,7 +99,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, useContext, useMeta } from "@nuxtjs/composition-api";
-import "v-tooltip/dist/v-tooltip.css";
+import "floating-vue/dist/style.css";
 
 export default defineComponent({
   setup() {

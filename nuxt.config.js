@@ -42,7 +42,6 @@ export default defineNuxtConfig({
     "~/plugins/v-tooltip.client.ts",
     "~/plugins/toast.client.ts",
     "~/plugins/vue-clickaway.client.ts",
-    // "~/plugins/okta-auth.client.ts",
     "~/plugins/axios-ukrdc-api.client.ts",
     "~/plugins/axios-error-handlers.ts",
     "~/plugins/sentry-usercontext.client.ts",
@@ -71,7 +70,7 @@ export default defineNuxtConfig({
 
   // Router and middleware configuration
   router: {
-    middleware: ["check-ie", "okta-auth"],
+    middleware: ["check-ie"],
     base: process.env.APP_BASE_URL || "/new/app",
   },
 
@@ -114,12 +113,12 @@ export default defineNuxtConfig({
 
   // Okta JS config
   okta: {
+    defaultProtectRoutes: true,
     redirectUri: "/login",
     postLogoutRedirectUri: "/login",
-    // Use authorization_code flow
+    authExpiredRedirectUri: "/login",
     responseType: "code",
     pkce: true,
-    // Extra options
     scopes: ["openid", "profile", "email", "offline_access"],
   },
 

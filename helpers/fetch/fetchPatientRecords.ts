@@ -11,6 +11,7 @@ import { Survey } from "~/interfaces/survey";
 import { Treatment } from "~/interfaces/treatment";
 import { WorkItem } from "~/interfaces/workitem";
 import { PatientDocumentSummary, PatientDocument } from "~/interfaces/document";
+import { TrackableTask } from "~/interfaces/tasks";
 
 export interface ResultsPage {
   items: ResultItem[];
@@ -186,7 +187,7 @@ export default function () {
     });
   }
 
-  async function postPatientRecordExport(record: PatientRecordSummary, scope: string | null): Promise<void> {
+  async function postPatientRecordExport(record: PatientRecordSummary, scope: string | null): Promise<TrackableTask> {
     let path: string;
     switch (scope) {
       case null || "pv": {
@@ -205,11 +206,15 @@ export default function () {
         path = record.links.exportRADAR;
         break;
       }
+      case "PKB": {
+        path = record.links.exportPKB;
+        break;
+      }
       default: {
         throw new Error("Invalid scope");
       }
     }
-    return await $api.$post(path);
+    return (await $api.$post(path)) as TrackableTask;
   }
 
   async function postPatientRecordDelete(

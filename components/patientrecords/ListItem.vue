@@ -42,6 +42,7 @@
           <PatientrecordsManageMenu
             :show-pv-sync="showPvSync"
             :show-radar-sync="showRadarSync"
+            :show-pkb-sync="showPkbSync"
             :item="item"
             @deleted="$emit('deleted')"
           />
@@ -79,6 +80,11 @@ export default defineComponent({
       default: false,
     },
     showRadarSync: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    showPkbSync: {
       type: Boolean,
       required: false,
       default: false,

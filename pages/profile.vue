@@ -1,17 +1,20 @@
 <template>
   <div>
     <div class="mx-auto max-w-4xl px-4 sm:px-6 md:px-8">
-      <div v-if="signedIn()" class="max-w-3xl lg:flex lg:max-w-7xl lg:items-center lg:justify-between lg:space-x-5">
+      <div
+        v-if="$okta.isAuthenticated()"
+        class="max-w-3xl lg:flex lg:max-w-7xl lg:items-center lg:justify-between lg:space-x-5"
+      >
         <div class="mb-4 flex items-center space-x-5">
           <div class="flex-shrink-0">
             <div class="relative">
               <span
                 class="inline-block h-16 w-16 overflow-hidden rounded-full"
-                :class="signedIn() ? 'bg-indigo-100' : 'bg-gray-100'"
+                :class="$okta.isAuthenticated() ? 'bg-indigo-100' : 'bg-gray-100'"
               >
                 <svg
                   class="h-full w-full"
-                  :class="signedIn() ? 'text-indigo-300' : 'text-gray-300'"
+                  :class="$okta.isAuthenticated() ? 'text-indigo-300' : 'text-gray-300'"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -47,7 +50,7 @@
             class="rounded-md border border-gray-300 bg-white px-3 py-2 text-center font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >Manage Account</a
           >
-          <GenericButton @click="logout"> Sign out </GenericButton>
+          <GenericButton @click="$okta.signOutAuto()"> Sign out </GenericButton>
         </div>
       </div>
       <div class="mb-4">
@@ -66,14 +69,13 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
+import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
 
-import useAuth from "~/helpers/useAuth";
 import usePermissions from "~/helpers/usePermissions";
 
 export default defineComponent({
   setup() {
-    const { getUser, signOut, signedIn } = useAuth();
+    const { $okta } = useContext();
     const { getPermissions } = usePermissions();
 
     // User info
@@ -81,7 +83,7 @@ export default defineComponent({
     const user = ref();
 
     onMounted(async () => {
-      user.value = await getUser();
+      user.value = await $okta.getUser();
     });
 
     // Permissions
@@ -98,17 +100,9 @@ export default defineComponent({
       }
     }
 
-    // Functions
-
-    async function logout() {
-      await signOut();
-    }
-
     return {
       user,
       perms,
-      signedIn,
-      logout,
       classesForPermissions,
     };
   },
