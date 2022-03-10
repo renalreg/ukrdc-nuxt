@@ -16,6 +16,7 @@
             Sync Tests to PatientView
           </GenericMenuItem>
           <GenericMenuItem v-if="showRadarSync" @click="actionExport('RADAR')"> Sync Record to RADAR </GenericMenuItem>
+          <GenericMenuItem v-if="showPkbSync" @click="actionExport('PKB')"> Sync Record to PKB </GenericMenuItem>
         </div>
         <div v-if="hasPermission('ukrdc:records:delete')">
           <GenericMenuDivider />
@@ -47,6 +48,11 @@ export default defineComponent({
       default: false,
     },
     showRadarSync: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    showPkbSync: {
       type: Boolean,
       required: false,
       default: false,

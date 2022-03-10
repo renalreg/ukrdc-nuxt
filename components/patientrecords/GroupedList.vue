@@ -9,6 +9,7 @@
       :item="item"
       :show-pv-sync="hasPVMembership"
       :show-radar-sync="hasRADARMembership"
+      :show-pkb-sync="hasPKBMembership"
       @deleted="$emit('refresh')"
     />
 
@@ -21,6 +22,7 @@
       :item="item"
       :show-pv-sync="hasPVMembership"
       :show-radar-sync="hasRADARMembership"
+      :show-pkb-sync="hasPKBMembership"
       @deleted="$emit('refresh')"
     />
 
@@ -33,6 +35,7 @@
       :item="item"
       :show-pv-sync="hasPVMembership"
       :show-radar-sync="hasRADARMembership"
+      :show-pkb-sync="hasPKBMembership"
       @deleted="$emit('refresh')"
     />
 
