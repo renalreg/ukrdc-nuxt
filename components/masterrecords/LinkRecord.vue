@@ -58,13 +58,13 @@ export default defineComponent({
   setup(props) {
     const router = useRouter();
     const { $toast } = useContext();
-    const { PostEMPIUnlink } = fetchEMPI();
+    const { postEMPIUnlink } = fetchEMPI();
 
     const unlinkModal = ref<modalInterface>();
     const unlinkComment = ref("");
 
     function doUnlink() {
-      PostEMPIUnlink(props.record.person.id, props.record.masterRecord.id, unlinkComment.value)
+      postEMPIUnlink(props.record.person.id, props.record.masterRecord.id, unlinkComment.value)
         .then((response: LinkRecord) => {
           $toast.show({
             type: "success",

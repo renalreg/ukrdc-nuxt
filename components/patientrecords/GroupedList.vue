@@ -39,15 +39,23 @@
       @deleted="$emit('refresh')"
     />
 
-    <div v-if="groupedRecords.memberships.length > 0" class="bg-gray-50 py-1 pl-4 sm:pl-6">
-      <TextH4>Membership Records</TextH4>
+    <div class="flex items-center bg-gray-50 py-1 pl-4 sm:pl-6">
+      <TextH4 class="flex-grow">Membership Records</TextH4>
+      <div v-if="hasPermission('ukrdc:memberships:create')" class="mr-2 flex-grow-0">
+        <PatientrecordsMembershipsMenu :master-record="masterRecord" :show-create-pkb-membership="!hasPKBMembership" />
+      </div>
     </div>
-    <patientrecordsListItem
-      v-for="item in groupedRecords.memberships"
-      :key="item.pid + '_membership'"
-      :item="item"
-      @deleted="$emit('refresh')"
-    />
+    <div v-if="groupedRecords.memberships.length < 1" class="py-2 pl-4 sm:pl-6">
+      <TextP>No membership records</TextP>
+    </div>
+    <div v-else>
+      <patientrecordsListItem
+        v-for="item in groupedRecords.memberships"
+        :key="item.pid + '_membership'"
+        :item="item"
+        @deleted="$emit('refresh')"
+      />
+    </div>
 
     <div v-if="groupedRecords.tracing.length > 0" class="bg-gray-50 py-1 pl-4 sm:pl-6">
       <TextH4>Tracing Records</TextH4>
@@ -66,7 +74,9 @@ import { computed, defineComponent } from "@nuxtjs/composition-api";
 
 import { PatientRecordSummary } from "@/interfaces/patientrecord";
 
+import usePermissions from "~/helpers/usePermissions";
 import { isData, isMembership, isMigrated, isSurvey, isTracing } from "@/helpers/utils/recordUtils";
+import { MasterRecord } from "~/interfaces/masterrecord";
 
 interface PRGroups {
   data: PatientRecordSummary[];
@@ -78,12 +88,18 @@ interface PRGroups {
 
 export default defineComponent({
   props: {
+    masterRecord: {
+      type: Object as () => MasterRecord,
+      required: true,
+    },
     records: {
       type: Array as () => PatientRecordSummary[],
       required: true,
     },
   },
   setup(props) {
+    const { hasPermission } = usePermissions();
+
     const groupedRecords = computed<PRGroups>(() => {
       if (!props.records) {
         return {
@@ -121,6 +137,7 @@ export default defineComponent({
       hasPVMembership,
       hasPKBMembership,
       hasRADARMembership,
+      hasPermission,
     };
   },
 });

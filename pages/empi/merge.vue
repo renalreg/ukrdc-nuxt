@@ -128,7 +128,7 @@ export default defineComponent({
     const router = useRouter();
     const { $toast } = useContext();
     const { stringQuery } = useQuery();
-    const { PostEMPIMerge } = fetchEMPI();
+    const { postEMPIMerge } = fetchEMPI();
     const { fetchMasterRecord } = fetchMasterRecords();
 
     // Modals
@@ -251,7 +251,7 @@ export default defineComponent({
 
     function requestMerge() {
       if (superseded.value && superseding.value) {
-        PostEMPIMerge(superseding.value.id, superseded.value.id)
+        postEMPIMerge(superseding.value.id, superseded.value.id)
           .then(() => {
             $toast.show({
               type: "success",
