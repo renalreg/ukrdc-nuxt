@@ -14,8 +14,8 @@
     </GenericModalConfirm>
 
     <div v-click-away="closeMenu" class="relative flex items-center justify-self-end">
-      <GenericButtonRaw label="Manage record" class="z-0" @click="showMenu = !showMenu">
-        <IconMiniPlusCircle class="text-gray-400 hover:text-gray-800" />
+      <GenericButtonRaw :disabled="!menuAvailable" label="Manage record" class="z-0" @click="showMenu = !showMenu">
+        <IconMiniPlusCircle class="text-gray-400" :class="{ 'hover:text-gray-800': menuAvailable }" />
       </GenericButtonRaw>
 
       <GenericMenu class="top-0 right-0 z-10 mx-2" :show="menuAvailable && showMenu">
