@@ -23,9 +23,10 @@
           {{ title }}
         </h3>
         <div class="mt-2">
-          <p class="text-gray-500">
+          <TextP v-if="message">
             {{ message }}
-          </p>
+          </TextP>
+          <slot />
         </div>
       </div>
     </div>
@@ -52,7 +53,8 @@ export default defineComponent({
     },
     message: {
       type: String,
-      required: true,
+      required: false,
+      default: undefined,
     },
     confirmLabel: {
       type: String,
