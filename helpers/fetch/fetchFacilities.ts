@@ -9,9 +9,9 @@ export default function () {
   async function fetchFacilitiesList(
     sortBy: string | null = null,
     orderBy: string | null = null,
-    includeEmpty: boolean = true
+    includeInactive: boolean = true
   ): Promise<Facility[]> {
-    let path = `/v1/facilities/?include_empty=${includeEmpty}`;
+    let path = `/v1/facilities/?include_inactive=${includeInactive}`;
     if (sortBy) {
       path = path + `&sort_by=${sortBy}`;
     }

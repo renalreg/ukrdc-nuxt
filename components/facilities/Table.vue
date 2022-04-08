@@ -89,7 +89,7 @@ interface IsAscending {
 
 export default defineComponent({
   props: {
-    includeEmpty: {
+    includeInactive: {
       // Should facilities with no UKRDC records be included in the list?
       type: Boolean,
       default: false,
@@ -133,7 +133,7 @@ export default defineComponent({
     async function fetchTable() {
       const currentisAscending: null | boolean = isAscending.value[sortBy.value || "default"] || null;
       const currentOrderBy: string = currentisAscending ? "asc" : "desc";
-      facilities.value = await fetchFacilitiesList(sortBy.value, currentOrderBy, props.includeEmpty);
+      facilities.value = await fetchFacilitiesList(sortBy.value, currentOrderBy, props.includeInactive);
     }
 
     async function toggleSort(key: string) {
@@ -151,7 +151,7 @@ export default defineComponent({
     });
 
     watch(
-      () => props.includeEmpty,
+      () => props.includeInactive,
       async () => {
         await fetchTable();
       }
