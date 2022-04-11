@@ -9,16 +9,16 @@ Table of facilities and their basic statistics
     <GenericTable>
       <thead class="bg-gray-50">
         <tr>
-          <th scope="col" class="px-6 py-3 text-left">
+          <th scope="col" class="px-4 py-3 text-left">
             <div class="flex items-center">
               <TextTh>Code</TextTh>
               <IconDynamicSort :active="sortBy === 'id'" :asc="isAscending['id']" @toggle="toggleSort('id')" />
             </div>
           </th>
-          <th scope="col" class="hidden px-6 py-3 text-left lg:table-cell">
+          <th scope="col" class="hidden px-4 py-3 text-left lg:table-cell">
             <TextTh>Name</TextTh>
           </th>
-          <th scope="col" class="px-6 py-3 text-left">
+          <th scope="col" class="px-4 py-3 text-left">
             <div class="flex items-center">
               <TextTh>Total Records</TextTh>
               <IconDynamicSort
@@ -28,7 +28,7 @@ Table of facilities and their basic statistics
               />
             </div>
           </th>
-          <th scope="col" class="px-6 py-3 text-left">
+          <th scope="col" class="px-4 py-3 text-left">
             <div class="flex items-center">
               <TextTh>Failing Records</TextTh>
               <IconDynamicSort
@@ -38,10 +38,20 @@ Table of facilities and their basic statistics
               />
             </div>
           </th>
-          <th scope="col" class="px-6 py-3 text-left">
+          <th scope="col" class="px-4 py-3 text-left">
             <div class="flex items-center">
               <TextTh>Sending to PKB</TextTh>
               <IconDynamicFilter :active="filterByPkbOut" @toggle="filterByPkbOut = !filterByPkbOut" />
+            </div>
+          </th>
+          <th scope="col" class="px-4 py-3 text-left">
+            <div class="flex items-center">
+              <TextTh>Last Recieved</TextTh>
+              <IconDynamicSort
+                :active="sortBy === 'latest_message.last_message_received_at'"
+                :asc="isAscending['latest_message.last_message_received_at']"
+                @toggle="toggleSort('latest_message.last_message_received_at')"
+              />
             </div>
           </th>
         </tr>
@@ -72,6 +82,11 @@ Table of facilities and their basic statistics
               <p>{{ facility.dataFlow.pkbOut ? "Yes" : "No" }}</p>
             </div>
           </GenericTableCell>
+          <GenericTableCell>{{
+            facility.latestMessage.lastMessageReceivedAt
+              ? formatDate(facility.latestMessage.lastMessageReceivedAt, (t = false))
+              : "> Year Ago"
+          }}</GenericTableCell>
         </tr>
       </tbody>
     </GenericTable>
@@ -80,8 +95,9 @@ Table of facilities and their basic statistics
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-import fetchFacilities from "~/helpers/fetch/fetchFacilities";
-import { Facility } from "~/interfaces/facilities";
+import fetchFacilities from "@/helpers/fetch/fetchFacilities";
+import { formatDate } from "@/helpers/utils/dateUtils";
+import { Facility } from "@/interfaces/facilities";
 
 interface IsAscending {
   [key: string]: boolean | null;
@@ -89,8 +105,14 @@ interface IsAscending {
 
 export default defineComponent({
   props: {
-    includeInactive: {
+    includeEmpty: {
       // Should facilities with no UKRDC records be included in the list?
+      type: Boolean,
+      default: false,
+      required: false,
+    },
+    includeInactive: {
+      // Should facilities with no feed files in the last year be included in the list?
       type: Boolean,
       default: false,
       required: false,
@@ -133,7 +155,12 @@ export default defineComponent({
     async function fetchTable() {
       const currentisAscending: null | boolean = isAscending.value[sortBy.value || "default"] || null;
       const currentOrderBy: string = currentisAscending ? "asc" : "desc";
-      facilities.value = await fetchFacilitiesList(sortBy.value, currentOrderBy, props.includeInactive);
+      facilities.value = await fetchFacilitiesList(
+        sortBy.value,
+        currentOrderBy,
+        props.includeInactive,
+        props.includeEmpty
+      );
     }
 
     async function toggleSort(key: string) {
@@ -151,7 +178,7 @@ export default defineComponent({
     });
 
     watch(
-      () => props.includeInactive,
+      () => [props.includeInactive, props.includeEmpty],
       async () => {
         await fetchTable();
       }
@@ -165,6 +192,7 @@ export default defineComponent({
       isAscending,
       sortBy,
       toggleSort,
+      formatDate,
     };
   },
 });
