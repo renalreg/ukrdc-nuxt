@@ -15,7 +15,7 @@
         hint="Select a facility..."
       />
       <div class="flex items-center gap-2">
-        <div class="flex flex-grow items-center">
+        <div class="flex flex-grow items-center gap-4">
           <FormCheckbox v-model="statuses" label="Stored" value="STORED" />
           <FormCheckbox v-model="statuses" label="Received" value="RECEIVED" />
           <FormCheckbox v-model="statuses" label="Error" value="ERROR" />
