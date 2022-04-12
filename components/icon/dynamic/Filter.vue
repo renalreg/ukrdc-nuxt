@@ -1,6 +1,6 @@
 <template>
   <span :class="active ? 'opacity-100' : 'opacity-40'" class="cursor-pointer" @click="$emit('toggle')">
-    <IconMiniFilter class="ml-2" />
+    <IconMiniFilter />
   </span>
 </template>
 

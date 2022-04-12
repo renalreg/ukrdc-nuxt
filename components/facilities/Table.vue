@@ -10,7 +10,7 @@ Table of facilities and their basic statistics
       <thead class="bg-gray-50">
         <tr>
           <th scope="col" class="px-4 py-3 text-left">
-            <div class="flex items-center">
+            <div class="flex items-center gap-1">
               <TextTh>Code</TextTh>
               <IconDynamicSort :active="sortBy === 'id'" :asc="isAscending['id']" @toggle="toggleSort('id')" />
             </div>
@@ -19,7 +19,7 @@ Table of facilities and their basic statistics
             <TextTh>Name</TextTh>
           </th>
           <th scope="col" class="px-4 py-3 text-left">
-            <div class="flex items-center">
+            <div class="flex items-center gap-1">
               <TextTh>Total Records</TextTh>
               <IconDynamicSort
                 :active="sortBy === 'statistics.total_patients'"
@@ -29,7 +29,7 @@ Table of facilities and their basic statistics
             </div>
           </th>
           <th scope="col" class="px-4 py-3 text-left">
-            <div class="flex items-center">
+            <div class="flex items-center gap-1">
               <TextTh>Failing Records</TextTh>
               <IconDynamicSort
                 :active="sortBy === 'statistics.patients_receiving_message_error'"
@@ -45,12 +45,16 @@ Table of facilities and their basic statistics
             </div>
           </th>
           <th scope="col" class="px-4 py-3 text-left">
-            <div class="flex items-center">
+            <div class="flex items-center gap-1">
               <TextTh>Last Recieved</TextTh>
               <IconDynamicSort
                 :active="sortBy === 'latest_message.last_message_received_at'"
                 :asc="isAscending['latest_message.last_message_received_at']"
                 @toggle="toggleSort('latest_message.last_message_received_at')"
+              />
+              <IconDynamicFilter
+                :active="filterByLastMessageOver48"
+                @toggle="filterByLastMessageOver48 = !filterByLastMessageOver48"
               />
             </div>
           </th>
@@ -83,7 +87,7 @@ Table of facilities and their basic statistics
             </div>
           </GenericTableCell>
           <GenericTableCell>
-            <div class="flex items-center gap-1">
+            <div class="flex items-center gap-2">
               <div>
                 {{
                   facility.latestMessage.lastMessageReceivedAt
@@ -138,6 +142,7 @@ export default defineComponent({
     const searchboxString = ref("");
 
     const filterByPkbOut = ref(false);
+    const filterByLastMessageOver48 = ref(false);
 
     const filteredFacilities = computed(() => {
       if (!facilities.value) return [];
@@ -151,6 +156,8 @@ export default defineComponent({
           )
           // Filter by additional filters, such as PkbOut
           .filter((option) => (filterByPkbOut.value ? option.dataFlow.pkbOut : true))
+          // Filter by last message over 48 hours
+          .filter((option) => (filterByLastMessageOver48.value ? facilityLastMessageOver48(option) : true))
       );
     });
 
@@ -209,6 +216,7 @@ export default defineComponent({
       facilities,
       searchboxString,
       filterByPkbOut,
+      filterByLastMessageOver48,
       filteredFacilities,
       isAscending,
       sortBy,
