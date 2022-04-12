@@ -45,7 +45,7 @@
       </GenericCardHeader>
       <GenericCardContent>
         <GenericCardMini class="w-2/3">
-          <GenericAttachment :filename="message.filename || `${message.facility}-{message.id}.txt`">
+          <GenericAttachment :filename="message.filename || `${message.facility}-${message.id}.txt`">
             <NuxtLink :to="`/messages/${message.id}/source`" class="font-medium"> View </NuxtLink>
             <TextLink @click="downloadMessageSource(message)"> Download </TextLink>
           </GenericAttachment>
