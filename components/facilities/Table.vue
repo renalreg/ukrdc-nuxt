@@ -82,11 +82,22 @@ Table of facilities and their basic statistics
               <p>{{ facility.dataFlow.pkbOut ? "Yes" : "No" }}</p>
             </div>
           </GenericTableCell>
-          <GenericTableCell>{{
-            facility.latestMessage.lastMessageReceivedAt
-              ? formatDate(facility.latestMessage.lastMessageReceivedAt, (t = false))
-              : "> Year Ago"
-          }}</GenericTableCell>
+          <GenericTableCell>
+            <div class="flex items-center gap-1">
+              <div>
+                {{
+                  facility.latestMessage.lastMessageReceivedAt
+                    ? formatDate(facility.latestMessage.lastMessageReceivedAt, (t = false))
+                    : "> Year Ago"
+                }}
+              </div>
+              <IconExclamation
+                v-if="facilityLastMessageOver48(facility)"
+                v-tooltip="'No files received in over 48 hours'"
+                class="inline text-yellow-600"
+              />
+            </div>
+          </GenericTableCell>
         </tr>
       </tbody>
     </GenericTable>
@@ -143,6 +154,16 @@ export default defineComponent({
       );
     });
 
+    // Facility warnings
+    function facilityLastMessageOver48(facility: Facility) {
+      // True if the last message received was over 48 hours ago
+      return (
+        !facility.latestMessage.lastMessageReceivedAt ||
+        new Date(facility.latestMessage.lastMessageReceivedAt).getTime() <
+          new Date().setHours(new Date().getHours() - 48)
+      );
+    }
+
     // Sorting
 
     const sortBy = ref<string | null>(null);
@@ -191,6 +212,7 @@ export default defineComponent({
       filteredFacilities,
       isAscending,
       sortBy,
+      facilityLastMessageOver48,
       toggleSort,
       formatDate,
     };
