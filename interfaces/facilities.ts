@@ -18,9 +18,15 @@ interface FacilityDataFlowSchema {
   pkbMessageExclusions: string[];
 }
 
+interface FacilityLatestMessage {
+  lastUpdated: string;
+  lastMessageReceivedAt: string;
+}
 export interface Facility {
   id: string;
   description: string;
+
+  latestMessage: FacilityLatestMessage;
   statistics: FacilityStatistics;
   dataFlow: FacilityDataFlowSchema;
 
