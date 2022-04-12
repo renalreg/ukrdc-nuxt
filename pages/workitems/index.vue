@@ -15,7 +15,7 @@
         hint="Select a facility..."
       />
       <div class="flex items-center">
-        <div class="flex flex-grow items-center">
+        <div class="flex flex-grow items-center gap-4">
           <FormCheckbox v-model="statuses" label="Open" :value="1" />
           <FormCheckbox v-model="statuses" label="WIP" :value="2" />
           <FormCheckbox v-model="statuses" label="Closed" :value="3" />
