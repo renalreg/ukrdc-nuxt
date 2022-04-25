@@ -48,14 +48,12 @@
     <div v-if="groupedRecords.memberships.length < 1" class="py-2 pl-4 sm:pl-6">
       <TextP>No membership records</TextP>
     </div>
-    <div v-else>
-      <patientrecordsListItem
-        v-for="item in groupedRecords.memberships"
-        :key="item.pid + '_membership'"
-        :item="item"
-        @deleted="$emit('refresh')"
-      />
-    </div>
+    <patientrecordsListItem
+      v-for="item in groupedRecords.memberships"
+      :key="item.pid + '_membership'"
+      :item="item"
+      @deleted="$emit('refresh')"
+    />
 
     <div v-if="groupedRecords.tracing.length > 0" class="bg-gray-50 py-1 pl-4 sm:pl-6">
       <TextH4>Tracing Records</TextH4>
