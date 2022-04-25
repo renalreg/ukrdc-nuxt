@@ -104,8 +104,8 @@
 
       <ul class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
         <li
-          v-for="item in record.programMemberships"
-          :key="item.programName"
+          v-for="(item, index) in record.programMemberships"
+          :key="item.programName + index"
           class="col-span-1 flex rounded-md shadow-sm"
         >
           <GenericCardMini class="w-full px-4 py-2">
