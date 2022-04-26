@@ -4,13 +4,7 @@
 
 ### Prerequisites
 
-- Create a `.env` file, for example:
-
-```
-OAUTH_ISSUER=https://renalregistry.okta.com/oauth2/ausn7fa9zfh1DC2La5d6
-APP_CLIENT_ID=0oan98slw3m4mnhxq5d6
-```
-
+- Create a `.env` file (see `.env.template`):
 - Ensure a local UKRDC-FastAPI instance is running locally (see <https://github.com/renalreg/ukrdc-fastapi>)
 
 ### Installation
