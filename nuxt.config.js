@@ -71,7 +71,7 @@ export default defineNuxtConfig({
   // Router and middleware configuration
   router: {
     middleware: ["check-ie"],
-    base: process.env.APP_BASE_URL || "/new/app",
+    base: process.env.APP_BASE_URL || "/app",
   },
 
   // Build-time variables. These are resolved during the build process,
@@ -127,7 +127,7 @@ export default defineNuxtConfig({
     // Custom UKRDC API config
     api: {
       host: process.env.API_HOST,
-      base: process.env.API_BASE_URL || "/new/api",
+      base: process.env.API_BASE_URL || "/api",
     },
     // Okta domain
     manageAccountUrl: process.env.MANAGE_ACCOUNT_URL || "https://renalregistry.okta.com/app/UserHome",

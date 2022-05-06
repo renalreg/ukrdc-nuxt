@@ -4,7 +4,7 @@ import { LinkRecord } from "~/interfaces/linkrecords";
 export default function () {
   const { $api } = useContext();
 
-  async function PostEMPIUnlink(personId: number, masterId: number, comment?: string): Promise<LinkRecord> {
+  async function postEMPIUnlink(personId: number, masterId: number, comment?: string): Promise<LinkRecord> {
     return (await $api.$post("/v1/empi/unlink/", {
       personId,
       masterId,
@@ -12,12 +12,12 @@ export default function () {
     })) as LinkRecord;
   }
 
-  async function PostEMPIMerge(supersedingId: number, supersededId: number): Promise<void> {
+  async function postEMPIMerge(supersedingId: number, supersededId: number): Promise<void> {
     return await $api.$post("/v1/empi/merge", {
       superseding: supersedingId,
       superseded: supersededId,
     });
   }
 
-  return { PostEMPIUnlink, PostEMPIMerge };
+  return { postEMPIUnlink, postEMPIMerge };
 }

@@ -46,8 +46,8 @@
                   </svg>
                 </span>
               </div>
-              <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
-                <div>
+              <div class="flex min-w-0 items-center gap-2">
+                <div class="flex-shrink">
                   <TextP class="mr-2 inline font-bold">
                     <time :datetime="treatment.time">{{ treatment.time }}</time>
                   </TextP>
@@ -69,6 +69,19 @@
                     {{ treatment.admitReasonDesc ? treatment.admitReasonDesc : treatment.admitReasonCode }}
                   </TextP>
                 </div>
+                <GenericInfoIcon>
+                  <p><b>From time: </b>{{ treatment.fromTime }}</p>
+                  <p><b>To time: </b>{{ treatment.toTime || "None" }}</p>
+                  <br />
+                  <p><b>Admin reason: </b>{{ treatment.admitReasonDesc || "None" }}</p>
+                  <p><b>Admin reason code: </b>{{ treatment.admitReasonCodeStd }} / {{ treatment.admitReasonCode }}</p>
+                  <br />
+                  <p><b>Discharge reason: </b>{{ treatment.dischargeReasonDesc || "None" }}</p>
+                  <p>
+                    <b>Discharge reason code: </b>{{ treatment.dischargeReasonCodeStd || "None" }} /
+                    {{ treatment.dischargeReasonCode || "None" }}
+                  </p>
+                </GenericInfoIcon>
               </div>
             </div>
           </div>
@@ -85,21 +98,9 @@ import { Treatment } from "@/interfaces/treatment";
 import { PatientRecord } from "@/interfaces/patientrecord";
 import fetchPatientRecords from "~/helpers/fetch/fetchPatientRecords";
 
-interface TreatmentEvent {
-  id: string;
-
+interface TreatmentEvent extends Treatment {
   time: string;
   isDischarge: boolean;
-
-  admitReasonCode: string;
-  admitReasonCodeStd: string;
-  admitReasonDesc: string;
-
-  dischargeReasonCode: string;
-  dischargeReasonCodeStd: string;
-  dischargeReasonDesc: string;
-
-  healthCareFacilityCode: string;
 }
 
 export default defineComponent({
@@ -127,30 +128,16 @@ export default defineComponent({
       for (const treatment of treatments.value || []) {
         if (treatment.toTime) {
           const event = {
-            id: treatment.id,
             time: treatment.toTime,
             isDischarge: true,
-            admitReasonCode: treatment.admitReasonCode,
-            admitReasonCodeStd: treatment.admitReasonCodeStd,
-            admitReasonDesc: treatment.admitReasonDesc,
-            dischargeReasonCode: treatment.dischargeReasonCode,
-            dischargeReasonCodeStd: treatment.dischargeReasonCodeStd,
-            dischargeReasonDesc: treatment.dischargeReasonDesc,
-            healthCareFacilityCode: treatment.healthCareFacilityCode,
+            ...treatment,
           };
           events.push(event);
         }
         const event = {
-          id: treatment.id,
           time: treatment.fromTime,
           isDischarge: false,
-          admitReasonCode: treatment.admitReasonCode,
-          admitReasonCodeStd: treatment.admitReasonCodeStd,
-          admitReasonDesc: treatment.admitReasonDesc,
-          dischargeReasonCode: treatment.dischargeReasonCode,
-          dischargeReasonCodeStd: treatment.dischargeReasonCodeStd,
-          dischargeReasonDesc: treatment.dischargeReasonDesc,
-          healthCareFacilityCode: treatment.healthCareFacilityCode,
+          ...treatment,
         };
         events.push(event);
       }

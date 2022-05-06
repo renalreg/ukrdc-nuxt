@@ -1,3 +1,7 @@
+interface MasterRecordMembershipLinks {
+  createPKB: string;
+}
+
 interface MasterRecordLinks {
   self: string;
   latestMessage: string;
@@ -10,6 +14,7 @@ interface MasterRecordLinks {
   workitems: string;
   patientrecords: string;
   audit: string;
+  memberships: MasterRecordMembershipLinks;
 }
 
 export interface MasterRecordStatistics {

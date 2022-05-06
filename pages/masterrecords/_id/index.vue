@@ -79,7 +79,12 @@
       <GenericCardHeader>
         <TextH2> Patient Records </TextH2>
       </GenericCardHeader>
-      <PatientrecordsGroupedList v-if="patientRecords" :records="patientRecords" @refresh="refreshRecords" />
+      <PatientrecordsGroupedList
+        v-if="patientRecords"
+        :master-record="record"
+        :records="patientRecords"
+        @refresh="refreshRecords"
+      />
       <ul v-else class="divide-y divide-gray-200">
         <SkeleListItem v-for="n in 5" :key="n" />
       </ul>

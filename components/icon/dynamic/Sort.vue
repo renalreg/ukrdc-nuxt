@@ -1,7 +1,7 @@
 <template>
   <span :class="active ? 'opacity-100' : 'opacity-40'" class="cursor-pointer" @click="$emit('toggle')">
-    <IconMiniSortAscending v-show="asc" class="ml-2" />
-    <IconMiniSortDescending v-show="!asc" class="ml-2" />
+    <IconMiniSortAscending v-show="asc" />
+    <IconMiniSortDescending v-show="!asc" />
   </span>
 </template>
 

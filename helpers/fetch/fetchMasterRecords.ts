@@ -77,6 +77,10 @@ export default function () {
     return (await $api.$get(path)) as AuditPage;
   }
 
+  async function postMasterRecordMembershipCreatePKB(masterRecord: MasterRecord): Promise<void> {
+    return await $api.$post(masterRecord.links.memberships.createPKB);
+  }
+
   return {
     fetchMasterRecord,
     fetchMasterRecordRelated,
@@ -87,5 +91,6 @@ export default function () {
     fetchMasterRecordLinkRecords,
     fetchMasterRecordWorkItems,
     fetchMasterRecordAuditPage,
+    postMasterRecordMembershipCreatePKB,
   };
 }
