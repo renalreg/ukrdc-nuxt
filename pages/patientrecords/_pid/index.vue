@@ -2,38 +2,38 @@
   <div>
     <!-- Description list -->
     <GenericCard class="my-8 p-6">
-      <GenericDl>
-        <GenericDi>
+      <GenericDlGrid>
+        <GenericDlGridItem>
           <TextDt>Local ID</TextDt>
           <TextDd>
             {{ record.localpatientid }}
           </TextDd>
-        </GenericDi>
+        </GenericDlGridItem>
 
-        <GenericDi>
+        <GenericDlGridItem>
           <TextDt>UKRDC ID</TextDt>
           <TextDd>{{ record.ukrdcid }}</TextDd>
-        </GenericDi>
+        </GenericDlGridItem>
 
-        <GenericDi>
+        <GenericDlGridItem>
           <TextDt>PID</TextDt>
           <TextDd>{{ record.pid }}</TextDd>
-        </GenericDi>
+        </GenericDlGridItem>
 
-        <GenericDi>
+        <GenericDlGridItem>
           <TextDt>Last Updated</TextDt>
           <TextDd>
             {{ formatDate(record.repositoryUpdateDate) }}
           </TextDd>
-        </GenericDi>
+        </GenericDlGridItem>
 
-        <GenericDi>
+        <GenericDlGridItem>
           <TextDt>Created</TextDt>
           <TextDd>
             {{ formatDate(record.repositoryCreationDate) }}
           </TextDd>
-        </GenericDi>
-      </GenericDl>
+        </GenericDlGridItem>
+      </GenericDlGrid>
     </GenericCard>
 
     <PatientrecordsDetailCards :full="true" :record="record" />

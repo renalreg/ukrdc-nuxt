@@ -2,22 +2,22 @@
   <div>
     <GenericCard class="mb-6">
       <GenericCardContent>
-        <GenericDl>
-          <GenericDi>
+        <GenericDlGrid>
+          <GenericDlGridItem>
             <TextDt>Connector Name</TextDt>
             <TextDd v-if="connectorMessage">
               {{ connectorMessage.connectorName }}
             </TextDd>
             <SkeleText v-else class="h-6 w-full" />
-          </GenericDi>
-          <GenericDi>
+          </GenericDlGridItem>
+          <GenericDlGridItem>
             <TextDt>Send Attempts</TextDt>
             <TextDd v-if="connectorMessage">
               {{ connectorMessage.sendAttempts }}
             </TextDd>
             <SkeleText v-else class="h-6 w-full" />
-          </GenericDi>
-          <GenericDi>
+          </GenericDlGridItem>
+          <GenericDlGridItem>
             <TextDt>Status</TextDt>
             <TextDd v-if="connectorMessage">
               <span
@@ -32,8 +32,8 @@
               >
             </TextDd>
             <SkeleText v-else class="h-6 w-full" />
-          </GenericDi>
-        </GenericDl>
+          </GenericDlGridItem>
+        </GenericDlGrid>
         <slot></slot>
       </GenericCardContent>
     </GenericCard>

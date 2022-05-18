@@ -8,10 +8,19 @@
     </div>
 
     <div v-else-if="facility && facility.statistics.lastUpdated">
+      <NuxtLink :to="`/facilities/${facility.id}/errors`">
+        <genericAlertError
+          v-if="facility.statistics.patientsReceivingMessageError > 0"
+          class="mb-4"
+          :message="`${facility.statistics.patientsReceivingMessageError} patients are not receiving data due to errors in their incoming files. Click for details.`"
+        >
+        </genericAlertError>
+      </NuxtLink>
+
       <TextL2 class="mb-2"> Last updated {{ lastUpdatedString }} </TextL2>
 
       <!-- Basic stats -->
-      <div class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-3">
         <GenericCard>
           <div class="flex items-center p-4">
             <div class="flex-shrink-0">
@@ -46,7 +55,7 @@
               <dl>
                 <GenericCardDt>Active Passing Records</GenericCardDt>
                 <dd>
-                  <h1 class="text-2xl font-semibold text-green-600">
+                  <h1 class="text-2xl font-semibold text-green-700">
                     {{ facility.statistics.patientsReceivingMessageSuccess }}
                   </h1>
                 </dd>
@@ -69,7 +78,7 @@
                 <dd class="flex items-baseline">
                   <TextHc
                     class="flex-grow"
-                    :class="facility.statistics.patientsReceivingMessageError > 0 ? 'text-red-600' : 'text-green-600'"
+                    :class="facility.statistics.patientsReceivingMessageError > 0 ? 'text-red-600' : 'text-green-700'"
                   >
                     {{ facility.statistics.patientsReceivingMessageError }}
                   </TextHc>
@@ -88,10 +97,11 @@
     </div>
 
     <!-- Data flow -->
-    <GenericCard v-if="facility && facility.dataFlow" class="mb-4">
-      <GenericCardContent>
-        <GenericDl>
-          <GenericDi>
+    <TextH2 class="mb-4">Data Flow</TextH2>
+    <div v-if="facility && facility.dataFlow" class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+      <GenericCard>
+        <GenericCardContent>
+          <dl>
             <TextDt>
               Sending data to
               <a class="hover:underline" href="https://patientsknowbest.com/" target="blank">Patients Know Best</a>
@@ -103,9 +113,13 @@
               </div>
               <div v-else>No</div>
             </TextDd>
-          </GenericDi>
-          <!-- TODO: Add this back in once PKB in is relevant
-          <GenericDi>
+          </dl>
+        </GenericCardContent>
+      </GenericCard>
+      <!-- TODO: Add this back in once PKB in is relevant
+      <GenericCard>
+        <GenericCardContent>
+          <dl>
             <TextDt>
               Receiving data from <a class="hover:underline" href="https://patientsknowbest.com/" target="blank">Patients Know Best</a>
             </TextDt>
@@ -116,9 +130,13 @@
               </div>
               <div v-else>No</div>
             </TextDd>
-          </GenericDi>
+          </dl>
+        </GenericCardContent>
+      </GenericCard>
           -->
-          <GenericDi>
+      <GenericCard>
+        <GenericCardContent>
+          <dl>
             <TextDt>
               Excluding data from
               <a class="hover:underline" href="https://patientsknowbest.com/" target="blank">Patients Know Best</a>
@@ -129,10 +147,10 @@
               </div>
               <div v-else>None</div>
             </TextDd>
-          </GenericDi>
-        </GenericDl>
-      </GenericCardContent>
-    </GenericCard>
+          </dl>
+        </GenericCardContent>
+      </GenericCard>
+    </div>
   </div>
 </template>
 
