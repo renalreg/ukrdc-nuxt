@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Description list -->
-    <GenericCard class="my-8 p-6">
+    <GenericCard class="my-4 p-6">
       <GenericDlGrid>
         <GenericDlGridItem>
           <TextDt>Local ID</TextDt>
