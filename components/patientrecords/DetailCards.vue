@@ -1,72 +1,87 @@
 <template>
   <div>
-    <div v-if="!isEmptyObject(record)">
-      <TextH4>Demographics</TextH4>
-      <ul class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-        <li class="col-span-1 sm:col-span-2">
-          <GenericCardMini class="grid w-full grid-cols-1 gap-4 px-4 py-2 sm:grid-cols-2">
-            <div>
-              <TextL1> Names </TextL1>
-              <TextP v-for="item in record.patient.names" :key="item.given + item.family">
-                {{ item.given }} {{ item.family }}
-              </TextP>
-            </div>
-            <div>
-              <TextL1> Gender </TextL1>
-              <TextP>{{ formatGender(record.patient.gender) }}</TextP>
-            </div>
-            <div>
-              <TextL1> Date of Birth </TextL1>
-              <TextP>{{ formatDate(record.patient.birthTime, (t = false)) }}</TextP>
-            </div>
-            <div>
-              <TextL1> Date of Death </TextL1>
-              <TextP>
-                {{ record.patient.deathTime ? formatDate(record.patient.deathTime, (t = false)) : "N/A" }}
-              </TextP>
-            </div>
-            <div>
-              <TextL1> Ethnicity </TextL1>
-              <TextP>
-                {{ record.patient.ethnicGroupDescription || record.patient.ethnicGroupCode || "Unknown" }}
-              </TextP>
-            </div>
-          </GenericCardMini>
-        </li>
-      </ul>
-    </div>
+    <div v-if="!isEmptyObject(record)" class="grid grid-cols-3">
+      <div class="col-span-3 mb-4">
+        <TextH4 class="mb-3">Demographics</TextH4>
+        <GenericCardMini class="grid w-full grid-cols-1 gap-4 px-4 py-2 sm:grid-cols-3">
+          <div>
+            <TextL1> Names </TextL1>
+            <TextP v-for="item in record.patient.names" :key="item.given + item.family">
+              {{ item.given }} {{ item.family }}
+            </TextP>
+          </div>
+          <div>
+            <TextL1> Gender </TextL1>
+            <TextP>{{ formatGender(record.patient.gender) }}</TextP>
+          </div>
+          <div>
+            <TextL1> Date of Birth </TextL1>
+            <TextP>{{ formatDate(record.patient.birthTime, (t = false)) }}</TextP>
+          </div>
+          <div>
+            <TextL1> Date of Death </TextL1>
+            <TextP>
+              {{ record.patient.deathTime ? formatDate(record.patient.deathTime, (t = false)) : "N/A" }}
+            </TextP>
+          </div>
+          <div>
+            <TextL1> Ethnicity </TextL1>
+            <TextP>
+              {{ record.patient.ethnicGroupDescription || record.patient.ethnicGroupCode || "Unknown" }}
+            </TextP>
+          </div>
+        </GenericCardMini>
+      </div>
 
-    <div v-if="!isEmptyObject(record)" class="mt-4">
-      <TextH4>Patient Numbers</TextH4>
-      <ul class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-        <li
-          v-for="item in record.patient.numbers"
-          :key="item.numbertype + item.organization + item.patientid"
-          class="col-span-1 flex"
-        >
-          <GenericCardMini class="flex w-full">
-            <div
-              class="flex w-16 flex-shrink-0 items-center justify-center rounded-l-md bg-indigo-600 font-medium text-white"
-            >
-              {{ item.numbertype }}
-            </div>
-            <div class="flex flex-1 items-center justify-between truncate">
-              <div class="flex-1 truncate px-4 py-2">
-                <TextB class="truncate">
-                  {{ item.patientid }}
-                </TextB>
-                <TextP>{{ item.organization }}</TextP>
+      <div class="col-span-3 mb-4 sm:col-span-2">
+        <TextH4 class="mb-3">History</TextH4>
+        <GenericCardMini class="grid w-full grid-cols-1 gap-4 px-4 py-2 sm:grid-cols-2">
+          <div>
+            <TextL1> Record Created </TextL1>
+            <TextP>{{ formatDate(record.repositoryCreationDate, (t = true)) }}</TextP>
+          </div>
+          <div>
+            <TextL1> Record Last Updated </TextL1>
+            <TextP>{{ formatDate(record.repositoryUpdateDate, (t = true)) }}</TextP>
+          </div>
+        </GenericCardMini>
+      </div>
+
+      <div class="col-span-3 mb-4">
+        <TextH4 class="mb-3">Patient Numbers</TextH4>
+        <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+          <li
+            v-for="item in record.patient.numbers"
+            :key="item.numbertype + item.organization + item.patientid"
+            class="col-span-1 flex"
+          >
+            <GenericCardMini class="flex w-full">
+              <div
+                class="flex w-16 flex-shrink-0 items-center justify-center rounded-l-md bg-indigo-600 font-medium text-white"
+              >
+                {{ item.numbertype }}
               </div>
-            </div>
-          </GenericCardMini>
-        </li>
-      </ul>
+              <div class="flex flex-1 items-center justify-between truncate">
+                <div class="flex-1 truncate px-4 py-2">
+                  <TextB class="truncate">
+                    {{ item.patientid }}
+                  </TextB>
+                  <TextP>{{ item.organization }}</TextP>
+                </div>
+              </div>
+            </GenericCardMini>
+          </li>
+        </ul>
+      </div>
     </div>
 
-    <div v-if="!isEmptyObject(record) && record.patient.addresses && record.patient.addresses.length > 0" class="mt-4">
-      <TextH4>Addresses</TextH4>
+    <div
+      v-if="!isEmptyObject(record) && record.patient.addresses && record.patient.addresses.length > 0"
+      class="col-span-3 mb-4"
+    >
+      <TextH4 class="mb-3">Addresses</TextH4>
 
-      <ul class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+      <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
         <li v-for="item in record.patient.addresses" :key="item.street" class="col-span-1">
           <GenericCardMini class="w-full px-4 py-2">
             <TextB>
@@ -98,11 +113,11 @@
 
     <div
       v-if="!isEmptyObject(record) && record.programMemberships && record.programMemberships.length > 0"
-      class="mt-4"
+      class="col-span-3 mb-4"
     >
-      <TextH4>Program Memberships</TextH4>
+      <TextH4 class="mb-3">Program Memberships</TextH4>
 
-      <ul class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+      <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
         <li
           v-for="(item, index) in record.programMemberships"
           :key="item.programName + index"
@@ -128,10 +143,10 @@
       </ul>
     </div>
 
-    <div v-if="full && !isEmptyObject(record) && record.patient.familydoctor" class="mt-4">
-      <TextH4>Family Doctor</TextH4>
+    <div v-if="full && !isEmptyObject(record) && record.patient.familydoctor" class="col-span-3 mb-4">
+      <TextH4 class="mb-3">Family Doctor</TextH4>
 
-      <ul class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+      <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
         <li
           v-for="(info, index) in [
             record.patient.familydoctor.gpInfo,
