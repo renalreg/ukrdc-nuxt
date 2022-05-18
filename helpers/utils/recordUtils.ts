@@ -3,7 +3,13 @@ import { PatientRecordSummary } from "~/interfaces/patientrecord";
 
 const ukrdcMembershipFacilities = ["PV", "PKB"];
 const membershipExtracts = ["RADAR"];
+const membershipFacilities = ["UKRR"];
 const migratedExtracts = ["PVMIG", "HSMIG"];
+
+/*
+  Notation: 
+  X/Y corresponds to sendingfacility/sendingextract
+*/
 
 export interface localNumber {
   label: string;
@@ -11,20 +17,23 @@ export interface localNumber {
 }
 
 export function isData(record: PatientRecordSummary): boolean {
+  // All PV extracts are data
   if (record.sendingextract === "PV") {
     return true;
   }
-  if (
-    record.sendingextract === "UKRDC" &&
-    !ukrdcMembershipFacilities.includes(record.sendingfacility) &&
-    record.sendingfacility !== "TRACING"
-  ) {
+  // UKRR/UKRR is a membership, but otherwise UKRR extracts are data
+  if (record.sendingextract === "UKRR" && !(record.sendingfacility === "UKRR")) {
+    return true;
+  }
+  // UKRDC extracts are data, unless facility is PV, PKB, or TRACING
+  if (record.sendingextract === "UKRDC" && !["PV", "PKB", "TRACING"].includes(record.sendingfacility)) {
     return true;
   }
   return false;
 }
 
 export function isSurvey(record: PatientRecordSummary): boolean {
+  // All SURVEY extracts are surveys
   if (record.sendingextract === "SURVEY") {
     return true;
   }
@@ -32,6 +41,7 @@ export function isSurvey(record: PatientRecordSummary): boolean {
 }
 
 export function isMigrated(record: PatientRecordSummary) {
+  // All *MIG extracts are migrated
   if (migratedExtracts.includes(record.sendingextract)) {
     return true;
   }
@@ -40,6 +50,9 @@ export function isMigrated(record: PatientRecordSummary) {
 
 export function isMembership(record: PatientRecordSummary) {
   if (membershipExtracts.includes(record.sendingextract)) {
+    return true;
+  }
+  if (membershipFacilities.includes(record.sendingfacility)) {
     return true;
   }
   if (record.sendingextract === "UKRDC" && ukrdcMembershipFacilities.includes(record.sendingfacility)) {
