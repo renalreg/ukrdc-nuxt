@@ -1,9 +1,6 @@
 <template>
   <div>
-    <div v-if="dash && (dash.warnings.length > 0 || dash.messages.length > 0)" class="mb-8">
-      <genericAlertWarning v-for="message in dash.warnings" :key="message" :message="message"> </genericAlertWarning>
-      <genericAlertInfo v-for="message in dash.messages" :key="message" :message="message"> </genericAlertInfo>
-    </div>
+    <DashboardAlerts class="mb-8" />
 
     <AdminDashboard v-if="isAdmin" class="mb-6" />
 
@@ -13,23 +10,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useContext, useRouter } from "@nuxtjs/composition-api";
-import { DashResponse } from "@/interfaces/dash";
-
-import fetchDash from "~/helpers/fetch/fetchDash";
+import { defineComponent, onMounted, useRouter } from "@nuxtjs/composition-api";
 
 import usePermissions from "~/helpers/usePermissions";
 
 export default defineComponent({
   setup() {
     const router = useRouter();
-    const { $okta } = useContext();
     const { isAdmin, availableFacilities, hasMultipleFacilities } = usePermissions();
-    const { fetchDashboard } = fetchDash();
 
     // Data refs
-
-    const dash = ref<DashResponse>();
 
     function redirectToOnlyFacility() {
       if (availableFacilities.value?.length === 1) {
@@ -39,13 +29,9 @@ export default defineComponent({
 
     onMounted(async () => {
       redirectToOnlyFacility();
-      if (await $okta.isAuthenticated()) {
-        dash.value = await fetchDashboard();
-      }
     });
 
     return {
-      dash,
       hasMultipleFacilities,
       availableFacilities,
       isAdmin,

@@ -1,5 +1,8 @@
 <template>
   <div>
+    <!-- Show dashboard alerts for users with only one facility, that is, for whom this page IS their dashboard -->
+    <DashboardAlerts v-if="!hasMultipleFacilities" class="mb-4" />
+
     <div class="mb-2">
       <TextH1 v-if="facility"> {{ facility.description }} </TextH1>
       <SkeleText v-else class="mb-2 h-8 w-1/4" />
@@ -17,13 +20,17 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
-import { Facility } from "~/interfaces/facilities";
+
+import usePermissions from "~/helpers/usePermissions";
 import fetchFacilities from "~/helpers/fetch/fetchFacilities";
+
+import { Facility } from "~/interfaces/facilities";
 import { TabItem } from "~/interfaces/tabs";
 
 export default defineComponent({
   setup() {
     const route = useRoute();
+    const { hasMultipleFacilities } = usePermissions();
 
     const { fetchFacility } = fetchFacilities();
 
@@ -59,6 +66,7 @@ export default defineComponent({
     });
 
     return {
+      hasMultipleFacilities,
       tabs,
       code,
       facility,
