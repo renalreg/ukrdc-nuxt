@@ -40,6 +40,19 @@ export default function () {
     return null;
   }
 
+  const availableFacilities = computed(() => {
+    return getFacilities();
+  });
+
+  const firstFacility = computed(() => {
+    if (availableFacilities.value) {
+      if (availableFacilities.value.length > 0) {
+        return availableFacilities.value[0];
+      }
+    }
+    return null;
+  });
+
   const isAdmin = computed(() => hasPermission("ukrdc:unit:*"));
 
   const hasMultipleFacilities = computed(() => {
@@ -53,5 +66,13 @@ export default function () {
     }
   });
 
-  return { hasPermission, getPermissions, getFacilities, hasMultipleFacilities, isAdmin };
+  return {
+    hasPermission,
+    getPermissions,
+    getFacilities,
+    availableFacilities,
+    firstFacility,
+    hasMultipleFacilities,
+    isAdmin,
+  };
 }

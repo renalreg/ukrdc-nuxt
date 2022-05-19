@@ -1,23 +1,28 @@
 <template>
-  <router-link v-if="to" v-slot="{ navigate }" custom :to="to">
-    <button
-      v-tooltip="{ content: tooltip, delay: { show: 500, hide: 0 } }"
-      :aria-label="label"
-      type="button"
-      :disabled="disabled"
-      :class="[primary ? `btn-${colour}-primary` : `btn-${colour}`, { 'btn-disabled': disabled }]"
-      @click="navigate"
-    >
-      <slot />
-    </button>
-  </router-link>
+  <NuxtLink
+    v-if="to"
+    v-tooltip="{ content: tooltip, delay: { show: 500, hide: 0 } }"
+    :aria-label="label"
+    type="button"
+    :disabled="disabled"
+    :class="[
+      'flex',
+      'items-center',
+      'justify-center',
+      primary ? `btn-${colour}-primary` : `btn-${colour}`,
+      { 'btn-disabled': disabled },
+    ]"
+    :to="to"
+  >
+    <slot />
+  </NuxtLink>
   <button
     v-else
     v-tooltip="{ content: tooltip, delay: { show: 500, hide: 0 } }"
     :aria-label="label"
     type="button"
     :disabled="disabled"
-    :class="[primary ? `btn-${colour}-primary` : `btn-${colour}`, { 'btn-disabled': disabled }]"
+    :class="['flex', 'items-center', primary ? `btn-${colour}-primary` : `btn-${colour}`, { 'btn-disabled': disabled }]"
     @click="$emit('click')"
   >
     <slot />

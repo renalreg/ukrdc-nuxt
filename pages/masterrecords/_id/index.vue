@@ -3,8 +3,8 @@
     <!-- Description list -->
     <GenericCard class="mb-4">
       <GenericCardContent>
-        <GenericDl>
-          <GenericDi>
+        <GenericDlGrid>
+          <GenericDlGridItem>
             <TextDt>Full Name</TextDt>
             <TextDd>
               <div class="flex items-center gap-2">
@@ -12,9 +12,9 @@
                 <TracingBadge v-if="tracingRecord" :verified="nameMatchesTracing" />
               </div>
             </TextDd>
-          </GenericDi>
+          </GenericDlGridItem>
 
-          <GenericDi>
+          <GenericDlGridItem>
             <TextDt>Gender</TextDt>
             <TextDd>
               <div class="flex items-center gap-2">
@@ -22,9 +22,9 @@
                 <TracingBadge v-if="tracingRecord" :verified="tracingRecord.patient.gender === record.gender" />
               </div>
             </TextDd>
-          </GenericDi>
+          </GenericDlGridItem>
 
-          <GenericDi>
+          <GenericDlGridItem>
             <TextDt>Date of Birth</TextDt>
             <TextDd>
               <div class="flex items-center gap-2">
@@ -32,9 +32,9 @@
                 <TracingBadge v-if="tracingRecord" :verified="birthTimeMatchesTracing" />
               </div>
             </TextDd>
-          </GenericDi>
+          </GenericDlGridItem>
 
-          <GenericDi>
+          <GenericDlGridItem>
             <TextDt class="font-medium text-gray-500">National ID</TextDt>
             <TextDd>
               <div class="flex items-center gap-2">
@@ -45,18 +45,18 @@
                 />
               </div>
             </TextDd>
-          </GenericDi>
+          </GenericDlGridItem>
 
-          <GenericDi>
+          <GenericDlGridItem>
             <TextDt>ID Type</TextDt>
             <TextDd>{{ record.nationalidType }} </TextDd>
-          </GenericDi>
+          </GenericDlGridItem>
 
-          <GenericDi>
+          <GenericDlGridItem>
             <TextDt>Last Updated</TextDt>
             <TextDd>{{ formatDate(record.lastUpdated) }} </TextDd>
-          </GenericDi>
-        </GenericDl>
+          </GenericDlGridItem>
+        </GenericDlGrid>
       </GenericCardContent>
     </GenericCard>
 

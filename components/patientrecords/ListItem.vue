@@ -50,7 +50,7 @@
       </div>
     </div>
     <!-- Collapsible details -->
-    <div v-show="showDetail" class="mb-4 px-4 sm:px-6">
+    <div v-show="showDetail" class="bg-gray-50 px-4 py-4 shadow-inner sm:px-6">
       <PatientrecordsDetailCards :record="item" />
     </div>
   </li>
