@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mx-auto mb-4 max-w-7xl">
-      <h1 class="text-2xl font-semibold text-gray-900">Codes List</h1>
+      <TextH1>Codes List</TextH1>
     </div>
 
     <div v-if="standards && standards.length > 1" :class="$route.params.id ? 'hidden lg:block' : 'block'">
