@@ -7,9 +7,9 @@
       v-for="item in groupedRecords.data"
       :key="item.pid + '_data'"
       :item="item"
-      :show-pv-sync="hasPVMembership"
-      :show-radar-sync="hasRADARMembership"
-      :show-pkb-sync="hasPKBMembership"
+      :show-pv-sync="hasPVMembership && item.sendingfacility !== 'NHSBT'"
+      :show-radar-sync="hasRADARMembership && item.sendingfacility !== 'NHSBT'"
+      :show-pkb-sync="hasPKBMembership && item.sendingfacility !== 'NHSBT'"
       @deleted="$emit('refresh')"
     />
 
