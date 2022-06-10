@@ -9,7 +9,7 @@
         <ChartTimeSeries
           class="h-64"
           :data="facilityErrorsHistory"
-          label="New Errors"
+          y-label="New Errors"
           @click="historyPointClickHandler"
         />
       </GenericCardContent>

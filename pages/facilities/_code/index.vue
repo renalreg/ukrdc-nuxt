@@ -151,6 +151,10 @@
         </GenericCardContent>
       </GenericCard>
     </div>
+
+    <!-- Demographic distributions -->
+    <TextH2 class="mb-4">Patient Demographics</TextH2>
+    <FacilitiesStatsDemographics v-if="facility" :facility="facility" />
   </div>
 </template>
 

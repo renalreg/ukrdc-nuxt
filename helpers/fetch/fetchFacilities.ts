@@ -1,6 +1,6 @@
 import { useContext } from "@nuxtjs/composition-api";
 import { buildCommonMessageQuery, MessagePage } from "./common";
-import { Facility } from "~/interfaces/facilities";
+import { Facility, FacilityDemographicStats } from "~/interfaces/facilities";
 import { HistoryItem } from "~/interfaces/common";
 
 export default function () {
@@ -42,5 +42,15 @@ export default function () {
     return (await $api.$get(path)) as MessagePage;
   }
 
-  return { fetchFacilitiesList, fetchFacility, fetchFacilityErrorsHistory, fetchFacilityPatientsLatestErrorsPage };
+  async function fetchFacilityDemographicStats(facility: Facility): Promise<FacilityDemographicStats> {
+    return (await $api.$get(facility.links.stats.demographics)) as FacilityDemographicStats;
+  }
+
+  return {
+    fetchFacilitiesList,
+    fetchFacility,
+    fetchFacilityErrorsHistory,
+    fetchFacilityPatientsLatestErrorsPage,
+    fetchFacilityDemographicStats,
+  };
 }

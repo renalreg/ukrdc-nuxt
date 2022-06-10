@@ -7,9 +7,9 @@
 <script lang="ts">
 import { defineComponent, onMounted } from "@nuxtjs/composition-api";
 
-import { ArcElement, Chart, DoughnutController, Legend } from "chart.js";
+import { BarElement, Chart, BarController, CategoryScale } from "chart.js";
 
-Chart.register(DoughnutController, ArcElement, Legend);
+Chart.register(BarElement, BarController, CategoryScale);
 
 export default defineComponent({
   props: {
@@ -21,32 +21,13 @@ export default defineComponent({
       type: Array,
       default: null,
     },
-    colors: {
-      type: Array,
-      default: () => {
-        return [
-          "#3366CC",
-          "#DC3912",
-          "#FF9900",
-          "#109618",
-          "#990099",
-          "#3B3EAC",
-          "#0099C6",
-          "#D47",
-          "#6A0",
-          "#B82E2E",
-          "#316395",
-          "#949",
-          "#2A9",
-          "#AA1",
-          "#63C",
-          "#E67300",
-          "#8B0707",
-          "#329262",
-          "#5574A6",
-          "#651067",
-        ];
-      },
+    yLabel: {
+      type: String,
+      default: null,
+    },
+    xLabel: {
+      type: String,
+      default: null,
     },
     options: {
       type: Object,
@@ -54,15 +35,11 @@ export default defineComponent({
     },
     legend: {
       type: Boolean,
-      default: true,
-    },
-    legendLimit: {
-      type: Number,
-      default: 8,
+      default: false,
     },
     id: {
       type: String,
-      default: "doughnut",
+      default: "bar",
     },
   },
 
@@ -70,13 +47,14 @@ export default defineComponent({
     onMounted(() => {
       const canvas = document.getElementById(props.id) as HTMLCanvasElement;
       const options = {
-        type: "doughnut",
+        type: "bar",
         data: {
           datasets: [
             {
               data: props.data,
-              backgroundColor: props.colors,
-              hoverOffset: 2,
+              borderColor: "rgba(79, 70, 229, 1)",
+              backgroundColor: "rgba(79, 70, 229, 0.5)",
+              borderWidth: 1,
             },
           ],
           labels: props.labels,
@@ -87,11 +65,19 @@ export default defineComponent({
           plugins: {
             legend: {
               display: props.legend,
-              position: "right",
-              labels: {
-                filter: (legendItem) => {
-                  return legendItem.index < props.legendLimit;
-                },
+            },
+          },
+          scales: {
+            x: {
+              title: {
+                display: !!props.xLabel,
+                text: props.xLabel,
+              },
+            },
+            y: {
+              title: {
+                display: !!props.yLabel,
+                text: props.yLabel,
               },
             },
           },

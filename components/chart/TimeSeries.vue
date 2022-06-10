@@ -28,9 +28,13 @@ export default defineComponent({
       type: Array as () => HistoryItem[],
       default: null,
     },
-    label: {
+    yLabel: {
       type: String,
-      default: "",
+      default: null,
+    },
+    xLabel: {
+      type: String,
+      default: null,
     },
     options: {
       type: Object,
@@ -129,18 +133,23 @@ export default defineComponent({
                 source: "auto",
                 autoSkip: true,
               },
+              title: {
+                display: !!props.xLabel,
+                text: props.xLabel,
+              },
             },
             y: {
               beginAtZero: true,
               title: {
-                display: true,
-                text: props.label,
+                display: !!props.yLabel,
+                text: props.yLabel,
               },
               ticks: {
                 precision: 0,
               },
             },
           },
+          ...props.options,
         },
       };
       // @ts-ignore
