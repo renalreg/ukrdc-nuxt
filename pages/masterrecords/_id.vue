@@ -57,7 +57,7 @@ export default defineComponent({
         href: `/masterrecords/${route.value.params.id}`,
       },
       ...insertIf(hasPermission("ukrdc:messages:read"), {
-        name: "Messages",
+        name: "Data Files",
         href: `/masterrecords/${route.value.params.id}/messages`,
       }),
       {
