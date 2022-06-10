@@ -9,7 +9,7 @@ import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
 import { Interval, DateTime } from "luxon";
 
-import { Chart, LineController, TimeScale, LinearScale, PointElement, LineElement, Tooltip } from "chart.js";
+import { Chart, LineController, TimeScale, LinearScale, PointElement, LineElement, Tooltip, Legend } from "chart.js";
 import "chartjs-adapter-luxon";
 
 import { HistoryItem } from "~/interfaces/common";
@@ -39,6 +39,10 @@ export default defineComponent({
     options: {
       type: Object,
       default: null,
+    },
+    legend: {
+      type: Boolean,
+      default: false,
     },
     autofillData: {
       type: Boolean,
@@ -120,6 +124,11 @@ export default defineComponent({
           },
           responsive: true,
           maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: props.legend,
+            },
+          },
           scales: {
             x: {
               type: "time",
