@@ -46,7 +46,7 @@ Table of facilities and their basic statistics
           </th>
           <th scope="col" class="px-4 py-3 text-left">
             <div class="flex items-center gap-1">
-              <TextTh>Last Recieved</TextTh>
+              <TextTh>Last Received</TextTh>
               <IconDynamicSort
                 :active="sortBy === 'latest_message.last_message_received_at'"
                 :asc="isAscending['latest_message.last_message_received_at']"
