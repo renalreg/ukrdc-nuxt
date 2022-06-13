@@ -14,7 +14,7 @@ import "chartjs-adapter-luxon";
 
 import { HistoryItem } from "~/interfaces/common";
 
-Chart.register(LineController, TimeScale, LinearScale, PointElement, LineElement, Tooltip);
+Chart.register(LineController, TimeScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
 interface EventElement {
   datasetIndex: number;

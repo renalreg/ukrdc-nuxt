@@ -9,7 +9,7 @@ import { defineComponent, onMounted } from "@nuxtjs/composition-api";
 
 import { BarElement, Chart, BarController, CategoryScale, Legend } from "chart.js";
 
-Chart.register(BarElement, BarController, CategoryScale);
+Chart.register(BarElement, BarController, CategoryScale, Legend);
 
 export default defineComponent({
   props: {
