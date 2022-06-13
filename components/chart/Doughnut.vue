@@ -6,8 +6,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from "@nuxtjs/composition-api";
-
-import { ArcElement, Chart, DoughnutController, Legend } from "chart.js";
+import { ChartData, ArcElement, Chart, DoughnutController, Legend, LegendItem } from "chart.js";
 
 Chart.register(DoughnutController, ArcElement, Legend);
 
@@ -89,8 +88,13 @@ export default defineComponent({
               display: props.legend,
               position: "right",
               labels: {
-                filter: (legendItem) => {
-                  return legendItem.index < props.legendLimit;
+                filter: (legendItem: LegendItem, data: ChartData) => {
+                  const labelIndex: number | undefined = data.labels?.indexOf(legendItem.text);
+                  // Hide label if it's not found in the dataset
+                  if (labelIndex === -1 || labelIndex === undefined) {
+                    return false;
+                  }
+                  return labelIndex < props.legendLimit;
                 },
               },
             },
