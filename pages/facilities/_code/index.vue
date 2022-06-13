@@ -82,9 +82,7 @@
                   >
                     {{ facility.statistics.patientsReceivingMessageError }}
                   </TextHc>
-                  <NuxtLink class="hover:underline" :to="`/facilities/${facility.id}/errors`">
-                    Show all patients
-                  </NuxtLink>
+                  <NuxtLink class="hover:underline" :to="`/facilities/${facility.id}/errors`"> Show errors </NuxtLink>
                 </dd>
               </dl>
             </div>
