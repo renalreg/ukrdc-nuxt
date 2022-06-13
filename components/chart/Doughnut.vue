@@ -8,6 +8,8 @@
 import { defineComponent, onMounted } from "@nuxtjs/composition-api";
 import { ChartData, ArcElement, Chart, DoughnutController, Legend, LegendItem } from "chart.js";
 
+import { tailwindColours } from "~/helpers/utils/colourUtils";
+
 Chart.register(DoughnutController, ArcElement, Legend);
 
 export default defineComponent({
@@ -24,20 +26,22 @@ export default defineComponent({
       type: Array,
       default: () => {
         return [
-          "#3366CC",
-          "#DC3912",
-          "#FF9900",
-          "#109618",
-          "#990099",
-          "#3B3EAC",
-          "#0099C6",
-          "#D47",
-          "#6A0",
-          "#B82E2E",
-          "#316395",
-          "#949",
-          "#2A9",
-          "#AA1",
+          tailwindColours.indigo[400],
+          tailwindColours.orange[400],
+          tailwindColours.emerald[400],
+          tailwindColours.blue[400],
+          tailwindColours.rose[400],
+          tailwindColours.purple[400],
+          tailwindColours.yellow[400],
+          tailwindColours.cyan[400],
+          tailwindColours.pink[400],
+          tailwindColours.lime[400],
+          tailwindColours.blue[400],
+          tailwindColours.amber[400],
+          tailwindColours.teal[400],
+          tailwindColours.fuchsia[400],
+          tailwindColours.red[400],
+          tailwindColours.neutral[400],
           "#63C",
           "#E67300",
           "#8B0707",
