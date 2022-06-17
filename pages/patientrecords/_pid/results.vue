@@ -19,78 +19,83 @@
       @confirm="deleteLabOrder"
     />
 
-    <GenericDateRange v-model="dateRange" class="mb-4" />
-    <GenericSearchableSelect
-      v-model="selectedService"
-      class="mb-4"
-      :options="availableServicesIds"
-      :labels="availableServicesLabels"
-      hint="Select a service..."
-    />
-
-    <div class="mb-4 flex flex-grow items-center gap-2">
-      <NuxtLink :to="'./laborders'">
-        <GenericButton>View Orders</GenericButton>
-      </NuxtLink>
-      <NuxtLink v-if="selectedOrderId" :to="{ query: { order_id: null } }">
-        <GenericButton>Show Results From All Orders</GenericButton>
-      </NuxtLink>
-      <GenericButton v-if="selectedOrderId && selectedOrder" colour="red" @click="deleteOrderAlert.show()"
-        >Delete Lab Order</GenericButton
-      >
-    </div>
-
-    <!-- Small data card display -->
-    <div class="lg:hidden">
-      <PatientrecordsResultCard
-        v-for="(item, index) in results"
-        :key="`${index}-card`"
-        :item="item"
-        @delete="showDeleteResultItemModal"
+    <LoadingContainer :loading="!results">
+      <GenericDateRange v-model="dateRange" class="mb-4" />
+      <GenericSearchableSelect
+        v-model="selectedService"
+        class="mb-4"
+        :options="availableServicesIds"
+        :labels="availableServicesLabels"
+        hint="Select a service..."
       />
-    </div>
-    <!-- Large table display -->
-    <GenericTable class="hidden lg:block">
-      <thead class="bg-gray-50">
-        <tr>
-          <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
-            Type
-          </th>
-          <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
-            Value
-          </th>
-          <th scope="col" class="px-6 py-3 pl-16 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
-            Order ID
-          </th>
-          <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
-            Observation Time
-          </th>
-          <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500"></th>
-          <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500"></th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-gray-200 bg-white">
-        <PatientrecordsResultRow
+
+      <div class="mb-4 flex flex-grow items-center gap-2">
+        <NuxtLink :to="'./laborders'">
+          <GenericButton>View Orders</GenericButton>
+        </NuxtLink>
+        <NuxtLink v-if="selectedOrderId" :to="{ query: { order_id: null } }">
+          <GenericButton>Show Results From All Orders</GenericButton>
+        </NuxtLink>
+        <GenericButton v-if="selectedOrderId && selectedOrder" colour="red" @click="deleteOrderAlert.show()"
+          >Delete Lab Order</GenericButton
+        >
+      </div>
+
+      <!-- Small data card display -->
+      <div class="lg:hidden">
+        <PatientrecordsResultCard
           v-for="(item, index) in results"
-          :key="index"
+          :key="`${index}-card`"
           :item="item"
           @delete="showDeleteResultItemModal"
         />
-      </tbody>
-    </GenericTable>
+      </div>
+      <!-- Large table display -->
+      <GenericTable class="hidden lg:block">
+        <thead class="bg-gray-50">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
+              Type
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
+              Value
+            </th>
+            <th
+              scope="col"
+              class="px-6 py-3 pl-16 text-left text-sm font-medium uppercase tracking-wider text-gray-500"
+            >
+              Order ID
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
+              Observation Time
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500"></th>
+            <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 bg-white">
+          <PatientrecordsResultRow
+            v-for="(item, index) in results"
+            :key="index"
+            :item="item"
+            @delete="showDeleteResultItemModal"
+          />
+        </tbody>
+      </GenericTable>
 
-    <div v-if="results.length > 0" class="mt-4">
-      <GenericCard>
-        <GenericPaginator
-          :page="page"
-          :size="size"
-          :total="total"
-          @next="page++"
-          @prev="page--"
-          @jump="page = $event"
-        />
-      </GenericCard>
-    </div>
+      <div v-if="results && results.length > 0" class="mt-4">
+        <GenericCard>
+          <GenericPaginator
+            :page="page"
+            :size="size"
+            :total="total"
+            @next="page++"
+            @prev="page--"
+            @jump="page = $event"
+          />
+        </GenericCard>
+      </div>
+    </LoadingContainer>
   </div>
 </template>
 
@@ -134,7 +139,7 @@ export default defineComponent({
 
     // Data refs
 
-    const results = ref([] as ResultItem[]);
+    const results = ref<ResultItem[]>();
 
     // Data fetching
 

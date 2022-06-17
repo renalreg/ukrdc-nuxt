@@ -1,63 +1,68 @@
 <template>
   <div>
-    <TextP v-if="observations && observations.length <= 0" class="text-center">No observations on record</TextP>
-    <div v-else>
-      <GenericSelect v-model="selectedCodeString" class="mb-4">
-        <option :value="null">All Observations</option>
-        <option v-for="item in availableCodes" :key="item">
-          {{ item }}
-        </option>
-      </GenericSelect>
+    <LoadingContainer :loading="!observations">
+      <TextP v-if="observations && observations.length <= 0" class="text-center">No observations on record</TextP>
+      <div v-else>
+        <GenericSelect v-model="selectedCodeString" class="mb-4">
+          <option :value="null">All Observations</option>
+          <option v-for="item in availableCodes" :key="item">
+            {{ item }}
+          </option>
+        </GenericSelect>
 
-      <!-- Small data card display -->
-      <div class="lg:hidden">
-        <PatientrecordsObservationCard
-          v-for="(item, index) in observations"
-          :key="`${item.observationCode}-${index}-card`"
-          :item="item"
-        />
-      </div>
-      <!-- Large table display -->
-      <GenericTable class="mb-4 hidden lg:block">
-        <thead class="bg-gray-50">
-          <tr>
-            <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
-              Type
-            </th>
-            <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
-              Value
-            </th>
-            <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
-              Entered At
-            </th>
-            <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
-              Entered On
-            </th>
-            <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500"></th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-200 bg-white">
-          <PatientrecordsObservationTableRow
+        <!-- Small data card display -->
+        <div class="lg:hidden">
+          <PatientrecordsObservationCard
             v-for="(item, index) in observations"
-            :key="`${item.observationCode}-${index}`"
+            :key="`${item.observationCode}-${index}-card`"
             :item="item"
           />
-        </tbody>
-      </GenericTable>
+        </div>
+        <!-- Large table display -->
+        <GenericTable class="mb-4 hidden lg:block">
+          <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
+                Type
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
+                Value
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
+                Entered At
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
+                Entered On
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500"
+              ></th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200 bg-white">
+            <PatientrecordsObservationTableRow
+              v-for="(item, index) in observations"
+              :key="`${item.observationCode}-${index}`"
+              :item="item"
+            />
+          </tbody>
+        </GenericTable>
 
-      <div v-if="observations && observations.length > 0">
-        <GenericCard>
-          <GenericPaginator
-            :page="page"
-            :size="size"
-            :total="total"
-            @next="page++"
-            @prev="page--"
-            @jump="page = $event"
-          />
-        </GenericCard>
+        <div v-if="observations && observations.length > 0">
+          <GenericCard>
+            <GenericPaginator
+              :page="page"
+              :size="size"
+              :total="total"
+              @next="page++"
+              @prev="page--"
+              @jump="page = $event"
+            />
+          </GenericCard>
+        </div>
       </div>
-    </div>
+    </LoadingContainer>
   </div>
 </template>
 

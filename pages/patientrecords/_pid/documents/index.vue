@@ -1,30 +1,27 @@
 <template>
   <div>
-    <TextP v-if="documents && documents.length <= 0" class="text-center">No documents on record</TextP>
-    <GenericCard v-else>
-      <!-- Skeleton results -->
-      <ul v-if="!documents" class="divide-y divide-gray-200">
-        <SkeleListItem v-for="n in 10" :key="n" />
-      </ul>
-      <!-- Real results -->
-      <ul v-else class="divide-y divide-gray-200">
-        <div v-for="item in documents" :key="item.id" :item="item" class="hover:bg-gray-50">
-          <NuxtLink :to="`/patientrecords/${$route.params.pid}/documents/${item.id}`">
-            <PatientrecordsDocumentListItem :item="item" />
-          </NuxtLink>
-        </div>
-      </ul>
-      <GenericPaginator
-        v-if="documents && documents.length > 0"
-        class="border-t border-gray-200 bg-white"
-        :page="page"
-        :size="size"
-        :total="total"
-        @next="page++"
-        @prev="page--"
-        @jump="page = $event"
-      />
-    </GenericCard>
+    <LoadingContainer :loading="!documents">
+      <TextP v-if="documents && documents.length <= 0" class="text-center">No documents on record</TextP>
+      <GenericCard v-else>
+        <ul class="divide-y divide-gray-200">
+          <div v-for="item in documents" :key="item.id" :item="item" class="hover:bg-gray-50">
+            <NuxtLink :to="`/patientrecords/${$route.params.pid}/documents/${item.id}`">
+              <PatientrecordsDocumentListItem :item="item" />
+            </NuxtLink>
+          </div>
+        </ul>
+        <GenericPaginator
+          v-if="documents && documents.length > 0"
+          class="border-t border-gray-200 bg-white"
+          :page="page"
+          :size="size"
+          :total="total"
+          @next="page++"
+          @prev="page--"
+          @jump="page = $event"
+        />
+      </GenericCard>
+    </LoadingContainer>
   </div>
 </template>
 
