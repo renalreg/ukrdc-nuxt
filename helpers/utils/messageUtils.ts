@@ -1,5 +1,7 @@
 import { Message } from "~/interfaces/messages";
 
+export const allStatuses = ["STORED", "RECEIVED", "ERROR", "RESOLVED"];
+
 export function MessageSummary(message: Message): string {
   if (message.msgStatus === "STORED") {
     return "Stored without error";

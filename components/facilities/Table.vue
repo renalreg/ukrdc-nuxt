@@ -112,6 +112,7 @@ Table of facilities and their basic statistics
 import { computed, defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import fetchFacilities from "@/helpers/fetch/fetchFacilities";
 import { formatDate } from "@/helpers/utils/dateUtils";
+import { facilityLastMessageOver48 } from "@/helpers/utils/facilityUtils";
 import { Facility } from "@/interfaces/facilities";
 
 interface IsAscending {
@@ -160,16 +161,6 @@ export default defineComponent({
           .filter((option) => (filterByLastMessageOver48.value ? facilityLastMessageOver48(option) : true))
       );
     });
-
-    // Facility warnings
-    function facilityLastMessageOver48(facility: Facility) {
-      // True if the last message received was over 48 hours ago
-      return (
-        !facility.latestMessage.lastMessageReceivedAt ||
-        new Date(facility.latestMessage.lastMessageReceivedAt).getTime() <
-          new Date().setHours(new Date().getHours() - 48)
-      );
-    }
 
     // Sorting
 

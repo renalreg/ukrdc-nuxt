@@ -96,6 +96,15 @@
 
     <!-- Data flow -->
     <TextH2 class="mb-4">Data Flow</TextH2>
+
+    <div v-if="hasPermission('ukrdc:messages:read')" class="mb-4">
+      <NuxtLink :to="{ path: `/messages/`, query: { facility: facility.id, status: allStatuses } }">
+        <GenericAlertError v-if="!facility.latestMessage.lastMessageReceivedAt" :message="latestDataInfo" />
+        <GenericAlertWarning v-else-if="facilityLastMessageOver48(facility)" :message="latestDataInfo" />
+        <GenericAlertInfo v-else :message="latestDataInfo" />
+      </NuxtLink>
+    </div>
+
     <div v-if="facility && facility.dataFlow" class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-3">
       <GenericCard>
         <GenericCardContent>
@@ -159,7 +168,10 @@
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { formatDate } from "~/helpers/utils/dateUtils";
+import { facilityLastMessageOver48 } from "@/helpers/utils/facilityUtils";
 import { Facility } from "~/interfaces/facilities";
+import { allStatuses } from "~/helpers/utils/messageUtils";
+import usePermissions from "~/helpers/usePermissions";
 
 export default defineComponent({
   props: {
@@ -170,13 +182,28 @@ export default defineComponent({
   },
 
   setup(props) {
+    const { hasPermission } = usePermissions();
+
     // Computed string for statistics last updated time
     const lastUpdatedString = computed(() => {
       return formatDate(props.facility.statistics.lastUpdated, true);
     });
 
+    // Computed string for the latest data received
+    const latestDataInfo = computed(() => {
+      if (!props.facility.latestMessage.lastMessageReceivedAt) {
+        return "No data files received from this facility in over a year";
+      } else {
+        return `Latest data file recieved on ${formatDate(props.facility.latestMessage.lastMessageReceivedAt, true)}`;
+      }
+    });
+
     return {
+      hasPermission,
+      facilityLastMessageOver48,
+      allStatuses,
       lastUpdatedString,
+      latestDataInfo,
     };
   },
 });
