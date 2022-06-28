@@ -63,7 +63,7 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
             id="error-history-time-series"
             class="h-64"
             :data="errorsHistory"
-            label="New Errors"
+            y-label="New Errors"
             @click="errorHistoryPointClickHandler"
           />
         </GenericCardContent>
@@ -78,7 +78,7 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
             id="workitem-history-time-series"
             class="h-64"
             :data="workitemsHistory"
-            label="New Work Items"
+            y-label="New Work Items"
             @click="workitemHistoryPointClickHandler"
           />
         </GenericCardContent>

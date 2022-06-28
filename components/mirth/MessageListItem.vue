@@ -8,7 +8,7 @@
             <TextL1 class="truncate"> Message ID {{ message.messageId }} </TextL1>
             <TextP class="mt-2 line-clamp-2">{{ channelName }}</TextP>
           </div>
-          <!-- Recieved  -->
+          <!-- Received  -->
           <div class="col-span-1">
             <TextP> {{ connectorMessagesArray.length }} messages in chain</TextP>
             <TextP class="mt-2 line-clamp-2">

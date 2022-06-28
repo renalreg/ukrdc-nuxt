@@ -14,7 +14,7 @@
             <SkeleText v-else class="h-6 w-full" />
           </GenericDlGridItem>
           <GenericDlGridItem>
-            <TextDt>Recieved</TextDt>
+            <TextDt>Received</TextDt>
             <TextDd v-if="message"> {{ message.received ? formatDate(message.received) : "Unknown" }}</TextDd>
             <SkeleText v-else class="h-6 w-full" />
           </GenericDlGridItem>

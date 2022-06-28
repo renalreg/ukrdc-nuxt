@@ -9,12 +9,12 @@ import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
 import { Interval, DateTime } from "luxon";
 
-import { Chart, LineController, TimeScale, LinearScale, PointElement, LineElement, Tooltip } from "chart.js";
+import { Chart, LineController, TimeScale, LinearScale, PointElement, LineElement, Tooltip, Legend } from "chart.js";
 import "chartjs-adapter-luxon";
 
 import { HistoryItem } from "~/interfaces/common";
 
-Chart.register(LineController, TimeScale, LinearScale, PointElement, LineElement, Tooltip);
+Chart.register(LineController, TimeScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
 interface EventElement {
   datasetIndex: number;
@@ -28,13 +28,21 @@ export default defineComponent({
       type: Array as () => HistoryItem[],
       default: null,
     },
-    label: {
+    yLabel: {
       type: String,
-      default: "",
+      default: null,
+    },
+    xLabel: {
+      type: String,
+      default: null,
     },
     options: {
       type: Object,
       default: null,
+    },
+    legend: {
+      type: Boolean,
+      default: false,
     },
     autofillData: {
       type: Boolean,
@@ -116,6 +124,11 @@ export default defineComponent({
           },
           responsive: true,
           maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: props.legend,
+            },
+          },
           scales: {
             x: {
               type: "time",
@@ -129,18 +142,23 @@ export default defineComponent({
                 source: "auto",
                 autoSkip: true,
               },
+              title: {
+                display: !!props.xLabel,
+                text: props.xLabel,
+              },
             },
             y: {
               beginAtZero: true,
               title: {
-                display: true,
-                text: props.label,
+                display: !!props.yLabel,
+                text: props.yLabel,
               },
               ticks: {
                 precision: 0,
               },
             },
           },
+          ...props.options,
         },
       };
       // @ts-ignore
