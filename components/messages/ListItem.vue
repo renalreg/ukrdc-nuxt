@@ -13,7 +13,7 @@
         </div>
         <div class="mt-2 flex">
           <MessagesStatusBadge class="mr-2 flex-shrink" :message="item" />
-          <TextP class="blurred flex-grow line-clamp-1">
+          <TextP class="flex-grow line-clamp-1">
             {{ itemDescription }}
           </TextP>
         </div>
@@ -67,7 +67,7 @@ export default defineComponent({
   },
   setup(props) {
     const itemDescription = computed(() => {
-      return MessageSummary(props.item);
+      return MessageSummary(props.item).replace(/\d/g, "0");
     });
     return { itemDescription, formatDate };
   },

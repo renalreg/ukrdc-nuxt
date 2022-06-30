@@ -58,8 +58,8 @@
         <TextH2>Error message</TextH2>
       </GenericCardHeader>
       <GenericCardContent>
-        <div class="blurred whitespace-pre-wrap font-mono">
-          {{ message.error.trim() }}
+        <div class="whitespace-pre-wrap font-mono">
+          {{ message.error.trim().replace(/\d/g, "0") }}
         </div>
       </GenericCardContent>
     </GenericCard>

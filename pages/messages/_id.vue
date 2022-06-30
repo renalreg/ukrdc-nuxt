@@ -6,7 +6,7 @@
           {{ message.msgStatus === "ERROR" ? "Error" : "Message" }} {{ message.id }} from {{ message.facility }}
         </TextH1>
         <SkeleText v-else class="mb-2 h-8 w-1/4" />
-        <TextL1 v-if="message" class="blurred line-clamp-1">
+        <TextL1 v-if="message" class="line-clamp-1">
           {{ messageSummary }}
         </TextL1>
         <SkeleText v-else class="h-4 w-1/2" />
@@ -42,7 +42,7 @@ export default defineComponent({
 
     const messageSummary = computed(() => {
       if (message.value) {
-        return MessageSummary(message.value);
+        return MessageSummary(message.value).replace(/\d/g, "0");
       }
       return "";
     });
