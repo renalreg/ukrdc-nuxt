@@ -4,7 +4,7 @@
       <!-- Heading -->
       <div class="col-span-5 lg:col-span-3">
         <div class="truncate">
-          <TextL1 class="truncate md:inline">
+          <TextL1 class="blurred truncate md:inline">
             {{ item.filename || "No filename found" }}
           </TextL1>
           <TextL1 class="truncate md:inline">
@@ -13,7 +13,7 @@
         </div>
         <div class="mt-2 flex">
           <MessagesStatusBadge class="mr-2 flex-shrink" :message="item" />
-          <TextP class="flex-grow line-clamp-1">
+          <TextP class="blurred flex-grow line-clamp-1">
             {{ itemDescription }}
           </TextP>
         </div>
@@ -38,7 +38,7 @@
         /></GenericButtonRound>
         <div class="flex-grow">
           <TextL1>Patient Number</TextL1>
-          <TextP class="mt-2">
+          <TextP class="blurred mt-2">
             {{ item.ni || "None Found" }}
           </TextP>
         </div>
