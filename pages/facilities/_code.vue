@@ -71,9 +71,5 @@ export default defineComponent({
       facility,
     };
   },
-
-  head: {
-    title: "Facility",
-  },
 });
 </script>

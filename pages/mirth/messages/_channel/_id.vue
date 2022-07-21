@@ -39,8 +39,5 @@ export default defineComponent({
       message,
     };
   },
-  head: {
-    title: "Mirth Message",
-  },
 });
 </script>
