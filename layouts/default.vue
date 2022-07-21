@@ -102,9 +102,9 @@ import "floating-vue/dist/style.css";
 
 export default defineComponent({
   setup() {
-    const { base } = useNuxtApp();
+    const router = useRouter();
     useHead({
-      link: computed(() => [{ rel: "icon", type: "image/x-icon", href: `${base || "/"}favicon.ico` }]),
+      link: computed(() => [{ rel: "icon", type: "image/x-icon", href: `${router.options.base || "/"}favicon.ico` }]),
     });
 
     const sbOpen = ref(false);
