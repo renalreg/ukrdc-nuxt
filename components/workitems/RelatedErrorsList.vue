@@ -25,7 +25,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import { Message } from "@/interfaces/messages";
 import { WorkItem } from "~/interfaces/workitem";
 import fetchWorkItems from "~/helpers/fetch/fetchWorkItems";

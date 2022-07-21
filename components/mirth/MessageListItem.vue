@@ -26,8 +26,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "@nuxtjs/composition-api";
-
 import { ChannelMessage } from "@/interfaces/mirth";
 
 import { isEmptyObject } from "@/helpers/utils/objectUtils";

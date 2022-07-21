@@ -43,8 +43,6 @@ Mini (half-width) search bar and results pages used in the EMPI Merge page.
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import usePagination from "~/helpers/query/usePagination";
 import { MasterRecord } from "@/interfaces/masterrecord";
 

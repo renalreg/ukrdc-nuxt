@@ -35,10 +35,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@nuxtjs/composition-api";
-
 import { formatDate } from "@/helpers/utils/dateUtils";
-
 import { ResultItem } from "~/interfaces/laborder";
 
 export default defineComponent({

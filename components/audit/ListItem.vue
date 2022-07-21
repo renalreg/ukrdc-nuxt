@@ -33,7 +33,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "@nuxtjs/composition-api";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { AuditEvent } from "@/interfaces/audit";
 

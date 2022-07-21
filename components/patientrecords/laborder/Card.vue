@@ -20,8 +20,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@nuxtjs/composition-api";
-
 import { formatDate } from "@/helpers/utils/dateUtils";
 
 import { LabOrderShort } from "~/interfaces/laborder";

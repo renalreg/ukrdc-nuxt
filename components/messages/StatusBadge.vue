@@ -5,7 +5,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { Message } from "@/interfaces/messages";
 
 export default defineComponent({

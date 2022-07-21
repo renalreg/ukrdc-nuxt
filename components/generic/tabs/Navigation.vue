@@ -41,7 +41,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, useRouter } from "@nuxtjs/composition-api";
 import { urlCompare } from "@/helpers/utils/pathUtils";
 
 export interface Tabs {
