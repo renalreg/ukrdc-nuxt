@@ -434,8 +434,5 @@ export default defineComponent({
       hasPermission,
     };
   },
-  head: {
-    title: "Work Item",
-  },
 });
 </script>
