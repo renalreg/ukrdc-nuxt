@@ -1,7 +1,13 @@
+interface FacilityStatsLinks {
+  demographics: string;
+}
+
 interface FacilityLinks {
   self: string;
   errorsHistory: string;
   patientsLatestErrors: string;
+
+  stats: FacilityStatsLinks;
 }
 
 export interface FacilityStatistics {
@@ -22,6 +28,7 @@ interface FacilityLatestMessage {
   lastUpdated: string;
   lastMessageReceivedAt: string;
 }
+
 export interface Facility {
   id: string;
   description: string;
@@ -31,4 +38,25 @@ export interface Facility {
   dataFlow: FacilityDataFlowSchema;
 
   links: FacilityLinks;
+}
+
+interface AgePoint {
+  age: number;
+  count: number;
+}
+
+interface GenderPoint {
+  gender: number;
+  count: number;
+}
+
+interface EthnicityPoint {
+  ethnicity: string;
+  count: number;
+}
+
+export interface FacilityDemographicStats {
+  ageDist: AgePoint[];
+  genderDist: GenderPoint[];
+  ethnicityDist: EthnicityPoint[];
 }

@@ -1,22 +1,24 @@
 <template>
-  <router-link v-if="to" v-slot="{ navigate }" custom :to="to">
-    <button
-      v-tooltip="{ content: tooltip, delay: { show: 500, hide: 0 } }"
-      :aria-label="label"
-      type="button"
-      :disabled="disabled"
-      :class="[
-        `btn-mini-${colour}`,
-        anchor !== 'left' ? 'rounded-l-md' : 'border-l-0',
-        anchor !== 'right' ? 'rounded-r-md' : 'border-r-0',
-        'border',
-        { 'btn-mini-disabled': disabled },
-      ]"
-      @click="navigate"
-    >
-      <slot />
-    </button>
-  </router-link>
+  <NuxtLink
+    v-if="to"
+    v-tooltip="{ content: tooltip, delay: { show: 500, hide: 0 } }"
+    :to="to"
+    :aria-label="label"
+    type="button"
+    :disabled="disabled"
+    :class="[
+      'flex',
+      'items-center',
+      'justify-center',
+      `btn-mini-${colour}`,
+      anchor !== 'left' ? 'rounded-l-md' : 'border-l-0',
+      anchor !== 'right' ? 'rounded-r-md' : 'border-r-0',
+      'border',
+      { 'btn-mini-disabled': disabled },
+    ]"
+  >
+    <slot />
+  </NuxtLink>
   <button
     v-else
     v-tooltip="{ content: tooltip, delay: { show: 500, hide: 0 } }"
@@ -24,6 +26,8 @@
     type="button"
     :disabled="disabled"
     :class="[
+      'flex',
+      'items-center',
       `btn-mini-${colour}`,
       anchor !== 'left' ? 'rounded-l-md' : 'border-l-0',
       anchor !== 'right' ? 'rounded-r-md' : 'border-r-0',

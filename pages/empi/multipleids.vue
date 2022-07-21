@@ -8,16 +8,16 @@
     <!-- Description list -->
     <GenericCard class="mb-6">
       <GenericCardContent>
-        <GenericDl>
-          <GenericDi>
+        <GenericDlGrid>
+          <GenericDlGridItem>
             <TextDt>Patients with Multiple UKRDC IDs</TextDt>
             <TextDd v-if="total">
               {{ total }}
             </TextDd>
             <SkeleText v-else class="mt-2 h-6 w-8" />
-          </GenericDi>
+          </GenericDlGridItem>
 
-          <GenericDi>
+          <GenericDlGridItem>
             <TextDt class="flex items-center gap-1">
               <span class="inline">Last Full Scan</span>
               <GenericInfoIcon class="inline">
@@ -32,8 +32,8 @@
               {{ formatDate(lastRunTime, true) }}
             </TextDd>
             <SkeleText v-else class="mt-2 h-6 w-1/4" />
-          </GenericDi>
-        </GenericDl>
+          </GenericDlGridItem>
+        </GenericDlGrid>
       </GenericCardContent>
     </GenericCard>
 

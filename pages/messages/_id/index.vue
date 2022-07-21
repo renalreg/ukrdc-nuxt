@@ -5,26 +5,26 @@
     <!-- Header card -->
     <GenericCard class="mb-4">
       <GenericCardContent>
-        <GenericDl>
-          <GenericDi>
+        <GenericDlGrid>
+          <GenericDlGridItem>
             <TextDt>Status</TextDt>
             <TextDd v-if="message">
               <MessagesStatusBadge class="mr-2 flex-shrink" :message="message" />
             </TextDd>
             <SkeleText v-else class="h-6 w-full" />
-          </GenericDi>
-          <GenericDi>
-            <TextDt>Recieved</TextDt>
+          </GenericDlGridItem>
+          <GenericDlGridItem>
+            <TextDt>Received</TextDt>
             <TextDd v-if="message"> {{ message.received ? formatDate(message.received) : "Unknown" }}</TextDd>
             <SkeleText v-else class="h-6 w-full" />
-          </GenericDi>
-          <GenericDi>
+          </GenericDlGridItem>
+          <GenericDlGridItem>
             <TextDt>Facility</TextDt>
             <LinkSendingFacility v-if="message" :code="message.facility" />
             <SkeleText v-else class="h-6 w-full" />
-          </GenericDi>
+          </GenericDlGridItem>
 
-          <GenericDi>
+          <GenericDlGridItem>
             <TextDt>Channel</TextDt>
             <TextDd v-if="message" class="flex items-center gap-1">
               <span>{{ message.channel ? message.channel : message.channelId }}</span>
@@ -34,8 +34,8 @@
               </GenericInfoIcon>
             </TextDd>
             <SkeleText v-else class="h-6 w-full" />
-          </GenericDi>
-        </GenericDl>
+          </GenericDlGridItem>
+        </GenericDlGrid>
       </GenericCardContent>
     </GenericCard>
 

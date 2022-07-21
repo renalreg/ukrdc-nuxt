@@ -1,5 +1,6 @@
 <template>
   <div>
+    <TextH1 class="mb-4">Enterprise Master Patient Index</TextH1>
     <TextH2 class="mb-4">EMPI Management</TextH2>
     <div class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
       <EmpiQuickLink

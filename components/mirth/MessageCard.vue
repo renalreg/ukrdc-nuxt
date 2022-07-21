@@ -1,30 +1,30 @@
 <template>
   <GenericCard>
     <GenericCardContent>
-      <GenericDl>
-        <GenericDi>
+      <GenericDlGrid>
+        <GenericDlGridItem>
           <TextDt>Message ID</TextDt>
           <TextDd v-if="message && !isEmptyObject(message)">
             {{ message.messageId }}
           </TextDd>
           <SkeleText v-else class="h-6 w-full" />
-        </GenericDi>
-        <GenericDi>
+        </GenericDlGridItem>
+        <GenericDlGridItem>
           <TextDt>Processed</TextDt>
           <TextDd v-if="message && !isEmptyObject(message)">
             {{ message.processed ? "Yes" : "No" }}
             {{ hasErrors ? "(with errors)" : "" }}
           </TextDd>
           <SkeleText v-else class="h-6 w-full" />
-        </GenericDi>
-        <GenericDi>
+        </GenericDlGridItem>
+        <GenericDlGridItem>
           <TextDt>Channel</TextDt>
           <TextDd v-if="message && !isEmptyObject(message)">
             {{ channelName }}
           </TextDd>
           <SkeleText v-else class="h-6 w-full" />
-        </GenericDi>
-      </GenericDl>
+        </GenericDlGridItem>
+      </GenericDlGrid>
       <slot></slot>
     </GenericCardContent>
   </GenericCard>

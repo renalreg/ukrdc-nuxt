@@ -14,53 +14,53 @@
         </div>
       </GenericCardHeader>
       <GenericCardContent>
-        <GenericDl>
-          <GenericDi>
+        <GenericDlGrid>
+          <GenericDlGridItem>
             <TextDt>Entered At</TextDt>
             <TextDd v-if="patientDocument">
               {{ patientDocument.enteredatdesc || patientDocument.enteredatcode || "Unknown Facility" }}
             </TextDd>
             <SkeleText v-else class="h-6 w-1/2" />
-          </GenericDi>
-          <GenericDi>
+          </GenericDlGridItem>
+          <GenericDlGridItem>
             <TextDt>Entered By</TextDt>
             <TextDd v-if="patientDocument">{{
               patientDocument.enteredbydesc || patientDocument.enteredbycode || "Unknown Person"
             }}</TextDd>
             <SkeleText v-else class="h-6 w-1/2" />
-          </GenericDi>
-          <GenericDi>
+          </GenericDlGridItem>
+          <GenericDlGridItem>
             <TextDt>Clinician:</TextDt>
             <TextDd v-if="patientDocument">
               {{ patientDocument.cliniciandesc || patientDocument.cliniciancode || "Unknown Clinician" }}
             </TextDd>
             <SkeleText v-else class="h-6 w-1/2" />
-          </GenericDi>
-          <GenericDi>
+          </GenericDlGridItem>
+          <GenericDlGridItem>
             <TextDt>Document Date</TextDt>
             <TextDd v-if="patientDocument">
               {{ formatDate(patientDocument.documenttime) }}
             </TextDd>
             <SkeleText v-else class="h-6 w-1/3" />
-          </GenericDi>
-          <GenericDi>
+          </GenericDlGridItem>
+          <GenericDlGridItem>
             <TextDt>Creation Date</TextDt>
             <TextDd v-if="patientDocument">
               {{ formatDate(patientDocument.creationDate) }}
             </TextDd>
             <SkeleText v-else class="h-6 w-1/3" />
-          </GenericDi>
-          <GenericDi>
+          </GenericDlGridItem>
+          <GenericDlGridItem>
             <TextDt>Update Date</TextDt>
             <TextDd v-if="patientDocument">
               {{ formatDate(patientDocument.updateDate) }}
             </TextDd>
             <SkeleText v-else class="h-6 w-1/3" />
-          </GenericDi>
-          <GenericDi v-if="patientDocument && patientDocument.notetext" class="sm:col-span-3">
+          </GenericDlGridItem>
+          <GenericDlGridItem v-if="patientDocument && patientDocument.notetext" class="sm:col-span-3">
             <TextDt>Note</TextDt>
             <TextDd class="whitespace-pre-wrap font-mono">{{ patientDocument.notetext }}</TextDd>
-          </GenericDi>
+          </GenericDlGridItem>
           <div v-if="patientDocument" class="sm:col-span-2">
             <TextDt>Attachments</TextDt>
             <TextDd>
@@ -71,7 +71,7 @@
               </GenericCardMini>
             </TextDd>
           </div>
-        </GenericDl>
+        </GenericDlGrid>
       </GenericCardContent>
     </GenericCard>
   </div>

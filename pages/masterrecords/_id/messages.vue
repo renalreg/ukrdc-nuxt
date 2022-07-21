@@ -1,17 +1,15 @@
 <template>
   <div>
-    <div class="mb-4 flex flex-col">
-      <div class="flex flex-row gap-2">
-        <GenericDateRange v-model="dateRange" class="flex-1" />
-        <GenericButtonMini class="flex-none" @click="toggleOrder">
-          <div v-show="orderAscending" class="flex">
-            <TextP>Oldest - Newest</TextP><IconMiniSortAscending class="ml-2" />
-          </div>
-          <div v-show="!orderAscending" class="flex">
-            <TextP>Newest - Oldest</TextP><IconMiniSortDescending class="ml-2" />
-          </div>
-        </GenericButtonMini>
-      </div>
+    <div class="mb-4 flex flex-col gap-2 lg:flex-row">
+      <GenericDateRange v-model="dateRange" class="flex-1" />
+      <GenericButtonMini class="flex-none" @click="toggleOrder">
+        <div v-show="orderAscending" class="flex">
+          <TextP>Oldest - Newest</TextP><IconMiniSortAscending class="ml-2" />
+        </div>
+        <div v-show="!orderAscending" class="flex">
+          <TextP>Newest - Oldest</TextP><IconMiniSortDescending class="ml-2" />
+        </div>
+      </GenericButtonMini>
     </div>
 
     <GenericCard>

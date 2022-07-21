@@ -1,50 +1,37 @@
 <template>
   <div>
-    <div v-if="dash && (dash.warnings.length > 0 || dash.messages.length > 0)" class="mb-8">
-      <genericAlertWarning v-for="message in dash.warnings" :key="message" :message="message"> </genericAlertWarning>
-      <genericAlertInfo v-for="message in dash.messages" :key="message" :message="message"> </genericAlertInfo>
-    </div>
+    <DashboardAlerts class="mb-8" />
 
     <AdminDashboard v-if="isAdmin" class="mb-6" />
 
-    <div v-if="hasMultipleFacilities">
-      <TextH2 class="mb-4">My Facilities</TextH2>
-      <FacilitiesTable @select="$router.push({ path: `/facilities/${$event}` })" />
-    </div>
-    <FacilitiesOverview v-else-if="availableFacilities.length > 0" :code="availableFacilities[0]" />
+    <TextH2 class="mb-4">My Facilities</TextH2>
+    <FacilitiesTable @select="$router.push({ path: `/facilities/${$event}` })" />
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
-import { DashResponse } from "@/interfaces/dash";
-
-import fetchDash from "~/helpers/fetch/fetchDash";
+import { defineComponent, onMounted, useRouter } from "@nuxtjs/composition-api";
 
 import usePermissions from "~/helpers/usePermissions";
 
 export default defineComponent({
   setup() {
-    const { $okta } = useContext();
-    const { isAdmin, getFacilities, hasMultipleFacilities } = usePermissions();
-    const { fetchDashboard } = fetchDash();
+    const router = useRouter();
+    const { isAdmin, availableFacilities, hasMultipleFacilities } = usePermissions();
 
     // Data refs
 
-    const dash = ref<DashResponse>();
-
-    const availableFacilities = computed(() => {
-      return getFacilities();
-    });
-
-    onMounted(async () => {
-      if (await $okta.isAuthenticated()) {
-        dash.value = await fetchDashboard();
+    function redirectToOnlyFacility() {
+      if (availableFacilities.value?.length === 1) {
+        router.push({ path: `/facilities/${availableFacilities.value[0]}` });
       }
+    }
+
+    onMounted(() => {
+      redirectToOnlyFacility();
     });
 
     return {
-      dash,
       hasMultipleFacilities,
       availableFacilities,
       isAdmin,

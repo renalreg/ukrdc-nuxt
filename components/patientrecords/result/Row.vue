@@ -12,7 +12,7 @@
         :to="{ query: { order_id: item.orderId } }"
         ><IconMiniFilter
       /></GenericButtonRound>
-      <div class="truncate text-gray-500">
+      <div class="w-48 truncate text-gray-500">
         {{ item.orderId }}
       </div>
     </td>
