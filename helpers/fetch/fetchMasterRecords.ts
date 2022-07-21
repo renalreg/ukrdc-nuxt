@@ -1,4 +1,3 @@
-import { useContext } from "@nuxtjs/composition-api";
 import { buildCommonMessageQuery, MessagePage, AuditPage, buildCommonDateRangeQuery } from "./common";
 import { MasterRecord, MasterRecordStatistics } from "~/interfaces/masterrecord";
 import { MinimalMessage } from "~/interfaces/messages";
@@ -7,7 +6,7 @@ import { LinkRecord } from "~/interfaces/linkrecords";
 import { WorkItem } from "~/interfaces/workitem";
 
 export default function () {
-  const { $api } = useContext();
+  const { $api } = useNuxtApp();
 
   async function fetchMasterRecord(masterRecordId: string): Promise<MasterRecord> {
     return (await $api.$get(`/v1/masterrecords/${masterRecordId}/`)) as MasterRecord;

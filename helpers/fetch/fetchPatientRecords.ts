@@ -1,4 +1,3 @@
-import { ref, useContext } from "@nuxtjs/composition-api";
 import { buildCommonDateRangeQuery } from "./common";
 import { LabOrder, LabOrderShort, ResultItem } from "~/interfaces/laborder";
 import { LinkRecordSummary } from "~/interfaces/linkrecords";
@@ -64,7 +63,7 @@ export interface DeletePIDResponseSchema {
 }
 
 export default function () {
-  const { $api } = useContext();
+  const { $api } = useNuxtApp();
 
   async function fetchPatientRecord(pid: string): Promise<PatientRecord> {
     return (await $api.$get(`/v1/patientrecords/${pid}/`)) as PatientRecord;

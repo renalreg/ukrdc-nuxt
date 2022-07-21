@@ -1,5 +1,3 @@
-import { useContext } from "@nuxtjs/composition-api";
-
 interface serverSystemInfo {
   githubRef: string;
   githubSha: string;
@@ -7,7 +5,7 @@ interface serverSystemInfo {
 }
 
 export default function () {
-  const { $api } = useContext();
+  const { $api } = useNuxtApp();
 
   async function fetchServerInfo(): Promise<serverSystemInfo> {
     return (await $api.$get("/v1/system/info/")) as serverSystemInfo;
