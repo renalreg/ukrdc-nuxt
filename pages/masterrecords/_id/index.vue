@@ -118,8 +118,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-
 import { formatDate, datesAreEqual } from "@/helpers/utils/dateUtils";
 import { formatGender } from "@/helpers/utils/codeUtils";
 import { isTracing } from "@/helpers/utils/recordUtils";
