@@ -107,8 +107,16 @@
 </template>
 
 <script lang="ts">
-import { computed, ref, useContext, useRoute, useRouter, watch } from "@nuxtjs/composition-api";
-import { defineComponent, onMounted } from "@vue/composition-api";
+import {
+  computed,
+  ref,
+  useContext,
+  useRoute,
+  useRouter,
+  defineComponent,
+  onMounted,
+  watch,
+} from "@nuxtjs/composition-api";
 
 import useQuery from "~/helpers/query/useQuery";
 import fetchEMPI from "~/helpers/fetch/fetchEMPI";
