@@ -24,7 +24,7 @@ const containerClasses = [
   "sm:justify-end",
 ];
 
-const toastProgrammatic = {
+export const toastProgrammatic = {
   show(props: object | string): Vue {
     if (typeof props === "string") props = { message: props };
     return spawn("toasts", props, Toast, Vue);
