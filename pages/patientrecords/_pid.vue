@@ -25,17 +25,6 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  onMounted,
-  ref,
-  useMeta,
-  useRoute,
-  useRouter,
-  watch,
-} from "@nuxtjs/composition-api";
-
 import { PatientRecord, PatientRecordSummary } from "@/interfaces/patientrecord";
 import { TabItem } from "@/interfaces/tabs";
 
@@ -49,9 +38,9 @@ export default defineComponent({
     const { fetchPatientRecord, fetchPatientRecordRelated } = fetchPatientRecords();
 
     // Head
-    const { title } = useMeta();
-    title.value = `Record ${route.value.params.pid}`;
-
+    useHead({
+      title: computed(() => `Record ${route.params.pid}`),
+    });
     // Data refs
 
     const record = ref<PatientRecord>();
@@ -60,7 +49,7 @@ export default defineComponent({
     // Data fetching
 
     async function getRecord() {
-      record.value = await fetchPatientRecord(route.value.params.pid);
+      record.value = await fetchPatientRecord(route.params.pid);
       related.value = await fetchPatientRecordRelated(record.value);
     }
 
@@ -77,10 +66,10 @@ export default defineComponent({
       return [];
     });
 
-    const selectedPid = ref(route.value.params.pid);
+    const selectedPid = ref(route.params.pid);
 
     watch(selectedPid, (value: string) => {
-      router.push({ name: route.value.name!, params: { pid: value } });
+      router.push({ name: route.name!, params: { pid: value } });
     });
 
     // Dynamic UI elements
@@ -98,31 +87,31 @@ export default defineComponent({
     const tabs = [
       {
         name: "Overview",
-        href: `/patientrecords/${route.value.params.pid}`,
+        href: `/patientrecords/${route.params.pid}`,
       },
       {
         name: "Medications",
-        href: `/patientrecords/${route.value.params.pid}/medications`,
+        href: `/patientrecords/${route.params.pid}/medications`,
       },
       {
         name: "Treatments",
-        href: `/patientrecords/${route.value.params.pid}/treatments`,
+        href: `/patientrecords/${route.params.pid}/treatments`,
       },
       {
         name: "Results",
-        href: `/patientrecords/${route.value.params.pid}/results`,
+        href: `/patientrecords/${route.params.pid}/results`,
       },
       {
         name: "Observations",
-        href: `/patientrecords/${route.value.params.pid}/observations`,
+        href: `/patientrecords/${route.params.pid}/observations`,
       },
       {
         name: "Documents",
-        href: `/patientrecords/${route.value.params.pid}/documents`,
+        href: `/patientrecords/${route.params.pid}/documents`,
       },
       {
         name: "Surveys",
-        href: `/patientrecords/${route.value.params.pid}/surveys`,
+        href: `/patientrecords/${route.params.pid}/surveys`,
       },
     ] as TabItem[];
 
@@ -135,9 +124,6 @@ export default defineComponent({
       surname,
       tabs,
     };
-  },
-  head: {
-    title: "Patient Record",
   },
 });
 </script>

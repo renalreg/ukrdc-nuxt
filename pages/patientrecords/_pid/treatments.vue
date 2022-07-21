@@ -95,8 +95,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-
 import { Treatment } from "@/interfaces/treatment";
 import { PatientRecord } from "@/interfaces/patientrecord";
 import fetchPatientRecords from "~/helpers/fetch/fetchPatientRecords";

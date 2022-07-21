@@ -78,8 +78,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useRoute } from "@nuxtjs/composition-api";
-
 import fetchPatientRecords from "~/helpers/fetch/fetchPatientRecords";
 import { formatDate } from "@/helpers/utils/dateUtils";
 
@@ -112,7 +110,7 @@ export default defineComponent({
 
     // Data fetching
     onMounted(async () => {
-      patientDocument.value = await fetchPatientRecordDocument(props.record, route.value.params.docid);
+      patientDocument.value = await fetchPatientRecordDocument(props.record, route.params.docid);
     });
 
     return {
