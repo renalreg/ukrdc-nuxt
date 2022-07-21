@@ -1,6 +1,13 @@
 import { defineNuxtConfig } from "@nuxt/bridge";
 
 export default defineNuxtConfig({
+  // Issue workarounds
+
+  // https://github.com/nuxt/bridge/issues/25#issuecomment-1097946846
+  alias: {
+    tslib: "tslib/tslib.es6.js",
+  },
+
   // Disable SSR, and build as an SPA
   ssr: false,
   // Use the Nuxt server to serve the SPA, allowing runtime config
