@@ -1,4 +1,3 @@
-import { Context } from "@nuxt/types";
 import { AxiosError, AxiosRequestConfig, AxiosResponse, AxiosStatic } from "axios";
 import urljoin from "url-join";
 import { isAbsolute } from "~/helpers/utils/pathUtils";
