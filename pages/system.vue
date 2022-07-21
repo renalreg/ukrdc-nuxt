@@ -79,14 +79,16 @@ interface serverSystemInfo {
 
 export default defineComponent({
   setup() {
-    const { $config, $toast } = useContext();
+    const { $toast } = useContext();
     const { fetchServerInfo } = fetchSystem();
+
+    const runtimeConfig = useRuntimeConfig();
 
     // Data refs
 
     const serverInfo = ref<serverSystemInfo>();
     const clientInfo = ref({
-      deploymentEnv: $config.deploymentEnv,
+      deploymentEnv: runtimeConfig.deploymentEnv,
       githubRef: process.env.githubRef,
       githubSha: process.env.githubSha,
     });
