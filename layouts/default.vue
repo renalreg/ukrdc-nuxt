@@ -98,14 +98,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, useMeta } from "@nuxtjs/composition-api";
 import "floating-vue/dist/style.css";
 
 export default defineComponent({
   setup() {
-    const { base } = useContext();
-    const { link } = useMeta();
-    link.value = [{ rel: "icon", type: "image/x-icon", href: `${base || "/"}favicon.ico` }];
+    const { base } = useNuxtApp();
+    useHead({
+      link: computed(() => [{ rel: "icon", type: "image/x-icon", href: `${base || "/"}favicon.ico` }]),
+    });
 
     const sbOpen = ref(false);
 

@@ -15,7 +15,6 @@
 
 <script lang="ts">
 import { NuxtError } from "@nuxt/types";
-import { computed, defineComponent } from "@nuxtjs/composition-api";
 
 export default defineComponent({
   layout: "error",
