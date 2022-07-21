@@ -1,6 +1,10 @@
 import { defineNuxtConfig } from "@nuxt/bridge";
 
 export default defineNuxtConfig({
+  bridge: {
+    meta: true,
+  },
+
   // Issue workarounds
 
   // https://github.com/nuxt/bridge/issues/25#issuecomment-1097946846
