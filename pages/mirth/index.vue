@@ -43,7 +43,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import fetchMirth from "~/helpers/fetch/fetchMirth";
 
 import { ChannelGroup } from "@/interfaces/mirth";
