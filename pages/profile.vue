@@ -69,13 +69,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
-
 import usePermissions from "~/helpers/usePermissions";
 
 export default defineComponent({
   setup() {
-    const { $okta } = useContext();
+    const { $okta } = useNuxtApp();
     const { getPermissions } = usePermissions();
 
     // User info

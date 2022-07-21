@@ -60,12 +60,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-
-import { formatDate } from "@/helpers/utils/dateUtils";
+import { formatDate } from "~/helpers/utils/dateUtils";
 import fetchTasks from "~/helpers/fetch/fetchTasks";
-import { TrackableTask } from "~/interfaces/tasks";
 import usePagination from "~/helpers/query/usePagination";
+
+import { TrackableTask } from "~/interfaces/tasks";
 
 export default defineComponent({
   setup() {
