@@ -58,8 +58,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import { WorkItem } from "@/interfaces/workitem";
 import usePagination from "~/helpers/query/usePagination";
 
