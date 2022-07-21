@@ -73,8 +73,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import { nowString } from "@/helpers/utils/dateUtils";
 import { Message } from "@/interfaces/messages";
 import usePagination from "~/helpers/query/usePagination";

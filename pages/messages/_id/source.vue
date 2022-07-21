@@ -16,7 +16,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import fetchMessages from "~/helpers/fetch/fetchMessages";
 
 import { ErrorSource, Message } from "~/interfaces/messages";
