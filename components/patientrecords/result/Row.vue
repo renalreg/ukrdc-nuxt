@@ -8,6 +8,7 @@
       <GenericButton
         class="opacity-0 group-hover:opacity-100"
         :round="true"
+        :tight="true"
         tooltip="Filter by this lab order"
         label="Filter by this lab order"
         :to="{ query: { order_id: item.orderId } }"
@@ -27,6 +28,7 @@
       <GenericButton
         class="opacity-0 group-hover:opacity-100"
         :round="true"
+        :tight="true"
         tooltip="Delete this result item"
         label="Delete this result item"
         @click="$emit('delete', item)"

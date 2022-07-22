@@ -32,6 +32,7 @@
           :class="!item.ni ? 'invisible' : ''"
           class="opacity-0 group-hover:opacity-100"
           :round="true"
+          :tight="true"
           :to="{ path: '/messages', query: { nationalid: item.ni } }"
           tooltip="Filter errors by this patient"
           :label="`Filter errors by patient ${item.ni}`"
