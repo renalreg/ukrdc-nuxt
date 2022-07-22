@@ -10,6 +10,7 @@
       'items-center',
       'justify-center',
       primary ? `btn-${colour}-primary` : `btn-${colour}`,
+      round ? 'btn-round' : 'btn-not-round',
       { 'btn-disabled': disabled },
     ]"
     :to="to"
@@ -22,7 +23,13 @@
     :aria-label="label"
     type="button"
     :disabled="disabled"
-    :class="['flex', 'items-center', primary ? `btn-${colour}-primary` : `btn-${colour}`, { 'btn-disabled': disabled }]"
+    :class="[
+      'flex',
+      'items-center',
+      primary ? `btn-${colour}-primary` : `btn-${colour}`,
+      round ? 'btn-round' : 'btn-not-round',
+      { 'btn-disabled': disabled },
+    ]"
     @click="$emit('click')"
   >
     <slot />
@@ -58,6 +65,11 @@ export default {
       default: false,
     },
     primary: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    round: {
       type: Boolean,
       required: false,
       default: false,
@@ -100,10 +112,16 @@ export default {
 .btn-red-primary {
   @apply btn-base-primary border-transparent bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
 }
+.btn-round {
+  @apply rounded-full p-1;
+}
+.btn-not-round {
+  @apply rounded-md px-4 py-2;
+}
 .btn-base {
   @apply btn-base-primary bg-white hover:bg-gray-50;
 }
 .btn-base-primary {
-  @apply rounded-md border py-2 px-4 font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2;
+  @apply border font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2;
 }
 </style>
