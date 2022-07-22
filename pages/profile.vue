@@ -54,7 +54,7 @@
         </div>
       </div>
       <div class="mb-4">
-        <TextH3 class="mb-2">Permissions</TextH3>
+        <TextH2 class="mb-4">Permissions</TextH2>
         <div v-for="group in perms" :key="group" class="inline">
           <span
             class="mr-2 mb-2 inline-flex items-center rounded-full px-3 py-0.5 font-medium"
@@ -64,6 +64,16 @@
           </span>
         </div>
       </div>
+      <div v-if="preferences" class="mb-4">
+        <TextH2 class="mb-4">Preferences</TextH2>
+        <div class="mb-4">
+          <FormCheckbox
+            v-model="preferences.searchShowUkrdc"
+            label="Include internal UKRDC records in search results by default"
+          />
+        </div>
+        <GenericButton colour="indigo" :primary="true" @click="submitPreferences">Save</GenericButton>
+      </div>
     </div>
   </div>
 </template>
@@ -72,11 +82,14 @@
 import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
 
 import usePermissions from "~/helpers/usePermissions";
+import fetchSystem from "~/helpers/fetch/fetchSystem";
+import { UserPreferences } from "~/interfaces/system";
 
 export default defineComponent({
   setup() {
     const { $okta } = useContext();
     const { getPermissions } = usePermissions();
+    const { fetchUserPreferences, putUserPreferences } = fetchSystem();
 
     // User info
 
@@ -100,9 +113,23 @@ export default defineComponent({
       }
     }
 
+    // Preferences
+
+    const preferences = ref<UserPreferences>();
+
+    onMounted(async () => {
+      preferences.value = await fetchUserPreferences();
+    });
+
+    async function submitPreferences() {
+      await putUserPreferences(preferences.value);
+    }
+
     return {
       user,
       perms,
+      preferences,
+      submitPreferences,
       classesForPermissions,
     };
   },

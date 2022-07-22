@@ -2,11 +2,6 @@
   <div>
     <div class="mb-4">
       <SearchBar v-model="searchboxString" :focus="true" @submit="searchSubmit" />
-      <GenericCollapseHeader label="Advanced">
-        <div class="mt-2">
-          <FormCheckbox v-model="showUKRDC" label="Show internal UKRDC records" />
-        </div>
-      </GenericCollapseHeader>
     </div>
 
     <div v-if="masterrecords.length > 0">
@@ -61,22 +56,23 @@ import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api"
 
 import { MasterRecord } from "@/interfaces/masterrecord";
 import usePagination from "~/helpers/query/usePagination";
-
-import useUserPrefs from "~/helpers/useUserPrefs";
+import useQuery from "~/helpers/query/useQuery";
 import useRecordSearch from "~/helpers/query/useRecordSearch";
-
 import fetchSearchResults from "~/helpers/fetch/fetchSearchResults";
+import fetchSystem from "~/helpers/fetch/fetchSystem";
 
 export default defineComponent({
   setup() {
     const { page, total, size } = usePagination();
-    const { showUKRDC } = useUserPrefs();
+    const { arrayQuery } = useQuery();
     const { searchQueryIsPopulated, searchboxString, searchSubmit, apiQueryString } = useRecordSearch();
     const { fetchSearchResultsPage, searchInProgress } = fetchSearchResults();
+    const { fetchUserPreferences } = fetchSystem();
 
     // Data refs
 
     const masterrecords = ref([] as MasterRecord[]);
+    const numberTypes = arrayQuery("status", ["NHS", "CHI", "HSC"], true, true);
 
     // Data fetching
 
@@ -86,7 +82,7 @@ export default defineComponent({
           apiQueryString.value,
           page.value || 1,
           size.value,
-          showUKRDC.value
+          numberTypes.value
         );
 
         masterrecords.value = resultsPage.items;
@@ -96,18 +92,21 @@ export default defineComponent({
       }
     }
 
-    onMounted(() => {
+    onMounted(async () => {
+      const showUkrdcByDefault = (await fetchUserPreferences()).searchShowUkrdc;
+      if (showUkrdcByDefault) {
+        numberTypes.value.push("UKRDC");
+      }
       getResults();
     });
 
-    watch([apiQueryString, page, showUKRDC], () => {
+    watch([apiQueryString, page, numberTypes], () => {
       getResults();
     });
 
     return {
       masterrecords,
       searchboxString,
-      showUKRDC,
       searchInProgress,
       searchSubmit,
       searchQueryIsPopulated,
