@@ -49,7 +49,7 @@
       :class="topToBottom ? 'top-16 right-0' : 'bottom-16 left-0 mb-1'"
       :show="showMenu"
     >
-      <GenericMenuItem to="/profile"> View Profile </GenericMenuItem>
+      <GenericMenuItem to="/profile"> Profile and Settings </GenericMenuItem>
       <GenericMenuItem :href="$config.manageAccountUrl" target="blank"> Manage Account </GenericMenuItem>
       <GenericMenuDivider />
       <GenericMenuItem to="/system"> Support </GenericMenuItem>
