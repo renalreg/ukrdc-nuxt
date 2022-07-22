@@ -90,16 +90,9 @@ export default defineComponent({
       fetchEvents();
     });
 
-    watch(
-      [
-        page,
-        orderBy,
-        () => JSON.stringify(dateRange), // Stringify to watch for actual value changes
-      ],
-      () => {
-        fetchEvents();
-      }
-    );
+    watch([page, orderBy, dateRange], () => {
+      fetchEvents();
+    });
 
     return {
       page,

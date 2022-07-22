@@ -114,18 +114,9 @@ export default defineComponent({
       getWorkitems();
     });
 
-    watch(
-      [
-        page,
-        selectedFacility,
-        orderBy,
-        () => JSON.stringify(dateRange.value), // Stringify to watch for actual value changes
-        () => JSON.stringify(statuses.value), // Stringify to watch for actual value changes
-      ],
-      () => {
-        getWorkitems();
-      }
-    );
+    watch([page, selectedFacility, orderBy, dateRange, statuses], () => {
+      getWorkitems();
+    });
 
     return {
       fetchInProgress,

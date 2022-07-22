@@ -121,15 +121,9 @@ export default defineComponent({
       fetchObservations();
     });
 
-    watch(
-      [
-        page,
-        () => JSON.stringify(selectedCodes), // Stringify to watch for actual value changes
-      ],
-      () => {
-        fetchObservations();
-      }
-    );
+    watch([page, selectedCodes], () => {
+      fetchObservations();
+    });
 
     // Observation code filter
 

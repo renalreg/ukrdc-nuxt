@@ -96,16 +96,9 @@ export default defineComponent({
       fetchMessages();
     });
 
-    watch(
-      [
-        page,
-        orderBy,
-        () => JSON.stringify(dateRange), // Stringify to watch for actual value changes
-      ],
-      () => {
-        fetchMessages();
-      }
-    );
+    watch([page, orderBy, dateRange], () => {
+      fetchMessages();
+    });
 
     return {
       page,
