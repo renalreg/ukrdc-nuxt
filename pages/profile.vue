@@ -67,6 +67,7 @@
       <div v-if="preferences" class="mb-4">
         <TextH2 class="mb-4">Preferences</TextH2>
         <div class="mb-4">
+          <TextH3 class="mb-2">Search</TextH3>
           <FormCheckbox
             v-model="preferences.searchShowUkrdc"
             label="Include internal UKRDC records in search results by default"
