@@ -121,7 +121,9 @@ export default defineComponent({
     });
 
     async function submitPreferences() {
-      await putUserPreferences(preferences.value);
+      if (preferences.value) {
+        await putUserPreferences(preferences.value);
+      }
     }
 
     return {
