@@ -138,7 +138,7 @@ export default defineNuxtConfig({
   },
 
   // Runtime configuration variables
-  publicRuntimeConfig: {
+  runtimeConfig: {
     // Custom UKRDC API config
     api: {
       host: process.env.API_HOST,
