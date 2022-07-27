@@ -2,6 +2,12 @@
   <div>
     <div class="mb-4">
       <SearchBar v-model="searchboxString" :focus="true" @submit="searchSubmit" />
+      <div class="flex flex-grow items-center gap-2">
+        <FormCheckboxPill v-model="numberTypes" label="UKRDC" value="UKRDC" colour="red" />
+        <FormCheckboxPill v-model="numberTypes" label="NHS" value="NHS" colour="blue" />
+        <FormCheckboxPill v-model="numberTypes" label="CHI" value="CHI" colour="purple" />
+        <FormCheckboxPill v-model="numberTypes" label="HSC" value="HSC" colour="green" />
+      </div>
     </div>
 
     <div v-if="masterrecords.length > 0">
@@ -70,7 +76,7 @@ export default defineComponent({
     // Data refs
 
     const masterrecords = ref([] as MasterRecord[]);
-    const numberTypes = arrayQuery("status", ["NHS", "CHI", "HSC"], true, true);
+    const numberTypes = arrayQuery("numberType", [], true, true);
 
     // Data fetching
 
@@ -91,10 +97,15 @@ export default defineComponent({
     }
 
     onMounted(async () => {
-      const showUkrdcByDefault = (await fetchUserPreferences()).searchShowUkrdc;
-      if (showUkrdcByDefault) {
-        numberTypes.value.push("UKRDC");
+      if (!searchQueryIsPopulated.value) {
+        const showUkrdcByDefault = (await fetchUserPreferences()).searchShowUkrdc;
+        if (showUkrdcByDefault) {
+          numberTypes.value = ["UKRDC", "NHS", "CHI", "HSC"];
+        } else {
+          numberTypes.value = ["NHS", "CHI", "HSC"];
+        }
       }
+
       getResults();
     });
 
@@ -111,6 +122,7 @@ export default defineComponent({
       page,
       size,
       total,
+      numberTypes,
     };
   },
   head: {
