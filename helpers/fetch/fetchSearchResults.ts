@@ -17,15 +17,12 @@ export default function () {
     queryString: string,
     page: number,
     size: number,
-    showUKRDC: boolean = false,
-    onlyUKRDC: boolean = false
+    numberTypes: (string | null)[] = []
   ): Promise<MasterRecordPage> {
     let path = `/v1/search/?${queryString}&page=${page}&size=${size}`;
-    if (showUKRDC) {
-      path = path + "&include_ukrdc=true";
-    }
-    if (onlyUKRDC) {
-      path = path + `&number_type=UKRDC`;
+    // Pass selected statuses to the API
+    for (const numberType of numberTypes) {
+      path = path + `&number_type=${numberType}`;
     }
 
     // Fetch the search results from our API server

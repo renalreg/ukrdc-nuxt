@@ -48,22 +48,18 @@ import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api"
 import usePagination from "~/helpers/query/usePagination";
 import { MasterRecord } from "@/interfaces/masterrecord";
 
-import useUserPrefs from "~/helpers/useUserPrefs";
 import useRecordSearch from "~/helpers/query/useRecordSearch";
-
 import fetchSearchResults from "~/helpers/fetch/fetchSearchResults";
 
 export default defineComponent({
   props: {
-    onlyUkrdc: {
-      type: Boolean,
-      required: false,
-      default: false,
+    numberTypes: {
+      type: Array as () => string[],
+      default: () => [],
     },
   },
   setup(props) {
     const { page, total, size } = usePagination();
-    const { showUKRDC } = useUserPrefs();
     const { searchQueryIsPopulated, searchboxString, searchSubmit, apiQueryString } = useRecordSearch();
     const { fetchSearchResultsPage, searchInProgress } = fetchSearchResults();
 
@@ -75,8 +71,7 @@ export default defineComponent({
           apiQueryString.value,
           page.value || 1,
           size.value,
-          true,
-          props.onlyUkrdc
+          props.numberTypes || []
         );
 
         masterrecords.value = results.items;
@@ -90,14 +85,13 @@ export default defineComponent({
       fetchResults();
     });
 
-    watch([apiQueryString, page, showUKRDC], () => {
+    watch([apiQueryString, page], () => {
       fetchResults();
     });
 
     return {
       masterrecords,
       searchboxString,
-      showUKRDC,
       searchInProgress,
       searchSubmit,
       searchQueryIsPopulated,

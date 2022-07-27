@@ -10,6 +10,8 @@
       'items-center',
       'justify-center',
       primary ? `btn-${colour}-primary` : `btn-${colour}`,
+      round ? 'btn-round' : 'btn-not-round',
+      tight ? 'p-1' : 'px-4 py-2',
       { 'btn-disabled': disabled },
     ]"
     :to="to"
@@ -22,7 +24,14 @@
     :aria-label="label"
     type="button"
     :disabled="disabled"
-    :class="['flex', 'items-center', primary ? `btn-${colour}-primary` : `btn-${colour}`, { 'btn-disabled': disabled }]"
+    :class="[
+      'flex',
+      'items-center',
+      primary ? `btn-${colour}-primary` : `btn-${colour}`,
+      round ? 'btn-round' : 'btn-not-round',
+      tight ? 'p-1' : 'px-4 py-2',
+      { 'btn-disabled': disabled },
+    ]"
     @click="$emit('click')"
   >
     <slot />
@@ -62,6 +71,16 @@ export default {
       required: false,
       default: false,
     },
+    round: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    tight: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
 };
 </script>
@@ -82,6 +101,18 @@ export default {
 .btn-indigo-primary {
   @apply btn-base-primary border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500;
 }
+.btn-blue {
+  @apply btn-base border-blue-500 text-blue-700 focus:ring-blue-500;
+}
+.btn-blue-primary {
+  @apply btn-base-primary border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
+}
+.btn-purple {
+  @apply btn-base border-purple-500 text-purple-700 focus:ring-purple-500;
+}
+.btn-purple-primary {
+  @apply btn-base-primary border-transparent bg-purple-600 text-white hover:bg-purple-700 focus:ring-purple-500;
+}
 .btn-green {
   @apply btn-base border-green-500 text-green-700 focus:ring-green-500;
 }
@@ -100,10 +131,16 @@ export default {
 .btn-red-primary {
   @apply btn-base-primary border-transparent bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
 }
+.btn-round {
+  @apply rounded-full;
+}
+.btn-not-round {
+  @apply rounded-md;
+}
 .btn-base {
   @apply btn-base-primary bg-white hover:bg-gray-50;
 }
 .btn-base-primary {
-  @apply rounded-md border py-2 px-4 font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2;
+  @apply border font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2;
 }
 </style>
