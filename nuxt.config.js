@@ -5,8 +5,19 @@ export default defineNuxtConfig({
     meta: true,
   },
 
-  // Issue workarounds
+  // Routing workarounds
+  // This is the only way I've found to get routing on a sub-path working properly
+  // for SSR: false on Nuxt Bridge
+  app: {
+    baseURL: "/",
+    assetsPath: "/app/_nuxt/",
+    buildAssetsDir: "/app/_nuxt/",
+  },
+  router: {
+    base: "/app",
+  },
 
+  // Issue workarounds
   // https://github.com/nuxt/bridge/issues/25#issuecomment-1097946846
   alias: {
     tslib: "tslib/tslib.es6.js",
@@ -76,12 +87,6 @@ export default defineNuxtConfig({
         autoprefixer: {},
       },
     },
-  },
-
-  // Router and middleware configuration
-  router: {
-    middleware: ["check-ie"],
-    base: process.env.APP_BASE_URL || "/app",
   },
 
   // Build-time variables. These are resolved during the build process,
