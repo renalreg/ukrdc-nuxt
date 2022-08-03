@@ -27,7 +27,7 @@
           </NuxtLink>
         </div>
         <div v-else>
-          <EmpiSearch v-if="searchingFor === 'superseded'" :only-ukrdc="true" @select="selectSuperceeded" />
+          <EmpiSearch v-if="searchingFor === 'superseded'" :number-types="['UKRDC']" @select="selectSuperceeded" />
           <GenericButton v-else class="w-full" @click="searchingFor = 'superseded'">
             Search for a Record
           </GenericButton>
@@ -62,7 +62,7 @@
           </NuxtLink>
         </div>
         <div v-else>
-          <EmpiSearch v-if="searchingFor === 'superseding'" :only-ukrdc="true" @select="selectsuperseding" />
+          <EmpiSearch v-if="searchingFor === 'superseding'" :number-types="['UKRDC']" @select="selectsuperseding" />
           <GenericButton v-else class="w-full" @click="searchingFor = 'superseding'">
             Search for a Record
           </GenericButton>
@@ -107,8 +107,16 @@
 </template>
 
 <script lang="ts">
-import { computed, ref, useContext, useRoute, useRouter, watch } from "@nuxtjs/composition-api";
-import { defineComponent, onMounted } from "@vue/composition-api";
+import {
+  computed,
+  ref,
+  useContext,
+  useRoute,
+  useRouter,
+  defineComponent,
+  onMounted,
+  watch,
+} from "@nuxtjs/composition-api";
 
 import useQuery from "~/helpers/query/useQuery";
 import fetchEMPI from "~/helpers/fetch/fetchEMPI";

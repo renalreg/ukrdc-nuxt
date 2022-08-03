@@ -5,13 +5,15 @@
     </td>
     <td class="whitespace-nowrap px-6 py-4 text-gray-500">{{ item.value }} {{ item.valueUnits }}</td>
     <td class="flex items-center gap-2 whitespace-nowrap px-6 py-4">
-      <GenericButtonRound
+      <GenericButton
         class="opacity-0 group-hover:opacity-100"
+        :round="true"
+        :tight="true"
         tooltip="Filter by this lab order"
         label="Filter by this lab order"
         :to="{ query: { order_id: item.orderId } }"
         ><IconMiniFilter
-      /></GenericButtonRound>
+      /></GenericButton>
       <div class="w-48 truncate text-gray-500">
         {{ item.orderId }}
       </div>
@@ -23,13 +25,15 @@
       <BadgePrePost v-if="item.prePost" :pre-post="item.prePost" />
     </td>
     <td class="text-gray-500">
-      <GenericButtonRound
+      <GenericButton
         class="opacity-0 group-hover:opacity-100"
+        :round="true"
+        :tight="true"
         tooltip="Delete this result item"
         label="Delete this result item"
         @click="$emit('delete', item)"
         ><IconMiniTrash
-      /></GenericButtonRound>
+      /></GenericButton>
     </td>
   </tr>
 </template>

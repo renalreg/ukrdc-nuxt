@@ -27,15 +27,17 @@
       </div>
       <!-- Identifiers  -->
       <div class="col-span-3 flex items-center gap-4 lg:col-span-1">
-        <GenericButtonRound
+        <GenericButton
           v-if="showPatientFilter"
           :class="!item.ni ? 'invisible' : ''"
           class="opacity-0 group-hover:opacity-100"
+          :round="true"
+          :tight="true"
           :to="{ path: '/messages', query: { nationalid: item.ni } }"
           tooltip="Filter errors by this patient"
           :label="`Filter errors by patient ${item.ni}`"
           ><IconMiniFilter
-        /></GenericButtonRound>
+        /></GenericButton>
         <div class="flex-grow">
           <TextL1>Patient Number</TextL1>
           <TextP class="blurred mt-2">
