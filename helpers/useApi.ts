@@ -1,5 +1,5 @@
 import { useContext } from "@nuxtjs/composition-api";
-import { AdminApi, DashboardApi } from "@ukkidney/ukrdc-axios-ts";
+import { AdminApi, DashboardApi, SystemInfoApi, CodesApi } from "@ukkidney/ukrdc-axios-ts";
 import axios from "axios";
 
 export default function () {
@@ -31,9 +31,13 @@ export default function () {
   // Create API instances
   const adminApi = new AdminApi(undefined, $config.api.host || "/", apiInstance);
   const dashboardApi = new DashboardApi(undefined, $config.api.host || "/", apiInstance);
+  const systemInfoApi = new SystemInfoApi(undefined, $config.api.host || "/", apiInstance);
+  const codesApi = new CodesApi(undefined, $config.api.host || "/", apiInstance);
 
   return {
     adminApi,
     dashboardApi,
+    systemInfoApi,
+    codesApi,
   };
 }

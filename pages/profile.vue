@@ -82,15 +82,15 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
 
+import { ReadUserPreferences } from "@ukkidney/ukrdc-axios-ts";
 import usePermissions from "~/helpers/usePermissions";
-import fetchSystem from "~/helpers/fetch/fetchSystem";
-import { UserPreferences } from "~/interfaces/system";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   setup() {
     const { $okta } = useContext();
     const { getPermissions } = usePermissions();
-    const { fetchUserPreferences, putUserPreferences } = fetchSystem();
+    const { systemInfoApi } = useApi();
 
     // User info
 
@@ -116,15 +116,19 @@ export default defineComponent({
 
     // Preferences
 
-    const preferences = ref<UserPreferences>();
+    const preferences = ref<ReadUserPreferences>();
 
-    onMounted(async () => {
-      preferences.value = await fetchUserPreferences();
+    onMounted(() => {
+      systemInfoApi.getSystemUserPreferences().then((response) => {
+        preferences.value = response.data;
+      });
     });
 
     async function submitPreferences() {
       if (preferences.value) {
-        await putUserPreferences(preferences.value);
+        await systemInfoApi.putUpdateSystemUserPreferences({
+          updateUserPreferences: preferences.value,
+        });
       }
     }
 

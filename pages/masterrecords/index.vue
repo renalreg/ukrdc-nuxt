@@ -65,7 +65,7 @@ import usePagination from "~/helpers/query/usePagination";
 import useQuery from "~/helpers/query/useQuery";
 import useRecordSearch from "~/helpers/query/useRecordSearch";
 import fetchSearchResults from "~/helpers/fetch/fetchSearchResults";
-import fetchSystem from "~/helpers/fetch/fetchSystem";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   setup() {
@@ -73,7 +73,7 @@ export default defineComponent({
     const { arrayQuery } = useQuery();
     const { searchQueryIsPopulated, searchboxString, searchSubmit, apiQueryString } = useRecordSearch();
     const { fetchSearchResultsPage, searchInProgress } = fetchSearchResults();
-    const { fetchUserPreferences } = fetchSystem();
+    const { systemInfoApi } = useApi();
 
     // Data refs
 
@@ -98,14 +98,16 @@ export default defineComponent({
       }
     }
 
-    onMounted(async () => {
+    onMounted(() => {
       if (!searchQueryIsPopulated.value) {
-        const showUkrdcByDefault = (await fetchUserPreferences()).searchShowUkrdc;
-        if (showUkrdcByDefault) {
-          numberTypes.value = ["UKRDC", "NHS", "CHI", "HSC"];
-        } else {
-          numberTypes.value = ["NHS", "CHI", "HSC"];
-        }
+        systemInfoApi.getSystemUserPreferences().then((response) => {
+          const showUkrdcByDefault = response.data.searchShowUkrdc;
+          if (showUkrdcByDefault) {
+            numberTypes.value = ["UKRDC", "NHS", "CHI", "HSC"];
+          } else {
+            numberTypes.value = ["NHS", "CHI", "HSC"];
+          }
+        });
       }
 
       getResults();

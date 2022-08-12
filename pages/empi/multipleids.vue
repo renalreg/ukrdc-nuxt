@@ -68,7 +68,6 @@ import { MultipleUKRDCIDsGroup } from "@/interfaces/datahealth";
 import usePagination from "~/helpers/query/usePagination";
 
 import fetchDataHealth from "~/helpers/fetch/fetchDataHealth";
-import { LastRunTime } from "~/interfaces/admin";
 
 export default defineComponent({
   setup() {
@@ -98,7 +97,7 @@ export default defineComponent({
 
     onMounted(() => {
       getGroups();
-      fetchMultipleUKRDCIDsLastRun().then((response: LastRunTime) => {
+      fetchMultipleUKRDCIDsLastRun().then((response) => {
         lastRunTime.value = response.lastRunTime;
       });
     });
