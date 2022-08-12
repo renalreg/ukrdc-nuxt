@@ -7,20 +7,21 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-import { DashResponse } from "@/interfaces/dash";
-
-import fetchDash from "~/helpers/fetch/fetchDash";
+import { DashboardSchema } from "@ukkidney/ukrdc-axios-ts";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   setup() {
-    const { fetchDashboard } = fetchDash();
+    const { dashboardApi } = useApi();
 
     // Data refs
 
-    const dash = ref<DashResponse>();
+    const dash = ref<DashboardSchema>();
 
-    onMounted(async () => {
-      dash.value = await fetchDashboard();
+    onMounted(() => {
+      dashboardApi.getDashboard().then((response) => {
+        dash.value = response.data;
+      });
     });
 
     return {

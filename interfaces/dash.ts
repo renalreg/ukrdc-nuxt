@@ -1,8 +1,3 @@
-export interface DashResponse {
-  messages: string[];
-  warnings: string[];
-}
-
 export interface ChannelStatistics {
   name: string;
   updated: string;

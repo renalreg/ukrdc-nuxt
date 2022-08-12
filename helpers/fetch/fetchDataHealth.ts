@@ -1,6 +1,9 @@
 import { useContext } from "@nuxtjs/composition-api";
-import { LastRunTime } from "~/interfaces/admin";
 import { MultipleUKRDCIDsPage } from "~/interfaces/datahealth";
+
+interface LastRunTime {
+  lastRunTime: string;
+}
 
 export default function () {
   const { $api } = useContext();

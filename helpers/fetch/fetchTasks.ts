@@ -15,8 +15,8 @@ export default function () {
     return (await $api.$get(`/v1/tasks/?page=${page}&size=${size}`)) as TasksPage;
   }
 
-  async function fetchTask(task: TrackableTask, progress: boolean = true): Promise<TrackableTask> {
-    return (await $api.$get(task.links.self, { progress })) as TrackableTask;
+  async function fetchTask(task: TrackableTask): Promise<TrackableTask> {
+    return (await $api.$get(task.links.self)) as TrackableTask;
   }
 
   function pollTask(task: TrackableTask, interval: number) {
@@ -24,7 +24,7 @@ export default function () {
 
     const checkCondition = (resolve: any, reject: any) => {
       // If the condition is met, we're done!
-      fetchTask(task, false).then((response) => {
+      fetchTask(task).then((response) => {
         const status = response.status;
         // If the task ends with success
         if (status === "finished") {

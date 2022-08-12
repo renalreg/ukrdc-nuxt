@@ -89,30 +89,30 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, useRouter } from "@nuxtjs/composition-api";
-import { HistoryItem } from "~/interfaces/common";
+import { AdminCountsSchema, HistoryPoint } from "@ukkidney/ukrdc-axios-ts";
 import { HistoryPointEvent } from "~/interfaces/charts";
-import fetchAdmin from "@/helpers/fetch/fetchAdmin";
+import useApi from "~/helpers/useApi";
 import { getPointDateRange } from "@/helpers/utils/chartUtils";
-import { AdminCounts } from "~/interfaces/admin";
 
 export default defineComponent({
   setup() {
     const router = useRouter();
-    const { fetchWorkItemsHistory, fetchErrorsHistory, fetchAdminCounts } = fetchAdmin();
+    const { adminApi } = useApi();
 
-    const errorsHistory = ref<HistoryItem[]>();
-    const workitemsHistory = ref<HistoryItem[]>();
-    const counts = ref<AdminCounts>();
+    const errorsHistory = ref<HistoryPoint[]>();
+    const workitemsHistory = ref<HistoryPoint[]>();
+    const counts = ref<AdminCountsSchema>();
 
     function fetchAdminDashboard() {
-      fetchWorkItemsHistory(null, null).then((response: HistoryItem[]) => {
-        workitemsHistory.value = response;
+      adminApi.getFullWorkitemHistory().then((response) => {
+        workitemsHistory.value = response.data;
       });
-      fetchErrorsHistory(null, null).then((response: HistoryItem[]) => {
-        errorsHistory.value = response;
+
+      adminApi.getFullErrorsHistory().then((response) => {
+        errorsHistory.value = response.data;
       });
-      fetchAdminCounts().then((response: AdminCounts) => {
-        counts.value = response;
+      adminApi.getAdminCounts().then((response) => {
+        counts.value = response.data;
       });
     }
 
