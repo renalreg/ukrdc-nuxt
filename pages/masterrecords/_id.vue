@@ -30,19 +30,19 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
 
+import { MasterRecordSchema, MasterRecordStatisticsSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { formatGender } from "@/helpers/utils/codeUtils";
 import { insertIf } from "@/helpers/utils/arrayUtils";
-import fetchMasterRecords from "@/helpers/fetch/fetchMasterRecords";
 
-import { MasterRecord, MasterRecordStatistics } from "@/interfaces/masterrecord";
 import { TabItem } from "@/interfaces/tabs";
 import usePermissions from "~/helpers/usePermissions";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   setup() {
     const route = useRoute();
-    const { fetchMasterRecord, fetchMasterRecordStatistics } = fetchMasterRecords();
+    const { masterRecordsApi } = useApi();
     const { hasPermission } = usePermissions();
 
     // Head
@@ -76,16 +76,30 @@ export default defineComponent({
 
     // Data refs
 
-    const record = ref<MasterRecord>();
-    const stats = ref<MasterRecordStatistics>();
+    const record = ref<MasterRecordSchema>();
+    const stats = ref<MasterRecordStatisticsSchema>();
 
     // Data fetching
 
-    async function fetchRecord() {
-      record.value = await fetchMasterRecord(route.value.params.id);
+    function fetchRecord() {
+      masterRecordsApi
+        .getMasterRecord({
+          recordId: Number(route.value.params.id),
+        })
+        .then((response) => {
+          record.value = response.data;
+        });
 
       // Get basic record statistics
-      stats.value = await fetchMasterRecordStatistics(record.value);
+      masterRecordsApi
+        .getMasterRecordStatistics({
+          recordId: Number(route.value.params.id),
+        })
+        .then((response) => {
+          stats.value = response.data;
+        });
+
+      // Generate issues warning message
       issueMessage.value = buildErrorMessage(stats.value);
     }
 
@@ -97,7 +111,7 @@ export default defineComponent({
 
     const issueMessage = ref<string>();
 
-    function buildErrorMessage(stats?: MasterRecordStatistics): string {
+    function buildErrorMessage(stats?: MasterRecordStatisticsSchema): string {
       let msg = "";
       let workItemsMsg = "";
       let errorMsg = "";

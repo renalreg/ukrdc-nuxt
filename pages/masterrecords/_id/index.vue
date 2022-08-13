@@ -120,52 +120,64 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
+import {
+  MasterRecordSchema,
+  MasterRecordStatisticsSchema,
+  MinimalMessageSchema,
+  PatientRecordSummarySchema,
+} from "@ukkidney/ukrdc-axios-ts";
 import { formatDate, datesAreEqual } from "@/helpers/utils/dateUtils";
 import { formatGender } from "@/helpers/utils/codeUtils";
 import { isTracing } from "@/helpers/utils/recordUtils";
-
-import fetchMasterRecords from "@/helpers/fetch/fetchMasterRecords";
-
-import { MasterRecord, MasterRecordStatistics } from "@/interfaces/masterrecord";
-import { PatientRecordSummary } from "@/interfaces/patientrecord";
-import { MinimalMessage } from "~/interfaces/messages";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
     record: {
-      type: Object as () => MasterRecord,
+      type: Object as () => MasterRecordSchema,
       required: true,
     },
     stats: {
-      type: Object as () => MasterRecordStatistics,
+      type: Object as () => MasterRecordStatisticsSchema,
       required: false,
       default: null,
     },
   },
 
   setup(props) {
-    const { fetchMasterRecordRelated, fetchMasterRecordLatestMessage, fetchMasterRecordPatientRecords } =
-      fetchMasterRecords();
+    const { masterRecordsApi } = useApi();
 
     // Data refs
 
-    const relatedRecords = ref<MasterRecord[]>();
-    const patientRecords = ref<PatientRecordSummary[]>();
-    const latestMessage = ref<MinimalMessage | null | undefined>(undefined);
+    const relatedRecords = ref<MasterRecordSchema[]>();
+    const patientRecords = ref<PatientRecordSummarySchema[]>();
+    const latestMessage = ref<MinimalMessageSchema | null | undefined>(undefined);
 
     // Data fetching
     function fetchRelatedRecordData() {
-      fetchMasterRecordPatientRecords(props.record).then((records) => {
-        patientRecords.value = records;
-      });
+      masterRecordsApi
+        .getMasterRecordPatientrecords({
+          recordId: props.record.id,
+        })
+        .then((response) => {
+          patientRecords.value = response.data;
+        });
 
-      fetchMasterRecordRelated(props.record, false).then((records) => {
-        relatedRecords.value = records;
-      });
+      masterRecordsApi
+        .getMasterRecordRelated({
+          recordId: props.record.id,
+        })
+        .then((response) => {
+          relatedRecords.value = response.data;
+        });
 
-      fetchMasterRecordLatestMessage(props.record).then((message) => {
-        latestMessage.value = message;
-      });
+      masterRecordsApi
+        .getMasterRecordLatestMessage({
+          recordId: props.record.id,
+        })
+        .then((response) => {
+          latestMessage.value = response.data;
+        });
     }
 
     onMounted(() => {
@@ -178,7 +190,7 @@ export default defineComponent({
 
     // Tracing record matching
 
-    const tracingRecord = computed<PatientRecordSummary | null>(() => {
+    const tracingRecord = computed<PatientRecordSummarySchema | null>(() => {
       const tracings = patientRecords.value?.filter(isTracing);
       if (!tracings || (tracings && tracings.length < 1)) {
         return null;
@@ -191,7 +203,7 @@ export default defineComponent({
         return false;
       }
       for (const name of tracingRecord.value.patient.names) {
-        if (props.record.givenname.toLowerCase() === name.given.toLowerCase()) {
+        if (props.record.givenname?.toLowerCase() === name.given.toLowerCase()) {
           return true;
         }
       }
@@ -203,7 +215,7 @@ export default defineComponent({
         return false;
       }
       for (const name of tracingRecord.value.patient.names) {
-        if (props.record.surname.toLowerCase() === name.family.toLowerCase()) {
+        if (props.record.surname?.toLowerCase() === name.family.toLowerCase()) {
           return true;
         }
       }
@@ -231,15 +243,21 @@ export default defineComponent({
         return null;
       }
       if (latestMessage.value.msgStatus === "ERROR") {
-        return `Latest file ${latestMessage.value.filename} failed from ${latestMessage.value.facility} on ${formatDate(
-          latestMessage.value.received,
-          false
-        )}`;
+        if (latestMessage.value.received) {
+          return `Latest file ${latestMessage.value.filename} failed from ${
+            latestMessage.value.facility
+          } on ${formatDate(latestMessage.value.received, false)}`;
+        } else {
+          return `Latest file ${latestMessage.value.filename} failed from ${latestMessage.value.facility}`;
+        }
       }
-      return `Latest file ${latestMessage.value.filename} recieved from ${latestMessage.value.facility} on ${formatDate(
-        latestMessage.value.received,
-        false
-      )}`;
+      if (latestMessage.value.received) {
+        return `Latest file ${latestMessage.value.filename} recieved from ${
+          latestMessage.value.facility
+        } on ${formatDate(latestMessage.value.received, false)}`;
+      } else {
+        return `Latest file ${latestMessage.value.filename} recieved from ${latestMessage.value.facility}`;
+      }
     });
 
     return {
