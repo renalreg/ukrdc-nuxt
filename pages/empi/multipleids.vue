@@ -62,44 +62,50 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
+import { MultipleUKRDCIDGroup } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 
-import { MultipleUKRDCIDsGroup } from "@/interfaces/datahealth";
 import usePagination from "~/helpers/query/usePagination";
-
-import fetchDataHealth from "~/helpers/fetch/fetchDataHealth";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   setup() {
     const { page, total, size } = usePagination();
-    const { fetchMultipleUKRDCIDsPage, fetchMultipleUKRDCIDsLastRun } = fetchDataHealth();
+    const { adminApi } = useApi();
 
     // Data refs
     size.value = 10; // Get 10 groups as we expect a couple of records per group
 
-    const groups = ref<MultipleUKRDCIDsGroup[]>();
+    const groups = ref<MultipleUKRDCIDGroup[]>();
     const fetchInProgress = ref(false);
 
     const lastRunTime = ref<string>();
 
     // Data fetching
-    async function getGroups() {
+    function getGroups() {
       fetchInProgress.value = true;
 
-      const groupsPage = await fetchMultipleUKRDCIDsPage(page.value || 1, size.value);
-      groups.value = groupsPage.items;
-      total.value = groupsPage.total;
-      page.value = groupsPage.page;
-      size.value = groupsPage.size;
+      adminApi
+        .getDatahealthMultipleUkrdcids({
+          page: page.value || 1,
+          size: size.value,
+        })
+        .then((response) => {
+          groups.value = response.data.items;
+          total.value = response.data.total;
+          page.value = response.data.page;
+          size.value = response.data.size;
 
-      fetchInProgress.value = false;
+          fetchInProgress.value = false;
+        });
+
+      adminApi.getDatahealthMultipleUkrdcidsLastRun().then((response) => {
+        lastRunTime.value = response.data.lastRunTime;
+      });
     }
 
     onMounted(() => {
       getGroups();
-      fetchMultipleUKRDCIDsLastRun().then((response) => {
-        lastRunTime.value = response.lastRunTime;
-      });
     });
 
     watch(page, () => {
