@@ -108,15 +108,11 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
+import { MasterRecordSchema, MirthChannelMessageModel, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 import { Message } from "@/interfaces/messages";
-import { ChannelMessage } from "~/interfaces/mirth";
-import { WorkItem } from "~/interfaces/workitem";
-import { MasterRecord } from "~/interfaces/masterrecord";
-
 import { formatDate } from "@/helpers/utils/dateUtils";
-
-import fetchMessages from "~/helpers/fetch/fetchMessages";
 import usePermissions from "~/helpers/usePermissions";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
@@ -127,38 +123,70 @@ export default defineComponent({
   },
   setup(props) {
     const { hasPermission } = usePermissions();
-    const {
-      fetchMessageMasterRecords,
-      fetchMessageWorkItems,
-      fetchMessageMirth,
-      downloadMessageSource,
-      downloadSourceInProgress,
-    } = fetchMessages();
+    const { messagesApi, mirthApi } = useApi();
 
     // Data refs
-    const mirthMessage = ref<ChannelMessage | null | undefined>(undefined);
-    const workItems = ref([] as WorkItem[]);
-    const masterRecords = ref([] as MasterRecord[]);
+    const mirthMessage = ref<MirthChannelMessageModel | null | undefined>(undefined);
+    const workItems = ref([] as WorkItemSchema[]);
+    const masterRecords = ref([] as MasterRecordSchema[]);
 
     // Data fetching
 
-    async function getMessageData() {
+    function getMessageData() {
       // Get auxilalry record data
       if (hasPermission("ukrdc:records:read")) {
-        masterRecords.value = await fetchMessageMasterRecords(props.message);
+        messagesApi
+          .getMessageMasterrecords({
+            messageId: props.message.id,
+          })
+          .then((response) => {
+            masterRecords.value = response.data;
+          });
       }
       if (hasPermission("ukrdc:workitems:read")) {
-        workItems.value = await fetchMessageWorkItems(props.message);
+        messagesApi
+          .getMessageWorkitems({
+            messageId: props.message.id,
+          })
+          .then((response) => {
+            workItems.value = response.data;
+          });
       }
 
       // Conditionally get the Mirth message data
       if (hasPermission("ukrdc:mirth:read")) {
-        try {
-          mirthMessage.value = await fetchMessageMirth(props.message);
-        } catch (e) {
-          mirthMessage.value = null;
-        }
+        mirthApi
+          .getMirthChannelMessage({
+            messageId: props.message.messageId,
+            channelId: props.message.channelId,
+          })
+          .then((response) => {
+            mirthMessage.value = response.data;
+          })
+          .catch(() => {
+            mirthMessage.value = null;
+          });
       }
+    }
+
+    const downloadSourceInProgress = ref(false);
+
+    function downloadMessageSource(): void {
+      downloadSourceInProgress.value = true;
+
+      messagesApi
+        .getMessageSource({
+          messageId: props.message.id,
+        })
+        .then((response) => {
+          const url = window.URL.createObjectURL(new Blob([response.data.content ? response.data.content : ""]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", props.message.filename || `${props.message.facility}-{message.id}.txt`);
+          document.body.appendChild(link);
+          link.click();
+          downloadSourceInProgress.value = false;
+        });
     }
 
     onMounted(() => {

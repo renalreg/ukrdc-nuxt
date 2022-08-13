@@ -75,8 +75,8 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
+import { MessageSchema, OrderBy } from "@ukkidney/ukrdc-axios-ts";
 import { nowString } from "@/helpers/utils/dateUtils";
-import { Message } from "@/interfaces/messages";
 import usePagination from "~/helpers/query/usePagination";
 import useDateRange from "~/helpers/query/useDateRange";
 
@@ -85,7 +85,7 @@ import useFacilities from "~/helpers/useFacilities";
 import useQuery from "~/helpers/query/useQuery";
 import useSortBy from "~/helpers/query/useSortBy";
 
-import fetchMessages from "~/helpers/fetch/fetchMessages";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   setup() {
@@ -94,7 +94,7 @@ export default defineComponent({
     const { stringQuery, arrayQuery } = useQuery();
     const { facilities, facilityIds, facilityLabels, selectedFacility } = useFacilities();
     const { orderAscending, orderBy, toggleOrder } = useSortBy();
-    const { fetchMessagesPage } = fetchMessages();
+    const { messagesApi } = useApi();
     const { isAdmin } = usePermissions();
 
     // Set up URL query params for additional filters
@@ -105,31 +105,35 @@ export default defineComponent({
     const dateRange = makeDateRange(isAdmin ? nowString(-30) : nowString(-365), nowString(0), true);
 
     // Data refs
-    const messages = ref<Message[]>();
+    const messages = ref<MessageSchema[]>();
     const statuses = arrayQuery("status", ["ERROR"], true, true);
 
     const fetchInProgress = ref(false);
 
     // Data fetching
-    async function getMessages() {
+    function getMessages() {
       fetchInProgress.value = true;
 
-      const messagesPage = await fetchMessagesPage(
-        page.value || 1,
-        size.value,
-        orderBy.value,
-        statuses.value, // Status filter
-        dateRange.value.start,
-        dateRange.value.end,
-        selectedFacility.value,
-        nationalId.value
-      );
-      messages.value = messagesPage.items;
-      total.value = messagesPage.total;
-      page.value = messagesPage.page;
-      size.value = messagesPage.size;
-
-      fetchInProgress.value = false;
+      messagesApi
+        .getMessages({
+          page: page.value || 1,
+          size: size.value,
+          orderBy: orderBy.value as OrderBy,
+          status: statuses.value.filter((n) => n) as string[],
+          since: dateRange.value.start || undefined,
+          until: dateRange.value.end || undefined,
+          facility: selectedFacility.value || undefined,
+          ni: [nationalId.value].filter((n) => n) as string[],
+        })
+        .then((response) => {
+          messages.value = response.data.items;
+          total.value = response.data.total;
+          page.value = response.data.page;
+          size.value = response.data.size;
+        })
+        .finally(() => {
+          fetchInProgress.value = false;
+        });
     }
 
     onMounted(() => {

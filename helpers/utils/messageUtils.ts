@@ -1,8 +1,8 @@
-import { Message } from "~/interfaces/messages";
+import { MessageSchema } from "@ukkidney/ukrdc-axios-ts";
 
 export const allStatuses = ["STORED", "RECEIVED", "ERROR", "RESOLVED"];
 
-export function MessageSummary(message: Message): string {
+export function MessageSummary(message: MessageSchema): string {
   if (message.msgStatus === "STORED") {
     return "Stored without error";
   }

@@ -20,16 +20,15 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
 
-import { Message } from "@/interfaces/messages";
-
+import { MessageSchema } from "@ukkidney/ukrdc-axios-ts";
 import { MessageSummary } from "@/helpers/utils/messageUtils";
 
-import fetchMessages from "~/helpers/fetch/fetchMessages";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   setup() {
     const route = useRoute();
-    const { fetchMessage } = fetchMessages();
+    const { messagesApi } = useApi();
 
     // Head
 
@@ -38,7 +37,7 @@ export default defineComponent({
 
     // Data refs
 
-    const message = ref<Message>();
+    const message = ref<MessageSchema>();
 
     const messageSummary = computed(() => {
       if (message.value) {
@@ -49,8 +48,14 @@ export default defineComponent({
 
     // Data fetching
 
-    onMounted(async () => {
-      message.value = await fetchMessage(route.value.params.id);
+    onMounted(() => {
+      messagesApi
+        .getMessage({
+          messageId: route.value.params.id,
+        })
+        .then((response) => {
+          message.value = response.data;
+        });
     });
 
     return {

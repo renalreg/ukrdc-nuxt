@@ -12,6 +12,7 @@ import {
   PatientIndexOperationsApi,
   MirthApi,
   WorkItemsApi,
+  MessagesApi,
 } from "@ukkidney/ukrdc-axios-ts";
 import axios from "axios";
 
@@ -54,6 +55,7 @@ export default function () {
   const patientIndexOperationsApi = new PatientIndexOperationsApi(undefined, $config.api.host || "/", apiInstance);
   const mirthApi = new MirthApi(undefined, $config.api.host || "/", apiInstance);
   const workItemsApi = new WorkItemsApi(undefined, $config.api.host || "/", apiInstance);
+  const messagesApi = new MessagesApi(undefined, $config.api.host || "/", apiInstance);
 
   return {
     adminApi,
@@ -68,5 +70,6 @@ export default function () {
     patientIndexOperationsApi,
     mirthApi,
     workItemsApi,
+    messagesApi,
   };
 }
