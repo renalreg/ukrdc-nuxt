@@ -44,20 +44,22 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-import fetchMirth from "~/helpers/fetch/fetchMirth";
+import { ChannelGroupModel } from "@ukkidney/ukrdc-axios-ts";
 
-import { ChannelGroup } from "@/interfaces/mirth";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   setup() {
-    const { fetchMirthGroups } = fetchMirth();
+    const { mirthApi } = useApi();
 
     // Data refs
-    const mirthGroups = ref<ChannelGroup[]>();
+    const mirthGroups = ref<ChannelGroupModel[]>();
 
     // Data fetching
-    onMounted(async () => {
-      mirthGroups.value = await fetchMirthGroups();
+    onMounted(() => {
+      mirthApi.getMirthGroups().then((response) => {
+        mirthGroups.value = response.data;
+      });
     });
 
     return {
