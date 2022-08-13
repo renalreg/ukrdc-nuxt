@@ -60,15 +60,15 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
-import { WorkItem } from "@/interfaces/workitem";
+import { OrderBy, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 import usePagination from "~/helpers/query/usePagination";
 
 import useQuery from "~/helpers/query/useQuery";
 import useFacilities from "~/helpers/useFacilities";
 import useSortBy from "~/helpers/query/useSortBy";
 
-import fetchWorkItems from "~/helpers/fetch/fetchWorkItems";
 import useDateRange from "~/helpers/query/useDateRange";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   setup() {
@@ -77,11 +77,11 @@ export default defineComponent({
     const { arrayQuery } = useQuery();
     const { facilities, facilityIds, facilityLabels, selectedFacility } = useFacilities();
     const { orderAscending, orderBy, toggleOrder } = useSortBy();
-    const { fetchWorkItemsPage } = fetchWorkItems();
+    const { workItemsApi } = useApi();
 
     // Data refs
 
-    const workitems = ref<WorkItem[]>();
+    const workitems = ref<WorkItemSchema[]>();
     const statuses = arrayQuery("status", ["1"], true, true);
 
     const fetchInProgress = ref(false);
@@ -91,25 +91,30 @@ export default defineComponent({
 
     // Data fetching
 
-    async function getWorkitems() {
+    function getWorkitems() {
       fetchInProgress.value = true;
 
-      const itemsPage = await fetchWorkItemsPage(
-        page.value || 1,
-        size.value,
-        orderBy.value || "desc",
-        statuses.value,
-        selectedFacility.value,
-        dateRange.value.start,
-        dateRange.value.end
-      );
-
-      workitems.value = itemsPage.items;
-      page.value = itemsPage.page;
-      total.value = itemsPage.total;
-      size.value = itemsPage.size;
-
-      fetchInProgress.value = false;
+      workItemsApi
+        .getWorkitemsList({
+          page: page.value || 1,
+          size: size.value,
+          orderBy: orderBy.value as OrderBy,
+          status: statuses.value.map((str) => {
+            return Number(str);
+          }),
+          facility: selectedFacility.value || undefined,
+          since: dateRange.value.start || undefined,
+          until: dateRange.value.end || undefined,
+        })
+        .then((response) => {
+          workitems.value = response.data.items;
+          page.value = response.data.page;
+          total.value = response.data.total;
+          size.value = response.data.size;
+        })
+        .finally(() => {
+          fetchInProgress.value = false;
+        });
     }
 
     onMounted(() => {
