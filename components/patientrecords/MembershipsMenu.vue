@@ -31,10 +31,10 @@
 import { computed, defineComponent, ref, useContext } from "@nuxtjs/composition-api";
 
 import usePermissions from "~/helpers/usePermissions";
-import fetchMasterRecords from "@/helpers/fetch/fetchMasterRecords";
 
 import { modalInterface } from "~/interfaces/modal";
 import { MasterRecord } from "~/interfaces/masterrecord";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
@@ -51,7 +51,7 @@ export default defineComponent({
   setup(props) {
     const { $toast } = useContext();
     const { hasPermission } = usePermissions();
-    const { postMasterRecordMembershipCreatePKB } = fetchMasterRecords();
+    const { masterRecordsApi } = useApi();
 
     // Modals
 
@@ -76,7 +76,10 @@ export default defineComponent({
     }
 
     function createPkbMembership() {
-      postMasterRecordMembershipCreatePKB(props.masterRecord)
+      masterRecordsApi
+        .postMasterRecordMembershipsCreatePkb({
+          recordId: props.masterRecord.id,
+        })
         .then(() => {
           $toast.show({
             type: "success",

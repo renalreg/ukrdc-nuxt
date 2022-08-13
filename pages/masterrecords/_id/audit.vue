@@ -41,15 +41,14 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
+import { AuditEventSchema, OrderBy } from "@ukkidney/ukrdc-axios-ts";
 import { nowString } from "@/helpers/utils/dateUtils";
 import usePagination from "~/helpers/query/usePagination";
 import useSortBy from "~/helpers/query/useSortBy";
 import useDateRange from "~/helpers/query/useDateRange";
 
-import fetchMasterRecords from "@/helpers/fetch/fetchMasterRecords";
-
-import { AuditEvent } from "~/interfaces/audit";
 import { MasterRecord } from "~/interfaces/masterrecord";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
@@ -62,30 +61,32 @@ export default defineComponent({
     const { page, total, size } = usePagination();
     const { makeDateRange } = useDateRange();
     const { orderAscending, orderBy, toggleOrder } = useSortBy();
-    const { fetchMasterRecordAuditPage } = fetchMasterRecords();
+    const { masterRecordsApi } = useApi();
 
     // Set initial date dateRange
     const dateRange = makeDateRange(nowString(-30), nowString(0), true);
 
     // Data refs
-    const events = ref<AuditEvent[]>();
+    const events = ref<AuditEventSchema[]>();
 
     // Data fetching
 
-    async function fetchEvents() {
-      const eventsPage = await fetchMasterRecordAuditPage(
-        props.record,
-        page.value || 1,
-        size.value,
-        orderBy.value,
-        dateRange.value.start,
-        dateRange.value.end
-      );
-
-      events.value = eventsPage.items;
-      total.value = eventsPage.total;
-      page.value = eventsPage.page;
-      size.value = eventsPage.size;
+    function fetchEvents() {
+      masterRecordsApi
+        .getMasterRecordAudit({
+          recordId: props.record.id,
+          page: page.value || 1,
+          size: size.value,
+          orderBy: orderBy.value as OrderBy,
+          since: dateRange.value.start || undefined,
+          until: dateRange.value.end || undefined,
+        })
+        .then((response) => {
+          events.value = response.data.items;
+          total.value = response.data.total;
+          page.value = response.data.page;
+          size.value = response.data.size;
+        });
     }
 
     onMounted(() => {

@@ -1,8 +1,8 @@
-import { MasterRecord } from "./masterrecord";
+import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
 interface MultipleUKRDCIDsGroupItem {
   lastUpdated: string | null;
-  masterRecord: MasterRecord;
+  masterRecord: MasterRecordSchema;
 }
 
 export interface MultipleUKRDCIDsGroup {

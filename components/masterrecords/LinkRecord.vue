@@ -40,32 +40,38 @@ Includes a header with the Link Record ID and functionality to Unlink the record
 <script lang="ts">
 import { defineComponent, ref, useContext, useRouter } from "@nuxtjs/composition-api";
 
+import { LinkRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { formatGender } from "@/helpers/utils/codeUtils";
 
-import fetchEMPI from "~/helpers/fetch/fetchEMPI";
-
-import { LinkRecord } from "@/interfaces/linkrecords";
 import { modalInterface } from "~/interfaces/modal";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
     record: {
-      type: Object as () => LinkRecord,
+      type: Object as () => LinkRecordSchema,
       required: true,
     },
   },
   setup(props) {
     const router = useRouter();
     const { $toast } = useContext();
-    const { postEMPIUnlink } = fetchEMPI();
+    const { patientIndexOperationsApi } = useApi();
 
     const unlinkModal = ref<modalInterface>();
     const unlinkComment = ref("");
 
     function doUnlink() {
-      postEMPIUnlink(props.record.person.id, props.record.masterRecord.id, unlinkComment.value)
-        .then((response: LinkRecord) => {
+      patientIndexOperationsApi
+        .postEmpiUnlink({
+          unlinkRequestSchema: {
+            personId: props.record.person.id,
+            masterId: props.record.masterRecord.id,
+            comment: unlinkComment.value,
+          },
+        })
+        .then((response) => {
           $toast.show({
             type: "success",
             title: "Success",
@@ -73,7 +79,7 @@ export default defineComponent({
             timeout: 10,
             classTimeout: "bg-green-600",
           });
-          router.push({ path: `/masterrecords/${response.masterRecord.id}` });
+          router.push({ path: `/masterrecords/${response.data.masterRecord.id}` });
         })
         .finally(() => {
           unlinkModal.value?.hide();

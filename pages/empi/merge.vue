@@ -118,12 +118,11 @@ import {
   watch,
 } from "@nuxtjs/composition-api";
 
+import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import useQuery from "~/helpers/query/useQuery";
-import fetchEMPI from "~/helpers/fetch/fetchEMPI";
-import fetchMasterRecords from "@/helpers/fetch/fetchMasterRecords";
 
 import { modalInterface } from "~/interfaces/modal";
-import { MasterRecord } from "~/interfaces/masterrecord";
+import useApi from "~/helpers/useApi";
 
 enum Direction {
   superseding = "superseding",
@@ -136,8 +135,7 @@ export default defineComponent({
     const router = useRouter();
     const { $toast } = useContext();
     const { stringQuery } = useQuery();
-    const { postEMPIMerge } = fetchEMPI();
-    const { fetchMasterRecord } = fetchMasterRecords();
+    const { patientIndexOperationsApi, masterRecordsApi } = useApi();
 
     // Modals
 
@@ -149,8 +147,8 @@ export default defineComponent({
     const supersedingId = stringQuery("superseding", null, true, false);
     const callbackPath = stringQuery("callback", null);
 
-    const superseded = ref<MasterRecord>();
-    const superseding = ref<MasterRecord>();
+    const superseded = ref<MasterRecordSchema>();
+    const superseding = ref<MasterRecordSchema>();
 
     const searchingFor = ref<Direction>();
 
@@ -171,12 +169,24 @@ export default defineComponent({
     });
 
     // Data fetching
-    async function fetchRecords() {
+    function fetchRecords() {
       if (supersededId.value) {
-        superseded.value = await fetchMasterRecord(supersededId.value);
+        masterRecordsApi
+          .getMasterRecord({
+            recordId: Number(supersededId.value),
+          })
+          .then((response) => {
+            superseded.value = response.data;
+          });
       }
       if (supersedingId.value) {
-        superseding.value = await fetchMasterRecord(supersedingId.value);
+        masterRecordsApi
+          .getMasterRecord({
+            recordId: Number(supersedingId.value),
+          })
+          .then((response) => {
+            superseding.value = response.data;
+          });
       }
     }
 
@@ -259,7 +269,13 @@ export default defineComponent({
 
     function requestMerge() {
       if (superseded.value && superseding.value) {
-        postEMPIMerge(superseding.value.id, superseded.value.id)
+        patientIndexOperationsApi
+          .postEmpiMerge({
+            mergeRequestSchema: {
+              superseded: superseded.value.id,
+              superseding: superseding.value.id,
+            },
+          })
           .then(() => {
             $toast.show({
               type: "success",
