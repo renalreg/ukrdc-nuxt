@@ -44,30 +44,28 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, useRouter, watch } from "@nuxtjs/composition-api";
-import fetchFacilities from "~/helpers/fetch/fetchFacilities";
+import { FacilityDetailsSchema, HistoryPoint, MessageSchema } from "@ukkidney/ukrdc-axios-ts";
+import useApi from "~/helpers/useApi";
 import { getPointDateRange } from "~/helpers/utils/chartUtils";
 import { HistoryPointEvent } from "~/interfaces/charts";
-import { HistoryItem } from "~/interfaces/common";
-import { Facility } from "~/interfaces/facilities";
-import { Message } from "~/interfaces/messages";
 
 export default defineComponent({
   props: {
     facility: {
-      type: Object as () => Facility,
+      type: Object as () => FacilityDetailsSchema,
       required: true,
     },
   },
 
   setup(props) {
     const router = useRouter();
-    const { fetchFacilityErrorsHistory, fetchFacilityPatientsLatestErrorsPage } = fetchFacilities();
+    const { facilitiesApi } = useApi();
 
     // Data refs
-    const facilityErrorsHistory = ref<HistoryItem[]>();
+    const facilityErrorsHistory = ref<HistoryPoint[]>();
 
     // Failing NIs data
-    const errorMessages = ref([] as Message[]);
+    const errorMessages = ref([] as MessageSchema[]);
     const errorMessagesPage = ref(1);
     const errorMessagesSize = ref(5);
     const errorMessagesTotal = ref(0);
@@ -89,22 +87,29 @@ export default defineComponent({
 
     // Data fetching
 
-    async function updateErrorMessages(): Promise<void> {
-      const errorsPage = await fetchFacilityPatientsLatestErrorsPage(
-        props.facility,
-        errorMessagesPage.value,
-        errorMessagesSize.value,
-        null
-      );
-      // Set related errors
-      errorMessages.value = errorsPage.items;
-      errorMessagesPage.value = errorsPage.page;
-      errorMessagesSize.value = errorsPage.size;
-      errorMessagesTotal.value = errorsPage.total;
+    function updateErrorMessages() {
+      facilitiesApi
+        .getFacilityPatientsLatestErrors({
+          code: props.facility.id,
+          page: errorMessagesPage.value,
+          size: errorMessagesSize.value,
+        })
+        .then((response) => {
+          errorMessages.value = response.data.items;
+          errorMessagesPage.value = response.data.page;
+          errorMessagesSize.value = response.data.size;
+          errorMessagesTotal.value = response.data.total;
+        });
     }
 
-    async function updateErrorsHistory(): Promise<void> {
-      facilityErrorsHistory.value = await fetchFacilityErrorsHistory(props.facility);
+    function updateErrorsHistory() {
+      facilitiesApi
+        .getFacilityErrrorsHistory({
+          code: props.facility.id,
+        })
+        .then((response) => {
+          facilityErrorsHistory.value = response.data;
+        });
     }
 
     onMounted(() => {

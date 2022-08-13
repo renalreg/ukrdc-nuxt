@@ -49,20 +49,20 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-import fetchFacilities from "~/helpers/fetch/fetchFacilities";
-import { Facility, FacilityDemographicStats } from "~/interfaces/facilities";
+import { FacilityDemographicStats, FacilityDetailsSchema } from "@ukkidney/ukrdc-axios-ts";
 import { NumericChartData } from "~/interfaces/charts";
 import { formatGender } from "~/helpers/utils/codeUtils";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
     facility: {
-      type: Object as () => Facility,
+      type: Object as () => FacilityDetailsSchema,
       required: true,
     },
   },
   setup(props) {
-    const { fetchFacilityDemographicStats } = fetchFacilities();
+    const { facilitiesApi } = useApi();
 
     // Data refs
     const facilityDemographicStats = ref<FacilityDemographicStats>();
@@ -70,9 +70,13 @@ export default defineComponent({
     // Data fetching
 
     onMounted(() => {
-      fetchFacilityDemographicStats(props.facility).then((response) => {
-        facilityDemographicStats.value = response;
-      });
+      facilitiesApi
+        .getFacilityStatsDemographics({
+          code: props.facility.id,
+        })
+        .then((response) => {
+          facilityDemographicStats.value = response.data;
+        });
     });
 
     // Data coersion
@@ -117,7 +121,7 @@ export default defineComponent({
 
       if (facilityDemographicStats.value) {
         for (const point of facilityDemographicStats.value?.ethnicityDist) {
-          labels.push(point.ethnicity);
+          labels.push(point.ethnicity || "Undefined");
           data.push(point.count);
         }
       }

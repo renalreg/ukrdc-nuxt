@@ -110,10 +110,11 @@ Table of facilities and their basic statistics
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-import fetchFacilities from "@/helpers/fetch/fetchFacilities";
+import { FacilityDetailsSchema, FacilityEnum, OrderBy } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { facilityLastMessageOver48 } from "@/helpers/utils/facilityUtils";
-import { Facility } from "@/interfaces/facilities";
+
+import useApi from "~/helpers/useApi";
 
 interface IsAscending {
   [key: string]: boolean | null;
@@ -135,11 +136,11 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { fetchFacilitiesList } = fetchFacilities();
+    const { facilitiesApi } = useApi();
 
     // Facility list and filters
 
-    const facilities = ref<Facility[]>();
+    const facilities = ref<FacilityDetailsSchema[]>();
     const searchboxString = ref("");
 
     const filterByPkbOut = ref(false);
@@ -153,7 +154,7 @@ export default defineComponent({
           .filter(
             (option) =>
               option.id.toLowerCase().includes(searchboxString.value.toLowerCase()) ||
-              option.description.toLowerCase().includes(searchboxString.value.toLowerCase())
+              option.description?.toLowerCase().includes(searchboxString.value.toLowerCase())
           )
           // Filter by additional filters, such as PkbOut
           .filter((option) => (filterByPkbOut.value ? option.dataFlow.pkbOut : true))
@@ -164,42 +165,47 @@ export default defineComponent({
 
     // Sorting
 
-    const sortBy = ref<string | null>(null);
+    const sortBy = ref<FacilityEnum>();
 
     // Set initial order for id sorting. Other columns left as default
     const isAscending = ref<IsAscending>({
       id: true,
     });
 
-    async function fetchTable() {
+    function fetchTable() {
       const currentisAscending: null | boolean = isAscending.value[sortBy.value || "default"] || null;
-      const currentOrderBy: string = currentisAscending ? "asc" : "desc";
-      facilities.value = await fetchFacilitiesList(
-        sortBy.value,
-        currentOrderBy,
-        props.includeInactive,
-        props.includeEmpty
-      );
+      const currentOrderBy: OrderBy = currentisAscending ? "asc" : "desc";
+
+      facilitiesApi
+        .getFacilityList({
+          sortBy: sortBy.value,
+          orderBy: currentOrderBy,
+          includeInactive: props.includeInactive,
+          includeEmpty: props.includeEmpty,
+        })
+        .then((response) => {
+          facilities.value = response.data;
+        });
     }
 
-    async function toggleSort(key: string) {
+    function toggleSort(key: FacilityEnum) {
       // Only reverse order if we're sorting by this key already
       if (sortBy.value === key) {
         // !null is true, so this should work always
         isAscending.value[key] = !isAscending.value[key];
       }
       sortBy.value = key;
-      await fetchTable();
+      fetchTable();
     }
 
-    onMounted(async () => {
-      await fetchTable();
+    onMounted(() => {
+      fetchTable();
     });
 
     watch(
       () => [props.includeInactive, props.includeEmpty],
-      async () => {
-        await fetchTable();
+      () => {
+        fetchTable();
       }
     );
 

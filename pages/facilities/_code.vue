@@ -21,18 +21,18 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
 
+import { FacilityDetailsSchema } from "@ukkidney/ukrdc-axios-ts";
 import usePermissions from "~/helpers/usePermissions";
-import fetchFacilities from "~/helpers/fetch/fetchFacilities";
 
-import { Facility } from "~/interfaces/facilities";
 import { TabItem } from "~/interfaces/tabs";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   setup() {
     const route = useRoute();
     const { hasMultipleFacilities } = usePermissions();
 
-    const { fetchFacility } = fetchFacilities();
+    const { facilitiesApi } = useApi();
 
     // Head
     const { title } = useMeta();
@@ -55,14 +55,18 @@ export default defineComponent({
     ] as TabItem[];
 
     // Data refs
-    const facility = ref<Facility>();
+    const facility = ref<FacilityDetailsSchema>();
 
     // Data fetching
 
     onMounted(() => {
-      fetchFacility(code.value).then((response) => {
-        facility.value = response;
-      });
+      facilitiesApi
+        .getFacility({
+          code: code.value,
+        })
+        .then((response) => {
+          facility.value = response.data;
+        });
     });
 
     return {

@@ -1,13 +1,13 @@
 import { computed, onMounted, ref } from "@nuxtjs/composition-api";
-import fetchFacilities from "./fetch/fetchFacilities";
+import { FacilityDetailsSchema } from "@ukkidney/ukrdc-axios-ts";
 import useQuery from "~/helpers/query/useQuery";
-import { Facility } from "~/interfaces/facilities";
+import useApi from "~/helpers/useApi";
 
 export default function () {
   const { stringQuery } = useQuery();
-  const { fetchFacilitiesList } = fetchFacilities();
+  const { facilitiesApi } = useApi();
 
-  const facilities = ref([] as Facility[]);
+  const facilities = ref([] as FacilityDetailsSchema[]);
   const facilityIds = computed(() => {
     return facilities.value.map(({ id }) => id);
   });
@@ -16,10 +16,12 @@ export default function () {
   });
   const selectedFacility = stringQuery("facility", null, true);
 
-  async function setFacilities() {
+  function setFacilities() {
     // If we don't already have a list of available facilties, fetch one
     if (facilities.value.length === 0) {
-      facilities.value = await fetchFacilitiesList();
+      facilitiesApi.getFacilityList().then((response) => {
+        facilities.value = response.data;
+      });
     }
   }
 
@@ -32,6 +34,5 @@ export default function () {
     facilityIds,
     facilityLabels,
     selectedFacility,
-    fetchFacilities,
   };
 }
