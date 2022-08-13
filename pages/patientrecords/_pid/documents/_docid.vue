@@ -80,11 +80,11 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useRoute } from "@nuxtjs/composition-api";
 
-import fetchPatientRecords from "~/helpers/fetch/fetchPatientRecords";
+import { DocumentSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 
 import { PatientRecord } from "@/interfaces/patientrecord";
-import { PatientDocument } from "~/interfaces/document";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
@@ -95,12 +95,11 @@ export default defineComponent({
   },
 
   setup(props) {
-    const { fetchPatientRecordDocument, downloadPatientRecordDocument, documentDownloadInProgress } =
-      fetchPatientRecords();
     const route = useRoute();
+    const { patientRecordsApi } = useApi();
 
     // Data refs
-    const patientDocument = ref<PatientDocument>();
+    const patientDocument = ref<DocumentSchema>();
 
     // Computed properties
     const filename = computed(() => {
@@ -111,9 +110,45 @@ export default defineComponent({
     });
 
     // Data fetching
-    onMounted(async () => {
-      patientDocument.value = await fetchPatientRecordDocument(props.record, route.value.params.docid);
+    onMounted(() => {
+      patientRecordsApi
+        .getDocument({
+          pid: props.record.pid,
+          documentId: route.value.params.docid,
+        })
+        .then((response) => {
+          patientDocument.value = response.data;
+        });
     });
+
+    const documentDownloadInProgress = ref(false);
+
+    function downloadPatientRecordDocument() {
+      documentDownloadInProgress.value = true;
+      patientRecordsApi
+        .getDocumentDownload(
+          {
+            pid: props.record.pid,
+            documentId: route.value.params.docid,
+          },
+          {
+            method: "GET",
+            responseType: "blob",
+          }
+        )
+        .then((response) => {
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute(
+            "download",
+            patientDocument.value?.filename || `${patientDocument.value?.documentname}.txt`
+          );
+          document.body.appendChild(link);
+          link.click();
+          documentDownloadInProgress.value = false;
+        });
+    }
 
     return {
       patientDocument,

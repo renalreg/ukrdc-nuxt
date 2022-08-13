@@ -43,16 +43,15 @@
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
 
+import { PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { formatGender } from "@/helpers/utils/codeUtils";
 import { isEmptyObject } from "@/helpers/utils/objectUtils";
 
-import { PatientRecord } from "@/interfaces/patientrecord";
-
 export default defineComponent({
   props: {
     record: {
-      type: Object as () => PatientRecord,
+      type: Object as () => PatientRecordSchema,
       required: true,
     },
   },

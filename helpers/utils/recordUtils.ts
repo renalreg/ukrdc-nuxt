@@ -1,5 +1,4 @@
-import { PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
-import { PatientNumber } from "~/interfaces/patient";
+import { NumberSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 
 const ukrdcMembershipFacilities = ["PV", "PKB"];
 const migratedExtracts = ["PVMIG", "HSMIG"];
@@ -70,7 +69,7 @@ export function firstSurname(record: PatientRecordSummarySchema): string {
 }
 
 export function firstMRN(record: PatientRecordSummarySchema): localNumber {
-  const mrn = record.patient?.numbers.find((i: PatientNumber) => i.numbertype === "MRN");
+  const mrn = record.patient?.numbers.find((i: NumberSchema) => i.numbertype === "MRN");
   if (mrn) {
     return {
       label: mrn.organization === "LOCALHOSP" ? "Hospital" : mrn.organization,

@@ -40,11 +40,11 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
+import { SurveySchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 
-import { Survey } from "@/interfaces/survey";
 import { PatientRecord } from "@/interfaces/patientrecord";
-import fetchPatientRecords from "~/helpers/fetch/fetchPatientRecords";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
@@ -55,14 +55,20 @@ export default defineComponent({
   },
 
   setup(props) {
-    const { fetchPatientRecordSurveys } = fetchPatientRecords();
+    const { patientRecordsApi } = useApi();
 
     // Data refs
-    const surveys = ref<Survey[]>();
+    const surveys = ref<SurveySchema[]>();
 
     // Data fetching
-    onMounted(async () => {
-      surveys.value = await fetchPatientRecordSurveys(props.record);
+    onMounted(() => {
+      patientRecordsApi
+        .getPatientSurveys({
+          pid: props.record.pid,
+        })
+        .then((response) => {
+          surveys.value = response.data;
+        });
     });
 
     return {

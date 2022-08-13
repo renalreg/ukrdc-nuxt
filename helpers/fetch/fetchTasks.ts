@@ -1,25 +1,27 @@
-import { useContext } from "@nuxtjs/composition-api";
-import { TrackableTask } from "~/interfaces/tasks";
-
-export interface TasksPage {
-  items: TrackableTask[];
-  total: number;
-  page: number;
-  size: number;
-}
+import { PageTrackableTaskSchema, TrackableTaskSchema } from "@ukkidney/ukrdc-axios-ts";
+import useApi from "../useApi";
 
 export default function () {
-  const { $api } = useContext();
+  const { backgroundTasksApi } = useApi();
 
-  async function fetchTasksList(page: number, size: number): Promise<TasksPage> {
-    return (await $api.$get(`/v1/tasks/?page=${page}&size=${size}`)) as TasksPage;
+  async function fetchTasksList(page: number, size: number): Promise<PageTrackableTaskSchema> {
+    return (
+      await backgroundTasksApi.getTasks({
+        page,
+        size,
+      })
+    ).data;
   }
 
-  async function fetchTask(task: TrackableTask): Promise<TrackableTask> {
-    return (await $api.$get(task.links.self)) as TrackableTask;
+  async function fetchTask(task: TrackableTaskSchema): Promise<TrackableTaskSchema> {
+    return (
+      await backgroundTasksApi.getTask({
+        taskId: task.id,
+      })
+    ).data;
   }
 
-  function pollTask(task: TrackableTask, interval: number) {
+  function pollTask(task: TrackableTaskSchema, interval: number) {
     interval = interval * 1000 || 500;
 
     const checkCondition = (resolve: any, reject: any) => {

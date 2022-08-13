@@ -97,12 +97,12 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
-import { Treatment } from "@/interfaces/treatment";
+import { TreatmentSchema } from "@ukkidney/ukrdc-axios-ts";
 import { PatientRecord } from "@/interfaces/patientrecord";
-import fetchPatientRecords from "~/helpers/fetch/fetchPatientRecords";
+import useApi from "~/helpers/useApi";
 
-interface TreatmentEvent extends Treatment {
-  time: string;
+interface TreatmentEvent extends TreatmentSchema {
+  time?: string;
   isDischarge: boolean;
 }
 
@@ -115,14 +115,20 @@ export default defineComponent({
   },
 
   setup(props) {
-    const { fetchPatientRecordTreatments } = fetchPatientRecords();
+    const { patientRecordsApi } = useApi();
 
     // Data refs
-    const treatments = ref<Treatment[]>();
+    const treatments = ref<TreatmentSchema[]>();
 
     // Data fetching
-    onMounted(async () => {
-      treatments.value = await fetchPatientRecordTreatments(props.record);
+    onMounted(() => {
+      patientRecordsApi
+        .getPatientTreatments({
+          pid: props.record.pid,
+        })
+        .then((response) => {
+          treatments.value = response.data;
+        });
     });
 
     // Sorted and paired treatment events
@@ -145,6 +151,9 @@ export default defineComponent({
         events.push(event);
       }
       events.sort(function (a, b) {
+        if (a.time === undefined || b.time === undefined) {
+          return 0;
+        }
         // Turn your strings into dates, and then subtract them
         // to get a value that is either negative, positive, or zero.
         if (a.time === b.time) {

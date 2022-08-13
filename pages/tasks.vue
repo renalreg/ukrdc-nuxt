@@ -62,9 +62,9 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
+import { TrackableTaskSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import fetchTasks from "~/helpers/fetch/fetchTasks";
-import { TrackableTask } from "~/interfaces/tasks";
 import usePagination from "~/helpers/query/usePagination";
 
 export default defineComponent({
@@ -73,7 +73,7 @@ export default defineComponent({
     const { fetchTasksList } = fetchTasks();
 
     // Data refs
-    const tasks = ref([] as TrackableTask[]);
+    const tasks = ref([] as TrackableTaskSchema[]);
 
     // Data fetching
 

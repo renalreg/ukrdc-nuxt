@@ -69,14 +69,14 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useRoute, useRouter, watch } from "@nuxtjs/composition-api";
 
+import { ObservationSchema } from "@ukkidney/ukrdc-axios-ts";
 import usePagination from "~/helpers/query/usePagination";
 
 import { arrayQuery } from "@/helpers/utils/queryUtils";
 import { formatDate } from "@/helpers/utils/dateUtils";
 
-import { Observation } from "@/interfaces/observation";
 import { PatientRecord } from "@/interfaces/patientrecord";
-import fetchPatientRecords from "~/helpers/fetch/fetchPatientRecords";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
@@ -90,32 +90,41 @@ export default defineComponent({
     const route = useRoute();
     const router = useRouter();
     const { page, total, size } = usePagination();
-    const { fetchPatientRecordObservationsPage, fetchPatientRecordObservationCodes } = fetchPatientRecords();
+    const { patientRecordsApi } = useApi();
 
     // Data refs
 
-    const observations = ref<Observation[]>();
+    const observations = ref<ObservationSchema[]>();
 
     const availableCodes = ref([] as string[]);
     const selectedCodes = ref((arrayQuery(route.value.query.code) || []) as string[]);
 
     // Data fetching
 
-    async function fetchObservations() {
-      const observationsPage = await fetchPatientRecordObservationsPage(
-        props.record,
-        page.value || 1,
-        size.value,
-        selectedCodes.value
-      );
-      observations.value = observationsPage.items;
-      total.value = observationsPage.total;
-      page.value = observationsPage.page;
-      size.value = observationsPage.size;
+    function fetchObservations() {
+      patientRecordsApi
+        .getPatientObservations({
+          pid: props.record.pid,
+          page: page.value || 1,
+          size: size.value,
+          code: selectedCodes.value,
+        })
+        .then((response) => {
+          observations.value = response.data.items;
+          total.value = response.data.total;
+          page.value = response.data.page;
+          size.value = response.data.size;
+        });
 
       // If we don't already have a list of available codes, fetch one
       if (availableCodes.value.length === 0) {
-        availableCodes.value = await fetchPatientRecordObservationCodes(props.record);
+        patientRecordsApi
+          .getPatientObservationCodes({
+            pid: props.record.pid,
+          })
+          .then((response) => {
+            availableCodes.value = response.data;
+          });
       }
     }
 

@@ -58,9 +58,9 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed } from "@nuxtjs/composition-api";
+import { PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { formatGenderCharacter } from "@/helpers/utils/codeUtils";
-import { PatientRecordSummary } from "@/interfaces/patientrecord";
 import { firstMRN } from "~/helpers/utils/recordUtils";
 
 interface localNumber {
@@ -71,7 +71,7 @@ interface localNumber {
 export default defineComponent({
   props: {
     item: {
-      type: Object as () => PatientRecordSummary,
+      type: Object as () => PatientRecordSummarySchema,
       required: true,
     },
     showPvSync: {

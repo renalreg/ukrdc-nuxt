@@ -2154,10 +2154,10 @@
     "@typescript-eslint/types" "5.11.0"
     eslint-visitor-keys "^3.0.0"
 
-"@ukkidney/ukrdc-axios-ts@^1.0.0-beta.1-SNAPSHOT.202208151506":
-  version "1.0.0-beta.1-SNAPSHOT.202208151506"
-  resolved "https://registry.yarnpkg.com/@ukkidney/ukrdc-axios-ts/-/ukrdc-axios-ts-1.0.0-beta.1-SNAPSHOT.202208151506.tgz#e87186d19b9e011310b41bbfccee731e7a878020"
-  integrity sha512-B7PkYsKdOP9RRZPT8Tk8w77Yi5o2HZZ98oASL5RWkVpEH6jf4Gt/hDXrrKdeNtVFG1ttYBDnwUEv3YTpOkjDHg==
+"@ukkidney/ukrdc-axios-ts@^1.0.0-beta.1-SNAPSHOT.202208161124":
+  version "1.0.0-beta.1-SNAPSHOT.202208161124"
+  resolved "https://registry.yarnpkg.com/@ukkidney/ukrdc-axios-ts/-/ukrdc-axios-ts-1.0.0-beta.1-SNAPSHOT.202208161124.tgz#fc09235e5ef95a908fe50851bbad93e7367026cf"
+  integrity sha512-J8p2zLcUcBItZoUsgBJaAO+PUm2u93TAhIevyEVWRxBqXFyyofd9+TidtSzPoi4VHpRu4SGDSxqa/9nt9eIfDg==
   dependencies:
     axios "^0.26.1"
 
@@ -3212,9 +3212,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000981, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001228, caniuse-lite@^1.0.30001286, caniuse-lite@^1.0.30001297:
-  version "1.0.30001312"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001312.tgz#e11eba4b87e24d22697dae05455d5aea28550d5f"
-  integrity sha512-Wiz1Psk2MEK0pX3rUzWaunLTZzqS2JYZFzNKqAiJGiuxIjRPLgV6+VDPOg6lQOUxmDwhTlh198JsTTi8Hzw6aQ==
+  version "1.0.30001377"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001377.tgz"
+  integrity sha512-I5XeHI1x/mRSGl96LFOaSk528LA/yZG3m3iQgImGujjO8gotd/DL8QaI1R1h1dg5ATeI2jqPblMpKq4Tr5iKfQ==
 
 chalk@^1.1.3:
   version "1.1.3"

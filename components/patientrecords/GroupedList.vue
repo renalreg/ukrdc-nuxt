@@ -70,18 +70,17 @@
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 
-import { PatientRecordSummary } from "@/interfaces/patientrecord";
-
+import { PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 import usePermissions from "~/helpers/usePermissions";
 import { isData, isMembership, isMigrated, isSurvey, isTracing } from "@/helpers/utils/recordUtils";
 import { MasterRecord } from "~/interfaces/masterrecord";
 
 interface PRGroups {
-  data: PatientRecordSummary[];
-  surveys: PatientRecordSummary[];
-  migrated: PatientRecordSummary[];
-  memberships: PatientRecordSummary[];
-  tracing: PatientRecordSummary[];
+  data: PatientRecordSummarySchema[];
+  surveys: PatientRecordSummarySchema[];
+  migrated: PatientRecordSummarySchema[];
+  memberships: PatientRecordSummarySchema[];
+  tracing: PatientRecordSummarySchema[];
 }
 
 export default defineComponent({
@@ -91,7 +90,7 @@ export default defineComponent({
       required: true,
     },
     records: {
-      type: Array as () => PatientRecordSummary[],
+      type: Array as () => PatientRecordSummarySchema[],
       required: true,
     },
   },

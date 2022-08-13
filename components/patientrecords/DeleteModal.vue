@@ -209,7 +209,7 @@ import { MasterRecord } from "~/interfaces/masterrecord";
 import { Person, PidXRef } from "~/interfaces/persons";
 import { WorkItem } from "~/interfaces/workitem";
 import { LinkRecordSummary } from "~/interfaces/linkrecords";
-import fetchPatientRecords from "~/helpers/fetch/fetchPatientRecords";
+import useApi from "~/helpers/useApi";
 
 interface DeletePIDFromEMPISchema {
   persons: Person[];
@@ -238,7 +238,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const { $toast } = useContext();
     const { visible, show, hide, toggle } = useModal();
-    const { postPatientRecordDelete } = fetchPatientRecords();
+    const { patientRecordsApi } = useApi();
 
     const confirmChecked = ref(false);
     const previewResponse = ref<DeletePIDResponseSchema>();
@@ -251,7 +251,7 @@ export default defineComponent({
       hide();
     }
 
-    watch(visible, async () => {
+    watch(visible, () => {
       // If the modal becomes visible
       if (visible.value) {
         // Reset the modal each time it's is shown.
@@ -259,42 +259,59 @@ export default defineComponent({
         previewResponse.value = undefined;
         deleteResponse.value = undefined;
 
-        try {
-          // Fetch the delete preview and confirmation hash
-          previewResponse.value = await postPatientRecordDelete(props.item, null);
-        } catch (error: any) {
-          // Populate error message if preview fails
-          if (error.response.status === 400) {
+        patientRecordsApi
+          .postPatientDelete({
+            pid: props.item.pid,
+            deletePIDRequestSchema: {
+              hash: undefined,
+            },
+          })
+          .then((response) => {
+            previewResponse.value = response.data;
+          })
+          .catch((error) => {
             previewErrorMessage.value = error.response.data.detail;
-          }
-        }
+          });
       }
     });
 
-    async function doRealDelete() {
+    function doRealDelete() {
       // Emit confirm event (currently unused)
       emit("confirm");
       // If the checkbox is checked and we have a preview response
       if (confirmChecked.value && previewResponse.value) {
         // Start the delete spinner
         deleteInProgress.value = true;
-        // Request an actual delete by sending the confirmation hash
-        previewResponse.value = await postPatientRecordDelete(props.item, previewResponse.value.hash);
+
+        patientRecordsApi
+          .postPatientDelete({
+            pid: props.item.pid,
+            deletePIDRequestSchema: {
+              hash: previewResponse.value?.hash,
+            },
+          })
+          .then(() => {
+            // Hide the modal
+            hide();
+            // Emit an event notifying parents that a record has been deleted
+            emit("deleted");
+            // Show success toast
+            $toast.show({
+              type: "success",
+              title: "Success",
+              message: "Record deleted",
+              timeout: 5,
+              classTimeout: "bg-green-600",
+            });
+          })
+          .catch((error) => {
+            previewErrorMessage.value = error.response.data.detail;
+          })
+          .finally(() => {
+            // Stop the delete spinner
+            deleteInProgress.value = false;
+          });
       }
-      // Remove the delete spinner
-      deleteInProgress.value = false;
-      // Hide the modal
-      hide();
-      // Emit an event notifying parents that a record has been deleted
-      emit("deleted");
-      // Show success toast
-      $toast.show({
-        type: "success",
-        title: "Success",
-        message: "Record deleted",
-        timeout: 5,
-        classTimeout: "bg-green-600",
-      });
     }
 
     return {

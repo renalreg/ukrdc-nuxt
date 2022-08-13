@@ -7,6 +7,8 @@ import {
   SearchApi,
   FacilitiesApi,
   MasterRecordsApi,
+  PatientRecordsApi,
+  BackgroundTasksApi,
 } from "@ukkidney/ukrdc-axios-ts";
 import axios from "axios";
 
@@ -44,6 +46,8 @@ export default function () {
   const searchApi = new SearchApi(undefined, $config.api.host || "/", apiInstance);
   const facilitiesApi = new FacilitiesApi(undefined, $config.api.host || "/", apiInstance);
   const masterRecordsApi = new MasterRecordsApi(undefined, $config.api.host || "/", apiInstance);
+  const patientRecordsApi = new PatientRecordsApi(undefined, $config.api.host || "/", apiInstance);
+  const backgroundTasksApi = new BackgroundTasksApi(undefined, $config.api.host || "/", apiInstance);
 
   return {
     adminApi,
@@ -53,5 +57,7 @@ export default function () {
     searchApi,
     facilitiesApi,
     masterRecordsApi,
+    patientRecordsApi,
+    backgroundTasksApi,
   };
 }
