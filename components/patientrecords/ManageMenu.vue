@@ -30,7 +30,7 @@ import { defineComponent, ref, useContext } from "@nuxtjs/composition-api";
 import { PatientRecordSummarySchema, TrackableTaskSchema } from "@ukkidney/ukrdc-axios-ts";
 import { modalInterface } from "~/interfaces/modal";
 import usePermissions from "~/helpers/usePermissions";
-import fetchTasks from "~/helpers/fetch/fetchTasks";
+import useTasks from "~/helpers/useTasks";
 import useApi from "~/helpers/useApi";
 
 export default defineComponent({
@@ -59,7 +59,7 @@ export default defineComponent({
     const { $toast } = useContext();
     const { hasPermission } = usePermissions();
     const { patientRecordsApi } = useApi();
-    const { pollTask } = fetchTasks();
+    const { pollTask } = useTasks();
 
     const deleteModal = ref<modalInterface>();
 
