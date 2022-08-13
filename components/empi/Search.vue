@@ -45,11 +45,11 @@ Mini (half-width) search bar and results pages used in the EMPI Merge page.
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
+import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import usePagination from "~/helpers/query/usePagination";
-import { MasterRecord } from "@/interfaces/masterrecord";
 
 import useRecordSearch from "~/helpers/query/useRecordSearch";
-import fetchSearchResults from "~/helpers/fetch/fetchSearchResults";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
@@ -60,24 +60,35 @@ export default defineComponent({
   },
   setup(props) {
     const { page, total, size } = usePagination();
-    const { searchQueryIsPopulated, searchboxString, searchSubmit, apiQueryString } = useRecordSearch();
-    const { fetchSearchResultsPage, searchInProgress } = fetchSearchResults();
+    const { searchQueryIsPopulated, searchboxString, searchSubmit, searchTermArray } = useRecordSearch();
+    const { searchApi } = useApi();
 
-    const masterrecords = ref([] as MasterRecord[]);
+    // Data refs
 
-    async function fetchResults() {
-      if (searchQueryIsPopulated) {
-        const results = await fetchSearchResultsPage(
-          apiQueryString.value,
-          page.value || 1,
-          size.value,
-          props.numberTypes || []
-        );
+    const masterrecords = ref([] as MasterRecordSchema[]);
 
-        masterrecords.value = results.items;
-        total.value = results.total;
-        page.value = results.page;
-        size.value = results.size;
+    // Data fetching
+    const searchInProgress = ref(false);
+
+    function fetchResults() {
+      if (searchQueryIsPopulated.value) {
+        searchInProgress.value = true;
+
+        searchApi
+          .getSearchMasterrecords({
+            search: searchTermArray.value.filter((n) => n) as string[],
+            page: page.value || 1,
+            size: size.value,
+            numberType: props.numberTypes.filter((n) => n) as string[],
+          })
+          .then((response) => {
+            masterrecords.value = response.data.items;
+            page.value = response.data.page;
+            total.value = response.data.total;
+            size.value = response.data.size;
+
+            searchInProgress.value = false;
+          });
       }
     }
 
@@ -85,7 +96,7 @@ export default defineComponent({
       fetchResults();
     });
 
-    watch([apiQueryString, page], () => {
+    watch([searchTermArray, page], () => {
       fetchResults();
     });
 

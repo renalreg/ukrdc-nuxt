@@ -61,47 +61,6 @@ export default function () {
     }
   }
 
-  function buildAPIQueryStringFromArray(
-    input: (string | null)[] | string,
-    defaultQueryName: string = "search"
-  ): string {
-    // Builds an API query string from an array of search terms.
-    // e.g. ['john', '1949-03-01'] becomes search=john&search=1949-03-01
-
-    if (Array.isArray(input)) {
-      // If passed multiple query params as an array
-
-      // Initial empty query
-      let q = "";
-      for (const term of input) {
-        let queryName = defaultQueryName;
-        let queryValue: string;
-
-        if (term) {
-          if (term.includes("=")) {
-            // If the term contains a query name and value
-            const splitTerm = term.split("=");
-            queryName = splitTerm[0];
-            queryValue = splitTerm[1];
-          } else {
-            queryName = defaultQueryName;
-            queryValue = term;
-          }
-          q = q.concat(`${queryName}=${queryValue}&`);
-        }
-      }
-      return q.slice(0, -1); // Remove trailing '&'
-    } else {
-      // If passed a single query param as a string
-      return `${defaultQueryName}=${input}`;
-    }
-  }
-
-  // Search query string to be passed to the UKRDC API search
-  const apiQueryString = computed(() => {
-    return buildAPIQueryStringFromArray(searchTermArray.value);
-  });
-
   watch(searchTermArray, () => {
     searchApply();
   });
@@ -115,6 +74,5 @@ export default function () {
     searchTermArray,
     searchboxString,
     searchSubmit,
-    apiQueryString,
   };
 }
