@@ -92,7 +92,7 @@ export default defineComponent({
       // Get basic record statistics
       masterRecordsApi
         .getMasterRecordStatistics({
-          recordId: Number(route.value.params.id),
+          recordId: Number(route.params.id),
         })
         .then((response) => {
           stats.value = response.data;

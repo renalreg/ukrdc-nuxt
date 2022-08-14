@@ -98,8 +98,8 @@ export default defineComponent({
 
       codesApi
         .getCodeDetails({
-          code: route.value.params.id.split(".")[1],
-          codingStandard: route.value.params.id.split(".")[0],
+          code: route.params.id.split(".")[1],
+          codingStandard: route.params.id.split(".")[0],
         })
         .then((response) => {
           code.value = response.data;
