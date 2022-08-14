@@ -1,4 +1,3 @@
-import { computed, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import useQuery from "~/helpers/query/useQuery";
 
 export default function () {

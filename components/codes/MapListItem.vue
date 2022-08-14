@@ -17,7 +17,6 @@ Basic code map description, used in the maps sections of a Code pane.
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@nuxtjs/composition-api";
 import { CodeMapSchema } from "@ukkidney/ukrdc-axios-ts";
 
 export default defineComponent({

@@ -74,8 +74,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from "@nuxtjs/composition-api";
-
 import { DateRange, nowString } from "@/helpers/utils/dateUtils";
 
 export default defineComponent({
@@ -132,7 +130,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-::v-deep select {
+:deep(select) {
   background-image: none;
 }
 </style>

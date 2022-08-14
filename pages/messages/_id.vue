@@ -18,8 +18,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
-
 import { MessageSchema } from "@ukkidney/ukrdc-axios-ts";
 import { MessageSummary } from "@/helpers/utils/messageUtils";
 
@@ -31,9 +29,9 @@ export default defineComponent({
     const { messagesApi } = useApi();
 
     // Head
-
-    const { title } = useMeta();
-    title.value = `Message ${route.value.params.id}`;
+    useHead({
+      title: computed(() => `Message ${route.params.id}`),
+    });
 
     // Data refs
 
@@ -51,7 +49,7 @@ export default defineComponent({
     onMounted(() => {
       messagesApi
         .getMessage({
-          messageId: Number(route.value.params.id),
+          messageId: Number(route.params.id),
         })
         .then((response) => {
           message.value = response.data;
@@ -62,9 +60,6 @@ export default defineComponent({
       message,
       messageSummary,
     };
-  },
-  head: {
-    title: "Message",
   },
 });
 </script>

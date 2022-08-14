@@ -5,7 +5,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from "@nuxtjs/composition-api";
 import { ChartData, ArcElement, Chart, DoughnutController, Legend, LegendItem } from "chart.js";
 
 import { tailwindColours } from "~/helpers/utils/colourUtils";

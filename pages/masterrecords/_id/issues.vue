@@ -50,8 +50,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import {
   MasterRecordSchema,
   MasterRecordStatisticsSchema,

@@ -1,4 +1,3 @@
-import { computed, onMounted, ref } from "@nuxtjs/composition-api";
 import { FacilityDetailsSchema } from "@ukkidney/ukrdc-axios-ts";
 import useQuery from "~/helpers/query/useQuery";
 import useApi from "~/helpers/useApi";

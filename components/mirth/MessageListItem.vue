@@ -26,8 +26,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "@nuxtjs/composition-api";
-
 import { ChannelMessageModel } from "@ukkidney/ukrdc-axios-ts";
 import { isEmptyObject } from "@/helpers/utils/objectUtils";
 import { messageHasErrors } from "@/helpers/utils/mirthUtils";

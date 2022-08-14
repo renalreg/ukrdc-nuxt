@@ -201,7 +201,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, watch } from "@nuxtjs/composition-api";
 import {
   LinkRecordSchema,
   MasterRecordSchema,
@@ -239,7 +238,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const { $toast } = useContext();
+    const { $toast } = useNuxtApp();
     const { visible, show, hide, toggle } = useModal();
     const { patientRecordsApi } = useApi();
 

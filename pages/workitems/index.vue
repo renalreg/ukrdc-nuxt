@@ -58,8 +58,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import { OrderBy, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 import usePagination from "~/helpers/query/usePagination";
 
@@ -121,18 +119,9 @@ export default defineComponent({
       getWorkitems();
     });
 
-    watch(
-      [
-        page,
-        selectedFacility,
-        orderBy,
-        () => JSON.stringify(dateRange.value), // Stringify to watch for actual value changes
-        () => JSON.stringify(statuses.value), // Stringify to watch for actual value changes
-      ],
-      () => {
-        getWorkitems();
-      }
-    );
+    watch([page, selectedFacility, orderBy, dateRange, statuses], () => {
+      getWorkitems();
+    });
 
     return {
       fetchInProgress,

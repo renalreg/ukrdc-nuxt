@@ -28,8 +28,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, useContext } from "@nuxtjs/composition-api";
-
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import usePermissions from "~/helpers/usePermissions";
 
@@ -49,7 +47,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { $toast } = useContext();
+    const { $toast } = useNuxtApp();
     const { hasPermission } = usePermissions();
     const { masterRecordsApi } = useApi();
 

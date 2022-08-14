@@ -69,7 +69,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useMeta, useRoute, watch } from "@nuxtjs/composition-api";
 import { ExtendedCodeSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import useApi from "~/helpers/useApi";
@@ -80,8 +79,9 @@ export default defineComponent({
     const { codesApi } = useApi();
 
     // Head
-    const { title } = useMeta();
-    title.value = `Code ${route.value.params.id}`;
+    useHead({
+      title: computed(() => `Code ${route.params.id}`),
+    });
 
     // Data refs
 
@@ -111,7 +111,7 @@ export default defineComponent({
     });
 
     watch(
-      () => route.value.params.id, // Watch the computed (reactive) value of params.id
+      () => route.params.id, // Watch the computed (reactive) value of params.id
       () => {
         getCode();
       }
@@ -134,6 +134,5 @@ export default defineComponent({
 
     return { formatDate, externalLink, code };
   },
-  head: {},
 });
 </script>

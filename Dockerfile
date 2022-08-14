@@ -25,6 +25,6 @@ COPY package.json yarn.lock ./
 RUN yarn --production
 
 COPY . .
-COPY --from=builder /app/.nuxt ./.nuxt/
+COPY --from=builder /app/.output ./.output/
 
-CMD [ "yarn", "start" ]
+CMD [ "node", "./.output/server/index.mjs" ]

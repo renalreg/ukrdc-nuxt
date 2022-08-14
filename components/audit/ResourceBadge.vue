@@ -12,7 +12,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
 import { AuditEventSchema } from "@ukkidney/ukrdc-axios-ts";
 
 export default defineComponent({

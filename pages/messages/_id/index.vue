@@ -106,8 +106,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-
 import { MasterRecordSchema, MessageSchema, ChannelMessageModel, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import usePermissions from "~/helpers/usePermissions";

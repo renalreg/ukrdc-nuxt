@@ -64,8 +64,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import { CodeSchema } from "@ukkidney/ukrdc-axios-ts";
 import useQuery from "~/helpers/query/useQuery";
 import usePagination from "~/helpers/query/usePagination";

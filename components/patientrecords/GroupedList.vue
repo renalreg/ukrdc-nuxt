@@ -68,8 +68,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "@nuxtjs/composition-api";
-
 import { MasterRecordSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 import usePermissions from "~/helpers/usePermissions";
 import { isData, isMembership, isMigrated, isSurvey, isTracing } from "@/helpers/utils/recordUtils";

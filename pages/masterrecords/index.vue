@@ -58,8 +58,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import usePagination from "~/helpers/query/usePagination";
 import useQuery from "~/helpers/query/useQuery";

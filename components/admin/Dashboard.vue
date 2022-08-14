@@ -88,7 +88,6 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useRouter } from "@nuxtjs/composition-api";
 import { AdminCountsSchema, HistoryPoint } from "@ukkidney/ukrdc-axios-ts";
 import { HistoryPointEvent } from "~/interfaces/charts";
 import useApi from "~/helpers/useApi";

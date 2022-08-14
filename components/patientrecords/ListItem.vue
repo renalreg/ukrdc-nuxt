@@ -57,7 +57,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from "@nuxtjs/composition-api";
 import { PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { formatGenderCharacter } from "@/helpers/utils/codeUtils";

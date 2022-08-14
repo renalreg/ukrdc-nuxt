@@ -26,7 +26,6 @@ Single item of the codes list used in the Codes page.
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@nuxtjs/composition-api";
 import { CodeSchema } from "@ukkidney/ukrdc-axios-ts";
 
 export default defineComponent({

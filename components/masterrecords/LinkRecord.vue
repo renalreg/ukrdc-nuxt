@@ -38,12 +38,9 @@ Includes a header with the Link Record ID and functionality to Unlink the record
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, useRouter } from "@nuxtjs/composition-api";
-
 import { LinkRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { formatGender } from "@/helpers/utils/codeUtils";
-
 import { modalInterface } from "~/interfaces/modal";
 import useApi from "~/helpers/useApi";
 
@@ -56,7 +53,7 @@ export default defineComponent({
   },
   setup(props) {
     const router = useRouter();
-    const { $toast } = useContext();
+    const { $toast } = useNuxtApp();
     const { patientIndexOperationsApi } = useApi();
 
     const unlinkModal = ref<modalInterface>();

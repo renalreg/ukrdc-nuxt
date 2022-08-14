@@ -68,11 +68,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
-
 import { SurveyQuestionSchema, SurveySchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
-
 import { modalInterface } from "~/interfaces/modal";
 
 interface GroupedQuestions {

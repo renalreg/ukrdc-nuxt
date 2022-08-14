@@ -5,8 +5,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-
 import { Interval, DateTime } from "luxon";
 
 import { Chart, LineController, TimeScale, LinearScale, PointElement, LineElement, Tooltip, Legend } from "chart.js";

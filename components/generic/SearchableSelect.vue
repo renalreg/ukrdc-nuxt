@@ -89,8 +89,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, nextTick, onMounted, ref } from "@nuxtjs/composition-api";
-
 export default defineComponent({
   props: {
     value: {

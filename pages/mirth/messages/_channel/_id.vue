@@ -13,7 +13,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
 import { ChannelMessageModel } from "@ukkidney/ukrdc-axios-ts";
 
 import useApi from "~/helpers/useApi";
@@ -24,9 +23,9 @@ export default defineComponent({
     const { mirthApi } = useApi();
 
     // Head
-
-    const { title } = useMeta();
-    title.value = `Mirth message ${route.value.params.id}`;
+    useHead({
+      title: computed(() => `Mirth message ${route.params.id}`),
+    });
 
     // Data refs
     const message = ref<ChannelMessageModel>();
@@ -35,8 +34,8 @@ export default defineComponent({
     onMounted(() => {
       mirthApi
         .getMirthChannelMessage({
-          channelId: route.value.params.channel,
-          messageId: route.value.params.id,
+          channelId: route.params.channel,
+          messageId: route.params.id,
         })
         .then((response) => {
           message.value = response.data;
@@ -46,9 +45,6 @@ export default defineComponent({
     return {
       message,
     };
-  },
-  head: {
-    title: "Mirth Message",
   },
 });
 </script>

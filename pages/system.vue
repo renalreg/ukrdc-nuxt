@@ -67,21 +67,21 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
 import { SystemInfoSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   setup() {
-    const { $config, $toast } = useContext();
+    const { $toast } = useNuxtApp();
+    const runtimeConfig = useRuntimeConfig();
     const { systemInfoApi } = useApi();
 
     // Data refs
 
     const serverInfo = ref<SystemInfoSchema>();
     const clientInfo = ref({
-      deploymentEnv: $config.deploymentEnv,
+      deploymentEnv: runtimeConfig.deploymentEnv,
       githubRef: process.env.githubRef,
       githubSha: process.env.githubSha,
     });

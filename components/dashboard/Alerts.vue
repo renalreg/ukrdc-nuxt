@@ -6,7 +6,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { DashboardSchema } from "@ukkidney/ukrdc-axios-ts";
 import useApi from "~/helpers/useApi";
 

@@ -238,17 +238,13 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useContext, useMeta, useRoute } from "@nuxtjs/composition-api";
-
 import { WorkItemExtendedSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { formatGender } from "@/helpers/utils/codeUtils";
 import { isEmptyObject } from "@/helpers/utils/objectUtils";
 import { delay } from "@/helpers/utils/timeUtils";
 import { workItemIsMergable } from "@/helpers/utils/workItemUtils";
-
 import { modalInterface } from "~/interfaces/modal";
-
 import usePermissions from "~/helpers/usePermissions";
 import useApi from "~/helpers/useApi";
 
@@ -263,13 +259,14 @@ export default defineComponent({
   setup() {
     // Dependencies
     const route = useRoute();
-    const { $toast } = useContext();
+    const { $toast } = useNuxtApp();
     const { hasPermission } = usePermissions();
     const { workItemsApi } = useApi();
 
     // Head
-    const { title } = useMeta();
-    title.value = `Work Item ${route.value.params.id}`;
+    useHead({
+      title: computed(() => `Work Item ${route.params.id}`),
+    });
 
     // Work item record data
     const record = ref<WorkItemExtendedSchema>();
@@ -287,7 +284,7 @@ export default defineComponent({
     function getWorkItem() {
       workItemsApi
         .getWorkitem({
-          workitemId: Number(route.value.params.id),
+          workitemId: Number(route.params.id),
         })
         .then((response) => {
           record.value = response.data;
@@ -295,7 +292,7 @@ export default defineComponent({
 
       workItemsApi
         .getWorkitemCollection({
-          workitemId: Number(route.value.params.id),
+          workitemId: Number(route.params.id),
         })
         .then((response) => {
           workItemCollection.value = response.data;
@@ -369,7 +366,7 @@ export default defineComponent({
     function updateWorkItemComment() {
       workItemsApi
         .putWorkitemUpdate({
-          workitemId: Number(route.value.params.id),
+          workitemId: Number(route.params.id),
           updateWorkItemRequest: {
             comment: customComment.value,
           },
@@ -406,7 +403,7 @@ export default defineComponent({
     function handleCloseWorkItem() {
       workItemsApi
         .postWorkitemClose({
-          workitemId: Number(route.value.params.id),
+          workitemId: Number(route.params.id),
           closeWorkItemRequest: {
             comment: customComment.value,
           },
@@ -460,9 +457,6 @@ export default defineComponent({
       handleCloseWorkItem,
       hasPermission,
     };
-  },
-  head: {
-    title: "Work Item",
   },
 });
 </script>

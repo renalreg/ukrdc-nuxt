@@ -19,8 +19,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
-
 import { FacilityDetailsSchema } from "@ukkidney/ukrdc-axios-ts";
 import usePermissions from "~/helpers/usePermissions";
 
@@ -35,22 +33,23 @@ export default defineComponent({
     const { facilitiesApi } = useApi();
 
     // Head
-    const { title } = useMeta();
-    title.value = `${route.value.params.code}`;
+    useHead({
+      title: computed(() => `${route.params.code}`),
+    });
 
     // URL parameters
-    const code = computed(() => route.value.params.code);
+    const code = computed(() => route.params.code);
 
     // Navigation
 
     const tabs = [
       {
         name: "Overview",
-        href: `/facilities/${route.value.params.code}`,
+        href: `/facilities/${route.params.code}`,
       },
       {
         name: "Errors",
-        href: `/facilities/${route.value.params.code}/errors`,
+        href: `/facilities/${route.params.code}/errors`,
       },
     ] as TabItem[];
 
@@ -75,10 +74,6 @@ export default defineComponent({
       code,
       facility,
     };
-  },
-
-  head: {
-    title: "Facility",
   },
 });
 </script>

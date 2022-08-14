@@ -67,11 +67,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useRoute, useRouter, watch } from "@nuxtjs/composition-api";
-
 import { ObservationSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import usePagination from "~/helpers/query/usePagination";
-
 import { arrayQuery } from "@/helpers/utils/queryUtils";
 import { formatDate } from "@/helpers/utils/dateUtils";
 
@@ -96,7 +93,7 @@ export default defineComponent({
     const observations = ref<ObservationSchema[]>();
 
     const availableCodes = ref([] as string[]);
-    const selectedCodes = ref((arrayQuery(route.value.query.code) || []) as string[]);
+    const selectedCodes = ref((arrayQuery(route.query.code) || []) as string[]);
 
     // Data fetching
 
@@ -131,15 +128,9 @@ export default defineComponent({
       fetchObservations();
     });
 
-    watch(
-      [
-        page,
-        () => JSON.stringify(selectedCodes), // Stringify to watch for actual value changes
-      ],
-      () => {
-        fetchObservations();
-      }
-    );
+    watch([page, selectedCodes], () => {
+      fetchObservations();
+    });
 
     // Observation code filter
 
@@ -154,7 +145,7 @@ export default defineComponent({
           code: selectedCodes.value,
         };
         router.push({
-          path: route.value.path,
+          path: route.path,
           query: newQuery,
         });
       },

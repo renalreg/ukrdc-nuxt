@@ -43,7 +43,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useRouter, watch } from "@nuxtjs/composition-api";
 import { FacilityDetailsSchema, HistoryPoint, MessageSchema } from "@ukkidney/ukrdc-axios-ts";
 import useApi from "~/helpers/useApi";
 import { getPointDateRange } from "~/helpers/utils/chartUtils";

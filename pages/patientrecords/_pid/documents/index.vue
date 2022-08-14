@@ -26,15 +26,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import { DocumentSummarySchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
-
 import { formatDate } from "@/helpers/utils/dateUtils";
-
 import usePagination from "~/helpers/query/usePagination";
 import useDateRange from "~/helpers/query/useDateRange";
-
 import useApi from "~/helpers/useApi";
 
 export default defineComponent({

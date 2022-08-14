@@ -78,8 +78,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useRoute } from "@nuxtjs/composition-api";
-
 import { DocumentSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 
@@ -113,7 +111,7 @@ export default defineComponent({
       patientRecordsApi
         .getPatientDocument({
           pid: props.record.pid,
-          documentId: route.value.params.docid,
+          documentId: route.params.docid,
         })
         .then((response) => {
           patientDocument.value = response.data;

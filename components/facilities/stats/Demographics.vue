@@ -48,7 +48,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { FacilityDemographicStats, FacilityDetailsSchema } from "@ukkidney/ukrdc-axios-ts";
 import { NumericChartData } from "~/interfaces/charts";
 import { formatGender } from "~/helpers/utils/codeUtils";

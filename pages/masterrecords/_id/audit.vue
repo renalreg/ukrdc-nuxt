@@ -39,8 +39,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import { AuditEventSchema, MasterRecordSchema, OrderBy } from "@ukkidney/ukrdc-axios-ts";
 import { nowString } from "@/helpers/utils/dateUtils";
 import usePagination from "~/helpers/query/usePagination";
@@ -92,16 +90,9 @@ export default defineComponent({
       fetchEvents();
     });
 
-    watch(
-      [
-        page,
-        orderBy,
-        () => JSON.stringify(dateRange), // Stringify to watch for actual value changes
-      ],
-      () => {
-        fetchEvents();
-      }
-    );
+    watch([page, orderBy, dateRange], () => {
+      fetchEvents();
+    });
 
     return {
       page,

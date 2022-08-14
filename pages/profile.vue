@@ -80,15 +80,13 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
-
 import { UserPreferences } from "@ukkidney/ukrdc-axios-ts";
 import usePermissions from "~/helpers/usePermissions";
 import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   setup() {
-    const { $okta } = useContext();
+    const { $okta } = useNuxtApp();
     const { getPermissions } = usePermissions();
     const { systemInfoApi } = useApi();
 

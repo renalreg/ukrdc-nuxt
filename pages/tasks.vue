@@ -60,10 +60,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-
 import { TrackableTaskSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/utils/dateUtils";
+import { formatDate } from "~/helpers/utils/dateUtils";
 import useTasks from "~/helpers/useTasks";
 import usePagination from "~/helpers/query/usePagination";
 

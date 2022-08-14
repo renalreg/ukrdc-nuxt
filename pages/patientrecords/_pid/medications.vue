@@ -26,8 +26,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-
 import { MedicationSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import useApi from "~/helpers/useApi";
 

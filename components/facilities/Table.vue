@@ -109,7 +109,6 @@ Table of facilities and their basic statistics
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import { FacilityDetailsSchema, FacilityEnum, OrderBy } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { facilityLastMessageOver48 } from "@/helpers/utils/facilityUtils";
