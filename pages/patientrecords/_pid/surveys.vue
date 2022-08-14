@@ -40,16 +40,15 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
-import { SurveySchema } from "@ukkidney/ukrdc-axios-ts";
+import { PatientRecordSchema, SurveySchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 
-import { PatientRecord } from "@/interfaces/patientrecord";
 import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
     record: {
-      type: Object as () => PatientRecord,
+      type: Object as () => PatientRecordSchema,
       required: true,
     },
   },

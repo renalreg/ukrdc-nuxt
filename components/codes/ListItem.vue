@@ -27,12 +27,12 @@ Single item of the codes list used in the Codes page.
 
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
-import { Code } from "@/interfaces/codes";
+import { CodeSchema } from "@ukkidney/ukrdc-axios-ts";
 
 export default defineComponent({
   props: {
     code: {
-      type: Object as () => Code,
+      type: Object as () => CodeSchema,
       required: true,
     },
   },

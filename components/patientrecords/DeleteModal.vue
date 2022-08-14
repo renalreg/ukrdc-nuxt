@@ -202,35 +202,38 @@
 
 <script lang="ts">
 import { defineComponent, ref, useContext, watch } from "@nuxtjs/composition-api";
+import {
+  LinkRecordSchema,
+  MasterRecordSchema,
+  PatientRecordSchema,
+  PersonSchema,
+  PidXRefSchema,
+  WorkItemSchema,
+} from "@ukkidney/ukrdc-axios-ts";
 import useModal from "@/helpers/useModal";
 import { formatDate } from "@/helpers/utils/dateUtils";
-import { PatientRecord, PatientRecordFull } from "~/interfaces/patientrecord";
-import { MasterRecord } from "~/interfaces/masterrecord";
-import { Person, PidXRef } from "~/interfaces/persons";
-import { WorkItem } from "~/interfaces/workitem";
-import { LinkRecordSummary } from "~/interfaces/linkrecords";
 import useApi from "~/helpers/useApi";
 
 interface DeletePIDFromEMPISchema {
-  persons: Person[];
-  masterRecords: MasterRecord[];
-  pidxrefs: PidXRef[];
-  workItems: WorkItem[];
-  linkRecords: LinkRecordSummary[];
+  persons: PersonSchema[];
+  masterRecords: MasterRecordSchema[];
+  pidxrefs: PidXRefSchema[];
+  workItems: WorkItemSchema[];
+  linkRecords: LinkRecordSchema[];
 }
 
 interface DeletePIDResponseSchema {
   hash: string;
   committed: boolean;
 
-  patientRecord: PatientRecordFull;
+  patientRecord: any;
   empi: DeletePIDFromEMPISchema;
 }
 
 export default defineComponent({
   props: {
     item: {
-      type: Object as () => PatientRecord,
+      type: Object as () => PatientRecordSchema,
       required: true,
     },
   },

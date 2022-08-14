@@ -26,14 +26,13 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-import { MessageSchema } from "@ukkidney/ukrdc-axios-ts";
-import { WorkItem } from "~/interfaces/workitem";
+import { MessageSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
     workitem: {
-      type: Object as () => WorkItem,
+      type: Object as () => WorkItemSchema,
       required: true,
     },
     size: {

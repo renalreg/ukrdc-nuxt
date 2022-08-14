@@ -62,10 +62,9 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
+import { PersonSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { formatGender } from "@/helpers/utils/codeUtils";
-
-import { Person } from "@/interfaces/persons";
 
 interface realLocalId {
   localid: string;
@@ -76,7 +75,7 @@ interface realLocalId {
 export default defineComponent({
   props: {
     record: {
-      type: Object as () => Person,
+      type: Object as () => PersonSchema,
       required: true,
     },
     label: {

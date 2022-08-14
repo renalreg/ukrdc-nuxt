@@ -47,14 +47,13 @@
 
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
+import { MultipleUKRDCIDGroup } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
-
-import { MultipleUKRDCIDsGroup } from "@/interfaces/datahealth";
 
 export default defineComponent({
   props: {
     group: {
-      type: Object as () => MultipleUKRDCIDsGroup,
+      type: Object as () => MultipleUKRDCIDGroup,
       required: true,
     },
     fetchInProgress: {

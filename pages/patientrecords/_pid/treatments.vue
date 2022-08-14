@@ -97,8 +97,7 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
-import { TreatmentSchema } from "@ukkidney/ukrdc-axios-ts";
-import { PatientRecord } from "@/interfaces/patientrecord";
+import { PatientRecordSchema, TreatmentSchema } from "@ukkidney/ukrdc-axios-ts";
 import useApi from "~/helpers/useApi";
 
 interface TreatmentEvent extends TreatmentSchema {
@@ -109,7 +108,7 @@ interface TreatmentEvent extends TreatmentSchema {
 export default defineComponent({
   props: {
     record: {
-      type: Object as () => PatientRecord,
+      type: Object as () => PatientRecordSchema,
       required: true,
     },
   },

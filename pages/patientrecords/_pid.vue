@@ -37,7 +37,7 @@ import {
 } from "@nuxtjs/composition-api";
 
 import { PatientRecordSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
-import { TabItem } from "@/interfaces/tabs";
+import { TabItem } from "~/interfaces/tabs";
 
 import { firstForename, firstSurname, isMembership } from "@/helpers/utils/recordUtils";
 import useApi from "~/helpers/useApi";

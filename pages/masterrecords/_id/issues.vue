@@ -52,24 +52,36 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
-import { MessageSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
+import {
+  MasterRecordSchema,
+  MasterRecordStatisticsSchema,
+  MessageSchema,
+  WorkItemSchema,
+} from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { formatGender } from "@/helpers/utils/codeUtils";
-
-import { MasterRecord, MasterRecordStatistics } from "@/interfaces/masterrecord";
-import { MultipleUKRDCIDsGroup } from "@/interfaces/datahealth";
 
 import usePermissions from "~/helpers/usePermissions";
 import useApi from "~/helpers/useApi";
 
+interface MultipleUKRDCIDsGroupItem {
+  lastUpdated: string | null;
+  masterRecord: MasterRecordSchema;
+}
+
+export interface MultipleUKRDCIDsGroup {
+  groupId: number | null;
+  records: MultipleUKRDCIDsGroupItem[];
+}
+
 export default defineComponent({
   props: {
     record: {
-      type: Object as () => MasterRecord,
+      type: Object as () => MasterRecordSchema,
       required: true,
     },
     stats: {
-      type: Object as () => MasterRecordStatistics,
+      type: Object as () => MasterRecordStatisticsSchema,
       required: false,
       default: null,
     },

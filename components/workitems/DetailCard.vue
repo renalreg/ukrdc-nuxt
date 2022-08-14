@@ -32,14 +32,13 @@
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
 
+import { WorkItemExtendedSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
-
-import { WorkItemExtended } from "@/interfaces/workitem";
 
 export default defineComponent({
   props: {
     item: {
-      type: Object as () => WorkItemExtended,
+      type: Object as () => WorkItemExtendedSchema,
       required: false,
       default: undefined,
     },

@@ -18,12 +18,12 @@ Basic code map description, used in the maps sections of a Code pane.
 
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
-import { CodeMap } from "@/interfaces/codes";
+import { CodeMapSchema } from "@ukkidney/ukrdc-axios-ts";
 
 export default defineComponent({
   props: {
     map: {
-      type: Object as () => CodeMap,
+      type: Object as () => CodeMapSchema,
       required: true,
     },
   },

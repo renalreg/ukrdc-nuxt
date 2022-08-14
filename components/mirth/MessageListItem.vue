@@ -28,15 +28,14 @@
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 
-import { ChannelMessage } from "@/interfaces/mirth";
-
+import { MirthChannelMessageModel } from "@ukkidney/ukrdc-axios-ts";
 import { isEmptyObject } from "@/helpers/utils/objectUtils";
 import { messageHasErrors } from "@/helpers/utils/mirthUtils";
 
 export default defineComponent({
   props: {
     message: {
-      type: Object as () => ChannelMessage,
+      type: Object as () => MirthChannelMessageModel,
       required: true,
     },
   },

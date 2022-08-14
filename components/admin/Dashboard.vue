@@ -92,7 +92,7 @@ import { defineComponent, onMounted, ref, useRouter } from "@nuxtjs/composition-
 import { AdminCountsSchema, HistoryPoint } from "@ukkidney/ukrdc-axios-ts";
 import { HistoryPointEvent } from "~/interfaces/charts";
 import useApi from "~/helpers/useApi";
-import { getPointDateRange } from "@/helpers/utils/chartUtils";
+import { getPointDateRange } from "~/helpers/utils/chartUtils";
 
 export default defineComponent({
   setup() {

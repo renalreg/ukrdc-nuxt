@@ -30,16 +30,16 @@
 <script lang="ts">
 import { computed, defineComponent, ref, useContext } from "@nuxtjs/composition-api";
 
+import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import usePermissions from "~/helpers/usePermissions";
 
 import { modalInterface } from "~/interfaces/modal";
-import { MasterRecord } from "~/interfaces/masterrecord";
 import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
     masterRecord: {
-      type: Object as () => MasterRecord,
+      type: Object as () => MasterRecordSchema,
       required: true,
     },
     showCreatePkbMembership: {

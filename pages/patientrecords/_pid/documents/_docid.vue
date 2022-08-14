@@ -80,16 +80,15 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useRoute } from "@nuxtjs/composition-api";
 
-import { DocumentSchema } from "@ukkidney/ukrdc-axios-ts";
+import { DocumentSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 
-import { PatientRecord } from "@/interfaces/patientrecord";
 import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
     record: {
-      type: Object as () => PatientRecord,
+      type: Object as () => PatientRecordSchema,
       required: true,
     },
   },

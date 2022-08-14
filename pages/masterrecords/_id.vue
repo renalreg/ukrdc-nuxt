@@ -35,7 +35,7 @@ import { formatDate } from "@/helpers/utils/dateUtils";
 import { formatGender } from "@/helpers/utils/codeUtils";
 import { insertIf } from "@/helpers/utils/arrayUtils";
 
-import { TabItem } from "@/interfaces/tabs";
+import { TabItem } from "~/interfaces/tabs";
 import usePermissions from "~/helpers/usePermissions";
 import useApi from "~/helpers/useApi";
 

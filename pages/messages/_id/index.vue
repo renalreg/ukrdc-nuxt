@@ -108,8 +108,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
-import { MasterRecordSchema, MirthChannelMessageModel, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
-import { Message } from "@/interfaces/messages";
+import { MasterRecordSchema, MessageSchema, MirthChannelMessageModel, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import usePermissions from "~/helpers/usePermissions";
 import useApi from "~/helpers/useApi";
@@ -117,7 +116,7 @@ import useApi from "~/helpers/useApi";
 export default defineComponent({
   props: {
     message: {
-      type: Object as () => Message,
+      type: Object as () => MessageSchema,
       required: true,
     },
   },

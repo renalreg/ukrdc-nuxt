@@ -33,17 +33,16 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
-import { LabOrderShortSchema } from "@ukkidney/ukrdc-axios-ts";
+import { LabOrderShortSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 
-import { PatientRecord } from "@/interfaces/patientrecord";
 import usePagination from "~/helpers/query/usePagination";
 import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
     record: {
-      type: Object as () => PatientRecord,
+      type: Object as () => PatientRecordSchema,
       required: true,
     },
   },

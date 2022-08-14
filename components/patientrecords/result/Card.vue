@@ -25,14 +25,13 @@
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
 
+import { ResultItemSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
-
-import { ResultItem } from "~/interfaces/laborder";
 
 export default defineComponent({
   props: {
     item: {
-      type: Object as () => ResultItem,
+      type: Object as () => ResultItemSchema,
       required: true,
     },
   },

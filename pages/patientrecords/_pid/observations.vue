@@ -69,19 +69,18 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useRoute, useRouter, watch } from "@nuxtjs/composition-api";
 
-import { ObservationSchema } from "@ukkidney/ukrdc-axios-ts";
+import { ObservationSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import usePagination from "~/helpers/query/usePagination";
 
 import { arrayQuery } from "@/helpers/utils/queryUtils";
 import { formatDate } from "@/helpers/utils/dateUtils";
 
-import { PatientRecord } from "@/interfaces/patientrecord";
 import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
     record: {
-      type: Object as () => PatientRecord,
+      type: Object as () => PatientRecordSchema,
       required: true,
     },
   },

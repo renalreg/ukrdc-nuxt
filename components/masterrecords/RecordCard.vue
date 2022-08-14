@@ -50,15 +50,14 @@
 
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
+import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { formatGender } from "@/helpers/utils/codeUtils";
-
-import { MasterRecord } from "~/interfaces/masterrecord";
 
 export default defineComponent({
   props: {
     record: {
-      type: Object as () => MasterRecord,
+      type: Object as () => MasterRecordSchema,
       required: true,
     },
     label: {

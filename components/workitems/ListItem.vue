@@ -45,13 +45,13 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
+import { WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
-import { WorkItem } from "@/interfaces/workitem";
 
 export default defineComponent({
   props: {
     item: {
-      type: Object as () => WorkItem,
+      type: Object as () => WorkItemSchema,
       required: true,
     },
   },

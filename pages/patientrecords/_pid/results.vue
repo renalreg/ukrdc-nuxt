@@ -102,8 +102,7 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useContext, watch } from "@nuxtjs/composition-api";
 
-import { LabOrderSchema, ResultItemSchema, ResultItemServiceSchema } from "@ukkidney/ukrdc-axios-ts";
-import { PatientRecord } from "@/interfaces/patientrecord";
+import { LabOrderSchema, PatientRecordSchema, ResultItemSchema, ResultItemServiceSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import { formatDate } from "@/helpers/utils/dateUtils";
 
@@ -117,7 +116,7 @@ import useApi from "~/helpers/useApi";
 export default defineComponent({
   props: {
     record: {
-      type: Object as () => PatientRecord,
+      type: Object as () => PatientRecordSchema,
       required: true,
     },
   },

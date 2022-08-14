@@ -41,19 +41,18 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
-import { AuditEventSchema, OrderBy } from "@ukkidney/ukrdc-axios-ts";
+import { AuditEventSchema, MasterRecordSchema, OrderBy } from "@ukkidney/ukrdc-axios-ts";
 import { nowString } from "@/helpers/utils/dateUtils";
 import usePagination from "~/helpers/query/usePagination";
 import useSortBy from "~/helpers/query/useSortBy";
 import useDateRange from "~/helpers/query/useDateRange";
 
-import { MasterRecord } from "~/interfaces/masterrecord";
 import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
     record: {
-      type: Object as () => MasterRecord,
+      type: Object as () => MasterRecordSchema,
       required: true,
     },
   },

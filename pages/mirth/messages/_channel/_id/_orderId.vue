@@ -71,7 +71,7 @@
 <script lang="ts">
 import { computed, defineComponent, ref, useRoute, watch } from "@nuxtjs/composition-api";
 
-import { ChannelMessage, ConnectorMessage, ConnectorMessageData, MetaDataMap } from "@/interfaces/mirth";
+import { ConnectorMessageModel, MirthChannelMessageModel, ConnectorMessageData } from "@ukkidney/ukrdc-axios-ts";
 import { connectorMessageError } from "~/helpers/utils/mirthUtils";
 
 interface ConnectorMessageDataTabs {
@@ -84,7 +84,7 @@ interface ConnectorMessageDataTabs {
 export default defineComponent({
   props: {
     message: {
-      type: Object as () => ChannelMessage,
+      type: Object as () => MirthChannelMessageModel,
       required: true,
     },
   },
@@ -94,7 +94,7 @@ export default defineComponent({
     // Data refs
     const connectorMessage = computed(() => {
       const orderId = parseInt(route.value.params.orderId);
-      return props.message.connectorMessages[orderId] as ConnectorMessage;
+      return props.message.connectorMessages[orderId] as ConnectorMessageModel;
     });
     const formatconnectorMessage = ref(true);
 
@@ -113,23 +113,23 @@ export default defineComponent({
     const availableconnectorMessageData = computed<ConnectorMessageDataTabs>(() => {
       const tabs = {} as ConnectorMessageDataTabs;
       if (connectorMessage.value) {
-        if (connectorMessage.value.raw !== null) {
+        if (connectorMessage.value.raw) {
           tabs.raw = connectorMessage.value.raw;
         }
-        if (connectorMessage.value.encoded !== null) {
+        if (connectorMessage.value.encoded) {
           tabs.encoded = connectorMessage.value.encoded;
         }
-        if (connectorMessage.value.sent !== null) {
+        if (connectorMessage.value.sent) {
           tabs.sent = connectorMessage.value.sent;
         }
-        if (connectorMessage.value.response !== null) {
+        if (connectorMessage.value.response) {
           tabs.response = connectorMessage.value.response;
         }
       }
       return tabs;
     });
 
-    const nonNullMetadata = computed<MetaDataMap>(() => {
+    const nonNullMetadata = computed(() => {
       if (connectorMessage.value?.metaDataMap) {
         return Object.fromEntries(Object.entries(connectorMessage.value.metaDataMap).filter(([_, v]) => v != null));
       } else {

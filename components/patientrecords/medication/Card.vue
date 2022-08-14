@@ -28,15 +28,14 @@
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
 
+import { MedicationSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { formatGender } from "@/helpers/utils/codeUtils";
-
-import { Medication } from "@/interfaces/medication";
 
 export default defineComponent({
   props: {
     item: {
-      type: Object as () => Medication,
+      type: Object as () => MedicationSchema,
       required: true,
     },
   },

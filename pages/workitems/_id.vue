@@ -247,7 +247,7 @@ import { isEmptyObject } from "@/helpers/utils/objectUtils";
 import { delay } from "@/helpers/utils/timeUtils";
 import { workItemIsMergable } from "@/helpers/utils/workItemUtils";
 
-import { modalInterface } from "@/interfaces/modal";
+import { modalInterface } from "~/interfaces/modal";
 
 import usePermissions from "~/helpers/usePermissions";
 import useApi from "~/helpers/useApi";
