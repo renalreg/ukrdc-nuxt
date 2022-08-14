@@ -82,7 +82,7 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
 
-import { ReadUserPreferences } from "@ukkidney/ukrdc-axios-ts";
+import { UserPreferences } from "@ukkidney/ukrdc-axios-ts";
 import usePermissions from "~/helpers/usePermissions";
 import useApi from "~/helpers/useApi";
 
@@ -116,7 +116,7 @@ export default defineComponent({
 
     // Preferences
 
-    const preferences = ref<ReadUserPreferences>();
+    const preferences = ref<UserPreferences>();
 
     onMounted(() => {
       systemInfoApi.getSystemUserPreferences().then((response) => {
@@ -127,7 +127,7 @@ export default defineComponent({
     async function submitPreferences() {
       if (preferences.value) {
         await systemInfoApi.putUpdateSystemUserPreferences({
-          updateUserPreferences: preferences.value,
+          userPreferencesRequest: preferences.value,
         });
       }
     }

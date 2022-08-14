@@ -1,6 +1,6 @@
-import { ConnectorMessageModel, MirthChannelMessageModel } from "@ukkidney/ukrdc-axios-ts";
+import { ConnectorMessageModel, ChannelMessageModel } from "@ukkidney/ukrdc-axios-ts";
 
-export function messageHasErrors(message: MirthChannelMessageModel): boolean {
+export function messageHasErrors(message: ChannelMessageModel): boolean {
   for (const msg of Object.values(message.connectorMessages)) {
     if (msg.errorCode !== 0) {
       return true;

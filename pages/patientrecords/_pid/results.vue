@@ -102,7 +102,12 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useContext, watch } from "@nuxtjs/composition-api";
 
-import { LabOrderSchema, PatientRecordSchema, ResultItemSchema, ResultItemServiceSchema } from "@ukkidney/ukrdc-axios-ts";
+import {
+  LabOrderSchema,
+  PatientRecordSchema,
+  ResultItemSchema,
+  ResultItemServiceSchema,
+} from "@ukkidney/ukrdc-axios-ts";
 
 import { formatDate } from "@/helpers/utils/dateUtils";
 
@@ -201,7 +206,7 @@ export default defineComponent({
     function deleteResultItem() {
       if (itemToDelete.value) {
         patientRecordsApi
-          .deleteResultDelete({
+          .deletePatientResultDelete({
             pid: props.record.pid,
             resultitemId: itemToDelete.value.id,
           })

@@ -199,35 +199,32 @@ export default defineComponent({
     });
 
     function givenNameMatchesTracing() {
-      if (!tracingRecord.value) {
-        return false;
-      }
-      for (const name of tracingRecord.value.patient.names) {
-        if (props.record.givenname?.toLowerCase() === name.given.toLowerCase()) {
-          return true;
+      if (tracingRecord.value && tracingRecord.value.patient) {
+        for (const name of tracingRecord.value.patient.names) {
+          if (props.record.givenname?.toLowerCase() === name.given.toLowerCase()) {
+            return true;
+          }
         }
       }
       return false;
     }
 
     function surnameMatchesTracing() {
-      if (!tracingRecord.value) {
-        return false;
-      }
-      for (const name of tracingRecord.value.patient.names) {
-        if (props.record.surname?.toLowerCase() === name.family.toLowerCase()) {
-          return true;
+      if (tracingRecord.value && tracingRecord.value.patient) {
+        for (const name of tracingRecord.value.patient.names) {
+          if (props.record.surname?.toLowerCase() === name.family.toLowerCase()) {
+            return true;
+          }
         }
       }
       return false;
     }
 
     const birthTimeMatchesTracing = computed(() => {
-      if (!tracingRecord.value) {
-        return false;
-      }
-      if (datesAreEqual(props.record.dateOfBirth, tracingRecord.value.patient.birthTime)) {
-        return true;
+      if (tracingRecord.value && tracingRecord.value.patient) {
+        if (datesAreEqual(props.record.dateOfBirth, tracingRecord.value.patient.birthTime)) {
+          return true;
+        }
       }
       return false;
     });

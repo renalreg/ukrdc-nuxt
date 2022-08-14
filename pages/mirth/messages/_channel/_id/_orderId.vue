@@ -71,7 +71,7 @@
 <script lang="ts">
 import { computed, defineComponent, ref, useRoute, watch } from "@nuxtjs/composition-api";
 
-import { ConnectorMessageModel, MirthChannelMessageModel, ConnectorMessageData } from "@ukkidney/ukrdc-axios-ts";
+import { ConnectorMessageModel, ChannelMessageModel, ConnectorMessageData } from "@ukkidney/ukrdc-axios-ts";
 import { connectorMessageError } from "~/helpers/utils/mirthUtils";
 
 interface ConnectorMessageDataTabs {
@@ -84,7 +84,7 @@ interface ConnectorMessageDataTabs {
 export default defineComponent({
   props: {
     message: {
-      type: Object as () => MirthChannelMessageModel,
+      type: Object as () => ChannelMessageModel,
       required: true,
     },
   },

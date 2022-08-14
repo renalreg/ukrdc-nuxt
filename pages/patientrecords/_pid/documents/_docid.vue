@@ -111,7 +111,7 @@ export default defineComponent({
     // Data fetching
     onMounted(() => {
       patientRecordsApi
-        .getDocument({
+        .getPatientDocument({
           pid: props.record.pid,
           documentId: route.value.params.docid,
         })
@@ -125,7 +125,7 @@ export default defineComponent({
     function downloadPatientRecordDocument() {
       documentDownloadInProgress.value = true;
       patientRecordsApi
-        .getDocumentDownload(
+        .getPatientDocumentDownload(
           {
             pid: props.record.pid,
             documentId: route.value.params.docid,

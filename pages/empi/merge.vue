@@ -271,7 +271,7 @@ export default defineComponent({
       if (superseded.value && superseding.value) {
         patientIndexOperationsApi
           .postEmpiMerge({
-            mergeRequestSchema: {
+            mergeRequest: {
               superseded: superseded.value.id,
               superseding: superseding.value.id,
             },

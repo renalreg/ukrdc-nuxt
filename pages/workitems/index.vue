@@ -95,7 +95,7 @@ export default defineComponent({
       fetchInProgress.value = true;
 
       workItemsApi
-        .getWorkitemsList({
+        .getWorkitems({
           page: page.value || 1,
           size: size.value,
           orderBy: orderBy.value as OrderBy,

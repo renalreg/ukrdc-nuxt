@@ -51,7 +51,7 @@ export default defineComponent({
     onMounted(() => {
       messagesApi
         .getMessage({
-          messageId: route.value.params.id,
+          messageId: Number(route.value.params.id),
         })
         .then((response) => {
           message.value = response.data;

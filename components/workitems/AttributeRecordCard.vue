@@ -53,7 +53,7 @@
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 
-import { Attributes } from "@ukkidney/ukrdc-axios-ts";
+import { WorkItemAttributes } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { formatGender } from "@/helpers/utils/codeUtils";
 import { formatAttributeValue } from "@/helpers/utils/workItemUtils";
@@ -61,7 +61,7 @@ import { formatAttributeValue } from "@/helpers/utils/workItemUtils";
 export default defineComponent({
   props: {
     record: {
-      type: Object as () => Attributes,
+      type: Object as () => WorkItemAttributes,
       required: true,
     },
     label: {

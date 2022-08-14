@@ -370,7 +370,7 @@ export default defineComponent({
       workItemsApi
         .putWorkitemUpdate({
           workitemId: Number(route.value.params.id),
-          updateWorkItemRequestSchema: {
+          updateWorkItemRequest: {
             comment: customComment.value,
           },
         })
@@ -407,7 +407,7 @@ export default defineComponent({
       workItemsApi
         .postWorkitemClose({
           workitemId: Number(route.value.params.id),
-          closeWorkItemRequestSchema: {
+          closeWorkItemRequest: {
             comment: customComment.value,
           },
         })

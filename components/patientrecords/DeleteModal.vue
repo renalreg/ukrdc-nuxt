@@ -265,7 +265,7 @@ export default defineComponent({
         patientRecordsApi
           .postPatientDelete({
             pid: props.item.pid,
-            deletePIDRequestSchema: {
+            deletePidRequest: {
               hash: undefined,
             },
           })
@@ -289,7 +289,7 @@ export default defineComponent({
         patientRecordsApi
           .postPatientDelete({
             pid: props.item.pid,
-            deletePIDRequestSchema: {
+            deletePidRequest: {
               hash: previewResponse.value?.hash,
             },
           })

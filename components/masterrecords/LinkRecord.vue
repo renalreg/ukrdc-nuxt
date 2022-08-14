@@ -65,7 +65,7 @@ export default defineComponent({
     function doUnlink() {
       patientIndexOperationsApi
         .postEmpiUnlink({
-          unlinkRequestSchema: {
+          unlinkRequest: {
             personId: props.record.person.id,
             masterId: props.record.masterRecord.id,
             comment: unlinkComment.value,

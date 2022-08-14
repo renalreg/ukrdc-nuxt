@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
-import { MirthChannelMessageModel } from "@ukkidney/ukrdc-axios-ts";
+import { ChannelMessageModel } from "@ukkidney/ukrdc-axios-ts";
 
 import useApi from "~/helpers/useApi";
 
@@ -29,7 +29,7 @@ export default defineComponent({
     title.value = `Mirth message ${route.value.params.id}`;
 
     // Data refs
-    const message = ref<MirthChannelMessageModel>();
+    const message = ref<ChannelMessageModel>();
 
     // Data fetching
     onMounted(() => {

@@ -108,7 +108,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
-import { MasterRecordSchema, MessageSchema, MirthChannelMessageModel, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
+import { MasterRecordSchema, MessageSchema, ChannelMessageModel, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import usePermissions from "~/helpers/usePermissions";
 import useApi from "~/helpers/useApi";
@@ -125,7 +125,7 @@ export default defineComponent({
     const { messagesApi, mirthApi } = useApi();
 
     // Data refs
-    const mirthMessage = ref<MirthChannelMessageModel | null | undefined>(undefined);
+    const mirthMessage = ref<ChannelMessageModel | null | undefined>(undefined);
     const workItems = ref([] as WorkItemSchema[]);
     const masterRecords = ref([] as MasterRecordSchema[]);
 
@@ -156,8 +156,8 @@ export default defineComponent({
       if (hasPermission("ukrdc:mirth:read")) {
         mirthApi
           .getMirthChannelMessage({
-            messageId: props.message.messageId,
-            channelId: props.message.channelId,
+            messageId: props.message.mirthMessageId,
+            channelId: props.message.mirthChannelId,
           })
           .then((response) => {
             mirthMessage.value = response.data;

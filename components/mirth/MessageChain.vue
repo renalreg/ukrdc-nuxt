@@ -22,7 +22,7 @@
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 
-import { ConnectorMessageModel, MirthChannelMessageModel } from "@ukkidney/ukrdc-axios-ts";
+import { ConnectorMessageModel, ChannelMessageModel } from "@ukkidney/ukrdc-axios-ts";
 
 import { isEmptyObject } from "@/helpers/utils/objectUtils";
 
@@ -33,7 +33,7 @@ interface ChainMap {
 export default defineComponent({
   props: {
     message: {
-      type: Object as () => MirthChannelMessageModel,
+      type: Object as () => ChannelMessageModel,
       required: true,
     },
   },
