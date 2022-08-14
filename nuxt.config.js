@@ -39,8 +39,6 @@ export default {
     "~/plugins/v-tooltip.client.ts",
     "~/plugins/toast.client.ts",
     "~/plugins/vue-clickaway.client.ts",
-    "~/plugins/axios-ukrdc-api.client.ts",
-    "~/plugins/axios-error-handlers.ts",
     "~/plugins/sentry-usercontext.client.ts",
   ],
 
@@ -55,7 +53,7 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ["~/modules/okta-auth", "@nuxtjs/axios", "@nuxtjs/sentry"],
+  modules: ["~/modules/okta-auth", "@nuxtjs/sentry"],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

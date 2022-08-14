@@ -14,7 +14,6 @@
     "prettier:fix": "yarn prettier --write"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.13.1",
     "@nuxtjs/composition-api": "^0.31.0",
     "@nuxtjs/sentry": "^5.1.2",
     "@okta/okta-auth-js": "^6.0.0",
