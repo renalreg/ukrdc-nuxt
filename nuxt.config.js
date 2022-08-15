@@ -137,25 +137,26 @@ export default defineNuxtConfig({
 
   // Runtime configuration variables
   runtimeConfig: {
-    // Custom UKRDC API config
-    api: {
-      host: process.env.API_HOST,
-      base: process.env.API_BASE_URL || "/api",
-    },
-    // Okta domain
-    manageAccountUrl: process.env.MANAGE_ACCOUNT_URL || "https://renalregistry.okta.com/app/UserHome",
-    // Deployment environment
-    deploymentEnv: process.env.DEPLOYMENT_ENV || "development",
-    // Sentry public runtime config, see https://sentry.nuxtjs.org/sentry/runtime-config/
-    sentry: {
-      config: {
-        environment: process.env.DEPLOYMENT_ENV || "development",
+    public: {
+      // Custom UKRDC API config
+      api: {
+        host: "/",
       },
-    },
-    // Okta JS runtime config
-    okta: {
-      issuer: process.env.OAUTH_ISSUER,
-      clientId: process.env.APP_CLIENT_ID,
+      // Okta domain
+      manageAccountUrl: "https://renalregistry.okta.com/app/UserHome",
+      // Deployment environment
+      deploymentEnv: "development",
+      // Sentry public runtime config, see https://sentry.nuxtjs.org/sentry/runtime-config/
+      sentry: {
+        config: {
+          environment: "development",
+        },
+      },
+      // Okta JS runtime config
+      okta: {
+        issuer: "",
+        clientId: "",
+      },
     },
   },
 });
