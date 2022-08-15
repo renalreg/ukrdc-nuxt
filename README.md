@@ -33,6 +33,12 @@ Under this system, the major and minor application versions should be the same a
 
 [Use Yarn to set the application version.](https://classic.yarnpkg.com/en/docs/cli/version)
 
+### Github Release Versions
+
+Github releases should use tags that follow the application version. E.g. application version 1.0.1 will be tagged with `v1.0.1`.
+
+This will publish a container image tagged with the version number, and `latest` (except pre-release versions e.g. `1.0.1-beta.1`).
+
 ## ESLint and Prettier
 
 ESLint and Prettier should be handled separately.
