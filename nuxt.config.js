@@ -123,7 +123,7 @@ export default {
   publicRuntimeConfig: {
     // Custom UKRDC API config
     api: {
-      host: process.env.API_HOST,
+      host: process.env.API_HOST || "/",
     },
     // Okta domain
     manageAccountUrl: process.env.MANAGE_ACCOUNT_URL || "https://renalregistry.okta.com/app/UserHome",

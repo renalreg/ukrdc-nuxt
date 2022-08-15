@@ -114,19 +114,19 @@ export default function () {
   );
 
   // Create API instances
-  const adminApi = new AdminApi(undefined, $config.api.host || "/", apiInstance);
-  const dashboardApi = new DashboardApi(undefined, $config.api.host || "/", apiInstance);
-  const systemInfoApi = new SystemInfoApi(undefined, $config.api.host || "/", apiInstance);
-  const codesApi = new CodesApi(undefined, $config.api.host || "/", apiInstance);
-  const searchApi = new SearchApi(undefined, $config.api.host || "/", apiInstance);
-  const facilitiesApi = new FacilitiesApi(undefined, $config.api.host || "/", apiInstance);
-  const masterRecordsApi = new MasterRecordsApi(undefined, $config.api.host || "/", apiInstance);
-  const patientRecordsApi = new PatientRecordsApi(undefined, $config.api.host || "/", apiInstance);
-  const backgroundTasksApi = new BackgroundTasksApi(undefined, $config.api.host || "/", apiInstance);
-  const patientIndexOperationsApi = new PatientIndexOperationsApi(undefined, $config.api.host || "/", apiInstance);
-  const mirthApi = new MirthApi(undefined, $config.api.host || "/", apiInstance);
-  const workItemsApi = new WorkItemsApi(undefined, $config.api.host || "/", apiInstance);
-  const messagesApi = new MessagesApi(undefined, $config.api.host || "/", apiInstance);
+  const adminApi = new AdminApi(undefined, $config.api.host, apiInstance);
+  const dashboardApi = new DashboardApi(undefined, $config.api.host, apiInstance);
+  const systemInfoApi = new SystemInfoApi(undefined, $config.api.host, apiInstance);
+  const codesApi = new CodesApi(undefined, $config.api.host, apiInstance);
+  const searchApi = new SearchApi(undefined, $config.api.host, apiInstance);
+  const facilitiesApi = new FacilitiesApi(undefined, $config.api.host, apiInstance);
+  const masterRecordsApi = new MasterRecordsApi(undefined, $config.api.host, apiInstance);
+  const patientRecordsApi = new PatientRecordsApi(undefined, $config.api.host, apiInstance);
+  const backgroundTasksApi = new BackgroundTasksApi(undefined, $config.api.host, apiInstance);
+  const patientIndexOperationsApi = new PatientIndexOperationsApi(undefined, $config.api.host, apiInstance);
+  const mirthApi = new MirthApi(undefined, $config.api.host, apiInstance);
+  const workItemsApi = new WorkItemsApi(undefined, $config.api.host, apiInstance);
+  const messagesApi = new MessagesApi(undefined, $config.api.host, apiInstance);
 
   return {
     adminApi,
