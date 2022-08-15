@@ -21,6 +21,18 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 
 ## Developer notes
 
+### Application and API versioning
+
+The application version will generally follow the version of the API it is compatible with. Therefore, the application should follow [semantic versioning](https://semver.org/) for the API functionality, that is:
+
+- Major version changes should be accompanied by a breaking change in the API.
+- Minor version changes should be accompanied by a non-breaking change in the API.
+- Patch version changes should be accompanied by fixes or updates introducing no new API functionality.
+
+Under this system, the major and minor application versions should be the same as the API client version, and the patch version should iterate on it's own with any changes not dependent on API functionality.
+
+[Use Yarn to set the application version.](https://classic.yarnpkg.com/en/docs/cli/version)
+
 ## ESLint and Prettier
 
 ESLint and Prettier should be handled separately.
