@@ -50,7 +50,7 @@
       :show="showMenu"
     >
       <GenericMenuItem to="/profile"> Profile and Settings </GenericMenuItem>
-      <GenericMenuItem :href="$config.manageAccountUrl" target="blank"> Manage Account </GenericMenuItem>
+      <GenericMenuItem :href="manageAccountUrl" target="blank"> Manage Account </GenericMenuItem>
       <GenericMenuDivider />
       <GenericMenuItem to="/system"> Support </GenericMenuItem>
       <GenericMenuDivider />
@@ -79,6 +79,7 @@ export default defineComponent({
   },
   setup() {
     const { idToken } = useAuth();
+    const manageAccountUrl = useRuntimeConfig().manageAccountUrl;
 
     const showMenu = ref(false);
 
@@ -95,6 +96,7 @@ export default defineComponent({
 
     return {
       displayName,
+      manageAccountUrl,
       showMenu,
       closeMenu,
     };

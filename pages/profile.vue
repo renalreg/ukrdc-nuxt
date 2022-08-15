@@ -44,7 +44,7 @@
           class="justify-stretch mb-8 flex flex-col-reverse space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-y-0 sm:space-x-3 sm:space-x-reverse lg:mt-0 lg:flex-row lg:space-x-3"
         >
           <a
-            :href="$config.manageAccountUrl"
+            :href="manageAccountUrl"
             target="blank"
             type="button"
             class="rounded-md border border-gray-300 bg-white px-3 py-2 text-center font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -89,6 +89,7 @@ export default defineComponent({
     const { $okta } = useNuxtApp();
     const { getPermissions } = usePermissions();
     const { systemInfoApi } = useApi();
+    const manageAccountUrl = useRuntimeConfig().manageAccountUrl;
 
     // User info
 
@@ -134,6 +135,7 @@ export default defineComponent({
       user,
       perms,
       preferences,
+      manageAccountUrl,
       submitPreferences,
       classesForPermissions,
     };
