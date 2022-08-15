@@ -32,7 +32,9 @@
           </form>
         </div>
       </div>
-      <GenericButton v-if="showButton" @click="$emit('submit')">Search</GenericButton>
+      <GenericButton v-if="showButton" colour="indigo" :primary="true" class="w-24" @click="$emit('submit')"
+        >Search</GenericButton
+      >
     </div>
   </div>
 </template>

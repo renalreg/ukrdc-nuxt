@@ -44,7 +44,7 @@
             </svg>
           </div>
         </div>
-        <GenericButton colour="white" class="ml-2" @click="clear">Clear</GenericButton>
+        <GenericButton colour="white" class="ml-2 w-24" @click="clear">Clear</GenericButton>
       </div>
 
       <!-- Popover -->

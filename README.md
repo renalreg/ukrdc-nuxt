@@ -73,23 +73,14 @@ Thanks to [Headless UI](https://headlessui.dev/) and [@heroicons/vue](https://ww
 It may be simpler to start a fresh Nuxt 3 project and add the application back in bits at a time until we have a fully working project.
 
 - Phase 1: Migrate to [Nuxt Bridge](https://v3.nuxtjs.org/getting-started/bridge/)
-  - Wait for nuxtjs/sentry module to support Nuxt 3/Bridge (or replace with normal Sentry Vue integration)
-    - See https://github.com/nuxt-community/sentry-module/issues/358
-  - Wait for `ssr: false` support in Bridge
-    - See https://github.com/nuxt/framework/issues/886
-  - Migrate to using Nuxt Bridge
-    - See https://github.com/renalreg/ukrdc-nuxt/tree/bridge
+  - In progress: https://github.com/renalreg/ukrdc-nuxt/pull/157
 - Phase 2: Migrate to [Nuxt 3](https://v3.nuxtjs.org/guide/getting-started/)
-  - Wait for nuxtjs/axios module to support Nuxt 3 (or replace with normal Axios and a custom plugin)
-    - See https://github.com/nuxt-community/axios-module/issues/536
+  - **Requires Sentry module compatibility update**
   - Replace/remove @nuxt/postcss8
     - See https://tailwindcss.com/docs/guides/nuxtjs and https://stackoverflow.com/questions/70302520/nuxtjs-v3-and-tailwindcss-v3-postcss8-not-compatible
   - Update requirements to Vue 3 compatible versions
     - `v-calendar` to `v-calendar@next`
     - `v-tooltip` to `v-tooltip@vue3`
-  - Update Vue 3 comptible dependency initialisation
-    - `vuex-persistedstate`
-      - See https://github.com/robinvdvleuten/vuex-persistedstate/releases/tag/v4.0.0-beta.1
 
 ### Framework rationale
 
