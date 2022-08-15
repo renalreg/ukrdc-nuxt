@@ -27,6 +27,7 @@
     :class="[
       'flex',
       'items-center',
+      'justify-center',
       primary ? `btn-${colour}-primary` : `btn-${colour}`,
       round ? 'btn-round' : 'btn-not-round',
       tight ? 'p-1' : 'px-4 py-2',
