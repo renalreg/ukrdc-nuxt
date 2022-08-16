@@ -1,6 +1,6 @@
 {
   "name": "ukrdc-nuxt",
-  "version": "1.0.0-beta.5",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "nuxt",
@@ -18,7 +18,7 @@
     "@nuxtjs/sentry": "^5.1.2",
     "@okta/okta-auth-js": "^6.0.0",
     "@sentry/tracing": "^6.13.2",
-    "@ukkidney/ukrdc-axios-ts": "^1.0.0-beta.3",
+    "@ukkidney/ukrdc-axios-ts": "^1.0.0",
     "axios": "^0.26.1",
     "chart.js": "^3.5.1",
     "chartjs-adapter-luxon": "^1.1.0",

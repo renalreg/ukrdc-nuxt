@@ -2129,10 +2129,10 @@
     "@typescript-eslint/types" "5.11.0"
     eslint-visitor-keys "^3.0.0"
 
-"@ukkidney/ukrdc-axios-ts@^1.0.0-beta.3":
-  version "1.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/@ukkidney/ukrdc-axios-ts/-/ukrdc-axios-ts-1.0.0-beta.3.tgz#34c5b10cd164a9c99bfc95399927fcef551c1110"
-  integrity sha512-gB74wC1p/3jm6SHNSmkBt3p4Xf6OYDVWUfq3kb4G83j9CoCbV6kvZQBbs+uNcLJ607Sif0ltTzX6tudX1/YNdg==
+"@ukkidney/ukrdc-axios-ts@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@ukkidney/ukrdc-axios-ts/-/ukrdc-axios-ts-1.0.0.tgz#da14b9b0d86909865028ca2092bee0bc983db722"
+  integrity sha512-OiUNBilVGgYvBHcRH4TmbySM65IXe6oaaf0Ef0eo9Yx0Y3gAy1W9+n/iFJMHXeiuq0uSlbrT6V1ff4bDQjzZ6g==
   dependencies:
     axios "^0.26.1"
 
