@@ -23,12 +23,11 @@
     "chartjs-adapter-luxon": "^1.1.0",
     "check-ie": "^2.0.1",
     "defu": "^5.0.1",
-    "floating-vue": "^1.0.0-beta.9",
+    "floating-vue": "^1.0.0-beta.18",
     "luxon": "^2.0.2",
     "nuxt-edge": "latest",
     "url-join": "^4.0.1",
     "v-calendar": "^2.4.1",
-    "vuex-persistedstate": "^4.1.0",
     "xml-formatter": "^2.4.1"
   },
   "devDependencies": {
