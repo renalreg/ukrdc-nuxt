@@ -68,7 +68,7 @@ export default {
   // Router and middleware configuration
   router: {
     middleware: ["check-ie"],
-    base: process.env.APP_BASE_URL || "/app",
+    base: "/app",
   },
 
   // Build-time variables. These are resolved during the build process,
