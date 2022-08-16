@@ -27,4 +27,4 @@ RUN yarn --production
 COPY . .
 COPY --from=builder /app/.output ./.output/
 
-CMD [ "node", "./.output/server/index.mjs" ]
+CMD [ "./start.sh" ]
