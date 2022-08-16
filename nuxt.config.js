@@ -141,6 +141,7 @@ export default defineNuxtConfig({
       // Custom UKRDC API config
       api: {
         host: "/",
+        protocol: process.env.API_PROTOCOL || "https",
       },
       // Okta domain
       manageAccountUrl: "https://renalregistry.okta.com/app/UserHome",
