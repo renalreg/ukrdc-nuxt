@@ -4,7 +4,7 @@
 
 ### Prerequisites
 
-- Create a `.env` file (see `.env.template`):
+- Create a `.env` file (see below):
 - Ensure a local UKRDC-FastAPI instance is running locally (see <https://github.com/renalreg/ukrdc-fastapi>)
 
 ### Installation
@@ -18,6 +18,26 @@ $ yarn dev
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+## Environment variables
+
+### Build-time
+
+- `GITHUB_REF` - GitHub ref for automatic error reporting
+- `GITHUB_SHA` - GitHub SHA for automatic error reporting
+- `SENTRY_DSN` - Sentry DSN for automatic error reporting
+- `SENTRY_AUTH_TOKEN` - Sentry auth token
+- `SENTRY_ORG` - Sentry organization name
+- `SENTRY_PROJECT` - Sentry project name
+
+### Run-time
+
+- `API_HOST` - UKRDC API host. Defaults to null, which means same host will be used. Useful for local development.
+- `API_PROTOCOL` - UKRDC API protocol. Defaults to https. Useful for local development.
+- `MANAGE_ACCOUNT_URL` - Okta account management URL. Defaults to https://renalregistry.okta.com/app/UserHome.
+- `DEPLOYMENT_ENV` - Deployment environment,used for system and error reporting. Defaults to 'development'.
+- `OAUTH_ISSUER` - Okta OAuth issuer
+- `APP_CLIENT_ID` - Okta OAuth client ID
 
 ## Developer notes
 
