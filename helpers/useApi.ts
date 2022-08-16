@@ -113,11 +113,14 @@ export default function () {
     }
   );
 
-  let baseUrl = $config.api.host;
+  let baseUrl: string;
   // If we actually set the baseUrl to / then request URLs become absolute, e.g. https://api/v1/...
-  // This is not what we want, so we need to remove the leading slash.
-  if ($config.api.host === "/") {
-    baseUrl = undefined;
+  // If we set it to an empty string then the host defaults to localhost.
+  // This is not what we want, so we need to replace these cases with window.location.host.
+  if (!$config.api.host || $config.api.host === "/") {
+    baseUrl = `${$config.api.protocol}://${window.location.host}`;
+  } else {
+    baseUrl = `${$config.api.protocol}://${$config.api.host}`;
   }
 
   // Create API instances
