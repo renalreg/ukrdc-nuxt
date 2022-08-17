@@ -60,58 +60,65 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
-import { MasterRecord } from "@/interfaces/masterrecord";
+import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import usePagination from "~/helpers/query/usePagination";
 import useQuery from "~/helpers/query/useQuery";
 import useRecordSearch from "~/helpers/query/useRecordSearch";
-import fetchSearchResults from "~/helpers/fetch/fetchSearchResults";
-import fetchSystem from "~/helpers/fetch/fetchSystem";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   setup() {
     const { page, total, size } = usePagination();
     const { arrayQuery } = useQuery();
-    const { searchQueryIsPopulated, searchboxString, searchSubmit, apiQueryString } = useRecordSearch();
-    const { fetchSearchResultsPage, searchInProgress } = fetchSearchResults();
-    const { fetchUserPreferences } = fetchSystem();
+    const { searchQueryIsPopulated, searchboxString, searchSubmit, searchTermArray } = useRecordSearch();
+    const { searchApi, systemInfoApi } = useApi();
 
     // Data refs
 
-    const masterrecords = ref([] as MasterRecord[]);
+    const masterrecords = ref([] as MasterRecordSchema[]);
     const numberTypes = arrayQuery("numberType", [], true, true);
 
     // Data fetching
+    const searchInProgress = ref(false);
 
-    async function getResults() {
+    function getResults() {
       if (searchQueryIsPopulated.value) {
-        const resultsPage = await fetchSearchResultsPage(
-          apiQueryString.value,
-          page.value || 1,
-          size.value,
-          numberTypes.value
-        );
+        searchInProgress.value = true;
 
-        masterrecords.value = resultsPage.items;
-        page.value = resultsPage.page;
-        total.value = resultsPage.total;
-        size.value = resultsPage.size;
+        searchApi
+          .getSearchMasterrecords({
+            search: searchTermArray.value.filter((n) => n) as string[],
+            page: page.value || 1,
+            size: size.value,
+            numberType: numberTypes.value.filter((n) => n) as string[],
+          })
+          .then((response) => {
+            masterrecords.value = response.data.items;
+            page.value = response.data.page;
+            total.value = response.data.total;
+            size.value = response.data.size;
+
+            searchInProgress.value = false;
+          });
       }
     }
 
-    onMounted(async () => {
+    onMounted(() => {
       if (!searchQueryIsPopulated.value) {
-        const showUkrdcByDefault = (await fetchUserPreferences()).searchShowUkrdc;
-        if (showUkrdcByDefault) {
-          numberTypes.value = ["UKRDC", "NHS", "CHI", "HSC"];
-        } else {
-          numberTypes.value = ["NHS", "CHI", "HSC"];
-        }
+        systemInfoApi.getSystemUserPreferences().then((response) => {
+          const showUkrdcByDefault = response.data.searchShowUkrdc;
+          if (showUkrdcByDefault) {
+            numberTypes.value = ["UKRDC", "NHS", "CHI", "HSC"];
+          } else {
+            numberTypes.value = ["NHS", "CHI", "HSC"];
+          }
+        });
       }
 
       getResults();
     });
 
-    watch([apiQueryString, page, numberTypes], () => {
+    watch([searchTermArray, page, numberTypes], () => {
       getResults();
     });
 

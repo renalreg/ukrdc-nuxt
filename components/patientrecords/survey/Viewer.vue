@@ -70,18 +70,18 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
 
+import { SurveyQuestionSchema, SurveySchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 
-import { Survey, SurveyQuestion } from "@/interfaces/survey";
-import { modalInterface } from "@/interfaces/modal";
+import { modalInterface } from "~/interfaces/modal";
 
 interface GroupedQuestions {
-  [key: string]: SurveyQuestion[];
+  [key: string]: SurveyQuestionSchema[];
 }
 
 export default defineComponent({
   setup() {
-    const survey = ref({} as Survey);
+    const survey = ref({} as SurveySchema);
     const availableToOpen = computed(() => {
       return !(Object.keys(survey.value).length === 0);
     });
@@ -91,10 +91,10 @@ export default defineComponent({
       }
       const groups = {} as GroupedQuestions;
       for (const question of survey.value.questions) {
-        if (!(question.questionGroup in groups)) {
+        if (question.questionGroup && !(question.questionGroup in groups)) {
           groups[question.questionGroup] = [];
         }
-        groups[question.questionGroup].push(question);
+        groups[question.questionGroup || "Ungrouped"].push(question);
       }
       return groups;
     });
@@ -106,7 +106,7 @@ export default defineComponent({
     function toggle(): void {
       surveyViewerModal.value?.toggle();
     }
-    function show(surveyToShow: Survey): void {
+    function show(surveyToShow: SurveySchema): void {
       survey.value = surveyToShow;
       surveyViewerModal.value?.show();
     }

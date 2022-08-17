@@ -33,37 +33,43 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
+import { LabOrderShortSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 
-import { LabOrderShort } from "@/interfaces/laborder";
-import { PatientRecord } from "@/interfaces/patientrecord";
 import usePagination from "~/helpers/query/usePagination";
-import fetchPatientRecords from "~/helpers/fetch/fetchPatientRecords";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
     record: {
-      type: Object as () => PatientRecord,
+      type: Object as () => PatientRecordSchema,
       required: true,
     },
   },
 
   setup(props) {
     const { page, total, size } = usePagination();
-    const { fetchPatientRecordLabOrdersPage } = fetchPatientRecords();
+    const { patientRecordsApi } = useApi();
 
     // Data refs
     size.value = 18; // Fetch a multiple of our row length
-    const orders = ref([] as LabOrderShort[]);
+    const orders = ref([] as LabOrderShortSchema[]);
 
     // Data fetching
 
-    async function fetchOrders() {
-      const ordersPage = await fetchPatientRecordLabOrdersPage(props.record, page.value || 1, size.value);
-      orders.value = ordersPage.items;
-      total.value = ordersPage.total;
-      page.value = ordersPage.page;
-      size.value = ordersPage.size;
+    function fetchOrders() {
+      patientRecordsApi
+        .getPatientLaborders({
+          pid: props.record.pid,
+          page: page.value || 1,
+          size: size.value,
+        })
+        .then((response) => {
+          orders.value = response.data.items;
+          total.value = response.data.total;
+          page.value = response.data.page;
+          size.value = response.data.size;
+        });
     }
 
     onMounted(() => {

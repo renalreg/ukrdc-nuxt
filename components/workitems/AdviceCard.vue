@@ -71,7 +71,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, useRoute } from "@nuxtjs/composition-api";
-import { WorkItem, WorkItemExtended } from "@/interfaces/workitem";
+import { WorkItemExtendedSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 import {
   collectionIsUnresolved,
   workItemIsMergable,
@@ -83,12 +83,12 @@ import {
 export default defineComponent({
   props: {
     item: {
-      type: Object as () => WorkItemExtended,
+      type: Object as () => WorkItemExtendedSchema,
       required: false,
       default: undefined,
     },
     related: {
-      type: Array as () => WorkItem[],
+      type: Array as () => WorkItemSchema[],
       required: false,
       default: () => [],
     },

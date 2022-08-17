@@ -22,14 +22,13 @@
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
 
+import { LabOrderShortSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
-
-import { LabOrderShort } from "~/interfaces/laborder";
 
 export default defineComponent({
   props: {
     item: {
-      type: Object as () => LabOrderShort,
+      type: Object as () => LabOrderShortSchema,
       required: true,
     },
   },

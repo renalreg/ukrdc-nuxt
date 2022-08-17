@@ -14,14 +14,14 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
-import fetchMirth from "~/helpers/fetch/fetchMirth";
+import { ChannelMessageModel } from "@ukkidney/ukrdc-axios-ts";
 
-import { ChannelMessage } from "@/interfaces/mirth";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   setup() {
     const route = useRoute();
-    const { fetchMirthMessage } = fetchMirth();
+    const { mirthApi } = useApi();
 
     // Head
 
@@ -29,11 +29,18 @@ export default defineComponent({
     title.value = `Mirth message ${route.value.params.id}`;
 
     // Data refs
-    const message = ref<ChannelMessage>();
+    const message = ref<ChannelMessageModel>();
 
     // Data fetching
-    onMounted(async () => {
-      message.value = await fetchMirthMessage(route.value.params.channel, route.value.params.id);
+    onMounted(() => {
+      mirthApi
+        .getMirthChannelMessage({
+          channelId: route.value.params.channel,
+          messageId: route.value.params.id,
+        })
+        .then((response) => {
+          message.value = response.data;
+        });
     });
 
     return {

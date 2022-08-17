@@ -36,17 +36,17 @@ import {
   watch,
 } from "@nuxtjs/composition-api";
 
-import { PatientRecord, PatientRecordSummary } from "@/interfaces/patientrecord";
-import { TabItem } from "@/interfaces/tabs";
+import { PatientRecordSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
+import { TabItem } from "~/interfaces/tabs";
 
 import { firstForename, firstSurname, isMembership } from "@/helpers/utils/recordUtils";
-import fetchPatientRecords from "~/helpers/fetch/fetchPatientRecords";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   setup() {
     const route = useRoute();
     const router = useRouter();
-    const { fetchPatientRecord, fetchPatientRecordRelated } = fetchPatientRecords();
+    const { patientRecordsApi } = useApi();
 
     // Head
     const { title } = useMeta();
@@ -54,14 +54,27 @@ export default defineComponent({
 
     // Data refs
 
-    const record = ref<PatientRecord>();
-    const related = ref<PatientRecordSummary[]>();
+    const record = ref<PatientRecordSchema>();
+    const related = ref<PatientRecordSummarySchema[]>();
 
     // Data fetching
 
-    async function getRecord() {
-      record.value = await fetchPatientRecord(route.value.params.pid);
-      related.value = await fetchPatientRecordRelated(record.value);
+    function getRecord() {
+      patientRecordsApi
+        .getPatient({
+          pid: route.value.params.pid,
+        })
+        .then((response) => {
+          record.value = response.data;
+        });
+
+      patientRecordsApi
+        .getPatientRelated({
+          pid: route.value.params.pid,
+        })
+        .then((response) => {
+          related.value = response.data;
+        });
     }
 
     onMounted(() => {
@@ -70,7 +83,7 @@ export default defineComponent({
 
     // PID Switcher UI
 
-    const relatedDataRecords = computed<PatientRecordSummary[]>(() => {
+    const relatedDataRecords = computed<PatientRecordSummarySchema[]>(() => {
       if (related.value) {
         return related.value.filter((record) => !isMembership(record));
       }

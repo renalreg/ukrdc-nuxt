@@ -102,8 +102,12 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useContext, watch } from "@nuxtjs/composition-api";
 
-import { PatientRecord } from "@/interfaces/patientrecord";
-import { LabOrder, ResultItem } from "@/interfaces/laborder";
+import {
+  LabOrderSchema,
+  PatientRecordSchema,
+  ResultItemSchema,
+  ResultItemServiceSchema,
+} from "@ukkidney/ukrdc-axios-ts";
 
 import { formatDate } from "@/helpers/utils/dateUtils";
 
@@ -111,13 +115,13 @@ import usePagination from "~/helpers/query/usePagination";
 import useQuery from "~/helpers/query/useQuery";
 import useDateRange from "~/helpers/query/useDateRange";
 
-import fetchPatientRecords, { ResultService } from "~/helpers/fetch/fetchPatientRecords";
 import { modalInterface } from "~/interfaces/modal";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
     record: {
-      type: Object as () => PatientRecord,
+      type: Object as () => PatientRecordSchema,
       required: true,
     },
   },
@@ -126,49 +130,59 @@ export default defineComponent({
     const { page, total, size } = usePagination();
     const { makeDateRange } = useDateRange();
     const { stringQuery } = useQuery();
-    const {
-      fetchPatientRecordResultsPage,
-      fetchPatientRecordResultServices,
-      deletePatientRecordResultItem,
-      fetchPatientRecordLabOrder,
-      deletePatientRecordLabOrder,
-    } = fetchPatientRecords();
+    const { patientRecordsApi } = useApi();
 
     // Set initial date dateRange
     const dateRange = makeDateRange(null, null, true, false);
 
     // Data refs
 
-    const results = ref<ResultItem[]>();
+    const results = ref<ResultItemSchema[]>();
 
     // Data fetching
 
-    async function fetchResults() {
-      const resultsPage = await fetchPatientRecordResultsPage(
-        props.record,
-        page.value || 1,
-        size.value,
-        selectedService.value,
-        selectedOrderId.value,
-        dateRange.value.start,
-        dateRange.value.end
-      );
-      results.value = resultsPage.items;
-      total.value = resultsPage.total;
-      page.value = resultsPage.page;
-      size.value = resultsPage.size;
+    function fetchResults() {
+      patientRecordsApi
+        .getPatientResults({
+          pid: props.record.pid,
+          page: page.value || 1,
+          size: size.value,
+          serviceId: selectedService.value ? [selectedService.value] : undefined,
+          orderId: selectedOrderId.value ? [selectedOrderId.value] : undefined,
+          since: dateRange.value.start || undefined,
+          until: dateRange.value.end || undefined,
+        })
+        .then((response) => {
+          results.value = response.data.items;
+          total.value = response.data.total;
+          page.value = response.data.page;
+          size.value = response.data.size;
+        });
 
       // If we don't already have a list of available codes, fetch one
       if (availableServicesMap.value.length === 0) {
-        availableServicesMap.value = await fetchPatientRecordResultServices(props.record);
+        patientRecordsApi
+          .getPatientResultServices({
+            pid: props.record.pid,
+          })
+          .then((response) => {
+            availableServicesMap.value = response.data;
+          });
       }
     }
 
-    const selectedOrder = ref<LabOrder>();
+    const selectedOrder = ref<LabOrderSchema>();
 
-    async function fetchLabOrder() {
+    function fetchLabOrder() {
       if (selectedOrderId.value) {
-        selectedOrder.value = await fetchPatientRecordLabOrder(props.record, selectedOrderId.value);
+        patientRecordsApi
+          .getPatientLaborder({
+            pid: props.record.pid,
+            orderId: selectedOrderId.value,
+          })
+          .then((response) => {
+            selectedOrder.value = response.data;
+          });
       }
     }
 
@@ -177,9 +191,9 @@ export default defineComponent({
     const deleteResultAlert = ref<modalInterface>();
     const deleteOrderAlert = ref<modalInterface>();
 
-    const itemToDelete = ref<ResultItem | null>(null);
+    const itemToDelete = ref<ResultItemSchema | null>(null);
 
-    function showDeleteResultItemModal(item: ResultItem) {
+    function showDeleteResultItemModal(item: ResultItemSchema) {
       itemToDelete.value = item;
       deleteResultAlert.value?.show();
     }
@@ -189,42 +203,54 @@ export default defineComponent({
       deleteResultAlert.value?.hide();
     }
 
-    async function deleteResultItem() {
+    function deleteResultItem() {
       if (itemToDelete.value) {
-        await deletePatientRecordResultItem(itemToDelete.value);
-        $toast.show({
-          type: "success",
-          title: "Success",
-          message: "Result Item deleted",
-          timeout: 10,
-          classTimeout: "bg-green-600",
-        });
-        await fetchResults();
-        itemToDelete.value = null;
-        deleteResultAlert.value?.hide();
+        patientRecordsApi
+          .deletePatientResultDelete({
+            pid: props.record.pid,
+            resultitemId: itemToDelete.value.id,
+          })
+          .then(() => {
+            $toast.show({
+              type: "success",
+              title: "Success",
+              message: "Result Item deleted",
+              timeout: 10,
+              classTimeout: "bg-green-600",
+            });
+            fetchResults();
+            itemToDelete.value = null;
+            deleteResultAlert.value?.hide();
+          });
       }
     }
 
-    async function deleteLabOrder() {
+    function deleteLabOrder() {
       if (selectedOrder.value) {
-        await deletePatientRecordLabOrder(selectedOrder.value);
-        $toast.show({
-          type: "success",
-          title: "Success",
-          message: "Lab Order deleted",
-          timeout: 10,
-          classTimeout: "bg-green-600",
-        });
-        selectedOrderId.value = null;
-        await fetchResults();
-        await fetchLabOrder();
-        deleteOrderAlert.value?.hide();
+        patientRecordsApi
+          .deletePatientLaborderDelete({
+            pid: props.record.pid,
+            orderId: selectedOrder.value.id,
+          })
+          .then(() => {
+            $toast.show({
+              type: "success",
+              title: "Success",
+              message: "Lab Order deleted",
+              timeout: 10,
+              classTimeout: "bg-green-600",
+            });
+            selectedOrderId.value = null;
+            fetchResults();
+            fetchLabOrder();
+            deleteOrderAlert.value?.hide();
+          });
       }
     }
 
     // Result item services
 
-    const availableServicesMap = ref([] as ResultService[]);
+    const availableServicesMap = ref([] as ResultItemServiceSchema[]);
 
     const availableServicesIds = computed(() => {
       return availableServicesMap.value.map(({ id }) => id);

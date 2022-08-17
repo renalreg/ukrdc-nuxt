@@ -28,43 +28,49 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
-import { PatientRecord } from "@/interfaces/patientrecord";
-import { PatientDocumentSummary } from "@/interfaces/document";
+import { DocumentSummarySchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import { formatDate } from "@/helpers/utils/dateUtils";
 
 import usePagination from "~/helpers/query/usePagination";
 import useDateRange from "~/helpers/query/useDateRange";
 
-import fetchPatientRecords from "~/helpers/fetch/fetchPatientRecords";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
     record: {
-      type: Object as () => PatientRecord,
+      type: Object as () => PatientRecordSchema,
       required: true,
     },
   },
   setup(props) {
     const { page, total, size } = usePagination();
     const { makeDateRange } = useDateRange();
-    const { fetchPatientRecordDocumentsPage } = fetchPatientRecords();
+    const { patientRecordsApi } = useApi();
 
     // Set initial date dateRange
     const dateRange = makeDateRange(null, null, true, false);
 
     // Data refs
 
-    const documents = ref<PatientDocumentSummary[]>();
+    const documents = ref<DocumentSummarySchema[]>();
 
     // Data fetching
 
-    async function getDocuments() {
-      const documentsPage = await fetchPatientRecordDocumentsPage(props.record, page.value || 1, size.value);
-      documents.value = documentsPage.items;
-      total.value = documentsPage.total;
-      page.value = documentsPage.page;
-      size.value = documentsPage.size;
+    function getDocuments() {
+      patientRecordsApi
+        .getPatientDocuments({
+          pid: props.record.pid,
+          page: page.value || 1,
+          size: size.value,
+        })
+        .then((response) => {
+          documents.value = response.data.items;
+          total.value = response.data.total;
+          page.value = response.data.page;
+          size.value = response.data.size;
+        });
     }
 
     onMounted(() => {

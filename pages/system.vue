@@ -68,23 +68,18 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
+import { SystemInfoSchema } from "@ukkidney/ukrdc-axios-ts";
 
-import fetchSystem from "~/helpers/fetch/fetchSystem";
-
-interface serverSystemInfo {
-  githubRef: string;
-  githubSha: string;
-  deploymentEnv: string;
-}
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   setup() {
     const { $config, $toast } = useContext();
-    const { fetchServerInfo } = fetchSystem();
+    const { systemInfoApi } = useApi();
 
     // Data refs
 
-    const serverInfo = ref<serverSystemInfo>();
+    const serverInfo = ref<SystemInfoSchema>();
     const clientInfo = ref({
       deploymentEnv: $config.deploymentEnv,
       githubRef: process.env.githubRef,
@@ -93,8 +88,10 @@ export default defineComponent({
 
     // Data fetching
 
-    onMounted(async () => {
-      serverInfo.value = await fetchServerInfo();
+    onMounted(() => {
+      systemInfoApi.getSystemInfo().then((response) => {
+        serverInfo.value = response.data;
+      });
     });
 
     // Config reports

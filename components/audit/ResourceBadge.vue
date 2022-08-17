@@ -13,13 +13,12 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
-
-import { AuditEvent } from "~/interfaces/audit";
+import { AuditEventSchema } from "@ukkidney/ukrdc-axios-ts";
 
 export default defineComponent({
   props: {
     item: {
-      type: Object as () => AuditEvent,
+      type: Object as () => AuditEventSchema,
       required: true,
     },
   },
@@ -27,11 +26,11 @@ export default defineComponent({
     const clickUrl = ref<string | null>(null);
 
     const resourceName = computed(() => {
-      return props.item.resource.replace("_", " ").trim();
+      return props.item?.resource?.replace("_", " ").trim();
     });
 
     const primaryIdentifier = computed(() => {
-      if (props.item.identifiers.length > 0) {
+      if (props?.item?.identifiers?.length && props.item.identifiers.length > 0) {
         return props.item.identifiers[0];
       } else {
         return props.item.resourceId;
@@ -39,7 +38,7 @@ export default defineComponent({
     });
 
     function identifier(index: number) {
-      if (props.item.identifiers.length > index) {
+      if (props?.item?.identifiers?.length && props.item.identifiers.length > index) {
         return props.item.identifiers[index];
       } else {
         return "";

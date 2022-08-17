@@ -17,29 +17,37 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-import fetchMessages from "~/helpers/fetch/fetchMessages";
-
-import { ErrorSource, Message } from "~/interfaces/messages";
+import { MessageSchema, MessageSourceSchema } from "@ukkidney/ukrdc-axios-ts";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
     message: {
-      type: Object as () => Message,
+      type: Object as () => MessageSchema,
       required: true,
     },
   },
   setup(props) {
-    const { fetchMessageSource, fetchSourceInProgress } = fetchMessages();
+    const { messagesApi } = useApi();
 
-    const source = ref<ErrorSource>();
+    const source = ref<MessageSourceSchema>();
     const error = ref<string>();
 
-    onMounted(async () => {
-      try {
-        source.value = await fetchMessageSource(props.message);
-      } catch (e: any) {
-        error.value = e.response.data.detail;
-      }
+    const fetchSourceInProgress = ref(false);
+
+    onMounted(() => {
+      fetchSourceInProgress.value = true;
+      messagesApi
+        .getMessageSource({ messageId: props.message.id })
+        .then((response) => {
+          source.value = response.data;
+        })
+        .catch((error) => {
+          error.value = error.response.data.detail;
+        })
+        .finally(() => {
+          fetchSourceInProgress.value = false;
+        });
     });
 
     return {

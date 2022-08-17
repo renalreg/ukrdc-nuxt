@@ -8,12 +8,12 @@
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
 
-import { ChannelMessage } from "@/interfaces/mirth";
+import { ChannelMessageModel } from "@ukkidney/ukrdc-axios-ts";
 
 export default defineComponent({
   props: {
     message: {
-      type: Object as () => ChannelMessage,
+      type: Object as () => ChannelMessageModel,
       required: true,
     },
   },

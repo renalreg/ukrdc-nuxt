@@ -34,17 +34,17 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "@nuxtjs/composition-api";
+import { AuditEventSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
-import { AuditEvent } from "@/interfaces/audit";
 
 export default defineComponent({
   props: {
     item: {
-      type: Object as () => AuditEvent,
+      type: Object as () => AuditEventSchema,
       required: true,
     },
     parent: {
-      type: Object as () => AuditEvent,
+      type: Object as () => AuditEventSchema,
       required: false,
       default: null,
     },

@@ -28,40 +28,45 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
-import { Medication } from "@/interfaces/medication";
-import { PatientRecord } from "@/interfaces/patientrecord";
-import fetchPatientRecords from "~/helpers/fetch/fetchPatientRecords";
+import { MedicationSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
     record: {
-      type: Object as () => PatientRecord,
+      type: Object as () => PatientRecordSchema,
       required: true,
     },
   },
 
   setup(props) {
-    const { fetchPatientRecordMedications } = fetchPatientRecords();
+    const { patientRecordsApi } = useApi();
 
     // Data refs
-    const medications = ref<Medication[]>();
+    const medications = ref<MedicationSchema[]>();
 
     // Data fetching
-    onMounted(async () => {
-      medications.value = await fetchPatientRecordMedications(props.record);
+    onMounted(() => {
+      patientRecordsApi
+        .getPatientMedications({
+          pid: props.record.pid,
+        })
+        .then((response) => {
+          medications.value = response.data;
+        });
     });
 
     // Split active and inactive medications
 
     const activeMedications = computed(() => {
       if (!medications.value) return [];
-      return medications.value?.filter(function (item: Medication) {
+      return medications.value?.filter(function (item: MedicationSchema) {
         return item.toTime === null;
       });
     });
     const inactiveMedications = computed(() => {
       if (!medications.value) return [];
-      return medications.value?.filter(function (item: Medication) {
+      return medications.value?.filter(function (item: MedicationSchema) {
         return item.toTime !== null;
       });
     });

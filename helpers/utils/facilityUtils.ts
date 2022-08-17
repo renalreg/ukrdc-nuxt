@@ -1,6 +1,6 @@
-import { Facility } from "@/interfaces/facilities";
+import { FacilityDetailsSchema } from "@ukkidney/ukrdc-axios-ts";
 
-export function facilityLastMessageOver48(facility: Facility) {
+export function facilityLastMessageOver48(facility: FacilityDetailsSchema) {
   // True if the last message received was over 48 hours ago
   return (
     !facility.latestMessage.lastMessageReceivedAt ||

@@ -41,24 +41,22 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
+import { MasterRecordSchema, MasterRecordStatisticsSchema, MessageSchema, OrderBy } from "@ukkidney/ukrdc-axios-ts";
 import { nowString } from "@/helpers/utils/dateUtils";
 import usePagination from "~/helpers/query/usePagination";
 import useSortBy from "~/helpers/query/useSortBy";
 import useDateRange from "~/helpers/query/useDateRange";
 
-import fetchMasterRecords from "@/helpers/fetch/fetchMasterRecords";
-
-import { Message } from "~/interfaces/messages";
-import { MasterRecord, MasterRecordStatistics } from "~/interfaces/masterrecord";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
     record: {
-      type: Object as () => MasterRecord,
+      type: Object as () => MasterRecordSchema,
       required: true,
     },
     stats: {
-      type: Object as () => MasterRecordStatistics,
+      type: Object as () => MasterRecordStatisticsSchema,
       required: false,
       default: null,
     },
@@ -67,31 +65,32 @@ export default defineComponent({
     const { page, total, size } = usePagination();
     const { makeDateRange } = useDateRange();
     const { orderAscending, orderBy, toggleOrder } = useSortBy();
-    const { fetchMasterRecordMessagesPage } = fetchMasterRecords();
+    const { masterRecordsApi } = useApi();
 
     // Set initial date dateRange
     const dateRange = makeDateRange(nowString(-365), nowString(0), true);
 
     // Data refs
-    const messages = ref<Message[]>();
+    const messages = ref<MessageSchema[]>();
 
     // Data fetching
 
-    async function fetchMessages() {
-      const messagesPage = await fetchMasterRecordMessagesPage(
-        props.record,
-        page.value || 1,
-        size.value,
-        orderBy.value,
-        [], // Status filter
-        dateRange.value.start,
-        dateRange.value.end
-      );
-
-      messages.value = messagesPage.items;
-      total.value = messagesPage.total;
-      page.value = messagesPage.page;
-      size.value = messagesPage.size;
+    function fetchMessages() {
+      masterRecordsApi
+        .getMasterRecordMessages({
+          recordId: props.record.id,
+          page: page.value || 1,
+          size: size.value,
+          orderBy: orderBy.value as OrderBy,
+          since: dateRange.value.start || undefined,
+          until: dateRange.value.end || undefined,
+        })
+        .then((response) => {
+          messages.value = response.data.items;
+          total.value = response.data.total;
+          page.value = response.data.page;
+          size.value = response.data.size;
+        });
     }
 
     onMounted(() => {

@@ -10,13 +10,11 @@
         <GenericMenuItem @click="copyPID"> Copy PID </GenericMenuItem>
         <div v-if="hasPermission('ukrdc:records:export') && (showPvSync || showRadarSync || showPkbSync)">
           <GenericMenuDivider />
-          <GenericMenuItem v-if="showPvSync" @click="actionExport('pv')"> Sync Record to PatientView </GenericMenuItem>
-          <GenericMenuItem v-if="showPvSync" @click="actionExport('docs')"> Sync Docs to PatientView </GenericMenuItem>
-          <GenericMenuItem v-if="showPvSync" @click="actionExport('tests')">
-            Sync Tests to PatientView
-          </GenericMenuItem>
-          <GenericMenuItem v-if="showRadarSync" @click="actionExport('RADAR')"> Sync Record to RADAR </GenericMenuItem>
-          <GenericMenuItem v-if="showPkbSync" @click="actionExport('PKB')"> Sync Record to PKB </GenericMenuItem>
+          <GenericMenuItem v-if="showPvSync" @click="exportPV"> Sync Record to PatientView </GenericMenuItem>
+          <GenericMenuItem v-if="showPvSync" @click="exportPVDocs"> Sync Docs to PatientView </GenericMenuItem>
+          <GenericMenuItem v-if="showPvSync" @click="exportPVTests"> Sync Tests to PatientView </GenericMenuItem>
+          <GenericMenuItem v-if="showRadarSync" @click="exportRADAR"> Sync Record to RADAR </GenericMenuItem>
+          <GenericMenuItem v-if="showPkbSync" @click="exportPKB"> Sync Record to PKB </GenericMenuItem>
         </div>
         <div v-if="hasPermission('ukrdc:records:delete')">
           <GenericMenuDivider />
@@ -29,17 +27,16 @@
 
 <script lang="ts">
 import { defineComponent, ref, useContext } from "@nuxtjs/composition-api";
-import { PatientRecordSummary } from "@/interfaces/patientrecord";
+import { PatientRecordSummarySchema, TrackableTaskSchema } from "@ukkidney/ukrdc-axios-ts";
 import { modalInterface } from "~/interfaces/modal";
 import usePermissions from "~/helpers/usePermissions";
-import fetchPatientRecords from "~/helpers/fetch/fetchPatientRecords";
-import { TrackableTask } from "~/interfaces/tasks";
-import fetchTasks from "~/helpers/fetch/fetchTasks";
+import useTasks from "~/helpers/useTasks";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
     item: {
-      type: Object as () => PatientRecordSummary,
+      type: Object as () => PatientRecordSummarySchema,
       required: true,
     },
     showPvSync: {
@@ -61,8 +58,8 @@ export default defineComponent({
   setup(props) {
     const { $toast } = useContext();
     const { hasPermission } = usePermissions();
-    const { postPatientRecordExport } = fetchPatientRecords();
-    const { pollTask } = fetchTasks();
+    const { patientRecordsApi } = useApi();
+    const { pollTask } = useTasks();
 
     const deleteModal = ref<modalInterface>();
 
@@ -89,38 +86,126 @@ export default defineComponent({
         });
     }
 
-    function actionExport(scope: string) {
-      postPatientRecordExport(props.item, scope)
-        .then((task: TrackableTask) => {
-          // Notify of task started
-          $toast.show({
-            type: "info",
-            title: "Export Started",
-            message: "Export is now running in the background",
-            timeout: 10,
-            classTimeout: "bg-blue-600",
-          });
-          // Start polling new task
+    function showExportStartedToast() {
+      $toast.show({
+        type: "info",
+        title: "Export Started",
+        message: "Export is now running in the background",
+        timeout: 5,
+        classTimeout: "bg-green-600",
+      });
+    }
+
+    function showExportSuccessToast() {
+      // Notify of task finished
+      $toast.show({
+        type: "success",
+        title: "Export Finished",
+        message: "Export completed successfully",
+        timeout: 10,
+        classTimeout: "bg-blue-600",
+      });
+    }
+
+    function showExportErrorToast() {
+      // Notify of task finished
+      $toast.show({
+        type: "error",
+        title: "Export Failed",
+        message: "Export failed",
+        timeout: 10,
+        classTimeout: "bg-red-600",
+      });
+    }
+
+    function exportPV() {
+      patientRecordsApi
+        .postPatientExportPv({ pid: props.item.pid })
+        .then((response) => {
+          const task: TrackableTaskSchema = response.data;
+          showExportStartedToast();
           pollTask(task, 1)
             .then(() => {
-              // Notify of task finished
-              $toast.show({
-                type: "success",
-                title: "Export Finished",
-                message: "Export completed successfully",
-                timeout: 10,
-                classTimeout: "bg-blue-600",
-              });
+              showExportSuccessToast();
             })
-            .catch((error) => {
-              // Notify of task error
-              $toast.show({
-                type: "error",
-                title: "Export Error",
-                message: error.message,
-                timeout: 10,
-                classTimeout: "bg-red-600",
-              });
+            .catch(() => {
+              showExportErrorToast();
+            });
+        })
+        .finally(() => {
+          closeMenu();
+        });
+    }
+
+    function exportPVDocs() {
+      patientRecordsApi
+        .postPatientExportPvDocs({ pid: props.item.pid })
+        .then((response) => {
+          const task: TrackableTaskSchema = response.data;
+          showExportStartedToast();
+          pollTask(task, 1)
+            .then(() => {
+              showExportSuccessToast();
+            })
+            .catch(() => {
+              showExportErrorToast();
+            });
+        })
+        .finally(() => {
+          closeMenu();
+        });
+    }
+
+    function exportPVTests() {
+      patientRecordsApi
+        .postPatientExportPvTests({ pid: props.item.pid })
+        .then((response) => {
+          const task: TrackableTaskSchema = response.data;
+          showExportStartedToast();
+          pollTask(task, 1)
+            .then(() => {
+              showExportSuccessToast();
+            })
+            .catch(() => {
+              showExportErrorToast();
+            });
+        })
+        .finally(() => {
+          closeMenu();
+        });
+    }
+
+    function exportRADAR() {
+      patientRecordsApi
+        .postPatientExportRadar({ pid: props.item.pid })
+        .then((response) => {
+          const task: TrackableTaskSchema = response.data;
+          showExportStartedToast();
+          pollTask(task, 1)
+            .then(() => {
+              showExportSuccessToast();
+            })
+            .catch(() => {
+              showExportErrorToast();
+            });
+        })
+        .finally(() => {
+          closeMenu();
+        });
+    }
+
+    function exportPKB() {
+      patientRecordsApi
+        .postPatientExportPkb({ pid: props.item.pid })
+        .then((response) => {
+          const task: TrackableTaskSchema = response.data;
+          showExportStartedToast();
+          pollTask(task, 1)
+            .then(() => {
+              showExportSuccessToast();
+            })
+            .catch(() => {
+              showExportErrorToast();
             });
         })
         .finally(() => {
@@ -133,7 +218,19 @@ export default defineComponent({
       deleteModal.value?.show();
     }
 
-    return { deleteModal, showMenu, closeMenu, copyPID, actionExport, showDeleteModal, hasPermission };
+    return {
+      deleteModal,
+      showMenu,
+      closeMenu,
+      copyPID,
+      showDeleteModal,
+      hasPermission,
+      exportPV,
+      exportPVDocs,
+      exportPVTests,
+      exportRADAR,
+      exportPKB,
+    };
   },
 });
 </script>

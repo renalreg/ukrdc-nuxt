@@ -40,13 +40,13 @@
 
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
-import { PatientDocumentSummary } from "~/interfaces/document";
+import { DocumentSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 
 export default defineComponent({
   props: {
     item: {
-      type: Object as () => PatientDocumentSummary,
+      type: Object as () => DocumentSummarySchema,
       required: true,
     },
   },

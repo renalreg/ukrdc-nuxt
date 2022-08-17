@@ -6,12 +6,12 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
-import { Message } from "@/interfaces/messages";
+import { MessageSchema } from "@ukkidney/ukrdc-axios-ts";
 
 export default defineComponent({
   props: {
     message: {
-      type: Object as () => Message,
+      type: Object as () => MessageSchema,
       required: true,
     },
   },

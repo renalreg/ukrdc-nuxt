@@ -10,36 +10,40 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
+import { LinkRecordSchema, MasterRecordSchema, MasterRecordStatisticsSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { formatGender } from "@/helpers/utils/codeUtils";
 
-import fetchMasterRecords from "@/helpers/fetch/fetchMasterRecords";
-
-import { MasterRecord, MasterRecordStatistics } from "@/interfaces/masterrecord";
-import { LinkRecord } from "@/interfaces/linkrecords";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
     record: {
-      type: Object as () => MasterRecord,
+      type: Object as () => MasterRecordSchema,
       required: true,
     },
     stats: {
-      type: Object as () => MasterRecordStatistics,
+      type: Object as () => MasterRecordStatisticsSchema,
       required: false,
       default: null,
     },
   },
   setup(props) {
-    const { fetchMasterRecordLinkRecords } = fetchMasterRecords();
+    const { masterRecordsApi } = useApi();
 
     // Data refs
 
-    const linkRecords = ref<LinkRecord[]>();
+    const linkRecords = ref<LinkRecordSchema[]>();
 
     // Data fetching
-    onMounted(async () => {
-      linkRecords.value = await fetchMasterRecordLinkRecords(props.record);
+    onMounted(() => {
+      masterRecordsApi
+        .getMasterRecordLinkrecords({
+          recordId: props.record.id,
+        })
+        .then((response) => {
+          linkRecords.value = response.data;
+        });
     });
 
     return {

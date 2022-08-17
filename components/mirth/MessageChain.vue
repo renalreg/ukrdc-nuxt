@@ -22,14 +22,18 @@
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 
-import { ChainMap, ChannelMessage, ConnectorMessage } from "@/interfaces/mirth";
+import { ConnectorMessageModel, ChannelMessageModel } from "@ukkidney/ukrdc-axios-ts";
 
 import { isEmptyObject } from "@/helpers/utils/objectUtils";
+
+interface ChainMap {
+  [key: number]: ConnectorMessageModel[];
+}
 
 export default defineComponent({
   props: {
     message: {
-      type: Object as () => ChannelMessage,
+      type: Object as () => ChannelMessageModel,
       required: true,
     },
   },
@@ -44,7 +48,9 @@ export default defineComponent({
           currentChain[msg.chainId].push(msg);
         }
         for (const index in currentChain) {
-          currentChain[index].sort((a: ConnectorMessage, b: ConnectorMessage) => (a.orderId > b.orderId ? 1 : -1));
+          currentChain[index].sort((a: ConnectorMessageModel, b: ConnectorMessageModel) =>
+            a.orderId > b.orderId ? 1 : -1
+          );
         }
       }
       return currentChain;

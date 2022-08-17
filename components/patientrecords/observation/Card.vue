@@ -21,14 +21,13 @@
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
 
+import { ObservationSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
-
-import { Observation } from "@/interfaces/observation";
 
 export default defineComponent({
   props: {
     item: {
-      type: Object as () => Observation,
+      type: Object as () => ObservationSchema,
       required: true,
     },
   },

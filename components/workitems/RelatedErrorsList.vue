@@ -26,14 +26,13 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-import { Message } from "@/interfaces/messages";
-import { WorkItem } from "~/interfaces/workitem";
-import fetchWorkItems from "~/helpers/fetch/fetchWorkItems";
+import { MessageSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   props: {
     workitem: {
-      type: Object as () => WorkItem,
+      type: Object as () => WorkItemSchema,
       required: true,
     },
     size: {
@@ -43,30 +42,28 @@ export default defineComponent({
     },
   },
   setup(props) {
-    // Dependencies
-    const { fetchWorkItemMessagesPage } = fetchWorkItems();
+    const { workItemsApi } = useApi();
 
     // Related errors data
-    const relatedErrors = ref([] as Message[]);
+    const relatedErrors = ref([] as MessageSchema[]);
     const relatedErrorsPage = ref(1);
     const relatedErrorsSize = ref(props.size);
     const relatedErrorsTotal = ref(0);
 
-    async function updateRelatedErrors(): Promise<void> {
-      const errorsPage = await fetchWorkItemMessagesPage(
-        props.workitem,
-        relatedErrorsPage.value,
-        relatedErrorsSize.value,
-        null,
-        ["ERROR"],
-        null,
-        null
-      );
-      // Set related errors
-      relatedErrors.value = errorsPage.items;
-      relatedErrorsPage.value = errorsPage.page;
-      relatedErrorsSize.value = errorsPage.size;
-      relatedErrorsTotal.value = errorsPage.total;
+    function updateRelatedErrors() {
+      workItemsApi
+        .getWorkitemMessages({
+          workitemId: props.workitem.id,
+          page: relatedErrorsPage.value || 1,
+          size: relatedErrorsSize.value,
+          status: ["ERROR"],
+        })
+        .then((response) => {
+          relatedErrors.value = response.data.items;
+          relatedErrorsPage.value = response.data.page;
+          relatedErrorsSize.value = response.data.size;
+          relatedErrorsTotal.value = response.data.total;
+        });
     }
 
     onMounted(updateRelatedErrors);

@@ -37,22 +37,27 @@ by the same event, which can be resolved without the others.
 
 */
 
-import { WorkItem, WorkItemExtended } from "~/interfaces/workitem";
+import { WorkItemExtendedSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 
-export function workItemIsOpen(item: WorkItem): Boolean {
+export function workItemIsOpen(item: WorkItemSchema): Boolean {
   return item?.status !== 3;
 }
 
-export function workItemIsUKRDC(item: WorkItem) {
+export function workItemIsUKRDC(item: WorkItemSchema) {
   return item?.type === 3 || item?.type === 6;
 }
 
-export function workItemIsMergable(item: WorkItemExtended): Boolean {
+export function workItemIsMergable(item: WorkItemExtendedSchema): Boolean {
   // Check if a workitem can be merged (incoming and destination UKRDC records)
-  return workItemIsUKRDC(item) && item.incoming.masterRecords.length > 0 && !!item.destination.masterRecord;
+  return (
+    workItemIsUKRDC(item) &&
+    item.incoming?.masterRecords?.length !== undefined &&
+    item.incoming?.masterRecords?.length > 0 &&
+    !!item.destination.masterRecord
+  );
 }
 
-export function workItemIsSecondary(item: WorkItemExtended, related: WorkItem[]) {
+export function workItemIsSecondary(item: WorkItemExtendedSchema, related: WorkItemSchema[]) {
   // Check if a workitem should be treated as secondary to others in the collection
   if (workItemIsMergable(item)) {
     // Mergable workitems are always "primary"
@@ -69,7 +74,7 @@ export function workItemIsSecondary(item: WorkItemExtended, related: WorkItem[])
   return false;
 }
 
-export function collectionIsUnresolved(related: WorkItem[]) {
+export function collectionIsUnresolved(related: WorkItemSchema[]) {
   // For each related Work Item in the collection
   for (const relatedItem of related) {
     // If the related Work Item is a mergable UKRDC Work Item

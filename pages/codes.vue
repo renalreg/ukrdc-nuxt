@@ -66,49 +66,53 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
-import { Code } from "@/interfaces/codes";
+import { CodeSchema } from "@ukkidney/ukrdc-axios-ts";
 import useQuery from "~/helpers/query/useQuery";
 import usePagination from "~/helpers/query/usePagination";
-import fetchCodes from "~/helpers/fetch/fetchCodes";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   setup() {
     const { page, total, size } = usePagination();
     const { stringQuery } = useQuery();
-    const { fetchCodingStandards, fetchCodesPage } = fetchCodes();
+    const { codesApi } = useApi();
 
     // Data refs
 
     const standards = ref<string[]>();
     const selectedStandard = stringQuery("standard", null, true, true);
 
-    const codes = ref([] as Code[]);
-    const selectedCode = ref<Code>();
+    const codes = ref([] as CodeSchema[]);
+    const selectedCode = ref<CodeSchema>();
 
     const searchboxString = stringQuery("search", null, true, true);
 
     const fetchInProgress = ref(false);
 
     // Data fetching
-    async function getCodes() {
+    function getCodes() {
       fetchInProgress.value = true;
 
-      const codesPage = await fetchCodesPage(
-        page.value || 1,
-        size.value,
-        selectedStandard.value,
-        searchboxString.value
-      );
-      codes.value = codesPage.items;
-      total.value = codesPage.total;
-      page.value = codesPage.page;
-      size.value = codesPage.size;
-
-      fetchInProgress.value = false;
+      codesApi
+        .getCodeList({
+          page: page.value || 1,
+          size: size.value,
+          codingStandard: selectedStandard.value ? [selectedStandard.value] : undefined,
+          search: searchboxString.value || undefined,
+        })
+        .then((response) => {
+          codes.value = response.data.items;
+          total.value = response.data.total;
+          page.value = response.data.page;
+          size.value = response.data.size;
+          fetchInProgress.value = false;
+        });
     }
 
-    onMounted(async () => {
-      standards.value = await fetchCodingStandards();
+    onMounted(() => {
+      codesApi.getCodingStandardsList().then((response) => {
+        standards.value = response.data;
+      });
       getCodes();
     });
 

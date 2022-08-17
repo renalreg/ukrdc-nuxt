@@ -1,5 +1,4 @@
-import { PatientNumber } from "~/interfaces/patient";
-import { PatientRecordSummary } from "~/interfaces/patientrecord";
+import { NumberSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 
 const ukrdcMembershipFacilities = ["PV", "PKB"];
 const migratedExtracts = ["PVMIG", "HSMIG"];
@@ -14,7 +13,7 @@ export interface localNumber {
   number: string;
 }
 
-export function isSurvey(record: PatientRecordSummary): boolean {
+export function isSurvey(record: PatientRecordSummarySchema): boolean {
   // All SURVEY extracts are survey records
   if (record.sendingextract === "SURVEY") {
     return true;
@@ -22,7 +21,7 @@ export function isSurvey(record: PatientRecordSummary): boolean {
   return false;
 }
 
-export function isMigrated(record: PatientRecordSummary) {
+export function isMigrated(record: PatientRecordSummarySchema) {
   // All *MIG extracts are migrated records
   if (migratedExtracts.includes(record.sendingextract)) {
     return true;
@@ -30,7 +29,7 @@ export function isMigrated(record: PatientRecordSummary) {
   return false;
 }
 
-export function isTracing(record: PatientRecordSummary) {
+export function isTracing(record: PatientRecordSummarySchema) {
   // All TRACING facilities are tracing records
   if (record.sendingfacility === "TRACING") {
     return true;
@@ -38,7 +37,7 @@ export function isTracing(record: PatientRecordSummary) {
   return false;
 }
 
-export function isMembership(record: PatientRecordSummary) {
+export function isMembership(record: PatientRecordSummarySchema) {
   // All RADAR extracts are membership records
   if (record.sendingextract === "RADAR") {
     return true;
@@ -54,23 +53,23 @@ export function isMembership(record: PatientRecordSummary) {
   return false;
 }
 
-export function isData(record: PatientRecordSummary): boolean {
+export function isData(record: PatientRecordSummarySchema): boolean {
   // Everything else is a data record
   return !(isSurvey(record) || isMigrated(record) || isTracing(record) || isMembership(record));
 }
 
 // General record utilities
 
-export function firstForename(record: PatientRecordSummary): string {
-  return record.patient.names[0]?.given || "";
+export function firstForename(record: PatientRecordSummarySchema): string {
+  return record.patient?.names[0]?.given || "";
 }
 
-export function firstSurname(record: PatientRecordSummary): string {
-  return record.patient.names[0]?.family || "";
+export function firstSurname(record: PatientRecordSummarySchema): string {
+  return record.patient?.names[0]?.family || "";
 }
 
-export function firstMRN(record: PatientRecordSummary): localNumber {
-  const mrn = record.patient.numbers.find((i: PatientNumber) => i.numbertype === "MRN");
+export function firstMRN(record: PatientRecordSummarySchema): localNumber {
+  const mrn = record.patient?.numbers.find((i: NumberSchema) => i.numbertype === "MRN");
   if (mrn) {
     return {
       label: mrn.organization === "LOCALHOSP" ? "Hospital" : mrn.organization,

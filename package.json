@@ -14,11 +14,12 @@
     "prettier:fix": "yarn prettier --write"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.13.1",
     "@nuxtjs/composition-api": "^0.31.0",
     "@nuxtjs/sentry": "^5.1.2",
     "@okta/okta-auth-js": "^6.0.0",
     "@sentry/tracing": "^6.13.2",
+    "@ukkidney/ukrdc-axios-ts": "^1.0.0-beta.1-SNAPSHOT.202208171329",
+    "axios": "^0.26.1",
     "chart.js": "^3.5.1",
     "chartjs-adapter-luxon": "^1.1.0",
     "check-ie": "^2.0.1",

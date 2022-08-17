@@ -30,13 +30,13 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
-import { ConnectorMessage } from "@/interfaces/mirth";
+import { ConnectorMessageModel } from "@ukkidney/ukrdc-axios-ts";
 import { connectorMessageError } from "~/helpers/utils/mirthUtils";
 
 export default defineComponent({
   props: {
     message: {
-      type: Object as () => ConnectorMessage,
+      type: Object as () => ConnectorMessageModel,
       required: true,
     },
   },

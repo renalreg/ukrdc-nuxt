@@ -240,17 +240,17 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useContext, useMeta, useRoute } from "@nuxtjs/composition-api";
 
+import { WorkItemExtendedSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { formatGender } from "@/helpers/utils/codeUtils";
 import { isEmptyObject } from "@/helpers/utils/objectUtils";
 import { delay } from "@/helpers/utils/timeUtils";
 import { workItemIsMergable } from "@/helpers/utils/workItemUtils";
 
-import { WorkItem, WorkItemExtended } from "@/interfaces/workitem";
-import { modalInterface } from "@/interfaces/modal";
+import { modalInterface } from "~/interfaces/modal";
 
 import usePermissions from "~/helpers/usePermissions";
-import fetchWorkItems from "~/helpers/fetch/fetchWorkItems";
+import useApi from "~/helpers/useApi";
 
 interface AvailableActions {
   close: boolean;
@@ -265,18 +265,18 @@ export default defineComponent({
     const route = useRoute();
     const { $toast } = useContext();
     const { hasPermission } = usePermissions();
-    const { fetchWorkItem, closeWorkItem, putWorkItemComment, fetchWorkItemCollection } = fetchWorkItems();
+    const { workItemsApi } = useApi();
 
     // Head
     const { title } = useMeta();
     title.value = `Work Item ${route.value.params.id}`;
 
     // Work item record data
-    const record = ref<WorkItemExtended>();
+    const record = ref<WorkItemExtendedSchema>();
     const customComment = ref("");
 
     // Related persons data
-    const workItemCollection = ref([] as WorkItem[]);
+    const workItemCollection = ref([] as WorkItemSchema[]);
 
     // Related record paginator data
     const relatedRecordsIndex = ref(0);
@@ -284,9 +284,22 @@ export default defineComponent({
 
     // Data fetching
 
-    async function getWorkItem() {
-      record.value = await fetchWorkItem(route.value.params.id);
-      workItemCollection.value = await fetchWorkItemCollection(record.value);
+    function getWorkItem() {
+      workItemsApi
+        .getWorkitem({
+          workitemId: Number(route.value.params.id),
+        })
+        .then((response) => {
+          record.value = response.data;
+        });
+
+      workItemsApi
+        .getWorkitemCollection({
+          workitemId: Number(route.value.params.id),
+        })
+        .then((response) => {
+          workItemCollection.value = response.data;
+        });
 
       // Apply existing comment
       customComment.value = record.value?.updateDescription || "";
@@ -305,7 +318,8 @@ export default defineComponent({
       if (
         record.value?.status === 1 &&
         record.value?.destination.masterRecord?.nationalidType === "UKRDC" &&
-        record.value?.incoming.masterRecords.length <= 0 &&
+        record.value?.incoming?.masterRecords?.length !== undefined &&
+        record.value?.incoming?.masterRecords?.length <= 0 &&
         route.value.query.justMerged === "true"
       ) {
         closeMessageOverride.value =
@@ -353,7 +367,13 @@ export default defineComponent({
 
     // Workitem actions
     function updateWorkItemComment() {
-      putWorkItemComment(route.value.params.id, customComment.value)
+      workItemsApi
+        .putWorkitemUpdate({
+          workitemId: Number(route.value.params.id),
+          updateWorkItemRequest: {
+            comment: customComment.value,
+          },
+        })
         .then(() => {
           $toast.show({
             type: "success",
@@ -384,7 +404,13 @@ export default defineComponent({
     }
 
     function handleCloseWorkItem() {
-      closeWorkItem(route.value.params.id, customComment.value)
+      workItemsApi
+        .postWorkitemClose({
+          workitemId: Number(route.value.params.id),
+          closeWorkItemRequest: {
+            comment: customComment.value,
+          },
+        })
         .then(() => {
           $toast.show({
             type: "success",

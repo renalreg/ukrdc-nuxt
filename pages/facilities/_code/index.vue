@@ -167,16 +167,16 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
+import { FacilityDetailsSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "~/helpers/utils/dateUtils";
 import { facilityLastMessageOver48 } from "@/helpers/utils/facilityUtils";
-import { Facility } from "~/interfaces/facilities";
 import { allStatuses } from "~/helpers/utils/messageUtils";
 import usePermissions from "~/helpers/usePermissions";
 
 export default defineComponent({
   props: {
     facility: {
-      type: Object as () => Facility,
+      type: Object as () => FacilityDetailsSchema,
       required: true,
     },
   },
@@ -186,7 +186,11 @@ export default defineComponent({
 
     // Computed string for statistics last updated time
     const lastUpdatedString = computed(() => {
-      return formatDate(props.facility.statistics.lastUpdated, true);
+      if (props.facility.statistics.lastUpdated) {
+        return formatDate(props.facility.statistics.lastUpdated, true);
+      } else {
+        return "Unknown Time";
+      }
     });
 
     // Computed string for the latest data received

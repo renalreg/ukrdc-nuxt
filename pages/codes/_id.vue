@@ -70,14 +70,14 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useMeta, useRoute, watch } from "@nuxtjs/composition-api";
+import { ExtendedCodeSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
-import { ExtendedCode } from "@/interfaces/codes";
-import fetchCodes from "~/helpers/fetch/fetchCodes";
+import useApi from "~/helpers/useApi";
 
 export default defineComponent({
   setup() {
     const route = useRoute();
-    const { fetchCode } = fetchCodes();
+    const { codesApi } = useApi();
 
     // Head
     const { title } = useMeta();
@@ -85,17 +85,25 @@ export default defineComponent({
 
     // Data refs
 
-    const code = ref<ExtendedCode>();
+    const code = ref<ExtendedCodeSchema>();
 
     // Data fetching
 
-    async function getCode() {
+    function getCode() {
       // Scroll to top every time we fetch a new code
       if (process.client) {
         document.getElementsByTagName("main")[0].scrollTop = 0;
       }
       // Fetch code details
-      code.value = await fetchCode(route.value.params.id);
+
+      codesApi
+        .getCodeDetails({
+          code: route.value.params.id.split(".")[1],
+          codingStandard: route.value.params.id.split(".")[0],
+        })
+        .then((response) => {
+          code.value = response.data;
+        });
     }
 
     onMounted(() => {
