@@ -17,6 +17,7 @@ Basic code map description, used in the maps sections of a Code pane.
 </template>
 
 <script lang="ts">
+import { defineComponent } from "@nuxtjs/composition-api";
 import { CodeMap } from "@/interfaces/codes";
 
 export default defineComponent({

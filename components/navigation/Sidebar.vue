@@ -23,8 +23,8 @@
       <div class="mb-2 flex flex-shrink-0 items-center px-4">
         <img class="h-auto w-full" src="~/assets/UKKA_UKRDC.svg" alt="Workflow" />
       </div>
-      <div v-if="deploymentEnvironment !== 'production'" class="bg-yellow-700 py-2 text-center capitalize text-white">
-        {{ deploymentEnvironment }}
+      <div v-if="$config.deploymentEnv !== 'production'" class="bg-yellow-700 py-2 text-center capitalize text-white">
+        {{ $config.deploymentEnv }}
       </div>
       <nav class="mt-6 space-y-1 px-2">
         <div v-for="item in pages" :key="item.key">
@@ -71,6 +71,7 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent } from "@nuxtjs/composition-api";
 import usePermissions from "~/helpers/usePermissions";
 
 interface NavItem {
@@ -97,8 +98,6 @@ export default defineComponent({
 
   setup() {
     const { hasPermission, availableFacilities, firstFacility, hasMultipleFacilities } = usePermissions();
-
-    const deploymentEnvironment = useRuntimeConfig().deploymentEnv;
 
     const pages = computed(() => {
       return [
@@ -188,7 +187,7 @@ export default defineComponent({
       ] as NavItem[];
     });
 
-    return { pages, deploymentEnvironment };
+    return { pages };
   },
 });
 </script>

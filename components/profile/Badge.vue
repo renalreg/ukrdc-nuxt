@@ -62,6 +62,7 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
 import useAuth from "~/helpers/useAuth";
 
 export default defineComponent({

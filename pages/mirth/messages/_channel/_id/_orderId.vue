@@ -69,6 +69,8 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent, ref, useRoute, watch } from "@nuxtjs/composition-api";
+
 import { ChannelMessage, ConnectorMessage, ConnectorMessageData, MetaDataMap } from "@/interfaces/mirth";
 import { connectorMessageError } from "~/helpers/utils/mirthUtils";
 
@@ -91,7 +93,7 @@ export default defineComponent({
 
     // Data refs
     const connectorMessage = computed(() => {
-      const orderId = parseInt(route.params.orderId);
+      const orderId = parseInt(route.value.params.orderId);
       return props.message.connectorMessages[orderId] as ConnectorMessage;
     });
     const formatconnectorMessage = ref(true);

@@ -88,6 +88,7 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
 </template>
 
 <script lang="ts">
+import { defineComponent, onMounted, ref, useRouter } from "@nuxtjs/composition-api";
 import { HistoryItem } from "~/interfaces/common";
 import { HistoryPointEvent } from "~/interfaces/charts";
 import fetchAdmin from "@/helpers/fetch/fetchAdmin";

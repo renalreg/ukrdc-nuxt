@@ -69,6 +69,7 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent, onMounted, ref, useMeta, useRoute, watch } from "@nuxtjs/composition-api";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { ExtendedCode } from "@/interfaces/codes";
 import fetchCodes from "~/helpers/fetch/fetchCodes";
@@ -79,9 +80,8 @@ export default defineComponent({
     const { fetchCode } = fetchCodes();
 
     // Head
-    useHead({
-      title: computed(() => `Code ${route.params.id}`),
-    });
+    const { title } = useMeta();
+    title.value = `Code ${route.value.params.id}`;
 
     // Data refs
 
@@ -95,7 +95,7 @@ export default defineComponent({
         document.getElementsByTagName("main")[0].scrollTop = 0;
       }
       // Fetch code details
-      code.value = await fetchCode(route.params.id);
+      code.value = await fetchCode(route.value.params.id);
     }
 
     onMounted(() => {
@@ -103,7 +103,7 @@ export default defineComponent({
     });
 
     watch(
-      () => route.params.id, // Watch the computed (reactive) value of params.id
+      () => route.value.params.id, // Watch the computed (reactive) value of params.id
       () => {
         getCode();
       }
@@ -126,5 +126,6 @@ export default defineComponent({
 
     return { formatDate, externalLink, code };
   },
+  head: {},
 });
 </script>

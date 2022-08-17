@@ -109,6 +109,7 @@ Table of facilities and their basic statistics
 </template>
 
 <script lang="ts">
+import { computed, defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import fetchFacilities from "@/helpers/fetch/fetchFacilities";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { facilityLastMessageOver48 } from "@/helpers/utils/facilityUtils";

@@ -1,3 +1,5 @@
+import { computed, useRoute, useRouter } from "@nuxtjs/composition-api";
+
 import { DateRange } from "~/helpers/utils/dateUtils";
 import { singleQuery } from "~/helpers/utils/queryUtils";
 
@@ -14,8 +16,8 @@ export default function () {
     return computed({
       get: () => {
         return {
-          start: singleQuery(route.query.since) || defaultStart,
-          end: singleQuery(route.query.until) || defaultEnd,
+          start: singleQuery(route.value.query.since) || defaultStart,
+          end: singleQuery(route.value.query.until) || defaultEnd,
         };
       },
       set(newRange: DateRange) {
@@ -23,7 +25,7 @@ export default function () {
           return;
         }
 
-        const newQuery = Object.assign({}, route.query, {
+        const newQuery = Object.assign({}, route.value.query, {
           since: newRange.start,
           until: newRange.end,
         });
@@ -38,12 +40,12 @@ export default function () {
 
         if (history) {
           router.push({
-            path: route.path,
+            path: route.value.path,
             query: newQuery,
           });
         } else {
           router.replace({
-            path: route.path,
+            path: route.value.path,
             query: newQuery,
           });
         }

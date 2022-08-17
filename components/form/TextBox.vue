@@ -8,6 +8,8 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
+
 export default defineComponent({
   props: {
     value: {

@@ -107,6 +107,17 @@
 </template>
 
 <script lang="ts">
+import {
+  computed,
+  ref,
+  useContext,
+  useRoute,
+  useRouter,
+  defineComponent,
+  onMounted,
+  watch,
+} from "@nuxtjs/composition-api";
+
 import useQuery from "~/helpers/query/useQuery";
 import fetchEMPI from "~/helpers/fetch/fetchEMPI";
 import fetchMasterRecords from "@/helpers/fetch/fetchMasterRecords";
@@ -123,7 +134,7 @@ export default defineComponent({
   setup() {
     const route = useRoute();
     const router = useRouter();
-    const { $toast } = useNuxtApp();
+    const { $toast } = useContext();
     const { stringQuery } = useQuery();
     const { postEMPIMerge } = fetchEMPI();
     const { fetchMasterRecord } = fetchMasterRecords();
@@ -202,11 +213,11 @@ export default defineComponent({
     // Edit merge functions
 
     function switchRecords() {
-      const newQuery = Object.assign({}, route.query);
+      const newQuery = Object.assign({}, route.value.query);
       newQuery.superseded = [supersedingId.value];
       newQuery.superseding = [supersededId.value];
       router.push({
-        path: route.path,
+        path: route.value.path,
         query: newQuery,
       });
     }
@@ -215,11 +226,11 @@ export default defineComponent({
       superseding.value = undefined;
       superseded.value = undefined;
       searchingFor.value = undefined;
-      const newQuery = Object.assign({}, route.query);
+      const newQuery = Object.assign({}, route.value.query);
       newQuery.superseded = [null];
       newQuery.superseding = [null];
       router.push({
-        path: route.path,
+        path: route.value.path,
         query: newQuery,
       });
     }

@@ -238,6 +238,8 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent, onMounted, ref, useContext, useMeta, useRoute } from "@nuxtjs/composition-api";
+
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { formatGender } from "@/helpers/utils/codeUtils";
 import { isEmptyObject } from "@/helpers/utils/objectUtils";
@@ -261,14 +263,13 @@ export default defineComponent({
   setup() {
     // Dependencies
     const route = useRoute();
-    const { $toast } = useNuxtApp();
+    const { $toast } = useContext();
     const { hasPermission } = usePermissions();
     const { fetchWorkItem, closeWorkItem, putWorkItemComment, fetchWorkItemCollection } = fetchWorkItems();
 
     // Head
-    useHead({
-      title: computed(() => `Work Item ${route.params.id}`),
-    });
+    const { title } = useMeta();
+    title.value = `Work Item ${route.value.params.id}`;
 
     // Work item record data
     const record = ref<WorkItemExtended>();
@@ -284,7 +285,7 @@ export default defineComponent({
     // Data fetching
 
     async function getWorkItem() {
-      record.value = await fetchWorkItem(route.params.id);
+      record.value = await fetchWorkItem(route.value.params.id);
       workItemCollection.value = await fetchWorkItemCollection(record.value);
 
       // Apply existing comment
@@ -305,7 +306,7 @@ export default defineComponent({
         record.value?.status === 1 &&
         record.value?.destination.masterRecord?.nationalidType === "UKRDC" &&
         record.value?.incoming.masterRecords.length <= 0 &&
-        route.query.justMerged === "true"
+        route.value.query.justMerged === "true"
       ) {
         closeMessageOverride.value =
           "It looks like the incoming Master Record for this Work Item has been merged. Close the Work Item?";
@@ -352,7 +353,7 @@ export default defineComponent({
 
     // Workitem actions
     function updateWorkItemComment() {
-      putWorkItemComment(route.params.id, customComment.value)
+      putWorkItemComment(route.value.params.id, customComment.value)
         .then(() => {
           $toast.show({
             type: "success",
@@ -383,7 +384,7 @@ export default defineComponent({
     }
 
     function handleCloseWorkItem() {
-      closeWorkItem(route.params.id, customComment.value)
+      closeWorkItem(route.value.params.id, customComment.value)
         .then(() => {
           $toast.show({
             type: "success",
@@ -433,6 +434,9 @@ export default defineComponent({
       handleCloseWorkItem,
       hasPermission,
     };
+  },
+  head: {
+    title: "Work Item",
   },
 });
 </script>

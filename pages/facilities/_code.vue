@@ -19,6 +19,8 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
+
 import usePermissions from "~/helpers/usePermissions";
 import fetchFacilities from "~/helpers/fetch/fetchFacilities";
 
@@ -33,23 +35,22 @@ export default defineComponent({
     const { fetchFacility } = fetchFacilities();
 
     // Head
-    useHead({
-      title: computed(() => `${route.params.code}`),
-    });
+    const { title } = useMeta();
+    title.value = `${route.value.params.code}`;
 
     // URL parameters
-    const code = computed(() => route.params.code);
+    const code = computed(() => route.value.params.code);
 
     // Navigation
 
     const tabs = [
       {
         name: "Overview",
-        href: `/facilities/${route.params.code}`,
+        href: `/facilities/${route.value.params.code}`,
       },
       {
         name: "Errors",
-        href: `/facilities/${route.params.code}/errors`,
+        href: `/facilities/${route.value.params.code}/errors`,
       },
     ] as TabItem[];
 
@@ -70,6 +71,10 @@ export default defineComponent({
       code,
       facility,
     };
+  },
+
+  head: {
+    title: "Facility",
   },
 });
 </script>

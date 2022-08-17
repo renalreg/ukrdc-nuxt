@@ -166,6 +166,7 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { formatDate } from "~/helpers/utils/dateUtils";
 import { facilityLastMessageOver48 } from "@/helpers/utils/facilityUtils";
 import { Facility } from "~/interfaces/facilities";

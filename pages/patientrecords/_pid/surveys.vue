@@ -38,6 +38,8 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
+
 import { formatDate } from "@/helpers/utils/dateUtils";
 
 import { Survey } from "@/interfaces/survey";

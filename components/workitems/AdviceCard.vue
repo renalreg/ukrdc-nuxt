@@ -70,6 +70,7 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent, useRoute } from "@nuxtjs/composition-api";
 import { WorkItem, WorkItemExtended } from "@/interfaces/workitem";
 import {
   collectionIsUnresolved,
@@ -124,7 +125,7 @@ export default defineComponent({
           // Advise to check/update demographics, then merge and close
           advices.push(5);
           // If the workitem has no records to merge, but was just merged
-        } else if (route.query.justMerged === "true") {
+        } else if (route.value.query.justMerged === "true") {
           // Advise to close the workitem
           advices.push(6);
           // If the workitem has no destination record, but was not just merged

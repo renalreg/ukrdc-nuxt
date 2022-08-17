@@ -28,6 +28,8 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
+
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { formatGender } from "@/helpers/utils/codeUtils";
 import { insertIf } from "@/helpers/utils/arrayUtils";
@@ -44,32 +46,31 @@ export default defineComponent({
     const { hasPermission } = usePermissions();
 
     // Head
-    useHead({
-      title: computed(() => `Record ${route.params.id}`),
-    });
+    const { title } = useMeta();
+    title.value = `Record ${route.value.params.id}`;
 
     // Navigation
 
     const tabs = [
       {
         name: "Overview",
-        href: `/masterrecords/${route.params.id}`,
+        href: `/masterrecords/${route.value.params.id}`,
       },
       ...insertIf(hasPermission("ukrdc:messages:read"), {
         name: "Data Files",
-        href: `/masterrecords/${route.params.id}/messages`,
+        href: `/masterrecords/${route.value.params.id}/messages`,
       }),
       {
         name: "Link Records",
-        href: `/masterrecords/${route.params.id}/linkrecords`,
+        href: `/masterrecords/${route.value.params.id}/linkrecords`,
       },
       {
         name: "Issues",
-        href: `/masterrecords/${route.params.id}/issues`,
+        href: `/masterrecords/${route.value.params.id}/issues`,
       },
       ...insertIf(hasPermission("ukrdc:audit:records:read"), {
         name: "Audit",
-        href: `/masterrecords/${route.params.id}/audit`,
+        href: `/masterrecords/${route.value.params.id}/audit`,
       }),
     ] as TabItem[];
 
@@ -81,7 +82,7 @@ export default defineComponent({
     // Data fetching
 
     async function fetchRecord() {
-      record.value = await fetchMasterRecord(route.params.id);
+      record.value = await fetchMasterRecord(route.value.params.id);
 
       // Get basic record statistics
       stats.value = await fetchMasterRecordStatistics(record.value);
@@ -137,6 +138,9 @@ export default defineComponent({
       formatGender,
       formatDate,
     };
+  },
+  head: {
+    title: "Master Record",
   },
 });
 </script>

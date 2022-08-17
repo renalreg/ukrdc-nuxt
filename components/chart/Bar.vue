@@ -5,6 +5,8 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, onMounted } from "@nuxtjs/composition-api";
+
 import { BarElement, Chart, BarController, CategoryScale, Legend } from "chart.js";
 
 Chart.register(BarElement, BarController, CategoryScale, Legend);

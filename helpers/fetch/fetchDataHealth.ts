@@ -1,8 +1,9 @@
+import { useContext } from "@nuxtjs/composition-api";
 import { LastRunTime } from "~/interfaces/admin";
 import { MultipleUKRDCIDsPage } from "~/interfaces/datahealth";
 
 export default function () {
-  const { $api } = useNuxtApp();
+  const { $api } = useContext();
 
   async function fetchMultipleUKRDCIDsPage(page: number, size: number): Promise<MultipleUKRDCIDsPage> {
     return (await $api.$get(

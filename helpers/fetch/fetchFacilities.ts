@@ -1,9 +1,10 @@
+import { useContext } from "@nuxtjs/composition-api";
 import { buildCommonMessageQuery, MessagePage } from "./common";
 import { Facility, FacilityDemographicStats } from "~/interfaces/facilities";
 import { HistoryItem } from "~/interfaces/common";
 
 export default function () {
-  const { $api } = useNuxtApp();
+  const { $api } = useContext();
 
   async function fetchFacilitiesList(
     sortBy: string | null = null,

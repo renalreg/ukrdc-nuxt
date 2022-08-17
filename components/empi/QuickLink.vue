@@ -42,6 +42,8 @@ Big link cards used in the EMPI page, to direct to Merge etc.
 </template>
 
 <script lang="ts">
+import { defineComponent } from "@nuxtjs/composition-api";
+
 export default defineComponent({
   props: {
     title: {

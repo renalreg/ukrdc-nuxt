@@ -1,3 +1,4 @@
+import { useContext } from "@nuxtjs/composition-api";
 import { Code, ExtendedCode } from "@/interfaces/codes";
 
 interface CodesPage {
@@ -8,7 +9,7 @@ interface CodesPage {
 }
 
 export default function () {
-  const { $api } = useNuxtApp();
+  const { $api } = useContext();
 
   async function fetchCodingStandards(): Promise<string[]> {
     const standardsResponse: string[] = await $api.$get("/v1/codes/standards/");

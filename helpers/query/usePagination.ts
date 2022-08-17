@@ -1,3 +1,4 @@
+import { ref } from "@nuxtjs/composition-api";
 import useQuery from "~/helpers/query/useQuery";
 
 export default function () {

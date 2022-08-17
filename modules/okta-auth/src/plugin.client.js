@@ -3,7 +3,6 @@ Injects an $okta object into the Vue instance and context,
 allowing components to interact with a shared OktaAuth instance.
 */
 
-import { sendRedirect } from "h3";
 import { OktaAuth } from "@okta/okta-auth-js";
 import urljoin from "url-join";
 import defu from "defu";
@@ -53,18 +52,16 @@ function routeOption(route, key, value) {
   });
 }
 
-export default defineNuxtPlugin((nuxtApp) => {
-  const runtimeConfig = useRuntimeConfig();
-
+const oktaPlugin = (_ctx, inject) => {
   // Common variables
-  const router = useRouter();
+  const router = _ctx.app.router;
   const basePath = router?.options.base || "/";
 
   // Get build-time options from module
   const options = JSON.parse(`<%= JSON.stringify(options) %>`);
 
   // Fetch (runtime) config from context
-  const runtimeOptions = runtimeConfig.okta;
+  const runtimeOptions = _ctx.$config.okta;
 
   // Combine build-time and runtime options
   const configOptions = defu(options, runtimeOptions);
@@ -118,7 +115,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         // Store the current route
         oktaAuth.setOriginalUri(router.currentRoute.fullPath);
         // Redirect to the authExpiredRedirectUri
-        sendRedirect(configOptions.authExpiredRedirectUri);
+        _ctx.redirect(configOptions.authExpiredRedirectUri);
       }
     });
   }
@@ -127,6 +124,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   oktaAuth.start();
 
   // Inject oktaAuth into Vue
-  // inject("okta", oktaAuth);
-  nuxtApp.provide("okta", oktaAuth);
-});
+  inject("okta", oktaAuth);
+};
+
+export default oktaPlugin;
