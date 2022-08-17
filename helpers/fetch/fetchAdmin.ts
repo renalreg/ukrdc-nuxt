@@ -1,10 +1,9 @@
-import { useContext } from "@nuxtjs/composition-api";
 import { buildCommonMessageQuery } from "./common";
 import { HistoryItem } from "~/interfaces/common";
 import { AdminCounts } from "~/interfaces/admin";
 
 export default function () {
-  const { $api } = useContext();
+  const { $api } = useNuxtApp();
 
   async function fetchWorkItemsHistory(since: string | null, until: string | null): Promise<HistoryItem[]> {
     let path = "/v1/admin/workitems_history/";

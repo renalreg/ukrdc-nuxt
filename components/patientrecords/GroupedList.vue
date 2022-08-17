@@ -68,8 +68,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "@nuxtjs/composition-api";
-
 import { PatientRecordSummary } from "@/interfaces/patientrecord";
 
 import usePermissions from "~/helpers/usePermissions";

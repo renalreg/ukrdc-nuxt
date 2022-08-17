@@ -18,8 +18,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
-
 import { Message } from "@/interfaces/messages";
 
 import { MessageSummary } from "@/helpers/utils/messageUtils";
@@ -32,9 +30,9 @@ export default defineComponent({
     const { fetchMessage } = fetchMessages();
 
     // Head
-
-    const { title } = useMeta();
-    title.value = `Message ${route.value.params.id}`;
+    useHead({
+      title: computed(() => `Message ${route.params.id}`),
+    });
 
     // Data refs
 
@@ -50,16 +48,13 @@ export default defineComponent({
     // Data fetching
 
     onMounted(async () => {
-      message.value = await fetchMessage(route.value.params.id);
+      message.value = await fetchMessage(route.params.id);
     });
 
     return {
       message,
       messageSummary,
     };
-  },
-  head: {
-    title: "Message",
   },
 });
 </script>

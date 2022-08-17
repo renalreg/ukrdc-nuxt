@@ -32,8 +32,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "@nuxtjs/composition-api";
-
 type Pages = (number | "...")[];
 
 export default defineComponent({

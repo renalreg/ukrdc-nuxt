@@ -28,8 +28,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, useContext } from "@nuxtjs/composition-api";
-
 import usePermissions from "~/helpers/usePermissions";
 import fetchMasterRecords from "@/helpers/fetch/fetchMasterRecords";
 
@@ -49,7 +47,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { $toast } = useContext();
+    const { $toast } = useNuxtApp();
     const { hasPermission } = usePermissions();
     const { postMasterRecordMembershipCreatePKB } = fetchMasterRecords();
 

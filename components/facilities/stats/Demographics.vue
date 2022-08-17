@@ -48,7 +48,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import fetchFacilities from "~/helpers/fetch/fetchFacilities";
 import { Facility, FacilityDemographicStats } from "~/interfaces/facilities";
 import { NumericChartData } from "~/interfaces/charts";

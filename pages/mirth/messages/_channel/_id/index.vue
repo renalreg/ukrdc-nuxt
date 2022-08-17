@@ -6,8 +6,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@nuxtjs/composition-api";
-
 import { ChannelMessage } from "@/interfaces/mirth";
 
 export default defineComponent({

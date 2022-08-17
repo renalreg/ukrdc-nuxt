@@ -106,8 +106,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-
 import { Message } from "@/interfaces/messages";
 import { ChannelMessage } from "~/interfaces/mirth";
 import { WorkItem } from "~/interfaces/workitem";

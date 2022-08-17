@@ -1,8 +1,7 @@
-import { useContext } from "@nuxtjs/composition-api";
 import { ChannelGroup, ChannelMessage } from "~/interfaces/mirth";
 
 export default function () {
-  const { $api } = useContext();
+  const { $api } = useNuxtApp();
 
   async function fetchMirthGroups(): Promise<ChannelGroup[]> {
     return (await $api.$get("/v1/mirth/groups/")) as ChannelGroup[];

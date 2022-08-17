@@ -145,7 +145,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { removeElement } from "@/helpers/utils/domUtils";
 
 interface Action {

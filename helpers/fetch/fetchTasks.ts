@@ -1,4 +1,3 @@
-import { useContext } from "@nuxtjs/composition-api";
 import { TrackableTask } from "~/interfaces/tasks";
 
 export interface TasksPage {
@@ -9,7 +8,7 @@ export interface TasksPage {
 }
 
 export default function () {
-  const { $api } = useContext();
+  const { $api } = useNuxtApp();
 
   async function fetchTasksList(page: number, size: number): Promise<TasksPage> {
     return (await $api.$get(`/v1/tasks/?page=${page}&size=${size}`)) as TasksPage;

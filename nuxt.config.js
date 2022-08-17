@@ -1,4 +1,28 @@
-export default {
+import { defineNuxtConfig } from "@nuxt/bridge";
+
+export default defineNuxtConfig({
+  bridge: {
+    meta: true,
+  },
+
+  // Routing workarounds
+  // This is the only way I've found to get routing on a sub-path working properly
+  // for SSR: false on Nuxt Bridge
+  app: {
+    baseURL: "/",
+    assetsPath: "/app/_nuxt/",
+    buildAssetsDir: "/app/_nuxt/",
+  },
+  router: {
+    base: "/app",
+  },
+
+  // Issue workarounds
+  // https://github.com/nuxt/bridge/issues/25#issuecomment-1097946846
+  alias: {
+    tslib: "tslib/tslib.es6.js",
+  },
+
   // Disable SSR, and build as an SPA
   ssr: false,
   // Use the Nuxt server to serve the SPA, allowing runtime config
@@ -49,8 +73,6 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    "@nuxt/typescript-build",
-    "@nuxtjs/composition-api/module",
     "@nuxt/postcss8", // Required for TailwindCSS
   ],
 
@@ -65,12 +87,6 @@ export default {
         autoprefixer: {},
       },
     },
-  },
-
-  // Router and middleware configuration
-  router: {
-    middleware: ["check-ie"],
-    base: process.env.APP_BASE_URL || "/app",
   },
 
   // Build-time variables. These are resolved during the build process,
@@ -122,7 +138,7 @@ export default {
   },
 
   // Runtime configuration variables
-  publicRuntimeConfig: {
+  runtimeConfig: {
     // Custom UKRDC API config
     api: {
       host: process.env.API_HOST,
@@ -144,4 +160,4 @@ export default {
       clientId: process.env.APP_CLIENT_ID,
     },
   },
-};
+});

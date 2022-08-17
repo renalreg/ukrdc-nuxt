@@ -201,7 +201,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, watch } from "@nuxtjs/composition-api";
 import useModal from "@/helpers/useModal";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { PatientRecord, PatientRecordFull } from "~/interfaces/patientrecord";
@@ -236,7 +235,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const { $toast } = useContext();
+    const { $toast } = useNuxtApp();
     const { visible, show, hide, toggle } = useModal();
     const { postPatientRecordDelete } = fetchPatientRecords();
 

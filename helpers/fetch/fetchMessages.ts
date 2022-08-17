@@ -1,4 +1,3 @@
-import { ref, useContext } from "@nuxtjs/composition-api";
 import { buildCommonMessageQuery, MessagePage } from "./common";
 import { MasterRecord } from "~/interfaces/masterrecord";
 import { ErrorSource, Message } from "~/interfaces/messages";
@@ -6,7 +5,7 @@ import { ChannelMessage } from "~/interfaces/mirth";
 import { WorkItem } from "~/interfaces/workitem";
 
 export default function () {
-  const { $api } = useContext();
+  const { $api } = useNuxtApp();
 
   async function fetchMessagesPage(
     page: number,

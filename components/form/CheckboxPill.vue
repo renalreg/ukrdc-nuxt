@@ -20,8 +20,6 @@ or an array of values when multiple instances are v-model'd onto the same array.
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "@nuxtjs/composition-api";
-
 export default defineComponent({
   model: {
     prop: "checked",

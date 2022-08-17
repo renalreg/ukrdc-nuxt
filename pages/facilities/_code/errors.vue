@@ -43,7 +43,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useRouter, watch } from "@nuxtjs/composition-api";
 import fetchFacilities from "~/helpers/fetch/fetchFacilities";
 import { getPointDateRange } from "~/helpers/utils/chartUtils";
 import { HistoryPointEvent } from "~/interfaces/charts";

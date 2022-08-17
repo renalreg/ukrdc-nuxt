@@ -26,8 +26,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-
 import { Medication } from "@/interfaces/medication";
 import { PatientRecord } from "@/interfaces/patientrecord";
 import fetchPatientRecords from "~/helpers/fetch/fetchPatientRecords";

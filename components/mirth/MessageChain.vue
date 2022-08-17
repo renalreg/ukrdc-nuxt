@@ -20,8 +20,6 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "@nuxtjs/composition-api";
-
 import { ChainMap, ChannelMessage, ConnectorMessage } from "@/interfaces/mirth";
 
 import { isEmptyObject } from "@/helpers/utils/objectUtils";

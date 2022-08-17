@@ -68,10 +68,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
-
 import { formatDate } from "@/helpers/utils/dateUtils";
-
 import { Survey, SurveyQuestion } from "@/interfaces/survey";
 import { modalInterface } from "@/interfaces/modal";
 

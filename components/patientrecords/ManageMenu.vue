@@ -28,7 +28,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext } from "@nuxtjs/composition-api";
 import { PatientRecordSummary } from "@/interfaces/patientrecord";
 import { modalInterface } from "~/interfaces/modal";
 import usePermissions from "~/helpers/usePermissions";
@@ -59,7 +58,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { $toast } = useContext();
+    const { $toast } = useNuxtApp();
     const { hasPermission } = usePermissions();
     const { postPatientRecordExport } = fetchPatientRecords();
     const { pollTask } = fetchTasks();

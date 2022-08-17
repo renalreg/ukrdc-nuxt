@@ -1,5 +1,3 @@
-import { ref } from "@nuxtjs/composition-api";
-
 export default function () {
   const visible = ref(false);
 

@@ -80,15 +80,13 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
-
 import usePermissions from "~/helpers/usePermissions";
 import fetchSystem from "~/helpers/fetch/fetchSystem";
 import { UserPreferences } from "~/interfaces/system";
 
 export default defineComponent({
   setup() {
-    const { $okta } = useContext();
+    const { $okta } = useNuxtApp();
     const { getPermissions } = usePermissions();
     const { fetchUserPreferences, putUserPreferences } = fetchSystem();
 

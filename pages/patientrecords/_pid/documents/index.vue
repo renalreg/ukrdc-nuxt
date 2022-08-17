@@ -26,8 +26,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import { PatientRecord } from "@/interfaces/patientrecord";
 import { PatientDocumentSummary } from "@/interfaces/document";
 
