@@ -100,6 +100,8 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent, onMounted, ref, useContext, watch } from "@nuxtjs/composition-api";
+
 import { PatientRecord } from "@/interfaces/patientrecord";
 import { LabOrder, ResultItem } from "@/interfaces/laborder";
 
@@ -120,7 +122,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { $toast } = useNuxtApp();
+    const { $toast } = useContext();
     const { page, total, size } = usePagination();
     const { makeDateRange } = useDateRange();
     const { stringQuery } = useQuery();
@@ -245,9 +247,17 @@ export default defineComponent({
       fetchLabOrder();
     });
 
-    watch([page, selectedService, selectedOrderId, dateRange], () => {
-      fetchResults();
-    });
+    watch(
+      [
+        page,
+        selectedService,
+        selectedOrderId,
+        () => JSON.stringify(dateRange.value), // Stringify to watch for actual value changes
+      ],
+      () => {
+        fetchResults();
+      }
+    );
 
     watch(selectedOrderId, () => {
       fetchLabOrder();

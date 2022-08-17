@@ -9,6 +9,8 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent } from "@nuxtjs/composition-api";
+
 export default defineComponent({
   props: {
     code: {

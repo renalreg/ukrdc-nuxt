@@ -26,6 +26,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from "@nuxtjs/composition-api";
 import useModal from "@/helpers/useModal";
 
 export default defineComponent({

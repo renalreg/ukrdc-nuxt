@@ -64,6 +64,8 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
+
 import { Code } from "@/interfaces/codes";
 import useQuery from "~/helpers/query/useQuery";
 import usePagination from "~/helpers/query/usePagination";

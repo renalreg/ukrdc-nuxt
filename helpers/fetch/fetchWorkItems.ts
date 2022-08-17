@@ -1,3 +1,4 @@
+import { useContext } from "@nuxtjs/composition-api";
 import { buildCommonMessageQuery, MessagePage, buildCommonDateRangeQuery } from "./common";
 import { WorkItem, WorkItemExtended } from "~/interfaces/workitem";
 
@@ -9,7 +10,7 @@ interface WorkItemPage {
 }
 
 export default function () {
-  const { $api } = useNuxtApp();
+  const { $api } = useContext();
 
   async function fetchWorkItemsPage(
     page: number,

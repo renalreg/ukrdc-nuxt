@@ -1,3 +1,4 @@
+import { Context } from "@nuxt/types";
 import { AxiosError, AxiosRequestConfig, AxiosResponse, AxiosStatic } from "axios";
 import urljoin from "url-join";
 import { isAbsolute } from "~/helpers/utils/pathUtils";
@@ -54,11 +55,9 @@ declare module "@nuxt/types" {
 
 // Create a new Axios instance and inject it into the Vue instance and context
 
-export default defineNuxtPlugin((nuxtApp) => {
-  const runtimeConfig = useRuntimeConfig();
-
+export default function ({ $axios, $okta, $config }: Context, inject: Function) {
   // Create a custom axios instance
-  const api = nuxtApp.$axios.create({
+  const api = $axios.create({
     headers: {
       common: {
         Accept: "application/json",
@@ -72,7 +71,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   // NB: This is only really relevant for local development, in production
   // the user-facing app and API run on the same host and port, so we set
   // the baseURL to / (i.e. the current host the user is connected to).
-  api.setBaseURL(runtimeConfig.api.host || "/");
+  api.setBaseURL($config.api.host || "/");
 
   // Request interceptor to handle API base paths and authentication
   api.interceptors.request.use((config) => {
@@ -81,13 +80,13 @@ export default defineNuxtPlugin((nuxtApp) => {
       // URLs returned by the API hypermedia include the base URL already,
       // so we don't need to add it again.
       // Likewise, we assume any absolute URLs are already correct.
-      if (!isAbsolute(config.url) && !config.url.startsWith(runtimeConfig.api.base)) {
-        config.url = urljoin(runtimeConfig.api.base, config.url);
+      if (!isAbsolute(config.url) && !config.url.startsWith($config.api.base)) {
+        config.url = urljoin($config.api.base, config.url);
       }
     }
 
     // Add the authorization header to each request
-    const token = nuxtApp.$okta.getAccessToken();
+    const token = $okta.getAccessToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -96,5 +95,5 @@ export default defineNuxtPlugin((nuxtApp) => {
   });
 
   // Inject to context as $api
-  nuxtApp.provide("api", api);
-});
+  inject("api", api);
+}

@@ -1,3 +1,4 @@
+import { computed } from "@nuxtjs/composition-api";
 import { JWTObject, UserClaims } from "@okta/okta-auth-js";
 import useAuth from "./useAuth";
 

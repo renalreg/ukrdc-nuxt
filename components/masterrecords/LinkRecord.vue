@@ -38,6 +38,8 @@ Includes a header with the Link Record ID and functionality to Unlink the record
 </template>
 
 <script lang="ts">
+import { defineComponent, ref, useContext, useRouter } from "@nuxtjs/composition-api";
+
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { formatGender } from "@/helpers/utils/codeUtils";
 
@@ -55,7 +57,7 @@ export default defineComponent({
   },
   setup(props) {
     const router = useRouter();
-    const { $toast } = useNuxtApp();
+    const { $toast } = useContext();
     const { postEMPIUnlink } = fetchEMPI();
 
     const unlinkModal = ref<modalInterface>();

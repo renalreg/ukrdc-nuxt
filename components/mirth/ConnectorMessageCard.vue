@@ -29,6 +29,7 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { ConnectorMessage } from "@/interfaces/mirth";
 import { connectorMessageError } from "~/helpers/utils/mirthUtils";
 

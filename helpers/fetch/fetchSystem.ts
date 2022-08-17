@@ -1,7 +1,8 @@
+import { useContext } from "@nuxtjs/composition-api";
 import { ServerSystemInfo, UserPreferences } from "~/interfaces/system";
 
 export default function () {
-  const { $api } = useNuxtApp();
+  const { $api } = useContext();
 
   async function fetchServerInfo(): Promise<ServerSystemInfo> {
     return (await $api.$get("/v1/system/info/")) as ServerSystemInfo;

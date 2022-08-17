@@ -5,12 +5,14 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, onBeforeMount, useContext, useRouter } from "@nuxtjs/composition-api";
+
 export default defineComponent({
   // Override auth middleware. We handle redirects here ourselves in mounted()
   auth: false,
 
   setup() {
-    const { $okta } = useNuxtApp();
+    const { $okta } = useContext();
     const router = useRouter();
 
     onBeforeMount(async () => {

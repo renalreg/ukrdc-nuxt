@@ -8,6 +8,8 @@ methods. E.g. boolearQuery will parse the query string
 and return a boolean.
 */
 
+import { computed, useRoute, useRouter } from "@nuxtjs/composition-api";
+
 import { singleQuery } from "~/helpers/utils/queryUtils";
 
 export default function () {
@@ -15,7 +17,7 @@ export default function () {
   const router = useRouter();
 
   function pushNewQuery(queryKey: string, newValue: any, history: boolean = true, resetPage: boolean = false) {
-    const newQuery = Object.assign({}, route.query, {
+    const newQuery = Object.assign({}, route.value.query, {
       [queryKey]: [newValue],
     });
     if (resetPage) {
@@ -23,12 +25,12 @@ export default function () {
     }
     if (history) {
       router.push({
-        path: route.path,
+        path: route.value.path,
         query: newQuery,
       });
     } else {
       router.replace({
-        path: route.path,
+        path: route.value.path,
         query: newQuery,
       });
     }
@@ -42,7 +44,7 @@ export default function () {
   ) {
     return computed({
       get: (): (string | null)[] => {
-        const val = route.query[queryKey];
+        const val = route.value.query[queryKey];
         if (val === undefined) {
           return defaultValue;
         }
@@ -53,7 +55,7 @@ export default function () {
         }
       },
       set: (newValue: (string | null)[]) => {
-        const newQuery = Object.assign({}, route.query, {
+        const newQuery = Object.assign({}, route.value.query, {
           [queryKey]: newValue,
         });
         if (resetPage) {
@@ -61,12 +63,12 @@ export default function () {
         }
         if (history) {
           router.push({
-            path: route.path,
+            path: route.value.path,
             query: newQuery,
           });
         } else {
           router.replace({
-            path: route.path,
+            path: route.value.path,
             query: newQuery,
           });
         }
@@ -77,7 +79,7 @@ export default function () {
   function booleanQuery(queryKey: string, history: boolean = true, resetPage: boolean = false) {
     return computed({
       get: (): boolean | null => {
-        return singleQuery(route.query[queryKey]) === "true";
+        return singleQuery(route.value.query[queryKey]) === "true";
       },
       set: (newValue: boolean | null) => {
         pushNewQuery(queryKey, newValue, history, resetPage);
@@ -93,7 +95,7 @@ export default function () {
   ) {
     return computed({
       get: (): string | null => {
-        const val = singleQuery(route.query[queryKey]);
+        const val = singleQuery(route.value.query[queryKey]);
         if (val === null || val === undefined) {
           return defaultValue;
         }
@@ -101,7 +103,7 @@ export default function () {
       },
       set: (newValue: string | null) => {
         // Check if the query has actually changed
-        const current = singleQuery(route.query[queryKey]);
+        const current = singleQuery(route.value.query[queryKey]);
         if (current !== null && current !== undefined) {
           // If no change, skip navigation
           if (current === newValue) {
@@ -121,7 +123,7 @@ export default function () {
   ) {
     return computed({
       get: (): number | null => {
-        const val = singleQuery(route.query[queryKey]);
+        const val = singleQuery(route.value.query[queryKey]);
         if (val === null || val === undefined) {
           return defaultValue;
         }
@@ -129,7 +131,7 @@ export default function () {
       },
       set: (newValue: number | null) => {
         // Check if the query has actually changed
-        const current = singleQuery(route.query[queryKey]);
+        const current = singleQuery(route.value.query[queryKey]);
         if (current !== null && current !== undefined) {
           // If no change, skip navigation
           if (parseInt(current) === newValue) {

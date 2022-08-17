@@ -67,6 +67,8 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
+
 import fetchSystem from "~/helpers/fetch/fetchSystem";
 
 interface serverSystemInfo {
@@ -77,16 +79,14 @@ interface serverSystemInfo {
 
 export default defineComponent({
   setup() {
-    const { $toast } = useNuxtApp();
+    const { $config, $toast } = useContext();
     const { fetchServerInfo } = fetchSystem();
-
-    const runtimeConfig = useRuntimeConfig();
 
     // Data refs
 
     const serverInfo = ref<serverSystemInfo>();
     const clientInfo = ref({
-      deploymentEnv: runtimeConfig.deploymentEnv,
+      deploymentEnv: $config.deploymentEnv,
       githubRef: process.env.githubRef,
       githubSha: process.env.githubSha,
     });

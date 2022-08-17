@@ -12,6 +12,8 @@ E.g. used in the Filter by Patient Number component in Data Files
 </template>
 
 <script lang="ts">
+import { defineComponent } from "@nuxtjs/composition-api";
+
 export default defineComponent({
   props: {
     value: {

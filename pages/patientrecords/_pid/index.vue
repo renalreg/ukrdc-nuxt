@@ -41,6 +41,8 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from "@nuxtjs/composition-api";
+
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { formatGender } from "@/helpers/utils/codeUtils";
 import { isEmptyObject } from "@/helpers/utils/objectUtils";

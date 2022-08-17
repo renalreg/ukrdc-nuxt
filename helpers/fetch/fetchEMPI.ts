@@ -1,7 +1,8 @@
+import { useContext } from "@nuxtjs/composition-api";
 import { LinkRecord } from "~/interfaces/linkrecords";
 
 export default function () {
-  const { $api } = useNuxtApp();
+  const { $api } = useContext();
 
   async function postEMPIUnlink(personId: number, masterId: number, comment?: string): Promise<LinkRecord> {
     return (await $api.$post("/v1/empi/unlink/", {

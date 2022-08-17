@@ -6,6 +6,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { DashResponse } from "@/interfaces/dash";
 
 import fetchDash from "~/helpers/fetch/fetchDash";

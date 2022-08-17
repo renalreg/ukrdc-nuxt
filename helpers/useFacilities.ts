@@ -1,3 +1,4 @@
+import { computed, onMounted, ref } from "@nuxtjs/composition-api";
 import fetchFacilities from "./fetch/fetchFacilities";
 import useQuery from "~/helpers/query/useQuery";
 import { Facility } from "~/interfaces/facilities";

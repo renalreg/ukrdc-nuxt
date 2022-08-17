@@ -3,6 +3,7 @@ Injects a $toast object into the Vue instance and context,
 allowing programatic toast creation.
 */
 
+import { Plugin } from "@nuxt/types";
 import Vue from "vue";
 import { spawn } from "@/helpers/utils/domUtils";
 import Toast from "~/components/generic/Toast.vue";
@@ -23,7 +24,7 @@ const containerClasses = [
   "sm:justify-end",
 ];
 
-export const toastProgrammatic = {
+const toastProgrammatic = {
   show(props: object | string): Vue {
     if (typeof props === "string") props = { message: props };
     return spawn("toasts", props, Toast, Vue);
@@ -62,7 +63,7 @@ declare module "@nuxt/types" {
   }
 }
 
-export default defineNuxtPlugin((nuxtApp) => {
+const toastPlugin: Plugin = (_ctx, inject) => {
   // Create a div to hold created toasts
   const toasts = document.createElement("div");
   containerClasses.forEach((c) => toasts.classList.add(c));
@@ -70,5 +71,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   document.body.appendChild(toasts);
 
   // Inject toastProgrammatic into Vue
-  nuxtApp.provide("toast", toastProgrammatic);
-});
+  inject("toast", toastProgrammatic);
+};
+
+export default toastPlugin;

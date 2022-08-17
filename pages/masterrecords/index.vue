@@ -58,6 +58,8 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
+
 import { MasterRecord } from "@/interfaces/masterrecord";
 import usePagination from "~/helpers/query/usePagination";
 import useQuery from "~/helpers/query/useQuery";

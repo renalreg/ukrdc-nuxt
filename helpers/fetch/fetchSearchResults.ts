@@ -1,3 +1,4 @@
+import { ref, useContext } from "@nuxtjs/composition-api";
 import { MasterRecord } from "~/interfaces/masterrecord";
 
 interface MasterRecordPage {
@@ -8,7 +9,7 @@ interface MasterRecordPage {
 }
 
 export default function () {
-  const { $api } = useNuxtApp();
+  const { $api } = useContext();
 
   const searchInProgress = ref(false);
 

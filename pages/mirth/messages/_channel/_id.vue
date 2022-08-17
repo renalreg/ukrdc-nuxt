@@ -13,6 +13,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
 import fetchMirth from "~/helpers/fetch/fetchMirth";
 
 import { ChannelMessage } from "@/interfaces/mirth";
@@ -23,21 +24,24 @@ export default defineComponent({
     const { fetchMirthMessage } = fetchMirth();
 
     // Head
-    useHead({
-      title: computed(() => `Mirth message ${route.params.id}`),
-    });
+
+    const { title } = useMeta();
+    title.value = `Mirth message ${route.value.params.id}`;
 
     // Data refs
     const message = ref<ChannelMessage>();
 
     // Data fetching
     onMounted(async () => {
-      message.value = await fetchMirthMessage(route.params.channel, route.params.id);
+      message.value = await fetchMirthMessage(route.value.params.channel, route.value.params.id);
     });
 
     return {
       message,
     };
+  },
+  head: {
+    title: "Mirth Message",
   },
 });
 </script>
