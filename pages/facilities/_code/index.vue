@@ -31,10 +31,7 @@
                 <GenericCardDt>Total Patients</GenericCardDt>
                 <dd class="flex items-baseline">
                   <TextHc class="flex-grow">{{ facility.statistics.totalPatients }}</TextHc>
-                  <NuxtLink
-                    class="hover:underline"
-                    :to="{ path: `/masterrecords/`, query: { search: [`facility=${facility.id}`, ''] } }"
-                  >
+                  <NuxtLink class="hover:underline" :to="{ path: `/masterrecords/`, query: { facility: facility.id } }">
                     Show all patients
                   </NuxtLink>
                 </dd>
