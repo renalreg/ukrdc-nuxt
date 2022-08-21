@@ -3,14 +3,14 @@ Utility functions to simplify interacting with a reactive Okta Auth state.
 */
 
 import { onBeforeUnmount, ref, useContext, computed } from "@nuxtjs/composition-api";
-import { AuthState, UserClaims, JWTObject } from "@okta/okta-auth-js";
+import { AuthState, JWTPayload, JWTObject } from "@okta/okta-auth-js";
 
-export interface UKRDCClaims {
+export declare type UKRDCClaims = JWTPayload & {
   "org.ukrdc.permissions": string[];
-}
+};
 
 export interface UKRDCJWTObject extends JWTObject {
-  payload: UserClaims<UKRDCClaims>;
+  payload: UKRDCClaims;
 }
 
 export default function () {

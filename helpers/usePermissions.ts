@@ -1,13 +1,5 @@
 import { computed } from "@nuxtjs/composition-api";
-import { JWTObject, UserClaims } from "@okta/okta-auth-js";
-import useAuth from "./useAuth";
-
-export interface UKRDCClaims {
-  "org.ukrdc.permissions": string[];
-}
-export interface UKRDCJWTObject extends JWTObject {
-  payload: UserClaims<UKRDCClaims>;
-}
+import useAuth, { UKRDCClaims, UKRDCJWTObject } from "./useAuth";
 
 export default function () {
   const { accessToken } = useAuth();
@@ -15,7 +7,7 @@ export default function () {
   function getPermissions(): string[] | null {
     if (accessToken.value) {
       const token = accessToken.value as UKRDCJWTObject;
-      const payload: UserClaims<UKRDCClaims> = token.payload;
+      const payload: UKRDCClaims = token.payload;
       return payload["org.ukrdc.permissions"] as string[];
     }
     return null;
