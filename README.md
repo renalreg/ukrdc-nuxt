@@ -51,7 +51,7 @@ The application version will generally follow the version of the API it is compa
 
 Under this system, the major and minor application versions should be the same as the API client version, and the patch version should iterate on it's own with any changes not dependent on API functionality.
 
-[Use Yarn to set the application version.](https://classic.yarnpkg.com/en/docs/cli/version) (Note: This will automatically create a git commit, so after running this command, you should push the changes to the remote repository.)
+[Use Yarn to set the application version.](https://classic.yarnpkg.com/en/docs/cli/version) Preferably include the `--no-git-tag-version` flag.
 
 ### Github Release Versions
 
