@@ -103,7 +103,7 @@ import "floating-vue/dist/style.css";
 export default defineComponent({
   setup() {
     const router = useRouter();
-    useHead({
+    useNuxt2Meta({
       link: computed(() => [{ rel: "icon", type: "image/x-icon", href: `${router.options.base || "/"}favicon.ico` }]),
     });
 

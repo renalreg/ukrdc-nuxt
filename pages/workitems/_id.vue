@@ -264,7 +264,7 @@ export default defineComponent({
     const { workItemsApi } = useApi();
 
     // Head
-    useHead({
+    useNuxt2Meta({
       title: computed(() => `Work Item ${route.params.id}`),
     });
 

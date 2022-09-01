@@ -17,14 +17,17 @@ jobs:
           node-version: '16'
           check-latest: true
 
-      - name: Install with Yarn
-        run: yarn install
+      - name: Install dependencies
+        run: npm install
+
+      - name: Test build
+        run: npm run build
 
       - name: ESLint
-        run: yarn eslint:check
+        run: npm run eslint:check
 
       - name: Prettier
-        run: yarn prettier:check
+        run: npm run prettier:check
 
   publish:
     runs-on: ubuntu-latest

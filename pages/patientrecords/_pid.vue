@@ -38,7 +38,7 @@ export default defineComponent({
     const { patientRecordsApi } = useApi();
 
     // Head
-    useHead({
+    useNuxt2Meta({
       title: computed(() => `Record ${route.params.pid}`),
     });
     // Data refs

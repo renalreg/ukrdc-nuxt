@@ -79,7 +79,7 @@ export default defineComponent({
     const { codesApi } = useApi();
 
     // Head
-    useHead({
+    useNuxt2Meta({
       title: computed(() => `Code ${route.params.id}`),
     });
 

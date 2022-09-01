@@ -1,10 +1,6 @@
 import { defineNuxtConfig } from "@nuxt/bridge";
 
 export default defineNuxtConfig({
-  bridge: {
-    meta: true,
-  },
-
   // Routing workarounds
   // This is the only way I've found to get routing on a sub-path working properly
   // for SSR: false on Nuxt Bridge

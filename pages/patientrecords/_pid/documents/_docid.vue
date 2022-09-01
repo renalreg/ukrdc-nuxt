@@ -82,6 +82,7 @@ import { DocumentSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 
 import useApi from "~/helpers/useApi";
+import { saveAs } from "~/helpers/utils/fileUtils";
 
 export default defineComponent({
   props: {
@@ -134,16 +135,8 @@ export default defineComponent({
           }
         )
         .then((response) => {
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement("a");
-          link.href = url;
-          link.setAttribute(
-            "download",
-            patientDocument.value?.filename || `${patientDocument.value?.documentname}.txt`
-          );
-          document.body.appendChild(link);
-          link.click();
-          documentDownloadInProgress.value = false;
+          const blob = new Blob([response.data]);
+          saveAs(blob, patientDocument.value?.filename || `${patientDocument.value?.documentname}.txt`);
         });
     }
 

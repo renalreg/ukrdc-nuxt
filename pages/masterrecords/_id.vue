@@ -44,7 +44,7 @@ export default defineComponent({
     const { hasPermission } = usePermissions();
 
     // Head
-    useHead({
+    useNuxt2Meta({
       title: computed(() => `Record ${route.params.id}`),
     });
 
