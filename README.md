@@ -11,10 +11,10 @@
 
 ```bash
 # install dependencies
-$ yarn install
+$ npm install
 
 # serve with hot reload at localhost:3000
-$ yarn dev
+$ npm run dev
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
@@ -51,7 +51,7 @@ The application version will generally follow the version of the API it is compa
 
 Under this system, the major and minor application versions should be the same as the API client version, and the patch version should iterate on it's own with any changes not dependent on API functionality.
 
-[Use Yarn to set the application version.](https://classic.yarnpkg.com/en/docs/cli/version) Preferably include the `--no-git-tag-version` flag.
+[Use `npm` to set the application version.](https://docs.npmjs.com/cli/v7/commands/npm-version)
 
 ### Github Release Versions
 
@@ -95,15 +95,15 @@ ESLint and Prettier should be handled separately.
 To check your code without changing anything, run:
 
 ```
-yarn eslint:check
-yarn prettier:check
+npm run eslint:check
+npm run prettier:check
 ```
 
 To fix the issues, run:
 
 ```
-yarn eslint:fix
-yarn prettier:fix
+npm run eslint:fix
+npm run prettier:fix
 ```
 
 ### (No) Server-side rendering
