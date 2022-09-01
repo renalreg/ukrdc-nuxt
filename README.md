@@ -59,7 +59,36 @@ Github releases should use tags that follow the application version. E.g. applic
 
 This will publish a container image tagged with the version number, and `latest` (except pre-release versions e.g. `1.0.1-beta.1`).
 
-## ESLint and Prettier
+## Suggested Development Environment
+
+- Visual Studio Code
+- [Volar extension (Vue language support)](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+- [Prettier extension (Code formatter)](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- [ESLint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+
+### VS Code Settings
+
+Suggested contents of your local `.vscode/settings.json` file:
+
+```json
+{
+  "editor.tabSize": 2,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "eslint.validate": ["vue", "javascript", "javascriptreact", "typescript"],
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
+```
+
+### Manually running ESLint and Prettier
 
 ESLint and Prettier should be handled separately.
 
