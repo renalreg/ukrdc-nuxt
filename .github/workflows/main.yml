@@ -20,14 +20,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Test build
+        run: npm run build
+
       - name: ESLint
         run: npm run eslint:check
 
       - name: Prettier
         run: npm run prettier:check
-
-      - name: Test build
-        run: npm run build
 
   publish:
     runs-on: ubuntu-latest
