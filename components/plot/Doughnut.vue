@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from "@nuxtjs/composition-api";
-import Plotly, { Data } from "plotly.js-dist";
+import { Data, newPlot } from "plotly.js";
 import { plotColours } from "~/helpers/utils/colourUtils";
 
 export default defineComponent({
@@ -57,7 +57,7 @@ export default defineComponent({
     const config = { responsive: true };
 
     onMounted(() => {
-      Plotly.newPlot(props.id, data, layout, config);
+      newPlot(props.id, data, layout, config);
     });
   },
 });
