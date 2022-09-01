@@ -1,7 +1,26 @@
 <template>
   <div>
-    <div class="mx-auto mb-4 max-w-7xl">
-      <TextH1>Codes List</TextH1>
+    <div class="mx-auto mb-4 flex">
+      <div class="flex-grow">
+        <TextH1>Codes List</TextH1>
+      </div>
+      <div>
+        <div v-click-away="closeExportMenu" class="relative flex">
+          <GenericButton @click="showExportMenu = !showExportMenu">
+            <div class="flex items-center">
+              <div class="flex-grow">Export Codes</div>
+              <div class="ml-2">
+                <IconChevronDown class="text-gray-700" />
+              </div>
+            </div>
+          </GenericButton>
+          <GenericMenu class="-right-2 z-10 mb-2 mt-14" :show="showExportMenu">
+            <GenericMenuItem @click="exportCodeList"> Export Code List </GenericMenuItem>
+            <GenericMenuItem @click="exportCodeMaps"> Export Code Maps </GenericMenuItem>
+            <GenericMenuItem @click="exportCodeExclusions"> Export Code Exclusions </GenericMenuItem>
+          </GenericMenu>
+        </div>
+      </div>
     </div>
 
     <div v-if="standards && standards.length > 1" :class="$route.params.id ? 'hidden lg:block' : 'block'">
@@ -68,6 +87,7 @@ import { CodeSchema } from "@ukkidney/ukrdc-axios-ts";
 import useQuery from "~/helpers/query/useQuery";
 import usePagination from "~/helpers/query/usePagination";
 import useApi from "~/helpers/useApi";
+import { saveAs } from "~/helpers/utils/fileUtils";
 
 export default defineComponent({
   setup() {
@@ -86,6 +106,50 @@ export default defineComponent({
     const searchboxString = stringQuery("search", null, true, true);
 
     const fetchInProgress = ref(false);
+
+    // Code exporting
+
+    const showExportMenu = ref(false);
+
+    function closeExportMenu() {
+      showExportMenu.value = false;
+    }
+
+    function exportCodeList() {
+      codesApi
+        .getCodeListExport()
+        .then(({ data }) => {
+          const blob = new Blob([data], { type: "text/plain;charset=utf-8" });
+          saveAs(blob, "code-list.csv");
+        })
+        .finally(() => {
+          closeExportMenu();
+        });
+    }
+
+    function exportCodeMaps() {
+      codesApi
+        .getCodeMapsExport()
+        .then(({ data }) => {
+          const blob = new Blob([data], { type: "text/plain;charset=utf-8" });
+          saveAs(blob, "code-maps.csv");
+        })
+        .finally(() => {
+          closeExportMenu();
+        });
+    }
+
+    function exportCodeExclusions() {
+      codesApi
+        .getCodeExclusionsExport()
+        .then(({ data }) => {
+          const blob = new Blob([data], { type: "text/plain;charset=utf-8" });
+          saveAs(blob, "code-exclusions.csv");
+        })
+        .finally(() => {
+          closeExportMenu();
+        });
+    }
 
     // Data fetching
     function getCodes() {
@@ -129,6 +193,11 @@ export default defineComponent({
       page,
       total,
       size,
+      showExportMenu,
+      closeExportMenu,
+      exportCodeList,
+      exportCodeMaps,
+      exportCodeExclusions,
     };
   },
   head: {

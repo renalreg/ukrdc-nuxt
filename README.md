@@ -11,10 +11,10 @@
 
 ```bash
 # install dependencies
-$ yarn install
+$ npm install
 
 # serve with hot reload at localhost:3000
-$ yarn dev
+$ npm run dev
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
@@ -51,7 +51,7 @@ The application version will generally follow the version of the API it is compa
 
 Under this system, the major and minor application versions should be the same as the API client version, and the patch version should iterate on it's own with any changes not dependent on API functionality.
 
-[Use Yarn to set the application version.](https://classic.yarnpkg.com/en/docs/cli/version) (Note: This will automatically create a git commit, so after running this command, you should push the changes to the remote repository.)
+[Use `npm` to set the application version.](https://docs.npmjs.com/cli/v7/commands/npm-version)
 
 ### Github Release Versions
 
@@ -59,22 +59,51 @@ Github releases should use tags that follow the application version. E.g. applic
 
 This will publish a container image tagged with the version number, and `latest` (except pre-release versions e.g. `1.0.1-beta.1`).
 
-## ESLint and Prettier
+## Suggested Development Environment
+
+- Visual Studio Code
+- [Volar extension (Vue language support)](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+- [Prettier extension (Code formatter)](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- [ESLint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+
+### VS Code Settings
+
+Suggested contents of your local `.vscode/settings.json` file:
+
+```json
+{
+  "editor.tabSize": 2,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "eslint.validate": ["vue", "javascript", "javascriptreact", "typescript"],
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
+```
+
+### Manually running ESLint and Prettier
 
 ESLint and Prettier should be handled separately.
 
 To check your code without changing anything, run:
 
 ```
-yarn eslint:check
-yarn prettier:check
+npm run eslint:check
+npm run prettier:check
 ```
 
 To fix the issues, run:
 
 ```
-yarn eslint:fix
-yarn prettier:fix
+npm run eslint:fix
+npm run prettier:fix
 ```
 
 ### (No) Server-side rendering

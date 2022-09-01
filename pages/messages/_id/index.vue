@@ -1,7 +1,5 @@
 <template>
   <div>
-    <LoadingIndicatorFull :visible="downloadSourceInProgress" />
-
     <!-- Header card -->
     <GenericCard class="mb-4">
       <GenericCardContent>
@@ -110,6 +108,7 @@ import { MasterRecordSchema, MessageSchema, ChannelMessageModel, WorkItemSchema 
 import { formatDate } from "@/helpers/utils/dateUtils";
 import usePermissions from "~/helpers/usePermissions";
 import useApi from "~/helpers/useApi";
+import { saveAs } from "~/helpers/utils/fileUtils";
 
 export default defineComponent({
   props: {
@@ -166,23 +165,14 @@ export default defineComponent({
       }
     }
 
-    const downloadSourceInProgress = ref(false);
-
-    function downloadMessageSource(): void {
-      downloadSourceInProgress.value = true;
-
+    function downloadMessageSource() {
       messagesApi
         .getMessageSource({
           messageId: props.message.id,
         })
         .then((response) => {
-          const url = window.URL.createObjectURL(new Blob([response.data.content ? response.data.content : ""]));
-          const link = document.createElement("a");
-          link.href = url;
-          link.setAttribute("download", props.message.filename || `${props.message.facility}-{message.id}.txt`);
-          document.body.appendChild(link);
-          link.click();
-          downloadSourceInProgress.value = false;
+          const blob = new Blob([response.data.content ? response.data.content : ""]);
+          saveAs(blob, props.message.filename || `${props.message.facility}-{message.id}.txt`);
         });
     }
 
@@ -196,7 +186,6 @@ export default defineComponent({
       mirthMessage,
       formatDate,
       downloadMessageSource,
-      downloadSourceInProgress,
       hasPermission,
     };
   },

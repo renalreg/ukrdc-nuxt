@@ -10,10 +10,10 @@ ARG GITHUB_REF
 
 WORKDIR /app
 
-COPY package.json yarn.lock ./
-RUN yarn
+COPY package.json package-lock.json ./
+RUN npm install
 COPY . .
-RUN yarn build
+RUN npm run build
 
 FROM node:16-alpine
 
@@ -21,8 +21,8 @@ ENV HOST="0.0.0.0"
 
 WORKDIR /app
 
-COPY package.json yarn.lock ./
-RUN yarn --production
+COPY package.json package-lock.json ./
+RUN npm install --production
 
 COPY . .
 COPY --from=builder /app/.output ./.output/
