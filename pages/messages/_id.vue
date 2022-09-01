@@ -29,7 +29,7 @@ export default defineComponent({
     const { messagesApi } = useApi();
 
     // Head
-    useHead({
+    useNuxt2Meta({
       title: computed(() => `Message ${route.params.id}`),
     });
 

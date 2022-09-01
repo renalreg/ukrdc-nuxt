@@ -33,7 +33,7 @@ export default defineComponent({
     const { facilitiesApi } = useApi();
 
     // Head
-    useHead({
+    useNuxt2Meta({
       title: computed(() => `${route.params.code}`),
     });
 

@@ -23,7 +23,7 @@ export default defineComponent({
     const { mirthApi } = useApi();
 
     // Head
-    useHead({
+    useNuxt2Meta({
       title: computed(() => `Mirth message ${route.params.id}`),
     });
 
