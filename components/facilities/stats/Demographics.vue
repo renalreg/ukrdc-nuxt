@@ -20,27 +20,24 @@
           <GenericCardHeader>
             <TextH2> Gender Distribution </TextH2>
           </GenericCardHeader>
-          <GenericCardContent class="p-4">
-            <ChartDoughnut
-              id="genderDistributionChart"
-              :data="genderDistributionChartData.data"
-              :labels="genderDistributionChartData.labels"
-              class="h-64"
-            />
-          </GenericCardContent>
+
+          <PlotDoughnut
+            id="genderDistributionChart"
+            :data="genderDistributionChartData.data"
+            :labels="genderDistributionChartData.labels"
+            class="h-64"
+          />
         </GenericCard>
         <GenericCard>
           <GenericCardHeader>
             <TextH2> Ethnicity Distribution </TextH2>
           </GenericCardHeader>
-          <GenericCardContent class="p-4">
-            <ChartDoughnut
-              id="ethnicityDistributionChart"
-              :data="ethnicityDistributionChartData.data"
-              :labels="ethnicityDistributionChartData.labels"
-              class="h-64"
-            />
-          </GenericCardContent>
+          <PlotDoughnut
+            id="ethnicityDistributionChart"
+            :data="ethnicityDistributionChartData.data"
+            :labels="ethnicityDistributionChartData.labels"
+            class="h-64"
+          />
         </GenericCard>
       </div>
     </div>

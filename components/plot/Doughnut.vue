@@ -23,17 +23,9 @@ export default defineComponent({
         return plotColours;
       },
     },
-    options: {
-      type: Object,
-      default: null,
-    },
     legend: {
       type: Boolean,
       default: true,
-    },
-    legendLimit: {
-      type: Number,
-      default: 8,
     },
     id: {
       type: String,
@@ -47,11 +39,23 @@ export default defineComponent({
         values: props.data as number[],
         labels: props.labels as string[],
         type: "pie",
+        marker: {
+          colors: props.colors as string[],
+        },
+        hoverinfo: "label+value",
+        textinfo: "none",
+        hole: 0.5,
       },
     ];
 
     const layout = {
-      font: { size: 18 },
+      autosize: true,
+      margin: { l: 10, t: 10, r: 10, b: 10 },
+      showlegend: props.legend,
+      legend: {
+        x: 1,
+        y: 0.5,
+      },
     };
 
     const config = { responsive: true };
