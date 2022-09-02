@@ -268,3 +268,28 @@ export const tailwindColours = {
     900: "#881337",
   },
 };
+
+export const plotColours = [
+  tailwindColours.indigo[400],
+  tailwindColours.orange[400],
+  tailwindColours.emerald[400],
+  tailwindColours.blue[400],
+  tailwindColours.rose[400],
+  tailwindColours.purple[400],
+  tailwindColours.yellow[400],
+  tailwindColours.cyan[400],
+  tailwindColours.pink[400],
+  tailwindColours.lime[400],
+  tailwindColours.blue[400],
+  tailwindColours.amber[400],
+  tailwindColours.teal[400],
+  tailwindColours.fuchsia[400],
+  tailwindColours.red[400],
+  tailwindColours.neutral[400],
+  "#63C",
+  "#E67300",
+  "#8B0707",
+  "#329262",
+  "#5574A6",
+  "#651067",
+];

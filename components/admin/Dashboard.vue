@@ -58,30 +58,28 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
         <GenericCardHeader>
           <TextH2> Error History </TextH2>
         </GenericCardHeader>
-        <GenericCardContent class="p-4">
-          <ChartTimeSeries
-            id="error-history-time-series"
-            class="h-64"
-            :data="errorsHistory"
-            y-label="New Errors"
-            @click="errorHistoryPointClickHandler"
-          />
-        </GenericCardContent>
+        <PlotTimeSeries
+          id="error-history-time-series"
+          class="h-64"
+          :x="errorsHistoryData.x"
+          :y="errorsHistoryData.y"
+          y-label="New Errors"
+          @click="errorHistoryPointClickHandler"
+        />
       </GenericCard>
       <!-- WorkItems history -->
       <GenericCard v-if="workitemsHistory">
         <GenericCardHeader>
           <TextH2> Work Items History </TextH2>
         </GenericCardHeader>
-        <GenericCardContent class="p-4">
-          <ChartTimeSeries
-            id="workitem-history-time-series"
-            class="h-64"
-            :data="workitemsHistory"
-            y-label="New Work Items"
-            @click="workitemHistoryPointClickHandler"
-          />
-        </GenericCardContent>
+        <PlotTimeSeries
+          id="workitem-history-time-series"
+          class="h-64"
+          :x="workitemsHistoryData.x"
+          :y="workitemsHistoryData.y"
+          y-label="New Work Items"
+          @click="workitemHistoryPointClickHandler"
+        />
       </GenericCard>
     </div>
   </div>
@@ -89,18 +87,59 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
 
 <script lang="ts">
 import { AdminCountsSchema, HistoryPoint } from "@ukkidney/ukrdc-axios-ts";
-import { HistoryPointEvent } from "~/interfaces/charts";
+import { PlotDatum } from "plotly.js";
 import useApi from "~/helpers/useApi";
-import { getPointDateRange } from "~/helpers/utils/chartUtils";
+import { getPointDateRange, unpackHistoryPoints } from "~/helpers/utils/chartUtils";
 
 export default defineComponent({
   setup() {
     const router = useRouter();
     const { adminApi } = useApi();
 
-    const errorsHistory = ref<HistoryPoint[]>();
-    const workitemsHistory = ref<HistoryPoint[]>();
     const counts = ref<AdminCountsSchema>();
+
+    // Errors history
+    const errorsHistory = ref<HistoryPoint[]>();
+    const errorsHistoryData = computed(() => {
+      return unpackHistoryPoints(errorsHistory.value ?? []);
+    });
+
+    // Work item history
+    const workitemsHistory = ref<HistoryPoint[]>();
+    const workitemsHistoryData = computed(() => {
+      return unpackHistoryPoints(workitemsHistory.value ?? []);
+    });
+
+    // History plot click handler
+
+    function errorHistoryPointClickHandler(point: PlotDatum) {
+      if (point.x) {
+        const pointRange = getPointDateRange(point.x as string);
+        router.push({
+          path: "/messages",
+          query: {
+            since: pointRange.since,
+            until: pointRange.until,
+            status: ["ERROR", "RESOLVED"],
+          },
+        });
+      }
+    }
+
+    function workitemHistoryPointClickHandler(point: PlotDatum) {
+      if (point.x) {
+        const pointRange = getPointDateRange(point.x as string);
+        router.push({
+          path: "/workitems",
+          query: {
+            since: pointRange.since,
+            until: pointRange.until,
+          },
+        });
+      }
+    }
+
+    // Data fetching
 
     function fetchAdminDashboard() {
       adminApi.getFullWorkitemHistory().then((response) => {
@@ -115,38 +154,15 @@ export default defineComponent({
       });
     }
 
-    // History plot click handler
-
-    function errorHistoryPointClickHandler(point: HistoryPointEvent) {
-      const pointRange = getPointDateRange(point);
-      router.push({
-        path: "/messages",
-        query: {
-          since: pointRange.since,
-          until: pointRange.until,
-          status: ["ERROR", "RESOLVED"],
-        },
-      });
-    }
-
-    function workitemHistoryPointClickHandler(point: HistoryPointEvent) {
-      const pointRange = getPointDateRange(point);
-      router.push({
-        path: "/workitems",
-        query: {
-          since: pointRange.since,
-          until: pointRange.until,
-        },
-      });
-    }
-
     onMounted(() => {
       fetchAdminDashboard();
     });
 
     return {
       errorsHistory,
+      errorsHistoryData,
       workitemsHistory,
+      workitemsHistoryData,
       counts,
       errorHistoryPointClickHandler,
       workitemHistoryPointClickHandler,
