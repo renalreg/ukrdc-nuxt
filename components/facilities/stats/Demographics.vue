@@ -5,22 +5,21 @@
         <GenericCardHeader>
           <TextH2> Age Distribution </TextH2>
         </GenericCardHeader>
-        <GenericCardContent class="p-4">
-          <ChartBar
-            id="ageDistributionChart"
-            :data="ageDistributionChartData.data"
-            :labels="ageDistributionChartData.labels"
-            y-label="Number of Patients"
-            class="h-64"
-          />
-        </GenericCardContent>
+        <PlotBar
+          id="ageDistributionChart"
+          :y="ageDistributionChartData.data"
+          :x="ageDistributionChartData.labels"
+          y-label="Number of Patients"
+          x-label="Age"
+          class="h-64"
+          hovertemplate="Age: <b>%{x}</b><br>%{y}<extra></extra>"
+        />
       </GenericCard>
       <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <GenericCard>
           <GenericCardHeader>
             <TextH2> Gender Distribution </TextH2>
           </GenericCardHeader>
-
           <PlotDoughnut
             id="genderDistributionChart"
             :data="genderDistributionChartData.data"
