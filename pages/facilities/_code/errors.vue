@@ -47,7 +47,7 @@ import { computed, defineComponent, onMounted, ref, useRouter, watch } from "@nu
 import { FacilityDetailsSchema, HistoryPoint, MessageSchema } from "@ukkidney/ukrdc-axios-ts";
 import { PlotDatum } from "plotly.js";
 import useApi from "~/helpers/useApi";
-import { getPointDateRange } from "~/helpers/utils/chartUtils";
+import { getPointDateRange, unpackHistoryPoints } from "~/helpers/utils/chartUtils";
 
 export default defineComponent({
   props: {
@@ -64,13 +64,7 @@ export default defineComponent({
     // Data refs
     const facilityErrorsHistory = ref<HistoryPoint[]>();
     const facilityErrorsHistoryData = computed(() => {
-      const x: string[] = [];
-      const y: number[] = [];
-      facilityErrorsHistory.value?.forEach((point) => {
-        x.push(point.time);
-        y.push(point.count);
-      });
-      return { x, y };
+      return unpackHistoryPoints(facilityErrorsHistory.value ?? []);
     });
 
     // Failing NIs data
@@ -83,7 +77,7 @@ export default defineComponent({
 
     function historyPointClickHandler(point: PlotDatum) {
       if (point.x) {
-        const pointRange = getPointDateRange(point.x);
+        const pointRange = getPointDateRange(point.x as string);
         router.push({
           path: "/messages",
           query: {
