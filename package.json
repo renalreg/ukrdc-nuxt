@@ -20,7 +20,6 @@
     "@okta/okta-auth-js": "^6.0.0",
     "@sentry/tracing": "^6.13.2",
     "@ukkidney/ukrdc-axios-ts": "^1.0.0",
-    "axios": "^0.26.1",
     "check-ie": "^2.0.1",
     "defu": "^5.0.1",
     "floating-vue": "^1.0.0-beta.18",
