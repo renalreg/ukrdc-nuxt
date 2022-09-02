@@ -5,14 +5,14 @@
       <GenericCardHeader>
         <TextH2> Error History </TextH2>
       </GenericCardHeader>
-      <GenericCardContent class="p-4">
-        <ChartTimeSeries
-          class="h-64"
-          :data="facilityErrorsHistory"
-          y-label="New Errors"
-          @click="historyPointClickHandler"
-        />
-      </GenericCardContent>
+      <PlotTimeSeries
+        class="h-64"
+        :x="facilityErrorsHistoryData.x"
+        :y="facilityErrorsHistoryData.y"
+        :fixedrange="false"
+        y-label="New Errors"
+        @click="historyPointClickHandler"
+      />
     </GenericCard>
 
     <!-- Failing NIs -->
@@ -43,11 +43,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, useRouter, watch } from "@nuxtjs/composition-api";
+import { computed, defineComponent, onMounted, ref, useRouter, watch } from "@nuxtjs/composition-api";
 import { FacilityDetailsSchema, HistoryPoint, MessageSchema } from "@ukkidney/ukrdc-axios-ts";
+import { PlotDatum } from "plotly.js";
 import useApi from "~/helpers/useApi";
-import { getPointDateRange } from "~/helpers/utils/chartUtils";
-import { HistoryPointEvent } from "~/interfaces/charts";
+import { getPointDateRange, unpackHistoryPoints } from "~/helpers/utils/chartUtils";
 
 export default defineComponent({
   props: {
@@ -63,6 +63,9 @@ export default defineComponent({
 
     // Data refs
     const facilityErrorsHistory = ref<HistoryPoint[]>();
+    const facilityErrorsHistoryData = computed(() => {
+      return unpackHistoryPoints(facilityErrorsHistory.value ?? []);
+    });
 
     // Failing NIs data
     const errorMessages = ref([] as MessageSchema[]);
@@ -72,17 +75,19 @@ export default defineComponent({
 
     // History plot click handler
 
-    function historyPointClickHandler(point: HistoryPointEvent) {
-      const pointRange = getPointDateRange(point);
-      router.push({
-        path: "/messages",
-        query: {
-          since: pointRange.since,
-          until: pointRange.until,
-          facility: props.facility.id,
-          status: ["ERROR", "RESOLVED"],
-        },
-      });
+    function historyPointClickHandler(point: PlotDatum) {
+      if (point.x) {
+        const pointRange = getPointDateRange(point.x as string);
+        router.push({
+          path: "/messages",
+          query: {
+            since: pointRange.since,
+            until: pointRange.until,
+            facility: props.facility.id,
+            status: ["ERROR", "RESOLVED"],
+          },
+        });
+      }
     }
 
     // Data fetching
@@ -123,6 +128,7 @@ export default defineComponent({
 
     return {
       facilityErrorsHistory,
+      facilityErrorsHistoryData,
       errorMessages,
       errorMessagesPage,
       errorMessagesSize,

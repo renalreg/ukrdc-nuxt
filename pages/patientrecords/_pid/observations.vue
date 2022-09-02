@@ -134,7 +134,7 @@ export default defineComponent({
     watch(
       [
         page,
-        () => JSON.stringify(selectedCodes), // Stringify to watch for actual value changes
+        () => JSON.stringify(selectedCodes.value), // Stringify to watch for actual value changes
       ],
       () => {
         fetchObservations();
