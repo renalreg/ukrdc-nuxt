@@ -55,7 +55,7 @@ export default defineComponent({
         type: "scatter",
         line: {
           color: tailwindColours.indigo[500],
-          width: 2.5,
+          width: 2,
         },
         hoverinfo: props.hoverinfo as PlotData["hoverinfo"],
         hovertemplate: props.hovertemplate,
