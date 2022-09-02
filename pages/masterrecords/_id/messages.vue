@@ -101,7 +101,7 @@ export default defineComponent({
       [
         page,
         orderBy,
-        () => JSON.stringify(dateRange), // Stringify to watch for actual value changes
+        () => JSON.stringify(dateRange.value), // Stringify to watch for actual value changes
       ],
       () => {
         fetchMessages();

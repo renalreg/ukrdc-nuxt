@@ -146,8 +146,8 @@ export default defineComponent({
         orderBy,
         selectedFacility,
         nationalId,
-        () => JSON.stringify(dateRange), // Stringify to watch for actual value changes
-        () => JSON.stringify(statuses), // Stringify to watch for actual value changes
+        () => JSON.stringify(dateRange.value), // Stringify to watch for actual value changes
+        () => JSON.stringify(statuses.value), // Stringify to watch for actual value changes
       ],
       () => {
         getMessages();
