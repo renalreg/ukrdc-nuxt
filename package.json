@@ -21,7 +21,7 @@
     "@sentry/tracing": "^6.13.2",
     "@ukkidney/ukrdc-axios-ts": "^1.1.0-beta.2",
     "check-ie": "^2.0.1",
-    "defu": "^5.0.1",
+    "defu": "^6.1.0",
     "floating-vue": "^1.0.0-beta.18",
     "luxon": "^3.0.3",
     "nuxt": "^2.15.8",
