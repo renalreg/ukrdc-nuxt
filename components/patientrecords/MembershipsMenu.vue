@@ -48,7 +48,7 @@ export default defineComponent({
       default: false,
     },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const { $toast } = useContext();
     const { hasPermission } = usePermissions();
     const { masterRecordsApi } = useApi();
@@ -100,6 +100,7 @@ export default defineComponent({
           });
         })
         .finally(() => {
+          emit("refresh");
           closeMenu();
         });
     }

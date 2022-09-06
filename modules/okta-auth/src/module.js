@@ -1,5 +1,5 @@
 import { resolve, join } from "path";
-import defu from "defu";
+import { defu } from "defu";
 
 const moduleDefaults = {
   namespace: "oktaAuth",
