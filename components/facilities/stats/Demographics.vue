@@ -2,8 +2,9 @@
   <div>
     <div v-if="facilityDemographicStats">
       <GenericCard class="mb-4">
-        <GenericCardHeader>
-          <TextH2> Age Distribution </TextH2>
+        <GenericCardHeader class="flex items-center">
+          <TextH2 class="flex-1"> Age Distribution </TextH2>
+          <GenericButtonMini @click="exportAgeDistribution">Export</GenericButtonMini>
         </GenericCardHeader>
         <PlotBar
           id="ageDistributionChart"
@@ -17,8 +18,9 @@
       </GenericCard>
       <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <GenericCard>
-          <GenericCardHeader>
-            <TextH2> Gender Distribution </TextH2>
+          <GenericCardHeader class="flex items-center">
+            <TextH2 class="flex-1"> Gender Distribution </TextH2>
+            <GenericButtonMini @click="exportGenderDistribution">Export</GenericButtonMini>
           </GenericCardHeader>
           <PlotDoughnut
             id="genderDistributionChart"
@@ -28,8 +30,9 @@
           />
         </GenericCard>
         <GenericCard>
-          <GenericCardHeader>
-            <TextH2> Ethnicity Distribution </TextH2>
+          <GenericCardHeader class="flex items-center">
+            <TextH2 class="flex-1"> Ethnicity Distribution </TextH2>
+            <GenericButtonMini @click="exportEthnicityDistribution">Export</GenericButtonMini>
           </GenericCardHeader>
           <PlotDoughnut
             id="ethnicityDistributionChart"
@@ -49,6 +52,8 @@ import { FacilityDemographicStats, FacilityDetailsSchema } from "@ukkidney/ukrdc
 import { NumericChartData } from "~/interfaces/charts";
 import { formatGender } from "~/helpers/utils/codeUtils";
 import useApi from "~/helpers/useApi";
+import { buildCsv } from "~/helpers/utils/exportUtils";
+import { saveAs } from "~/helpers/utils/fileUtils";
 
 export default defineComponent({
   props: {
@@ -121,18 +126,52 @@ export default defineComponent({
           data.push(point.count);
         }
       }
-
       return {
         labels,
         data,
       };
     });
 
+    // Exporters
+
+    function exportAgeDistribution() {
+      const rows: (string | number)[][] = [["age", "count"]];
+      for (let i = 0; i < ageDistributionChartData.value.labels.length; i++) {
+        rows.push([ageDistributionChartData.value.labels[i], ageDistributionChartData.value.data[i]]);
+      }
+
+      const blob = new Blob([buildCsv(rows)], { type: "text/plain;charset=utf-8" });
+      saveAs(blob, `age-distribution-${props.facility.id}.csv`);
+    }
+
+    function exportGenderDistribution() {
+      const rows: (string | number)[][] = [["gender", "count"]];
+      for (let i = 0; i < genderDistributionChartData.value.labels.length; i++) {
+        rows.push([genderDistributionChartData.value.labels[i], genderDistributionChartData.value.data[i]]);
+      }
+
+      const blob = new Blob([buildCsv(rows)], { type: "text/plain;charset=utf-8" });
+      saveAs(blob, `gender-distribution-${props.facility.id}.csv`);
+    }
+
+    function exportEthnicityDistribution() {
+      const rows: (string | number)[][] = [["ethnicity", "count"]];
+      for (let i = 0; i < ethnicityDistributionChartData.value.labels.length; i++) {
+        rows.push([ethnicityDistributionChartData.value.labels[i], ethnicityDistributionChartData.value.data[i]]);
+      }
+
+      const blob = new Blob([buildCsv(rows)], { type: "text/plain;charset=utf-8" });
+      saveAs(blob, `ethnicity-distribution-${props.facility.id}.csv`);
+    }
+
     return {
       facilityDemographicStats,
       ageDistributionChartData,
       genderDistributionChartData,
       ethnicityDistributionChartData,
+      exportAgeDistribution,
+      exportGenderDistribution,
+      exportEthnicityDistribution,
     };
   },
 });
