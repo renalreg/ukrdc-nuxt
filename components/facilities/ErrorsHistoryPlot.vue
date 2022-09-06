@@ -5,8 +5,8 @@
       class="h-64"
       :x="facilityErrorsHistoryData.x"
       :y="facilityErrorsHistoryData.y"
-      :fixedrange="false"
       y-label="New Errors"
+      hovertemplate="<b>%{x}</b><br>New errors: %{y}<extra></extra>"
       @click="historyPointClickHandler"
     />
   </div>
