@@ -1,20 +1,5 @@
 <template>
   <div>
-    <!-- Error history -->
-    <GenericCard v-if="facilityErrorsHistory">
-      <GenericCardHeader>
-        <TextH2> Error History </TextH2>
-      </GenericCardHeader>
-      <PlotTimeSeries
-        class="h-64"
-        :x="facilityErrorsHistoryData.x"
-        :y="facilityErrorsHistoryData.y"
-        :fixedrange="false"
-        y-label="New Errors"
-        @click="historyPointClickHandler"
-      />
-    </GenericCard>
-
     <!-- Failing NIs -->
     <GenericCard v-if="errorMessages && errorMessagesTotal > 0" class="mt-4">
       <GenericCardHeader>
@@ -43,11 +28,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useRouter, watch } from "@nuxtjs/composition-api";
-import { FacilityDetailsSchema, HistoryPoint, MessageSchema } from "@ukkidney/ukrdc-axios-ts";
+import { defineComponent, onMounted, ref, useRouter, watch } from "@nuxtjs/composition-api";
+import { FacilityDetailsSchema, MessageSchema } from "@ukkidney/ukrdc-axios-ts";
 import { PlotDatum } from "plotly.js";
 import useApi from "~/helpers/useApi";
-import { getPointDateRange, unpackHistoryPoints } from "~/helpers/utils/chartUtils";
+import { getPointDateRange } from "~/helpers/utils/chartUtils";
 
 export default defineComponent({
   props: {
@@ -56,25 +41,16 @@ export default defineComponent({
       required: true,
     },
   },
-
   setup(props) {
     const router = useRouter();
     const { facilitiesApi } = useApi();
 
-    // Data refs
-    const facilityErrorsHistory = ref<HistoryPoint[]>();
-    const facilityErrorsHistoryData = computed(() => {
-      return unpackHistoryPoints(facilityErrorsHistory.value ?? []);
-    });
-
     // Failing NIs data
     const errorMessages = ref([] as MessageSchema[]);
     const errorMessagesPage = ref(1);
-    const errorMessagesSize = ref(5);
+    const errorMessagesSize = ref(10);
     const errorMessagesTotal = ref(0);
-
     // History plot click handler
-
     function historyPointClickHandler(point: PlotDatum) {
       if (point.x) {
         const pointRange = getPointDateRange(point.x as string);
@@ -89,9 +65,7 @@ export default defineComponent({
         });
       }
     }
-
     // Data fetching
-
     function updateErrorMessages() {
       facilitiesApi
         .getFacilityPatientsLatestErrors({
@@ -107,28 +81,13 @@ export default defineComponent({
         });
     }
 
-    function updateErrorsHistory() {
-      facilitiesApi
-        .getFacilityErrrorsHistory({
-          code: props.facility.id,
-        })
-        .then((response) => {
-          facilityErrorsHistory.value = response.data;
-        });
-    }
-
     onMounted(() => {
       updateErrorMessages();
-      updateErrorsHistory();
     });
-
     watch(errorMessagesPage, () => {
       updateErrorMessages();
     });
-
     return {
-      facilityErrorsHistory,
-      facilityErrorsHistoryData,
       errorMessages,
       errorMessagesPage,
       errorMessagesSize,

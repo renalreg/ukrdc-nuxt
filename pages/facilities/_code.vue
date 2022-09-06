@@ -14,18 +14,19 @@
 
     <div class="mb-6"><GenericTabsNavigation :tabs="tabs" /></div>
 
-    <NuxtChild v-if="facility" :facility="facility" />
+    <NuxtChild v-if="facility && extracts" :facility="facility" :extracts="extracts" />
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
 
-import { FacilityDetailsSchema } from "@ukkidney/ukrdc-axios-ts";
+import { FacilityDetailsSchema, FacilityExtractsSchema } from "@ukkidney/ukrdc-axios-ts";
 import usePermissions from "~/helpers/usePermissions";
 
 import { TabItem } from "~/interfaces/tabs";
 import useApi from "~/helpers/useApi";
+import { insertIf } from "~/helpers/utils/arrayUtils";
 
 export default defineComponent({
   setup() {
@@ -43,19 +44,44 @@ export default defineComponent({
 
     // Navigation
 
-    const tabs = [
-      {
-        name: "Overview",
-        href: `/facilities/${route.value.params.code}`,
-      },
-      {
-        name: "Errors",
-        href: `/facilities/${route.value.params.code}/errors`,
-      },
-    ] as TabItem[];
+    // const tabs = [
+    //   {
+    //     name: "Overview",
+    //     href: `/facilities/${route.value.params.code}`,
+    //   },
+    //   {
+    //     name: "Errors",
+    //     href: `/facilities/${route.value.params.code}/errors`,
+    //   },
+    // ] as TabItem[];
+
+    const tabs = computed<TabItem[]>(() => {
+      return [
+        {
+          name: "Overview",
+          href: `/facilities/${route.value.params.code}`,
+        },
+        {
+          name: "Errors",
+          href: `/facilities/${route.value.params.code}/errors`,
+        },
+        ...insertIf(showStats.value, {
+          name: "Demographics",
+          href: `/facilities/${route.value.params.code}/demographics`,
+        }),
+      ];
+    });
 
     // Data refs
     const facility = ref<FacilityDetailsSchema>();
+    const extracts = ref<FacilityExtractsSchema>();
+
+    const showStats = computed<boolean>(() => {
+      if (extracts.value) {
+        return extracts.value.ukrdc > 0;
+      }
+      return false;
+    });
 
     // Data fetching
 
@@ -67,6 +93,13 @@ export default defineComponent({
         .then((response) => {
           facility.value = response.data;
         });
+      facilitiesApi
+        .getFacilityExtracts({
+          code: code.value,
+        })
+        .then((response) => {
+          extracts.value = response.data;
+        });
     });
 
     return {
@@ -74,6 +107,7 @@ export default defineComponent({
       tabs,
       code,
       facility,
+      extracts,
     };
   },
 
