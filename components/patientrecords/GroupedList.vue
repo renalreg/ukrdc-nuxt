@@ -42,7 +42,11 @@
     <div class="flex items-center bg-gray-50 py-1 pl-4 sm:pl-6">
       <TextH4 class="flex-grow">Membership Records</TextH4>
       <div v-if="hasPermission('ukrdc:memberships:create')" class="mr-2 flex-grow-0">
-        <PatientrecordsMembershipsMenu :master-record="masterRecord" :show-create-pkb-membership="!hasPKBMembership" />
+        <PatientrecordsMembershipsMenu
+          :master-record="masterRecord"
+          :show-create-pkb-membership="!hasPKBMembership"
+          @refresh="$emit('refresh')"
+        />
       </div>
     </div>
     <div v-if="groupedRecords.memberships.length < 1" class="py-2 pl-4 sm:pl-6">
