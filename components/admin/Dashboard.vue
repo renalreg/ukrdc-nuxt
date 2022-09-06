@@ -64,6 +64,7 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
           :x="errorsHistoryData.x"
           :y="errorsHistoryData.y"
           y-label="New Errors"
+          hovertemplate="<b>%{x}</b><br>New errors: %{y}<extra></extra>"
           @click="errorHistoryPointClickHandler"
         />
       </GenericCard>
@@ -78,6 +79,7 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
           :x="workitemsHistoryData.x"
           :y="workitemsHistoryData.y"
           y-label="New Work Items"
+          hovertemplate="<b>%{x}</b><br>New work items: %{y}<extra></extra>"
           @click="workitemHistoryPointClickHandler"
         />
       </GenericCard>

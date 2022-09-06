@@ -4,8 +4,8 @@ allowing components to interact with a shared OktaAuth instance.
 */
 
 import { OktaAuth } from "@okta/okta-auth-js";
+import { defu } from "defu";
 import urljoin from "url-join";
-import defu from "defu";
 
 class NuxtOktaAuth extends OktaAuth {
   constructor(options, router) {
