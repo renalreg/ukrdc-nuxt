@@ -72,7 +72,7 @@ export default defineComponent({
 
     onMounted(() => {
       facilitiesApi
-        .getFacilityStatsDemographics({
+        .getFacilityDemographics({
           code: props.facility.id,
         })
         .then((response) => {
