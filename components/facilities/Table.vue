@@ -90,8 +90,8 @@ Table of facilities and their basic statistics
             <div class="flex items-center gap-2">
               <div>
                 {{
-                  facility.latestMessage.lastMessageReceivedAt
-                    ? formatDate(facility.latestMessage.lastMessageReceivedAt, (t = false))
+                  facility.lastMessageReceivedAt
+                    ? formatDate(facility.lastMessageReceivedAt, (t = false))
                     : "> Year Ago"
                 }}
               </div>
