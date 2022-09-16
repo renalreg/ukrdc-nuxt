@@ -8,7 +8,9 @@
             <TextDt>Full Name</TextDt>
             <TextDd>
               <div class="flex items-center gap-2">
-                <div class="capitalize">{{ record.givenname.toLowerCase() }} {{ record.surname.toLowerCase() }}</div>
+                <div class="blurred capitalize">
+                  {{ record.givenname.toLowerCase() }} {{ record.surname.toLowerCase() }}
+                </div>
                 <TracingBadge v-if="tracingRecord" :verified="nameMatchesTracing" />
               </div>
             </TextDd>
@@ -18,7 +20,7 @@
             <TextDt>Gender</TextDt>
             <TextDd>
               <div class="flex items-center gap-2">
-                <div>{{ formatGender(record.gender) }}</div>
+                <div class="blurred">{{ formatGender(record.gender) }}</div>
                 <TracingBadge v-if="tracingRecord" :verified="tracingRecord.patient.gender === record.gender" />
               </div>
             </TextDd>
@@ -28,7 +30,7 @@
             <TextDt>Date of Birth</TextDt>
             <TextDd>
               <div class="flex items-center gap-2">
-                <div>{{ formatDate(record.dateOfBirth, (t = false)) }}</div>
+                <div class="blurred">{{ formatDate(record.dateOfBirth, (t = false)) }}</div>
                 <TracingBadge v-if="tracingRecord" :verified="birthTimeMatchesTracing" />
               </div>
             </TextDd>
@@ -38,7 +40,7 @@
             <TextDt class="font-medium text-gray-500">National ID</TextDt>
             <TextDd>
               <div class="flex items-center gap-2">
-                <div>{{ record.nationalid }}</div>
+                <div class="blurred">{{ record.nationalid }}</div>
                 <TracingBadge
                   v-if="tracingRecord && record.nationalidType !== 'UKRDC'"
                   :verified="tracingRecord.localpatientid.trim() === record.nationalid.trim()"
@@ -236,6 +238,7 @@ export default defineComponent({
     // Dynamic UI elements
 
     const latestMessageInfo = computed(() => {
+      // TODO: Redact file names if in demo mode
       if (!latestMessage.value) {
         return null;
       }

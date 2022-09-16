@@ -40,6 +40,7 @@ export default defineComponent({
     const message = ref<MessageSchema>();
 
     const messageSummary = computed(() => {
+      // TODO: Redact numbers
       if (message.value) {
         return MessageSummary(message.value);
       }

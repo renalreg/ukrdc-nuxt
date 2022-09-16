@@ -4,7 +4,7 @@
       <!-- Heading -->
       <div class="col-span-5 lg:col-span-3">
         <div class="truncate">
-          <TextL1 class="truncate md:inline">
+          <TextL1 class="blurred truncate md:inline">
             {{ item.filename || "No filename found" }}
           </TextL1>
           <TextL1 class="truncate md:inline">
@@ -40,7 +40,7 @@
         /></GenericButton>
         <div class="flex-grow">
           <TextL1>Patient Number</TextL1>
-          <TextP class="mt-2">
+          <TextP class="blurred mt-2">
             {{ item.ni || "None Found" }}
           </TextP>
         </div>
@@ -69,7 +69,7 @@ export default defineComponent({
   },
   setup(props) {
     const itemDescription = computed(() => {
-      return MessageSummary(props.item);
+      return MessageSummary(props.item).replace(/\d/g, "0");
     });
     return { itemDescription, formatDate };
   },

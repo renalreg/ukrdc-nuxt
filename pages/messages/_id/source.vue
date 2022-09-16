@@ -5,7 +5,7 @@
       <GenericCodeReader
         :content="source.content"
         :content-type="source.contentType"
-        class="box-border flex h-full flex-col overflow-x-scroll"
+        class="blurred box-border flex h-full flex-col overflow-x-scroll"
       />
     </GenericCard>
 

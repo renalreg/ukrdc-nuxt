@@ -6,27 +6,27 @@
         <GenericCardMini class="grid w-full grid-cols-1 gap-4 px-4 py-2 sm:grid-cols-3">
           <div>
             <TextL1> Names </TextL1>
-            <TextP v-for="item in record.patient.names" :key="item.given + item.family">
+            <TextP v-for="item in record.patient.names" :key="item.given + item.family" class="blurred">
               {{ item.given }} {{ item.family }}
             </TextP>
           </div>
           <div>
             <TextL1> Gender </TextL1>
-            <TextP>{{ formatGender(record.patient.gender) }}</TextP>
+            <TextP class="blurred">{{ formatGender(record.patient.gender) }}</TextP>
           </div>
           <div>
             <TextL1> Date of Birth </TextL1>
-            <TextP>{{ formatDate(record.patient.birthTime, (t = false)) }}</TextP>
+            <TextP class="blurred">{{ formatDate(record.patient.birthTime, (t = false)) }}</TextP>
           </div>
           <div>
             <TextL1> Date of Death </TextL1>
-            <TextP>
+            <TextP class="blurred">
               {{ record.patient.deathTime ? formatDate(record.patient.deathTime, (t = false)) : "N/A" }}
             </TextP>
           </div>
           <div>
             <TextL1> Ethnicity </TextL1>
-            <TextP>
+            <TextP class="blurred">
               {{ record.patient.ethnicGroupDescription || record.patient.ethnicGroupCode || "Unknown" }}
             </TextP>
           </div>
@@ -63,10 +63,10 @@
               </div>
               <div class="flex flex-1 items-center justify-between truncate">
                 <div class="flex-1 truncate px-4 py-2">
-                  <TextB class="truncate">
+                  <TextB class="blurred truncate">
                     {{ item.patientid }}
                   </TextB>
-                  <TextP>{{ item.organization }}</TextP>
+                  <TextP class="blurred">{{ item.organization }}</TextP>
                 </div>
               </div>
             </GenericCardMini>
@@ -83,7 +83,7 @@
 
       <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
         <li v-for="item in record.patient.addresses" :key="item.street" class="col-span-1">
-          <GenericCardMini class="w-full px-4 py-2">
+          <GenericCardMini class="blurred w-full px-4 py-2">
             <TextB>
               {{ item.street }}
             </TextB>
@@ -155,7 +155,7 @@
           :key="`gp-info-${index}`"
           class="col-span-1"
         >
-          <GenericCardMini class="w-full px-4 py-2">
+          <GenericCardMini class="blurred w-full px-4 py-2">
             <TextB>{{ info.type }} Information</TextB>
             <TextP>{{ info.gpname || "GP name not known" }}</TextP>
             <TextP>{{ info.street }}</TextP>
@@ -164,7 +164,7 @@
           </GenericCardMini>
         </li>
         <li v-if="!record.patient.familydoctor.gpInfo">
-          <GenericCardMini class="w-full px-4 py-2">
+          <GenericCardMini class="blurred w-full px-4 py-2">
             <TextB>GP Information</TextB>
             <TextP>{{ record.patient.familydoctor.gpname || "GP name not known" }}</TextP>
             <TextP>{{ record.patient.familydoctor.street }}</TextP>

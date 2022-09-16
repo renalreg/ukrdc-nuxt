@@ -56,7 +56,10 @@
         <TextH2>Error message</TextH2>
       </GenericCardHeader>
       <GenericCardContent>
-        <div class="whitespace-pre-wrap font-mono">{{ message.error.trim() }}</div>
+        <div class="whitespace-pre-wrap font-mono">
+          <!-- TODO: Redact numbers -->
+          {{ message.error.trim() }}
+        </div>
       </GenericCardContent>
     </GenericCard>
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="blurred">
     <GenericModalConfirm
       ref="deleteResultAlert"
       title="Delete Result Item"

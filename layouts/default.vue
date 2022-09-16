@@ -131,4 +131,8 @@ html {
 .v-popper--theme-dropdown .v-popper__inner {
   @apply rounded-md border border-gray-300 p-4 shadow-sm;
 }
+
+.blurred {
+  filter: blur(8px);
+}
 </style>
