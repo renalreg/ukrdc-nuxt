@@ -8,7 +8,9 @@
             <TextDt>Full Name</TextDt>
             <TextDd>
               <div class="flex items-center gap-2">
-                <div class="capitalize">{{ record.givenname.toLowerCase() }} {{ record.surname.toLowerCase() }}</div>
+                <div class="sensitive capitalize">
+                  {{ record.givenname.toLowerCase() }} {{ record.surname.toLowerCase() }}
+                </div>
                 <TracingBadge v-if="tracingRecord" :verified="nameMatchesTracing" />
               </div>
             </TextDd>
@@ -18,7 +20,7 @@
             <TextDt>Gender</TextDt>
             <TextDd>
               <div class="flex items-center gap-2">
-                <div>{{ formatGender(record.gender) }}</div>
+                <div class="sensitive">{{ formatGender(record.gender) }}</div>
                 <TracingBadge v-if="tracingRecord" :verified="tracingRecord.patient.gender === record.gender" />
               </div>
             </TextDd>
@@ -28,7 +30,7 @@
             <TextDt>Date of Birth</TextDt>
             <TextDd>
               <div class="flex items-center gap-2">
-                <div>{{ formatDate(record.dateOfBirth, (t = false)) }}</div>
+                <div class="sensitive">{{ formatDate(record.dateOfBirth, (t = false)) }}</div>
                 <TracingBadge v-if="tracingRecord" :verified="birthTimeMatchesTracing" />
               </div>
             </TextDd>
@@ -38,7 +40,7 @@
             <TextDt class="font-medium text-gray-500">National ID</TextDt>
             <TextDd>
               <div class="flex items-center gap-2">
-                <div>{{ record.nationalid }}</div>
+                <div class="sensitive">{{ record.nationalid }}</div>
                 <TracingBadge
                   v-if="tracingRecord && record.nationalidType !== 'UKRDC'"
                   :verified="tracingRecord.localpatientid.trim() === record.nationalid.trim()"
@@ -130,6 +132,7 @@ import { formatDate, datesAreEqual } from "@/helpers/utils/dateUtils";
 import { formatGender } from "@/helpers/utils/codeUtils";
 import { isTracing } from "@/helpers/utils/recordUtils";
 import useApi from "~/helpers/useApi";
+import useSensitive from "~/helpers/useSensitive";
 
 export default defineComponent({
   props: {
@@ -146,6 +149,7 @@ export default defineComponent({
 
   setup(props) {
     const { masterRecordsApi } = useApi();
+    const { sensitive } = useSensitive();
 
     // Data refs
 
@@ -241,19 +245,19 @@ export default defineComponent({
       }
       if (latestMessage.value.msgStatus === "ERROR") {
         if (latestMessage.value.received) {
-          return `Latest file ${latestMessage.value.filename} failed from ${
+          return `Latest file ${sensitive(latestMessage.value.filename)} failed from ${
             latestMessage.value.facility
           } on ${formatDate(latestMessage.value.received, false)}`;
         } else {
-          return `Latest file ${latestMessage.value.filename} failed from ${latestMessage.value.facility}`;
+          return `Latest file ${sensitive(latestMessage.value.filename)} failed from ${latestMessage.value.facility}`;
         }
       }
       if (latestMessage.value.received) {
-        return `Latest file ${latestMessage.value.filename} recieved from ${
+        return `Latest file ${sensitive(latestMessage.value.filename)} recieved from ${
           latestMessage.value.facility
         } on ${formatDate(latestMessage.value.received, false)}`;
       } else {
-        return `Latest file ${latestMessage.value.filename} recieved from ${latestMessage.value.facility}`;
+        return `Latest file ${sensitive(latestMessage.value.filename)} recieved from ${latestMessage.value.facility}`;
       }
     });
 

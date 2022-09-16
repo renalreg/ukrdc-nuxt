@@ -5,19 +5,19 @@
       <GenericDlGrid>
         <GenericDlGridItem>
           <TextDt>Local ID</TextDt>
-          <TextDd>
+          <TextDd class="sensitive">
             {{ record.localpatientid }}
           </TextDd>
         </GenericDlGridItem>
 
         <GenericDlGridItem>
           <TextDt>UKRDC ID</TextDt>
-          <TextDd>{{ record.ukrdcid }}</TextDd>
+          <TextDd class="sensitive">{{ record.ukrdcid }}</TextDd>
         </GenericDlGridItem>
 
         <GenericDlGridItem>
           <TextDt>PID</TextDt>
-          <TextDd>{{ record.pid }}</TextDd>
+          <TextDd class="sensitive">{{ record.pid }}</TextDd>
         </GenericDlGridItem>
 
         <GenericDlGridItem>

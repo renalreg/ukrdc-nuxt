@@ -38,6 +38,16 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 - `DEPLOYMENT_ENV` - Deployment environment,used for system and error reporting. Defaults to 'development'.
 - `OAUTH_ISSUER` - Okta OAuth issuer
 - `APP_CLIENT_ID` - Okta OAuth client ID
+- `DEMO_MODE` - Enable demo mode, redacting sensitive information. Defaults to false. See details below.
+
+#### Demo mode
+
+Demo mode is enabled by setting `DEMO_MODE` to a truthy value (e.g. "true", 1). This will attempt to redact sensitive information from the UI, such as patient names, NHS numbers, and addresses.
+
+Demo mode is not intended to be a security feature, but rather a way to show the UI without exposing sensitive information.
+It only masks information visually, and does not prevent the information from being accessed through inspection such as the browser developer tools.
+
+This should **not** be used in any context other than a controlled demonstration by the developers.
 
 ## Developer notes
 

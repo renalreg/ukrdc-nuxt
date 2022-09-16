@@ -121,6 +121,8 @@ export default {
 
   // Runtime configuration variables
   publicRuntimeConfig: {
+    // Demo mode with redacted data
+    demoMode: process.env.DEMO_MODE || false,
     // Custom UKRDC API config
     api: {
       host: process.env.API_HOST || "",

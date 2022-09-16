@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="sensitive">
     <LoadingContainer :loading="!treatments">
       <TextP v-if="treatments && treatments.length <= 0" class="text-center"> No treatments on record </TextP>
       <div v-else-if="treatments && treatments.length > 0" class="flow-root">
@@ -70,19 +70,21 @@
                     </TextP>
                   </div>
                   <GenericInfoIcon>
-                    <p><b>From time: </b>{{ treatment.fromTime }}</p>
-                    <p><b>To time: </b>{{ treatment.toTime || "None" }}</p>
-                    <br />
-                    <p><b>Admin reason: </b>{{ treatment.admitReasonDesc || "None" }}</p>
-                    <p>
-                      <b>Admin reason code: </b>{{ treatment.admitReasonCodeStd }} / {{ treatment.admitReasonCode }}
-                    </p>
-                    <br />
-                    <p><b>Discharge reason: </b>{{ treatment.dischargeReasonDesc || "None" }}</p>
-                    <p>
-                      <b>Discharge reason code: </b>{{ treatment.dischargeReasonCodeStd || "None" }} /
-                      {{ treatment.dischargeReasonCode || "None" }}
-                    </p>
+                    <div class="sensitive">
+                      <p><b>From time: </b>{{ treatment.fromTime }}</p>
+                      <p><b>To time: </b>{{ treatment.toTime || "None" }}</p>
+                      <br />
+                      <p><b>Admin reason: </b>{{ treatment.admitReasonDesc || "None" }}</p>
+                      <p>
+                        <b>Admin reason code: </b>{{ treatment.admitReasonCodeStd }} / {{ treatment.admitReasonCode }}
+                      </p>
+                      <br />
+                      <p><b>Discharge reason: </b>{{ treatment.dischargeReasonDesc || "None" }}</p>
+                      <p>
+                        <b>Discharge reason code: </b>{{ treatment.dischargeReasonCodeStd || "None" }} /
+                        {{ treatment.dischargeReasonCode || "None" }}
+                      </p>
+                    </div>
                   </GenericInfoIcon>
                 </div>
               </div>

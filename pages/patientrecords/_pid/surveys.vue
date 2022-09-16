@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="sensitive">
     <patientrecordsSurveyViewer ref="surveyViewerModal" class="md:w-large w-full" />
 
     <LoadingContainer :loading="!surveys">

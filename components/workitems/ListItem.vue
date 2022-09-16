@@ -21,10 +21,10 @@
       </div>
       <!-- National ID -->
       <div class="text-right sm:text-left">
-        <TextP v-if="item.masterRecord">
+        <TextP v-if="item.masterRecord" class="sensitive">
           {{ item.masterRecord.nationalid.trim() }}
         </TextP>
-        <TextP v-else-if="item.person">
+        <TextP v-else-if="item.person" class="sensitive">
           {{ item.person.localid.trim() }}
         </TextP>
         <masterrecordsNationalIdTypeTag

@@ -47,7 +47,7 @@
                   </div>
                   <div v-if="previewResponse && !deleteInProgress">
                     <TextH3 class="mb-2">The following data will be permanantly deleted</TextH3>
-                    <ul class="list-disc">
+                    <ul class="sensitive list-disc">
                       <li>
                         Patient record {{ previewResponse.patientRecord.pid }} - UKRDCID
                         {{ previewResponse.patientRecord.ukrdcid }} - Created
