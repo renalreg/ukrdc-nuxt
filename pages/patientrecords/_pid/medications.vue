@@ -1,5 +1,5 @@
 <template>
-  <div class="blurred">
+  <div class="sensitive">
     <LoadingContainer :loading="!medications">
       <TextP v-if="medications && medications.length <= 0" class="text-center">No medications on record</TextP>
       <div v-if="activeMedications.length > 0" class="mt-4">

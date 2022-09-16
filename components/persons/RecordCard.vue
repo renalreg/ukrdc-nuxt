@@ -13,7 +13,7 @@
       <GenericCardDl>
         <GenericCardDi>
           <GenericCardDt>Local ID</GenericCardDt>
-          <GenericCardDd :class="highlight.includes('localid') ? highlightClasses : []" class="blurred">
+          <GenericCardDd :class="highlight.includes('localid') ? highlightClasses : []" class="sensitive">
             {{ realLocalID.localid }}
           </GenericCardDd>
         </GenericCardDi>
@@ -31,7 +31,7 @@
         <GenericCardDi>
           <GenericCardDt>Date of Birth</GenericCardDt>
           <dd
-            class="blurred mt-1 text-gray-900 sm:col-span-2 sm:mt-0"
+            class="sensitive mt-1 text-gray-900 sm:col-span-2 sm:mt-0"
             :class="highlight.includes('dateOfBirth') ? highlightClasses : []"
           >
             {{ formatDate(record.dateOfBirth, (t = false)) }}
@@ -40,7 +40,7 @@
         <GenericCardDi>
           <GenericCardDt>Assigned Gender</GenericCardDt>
           <dd
-            class="blurred mt-1 text-gray-900 sm:col-span-2 sm:mt-0"
+            class="sensitive mt-1 text-gray-900 sm:col-span-2 sm:mt-0"
             :class="highlight.includes('gender') ? highlightClasses : []"
           >
             {{ formatGender(record.gender) }}
@@ -49,7 +49,7 @@
         <GenericCardDi>
           <GenericCardDt>Date of Death</GenericCardDt>
           <dd
-            class="blurred mt-1 text-gray-900 sm:col-span-2 sm:mt-0"
+            class="sensitive mt-1 text-gray-900 sm:col-span-2 sm:mt-0"
             :class="highlight.includes('dateOfDeath') ? highlightClasses : []"
           >
             {{ record.dateOfDeath ? formatDate(record.dateOfDeath, (t = false)) : "N/A" }}

@@ -5,7 +5,7 @@
       <!-- Name, DoB, gender -->
       <div>
         <TextNameL1 :forename="item.givenname" :surname="item.surname" />
-        <TextP class="blurred mt-2 flex items-center">
+        <TextP class="sensitive mt-2 flex items-center">
           {{ formatDate(item.dateOfBirth, (t = false)) }}
           <b class="ml-1"> {{ formatGenderCharacter(item.gender) }}</b>
         </TextP>
@@ -19,7 +19,7 @@
       </div>
       <!-- National ID -->
       <div>
-        <TextP class="blurred">
+        <TextP class="sensitive">
           {{ item.nationalid.trim() }}
         </TextP>
         <masterrecordsNationalIdTypeTag class="mt-2" :nationalid-type="item.nationalidType" />

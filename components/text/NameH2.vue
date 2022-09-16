@@ -1,9 +1,9 @@
 <template>
   <span>
-    <TextH2 class="blurred inline capitalize" :class="highlight.includes('givenname') ? highlightClasses : []">{{
+    <TextH2 class="sensitive inline capitalize" :class="highlight.includes('givenname') ? highlightClasses : []">{{
       forename.toLowerCase()
     }}</TextH2>
-    <TextH2 class="blurred inline capitalize italic" :class="highlight.includes('surname') ? highlightClasses : []">{{
+    <TextH2 class="sensitive inline capitalize italic" :class="highlight.includes('surname') ? highlightClasses : []">{{
       surname.toLowerCase()
     }}</TextH2>
   </span>

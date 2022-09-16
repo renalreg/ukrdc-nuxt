@@ -15,7 +15,7 @@
 
         <div class="grid flex-grow grid-cols-6 items-center gap-2 py-2 pr-2 lg:grid-cols-12">
           <TextP class="col-span-2 truncate lg:col-span-3">{{ formatDate(item.accessEvent.time, true, true) }}</TextP>
-          <TextP class="blurred col-span-4 lg:col-span-4"> {{ item.accessEvent.userEmail }} </TextP>
+          <TextP class="sensitive col-span-4 lg:col-span-4"> {{ item.accessEvent.userEmail }} </TextP>
           <TextP class="col-span-2 lg:col-span-1"> <BadgeCrud :operation="item.operation" /> </TextP>
           <AuditResourceBadge class="col-span-4 lg:col-span-4" :item="item" />
         </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="blurred">
+  <div class="sensitive">
     <LoadingContainer :loading="!documents">
       <TextP v-if="documents && documents.length <= 0" class="text-center">No documents on record</TextP>
       <GenericCard v-else>

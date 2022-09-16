@@ -5,8 +5,8 @@
       <TextL2 class="flex-none">{{ identifier(1) }}</TextL2>
     </div>
     <div class="flex">
-      <TextL2 class="blurred flex-grow">{{ primaryIdentifier }}</TextL2>
-      <TextL2 class="blurred flex-none">{{ identifier(2) }}</TextL2>
+      <TextL2 class="sensitive flex-grow">{{ primaryIdentifier }}</TextL2>
+      <TextL2 class="sensitive flex-none">{{ identifier(2) }}</TextL2>
     </div>
   </GenericCardMini>
 </template>

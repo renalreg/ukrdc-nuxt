@@ -10,7 +10,7 @@
         <!-- National ID -->
         <div>
           <TextNameL1 :forename="item.patient.names[0].given" :surname="item.patient.names[0].family" />
-          <TextP class="blurred mt-2 flex items-center">
+          <TextP class="sensitive mt-2 flex items-center">
             {{ formatDate(item.patient.birthTime, (t = false)) }}
             <b class="ml-1"> {{ formatGenderCharacter(item.patient.gender) }}</b>
           </TextP>
@@ -18,14 +18,14 @@
         <!-- MRN (medium breakpoint only) -->
         <div class="hidden sm:block">
           <TextL1 class="truncate">{{ firstMRNObject.label }} Number</TextL1>
-          <TextP class="blurred mt-2 truncate">
+          <TextP class="sensitive mt-2 truncate">
             {{ firstMRNObject.number }}
           </TextP>
         </div>
         <!-- UKRDC ID (large breakpoint only) -->
         <div class="hidden lg:block">
           <TextL1>UKRDC ID</TextL1>
-          <TextP class="blurred mt-2">
+          <TextP class="sensitive mt-2">
             {{ item.ukrdcid }}
           </TextP>
         </div>

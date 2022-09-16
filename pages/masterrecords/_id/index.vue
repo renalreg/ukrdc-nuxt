@@ -8,7 +8,7 @@
             <TextDt>Full Name</TextDt>
             <TextDd>
               <div class="flex items-center gap-2">
-                <div class="blurred capitalize">
+                <div class="sensitive capitalize">
                   {{ record.givenname.toLowerCase() }} {{ record.surname.toLowerCase() }}
                 </div>
                 <TracingBadge v-if="tracingRecord" :verified="nameMatchesTracing" />
@@ -20,7 +20,7 @@
             <TextDt>Gender</TextDt>
             <TextDd>
               <div class="flex items-center gap-2">
-                <div class="blurred">{{ formatGender(record.gender) }}</div>
+                <div class="sensitive">{{ formatGender(record.gender) }}</div>
                 <TracingBadge v-if="tracingRecord" :verified="tracingRecord.patient.gender === record.gender" />
               </div>
             </TextDd>
@@ -30,7 +30,7 @@
             <TextDt>Date of Birth</TextDt>
             <TextDd>
               <div class="flex items-center gap-2">
-                <div class="blurred">{{ formatDate(record.dateOfBirth, (t = false)) }}</div>
+                <div class="sensitive">{{ formatDate(record.dateOfBirth, (t = false)) }}</div>
                 <TracingBadge v-if="tracingRecord" :verified="birthTimeMatchesTracing" />
               </div>
             </TextDd>
@@ -40,7 +40,7 @@
             <TextDt class="font-medium text-gray-500">National ID</TextDt>
             <TextDd>
               <div class="flex items-center gap-2">
-                <div class="blurred">{{ record.nationalid }}</div>
+                <div class="sensitive">{{ record.nationalid }}</div>
                 <TracingBadge
                   v-if="tracingRecord && record.nationalidType !== 'UKRDC'"
                   :verified="tracingRecord.localpatientid.trim() === record.nationalid.trim()"

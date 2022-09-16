@@ -1,5 +1,5 @@
 <template>
-  <div class="blurred">
+  <div class="sensitive">
     <LoadingContainer :loading="!observations">
       <TextP v-if="observations && observations.length <= 0" class="text-center">No observations on record</TextP>
       <div v-else>

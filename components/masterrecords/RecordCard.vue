@@ -15,7 +15,7 @@
       <GenericCardDl>
         <GenericCardDi>
           <GenericCardDt>National ID</GenericCardDt>
-          <GenericCardDd class="blurred">
+          <GenericCardDd class="sensitive">
             {{ record.nationalid }}
           </GenericCardDd>
         </GenericCardDi>
@@ -27,13 +27,13 @@
         </GenericCardDi>
         <GenericCardDi>
           <GenericCardDt>Date of Birth</GenericCardDt>
-          <GenericCardDd :class="highlight.includes('dateOfBirth') ? highlightClasses : []" class="blurred">
+          <GenericCardDd :class="highlight.includes('dateOfBirth') ? highlightClasses : []" class="sensitive">
             {{ formatDate(record.dateOfBirth, (t = false)) }}
           </GenericCardDd>
         </GenericCardDi>
         <GenericCardDi>
           <GenericCardDt>Assigned Gender</GenericCardDt>
-          <GenericCardDd :class="highlight.includes('gender') ? highlightClasses : []" class="blurred">
+          <GenericCardDd :class="highlight.includes('gender') ? highlightClasses : []" class="sensitive">
             {{ formatGender(record.gender) }}
           </GenericCardDd>
         </GenericCardDi>

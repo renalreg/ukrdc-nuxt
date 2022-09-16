@@ -132,7 +132,7 @@ html {
   @apply rounded-md border border-gray-300 p-4 shadow-sm;
 }
 
-.blurred {
+.sensitive {
   filter: blur(8px);
 }
 </style>

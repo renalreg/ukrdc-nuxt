@@ -1,5 +1,5 @@
 <template>
-  <div class="blurred">
+  <div class="sensitive">
     <LoadingContainer :loading="!treatments">
       <TextP v-if="treatments && treatments.length <= 0" class="text-center"> No treatments on record </TextP>
       <div v-else-if="treatments && treatments.length > 0" class="flow-root">
@@ -70,7 +70,7 @@
                     </TextP>
                   </div>
                   <GenericInfoIcon>
-                    <div class="blurred">
+                    <div class="sensitive">
                       <p><b>From time: </b>{{ treatment.fromTime }}</p>
                       <p><b>To time: </b>{{ treatment.toTime || "None" }}</p>
                       <br />
