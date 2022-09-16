@@ -21,14 +21,16 @@
 import { computed, defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
 
 import { MessageSchema } from "@ukkidney/ukrdc-axios-ts";
-import { MessageSummary } from "@/helpers/utils/messageUtils";
+import { makeMessageSummary } from "@/helpers/utils/messageUtils";
 
 import useApi from "~/helpers/useApi";
+import useSensitive from "~/helpers/useSensitive";
 
 export default defineComponent({
   setup() {
     const route = useRoute();
     const { messagesApi } = useApi();
+    const { sensitiveNumbers } = useSensitive();
 
     // Head
 
@@ -40,9 +42,8 @@ export default defineComponent({
     const message = ref<MessageSchema>();
 
     const messageSummary = computed(() => {
-      // TODO: Redact numbers
       if (message.value) {
-        return MessageSummary(message.value);
+        return sensitiveNumbers(makeMessageSummary(message.value));
       }
       return "";
     });

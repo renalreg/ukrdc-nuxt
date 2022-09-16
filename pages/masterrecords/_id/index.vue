@@ -132,6 +132,7 @@ import { formatDate, datesAreEqual } from "@/helpers/utils/dateUtils";
 import { formatGender } from "@/helpers/utils/codeUtils";
 import { isTracing } from "@/helpers/utils/recordUtils";
 import useApi from "~/helpers/useApi";
+import useSensitive from "~/helpers/useSensitive";
 
 export default defineComponent({
   props: {
@@ -148,6 +149,7 @@ export default defineComponent({
 
   setup(props) {
     const { masterRecordsApi } = useApi();
+    const { sensitive } = useSensitive();
 
     // Data refs
 
@@ -238,25 +240,24 @@ export default defineComponent({
     // Dynamic UI elements
 
     const latestMessageInfo = computed(() => {
-      // TODO: Redact file names if in demo mode
       if (!latestMessage.value) {
         return null;
       }
       if (latestMessage.value.msgStatus === "ERROR") {
         if (latestMessage.value.received) {
-          return `Latest file ${latestMessage.value.filename} failed from ${
+          return `Latest file ${sensitive(latestMessage.value.filename)} failed from ${
             latestMessage.value.facility
           } on ${formatDate(latestMessage.value.received, false)}`;
         } else {
-          return `Latest file ${latestMessage.value.filename} failed from ${latestMessage.value.facility}`;
+          return `Latest file ${sensitive(latestMessage.value.filename)} failed from ${latestMessage.value.facility}`;
         }
       }
       if (latestMessage.value.received) {
-        return `Latest file ${latestMessage.value.filename} recieved from ${
+        return `Latest file ${sensitive(latestMessage.value.filename)} recieved from ${
           latestMessage.value.facility
         } on ${formatDate(latestMessage.value.received, false)}`;
       } else {
-        return `Latest file ${latestMessage.value.filename} recieved from ${latestMessage.value.facility}`;
+        return `Latest file ${sensitive(latestMessage.value.filename)} recieved from ${latestMessage.value.facility}`;
       }
     });
 

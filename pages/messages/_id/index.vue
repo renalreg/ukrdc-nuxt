@@ -45,7 +45,7 @@
         <GenericCardMini class="w-2/3">
           <GenericAttachment :filename="message.filename || `${message.facility}-${message.id}.txt`">
             <NuxtLink :to="`/messages/${message.id}/source`" class="font-medium"> View </NuxtLink>
-            <TextLink @click="downloadMessageSource(message)"> Download </TextLink>
+            <TextLink @click="downloadMessageSource"> Download </TextLink>
           </GenericAttachment>
         </GenericCardMini>
       </GenericCardContent>
@@ -57,8 +57,7 @@
       </GenericCardHeader>
       <GenericCardContent>
         <div class="whitespace-pre-wrap font-mono">
-          <!-- TODO: Redact numbers -->
-          {{ message.error.trim() }}
+          {{ messageText }}
         </div>
       </GenericCardContent>
     </GenericCard>
@@ -107,12 +106,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
+import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
 import { MasterRecordSchema, MessageSchema, ChannelMessageModel, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import usePermissions from "~/helpers/usePermissions";
 import useApi from "~/helpers/useApi";
+import useSensitive from "~/helpers/useSensitive";
 import { saveAs } from "~/helpers/utils/fileUtils";
 
 export default defineComponent({
@@ -125,11 +125,16 @@ export default defineComponent({
   setup(props) {
     const { hasPermission } = usePermissions();
     const { messagesApi, mirthApi } = useApi();
+    const { sensitiveNumbers } = useSensitive();
 
     // Data refs
     const mirthMessage = ref<ChannelMessageModel | null | undefined>(undefined);
     const workItems = ref([] as WorkItemSchema[]);
     const masterRecords = ref([] as MasterRecordSchema[]);
+
+    const messageText = computed(() => {
+      return sensitiveNumbers(props.message.error?.trim());
+    });
 
     // Data fetching
 
@@ -189,6 +194,7 @@ export default defineComponent({
       masterRecords,
       workItems,
       mirthMessage,
+      messageText,
       formatDate,
       downloadMessageSource,
       hasPermission,

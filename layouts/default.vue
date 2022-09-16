@@ -99,12 +99,14 @@
 
 <script lang="ts">
 import { defineComponent, ref, useContext, useMeta } from "@nuxtjs/composition-api";
+import useSensitive from "~/helpers/useSensitive";
 import "floating-vue/dist/style.css";
 
 export default defineComponent({
   setup() {
     const { base } = useContext();
     const { link } = useMeta();
+    const { sensitiveCssFilter } = useSensitive();
     link.value = [{ rel: "icon", type: "image/x-icon", href: `${base || "/"}favicon.ico` }];
 
     const sbOpen = ref(false);
@@ -113,7 +115,7 @@ export default defineComponent({
       sbOpen.value = !sbOpen.value;
     }
 
-    return { sbOpen, toggle };
+    return { sbOpen, toggle, sensitiveCssFilter };
   },
   head: {},
 });
@@ -133,6 +135,6 @@ html {
 }
 
 .sensitive {
-  filter: blur(8px);
+  filter: v-bind(sensitiveCssFilter);
 }
 </style>

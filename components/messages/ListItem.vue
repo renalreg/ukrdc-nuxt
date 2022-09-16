@@ -53,7 +53,8 @@
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { MessageSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
-import { MessageSummary } from "@/helpers/utils/messageUtils";
+import { makeMessageSummary } from "@/helpers/utils/messageUtils";
+import useSensitive from "@/helpers/useSensitive";
 
 export default defineComponent({
   props: {
@@ -68,8 +69,10 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const { sensitiveNumbers } = useSensitive();
+
     const itemDescription = computed(() => {
-      return MessageSummary(props.item).replace(/\d/g, "0");
+      return sensitiveNumbers(makeMessageSummary(props.item));
     });
     return { itemDescription, formatDate };
   },
