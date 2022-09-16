@@ -11,8 +11,8 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
             <IconUsers />
           </div>
           <div class="ml-5 w-0 flex-1">
-            <TextL1>Total UKRDC Records</TextL1>
-            <h1 class="text-2xl font-semibold text-green-600">{{ counts.UKRDCRecords }}</h1>
+            <TextL1>Total Patients</TextL1>
+            <h1 class="text-2xl font-semibold text-green-600">{{ counts.distinctPatients }}</h1>
           </div>
         </div>
         <GenericCardFooter>Total distinct UKRDC IDs in the database</GenericCardFooter>
