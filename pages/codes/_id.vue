@@ -44,7 +44,7 @@
         <ul class="divide-y divide-gray-200">
           <CodesMapListItem
             v-for="mappedCode in code.mapsTo"
-            :key="`${mappedCode.codingStandard}.${mappedCode.code}`"
+            :key="`${mappedCode.destinationCodingStandard}.${mappedCode.destinationCode}`"
             :map="mappedCode"
           />
         </ul>
@@ -58,7 +58,7 @@
         <ul class="divide-y divide-gray-200">
           <CodesMapListItem
             v-for="mappedCode in code.mappedBy"
-            :key="`${mappedCode.codingStandard}.${mappedCode.code}`"
+            :key="`${mappedCode.sourceCodingStandard}.${mappedCode.sourceCode}`"
             :map="mappedCode"
           />
         </ul>
