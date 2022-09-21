@@ -9,7 +9,9 @@
           <SkeleText v-else class="h-6 w-1/2" />
         </div>
         <div>
-          <TextL1 v-if="patientDocument">{{ formatDate(patientDocument.documenttime) }}</TextL1>
+          <TextL1 v-if="patientDocument">{{
+            patientDocument.documenttime ? formatDate(patientDocument.documenttime) : "Unknown date"
+          }}</TextL1>
           <SkeleText v-else class="h-6 w-1/3" />
         </div>
       </GenericCardHeader>
@@ -39,21 +41,21 @@
           <GenericDlGridItem>
             <TextDt>Document Date</TextDt>
             <TextDd v-if="patientDocument">
-              {{ formatDate(patientDocument.documenttime) }}
+              {{ patientDocument.documenttime ? formatDate(patientDocument.documenttime) : "Unknown date" }}
             </TextDd>
             <SkeleText v-else class="h-6 w-1/3" />
           </GenericDlGridItem>
           <GenericDlGridItem>
             <TextDt>Creation Date</TextDt>
             <TextDd v-if="patientDocument">
-              {{ formatDate(patientDocument.creationDate) }}
+              {{ patientDocument.creationDate ? formatDate(patientDocument.creationDate) : "Unknown date" }}
             </TextDd>
             <SkeleText v-else class="h-6 w-1/3" />
           </GenericDlGridItem>
           <GenericDlGridItem>
             <TextDt>Update Date</TextDt>
             <TextDd v-if="patientDocument">
-              {{ formatDate(patientDocument.updateDate) }}
+              {{ patientDocument.updateDate ? formatDate(patientDocument.updateDate) : "Unknown date" }}
             </TextDd>
             <SkeleText v-else class="h-6 w-1/3" />
           </GenericDlGridItem>
@@ -66,7 +68,7 @@
             <TextDd>
               <GenericCardMini>
                 <GenericAttachment :filename="filename">
-                  <TextLink @click="downloadPatientRecordDocument(patientDocument)"> Download </TextLink>
+                  <TextLink @click="downloadPatientRecordDocument()"> Download </TextLink>
                 </GenericAttachment>
               </GenericCardMini>
             </TextDd>
