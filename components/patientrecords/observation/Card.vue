@@ -5,9 +5,12 @@
     <div class="col-span-1 text-sm font-medium uppercase tracking-wider text-gray-500">Value</div>
     <TextP class="col-span-2">{{ item.observationValue }} {{ item.observationUnits }}</TextP>
     <div class="col-span-1 text-sm font-medium uppercase tracking-wider text-gray-500">Entered At</div>
-    <div class="col-span-2">
+    <div v-if="item.enteredAt || item.enteredAtDescription" class="col-span-2">
       <TextP>{{ item.enteredAt }}</TextP>
       <TextP>{{ item.enteredAtDescription }}</TextP>
+    </div>
+    <div v-else class="col-span-2">
+      <TextP>Unknown location</TextP>
     </div>
     <div class="col-span-1 text-sm font-medium uppercase tracking-wider text-gray-500">Entered On</div>
     <TextP class="col-span-2">

@@ -1,3 +1,5 @@
+// TODO: Are these still needed now we have useQuery?
+
 export function singleQuery(query: string | (string | null)[]): string | null {
   // Return a single value form a query string
   // If multiple values are passed as an array,
