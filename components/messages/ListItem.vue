@@ -8,7 +8,7 @@
             {{ item.filename || "No filename found" }}
           </TextL1>
           <TextL1 class="truncate md:inline">
-            {{ item.channel ? `on ${item.channel}` : "" }}
+            {{ item.mirthChannel ? `on ${item.mirthChannel}` : "" }}
           </TextL1>
         </div>
         <div class="mt-2 flex">
@@ -22,7 +22,7 @@
       <div class="col-span-2 lg:col-span-1">
         <TextP>From <LinkSendingFacility class="inline" :code="item.facility" /></TextP>
         <TextP class="mt-2">
-          {{ formatDate(item.received) }}
+          {{ item.received ? formatDate(item.received) : "Unknown time" }}
         </TextP>
       </div>
       <!-- Identifiers  -->

@@ -25,7 +25,7 @@
           <GenericDlGridItem>
             <TextDt>Channel</TextDt>
             <TextDd v-if="message" class="flex items-center gap-1">
-              <span>{{ message.channel ? message.channel : message.channelId }}</span>
+              <span>{{ message.mirthChannel ? message.mirthChannel : message.mirthChannelId }}</span>
               <GenericInfoIcon class="inline">
                 <p>This is the internal UKRDC channel responsible for processing this message.</p>
                 <p>The channel may be important when debugging unexpected errors.</p>
