@@ -46,7 +46,7 @@
             v-for="(value, key) in nonNullMetadata"
             :key="key"
             class="relative flex items-center space-x-2 px-4 py-4"
-            :class="key.includes('ERROR') ? 'border-2 border-red-500' : ''"
+            :class="key === 'ERROR' ? 'border-2 border-red-500' : ''"
           >
             <div class="min-w-0 flex-1">
               <span class="absolute inset-0" aria-hidden="true" />
@@ -129,7 +129,7 @@ export default defineComponent({
       return tabs;
     });
 
-    const nonNullMetadata = computed(() => {
+    const nonNullMetadata = computed<{ [key: string]: string }>(() => {
       if (connectorMessage.value?.metaDataMap) {
         return Object.fromEntries(Object.entries(connectorMessage.value.metaDataMap).filter(([_, v]) => v != null));
       } else {
