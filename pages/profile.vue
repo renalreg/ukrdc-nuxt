@@ -2,7 +2,7 @@
   <div>
     <div class="mx-auto max-w-4xl px-4 sm:px-6 md:px-8">
       <div
-        v-if="$okta.isAuthenticated()"
+        v-if="isAuthenticated"
         class="max-w-3xl lg:flex lg:max-w-7xl lg:items-center lg:justify-between lg:space-x-5"
       >
         <div class="mb-4 flex items-center space-x-5">
@@ -10,11 +10,11 @@
             <div class="relative">
               <span
                 class="inline-block h-16 w-16 overflow-hidden rounded-full"
-                :class="$okta.isAuthenticated() ? 'bg-indigo-100' : 'bg-gray-100'"
+                :class="isAuthenticated ? 'bg-indigo-100' : 'bg-gray-100'"
               >
                 <svg
                   class="h-full w-full"
-                  :class="$okta.isAuthenticated() ? 'text-indigo-300' : 'text-gray-300'"
+                  :class="isAuthenticated ? 'text-indigo-300' : 'text-gray-300'"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -93,11 +93,14 @@ export default defineComponent({
     const { systemInfoApi } = useApi();
 
     // User info
-
+    const isAuthenticated = ref(false);
     const user = ref();
 
     onMounted(async () => {
-      user.value = await $okta.getUser();
+      isAuthenticated.value = await $okta.isAuthenticated();
+      if (isAuthenticated.value) {
+        user.value = await $okta.getUser();
+      }
     });
 
     // Permissions
@@ -134,6 +137,7 @@ export default defineComponent({
 
     return {
       user,
+      isAuthenticated,
       perms,
       preferences,
       submitPreferences,
