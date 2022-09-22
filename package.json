@@ -19,7 +19,7 @@
     "@nuxtjs/sentry": "^6.0.0",
     "@okta/okta-auth-js": "^6.0.0",
     "@sentry/tracing": "^6.13.2",
-    "@ukkidney/ukrdc-axios-ts": "^2.0.0",
+    "@ukkidney/ukrdc-axios-ts": "^2.1.1",
     "check-ie": "^2.0.1",
     "defu": "^6.1.0",
     "floating-vue": "^1.0.0-beta.18",
