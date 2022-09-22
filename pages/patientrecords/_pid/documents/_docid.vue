@@ -1,7 +1,5 @@
 <template>
   <div>
-    <LoadingIndicatorFull :visible="documentDownloadInProgress" />
-
     <GenericCard>
       <GenericCardHeader>
         <div class="mb-1">

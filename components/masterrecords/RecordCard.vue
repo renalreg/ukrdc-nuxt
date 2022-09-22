@@ -28,13 +28,13 @@
         <GenericCardDi>
           <GenericCardDt>Date of Birth</GenericCardDt>
           <GenericCardDd :class="highlight.includes('dateOfBirth') ? highlightClasses : []" class="sensitive">
-            {{ formatDate(record.dateOfBirth, (t = false)) }}
+            {{ formatDate(record.dateOfBirth, false) }}
           </GenericCardDd>
         </GenericCardDi>
         <GenericCardDi>
           <GenericCardDt>Assigned Gender</GenericCardDt>
           <GenericCardDd :class="highlight.includes('gender') ? highlightClasses : []" class="sensitive">
-            {{ formatGender(record.gender) }}
+            {{ record.gender ? formatGender(record.gender) : "Unknown gender" }}
           </GenericCardDd>
         </GenericCardDi>
         <GenericCardDi>

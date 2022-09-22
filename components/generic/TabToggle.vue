@@ -49,6 +49,4 @@ export default defineComponent({
 .tab-active {
   @apply rounded-md border border-gray-300 bg-white p-1.5 shadow-sm focus:border-indigo-500;
 }
-.tab-inactive {
-}
 </style>

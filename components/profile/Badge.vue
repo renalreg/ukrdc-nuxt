@@ -9,11 +9,11 @@
         <div class="h-10 w-10">
           <span
             class="inline-block h-10 w-10 overflow-hidden rounded-full"
-            :class="$okta.isAuthenticated() ? 'bg-indigo-100' : 'bg-gray-100'"
+            :class="isAuthenticated ? 'bg-indigo-100' : 'bg-gray-100'"
           >
             <svg
               class="h-full w-full"
-              :class="$okta.isAuthenticated() ? 'text-indigo-300' : 'text-gray-300'"
+              :class="isAuthenticated ? 'text-indigo-300' : 'text-gray-300'"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -44,7 +44,7 @@
     </GenericButtonRaw>
 
     <GenericMenu
-      v-if="$okta.isAuthenticated()"
+      v-if="isAuthenticated"
       class="z-10 w-full"
       :class="topToBottom ? 'top-16 right-0' : 'bottom-16 left-0 mb-1'"
       :show="showMenu"
@@ -62,7 +62,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
+import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
 import useAuth from "~/helpers/useAuth";
 
 export default defineComponent({
@@ -79,14 +79,17 @@ export default defineComponent({
     },
   },
   setup() {
+    const { $okta } = useContext();
     const { idToken } = useAuth();
 
+    // Menu
     const showMenu = ref(false);
-
     function closeMenu() {
       showMenu.value = false;
     }
 
+    // User info
+    const isAuthenticated = ref(false);
     const displayName = computed(() => {
       if (idToken.value) {
         return idToken.value.payload.name;
@@ -94,7 +97,12 @@ export default defineComponent({
       return "Signed Out";
     });
 
+    onMounted(async () => {
+      isAuthenticated.value = await $okta.isAuthenticated();
+    });
+
     return {
+      isAuthenticated,
       displayName,
       showMenu,
       closeMenu,
