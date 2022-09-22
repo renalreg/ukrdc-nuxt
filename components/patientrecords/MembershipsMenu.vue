@@ -14,14 +14,22 @@
     </GenericModalConfirm>
 
     <div v-click-away="closeMenu" class="relative flex items-center justify-self-end">
-      <GenericButtonRaw :disabled="!menuAvailable" label="Manage record" class="z-0" @click="showMenu = !showMenu">
-        <IconMiniPlusCircle class="text-gray-400" :class="{ 'hover:text-gray-800': menuAvailable }" />
-      </GenericButtonRaw>
+      <GenericButtonMini
+        label="Manage record"
+        class="z-0 mr-2 flex gap-1"
+        :tooltip="!menuAvailable ? 'You do not have permission to manage patient memberships' : null"
+        :class="{ 'btn-disabled': !menuAvailable }"
+        @click="showMenu = !showMenu"
+      >
+        <IconMiniPlus class="inline text-gray-800" />
+        Add Memberships
+      </GenericButtonMini>
 
-      <GenericMenu class="top-0 right-0 z-10 mx-2" :show="menuAvailable && showMenu">
+      <GenericMenu class="top-8 right-2 z-10 ml-2" :show="menuAvailable && showMenu">
         <GenericMenuItem v-if="showCreatePkbMembership" @click="showCreatePkbMembershipConfirm">
           Create PKB Membership
         </GenericMenuItem>
+        <GenericMenuItem v-else :disabled="true"> PKB membership already exists </GenericMenuItem>
       </GenericMenu>
     </div>
   </div>
@@ -61,9 +69,7 @@ export default defineComponent({
 
     const showMenu = ref(false);
     const menuAvailable = computed(() => {
-      // As we add more membership types this should be true if ANY
-      // of them are available options
-      return props.showCreatePkbMembership;
+      return hasPermission("ukrdc:memberships:create");
     });
 
     function closeMenu() {
@@ -112,7 +118,6 @@ export default defineComponent({
       createPkbMembershipConfirm,
       showCreatePkbMembershipConfirm,
       createPkbMembership,
-      hasPermission,
     };
   },
 });
