@@ -123,7 +123,7 @@ export default defineComponent({
           page: relatedErrorsPage.value || 1,
           size: relatedErrorsSize.value,
           orderBy: "desc",
-          status: ["error"],
+          status: ["ERROR"],
         })
         .then((response) => {
           relatedErrors.value = response.data.items;
