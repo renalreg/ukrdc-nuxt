@@ -99,7 +99,7 @@
       </div>
 
       <div class="flex gap-2">
-        <GenericButton :primary="true" colour="red" @click="beginMergeAlert.show()">Begin Record Merge</GenericButton>
+        <GenericButton :primary="true" colour="red" @click="beginMergeAlert?.show()">Begin Record Merge</GenericButton>
         <GenericButton v-if="callbackPath" :to="callbackPath">Cancel</GenericButton>
       </div>
     </div>
@@ -124,10 +124,7 @@ import useQuery from "~/helpers/query/useQuery";
 import { modalInterface } from "~/interfaces/modal";
 import useApi from "~/helpers/useApi";
 
-enum Direction {
-  superseding = "superseding",
-  Superceeded = "superseded",
-}
+type Direction = "superseding" | "superseded";
 
 export default defineComponent({
   setup() {
@@ -248,13 +245,13 @@ export default defineComponent({
     function clearsuperseding() {
       superseding.value = undefined;
       supersedingId.value = null;
-      searchingFor.value = Direction.superseding;
+      searchingFor.value = "superseding";
     }
 
     function clearSuperceeded() {
       superseded.value = undefined;
       supersededId.value = null;
-      searchingFor.value = Direction.Superceeded;
+      searchingFor.value = "superseded";
     }
 
     function selectsuperseding(id: string) {

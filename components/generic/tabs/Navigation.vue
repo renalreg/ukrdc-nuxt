@@ -6,9 +6,10 @@
       <label for="tabs" class="sr-only">Select a tab</label>
       <select
         id="tabs"
+        ref="selectEl"
         name="tabs"
         class="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
-        @change="switchTab($event.target.value)"
+        @change="changeWithSelect"
       >
         <option v-for="tab in tabs" :key="tab.name" :value="tab.href" :selected="urlCompare($route.path, tab.href)">
           {{ tab.name }}
@@ -41,7 +42,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, useRouter } from "@nuxtjs/composition-api";
+import { defineComponent, ref, useRouter } from "@nuxtjs/composition-api";
 import { urlCompare } from "@/helpers/utils/pathUtils";
 
 export interface Tabs {
@@ -59,11 +60,22 @@ export default defineComponent({
   setup(_, { emit }) {
     const router = useRouter();
 
+    const selectEl = ref<HTMLFormElement>();
+
     function switchTab(href: string) {
       router.push({ path: href });
       emit("input", href);
     }
-    return { urlCompare, switchTab };
+
+    function changeWithSelect() {
+      switchTab(selectEl.value?.value);
+    }
+
+    function changeWithButton(value: string) {
+      switchTab(value);
+    }
+
+    return { selectEl, urlCompare, changeWithSelect, changeWithButton };
   },
 });
 </script>

@@ -9,10 +9,15 @@
         </div>
         <!-- National ID -->
         <div>
-          <TextNameL1 :forename="item.patient.names[0].given" :surname="item.patient.names[0].family" />
+          <TextNameL1
+            :forename="item.patient?.names[0].given || 'Unknown forename'"
+            :surname="item.patient?.names[0].family || 'Unknown surname'"
+          />
           <TextP class="sensitive mt-2 flex items-center">
-            {{ formatDate(item.patient.birthTime, (t = false)) }}
-            <b class="ml-1"> {{ formatGenderCharacter(item.patient.gender) }}</b>
+            {{ item.patient?.birthTime ? formatDate(item.patient?.birthTime, false) : "Unknown date of birth" }}
+            <b class="ml-1">
+              {{ item.patient?.gender ? formatGenderCharacter(item.patient?.gender) : "Unknown gender" }}</b
+            >
           </TextP>
         </div>
         <!-- MRN (medium breakpoint only) -->

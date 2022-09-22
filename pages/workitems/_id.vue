@@ -8,7 +8,7 @@
       </div>
 
       <div class="flex justify-end">
-        <GenericButton @click="addCommentModal.hide()">Cancel</GenericButton>
+        <GenericButton @click="addCommentModal?.hide()">Cancel</GenericButton>
         <GenericButton
           :disabled="!customComment"
           colour="indigo"
@@ -34,7 +34,7 @@
       </div>
 
       <div class="flex justify-end">
-        <GenericButton @click="closeModal.hide()"> Cancel </GenericButton>
+        <GenericButton @click="closeModal?.hide()"> Cancel </GenericButton>
         <GenericButton
           :disabled="!customComment"
           type="submit"
@@ -75,7 +75,7 @@
         :primary="true"
         colour="indigo"
         class="inline-flex w-full items-center justify-center"
-        @click="addCommentModal.show()"
+        @click="addCommentModal?.show()"
       >
         <IconPencil />
         Comment
@@ -86,7 +86,7 @@
         :primary="true"
         class="inline-flex w-full items-center justify-center"
         colour="green"
-        @click="closeModal.show()"
+        @click="closeModal?.show()"
       >
         <IconCheckCircle />
         Close
@@ -100,7 +100,7 @@
           path: '/empi/merge',
           query: {
             superseded: record.incoming.masterRecords[relatedRecordsIndex].id,
-            superseding: record.destination.masterRecord.id,
+            superseding: record.destination.masterRecord?.id,
             callback: $route.fullPath + '?justMerged=true',
           },
         }"
@@ -128,7 +128,7 @@
             v-if="showIncomingAttributes"
             :record="record.attributes"
             label="Incoming Attributes"
-            :highlight="Object.keys(record.attributes)"
+            :highlight="highlightedAttributes"
             :full="showDestinationPersons"
           />
           <!-- Else incoming person card -->
@@ -136,7 +136,7 @@
             v-else-if="record.incoming.person"
             :record="record.person"
             :label="`Incoming Person Record ${record.incoming.person.id}`"
-            :highlight="Object.keys(record.attributes)"
+            :highlight="highlightedAttributes"
             :full="showDestinationPersons"
           />
           <!-- Missing incoming person card -->
@@ -156,7 +156,7 @@
             v-if="showDestinationPersons && record.destination.persons.length > 0"
             :record="record.destination.persons[relatedPersonsIndex]"
             :label="`Related Person Record ${relatedPersonsIndex + 1} of ${record.destination.persons.length}`"
-            :highlight="Object.keys(record.attributes)"
+            :highlight="highlightedAttributes"
             :full="true"
           />
           <!-- Destination record card -->
@@ -274,6 +274,18 @@ export default defineComponent({
     // Work item record data
     const record = ref<WorkItemExtendedSchema>();
     const customComment = ref("");
+
+    const highlightedAttributes = computed(() => {
+      const attributeKeys: string[] = [];
+      if (record.value?.attributes) {
+        Object.entries(record.value.attributes).forEach(([key, value]) => {
+          if (value) {
+            attributeKeys.push(key);
+          }
+        });
+      }
+      return attributeKeys;
+    });
 
     // Related persons data
     const workItemCollection = ref([] as WorkItemSchema[]);
@@ -442,6 +454,7 @@ export default defineComponent({
 
     return {
       record,
+      highlightedAttributes,
       formatDate,
       formatGender,
       isEmptyObject,

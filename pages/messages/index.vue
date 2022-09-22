@@ -99,7 +99,7 @@ export default defineComponent({
 
     // Set up URL query params for additional filters
     const nationalId = stringQuery("nationalid", null, true, true);
-    const nationalIdSearchString = ref<string | null>(null);
+    const nationalIdSearchString = ref<string>("");
 
     // Set initial date dateRange
     const dateRange = makeDateRange(isAdmin ? nowString(-30) : nowString(-365), nowString(0), true);

@@ -8,22 +8,3 @@ export function singleQuery(query: string | (string | null)[]): string | null {
     return query;
   }
 }
-
-export function integerQuery(query: string | (string | null)[]): number | null {
-  const queryString = singleQuery(query);
-  if (queryString) {
-    return parseInt(queryString);
-  }
-  return null;
-}
-
-export function arrayQuery(query: string | number | (string | number | null)[]): (string | number | null)[] {
-  // Return a value array form a query string
-  // If a single value is passed,
-  // oconvert into a one-element array
-  if (!Array.isArray(query)) {
-    return [query];
-  } else {
-    return query;
-  }
-}

@@ -1,9 +1,12 @@
 <template>
   <tr>
-    <GenericTableCell class="font-medium text-gray-900">{{ item.observationDesc }}</GenericTableCell>
+    <GenericTableCell class="font-medium text-gray-900"
+      >{{ item.observationCode }} ({{ item.observationDesc }})</GenericTableCell
+    >
     <GenericTableCell>{{ item.observationValue }} {{ item.observationUnits }}</GenericTableCell>
     <GenericTableCell>
-      <p>{{ item.enteredAt }} / {{ item.enteredAtDescription }}</p>
+      <p v-if="item.enteredAt || item.enteredAtDescription">{{ item.enteredAt }} / {{ item.enteredAtDescription }}</p>
+      <p v-else>Unknown location</p>
     </GenericTableCell>
     <GenericTableCell>
       {{ formatDate(item.observationTime) }}

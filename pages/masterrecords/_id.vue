@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Issues alert -->
-    <div v-if="stats && stats.ukrdcids > 1">
+    <div v-if="record && stats && stats.ukrdcids > 1">
       <NuxtLink :to="`/masterrecords/${record.id}/issues`">
         <GenericAlertError
           class="mb-4"
@@ -10,7 +10,7 @@
       </NuxtLink>
     </div>
 
-    <div v-if="issueMessage">
+    <div v-if="record && issueMessage">
       <NuxtLink :to="`/masterrecords/${record.id}/issues`">
         <GenericAlertWarning class="mb-4" :message="issueMessage" />
       </NuxtLink>

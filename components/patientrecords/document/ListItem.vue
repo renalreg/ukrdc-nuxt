@@ -7,9 +7,6 @@
           <TextL1 class="truncate md:inline">
             {{ item.documentname || item.id }}
           </TextL1>
-          <TextL1 class="truncate md:inline">
-            {{ item.channel ? `on ${item.channel}` : "" }}
-          </TextL1>
         </div>
         <div class="mt-2 flex">
           <span class="inline-flex items-center rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-800">
@@ -24,14 +21,14 @@
       <div class="col-span-1">
         <TextL1>Entered By</TextL1>
         <TextP class="mt-2">
-          {{ item.enteredbydesc || "Unknown" }}
+          {{ item.enteredbydesc || "Unknown author" }}
         </TextP>
       </div>
       <!-- Origin  -->
       <div class="col-span-1">
         <TextP>From {{ item.enteredatcode ? item.enteredatcode : "Unknown source" }}</TextP>
         <TextP class="mt-2">
-          {{ formatDate(item.documenttime) }}
+          {{ item.documenttime ? formatDate(item.documenttime) : "Unknown date" }}
         </TextP>
       </div>
     </div>

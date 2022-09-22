@@ -30,7 +30,7 @@
           <GenericTableCell class="font-medium text-gray-900">{{ task.name }}</GenericTableCell>
           <GenericTableCell><BadgePublicPrivate :visibility="task.visibility" /></GenericTableCell>
           <GenericTableCell>{{ task.owner }}</GenericTableCell>
-          <GenericTableCell>{{ formatDate(task.started) }}</GenericTableCell>
+          <GenericTableCell>{{ task.started ? formatDate(task.started) : "Unknown start time" }}</GenericTableCell>
           <GenericTableCell>{{ task.finished ? formatDate(task.finished) : "" }}</GenericTableCell>
           <GenericTableCell>
             <div class="flex gap-1">

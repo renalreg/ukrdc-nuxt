@@ -3,12 +3,12 @@
     <LoadingContainer :loading="!observations">
       <TextP v-if="observations && observations.length <= 0" class="text-center">No observations on record</TextP>
       <div v-else>
-        <GenericSelect v-model="selectedCodeString" class="mb-4">
-          <option :value="null">All Observations</option>
-          <option v-for="item in availableCodes" :key="item">
-            {{ item }}
-          </option>
-        </GenericSelect>
+        <GenericSearchableSelect
+          v-model="selectedCode"
+          class="mb-4"
+          :options="availableCodes"
+          hint="Select an observation type..."
+        />
 
         <!-- Small data card display -->
         <div class="lg:hidden">
@@ -67,15 +67,15 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useRoute, useRouter, watch } from "@nuxtjs/composition-api";
+import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
 import { ObservationSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import usePagination from "~/helpers/query/usePagination";
 
-import { arrayQuery } from "@/helpers/utils/queryUtils";
 import { formatDate } from "@/helpers/utils/dateUtils";
 
 import useApi from "~/helpers/useApi";
+import useQuery from "~/helpers/query/useQuery";
 
 export default defineComponent({
   props: {
@@ -86,9 +86,8 @@ export default defineComponent({
   },
 
   setup(props) {
-    const route = useRoute();
-    const router = useRouter();
     const { page, total, size } = usePagination();
+    const { stringQuery } = useQuery();
     const { patientRecordsApi } = useApi();
 
     // Data refs
@@ -96,7 +95,7 @@ export default defineComponent({
     const observations = ref<ObservationSchema[]>();
 
     const availableCodes = ref([] as string[]);
-    const selectedCodes = ref((arrayQuery(route.value.query.code) || []) as string[]);
+    const selectedCode = stringQuery("code", null, true, true);
 
     // Data fetching
 
@@ -106,7 +105,7 @@ export default defineComponent({
           pid: props.record.pid,
           page: page.value || 1,
           size: size.value,
-          code: selectedCodes.value,
+          code: selectedCode.value ? [selectedCode.value] : undefined,
         })
         .then((response) => {
           observations.value = response.data.items;
@@ -116,7 +115,7 @@ export default defineComponent({
         });
 
       // If we don't already have a list of available codes, fetch one
-      if (availableCodes.value.length === 0) {
+      if (availableCodes.value && availableCodes.value.length === 0) {
         patientRecordsApi
           .getPatientObservationCodes({
             pid: props.record.pid,
@@ -131,33 +130,8 @@ export default defineComponent({
       fetchObservations();
     });
 
-    watch(
-      [
-        page,
-        () => JSON.stringify(selectedCodes.value), // Stringify to watch for actual value changes
-      ],
-      () => {
-        fetchObservations();
-      }
-    );
-
-    // Observation code filter
-
-    const selectedCodeString = computed({
-      get: () => selectedCodes.value[0] || "",
-      set: (newCode: string) => {
-        selectedCodes.value = [newCode];
-
-        // Reset page when we change the filter
-        const newQuery = {
-          page: "1",
-          code: selectedCodes.value,
-        };
-        router.push({
-          path: route.value.path,
-          query: newQuery,
-        });
-      },
+    watch([page, selectedCode], () => {
+      fetchObservations();
     });
 
     return {
@@ -166,7 +140,7 @@ export default defineComponent({
       total,
       observations,
       availableCodes,
-      selectedCodeString,
+      selectedCode,
       formatDate,
     };
   },
