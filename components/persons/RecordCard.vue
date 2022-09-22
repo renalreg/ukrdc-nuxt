@@ -34,7 +34,7 @@
             class="sensitive mt-1 text-gray-900 sm:col-span-2 sm:mt-0"
             :class="highlight.includes('dateOfBirth') ? highlightClasses : []"
           >
-            {{ formatDate(record.dateOfBirth, (t = false)) }}
+            {{ formatDate(record.dateOfBirth, false) }}
           </dd>
         </GenericCardDi>
         <GenericCardDi>
@@ -52,7 +52,7 @@
             class="sensitive mt-1 text-gray-900 sm:col-span-2 sm:mt-0"
             :class="highlight.includes('dateOfDeath') ? highlightClasses : []"
           >
-            {{ record.dateOfDeath ? formatDate(record.dateOfDeath, (t = false)) : "N/A" }}
+            {{ record.dateOfDeath ? formatDate(record.dateOfDeath, false) : "N/A" }}
           </dd>
         </GenericCardDi>
       </GenericCardDl>

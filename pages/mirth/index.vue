@@ -17,7 +17,7 @@
         </div>
 
         <ul class="my-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
-          <li v-for="item in group.channels" :key="item.channelId" class="col-span-1">
+          <li v-for="item in group.channels" :key="item.id" class="col-span-1">
             <GenericCard class="px-4 py-2">
               <TextH3 class="truncate">
                 {{ item.name }}

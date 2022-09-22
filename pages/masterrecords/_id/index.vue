@@ -9,7 +9,7 @@
             <TextDd>
               <div class="flex items-center gap-2">
                 <div class="sensitive capitalize">
-                  {{ record.givenname.toLowerCase() }} {{ record.surname.toLowerCase() }}
+                  {{ record.givenname?.toLowerCase() }} {{ record.surname?.toLowerCase() }}
                 </div>
                 <TracingBadge v-if="tracingRecord" :verified="nameMatchesTracing" />
               </div>
@@ -20,8 +20,8 @@
             <TextDt>Gender</TextDt>
             <TextDd>
               <div class="flex items-center gap-2">
-                <div class="sensitive">{{ formatGender(record.gender) }}</div>
-                <TracingBadge v-if="tracingRecord" :verified="tracingRecord.patient.gender === record.gender" />
+                <div class="sensitive">{{ record.gender ? formatGender(record.gender) : "Unknown gender" }}</div>
+                <TracingBadge v-if="tracingRecord" :verified="tracingRecord.patient?.gender === record.gender" />
               </div>
             </TextDd>
           </GenericDlGridItem>
@@ -30,7 +30,7 @@
             <TextDt>Date of Birth</TextDt>
             <TextDd>
               <div class="flex items-center gap-2">
-                <div class="sensitive">{{ formatDate(record.dateOfBirth, (t = false)) }}</div>
+                <div class="sensitive">{{ formatDate(record.dateOfBirth, false) }}</div>
                 <TracingBadge v-if="tracingRecord" :verified="birthTimeMatchesTracing" />
               </div>
             </TextDd>

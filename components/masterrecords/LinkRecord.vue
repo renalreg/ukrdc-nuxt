@@ -12,7 +12,7 @@ Includes a header with the Link Record ID and functionality to Unlink the record
       </div>
 
       <div class="flex justify-end">
-        <GenericButton @click="unlinkModal.hide()">Cancel</GenericButton>
+        <GenericButton @click="unlinkModal?.hide()">Cancel</GenericButton>
         <GenericButton :primary="true" colour="red" class="ml-2" type="submit" @click="doUnlink()">
           Unlink
         </GenericButton>
@@ -24,7 +24,7 @@ Includes a header with the Link Record ID and functionality to Unlink the record
         <TextL1>Link Record {{ record.id }}</TextL1>
       </div>
       <div class="flex-shrink">
-        <GenericButtonMini @click="unlinkModal.show()">Unlink</GenericButtonMini>
+        <GenericButtonMini @click="unlinkModal?.show()">Unlink</GenericButtonMini>
       </div>
     </GenericCard>
 

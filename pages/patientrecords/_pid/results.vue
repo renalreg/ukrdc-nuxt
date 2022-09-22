@@ -36,7 +36,7 @@
         <NuxtLink v-if="selectedOrderId" :to="{ query: { order_id: null } }">
           <GenericButton>Show Results From All Orders</GenericButton>
         </NuxtLink>
-        <GenericButton v-if="selectedOrderId && selectedOrder" colour="red" @click="deleteOrderAlert.show()"
+        <GenericButton v-if="selectedOrderId && selectedOrder" colour="red" @click="deleteOrderAlert?.show()"
           >Delete Lab Order</GenericButton
         >
       </div>

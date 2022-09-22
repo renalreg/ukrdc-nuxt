@@ -6,8 +6,8 @@
       <div>
         <TextNameL1 :forename="item.givenname" :surname="item.surname" />
         <TextP class="sensitive mt-2 flex items-center">
-          {{ formatDate(item.dateOfBirth, (t = false)) }}
-          <b class="ml-1"> {{ formatGenderCharacter(item.gender) }}</b>
+          {{ formatDate(item.dateOfBirth, false) }}
+          <b class="ml-1"> {{ item.gender ? formatGenderCharacter(item.gender) : "Unknown gender" }}</b>
         </TextP>
       </div>
       <!-- Record ID (large breakpoint only if a detail column is given) -->

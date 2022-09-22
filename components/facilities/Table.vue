@@ -48,9 +48,9 @@ Table of facilities and their basic statistics
             <div class="flex items-center gap-1">
               <TextTh>Last Received</TextTh>
               <IconDynamicSort
-                :active="sortBy === 'latest_message.last_message_received_at'"
-                :asc="isAscending['latest_message.last_message_received_at']"
-                @toggle="toggleSort('latest_message.last_message_received_at')"
+                :active="sortBy === 'last_message_received_at'"
+                :asc="isAscending['last_message_received_at']"
+                @toggle="toggleSort('last_message_received_at')"
               />
               <IconDynamicFilter
                 :active="filterByLastMessageOver48"
@@ -73,9 +73,13 @@ Table of facilities and their basic statistics
           <GenericTableCell>
             <div class="flex items-center">
               <IconCircle
-                v-if="facility.statistics.lastUpdated"
                 class="inline"
-                :class="facility.statistics.patientsReceivingMessageError > 0 ? 'text-red-700' : 'text-green-600'"
+                :class="
+                  facility.statistics.patientsReceivingMessageError &&
+                  facility.statistics.patientsReceivingMessageError > 0
+                    ? 'text-red-700'
+                    : 'text-green-600'
+                "
               />
               <p>{{ facility.statistics.patientsReceivingMessageError }}</p>
             </div>
@@ -89,11 +93,7 @@ Table of facilities and their basic statistics
           <GenericTableCell>
             <div class="flex items-center gap-2">
               <div>
-                {{
-                  facility.lastMessageReceivedAt
-                    ? formatDate(facility.lastMessageReceivedAt, (t = false))
-                    : "> Year Ago"
-                }}
+                {{ facility.lastMessageReceivedAt ? formatDate(facility.lastMessageReceivedAt, false) : "> Year Ago" }}
               </div>
               <IconExclamation
                 v-if="facilityLastMessageOver48(facility)"
@@ -110,7 +110,7 @@ Table of facilities and their basic statistics
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-import { FacilityDetailsSchema, FacilityEnum, OrderBy } from "@ukkidney/ukrdc-axios-ts";
+import { FacilityDetailsSchema, FacilitySorterEnum, OrderBy } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 import { facilityLastMessageOver48 } from "@/helpers/utils/facilityUtils";
 
@@ -165,7 +165,7 @@ export default defineComponent({
 
     // Sorting
 
-    const sortBy = ref<FacilityEnum>();
+    const sortBy = ref<FacilitySorterEnum>();
 
     // Set initial order for id sorting. Other columns left as default
     const isAscending = ref<IsAscending>({
@@ -188,7 +188,7 @@ export default defineComponent({
         });
     }
 
-    function toggleSort(key: FacilityEnum) {
+    function toggleSort(key: FacilitySorterEnum) {
       // Only reverse order if we're sorting by this key already
       if (sortBy.value === key) {
         // !null is true, so this should work always

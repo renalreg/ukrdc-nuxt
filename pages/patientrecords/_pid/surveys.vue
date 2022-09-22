@@ -12,7 +12,7 @@
         >
           <div class="flex-1 truncate px-4 py-2">
             <p class="mb-2 font-medium text-gray-900 hover:text-gray-600">
-              {{ formatDate(item.surveytime, (t = false)) }}
+              {{ formatDate(item.surveytime, false) }}
             </p>
             <p class="text-gray-500">Type: {{ item.surveytypecode }}</p>
             <p class="text-gray-500">
@@ -26,7 +26,7 @@
                 class="inline-block flex-shrink-0 rounded-sm bg-indigo-100 px-2 py-0.5 text-sm font-medium text-indigo-800"
                 >{{ item.questions.length }} questions</span
               >
-              <genericButtonMini class="float-right" @click="$refs.surveyViewerModal.show(item)">
+              <genericButtonMini class="float-right" @click="surveyViewerModal?.show(item)">
                 View survey
               </genericButtonMini>
             </div>
@@ -44,6 +44,7 @@ import { PatientRecordSchema, SurveySchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "@/helpers/utils/dateUtils";
 
 import useApi from "~/helpers/useApi";
+import { surveyViewerModalInterface } from "~/interfaces/modal";
 
 export default defineComponent({
   props: {
@@ -55,6 +56,9 @@ export default defineComponent({
 
   setup(props) {
     const { patientRecordsApi } = useApi();
+
+    // Element refs
+    const surveyViewerModal = ref<surveyViewerModalInterface>();
 
     // Data refs
     const surveys = ref<SurveySchema[]>();
@@ -73,6 +77,7 @@ export default defineComponent({
     return {
       surveys,
       formatDate,
+      surveyViewerModal,
     };
   },
 });
