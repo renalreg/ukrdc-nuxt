@@ -210,9 +210,9 @@ import {
   PidXRefSchema,
   WorkItemSchema,
 } from "@ukkidney/ukrdc-axios-ts";
-import useModal from "@/helpers/useModal";
-import { formatDate } from "@/helpers/utils/dateUtils";
-import useApi from "~/helpers/useApi";
+import useModal from "@/composables/useModal";
+import { formatDate } from "@/helpers/dateUtils";
+import useApi from "~/composables/useApi";
 
 interface DeletePIDFromEMPISchema {
   persons: PersonSchema[];

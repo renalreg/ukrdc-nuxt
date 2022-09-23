@@ -71,8 +71,8 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useMeta, useRoute, watch } from "@nuxtjs/composition-api";
 import { ExtendedCodeSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/utils/dateUtils";
-import useApi from "~/helpers/useApi";
+import { formatDate } from "@/helpers/dateUtils";
+import useApi from "~/composables/useApi";
 
 export default defineComponent({
   setup() {

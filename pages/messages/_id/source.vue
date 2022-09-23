@@ -18,7 +18,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { MessageSchema, MessageSourceSchema } from "@ukkidney/ukrdc-axios-ts";
-import useApi from "~/helpers/useApi";
+import useApi from "~/composables/useApi";
 
 export default defineComponent({
   props: {

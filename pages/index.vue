@@ -12,7 +12,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, useRouter } from "@nuxtjs/composition-api";
 
-import usePermissions from "~/helpers/usePermissions";
+import usePermissions from "~/composables/usePermissions";
 
 export default defineComponent({
   setup() {

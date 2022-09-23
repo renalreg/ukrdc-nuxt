@@ -5,7 +5,7 @@ allowing programatic toast creation.
 
 import { Plugin } from "@nuxt/types";
 import Vue from "vue";
-import { spawn } from "@/helpers/utils/domUtils";
+import { spawn } from "@/helpers/domUtils";
 import Toast from "~/components/generic/Toast.vue";
 
 const containerClasses = [

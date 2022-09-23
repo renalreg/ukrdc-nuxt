@@ -71,7 +71,7 @@
 import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
 
 import { SurveyQuestionSchema, SurveySchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/utils/dateUtils";
+import { formatDate } from "@/helpers/dateUtils";
 
 import { modalInterface } from "~/interfaces/modal";
 

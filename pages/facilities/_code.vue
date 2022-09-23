@@ -22,11 +22,11 @@
 import { computed, defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
 
 import { FacilityDetailsSchema, FacilityExtractsSchema } from "@ukkidney/ukrdc-axios-ts";
-import usePermissions from "~/helpers/usePermissions";
+import usePermissions from "~/composables/usePermissions";
 
 import { TabItem } from "~/interfaces/tabs";
-import useApi from "~/helpers/useApi";
-import { insertIf } from "~/helpers/utils/arrayUtils";
+import useApi from "~/composables/useApi";
+import { insertIf } from "~/helpers/arrayUtils";
 
 export default defineComponent({
   setup() {

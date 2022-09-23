@@ -29,9 +29,9 @@
 import { defineComponent, ref, useContext } from "@nuxtjs/composition-api";
 import { PatientRecordSummarySchema, TrackableTaskSchema } from "@ukkidney/ukrdc-axios-ts";
 import { modalInterface } from "~/interfaces/modal";
-import usePermissions from "~/helpers/usePermissions";
-import useTasks from "~/helpers/useTasks";
-import useApi from "~/helpers/useApi";
+import usePermissions from "~/composables/usePermissions";
+import useTasks from "~/composables/useTasks";
+import useApi from "~/composables/useApi";
 
 export default defineComponent({
   props: {

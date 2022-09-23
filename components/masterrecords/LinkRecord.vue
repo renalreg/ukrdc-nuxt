@@ -41,11 +41,11 @@ Includes a header with the Link Record ID and functionality to Unlink the record
 import { defineComponent, ref, useContext, useRouter } from "@nuxtjs/composition-api";
 
 import { LinkRecordSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/utils/dateUtils";
-import { formatGender } from "@/helpers/utils/codeUtils";
+import { formatDate } from "@/helpers/dateUtils";
+import { formatGender } from "@/helpers/codeUtils";
 
 import { modalInterface } from "~/interfaces/modal";
-import useApi from "~/helpers/useApi";
+import useApi from "~/composables/useApi";
 
 export default defineComponent({
   props: {

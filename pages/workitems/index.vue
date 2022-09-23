@@ -61,14 +61,14 @@
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
 import { OrderBy, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
-import usePagination from "~/helpers/query/usePagination";
+import usePagination from "~/composables/query/usePagination";
 
-import useQuery from "~/helpers/query/useQuery";
-import useFacilities from "~/helpers/useFacilities";
-import useSortBy from "~/helpers/query/useSortBy";
+import useQuery from "~/composables/query/useQuery";
+import useFacilities from "~/composables/useFacilities";
+import useSortBy from "~/composables/query/useSortBy";
 
-import useDateRange from "~/helpers/query/useDateRange";
-import useApi from "~/helpers/useApi";
+import useDateRange from "~/composables/query/useDateRange";
+import useApi from "~/composables/useApi";
 
 export default defineComponent({
   setup() {

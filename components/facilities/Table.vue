@@ -111,10 +111,10 @@ Table of facilities and their basic statistics
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import { FacilityDetailsSchema, FacilitySorterEnum, OrderBy } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/utils/dateUtils";
-import { facilityLastMessageOver48 } from "@/helpers/utils/facilityUtils";
+import { formatDate } from "@/helpers/dateUtils";
+import { facilityLastMessageOver48 } from "@/helpers/facilityUtils";
 
-import useApi from "~/helpers/useApi";
+import useApi from "~/composables/useApi";
 
 interface IsAscending {
   [key: string]: boolean | null;

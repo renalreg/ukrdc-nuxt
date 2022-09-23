@@ -31,8 +31,8 @@
 import { defineComponent, onMounted, ref, useRouter, watch } from "@nuxtjs/composition-api";
 import { FacilityDetailsSchema, MessageSchema } from "@ukkidney/ukrdc-axios-ts";
 import { PlotDatum } from "plotly.js";
-import useApi from "~/helpers/useApi";
-import { getPointDateRange } from "~/helpers/utils/chartUtils";
+import useApi from "~/composables/useApi";
+import { getPointDateRange } from "~/helpers/chartUtils";
 
 export default defineComponent({
   props: {

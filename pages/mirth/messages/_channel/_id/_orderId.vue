@@ -72,7 +72,7 @@
 import { computed, defineComponent, ref, useRoute, watch } from "@nuxtjs/composition-api";
 
 import { ConnectorMessageModel, ChannelMessageModel, ConnectorMessageData } from "@ukkidney/ukrdc-axios-ts";
-import { connectorMessageError } from "~/helpers/utils/mirthUtils";
+import { connectorMessageError } from "~/helpers/mirthUtils";
 
 interface ConnectorMessageDataTabs {
   raw: ConnectorMessageData;

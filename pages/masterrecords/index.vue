@@ -86,11 +86,11 @@
 import { computed, defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
-import usePagination from "~/helpers/query/usePagination";
-import useQuery from "~/helpers/query/useQuery";
-import useRecordSearch from "~/helpers/query/useRecordSearch";
-import useApi from "~/helpers/useApi";
-import useFacilities from "~/helpers/useFacilities";
+import usePagination from "~/composables/query/usePagination";
+import useQuery from "~/composables/query/useQuery";
+import useRecordSearch from "~/composables/query/useRecordSearch";
+import useApi from "~/composables/useApi";
+import useFacilities from "~/composables/useFacilities";
 
 export default defineComponent({
   setup() {

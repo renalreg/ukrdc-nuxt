@@ -29,8 +29,8 @@
 import { defineComponent } from "@nuxtjs/composition-api";
 
 import { MedicationSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/utils/dateUtils";
-import { formatGender } from "@/helpers/utils/codeUtils";
+import { formatDate } from "@/helpers/dateUtils";
+import { formatGender } from "@/helpers/codeUtils";
 
 export default defineComponent({
   props: {

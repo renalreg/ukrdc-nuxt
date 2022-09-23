@@ -99,7 +99,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, useContext, useMeta } from "@nuxtjs/composition-api";
-import useSensitive from "~/helpers/useSensitive";
+import useSensitive from "~/composables/useSensitive";
 import "floating-vue/dist/style.css";
 
 export default defineComponent({

@@ -128,11 +128,11 @@ import {
   MinimalMessageSchema,
   PatientRecordSummarySchema,
 } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate, datesAreEqual } from "@/helpers/utils/dateUtils";
-import { formatGender } from "@/helpers/utils/codeUtils";
-import { isTracing } from "@/helpers/utils/recordUtils";
-import useApi from "~/helpers/useApi";
-import useSensitive from "~/helpers/useSensitive";
+import { formatDate, datesAreEqual } from "@/helpers/dateUtils";
+import { formatGender } from "@/helpers/codeUtils";
+import { isTracing } from "@/helpers/recordUtils";
+import useApi from "~/composables/useApi";
+import useSensitive from "~/composables/useSensitive";
 
 export default defineComponent({
   props: {

@@ -42,12 +42,12 @@
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
 import { MasterRecordSchema, MasterRecordStatisticsSchema, MessageSchema, OrderBy } from "@ukkidney/ukrdc-axios-ts";
-import { nowString } from "@/helpers/utils/dateUtils";
-import usePagination from "~/helpers/query/usePagination";
-import useSortBy from "~/helpers/query/useSortBy";
-import useDateRange from "~/helpers/query/useDateRange";
+import { nowString } from "@/helpers/dateUtils";
+import usePagination from "~/composables/query/usePagination";
+import useSortBy from "~/composables/query/useSortBy";
+import useDateRange from "~/composables/query/useDateRange";
 
-import useApi from "~/helpers/useApi";
+import useApi from "~/composables/useApi";
 
 export default defineComponent({
   props: {

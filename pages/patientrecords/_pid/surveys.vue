@@ -41,9 +41,9 @@
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
 import { PatientRecordSchema, SurveySchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/utils/dateUtils";
+import { formatDate } from "@/helpers/dateUtils";
 
-import useApi from "~/helpers/useApi";
+import useApi from "~/composables/useApi";
 import { surveyViewerModalInterface } from "~/interfaces/modal";
 
 export default defineComponent({

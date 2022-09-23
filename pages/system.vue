@@ -70,7 +70,7 @@
 import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
 import { SystemInfoSchema } from "@ukkidney/ukrdc-axios-ts";
 
-import useApi from "~/helpers/useApi";
+import useApi from "~/composables/useApi";
 
 export default defineComponent({
   setup() {

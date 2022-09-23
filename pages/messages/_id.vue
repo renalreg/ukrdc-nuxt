@@ -21,10 +21,10 @@
 import { computed, defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
 
 import { MessageSchema } from "@ukkidney/ukrdc-axios-ts";
-import { makeMessageSummary } from "@/helpers/utils/messageUtils";
+import { makeMessageSummary } from "@/helpers/messageUtils";
 
-import useApi from "~/helpers/useApi";
-import useSensitive from "~/helpers/useSensitive";
+import useApi from "~/composables/useApi";
+import useSensitive from "~/composables/useSensitive";
 
 export default defineComponent({
   setup() {

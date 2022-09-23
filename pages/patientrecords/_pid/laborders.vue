@@ -34,10 +34,10 @@
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
 import { LabOrderShortSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/utils/dateUtils";
+import { formatDate } from "@/helpers/dateUtils";
 
-import usePagination from "~/helpers/query/usePagination";
-import useApi from "~/helpers/useApi";
+import usePagination from "~/composables/query/usePagination";
+import useApi from "~/composables/useApi";
 
 export default defineComponent({
   props: {

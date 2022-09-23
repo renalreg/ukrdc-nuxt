@@ -75,8 +75,8 @@
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 
 import { MasterRecordSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
-import usePermissions from "~/helpers/usePermissions";
-import { isData, isMembership, isMigrated, isSurvey, isTracing } from "@/helpers/utils/recordUtils";
+import usePermissions from "~/composables/usePermissions";
+import { isData, isMembership, isMigrated, isSurvey, isTracing } from "@/helpers/recordUtils";
 
 interface PRGroups {
   data: PatientRecordSummarySchema[];

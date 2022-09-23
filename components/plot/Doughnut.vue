@@ -5,7 +5,7 @@
 <script lang="ts">
 import { defineComponent, onMounted } from "@nuxtjs/composition-api";
 import { Data, newPlot } from "plotly.js";
-import { plotColours } from "~/helpers/utils/colourUtils";
+import { plotColours } from "~/helpers/colourUtils";
 
 export default defineComponent({
   props: {

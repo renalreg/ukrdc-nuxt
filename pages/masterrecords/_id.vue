@@ -31,13 +31,13 @@
 import { defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
 
 import { MasterRecordSchema, MasterRecordStatisticsSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/utils/dateUtils";
-import { formatGender } from "@/helpers/utils/codeUtils";
-import { insertIf } from "@/helpers/utils/arrayUtils";
+import { formatDate } from "@/helpers/dateUtils";
+import { formatGender } from "@/helpers/codeUtils";
+import { insertIf } from "@/helpers/arrayUtils";
 
 import { TabItem } from "~/interfaces/tabs";
-import usePermissions from "~/helpers/usePermissions";
-import useApi from "~/helpers/useApi";
+import usePermissions from "~/composables/usePermissions";
+import useApi from "~/composables/useApi";
 
 export default defineComponent({
   setup() {

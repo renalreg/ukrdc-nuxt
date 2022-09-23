@@ -1,5 +1,5 @@
 import { computed, ref, WritableComputedRef } from "@nuxtjs/composition-api";
-import useQuery from "~/helpers/query/useQuery";
+import useQuery from "~/composables/query/useQuery";
 
 export default function () {
   const { integerQuery } = useQuery();

@@ -39,10 +39,10 @@
 import { computed, defineComponent, ref, useContext } from "@nuxtjs/composition-api";
 
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
-import usePermissions from "~/helpers/usePermissions";
+import usePermissions from "~/composables/usePermissions";
 
 import { modalInterface } from "~/interfaces/modal";
-import useApi from "~/helpers/useApi";
+import useApi from "~/composables/useApi";
 
 export default defineComponent({
   props: {

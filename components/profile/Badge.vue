@@ -63,7 +63,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
-import useAuth from "~/helpers/useAuth";
+import useAuth from "~/composables/useAuth";
 
 export default defineComponent({
   props: {

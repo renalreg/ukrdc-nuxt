@@ -86,10 +86,10 @@
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
 import { CodeSchema } from "@ukkidney/ukrdc-axios-ts";
-import useQuery from "~/helpers/query/useQuery";
-import usePagination from "~/helpers/query/usePagination";
-import useApi from "~/helpers/useApi";
-import { saveAs } from "~/helpers/utils/fileUtils";
+import useQuery from "~/composables/query/useQuery";
+import usePagination from "~/composables/query/usePagination";
+import useApi from "~/composables/useApi";
+import { saveAs } from "~/helpers/fileUtils";
 
 export default defineComponent({
   setup() {

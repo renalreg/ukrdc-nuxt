@@ -109,14 +109,14 @@ import {
   ResultItemServiceSchema,
 } from "@ukkidney/ukrdc-axios-ts";
 
-import { formatDate } from "@/helpers/utils/dateUtils";
+import { formatDate } from "@/helpers/dateUtils";
 
-import usePagination from "~/helpers/query/usePagination";
-import useQuery from "~/helpers/query/useQuery";
-import useDateRange from "~/helpers/query/useDateRange";
+import usePagination from "~/composables/query/usePagination";
+import useQuery from "~/composables/query/useQuery";
+import useDateRange from "~/composables/query/useDateRange";
 
 import { modalInterface } from "~/interfaces/modal";
-import useApi from "~/helpers/useApi";
+import useApi from "~/composables/useApi";
 
 export default defineComponent({
   props: {

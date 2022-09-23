@@ -100,7 +100,7 @@
 import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
 import { PatientRecordSchema, TreatmentSchema } from "@ukkidney/ukrdc-axios-ts";
-import useApi from "~/helpers/useApi";
+import useApi from "~/composables/useApi";
 
 interface TreatmentEvent extends TreatmentSchema {
   time?: string;

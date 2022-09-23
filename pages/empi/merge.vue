@@ -119,10 +119,10 @@ import {
 } from "@nuxtjs/composition-api";
 
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
-import useQuery from "~/helpers/query/useQuery";
+import useQuery from "~/composables/query/useQuery";
 
 import { modalInterface } from "~/interfaces/modal";
-import useApi from "~/helpers/useApi";
+import useApi from "~/composables/useApi";
 
 type Direction = "superseding" | "superseded";
 

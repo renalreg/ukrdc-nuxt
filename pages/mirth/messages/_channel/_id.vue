@@ -16,7 +16,7 @@
 import { defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
 import { ChannelMessageModel } from "@ukkidney/ukrdc-axios-ts";
 
-import useApi from "~/helpers/useApi";
+import useApi from "~/composables/useApi";
 
 export default defineComponent({
   setup() {

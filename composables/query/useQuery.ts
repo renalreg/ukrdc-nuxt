@@ -10,7 +10,7 @@ and return a boolean.
 
 import { computed, useRoute, useRouter } from "@nuxtjs/composition-api";
 
-import { singleQuery } from "~/helpers/utils/queryUtils";
+import { singleQuery } from "~/helpers/queryUtils";
 
 export default function () {
   const route = useRoute();

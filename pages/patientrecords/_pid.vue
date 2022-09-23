@@ -39,8 +39,8 @@ import {
 import { PatientRecordSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 import { TabItem } from "~/interfaces/tabs";
 
-import { firstForename, firstSurname, isMembership } from "@/helpers/utils/recordUtils";
-import useApi from "~/helpers/useApi";
+import { firstForename, firstSurname, isMembership } from "@/helpers/recordUtils";
+import useApi from "~/composables/useApi";
 
 export default defineComponent({
   setup() {

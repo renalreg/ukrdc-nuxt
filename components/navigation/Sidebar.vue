@@ -72,7 +72,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
-import usePermissions from "~/helpers/usePermissions";
+import usePermissions from "~/composables/usePermissions";
 
 interface NavItem {
   title: string;

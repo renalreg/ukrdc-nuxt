@@ -31,7 +31,7 @@
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { ConnectorMessageModel } from "@ukkidney/ukrdc-axios-ts";
-import { connectorMessageError } from "~/helpers/utils/mirthUtils";
+import { connectorMessageError } from "~/helpers/mirthUtils";
 
 export default defineComponent({
   props: {

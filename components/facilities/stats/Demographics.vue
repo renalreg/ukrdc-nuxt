@@ -50,10 +50,10 @@
 import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { FacilityDemographicStats, FacilityDetailsSchema } from "@ukkidney/ukrdc-axios-ts";
 import { NumericChartData } from "~/interfaces/charts";
-import { formatGender } from "~/helpers/utils/codeUtils";
-import useApi from "~/helpers/useApi";
-import { buildCsv } from "~/helpers/utils/exportUtils";
-import { saveAs } from "~/helpers/utils/fileUtils";
+import { formatGender } from "~/helpers/codeUtils";
+import useApi from "~/composables/useApi";
+import { buildCsv } from "~/helpers/exportUtils";
+import { saveAs } from "~/helpers/fileUtils";
 
 export default defineComponent({
   props: {

@@ -63,9 +63,9 @@
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
 import { TrackableTaskSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/utils/dateUtils";
-import useTasks from "~/helpers/useTasks";
-import usePagination from "~/helpers/query/usePagination";
+import { formatDate } from "@/helpers/dateUtils";
+import useTasks from "~/composables/useTasks";
+import usePagination from "~/composables/query/usePagination";
 
 export default defineComponent({
   setup() {

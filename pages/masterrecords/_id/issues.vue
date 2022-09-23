@@ -58,11 +58,11 @@ import {
   MessageSchema,
   WorkItemSchema,
 } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/utils/dateUtils";
-import { formatGender } from "@/helpers/utils/codeUtils";
+import { formatDate } from "@/helpers/dateUtils";
+import { formatGender } from "@/helpers/codeUtils";
 
-import usePermissions from "~/helpers/usePermissions";
-import useApi from "~/helpers/useApi";
+import usePermissions from "~/composables/usePermissions";
+import useApi from "~/composables/useApi";
 
 interface MultipleUKRDCIDsGroupItem {
   lastUpdated: string | null;

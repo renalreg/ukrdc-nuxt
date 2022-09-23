@@ -241,16 +241,16 @@
 import { computed, defineComponent, onMounted, ref, useContext, useMeta, useRoute } from "@nuxtjs/composition-api";
 
 import { WorkItemExtendedSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/utils/dateUtils";
-import { formatGender } from "@/helpers/utils/codeUtils";
-import { isEmptyObject } from "@/helpers/utils/objectUtils";
-import { delay } from "@/helpers/utils/timeUtils";
-import { workItemIsMergable } from "@/helpers/utils/workItemUtils";
+import { formatDate } from "@/helpers/dateUtils";
+import { formatGender } from "@/helpers/codeUtils";
+import { isEmptyObject } from "@/helpers/objectUtils";
+import { delay } from "@/helpers/timeUtils";
+import { workItemIsMergable } from "@/helpers/workItemUtils";
 
 import { modalInterface } from "~/interfaces/modal";
 
-import usePermissions from "~/helpers/usePermissions";
-import useApi from "~/helpers/useApi";
+import usePermissions from "~/composables/usePermissions";
+import useApi from "~/composables/useApi";
 
 interface AvailableActions {
   close: boolean;

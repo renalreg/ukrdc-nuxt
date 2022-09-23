@@ -64,9 +64,9 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from "@nuxtjs/composition-api";
 import { PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/utils/dateUtils";
-import { formatGenderCharacter } from "@/helpers/utils/codeUtils";
-import { firstMRN } from "~/helpers/utils/recordUtils";
+import { formatDate } from "@/helpers/dateUtils";
+import { formatGenderCharacter } from "@/helpers/codeUtils";
+import { firstMRN } from "~/helpers/recordUtils";
 
 interface localNumber {
   label: string;

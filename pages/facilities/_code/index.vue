@@ -200,10 +200,10 @@
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { FacilityDetailsSchema, FacilityExtractsSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "~/helpers/utils/dateUtils";
-import { facilityLastMessageOver48 } from "@/helpers/utils/facilityUtils";
-import { allStatuses } from "~/helpers/utils/messageUtils";
-import usePermissions from "~/helpers/usePermissions";
+import { formatDate } from "~/helpers/dateUtils";
+import { facilityLastMessageOver48 } from "@/helpers/facilityUtils";
+import { allStatuses } from "~/helpers/messageUtils";
+import usePermissions from "~/composables/usePermissions";
 
 export default defineComponent({
   props: {
