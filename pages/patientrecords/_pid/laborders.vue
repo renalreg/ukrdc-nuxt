@@ -16,7 +16,7 @@
     </ul>
 
     <div v-if="orders.length > 0" class="mt-4">
-      <GenericCard>
+      <BaseCard>
         <GenericPaginator
           :page="page"
           :size="size"
@@ -25,21 +25,25 @@
           @prev="page--"
           @jump="page = $event"
         />
-      </GenericCard>
+      </BaseCard>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import { LabOrderShortSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
+
 import { formatDate } from "~/helpers/dateUtils";
 
 import usePagination from "~/composables/query/usePagination";
 import useApi from "~/composables/useApi";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+  },
   props: {
     record: {
       type: Object as () => PatientRecordSchema,

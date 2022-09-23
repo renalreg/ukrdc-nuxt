@@ -1,11 +1,11 @@
 <template>
   <div>
     <!-- Failing NIs -->
-    <GenericCard v-if="errorMessages && errorMessagesTotal > 0" class="mt-4">
-      <GenericCardHeader>
+    <BaseCard v-if="errorMessages && errorMessagesTotal > 0" class="mt-4">
+      <BaseCardHeader>
         <TextH2> Records Currently Failing </TextH2>
         <TextL1>Records where the most recent message received failed to process due to errors.</TextL1>
-      </GenericCardHeader>
+      </BaseCardHeader>
       <ul class="divide-y divide-gray-200">
         <div v-for="item in errorMessages" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/messages/${item.id}`">
@@ -23,7 +23,7 @@
         @prev="errorMessagesPage--"
         @jump="errorMessagesPage = $event"
       />
-    </GenericCard>
+    </BaseCard>
   </div>
 </template>
 
@@ -31,10 +31,16 @@
 import { defineComponent, onMounted, ref, useRouter, watch } from "@nuxtjs/composition-api";
 import { FacilityDetailsSchema, MessageSchema } from "@ukkidney/ukrdc-axios-ts";
 import { PlotDatum } from "plotly.js";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import useApi from "~/composables/useApi";
 import { getPointDateRange } from "~/helpers/chartUtils";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseCardHeader,
+  },
   props: {
     facility: {
       type: Object as () => FacilityDetailsSchema,

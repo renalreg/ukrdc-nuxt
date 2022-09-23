@@ -1,5 +1,5 @@
 <template>
-  <GenericCard class="border-2 border-green-500">
+  <BaseCard class="border-2 border-green-500">
     <div class="flex h-24 flex-col justify-center px-4 sm:px-6">
       <div class="sensitive text-gray-500" :class="highlight.includes('givenname') ? highlightClasses : []">
         {{ record.givenname ? formatAttributeValue(record.givenname) : "Given Name not specified" }}
@@ -47,18 +47,22 @@
         </GenericCardDi>
       </GenericCardDl>
     </div>
-  </GenericCard>
+  </BaseCard>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
-
 import { WorkItemAttributes } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
+
 import { formatDate } from "~/helpers/dateUtils";
 import { formatGender } from "~/helpers/codeUtils";
 import { formatAttributeValue } from "~/helpers/workItemUtils";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+  },
   props: {
     record: {
       type: Object as () => WorkItemAttributes,

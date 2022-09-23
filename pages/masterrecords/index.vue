@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="overflow-visible">
-      <GenericCard class="mb-4 overflow-visible px-4 pt-4">
+      <BaseCard class="mb-4 overflow-visible px-4 pt-4">
         <SearchBar v-model="searchboxString" :focus="true" @submit="searchSubmit" />
         <div class="mb-4 flex items-center">
           <div class="flex flex-grow items-center gap-2">
@@ -24,21 +24,21 @@
             hint="Select a facility..."
           />
         </div>
-      </GenericCard>
+      </BaseCard>
     </div>
 
     <!-- If loading -->
     <div v-if="searchInProgress">
-      <GenericCard>
+      <BaseCard>
         <!-- Skeleton results -->
         <ul class="divide-y divide-gray-200">
           <SkeleListItem v-for="n in 10" :key="n" />
         </ul>
-      </GenericCard>
+      </BaseCard>
     </div>
     <!-- If not loading, and results are not empty -->
     <div v-else-if="masterrecords.length > 0">
-      <GenericCard>
+      <BaseCard>
         <!-- Real results -->
         <ul class="divide-y divide-gray-200">
           <div v-for="item in masterrecords" :key="item.id" class="hover:bg-gray-50">
@@ -56,7 +56,7 @@
           @prev="page--"
           @jump="page = $event"
         />
-      </GenericCard>
+      </BaseCard>
     </div>
     <!-- If not loading, and results are empty -->
     <div v-else class="mt-2 text-center text-gray-500">
@@ -84,8 +84,9 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
+
 import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";
 import useRecordSearch from "~/composables/query/useRecordSearch";
@@ -93,6 +94,9 @@ import useApi from "~/composables/useApi";
 import useFacilities from "~/composables/useFacilities";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+  },
   setup() {
     const { page, total, size } = usePagination();
     const { arrayQuery } = useQuery();

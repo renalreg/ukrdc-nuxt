@@ -1,7 +1,7 @@
 <template>
   <div>
-    <GenericCard class="mb-6">
-      <GenericCardContent>
+    <BaseCard class="mb-6">
+      <BaseCardContent>
         <GenericDlGrid>
           <GenericDlGridItem>
             <TextDt>Connector Name</TextDt>
@@ -35,14 +35,14 @@
           </GenericDlGridItem>
         </GenericDlGrid>
         <slot></slot>
-      </GenericCardContent>
-    </GenericCard>
+      </BaseCardContent>
+    </BaseCard>
 
     <div class="mb-6"><GenericTabsMini v-model="currentTab" :tabs="tabs" /></div>
     <div class="flex-1">
       <div v-if="currentTab == 'metadata'" id="viewerMetadata">
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-          <GenericCardFlat
+          <BaseCard
             v-for="(value, key) in nonNullMetadata"
             :key="key"
             class="relative flex items-center space-x-2 px-4 py-4"
@@ -55,14 +55,14 @@
                 {{ value }}
               </p>
             </div>
-          </GenericCardFlat>
+          </BaseCard>
         </div>
       </div>
 
       <div v-for="(connectorMessageData, type) in availableconnectorMessageData" :key="type">
-        <GenericCard v-if="currentTab == type">
+        <BaseCard v-if="currentTab == type">
           <GenericCodeReader :content="connectorMessageData.content" :content-type="connectorMessageData.dataType" />
-        </GenericCard>
+        </BaseCard>
       </div>
     </div>
   </div>
@@ -70,8 +70,10 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, useRoute, watch } from "@nuxtjs/composition-api";
-
 import { ConnectorMessageModel, ChannelMessageModel, ConnectorMessageData } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardContent from "~/components/base/BaseCardContent.vue";
+
 import { connectorMessageError } from "~/helpers/mirthUtils";
 
 interface ConnectorMessageDataTabs {
@@ -82,6 +84,10 @@ interface ConnectorMessageDataTabs {
 }
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseCardContent,
+  },
   props: {
     message: {
       type: Object as () => ChannelMessageModel,

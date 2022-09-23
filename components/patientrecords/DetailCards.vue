@@ -3,7 +3,7 @@
     <div v-if="!isEmptyObject(record)" class="grid grid-cols-3">
       <div class="col-span-3 mb-4">
         <TextH4 class="mb-3">Demographics</TextH4>
-        <GenericCardMini class="grid w-full grid-cols-1 gap-4 px-4 py-2 sm:grid-cols-3">
+        <BaseCard class="grid w-full grid-cols-1 gap-4 px-4 py-2 sm:grid-cols-3">
           <div>
             <TextL1> Names </TextL1>
             <TextP v-for="item in record.patient.names" :key="item.given + item.family" class="sensitive">
@@ -30,12 +30,12 @@
               {{ record.patient.ethnicGroupDescription || record.patient.ethnicGroupCode || "Unknown" }}
             </TextP>
           </div>
-        </GenericCardMini>
+        </BaseCard>
       </div>
 
       <div class="col-span-3 mb-4 sm:col-span-2">
         <TextH4 class="mb-3">History</TextH4>
-        <GenericCardMini class="grid w-full grid-cols-1 gap-4 px-4 py-2 sm:grid-cols-2">
+        <BaseCard class="grid w-full grid-cols-1 gap-4 px-4 py-2 sm:grid-cols-2">
           <div>
             <TextL1> Record Created </TextL1>
             <TextP>{{ formatDate(record.repositoryCreationDate, (t = true)) }}</TextP>
@@ -44,7 +44,7 @@
             <TextL1> Record Last Updated </TextL1>
             <TextP>{{ formatDate(record.repositoryUpdateDate, (t = true)) }}</TextP>
           </div>
-        </GenericCardMini>
+        </BaseCard>
       </div>
 
       <div class="col-span-3 mb-4">
@@ -55,7 +55,7 @@
             :key="item.numbertype + item.organization + item.patientid"
             class="col-span-1 flex"
           >
-            <GenericCardMini class="flex w-full">
+            <BaseCard class="flex w-full">
               <div
                 class="flex w-16 flex-shrink-0 items-center justify-center rounded-l-md bg-indigo-600 font-medium text-white"
               >
@@ -69,7 +69,7 @@
                   <TextP class="sensitive">{{ item.organization }}</TextP>
                 </div>
               </div>
-            </GenericCardMini>
+            </BaseCard>
           </li>
         </ul>
       </div>
@@ -83,7 +83,7 @@
 
       <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
         <li v-for="item in record.patient.addresses" :key="item.street" class="col-span-1">
-          <GenericCardMini class="sensitive w-full px-4 py-2">
+          <BaseCard class="sensitive w-full px-4 py-2">
             <TextB>
               {{ item.street }}
             </TextB>
@@ -106,7 +106,7 @@
               class="mt-2 inline-block flex-shrink-0 rounded-sm bg-red-100 px-2 py-0.5 text-sm font-medium text-red-800"
               >Inactive since {{ formatDate(item.toTime, (t = false)) }}</span
             >
-          </GenericCardMini>
+          </BaseCard>
         </li>
       </ul>
     </div>
@@ -123,7 +123,7 @@
           :key="item.programName + index"
           class="col-span-1 flex rounded-md shadow-sm"
         >
-          <GenericCardMini class="w-full px-4 py-2">
+          <BaseCard class="w-full px-4 py-2">
             <TextB>
               {{ item.programName }}
             </TextB>
@@ -138,7 +138,7 @@
               class="mt-2 inline-block flex-shrink-0 rounded-sm bg-red-100 px-2 py-0.5 text-sm font-medium text-red-800"
               >Closed on {{ formatDate(item.toTime, (t = false)) }}</span
             >
-          </GenericCardMini>
+          </BaseCard>
         </li>
       </ul>
     </div>
@@ -155,22 +155,22 @@
           :key="`gp-info-${index}`"
           class="col-span-1"
         >
-          <GenericCardMini class="sensitive w-full px-4 py-2">
+          <BaseCard class="sensitive w-full px-4 py-2">
             <TextB>{{ info.type }} Information</TextB>
             <TextP>{{ info.gpname || "GP name not known" }}</TextP>
             <TextP>{{ info.street }}</TextP>
             <LinkPostCode v-if="info.postcode" :code="info.postcode" />
             <TextP>Contact {{ info.contactvalue }}</TextP>
-          </GenericCardMini>
+          </BaseCard>
         </li>
         <li v-if="!record.patient.familydoctor.gpInfo">
-          <GenericCardMini class="sensitive w-full px-4 py-2">
+          <BaseCard class="sensitive w-full px-4 py-2">
             <TextB>GP Information</TextB>
             <TextP>{{ record.patient.familydoctor.gpname || "GP name not known" }}</TextP>
             <TextP>{{ record.patient.familydoctor.street }}</TextP>
             <LinkPostCode v-if="record.patient.familydoctor.postcode" :code="record.patient.familydoctor.postcodee" />
             <TextP>Contact {{ record.patient.familydoctor.contactvalue }}</TextP>
-          </GenericCardMini>
+          </BaseCard>
         </li>
       </ul>
     </div>
@@ -179,13 +179,17 @@
 
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
-
 import { PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
+
 import { formatDate } from "~/helpers/dateUtils";
 import { formatGender } from "~/helpers/codeUtils";
 import { isEmptyObject } from "~/helpers/objectUtils";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+  },
   props: {
     record: {
       type: Object as () => PatientRecordSchema,

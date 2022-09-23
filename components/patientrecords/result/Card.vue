@@ -1,5 +1,5 @@
 <template>
-  <GenericCardFlat class="mb-4 grid grid-cols-3 gap-2 px-4 py-4">
+  <BaseCard class="mb-4 grid grid-cols-3 gap-2 px-4 py-4">
     <div class="col-span-1 text-sm font-medium uppercase tracking-wider text-gray-500">Type</div>
     <TextP class="col-span-2 font-medium text-gray-900">{{ item.serviceId }} ({{ item.serviceIdDescription }})</TextP>
     <div class="col-span-1 text-sm font-medium uppercase tracking-wider text-gray-500">Value</div>
@@ -19,12 +19,13 @@
     <BaseButton tooltip="Delete this result item" label="Delete this result item" @click="$emit('delete', item)">
       Delete</BaseButton
     >
-  </GenericCardFlat>
+  </BaseCard>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
 import { ResultItemSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
 import BaseButton from "@/components/base/BaseButton.vue";
 
 import { formatDate } from "~/helpers/dateUtils";
@@ -32,6 +33,7 @@ import { formatDate } from "~/helpers/dateUtils";
 export default defineComponent({
   components: {
     BaseButton,
+    BaseCard,
   },
   props: {
     item: {

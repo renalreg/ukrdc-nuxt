@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <GenericCard>
+    <BaseCard>
       <!-- Skeleton results -->
       <ul v-if="fetchInProgress" class="divide-y divide-gray-200">
         <SkeleListItem v-for="n in 10" :key="n" />
@@ -53,13 +53,14 @@
         @prev="page--"
         @jump="page = $event"
       />
-    </GenericCard>
+    </BaseCard>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import { OrderBy, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
 import BaseButtonMini from "@/components/base/BaseButtonMini.vue";
 
 import usePagination from "~/composables/query/usePagination";
@@ -74,6 +75,7 @@ import useApi from "~/composables/useApi";
 export default defineComponent({
   components: {
     BaseButtonMini,
+    BaseCard,
   },
   setup() {
     const { page, total, size } = usePagination();

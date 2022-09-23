@@ -5,7 +5,7 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
 <template>
   <div>
     <div v-if="counts" class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-3">
-      <GenericCard>
+      <BaseCard>
         <div class="flex items-center p-4">
           <div class="flex-shrink-0">
             <IconUsers />
@@ -15,10 +15,10 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
             <h1 class="text-2xl font-semibold text-green-600">{{ counts.distinctPatients }}</h1>
           </div>
         </div>
-        <GenericCardFooter>Total distinct UKRDC IDs in the database</GenericCardFooter>
-      </GenericCard>
+        <BaseCardFooter>Total distinct UKRDC IDs in the database</BaseCardFooter>
+      </BaseCard>
 
-      <GenericCard>
+      <BaseCard>
         <div class="flex items-center p-4">
           <div class="flex-shrink-0">
             <IconLink />
@@ -30,10 +30,10 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
             </h1>
           </div>
         </div>
-        <GenericCardFooter>Work Items currently open or WIP</GenericCardFooter>
-      </GenericCard>
+        <BaseCardFooter>Work Items currently open or WIP</BaseCardFooter>
+      </BaseCard>
 
-      <GenericCard>
+      <BaseCard>
         <div class="flex items-center p-4">
           <div class="flex-shrink-0">
             <IconExclamation />
@@ -48,16 +48,16 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
             </h1>
           </div>
         </div>
-        <GenericCardFooter>Records with active data files currently failing due to errors </GenericCardFooter>
-      </GenericCard>
+        <BaseCardFooter>Records with active data files currently failing due to errors </BaseCardFooter>
+      </BaseCard>
     </div>
     <!-- Graphs -->
     <div class="flex flex-col gap-4">
       <!-- Error history -->
-      <GenericCard v-if="errorsHistory">
-        <GenericCardHeader>
+      <BaseCard v-if="errorsHistory">
+        <BaseCardHeader>
           <TextH2> Error History </TextH2>
-        </GenericCardHeader>
+        </BaseCardHeader>
         <PlotTimeSeries
           id="error-history-time-series"
           class="h-64"
@@ -67,12 +67,12 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
           hovertemplate="<b>%{x}</b><br>New errors: %{y}<extra></extra>"
           @click="errorHistoryPointClickHandler"
         />
-      </GenericCard>
+      </BaseCard>
       <!-- WorkItems history -->
-      <GenericCard v-if="workitemsHistory">
-        <GenericCardHeader>
+      <BaseCard v-if="workitemsHistory">
+        <BaseCardHeader>
           <TextH2> Work Items History </TextH2>
-        </GenericCardHeader>
+        </BaseCardHeader>
         <PlotTimeSeries
           id="workitem-history-time-series"
           class="h-64"
@@ -82,7 +82,7 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
           hovertemplate="<b>%{x}</b><br>New work items: %{y}<extra></extra>"
           @click="workitemHistoryPointClickHandler"
         />
-      </GenericCard>
+      </BaseCard>
     </div>
   </div>
 </template>
@@ -91,10 +91,18 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
 import { computed, defineComponent, onMounted, ref, useRouter } from "@nuxtjs/composition-api";
 import { AdminCountsSchema, HistoryPoint } from "@ukkidney/ukrdc-axios-ts";
 import { PlotDatum } from "plotly.js";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+import BaseCardFooter from "~/components/base/BaseCardFooter.vue";
 import useApi from "~/composables/useApi";
 import { getPointDateRange, unpackHistoryPoints } from "~/helpers/chartUtils";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseCardHeader,
+    BaseCardFooter,
+  },
   setup() {
     const router = useRouter();
     const { adminApi } = useApi();

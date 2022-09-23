@@ -170,12 +170,12 @@
           </div>
         </div>
       </div>
-      <GenericCard v-if="showDestinationPersons && record.destination.persons.length > 1" class="mt-2 pl-4">
+      <BaseCard v-if="showDestinationPersons && record.destination.persons.length > 1" class="mt-2 pl-4">
         <GenericItemPaginator
           v-model="relatedPersonsIndex"
           :total="record.destination.persons.length"
           item-label="Record"
-      /></GenericCard>
+      /></BaseCard>
     </div>
 
     <!-- Proposed Merge -->
@@ -200,22 +200,22 @@
             <masterrecordsRecordCard :record="record.destination.masterRecord" label="Destination Master Record" />
           </NuxtLink>
         </div>
-        <GenericCard v-if="record.incoming.masterRecords.length > 1" class="mt-2 pl-4">
+        <BaseCard v-if="record.incoming.masterRecords.length > 1" class="mt-2 pl-4">
           <GenericItemPaginator
             v-model="relatedRecordsIndex"
             :total="record.incoming.masterRecords.length"
             item-label="Record"
-        /></GenericCard>
+        /></BaseCard>
       </div>
     </div>
 
     <!-- Related Work Items  -->
-    <GenericCard v-if="workItemCollection.length > 0" class="mb-8">
+    <BaseCard v-if="workItemCollection.length > 0" class="mb-8">
       <!-- Card header -->
-      <GenericCardHeader>
+      <BaseCardHeader>
         <TextH2>Related Work Items</TextH2>
         <TextL2>Work Items for the same patient, raised by the same event</TextL2>
-      </GenericCardHeader>
+      </BaseCardHeader>
       <!-- Results list -->
       <ul class="divide-y divide-gray-200">
         <div v-for="item in workItemCollection" :key="item.id" :item="item" class="hover:bg-gray-50">
@@ -224,7 +224,7 @@
           </NuxtLink>
         </div>
       </ul>
-    </GenericCard>
+    </BaseCard>
 
     <!-- Related errors card -->
     <WorkitemsRelatedErrorsList v-if="record" class="mt-4 mb-8" :workitem="record" :size="5" />
@@ -234,6 +234,8 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useContext, useMeta, useRoute } from "@nuxtjs/composition-api";
 import { WorkItemExtendedSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseButton from "@/components/base/BaseButton.vue";
 
 import { formatDate } from "~/helpers/dateUtils";
@@ -257,6 +259,8 @@ interface AvailableActions {
 export default defineComponent({
   components: {
     BaseButton,
+    BaseCard,
+    BaseCardHeader,
   },
   setup() {
     // Dependencies

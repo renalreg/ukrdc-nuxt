@@ -3,7 +3,7 @@ Big link cards used in the EMPI page, to direct to Merge etc.
 -->
 
 <template>
-  <GenericCard class="group relative p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-cyan-500">
+  <BaseCard class="group relative p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-cyan-500">
     <div>
       <span class="inline-flex rounded-lg bg-indigo-50 p-3 text-indigo-700 ring-4 ring-white">
         <!-- Heroicon name: outline/link -->
@@ -38,13 +38,17 @@ Big link cards used in the EMPI page, to direct to Merge etc.
         />
       </svg>
     </span>
-  </GenericCard>
+  </BaseCard>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
+import BaseCard from "~/components/base/BaseCard.vue";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+  },
   props: {
     title: {
       type: String,

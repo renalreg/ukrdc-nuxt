@@ -18,7 +18,7 @@
 
         <ul class="my-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
           <li v-for="item in group.channels" :key="item.id" class="col-span-1">
-            <GenericCard class="px-4 py-2">
+            <BaseCard class="px-4 py-2">
               <TextH3 class="truncate">
                 {{ item.name }}
               </TextH3>
@@ -34,7 +34,7 @@
                 class="mt-2 inline-block rounded-sm bg-red-100 px-2 py-0.5 text-sm font-medium text-red-800"
                 >{{ item.statistics.error }} errors</span
               >
-            </GenericCard>
+            </BaseCard>
           </li>
         </ul>
       </div>
@@ -45,10 +45,14 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { ChannelGroupModel } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
 
 import useApi from "~/composables/useApi";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+  },
   setup() {
     const { mirthApi } = useApi();
 

@@ -17,14 +17,14 @@ Includes a header with the Link Record ID and functionality to Unlink the record
       </div>
     </GenericModalSlot>
 
-    <GenericCard class="mb-2 flex items-center p-2">
+    <BaseCard class="mb-2 flex items-center p-2">
       <div class="flex-grow pl-2">
         <TextL1>Link Record {{ record.id }}</TextL1>
       </div>
       <div class="flex-shrink">
         <BaseButtonMini @click="unlinkModal?.show()">Unlink</BaseButtonMini>
       </div>
-    </GenericCard>
+    </BaseCard>
 
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
       <PersonsRecordCard :record="record.person" />
@@ -38,6 +38,7 @@ Includes a header with the Link Record ID and functionality to Unlink the record
 <script lang="ts">
 import { defineComponent, ref, useContext, useRouter } from "@nuxtjs/composition-api";
 import { LinkRecordSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
 import BaseButtonMini from "@/components/base/BaseButtonMini.vue";
 import BaseButton from "@/components/base/BaseButton.vue";
 
@@ -51,6 +52,7 @@ export default defineComponent({
   components: {
     BaseButton,
     BaseButtonMini,
+    BaseCard,
   },
   props: {
     record: {

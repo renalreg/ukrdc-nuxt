@@ -1,8 +1,8 @@
 <template>
   <div>
     <!-- Header card -->
-    <GenericCard class="mb-4">
-      <GenericCardContent>
+    <BaseCard class="mb-4">
+      <BaseCardContent>
         <GenericDlGrid>
           <GenericDlGridItem>
             <TextDt>Status</TextDt>
@@ -34,39 +34,39 @@
             <SkeleText v-else class="h-6 w-full" />
           </GenericDlGridItem>
         </GenericDlGrid>
-      </GenericCardContent>
-    </GenericCard>
+      </BaseCardContent>
+    </BaseCard>
 
-    <GenericCard v-if="message" class="mb-4">
-      <GenericCardHeader>
+    <BaseCard v-if="message" class="mb-4">
+      <BaseCardHeader>
         <TextH2>Files</TextH2>
-      </GenericCardHeader>
-      <GenericCardContent>
-        <GenericCardMini class="w-2/3">
+      </BaseCardHeader>
+      <BaseCardContent>
+        <BaseCard class="w-2/3">
           <GenericAttachment :filename="message.filename || `${message.facility}-${message.id}.txt`">
             <NuxtLink :to="`/messages/${message.id}/source`" class="font-medium"> View </NuxtLink>
             <TextLink @click="downloadMessageSource"> Download </TextLink>
           </GenericAttachment>
-        </GenericCardMini>
-      </GenericCardContent>
-    </GenericCard>
+        </BaseCard>
+      </BaseCardContent>
+    </BaseCard>
 
-    <GenericCard v-if="message && message.error" class="mb-4">
-      <GenericCardHeader>
+    <BaseCard v-if="message && message.error" class="mb-4">
+      <BaseCardHeader>
         <TextH2>Error message</TextH2>
-      </GenericCardHeader>
-      <GenericCardContent>
+      </BaseCardHeader>
+      <BaseCardContent>
         <div class="whitespace-pre-wrap font-mono">
           {{ messageText }}
         </div>
-      </GenericCardContent>
-    </GenericCard>
+      </BaseCardContent>
+    </BaseCard>
 
     <!-- Related Master Records card -->
-    <GenericCard v-if="masterRecords.length > 0" class="mt-4">
-      <GenericCardHeader>
+    <BaseCard v-if="masterRecords.length > 0" class="mt-4">
+      <BaseCardHeader>
         <TextH2> Related Records </TextH2>
-      </GenericCardHeader>
+      </BaseCardHeader>
       <ul class="divide-y divide-gray-200">
         <div v-for="item in masterRecords" :key="item.id" class="hover:bg-gray-50">
           <NuxtLink :to="`/masterrecords/${item.id}`">
@@ -74,23 +74,23 @@
           </NuxtLink>
         </div>
       </ul>
-    </GenericCard>
+    </BaseCard>
 
     <!-- Related Work Items card -->
-    <GenericCard v-if="workItems.length > 0" class="mt-4">
-      <GenericCardHeader>
+    <BaseCard v-if="workItems.length > 0" class="mt-4">
+      <BaseCardHeader>
         <TextH2> Related Work Items </TextH2>
-      </GenericCardHeader>
+      </BaseCardHeader>
       <ul class="divide-y divide-gray-200">
         <workitemsListItem v-for="item in workItems" :key="item.id" :item="item" />
       </ul>
-    </GenericCard>
+    </BaseCard>
 
     <!-- Mirth Messages card -->
-    <GenericCard v-if="hasPermission('ukrdc:mirth:read')" class="mt-4">
-      <GenericCardHeader>
+    <BaseCard v-if="hasPermission('ukrdc:mirth:read')" class="mt-4">
+      <BaseCardHeader>
         <TextH2> Mirth Messages </TextH2>
-      </GenericCardHeader>
+      </BaseCardHeader>
       <ul class="divide-y divide-gray-200">
         <li v-if="mirthMessage" class="hover:bg-gray-50">
           <NuxtLink :to="`/mirth/messages/${mirthMessage.channelId}/${mirthMessage.messageId}`">
@@ -101,14 +101,16 @@
           <SkeleListItem />
         </li>
       </ul>
-    </GenericCard>
+    </BaseCard>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-
 import { MasterRecordSchema, MessageSchema, ChannelMessageModel, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardContent from "~/components/base/BaseCardContent.vue";
+import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import { formatDate } from "~/helpers/dateUtils";
 import usePermissions from "~/composables/usePermissions";
 import useApi from "~/composables/useApi";
@@ -116,6 +118,12 @@ import useSensitive from "~/composables/useSensitive";
 import { saveAs } from "~/helpers/fileUtils";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseCard,
+    BaseCardContent,
+    BaseCardHeader,
+  },
   props: {
     message: {
       type: Object as () => MessageSchema,

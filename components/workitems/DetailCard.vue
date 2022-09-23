@@ -1,7 +1,7 @@
 <template>
-  <GenericCard>
-    <GenericCardHeader><TextH2>Details</TextH2></GenericCardHeader>
-    <GenericCardContent>
+  <BaseCard>
+    <BaseCardHeader><TextH2>Details</TextH2></BaseCardHeader>
+    <BaseCardContent>
       <GenericDlGrid :cols="2">
         <GenericDlGridItem>
           <TextDt>Last Updated</TextDt>
@@ -25,17 +25,25 @@
           <SkeleText v-else class="h-6 w-full" />
         </GenericDlGridItem>
       </GenericDlGrid>
-    </GenericCardContent>
-  </GenericCard>
+    </BaseCardContent>
+  </BaseCard>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
-
 import { WorkItemExtendedSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardContent from "~/components/base/BaseCardContent.vue";
+import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+
 import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseCardContent,
+    BaseCardHeader,
+  },
   props: {
     item: {
       type: Object as () => WorkItemExtendedSchema,

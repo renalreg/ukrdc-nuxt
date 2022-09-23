@@ -1,11 +1,11 @@
 <template>
   <div>
     <div v-if="facilityDemographicStats">
-      <GenericCard class="mb-4">
-        <GenericCardHeader class="flex items-center">
+      <BaseCard class="mb-4">
+        <BaseCardHeader class="flex items-center">
           <TextH2 class="flex-1"> Age Distribution </TextH2>
           <BaseButtonMini @click="exportAgeDistribution">Export</BaseButtonMini>
-        </GenericCardHeader>
+        </BaseCardHeader>
         <PlotBar
           id="ageDistributionChart"
           :y="ageDistributionChartData.data"
@@ -15,32 +15,32 @@
           class="h-64"
           hovertemplate="Age: <b>%{x}</b><br>%{y}<extra></extra>"
         />
-      </GenericCard>
+      </BaseCard>
       <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <GenericCard>
-          <GenericCardHeader class="flex items-center">
+        <BaseCard>
+          <BaseCardHeader class="flex items-center">
             <TextH2 class="flex-1"> Gender Distribution </TextH2>
             <BaseButtonMini @click="exportGenderDistribution">Export</BaseButtonMini>
-          </GenericCardHeader>
+          </BaseCardHeader>
           <PlotDoughnut
             id="genderDistributionChart"
             :data="genderDistributionChartData.data"
             :labels="genderDistributionChartData.labels"
             class="h-64"
           />
-        </GenericCard>
-        <GenericCard>
-          <GenericCardHeader class="flex items-center">
+        </BaseCard>
+        <BaseCard>
+          <BaseCardHeader class="flex items-center">
             <TextH2 class="flex-1"> Ethnicity Distribution </TextH2>
             <BaseButtonMini @click="exportEthnicityDistribution">Export</BaseButtonMini>
-          </GenericCardHeader>
+          </BaseCardHeader>
           <PlotDoughnut
             id="ethnicityDistributionChart"
             :data="ethnicityDistributionChartData.data"
             :labels="ethnicityDistributionChartData.labels"
             class="h-64"
           />
-        </GenericCard>
+        </BaseCard>
       </div>
     </div>
   </div>
@@ -49,7 +49,9 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { FacilityDemographicStats, FacilityDetailsSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
 import BaseButtonMini from "@/components/base/BaseButtonMini.vue";
+import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import { NumericChartData } from "~/interfaces/charts";
 import { formatGender } from "~/helpers/codeUtils";
 import useApi from "~/composables/useApi";
@@ -59,6 +61,8 @@ import { saveAs } from "~/helpers/fileUtils";
 export default defineComponent({
   components: {
     BaseButtonMini,
+    BaseCard,
+    BaseCardHeader,
   },
   props: {
     facility: {

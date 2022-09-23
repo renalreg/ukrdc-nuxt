@@ -1,7 +1,7 @@
 <template>
   <div>
-    <GenericCard>
-      <GenericCardHeader>
+    <BaseCard>
+      <BaseCardHeader>
         <div class="mb-1">
           <TextH2 v-if="patientDocument"> {{ patientDocument.documentname || "Unnamed Document" }} </TextH2>
           <SkeleText v-else class="h-6 w-1/2" />
@@ -12,8 +12,8 @@
           }}</TextL1>
           <SkeleText v-else class="h-6 w-1/3" />
         </div>
-      </GenericCardHeader>
-      <GenericCardContent>
+      </BaseCardHeader>
+      <BaseCardContent>
         <GenericDlGrid>
           <GenericDlGridItem>
             <TextDt>Entered At</TextDt>
@@ -64,29 +64,37 @@
           <div v-if="patientDocument" class="sm:col-span-2">
             <TextDt>Attachments</TextDt>
             <TextDd>
-              <GenericCardMini>
+              <BaseCard>
                 <GenericAttachment :filename="filename">
                   <TextLink @click="downloadPatientRecordDocument()"> Download </TextLink>
                 </GenericAttachment>
-              </GenericCardMini>
+              </BaseCard>
             </TextDd>
           </div>
         </GenericDlGrid>
-      </GenericCardContent>
-    </GenericCard>
+      </BaseCardContent>
+    </BaseCard>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useRoute } from "@nuxtjs/composition-api";
-
 import { DocumentSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardContent from "~/components/base/BaseCardContent.vue";
+import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import { formatDate } from "~/helpers/dateUtils";
 
 import useApi from "~/composables/useApi";
 import { saveAs } from "~/helpers/fileUtils";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseCard,
+    BaseCardContent,
+    BaseCardHeader,
+  },
   props: {
     record: {
       type: Object as () => PatientRecordSchema,

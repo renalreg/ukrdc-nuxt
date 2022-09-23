@@ -1,5 +1,5 @@
 <template>
-  <GenericCard class="border-2 border-indigo-500">
+  <BaseCard class="border-2 border-indigo-500">
     <div class="flex h-24 flex-col justify-center px-4 sm:px-6">
       <TextNameH2
         :class="highlight.includes('name') ? highlightClasses : []"
@@ -45,16 +45,18 @@
         </GenericCardDi>
       </GenericCardDl>
     </div>
-  </GenericCard>
+  </BaseCard>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
 import { formatDate } from "~/helpers/dateUtils";
 import { formatGender } from "~/helpers/codeUtils";
 
 export default defineComponent({
+  components: { BaseCard },
   props: {
     record: {
       type: Object as () => MasterRecordSchema,

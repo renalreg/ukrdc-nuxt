@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Description list -->
-    <GenericCard class="my-4 p-6">
+    <BaseCard class="my-4 p-6">
       <GenericDlGrid>
         <GenericDlGridItem>
           <TextDt>Local ID</TextDt>
@@ -34,7 +34,7 @@
           </TextDd>
         </GenericDlGridItem>
       </GenericDlGrid>
-    </GenericCard>
+    </BaseCard>
 
     <PatientrecordsDetailCards :full="true" :record="record" />
   </div>
@@ -42,13 +42,17 @@
 
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
-
 import { PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
+
 import { formatDate } from "~/helpers/dateUtils";
 import { formatGender } from "~/helpers/codeUtils";
 import { isEmptyObject } from "~/helpers/objectUtils";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+  },
   props: {
     record: {
       type: Object as () => PatientRecordSchema,

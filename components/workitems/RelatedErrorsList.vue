@@ -1,9 +1,9 @@
 <template>
   <!-- Related errors card -->
-  <GenericCard v-if="relatedErrors && relatedErrors.length > 0">
-    <GenericCardHeader>
+  <BaseCard v-if="relatedErrors && relatedErrors.length > 0">
+    <BaseCardHeader>
       <TextH2> Related Errors </TextH2>
-    </GenericCardHeader>
+    </BaseCardHeader>
     <ul class="divide-y divide-gray-200">
       <div v-for="item in relatedErrors" :key="item.id" :item="item" class="hover:bg-gray-50">
         <NuxtLink :to="`/messages/${item.id}`">
@@ -21,15 +21,21 @@
       @prev="relatedErrorsPage--"
       @jump="relatedErrorsPage = $event"
     />
-  </GenericCard>
+  </BaseCard>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import { MessageSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+import BaseCard from "~/components/base/BaseCard.vue";
 import useApi from "~/composables/useApi";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseCardHeader,
+  },
   props: {
     workitem: {
       type: Object as () => WorkItemSchema,

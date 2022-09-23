@@ -50,7 +50,7 @@
         </GenericTable>
 
         <div v-if="observations && observations.length > 0">
-          <GenericCard>
+          <BaseCard>
             <GenericPaginator
               :page="page"
               :size="size"
@@ -59,7 +59,7 @@
               @prev="page--"
               @jump="page = $event"
             />
-          </GenericCard>
+          </BaseCard>
         </div>
       </div>
     </LoadingContainer>
@@ -68,8 +68,9 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import { ObservationSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
+
 import usePagination from "~/composables/query/usePagination";
 
 import { formatDate } from "~/helpers/dateUtils";
@@ -78,6 +79,9 @@ import useApi from "~/composables/useApi";
 import useQuery from "~/composables/query/useQuery";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+  },
   props: {
     record: {
       type: Object as () => PatientRecordSchema,

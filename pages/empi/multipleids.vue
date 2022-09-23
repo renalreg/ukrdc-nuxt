@@ -6,8 +6,8 @@
     </div>
 
     <!-- Description list -->
-    <GenericCard class="mb-6">
-      <GenericCardContent>
+    <BaseCard class="mb-6">
+      <BaseCardContent>
         <GenericDlGrid>
           <GenericDlGridItem>
             <TextDt>Patients with Multiple UKRDC IDs</TextDt>
@@ -34,17 +34,17 @@
             <SkeleText v-else class="mt-2 h-6 w-1/4" />
           </GenericDlGridItem>
         </GenericDlGrid>
-      </GenericCardContent>
-    </GenericCard>
+      </BaseCardContent>
+    </BaseCard>
 
     <div v-if="groups">
       <div v-for="group in groups" :key="`group-${group.groupId}`">
-        <GenericCard class="mb-4">
+        <BaseCard class="mb-4">
           <empiMultipleIDItem :group="group" :fetch-in-progress="fetchInProgress" />
-        </GenericCard>
+        </BaseCard>
       </div>
 
-      <GenericCard>
+      <BaseCard>
         <GenericPaginator
           class="bg-white"
           :page="page"
@@ -54,7 +54,7 @@
           @prev="page--"
           @jump="page = $event"
         />
-      </GenericCard>
+      </BaseCard>
     </div>
     <LoadingIndicator v-else></LoadingIndicator>
   </div>
@@ -63,12 +63,18 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import { MultipleUKRDCIDGroup } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import { formatDate } from "~/helpers/dateUtils";
 
 import usePagination from "~/composables/query/usePagination";
 import useApi from "~/composables/useApi";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseCardContent,
+  },
   setup() {
     const { page, total, size } = usePagination();
     const { adminApi } = useApi();

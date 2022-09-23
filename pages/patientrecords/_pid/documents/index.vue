@@ -2,7 +2,7 @@
   <div class="sensitive">
     <LoadingContainer :loading="!documents">
       <TextP v-if="documents && documents.length <= 0" class="text-center">No documents on record</TextP>
-      <GenericCard v-else>
+      <BaseCard v-else>
         <ul class="divide-y divide-gray-200">
           <div v-for="item in documents" :key="item.id" :item="item" class="hover:bg-gray-50">
             <NuxtLink :to="`/patientrecords/${$route.params.pid}/documents/${item.id}`">
@@ -20,15 +20,15 @@
           @prev="page--"
           @jump="page = $event"
         />
-      </GenericCard>
+      </BaseCard>
     </LoadingContainer>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import { DocumentSummarySchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
 
 import { formatDate } from "~/helpers/dateUtils";
 
@@ -38,6 +38,9 @@ import useDateRange from "~/composables/query/useDateRange";
 import useApi from "~/composables/useApi";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+  },
   props: {
     record: {
       type: Object as () => PatientRecordSchema,

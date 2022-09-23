@@ -1,8 +1,8 @@
 <template>
   <div>
     <!-- Description list -->
-    <GenericCard class="mb-4">
-      <GenericCardContent>
+    <BaseCard class="mb-4">
+      <BaseCardContent>
         <GenericDlGrid>
           <GenericDlGridItem>
             <TextDt>Full Name</TextDt>
@@ -59,8 +59,8 @@
             <TextDd>{{ formatDate(record.lastUpdated) }} </TextDd>
           </GenericDlGridItem>
         </GenericDlGrid>
-      </GenericCardContent>
-    </GenericCard>
+      </BaseCardContent>
+    </BaseCard>
 
     <!-- Record message banners -->
     <div>
@@ -77,10 +77,10 @@
     </div>
 
     <!-- Related Patient Records card -->
-    <GenericCard class="overflow-visible">
-      <GenericCardHeader>
+    <BaseCard class="overflow-visible">
+      <BaseCardHeader>
         <TextH2> Patient Records </TextH2>
-      </GenericCardHeader>
+      </BaseCardHeader>
       <PatientrecordsGroupedList
         v-if="patientRecords"
         :master-record="record"
@@ -90,13 +90,13 @@
       <ul v-else class="divide-y divide-gray-200">
         <SkeleListItem v-for="n in 5" :key="n" />
       </ul>
-    </GenericCard>
+    </BaseCard>
 
     <!-- Related Master Records card -->
-    <GenericCard class="mt-4">
-      <GenericCardHeader>
+    <BaseCard class="mt-4">
+      <BaseCardHeader>
         <TextH2> Linked Master Records </TextH2>
-      </GenericCardHeader>
+      </BaseCardHeader>
       <ul v-if="relatedRecords" class="divide-y divide-gray-200">
         <div
           v-for="item in relatedRecords"
@@ -115,19 +115,22 @@
       <ul v-else class="divide-y divide-gray-200">
         <SkeleListItem v-for="n in 2" :key="n" />
       </ul>
-    </GenericCard>
+    </BaseCard>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-
 import {
   MasterRecordSchema,
   MasterRecordStatisticsSchema,
   MinimalMessageSchema,
   PatientRecordSummarySchema,
 } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardContent from "~/components/base/BaseCardContent.vue";
+import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+
 import { formatDate, datesAreEqual } from "~/helpers/dateUtils";
 import { formatGender } from "~/helpers/codeUtils";
 import { isTracing } from "~/helpers/recordUtils";
@@ -135,6 +138,11 @@ import useApi from "~/composables/useApi";
 import useSensitive from "~/composables/useSensitive";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseCardContent,
+    BaseCardHeader,
+  },
   props: {
     record: {
       type: Object as () => MasterRecordSchema,

@@ -5,15 +5,15 @@
     </div>
 
     <!-- Multiple UKRDC IDs -->
-    <GenericCard v-if="ukrdcIdGroup" class="mb-4">
+    <BaseCard v-if="ukrdcIdGroup" class="mb-4">
       <empiMultipleIDItem :group="ukrdcIdGroup" heading="Multiple UKRDC IDs" />
-    </GenericCard>
+    </BaseCard>
 
     <!-- Related Work Items card -->
-    <GenericCard v-if="workItems && workItems.length > 0" class="mt-4">
-      <GenericCardHeader>
+    <BaseCard v-if="workItems && workItems.length > 0" class="mt-4">
+      <BaseCardHeader>
         <TextH2> Open Work Items </TextH2>
-      </GenericCardHeader>
+      </BaseCardHeader>
       <ul class="divide-y divide-gray-200">
         <div v-for="item in workItems" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/workitems/${item.id}`">
@@ -21,13 +21,13 @@
           </NuxtLink>
         </div>
       </ul>
-    </GenericCard>
+    </BaseCard>
 
     <!-- Related errors card -->
-    <GenericCard v-if="relatedErrors && relatedErrors.length > 0" class="mt-4">
-      <GenericCardHeader>
+    <BaseCard v-if="relatedErrors && relatedErrors.length > 0" class="mt-4">
+      <BaseCardHeader>
         <TextH2> Record Errors </TextH2>
-      </GenericCardHeader>
+      </BaseCardHeader>
       <ul class="divide-y divide-gray-200">
         <div v-for="item in relatedErrors" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/messages/${item.id}`">
@@ -45,19 +45,21 @@
         @prev="relatedErrorsPage--"
         @jump="relatedErrorsPage = $event"
       />
-    </GenericCard>
+    </BaseCard>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import {
   MasterRecordSchema,
   MasterRecordStatisticsSchema,
   MessageSchema,
   WorkItemSchema,
 } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+
 import { formatDate } from "~/helpers/dateUtils";
 import { formatGender } from "~/helpers/codeUtils";
 
@@ -75,6 +77,10 @@ export interface MultipleUKRDCIDsGroup {
 }
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseCardHeader,
+  },
   props: {
     record: {
       type: Object as () => MasterRecordSchema,

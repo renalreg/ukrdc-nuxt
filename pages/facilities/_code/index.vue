@@ -13,7 +13,7 @@
       <div class="col-span-1 flex flex-col gap-4 lg:col-span-2">
         <!-- Basic stats -->
         <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          <GenericCard>
+          <BaseCard>
             <div class="flex items-center p-4">
               <div class="flex-shrink-0">
                 <IconUsers />
@@ -36,9 +36,9 @@
             <div class="bg-gray-50 px-4 py-2 text-sm text-gray-500">
               Total records ever stored in the UKRDC for this facility
             </div>
-          </GenericCard>
+          </BaseCard>
 
-          <GenericCard>
+          <BaseCard>
             <div class="flex items-center p-4">
               <div class="flex-shrink-0">
                 <IconExclamation />
@@ -61,16 +61,16 @@
               </div>
             </div>
             <div class="bg-gray-50 px-4 py-2 text-sm text-gray-500">Active records currently failing due to errors</div>
-          </GenericCard>
+          </BaseCard>
         </div>
 
         <!-- Error history -->
-        <GenericCard>
-          <GenericCardHeader>
+        <BaseCard>
+          <BaseCardHeader>
             <TextH2> Error History </TextH2>
-          </GenericCardHeader>
+          </BaseCardHeader>
           <FacilitiesErrorsHistoryPlot :facility="facility" />
-        </GenericCard>
+        </BaseCard>
 
         <!-- Record types -->
 
@@ -109,12 +109,12 @@
 
       <!-- Alerts -->
       <div class="col-span-1 flex flex-col gap-4">
-        <GenericCard>
-          <GenericCardHeader>
+        <BaseCard>
+          <BaseCardHeader>
             <TextH2>Alerts</TextH2>
-          </GenericCardHeader>
+          </BaseCardHeader>
 
-          <GenericCardContent>
+          <BaseCardContent>
             <ul role="list" class="-my-5 divide-y divide-gray-200">
               <li v-if="hasPermission('ukrdc:messages:read')" class="py-5">
                 <div v-if="!facility.lastMessageReceivedAt" class="flex items-center">
@@ -162,15 +162,15 @@
                 <TextP class="mt-1"> You currently have {{ extracts.ukrdc }} UKRDC records. </TextP>
               </li>
             </ul>
-          </GenericCardContent>
-        </GenericCard>
+          </BaseCardContent>
+        </BaseCard>
 
-        <GenericCard>
-          <GenericCardHeader>
+        <BaseCard>
+          <BaseCardHeader>
             <TextH2>Data Flow</TextH2>
-          </GenericCardHeader>
+          </BaseCardHeader>
 
-          <GenericCardContent v-if="facility && facility.dataFlow">
+          <BaseCardContent v-if="facility && facility.dataFlow">
             <ul role="list" class="-my-5 divide-y divide-gray-200">
               <li class="py-5">
                 <div class="flex items-center">
@@ -190,8 +190,8 @@
                 </TextP>
               </li>
             </ul>
-          </GenericCardContent>
-        </GenericCard>
+          </BaseCardContent>
+        </BaseCard>
       </div>
     </div>
   </div>
@@ -200,12 +200,20 @@
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { FacilityDetailsSchema, FacilityExtractsSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardContent from "~/components/base/BaseCardContent.vue";
+import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import { formatDate } from "~/helpers/dateUtils";
 import { facilityLastMessageOver48 } from "~/helpers/facilityUtils";
 import { allStatuses } from "~/helpers/messageUtils";
 import usePermissions from "~/composables/usePermissions";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseCardContent,
+    BaseCardHeader,
+  },
   props: {
     facility: {
       type: Object as () => FacilityDetailsSchema,

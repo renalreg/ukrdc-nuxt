@@ -1,5 +1,5 @@
 <template>
-  <GenericCard class="border-2 border-red-500">
+  <BaseCard class="border-2 border-red-500">
     <div class="flex h-24 flex-col justify-center px-4 sm:px-6">
       <span>
         <TextNameH2 :forename="record.givenname" :surname="record.surname" :highlight="highlight" />
@@ -57,12 +57,13 @@
         </GenericCardDi>
       </GenericCardDl>
     </div>
-  </GenericCard>
+  </BaseCard>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { PersonSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
 import { formatDate } from "~/helpers/dateUtils";
 import { formatGender } from "~/helpers/codeUtils";
 
@@ -73,6 +74,9 @@ interface realLocalId {
 }
 
 export default defineComponent({
+  components: {
+    BaseCard,
+  },
   props: {
     record: {
       type: Object as () => PersonSchema,

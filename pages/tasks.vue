@@ -45,7 +45,7 @@
     </GenericTable>
 
     <div v-if="tasks && tasks.length > 0" class="mb-4">
-      <GenericCard>
+      <BaseCard>
         <GenericPaginator
           :page="page"
           :size="size"
@@ -54,20 +54,24 @@
           @prev="page--"
           @jump="page = $event"
         />
-      </GenericCard>
+      </BaseCard>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-
 import { TrackableTaskSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
+
 import { formatDate } from "~/helpers/dateUtils";
 import useTasks from "~/composables/useTasks";
 import usePagination from "~/composables/query/usePagination";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+  },
   setup() {
     const { page, total, size } = usePagination();
     const { fetchTasksList } = useTasks();

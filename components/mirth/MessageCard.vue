@@ -1,6 +1,6 @@
 <template>
-  <GenericCard>
-    <GenericCardContent>
+  <BaseCard>
+    <BaseCardContent>
       <GenericDlGrid>
         <GenericDlGridItem>
           <TextDt>Message ID</TextDt>
@@ -26,18 +26,24 @@
         </GenericDlGridItem>
       </GenericDlGrid>
       <slot></slot>
-    </GenericCardContent>
-  </GenericCard>
+    </BaseCardContent>
+  </BaseCard>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
-
 import { ChannelMessageModel } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardContent from "~/components/base/BaseCardContent.vue";
+
 import { isEmptyObject } from "~/helpers/objectUtils";
 import { messageHasErrors } from "~/helpers/mirthUtils";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseCardContent,
+  },
   props: {
     message: {
       type: Object as () => ChannelMessageModel,

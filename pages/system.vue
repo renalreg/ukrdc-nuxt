@@ -19,10 +19,10 @@
 
     <TextH2 class="my-4">System Configuration</TextH2>
     <div class="mb-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
-      <GenericCard>
-        <GenericCardHeader>
+      <BaseCard>
+        <BaseCardHeader>
           <TextH2>Client</TextH2>
-        </GenericCardHeader>
+        </BaseCardHeader>
         <GenericCardDl>
           <GenericCardDi>
             <GenericCardDt>Environment</GenericCardDt>
@@ -37,12 +37,12 @@
             <GenericCardDd>{{ clientInfo.githubSha }}</GenericCardDd>
           </GenericCardDi>
         </GenericCardDl>
-      </GenericCard>
+      </BaseCard>
 
-      <GenericCard>
-        <GenericCardHeader>
+      <BaseCard>
+        <BaseCardHeader>
           <TextH2>Server</TextH2>
-        </GenericCardHeader>
+        </BaseCardHeader>
         <GenericCardDl>
           <GenericCardDi>
             <GenericCardDt>Environment</GenericCardDt>
@@ -60,7 +60,7 @@
             <SkeleText v-else class="mb-2 h-6 w-3/4" />
           </GenericCardDi>
         </GenericCardDl>
-      </GenericCard>
+      </BaseCard>
     </div>
     <BaseButton @click="copyConfigReport">Copy Configuration Report</BaseButton>
   </div>
@@ -69,13 +69,17 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
 import { SystemInfoSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
 import BaseButton from "@/components/base/BaseButton.vue";
+import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 
 import useApi from "~/composables/useApi";
 
 export default defineComponent({
   components: {
     BaseButton,
+    BaseCard,
+    BaseCardHeader,
   },
   setup() {
     const { $config, $toast } = useContext();

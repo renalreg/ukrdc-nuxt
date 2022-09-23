@@ -84,7 +84,7 @@
       </GenericTable>
 
       <div v-if="results && results.length > 0" class="mt-4">
-        <GenericCard>
+        <BaseCard>
           <GenericPaginator
             :page="page"
             :size="size"
@@ -93,7 +93,7 @@
             @prev="page--"
             @jump="page = $event"
           />
-        </GenericCard>
+        </BaseCard>
       </div>
     </LoadingContainer>
   </div>
@@ -107,6 +107,7 @@ import {
   ResultItemSchema,
   ResultItemServiceSchema,
 } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
 import BaseButton from "@/components/base/BaseButton.vue";
 
 import { formatDate } from "~/helpers/dateUtils";
@@ -121,6 +122,7 @@ import useApi from "~/composables/useApi";
 export default defineComponent({
   components: {
     BaseButton,
+    BaseCard,
   },
   props: {
     record: {

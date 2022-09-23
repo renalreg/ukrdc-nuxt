@@ -14,7 +14,7 @@
       </div>
     </div>
 
-    <GenericCard>
+    <BaseCard>
       <!-- Skeleton results -->
       <ul v-if="!events" class="divide-y divide-gray-200">
         <SkeleListItem v-for="n in 10" :key="n" />
@@ -34,13 +34,14 @@
         @prev="page--"
         @jump="page = $event"
       />
-    </GenericCard>
+    </BaseCard>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import { AuditEventSchema, MasterRecordSchema, OrderBy } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
 import BaseButtonMini from "@/components/base/BaseButtonMini.vue";
 
 import { nowString } from "~/helpers/dateUtils";
@@ -53,6 +54,7 @@ import useApi from "~/composables/useApi";
 export default defineComponent({
   components: {
     BaseButtonMini,
+    BaseCard,
   },
   props: {
     record: {

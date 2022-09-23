@@ -41,7 +41,7 @@
     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
       <!-- Code list -->
       <div :class="$route.params.id ? 'hidden lg:block' : 'block'">
-        <GenericCard>
+        <BaseCard>
           <!-- Skeleton results -->
           <ul v-if="fetchInProgress" class="divide-y divide-gray-200">
             <SkeleListItem v-for="n in 10" :key="n" />
@@ -64,7 +64,7 @@
             @prev="page--"
             @jump="page = $event"
           />
-        </GenericCard>
+        </BaseCard>
       </div>
       <!-- Code details -->
       <div>
@@ -74,9 +74,9 @@
           :to="{ path: `/codes/`, query: $route.query }"
           >Back to List</GenericButton
         >
-        <GenericCard class="pt-4" :class="$route.params.id ? 'block' : 'hidden lg:block'">
+        <BaseCard class="pt-4" :class="$route.params.id ? 'block' : 'hidden lg:block'">
           <NuxtChild />
-        </GenericCard>
+        </BaseCard>
       </div>
     </div>
   </div>
@@ -85,6 +85,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import { CodeSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
 import BaseButton from "@/components/base/BaseButton.vue";
 
 import useQuery from "~/composables/query/useQuery";
@@ -95,6 +96,7 @@ import { saveAs } from "~/helpers/fileUtils";
 export default defineComponent({
   components: {
     BaseButton,
+    BaseCard,
   },
   setup() {
     const { page, total, size } = usePagination();

@@ -9,7 +9,7 @@ Mini (half-width) search bar and results pages used in the EMPI Merge page.
     </div>
 
     <div v-if="masterrecords.length > 0">
-      <GenericCard>
+      <BaseCard>
         <!-- Skeleton results -->
         <ul v-if="searchInProgress" class="divide-y divide-gray-200">
           <SkeleListItem v-for="n in 10" :key="n" />
@@ -30,7 +30,7 @@ Mini (half-width) search bar and results pages used in the EMPI Merge page.
           @prev="page--"
           @jump="page = $event"
         />
-      </GenericCard>
+      </BaseCard>
     </div>
     <div v-else class="mt-2 text-center text-gray-500">
       <LoadingIndicator v-if="searchQueryIsPopulated && searchInProgress"></LoadingIndicator>
@@ -44,14 +44,18 @@ Mini (half-width) search bar and results pages used in the EMPI Merge page.
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
+
 import usePagination from "~/composables/query/usePagination";
 
 import useRecordSearch from "~/composables/query/useRecordSearch";
 import useApi from "~/composables/useApi";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+  },
   props: {
     numberTypes: {
       type: Array as () => string[],

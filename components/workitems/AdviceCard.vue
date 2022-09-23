@@ -1,7 +1,7 @@
 <template>
-  <GenericCard>
-    <GenericCardHeader><TextH2>Advice</TextH2></GenericCardHeader>
-    <GenericCardContent>
+  <BaseCard>
+    <BaseCardHeader><TextH2>Advice</TextH2></BaseCardHeader>
+    <BaseCardContent>
       <ul v-if="item">
         <li v-if="workItemAdvices.includes(2)">
           <TextP>Related Work Items labelled UKRDC should be resolved first. See below.</TextP>
@@ -65,13 +65,16 @@
         <SkeleText class="mb-2 h-6 w-1/2" />
         <SkeleText class="mb-2 h-6 w-3/4" />
       </div>
-    </GenericCardContent>
-  </GenericCard>
+    </BaseCardContent>
+  </BaseCard>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, useRoute } from "@nuxtjs/composition-api";
 import { WorkItemExtendedSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import {
   collectionIsUnresolved,
   workItemIsMergable,
@@ -81,6 +84,11 @@ import {
 } from "~/helpers/workItemUtils";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseCardContent,
+    BaseCardHeader,
+  },
   props: {
     item: {
       type: Object as () => WorkItemExtendedSchema,

@@ -1,5 +1,5 @@
 <template>
-  <GenericCardMini class="px-2 py-1">
+  <BaseCard class="px-2 py-1">
     <div class="flex">
       <TextL2 class="flex-grow">{{ resourceName }} </TextL2>
       <TextL2 class="flex-none">{{ identifier(1) }}</TextL2>
@@ -8,14 +8,18 @@
       <TextL2 class="sensitive flex-grow">{{ primaryIdentifier }}</TextL2>
       <TextL2 class="sensitive flex-none">{{ identifier(2) }}</TextL2>
     </div>
-  </GenericCardMini>
+  </BaseCard>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
 import { AuditEventSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+  },
   props: {
     item: {
       type: Object as () => AuditEventSchema,

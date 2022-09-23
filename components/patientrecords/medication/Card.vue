@@ -1,5 +1,5 @@
 <template>
-  <GenericCardMini class="px-4 py-2">
+  <BaseCard class="px-4 py-2">
     <div class="mb-2">
       <p class="font-medium text-gray-900 line-clamp-2 hover:text-gray-600">
         {{ item.drugProductGeneric }}
@@ -22,17 +22,21 @@
     <span v-else class="mt-2 inline-block rounded-sm bg-red-100 px-2 py-0.5 text-sm font-medium text-red-800"
       >Inactive since {{ formatDate(item.toTime, (t = false)) }}</span
     >
-  </GenericCardMini>
+  </BaseCard>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
-
 import { MedicationSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCard from "~/components/base/BaseCard.vue";
+
 import { formatDate } from "~/helpers/dateUtils";
 import { formatGender } from "~/helpers/codeUtils";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+  },
   props: {
     item: {
       type: Object as () => MedicationSchema,
