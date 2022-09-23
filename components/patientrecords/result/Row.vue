@@ -5,7 +5,7 @@
     </td>
     <td class="whitespace-nowrap px-6 py-4 text-gray-500">{{ item.value }} {{ item.valueUnits }}</td>
     <td class="flex items-center gap-2 whitespace-nowrap px-6 py-4">
-      <GenericButton
+      <BaseButton
         class="opacity-0 group-hover:opacity-100"
         :round="true"
         :tight="true"
@@ -13,7 +13,7 @@
         label="Filter by this lab order"
         :to="{ query: { order_id: item.orderId } }"
         ><IconMiniFilter
-      /></GenericButton>
+      /></BaseButton>
       <div class="w-48 truncate text-gray-500">
         {{ item.orderId }}
       </div>
@@ -25,7 +25,7 @@
       <BadgePrePost v-if="item.prePost" :pre-post="item.prePost" />
     </td>
     <td class="text-gray-500">
-      <GenericButton
+      <BaseButton
         class="opacity-0 group-hover:opacity-100"
         :round="true"
         :tight="true"
@@ -33,18 +33,22 @@
         label="Delete this result item"
         @click="$emit('delete', item)"
         ><IconMiniTrash
-      /></GenericButton>
+      /></BaseButton>
     </td>
   </tr>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
-
 import { ResultItemSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseButton from "~/components/base/BaseButton.vue";
+
 import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
+  components: {
+    BaseButton,
+  },
   props: {
     item: {
       type: Object as () => ResultItemSchema,

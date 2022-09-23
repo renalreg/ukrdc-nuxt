@@ -27,7 +27,7 @@
       </div>
       <!-- Identifiers  -->
       <div class="col-span-3 flex items-center gap-4 lg:col-span-1">
-        <GenericButton
+        <BaseButton
           v-if="showPatientFilter"
           :class="!item.ni ? 'invisible' : ''"
           class="opacity-0 group-hover:opacity-100"
@@ -37,7 +37,7 @@
           tooltip="Filter errors by this patient"
           :label="`Filter errors by patient ${item.ni}`"
           ><IconMiniFilter
-        /></GenericButton>
+        /></BaseButton>
         <div class="flex-grow">
           <TextL1>Patient Number</TextL1>
           <TextP class="sensitive mt-2">
@@ -52,11 +52,15 @@
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { MessageSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseButton from "~/components/base/BaseButton.vue";
 import { formatDate } from "~/helpers/dateUtils";
 import { makeMessageSummary } from "~/helpers/messageUtils";
 import useSensitive from "~/composables/useSensitive";
 
 export default defineComponent({
+  components: {
+    BaseButton,
+  },
   props: {
     item: {
       type: Object as () => MessageSchema,

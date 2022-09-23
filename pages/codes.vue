@@ -68,11 +68,11 @@
       </div>
       <!-- Code details -->
       <div>
-        <GenericButton
+        <BaseButton
           v-show="$route.params.id"
           class="mb-4 w-full lg:hidden"
           :to="{ path: `/codes/`, query: $route.query }"
-          >Back to List</GenericButton
+          >Back to List</BaseButton
         >
         <BaseCard class="pt-4" :class="$route.params.id ? 'block' : 'hidden lg:block'">
           <NuxtChild />
