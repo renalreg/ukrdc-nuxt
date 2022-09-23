@@ -113,7 +113,7 @@ import {
   watch,
 } from "@nuxtjs/composition-api";
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
-import BaseButton from "@/components/base/BaseButton.vue";
+import BaseButton from "~/components/base/BaseButton.vue";
 
 import useQuery from "~/composables/query/useQuery";
 

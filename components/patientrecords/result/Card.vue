@@ -26,7 +26,7 @@
 import { defineComponent } from "@nuxtjs/composition-api";
 import { ResultItemSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseCard from "~/components/base/BaseCard.vue";
-import BaseButton from "@/components/base/BaseButton.vue";
+import BaseButton from "~/components/base/BaseButton.vue";
 
 import { formatDate } from "~/helpers/dateUtils";
 

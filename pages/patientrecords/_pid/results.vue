@@ -101,11 +101,11 @@ import {
   ResultItemServiceSchema,
 } from "@ukkidney/ukrdc-axios-ts";
 
-import BaseCard from "@/components/base/BaseCard.vue";
-import BaseButton from "@/components/base/BaseButton.vue";
-import BaseLoadingContainer from "@/components/base/BaseLoadingContainer.vue";
-import BaseTable from "@/components/base/BaseTable.vue";
-import BasePaginator from "@/components/base/BasePaginator.vue";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseButton from "~/components/base/BaseButton.vue";
+import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
+import BaseTable from "~/components/base/BaseTable.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
 
 import { formatDate } from "~/helpers/dateUtils";
 

@@ -28,10 +28,10 @@
 <script lang="ts">
 import { defineComponent, ref, useContext } from "@nuxtjs/composition-api";
 import { PatientRecordSummarySchema, TrackableTaskSchema } from "@ukkidney/ukrdc-axios-ts";
-import BaseButtonSlot from "@/components/base/BaseButtonSlot.vue";
-import BaseMenu from "@/components/base/BaseMenu.vue";
-import BaseMenuDivider from "@/components/base/BaseMenuDivider.vue";
-import BaseMenuItem from "@/components/base/BaseMenuItem.vue";
+import BaseButtonSlot from "~/components/base/BaseButtonSlot.vue";
+import BaseMenu from "~/components/base/BaseMenu.vue";
+import BaseMenuDivider from "~/components/base/BaseMenuDivider.vue";
+import BaseMenuItem from "~/components/base/BaseMenuItem.vue";
 import { modalInterface } from "~/interfaces/modal";
 import usePermissions from "~/composables/usePermissions";
 import useTasks from "~/composables/useTasks";

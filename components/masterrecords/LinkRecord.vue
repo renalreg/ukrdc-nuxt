@@ -39,8 +39,8 @@ Includes a header with the Link Record ID and functionality to Unlink the record
 import { defineComponent, ref, useContext, useRouter } from "@nuxtjs/composition-api";
 import { LinkRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseCard from "~/components/base/BaseCard.vue";
-import BaseButtonMini from "@/components/base/BaseButtonMini.vue";
-import BaseButton from "@/components/base/BaseButton.vue";
+import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
+import BaseButton from "~/components/base/BaseButton.vue";
 
 import { formatDate } from "~/helpers/dateUtils";
 import { formatGender } from "~/helpers/codeUtils";

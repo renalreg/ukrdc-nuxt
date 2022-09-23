@@ -70,7 +70,7 @@
 import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
 import { SystemInfoSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseCard from "~/components/base/BaseCard.vue";
-import BaseButton from "@/components/base/BaseButton.vue";
+import BaseButton from "~/components/base/BaseButton.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import BaseCardDescriptionList from "~/components/base/BaseCardDescriptionList.vue";

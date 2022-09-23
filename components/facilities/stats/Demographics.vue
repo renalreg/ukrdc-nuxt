@@ -50,7 +50,7 @@
 import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { FacilityDemographicStats, FacilityDetailsSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseCard from "~/components/base/BaseCard.vue";
-import BaseButtonMini from "@/components/base/BaseButtonMini.vue";
+import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import { NumericChartData } from "~/interfaces/charts";
 import { formatGender } from "~/helpers/codeUtils";

@@ -36,7 +36,7 @@ import {
   watch,
 } from "@nuxtjs/composition-api";
 import { PatientRecordSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
-import BaseButton from "@/components/base/BaseButton.vue";
+import BaseButton from "~/components/base/BaseButton.vue";
 
 import { TabItem } from "~/interfaces/tabs";
 

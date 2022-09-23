@@ -38,9 +38,9 @@
 <script lang="ts">
 import { computed, defineComponent, ref, useContext } from "@nuxtjs/composition-api";
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
-import BaseButtonMini from "@/components/base/BaseButtonMini.vue";
-import BaseMenu from "@/components/base/BaseMenu.vue";
-import BaseMenuItem from "@/components/base/BaseMenuItem.vue";
+import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
+import BaseMenu from "~/components/base/BaseMenu.vue";
+import BaseMenuItem from "~/components/base/BaseMenuItem.vue";
 
 import usePermissions from "~/composables/usePermissions";
 

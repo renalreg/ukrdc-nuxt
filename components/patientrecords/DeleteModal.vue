@@ -210,8 +210,8 @@ import {
   PidXRefSchema,
   WorkItemSchema,
 } from "@ukkidney/ukrdc-axios-ts";
-import BaseButton from "@/components/base/BaseButton.vue";
-import BaseLoadingIndicator from "@/components/base/BaseLoadingIndicator.vue";
+import BaseButton from "~/components/base/BaseButton.vue";
+import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
 
 import useModal from "~/composables/useModal";
 import { formatDate } from "~/helpers/dateUtils";

@@ -234,7 +234,7 @@ import { WorkItemExtendedSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts
 
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
-import BaseButton from "@/components/base/BaseButton.vue";
+import BaseButton from "~/components/base/BaseButton.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import BaseItemPaginator from "~/components/base/BaseItemPaginator.vue";
 

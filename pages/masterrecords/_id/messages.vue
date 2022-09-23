@@ -45,7 +45,7 @@ import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api"
 import { MasterRecordSchema, MasterRecordStatisticsSchema, MessageSchema, OrderBy } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseCard from "~/components/base/BaseCard.vue";
-import BaseButtonMini from "@/components/base/BaseButtonMini.vue";
+import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 

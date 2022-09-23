@@ -63,10 +63,10 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
-import BaseButtonSlot from "@/components/base/BaseButtonSlot.vue";
-import BaseMenu from "@/components/base/BaseMenu.vue";
-import BaseMenuItem from "@/components/base/BaseMenuItem.vue";
-import BaseMenuDivider from "@/components/base/BaseMenuDivider.vue";
+import BaseButtonSlot from "~/components/base/BaseButtonSlot.vue";
+import BaseMenu from "~/components/base/BaseMenu.vue";
+import BaseMenuItem from "~/components/base/BaseMenuItem.vue";
+import BaseMenuDivider from "~/components/base/BaseMenuDivider.vue";
 import useAuth from "~/composables/useAuth";
 
 export default defineComponent({
