@@ -46,7 +46,7 @@
           </NuxtLink>
         </div>
       </ul>
-      <GenericPaginator
+      <BasePaginator
         class="border-t border-gray-200 bg-white"
         :page="page"
         :size="size"
@@ -62,16 +62,16 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import { OrderBy, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseButtonMini from "@/components/base/BaseButtonMini.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
 
 import usePagination from "~/composables/query/usePagination";
-
 import useQuery from "~/composables/query/useQuery";
 import useFacilities from "~/composables/useFacilities";
 import useSortBy from "~/composables/query/useSortBy";
-
 import useDateRange from "~/composables/query/useDateRange";
 import useApi from "~/composables/useApi";
 
@@ -80,6 +80,7 @@ export default defineComponent({
     BaseButtonMini,
     BaseCard,
     BaseSkeleListItem,
+    BasePaginator,
   },
   setup() {
     const { page, total, size } = usePagination();

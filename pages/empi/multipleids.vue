@@ -45,7 +45,7 @@
       </div>
 
       <BaseCard>
-        <GenericPaginator
+        <BasePaginator
           class="bg-white"
           :page="page"
           :size="size"
@@ -70,6 +70,7 @@ import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import BaseDlGrid from "~/components/base/BaseDlGrid.vue";
 import BaseDlGridItem from "~/components/base/BaseDlGridItem.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
 
 import { formatDate } from "~/helpers/dateUtils";
 import usePagination from "~/composables/query/usePagination";
@@ -83,6 +84,7 @@ export default defineComponent({
     BaseSkeleText,
     BaseDlGrid,
     BaseDlGridItem,
+    BasePaginator,
   },
   setup() {
     const { page, total, size } = usePagination();

@@ -20,7 +20,7 @@ Mini (half-width) search bar and results pages used in the EMPI Merge page.
             <MasterrecordsListItem class="cursor-pointer" :item="item" @click.native="$emit('select', item.id)" />
           </div>
         </ul>
-        <GenericPaginator
+        <BasePaginator
           class="border-t border-gray-200 bg-white"
           :page="page"
           :size="size"
@@ -48,6 +48,7 @@ import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
 
 import usePagination from "~/composables/query/usePagination";
 
@@ -59,6 +60,7 @@ export default defineComponent({
     BaseCard,
     BaseLoadingIndicator,
     BaseSkeleListItem,
+    BasePaginator,
   },
   props: {
     numberTypes: {

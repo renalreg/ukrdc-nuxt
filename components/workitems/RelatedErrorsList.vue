@@ -11,7 +11,7 @@
         </NuxtLink>
       </div>
     </ul>
-    <GenericPaginator
+    <BasePaginator
       class="border-t border-gray-200 bg-white"
       :jump-to-top="false"
       :page="relatedErrorsPage"
@@ -27,14 +27,18 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import { MessageSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
+
 import useApi from "~/composables/useApi";
 
 export default defineComponent({
   components: {
     BaseCard,
     BaseCardHeader,
+    BasePaginator,
   },
   props: {
     workitem: {

@@ -13,7 +13,7 @@
           </NuxtLink>
         </div>
       </ul>
-      <GenericPaginator
+      <BasePaginator
         class="border-t border-gray-200 bg-white"
         :jump-to-top="false"
         :page="errorMessagesPage"
@@ -31,8 +31,11 @@
 import { defineComponent, onMounted, ref, useRouter, watch } from "@nuxtjs/composition-api";
 import { FacilityDetailsSchema, MessageSchema } from "@ukkidney/ukrdc-axios-ts";
 import { PlotDatum } from "plotly.js";
+
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
+
 import useApi from "~/composables/useApi";
 import { getPointDateRange } from "~/helpers/chartUtils";
 
@@ -40,6 +43,7 @@ export default defineComponent({
   components: {
     BaseCard,
     BaseCardHeader,
+    BasePaginator,
   },
   props: {
     facility: {

@@ -35,7 +35,7 @@
           </NuxtLink>
         </div>
       </ul>
-      <GenericPaginator
+      <BasePaginator
         class="border-t border-gray-200 bg-white"
         :jump-to-top="false"
         :page="relatedErrorsPage"
@@ -57,8 +57,10 @@ import {
   MessageSchema,
   WorkItemSchema,
 } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
 
 import { formatDate } from "~/helpers/dateUtils";
 import { formatGender } from "~/helpers/codeUtils";
@@ -80,6 +82,7 @@ export default defineComponent({
   components: {
     BaseCard,
     BaseCardHeader,
+    BasePaginator,
   },
   props: {
     record: {

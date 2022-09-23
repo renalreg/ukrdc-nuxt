@@ -171,10 +171,7 @@
         </div>
       </div>
       <BaseCard v-if="showDestinationPersons && record.destination.persons.length > 1" class="mt-2 pl-4">
-        <GenericItemPaginator
-          v-model="relatedPersonsIndex"
-          :total="record.destination.persons.length"
-          item-label="Record"
+        <BaseItemPaginator v-model="relatedPersonsIndex" :total="record.destination.persons.length" item-label="Record"
       /></BaseCard>
     </div>
 
@@ -234,10 +231,12 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useContext, useMeta, useRoute } from "@nuxtjs/composition-api";
 import { WorkItemExtendedSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseButton from "@/components/base/BaseButton.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
+import BaseItemPaginator from "~/components/base/BaseItemPaginator.vue";
 
 import { formatDate } from "~/helpers/dateUtils";
 import { formatGender } from "~/helpers/codeUtils";
@@ -263,6 +262,7 @@ export default defineComponent({
     BaseCard,
     BaseCardHeader,
     BaseSkeleText,
+    BaseItemPaginator,
   },
   setup() {
     // Dependencies

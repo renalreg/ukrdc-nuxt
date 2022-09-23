@@ -54,7 +54,7 @@
               </NuxtLink>
             </div>
           </ul>
-          <GenericPaginator
+          <BasePaginator
             class="border-t border-gray-200 bg-white"
             :page="page"
             :size="size"
@@ -90,6 +90,7 @@ import BaseButton from "@/components/base/BaseButton.vue";
 import BaseMenu from "~/components/base/BaseMenu.vue";
 import BaseMenuItem from "~/components/base/BaseMenuItem.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
 
 import useQuery from "~/composables/query/useQuery";
 import usePagination from "~/composables/query/usePagination";
@@ -103,6 +104,7 @@ export default defineComponent({
     BaseMenu,
     BaseMenuItem,
     BaseSkeleListItem,
+    BasePaginator,
   },
   setup() {
     const { page, total, size } = usePagination();

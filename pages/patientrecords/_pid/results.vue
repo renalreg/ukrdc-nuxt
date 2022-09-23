@@ -85,14 +85,7 @@
 
       <div v-if="results && results.length > 0" class="mt-4">
         <BaseCard>
-          <GenericPaginator
-            :page="page"
-            :size="size"
-            :total="total"
-            @next="page++"
-            @prev="page--"
-            @jump="page = $event"
-          />
+          <BasePaginator :page="page" :size="size" :total="total" @next="page++" @prev="page--" @jump="page = $event" />
         </BaseCard>
       </div>
     </BaseLoadingContainer>
@@ -107,10 +100,12 @@ import {
   ResultItemSchema,
   ResultItemServiceSchema,
 } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseCard from "@/components/base/BaseCard.vue";
 import BaseButton from "@/components/base/BaseButton.vue";
 import BaseLoadingContainer from "@/components/base/BaseLoadingContainer.vue";
 import BaseTable from "@/components/base/BaseTable.vue";
+import BasePaginator from "@/components/base/BasePaginator.vue";
 
 import { formatDate } from "~/helpers/dateUtils";
 
@@ -127,6 +122,7 @@ export default defineComponent({
     BaseCard,
     BaseLoadingContainer,
     BaseTable,
+    BasePaginator,
   },
   props: {
     record: {

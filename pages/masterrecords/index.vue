@@ -47,7 +47,7 @@
             </NuxtLink>
           </div>
         </ul>
-        <GenericPaginator
+        <BasePaginator
           class="border-t border-gray-200 bg-white"
           :page="page"
           :size="size"
@@ -85,8 +85,10 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
 
 import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";
@@ -98,6 +100,7 @@ export default defineComponent({
   components: {
     BaseCard,
     BaseSkeleListItem,
+    BasePaginator,
   },
   setup() {
     const { page, total, size } = usePagination();

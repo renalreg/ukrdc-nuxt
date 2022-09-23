@@ -34,14 +34,7 @@
 
     <div v-if="tasks && tasks.length > 0" class="mb-4">
       <BaseCard>
-        <GenericPaginator
-          :page="page"
-          :size="size"
-          :total="total"
-          @next="page++"
-          @prev="page--"
-          @jump="page = $event"
-        />
+        <BasePaginator :page="page" :size="size" :total="total" @next="page++" @prev="page--" @jump="page = $event" />
       </BaseCard>
     </div>
   </div>
@@ -53,6 +46,7 @@ import { TrackableTaskSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
 import BaseTableCell from "~/components/base/BaseTableCell.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
 
 import { formatDate } from "~/helpers/dateUtils";
 import useTasks from "~/composables/useTasks";
@@ -63,6 +57,7 @@ export default defineComponent({
     BaseCard,
     BaseTable,
     BaseTableCell,
+    BasePaginator,
   },
   setup() {
     const { page, total, size } = usePagination();

@@ -51,7 +51,7 @@
 
         <div v-if="observations && observations.length > 0">
           <BaseCard>
-            <GenericPaginator
+            <BasePaginator
               :page="page"
               :size="size"
               :total="total"
@@ -69,9 +69,11 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import { ObservationSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
 
 import usePagination from "~/composables/query/usePagination";
 
@@ -85,6 +87,7 @@ export default defineComponent({
     BaseCard,
     BaseLoadingContainer,
     BaseTable,
+    BasePaginator,
   },
   props: {
     record: {
