@@ -39,7 +39,7 @@
 
     <BaseCard v-if="message" class="mb-4">
       <BaseCardHeader>
-        <TextH2>Files</TextH2>
+        <h2>Files</h2>
       </BaseCardHeader>
       <BaseCardContent>
         <BaseCard class="w-2/3">
@@ -53,7 +53,7 @@
 
     <BaseCard v-if="message && message.error" class="mb-4">
       <BaseCardHeader>
-        <TextH2>Error message</TextH2>
+        <h2>Error message</h2>
       </BaseCardHeader>
       <BaseCardContent>
         <div class="whitespace-pre-wrap font-mono">
@@ -65,7 +65,7 @@
     <!-- Related Master Records card -->
     <BaseCard v-if="masterRecords.length > 0" class="mt-4">
       <BaseCardHeader>
-        <TextH2> Related Records </TextH2>
+        <h2>Related Records</h2>
       </BaseCardHeader>
       <ul class="divide-y divide-gray-200">
         <div v-for="item in masterRecords" :key="item.id" class="hover:bg-gray-50">
@@ -79,7 +79,7 @@
     <!-- Related Work Items card -->
     <BaseCard v-if="workItems.length > 0" class="mt-4">
       <BaseCardHeader>
-        <TextH2> Related Work Items </TextH2>
+        <h2>Related Work Items</h2>
       </BaseCardHeader>
       <ul class="divide-y divide-gray-200">
         <workitemsListItem v-for="item in workItems" :key="item.id" :item="item" />
@@ -89,7 +89,7 @@
     <!-- Mirth Messages card -->
     <BaseCard v-if="hasPermission('ukrdc:mirth:read')" class="mt-4">
       <BaseCardHeader>
-        <TextH2> Mirth Messages </TextH2>
+        <h2>Mirth Messages</h2>
       </BaseCardHeader>
       <ul class="divide-y divide-gray-200">
         <li v-if="mirthMessage" class="hover:bg-gray-50">

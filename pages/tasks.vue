@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TextH1 class="mb-4">Background Tasks</TextH1>
+    <h1 class="mb-4">Background Tasks</h1>
 
     <BaseTable class="mb-4">
       <thead class="bg-gray-50">

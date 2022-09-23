@@ -3,7 +3,7 @@
     <patientrecordsSurveyViewer ref="surveyViewerModal" class="md:w-large w-full" />
 
     <BaseLoadingContainer :loading="!surveys">
-      <TextP v-if="surveys && surveys.length <= 0" class="text-center">No surveys on record</TextP>
+      <p v-if="surveys && surveys.length <= 0" class="text-center">No surveys on record</p>
       <div class="mt-3 grid grid-cols-1 justify-center gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-2">
         <genericCardMini
           v-for="item in surveys"

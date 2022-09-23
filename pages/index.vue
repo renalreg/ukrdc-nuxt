@@ -4,7 +4,7 @@
 
     <AdminDashboard v-if="isAdmin" class="mb-6" />
 
-    <TextH2 class="mb-4">My Facilities</TextH2>
+    <h2 class="mb-4">My Facilities</h2>
     <FacilitiesTable @select="$router.push({ path: `/facilities/${$event}` })" />
   </div>
 </template>

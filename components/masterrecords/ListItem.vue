@@ -5,31 +5,31 @@
       <!-- Name, DoB, gender -->
       <div>
         <TextNameL1 :forename="item.givenname" :surname="item.surname" />
-        <TextP class="sensitive mt-2 flex items-center">
+        <p class="sensitive mt-2 flex items-center">
           {{ formatDate(item.dateOfBirth, false) }}
           <b class="ml-1"> {{ item.gender ? formatGenderCharacter(item.gender) : "Unknown gender" }}</b>
-        </TextP>
+        </p>
       </div>
       <!-- Record ID (large breakpoint only if a detail column is given) -->
       <div :class="detailsValue ? 'hidden lg:block' : ''">
         <TextL1>Record ID</TextL1>
-        <TextP class="mt-2">
+        <p class="mt-2">
           {{ item.id }}
-        </TextP>
+        </p>
       </div>
       <!-- National ID -->
       <div>
-        <TextP class="sensitive">
+        <p class="sensitive">
           {{ item.nationalid.trim() }}
-        </TextP>
+        </p>
         <masterrecordsNationalIdTypeTag class="mt-2" :nationalid-type="item.nationalidType" />
       </div>
       <!-- Details, defaults to record updated time, but can be overridden by props  -->
       <div v-if="detailsValue">
         <TextL1>{{ detailsLabel }}</TextL1>
-        <TextP class="mt-2">
+        <p class="mt-2">
           {{ detailsValue }}
-        </TextP>
+        </p>
       </div>
     </div>
   </li>

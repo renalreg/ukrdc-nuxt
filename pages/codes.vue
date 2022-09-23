@@ -2,7 +2,7 @@
   <div>
     <div class="mx-auto mb-4 flex">
       <div class="flex-grow">
-        <TextH1>Codes List</TextH1>
+        <h1>Codes List</h1>
       </div>
       <div>
         <div v-click-away="closeExportMenu" class="relative flex">

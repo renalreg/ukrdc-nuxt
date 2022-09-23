@@ -3,7 +3,7 @@
     <div v-if="facilityDemographicStats">
       <BaseCard class="mb-4">
         <BaseCardHeader class="flex items-center">
-          <TextH2 class="flex-1"> Age Distribution </TextH2>
+          <h2 class="flex-1">Age Distribution</h2>
           <BaseButtonMini @click="exportAgeDistribution">Export</BaseButtonMini>
         </BaseCardHeader>
         <PlotBar
@@ -19,7 +19,7 @@
       <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <BaseCard>
           <BaseCardHeader class="flex items-center">
-            <TextH2 class="flex-1"> Gender Distribution </TextH2>
+            <h2 class="flex-1">Gender Distribution</h2>
             <BaseButtonMini @click="exportGenderDistribution">Export</BaseButtonMini>
           </BaseCardHeader>
           <PlotDoughnut
@@ -31,7 +31,7 @@
         </BaseCard>
         <BaseCard>
           <BaseCardHeader class="flex items-center">
-            <TextH2 class="flex-1"> Ethnicity Distribution </TextH2>
+            <h2 class="flex-1">Ethnicity Distribution</h2>
             <BaseButtonMini @click="exportEthnicityDistribution">Export</BaseButtonMini>
           </BaseCardHeader>
           <PlotDoughnut

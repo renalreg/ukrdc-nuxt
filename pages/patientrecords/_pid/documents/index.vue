@@ -1,7 +1,7 @@
 <template>
   <div class="sensitive">
     <BaseLoadingContainer :loading="!documents">
-      <TextP v-if="documents && documents.length <= 0" class="text-center">No documents on record</TextP>
+      <p v-if="documents && documents.length <= 0" class="text-center">No documents on record</p>
       <BaseCard v-else>
         <ul class="divide-y divide-gray-200">
           <div v-for="item in documents" :key="item.id" :item="item" class="hover:bg-gray-50">

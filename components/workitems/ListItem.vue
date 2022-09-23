@@ -17,16 +17,16 @@
           :surname="item.masterRecord.surname"
         />
         <TextL1 v-else class="inline truncate capitalize text-red-800"> Missing Record </TextL1>
-        <TextP class="mt-2 truncate"> {{ item.type }}: {{ item.description }} </TextP>
+        <p class="mt-2 truncate">{{ item.type }}: {{ item.description }}</p>
       </div>
       <!-- National ID -->
       <div class="text-right sm:text-left">
-        <TextP v-if="item.masterRecord" class="sensitive">
+        <p v-if="item.masterRecord" class="sensitive">
           {{ item.masterRecord.nationalid.trim() }}
-        </TextP>
-        <TextP v-else-if="item.person" class="sensitive">
+        </p>
+        <p v-else-if="item.person" class="sensitive">
           {{ item.person.localid.trim() }}
-        </TextP>
+        </p>
         <masterrecordsNationalIdTypeTag
           class="mt-2"
           :nationalid-type="item.masterRecord ? item.masterRecord.nationalidType : 'Unknown Type'"
@@ -34,10 +34,10 @@
       </div>
       <!-- Last updated (small and up) -->
       <div class="hidden lg:block">
-        <TextP><LinkSendingFacility class="inline" :code="facility" /> via {{ extract }}</TextP>
-        <TextP class="mt-2">
+        <p><LinkSendingFacility class="inline" :code="facility" /> via {{ extract }}</p>
+        <p class="mt-2">
           {{ formatDate(item.creationDate) }}
-        </TextP>
+        </p>
       </div>
     </div>
   </li>

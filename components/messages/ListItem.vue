@@ -13,17 +13,17 @@
         </div>
         <div class="mt-2 flex">
           <MessagesStatusBadge class="mr-2 flex-shrink" :message="item" />
-          <TextP class="flex-grow line-clamp-1">
+          <p class="flex-grow line-clamp-1">
             {{ itemDescription }}
-          </TextP>
+          </p>
         </div>
       </div>
       <!-- Recieved  -->
       <div class="col-span-2 lg:col-span-1">
-        <TextP>From <LinkSendingFacility class="inline" :code="item.facility" /></TextP>
-        <TextP class="mt-2">
+        <p>From <LinkSendingFacility class="inline" :code="item.facility" /></p>
+        <p class="mt-2">
           {{ item.received ? formatDate(item.received) : "Unknown time" }}
-        </TextP>
+        </p>
       </div>
       <!-- Identifiers  -->
       <div class="col-span-3 flex items-center gap-4 lg:col-span-1">
@@ -40,9 +40,9 @@
         /></BaseButton>
         <div class="flex-grow">
           <TextL1>Patient Number</TextL1>
-          <TextP class="sensitive mt-2">
+          <p class="sensitive mt-2">
             {{ item.ni || "None Found" }}
-          </TextP>
+          </p>
         </div>
       </div>
     </div>

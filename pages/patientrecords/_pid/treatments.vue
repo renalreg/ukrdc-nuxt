@@ -1,7 +1,7 @@
 <template>
   <div class="sensitive">
     <BaseLoadingContainer :loading="!treatments">
-      <TextP v-if="treatments && treatments.length <= 0" class="text-center"> No treatments on record </TextP>
+      <p v-if="treatments && treatments.length <= 0" class="text-center">No treatments on record</p>
       <div v-else-if="treatments && treatments.length > 0" class="flow-root">
         <ul role="list" class="-mb-8">
           <li v-for="(treatment, index) in treatmentEvents" :key="index">
@@ -48,10 +48,10 @@
                 </div>
                 <div class="flex min-w-0 items-center gap-2">
                   <div class="flex-shrink">
-                    <TextP class="mr-2 inline font-bold">
+                    <p class="mr-2 inline font-bold">
                       <time :datetime="treatment.time">{{ treatment.time }}</time>
-                    </TextP>
-                    <TextP v-if="treatment.isDischarge" class="inline">
+                    </p>
+                    <p v-if="treatment.isDischarge" class="inline">
                       Discharged from
                       {{ treatment.admitReasonDesc ? treatment.admitReasonDesc : treatment.admitReasonCode }} at
                       <TextL1 class="inline">{{ treatment.healthCareFacilityCode }}</TextL1>
@@ -62,12 +62,12 @@
                           ? `(${treatment.dischargeReasonCode})`
                           : ""
                       }}
-                    </TextP>
-                    <TextP v-else class="inline">
+                    </p>
+                    <p v-else class="inline">
                       {{ treatment.time }} - Admitted to
                       <TextL1 class="inline">{{ treatment.healthCareFacilityCode }}</TextL1> for
                       {{ treatment.admitReasonDesc ? treatment.admitReasonDesc : treatment.admitReasonCode }}
-                    </TextP>
+                    </p>
                   </div>
                   <GenericInfoIcon>
                     <div class="sensitive">

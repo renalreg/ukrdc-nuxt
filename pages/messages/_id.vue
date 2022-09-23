@@ -2,9 +2,9 @@
   <div>
     <div class="mb-6 flex items-end gap-4">
       <div class="flex-grow">
-        <TextH1 v-if="message">
+        <h1 v-if="message">
           {{ message.msgStatus === "ERROR" ? "Error" : "Message" }} {{ message.id }} from {{ message.facility }}
-        </TextH1>
+        </h1>
         <SkeleText v-else class="mb-2 h-8 w-1/4" />
         <TextL1 v-if="message" class="line-clamp-1">
           {{ messageSummary }}

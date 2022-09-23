@@ -1,8 +1,8 @@
 <template>
   <div>
-    <TextH1 class="mb-4">Support</TextH1>
-    <TextH3>UK Renal Registry users</TextH3>
-    <TextP>
+    <h1 class="mb-4">Support</h1>
+    <h3>UK Renal Registry users</h3>
+    <p>
       Please use the
       <a
         class="font-medium text-indigo-600 hover:text-indigo-500"
@@ -11,17 +11,17 @@
         >Jira issue tracker</a
       >
       to report issues with this application.
-    </TextP>
-    <TextP>Where possible, please include the configuration report shown below.</TextP>
+    </p>
+    <p>Where possible, please include the configuration report shown below.</p>
 
-    <TextH3 class="mt-2">External users</TextH3>
-    <TextP>Support lines for external users are yet to be confirmed. </TextP>
+    <h3 class="mt-2">External users</h3>
+    <p>Support lines for external users are yet to be confirmed.</p>
 
-    <TextH2 class="my-4">System Configuration</TextH2>
+    <h2 class="my-4">System Configuration</h2>
     <div class="mb-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
       <BaseCard>
         <BaseCardHeader>
-          <TextH2>Client</TextH2>
+          <h2>Client</h2>
         </BaseCardHeader>
         <GenericCardDl>
           <GenericCardDi>
@@ -41,7 +41,7 @@
 
       <BaseCard>
         <BaseCardHeader>
-          <TextH2>Server</TextH2>
+          <h2>Server</h2>
         </BaseCardHeader>
         <GenericCardDl>
           <GenericCardDi>

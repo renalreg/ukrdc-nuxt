@@ -3,7 +3,7 @@
     <BaseCard>
       <BaseCardHeader>
         <div class="mb-1">
-          <TextH2 v-if="patientDocument"> {{ patientDocument.documentname || "Unnamed Document" }} </TextH2>
+          <h2 v-if="patientDocument">{{ patientDocument.documentname || "Unnamed Document" }}</h2>
           <SkeleText v-else class="h-6 w-1/2" />
         </div>
         <div>

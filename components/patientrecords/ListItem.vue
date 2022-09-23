@@ -5,7 +5,7 @@
         <!-- Name, DoB, gender -->
         <div>
           <LinkSendingFacility class="font-medium" :code="item.sendingfacility" />
-          <TextP class="mt-2"> via {{ item.sendingextract }} </TextP>
+          <p class="mt-2">via {{ item.sendingextract }}</p>
         </div>
         <!-- National ID -->
         <div>
@@ -13,26 +13,26 @@
             :forename="item.patient?.names[0].given || 'Unknown forename'"
             :surname="item.patient?.names[0].family || 'Unknown surname'"
           />
-          <TextP class="sensitive mt-2 flex items-center">
+          <p class="sensitive mt-2 flex items-center">
             {{ item.patient?.birthTime ? formatDate(item.patient?.birthTime, false) : "Unknown date of birth" }}
             <b class="ml-1">
               {{ item.patient?.gender ? formatGenderCharacter(item.patient?.gender) : "Unknown gender" }}</b
             >
-          </TextP>
+          </p>
         </div>
         <!-- MRN (medium breakpoint only) -->
         <div class="hidden sm:block">
           <TextL1 class="truncate">{{ firstMRNObject.label }} Number</TextL1>
-          <TextP class="sensitive mt-2 truncate">
+          <p class="sensitive mt-2 truncate">
             {{ firstMRNObject.number }}
-          </TextP>
+          </p>
         </div>
         <!-- UKRDC ID (large breakpoint only) -->
         <div class="hidden lg:block">
           <TextL1>UKRDC ID</TextL1>
-          <TextP class="sensitive mt-2">
+          <p class="sensitive mt-2">
             {{ item.ukrdcid }}
-          </TextP>
+          </p>
         </div>
       </div>
       <!-- Record links -->

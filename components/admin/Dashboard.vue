@@ -56,7 +56,7 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
       <!-- Error history -->
       <BaseCard v-if="errorsHistory">
         <BaseCardHeader>
-          <TextH2> Error History </TextH2>
+          <h2>Error History</h2>
         </BaseCardHeader>
         <PlotTimeSeries
           id="error-history-time-series"
@@ -71,7 +71,7 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
       <!-- WorkItems history -->
       <BaseCard v-if="workitemsHistory">
         <BaseCardHeader>
-          <TextH2> Work Items History </TextH2>
+          <h2>Work Items History</h2>
         </BaseCardHeader>
         <PlotTimeSeries
           id="workitem-history-time-series"

@@ -3,12 +3,12 @@
     <div class="block items-center justify-center sm:flex">
       <TextHcxl class="sm:mr-8">{{ error.statusCode || "Error" }}</TextHcxl>
       <div class="sm:border-l sm:pl-8">
-        <TextH1 class="whitespace-pre">{{ errorTitle }}</TextH1>
+        <h1 class="whitespace-pre">{{ errorTitle }}</h1>
         <NuxtLink to="/">Home page</NuxtLink>
       </div>
     </div>
     <div v-if="errorDetail">
-      <TextP>{{ errorDetail }}</TextP>
+      <p>{{ errorDetail }}</p>
     </div>
   </div>
 </template>

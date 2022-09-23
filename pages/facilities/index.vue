@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TextH1 class="mb-2">Renal Facilities</TextH1>
+    <h1 class="mb-2">Renal Facilities</h1>
     <div class="mb-4 flex flex-col gap-2">
       <FormCheckbox
         v-model="includeInactive"

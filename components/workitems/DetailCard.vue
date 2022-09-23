@@ -1,6 +1,6 @@
 <template>
   <BaseCard>
-    <BaseCardHeader><TextH2>Details</TextH2></BaseCardHeader>
+    <BaseCardHeader><h2>Details</h2></BaseCardHeader>
     <BaseCardContent>
       <GenericDlGrid :cols="2">
         <GenericDlGridItem>

@@ -54,7 +54,7 @@
         </div>
       </div>
       <div class="mb-4">
-        <TextH2 class="mb-4">Permissions</TextH2>
+        <h2 class="mb-4">Permissions</h2>
         <div v-for="group in perms" :key="group" class="inline">
           <span
             class="mr-2 mb-2 inline-flex items-center rounded-full px-3 py-0.5 font-medium"
@@ -65,9 +65,9 @@
         </div>
       </div>
       <div v-if="preferences" class="mb-4">
-        <TextH2 class="mb-4">Preferences</TextH2>
+        <h2 class="mb-4">Preferences</h2>
         <div class="mb-4">
-          <TextH3 class="mb-2">Search</TextH3>
+          <h3 class="mb-2">Search</h3>
           <FormCheckbox
             v-model="preferences.searchShowUkrdc"
             label="Include internal UKRDC records in search results by default"

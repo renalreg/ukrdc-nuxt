@@ -1,11 +1,11 @@
 <!-- Given a postcode, creates and formats a link to open the postcode in Google Maps -->
 
 <template>
-  <TextP>
+  <p>
     <a :href="'http://google.com/maps?' + urlQuery" target="_blank">
       {{ code }}
     </a>
-  </TextP>
+  </p>
 </template>
 
 <script lang="ts">

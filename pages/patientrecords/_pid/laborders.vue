@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TextP v-if="orders.length <= 0" class="text-center"> No lab orders on record </TextP>
+    <p v-if="orders.length <= 0" class="text-center">No lab orders on record</p>
     <ul class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
       <li v-for="item in orders" :key="item.id">
         <NuxtLink

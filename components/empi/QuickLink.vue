@@ -27,9 +27,9 @@ Big link cards used in the EMPI page, to direct to Merge etc.
           {{ title }}
         </NuxtLink>
       </h3>
-      <TextP>
+      <p>
         {{ description }}
-      </TextP>
+      </p>
     </div>
     <span class="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-gray-400" aria-hidden="true">
       <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">

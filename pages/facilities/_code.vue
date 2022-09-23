@@ -4,7 +4,7 @@
     <DashboardAlerts v-if="!hasMultipleFacilities" class="mb-4" />
 
     <div class="mb-2">
-      <TextH1 v-if="facility"> {{ facility.description }} </TextH1>
+      <h1 v-if="facility">{{ facility.description }}</h1>
       <SkeleText v-else class="mb-2 h-8 w-1/4" />
       <TextL1 v-if="facility">
         {{ facility.id }}

@@ -7,10 +7,10 @@
       :danger="false"
       @confirm="createPkbMembership()"
     >
-      <TextP class="mb-2">Are you sure you want to create a PKB membership for this patient?</TextP>
-      <TextP>
+      <p class="mb-2">Are you sure you want to create a PKB membership for this patient?</p>
+      <p>
         Data will only be sent to PKB if/when at least one of the patient's renal units enrolls in PKB data sending.
-      </TextP>
+      </p>
     </GenericModalConfirm>
 
     <div v-click-away="closeMenu" class="relative flex items-center justify-self-end">

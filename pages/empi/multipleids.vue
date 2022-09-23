@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="mx-auto mb-4 max-w-7xl">
-      <TextH1>Multiple UKRDC IDs</TextH1>
-      <TextP>Results of a scan that detect patients with more than one UKRDC Master Record.</TextP>
+      <h1>Multiple UKRDC IDs</h1>
+      <p>Results of a scan that detect patients with more than one UKRDC Master Record.</p>
     </div>
 
     <!-- Description list -->

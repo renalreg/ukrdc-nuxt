@@ -2,9 +2,9 @@
   <div class="flex items-center justify-between py-3 pl-3 pr-4">
     <div class="flex w-0 flex-1 items-center">
       <IconMiniPaperClip class="mr-2" />
-      <TextP class="sensitive w-0 flex-1 truncate">
+      <p class="sensitive w-0 flex-1 truncate">
         {{ filename }}
-      </TextP>
+      </p>
     </div>
     <div class="ml-4 flex flex-shrink-0 gap-4">
       <slot />

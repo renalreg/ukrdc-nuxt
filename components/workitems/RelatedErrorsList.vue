@@ -2,7 +2,7 @@
   <!-- Related errors card -->
   <BaseCard v-if="relatedErrors && relatedErrors.length > 0">
     <BaseCardHeader>
-      <TextH2> Related Errors </TextH2>
+      <h2>Related Errors</h2>
     </BaseCardHeader>
     <ul class="divide-y divide-gray-200">
       <div v-for="item in relatedErrors" :key="item.id" :item="item" class="hover:bg-gray-50">

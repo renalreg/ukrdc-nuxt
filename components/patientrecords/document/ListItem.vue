@@ -12,24 +12,24 @@
           <span class="inline-flex items-center rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-800">
             {{ item.filetype || "text" }}
           </span>
-          <TextP class="ml-2 flex-grow line-clamp-1">
+          <p class="ml-2 flex-grow line-clamp-1">
             {{ item.filename || `${item.documentname}.txt` }}
-          </TextP>
+          </p>
         </div>
       </div>
       <!-- Source  -->
       <div class="col-span-1">
         <TextL1>Entered By</TextL1>
-        <TextP class="mt-2">
+        <p class="mt-2">
           {{ item.enteredbydesc || "Unknown author" }}
-        </TextP>
+        </p>
       </div>
       <!-- Origin  -->
       <div class="col-span-1">
-        <TextP>From {{ item.enteredatcode ? item.enteredatcode : "Unknown source" }}</TextP>
-        <TextP class="mt-2">
+        <p>From {{ item.enteredatcode ? item.enteredatcode : "Unknown source" }}</p>
+        <p class="mt-2">
           {{ item.documenttime ? formatDate(item.documenttime) : "Unknown date" }}
-        </TextP>
+        </p>
       </div>
     </div>
   </li>

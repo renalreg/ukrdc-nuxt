@@ -1,7 +1,7 @@
 <template>
   <ul class="divide-y divide-gray-200">
     <div v-if="groupedRecords.data.length > 0" class="patientrecords-list-header">
-      <TextH4>Data feeds</TextH4>
+      <h4>Data feeds</h4>
     </div>
     <patientrecordsListItem
       v-for="item in groupedRecords.data"
@@ -14,7 +14,7 @@
     />
 
     <div v-if="groupedRecords.surveys.length > 0" class="patientrecords-list-header">
-      <TextH4>Survey feeds</TextH4>
+      <h4>Survey feeds</h4>
     </div>
     <patientrecordsListItem
       v-for="item in groupedRecords.surveys"
@@ -27,7 +27,7 @@
     />
 
     <div v-if="groupedRecords.migrated.length > 0" class="patientrecords-list-header">
-      <TextH4>Historic Migrated Data</TextH4>
+      <h4>Historic Migrated Data</h4>
     </div>
     <patientrecordsListItem
       v-for="item in groupedRecords.migrated"
@@ -40,7 +40,7 @@
     />
 
     <div class="patientrecords-list-header">
-      <TextH4 class="flex-grow">Membership Records</TextH4>
+      <h4 class="flex-grow">Membership Records</h4>
       <div class="mr-2 flex-grow-0">
         <PatientrecordsMembershipsMenu
           :master-record="masterRecord"
@@ -50,7 +50,7 @@
       </div>
     </div>
     <div v-if="groupedRecords.memberships.length < 1" class="py-2 pl-4 sm:pl-6">
-      <TextP>No membership records</TextP>
+      <p>No membership records</p>
     </div>
     <patientrecordsListItem
       v-for="item in groupedRecords.memberships"
@@ -60,7 +60,7 @@
     />
 
     <div v-if="groupedRecords.tracing.length > 0" class="patientrecords-list-header">
-      <TextH4>Tracing Records</TextH4>
+      <h4>Tracing Records</h4>
     </div>
     <patientrecordsListItem
       v-for="item in groupedRecords.tracing"

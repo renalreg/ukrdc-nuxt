@@ -1,7 +1,7 @@
 <template>
   <div>
-    <TextH1 class="mb-4">Enterprise Master Patient Index</TextH1>
-    <TextH2 class="mb-4">EMPI Management</TextH2>
+    <h1 class="mb-4">Enterprise Master Patient Index</h1>
+    <h2 class="mb-4">EMPI Management</h2>
     <div class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
       <EmpiQuickLink
         title="Merge"
@@ -10,7 +10,7 @@
         :href="'/empi/merge'"
       />
     </div>
-    <TextH2 class="mb-4">EMPI Health</TextH2>
+    <h2 class="mb-4">EMPI Health</h2>
     <div class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
       <EmpiQuickLink
         title="Multiple UKRDC IDs"

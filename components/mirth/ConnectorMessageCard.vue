@@ -1,10 +1,10 @@
 <template>
   <genericCardMini class="col-span-1 flex items-center justify-between truncate">
     <div class="flex-1 truncate px-4 py-2">
-      <TextH3>
+      <h3>
         {{ message.connectorName }}
-      </TextH3>
-      <TextP>{{ message.sendAttempts }} send attempts</TextP>
+      </h3>
+      <p>{{ message.sendAttempts }} send attempts</p>
 
       <div class="mt-2">
         <span

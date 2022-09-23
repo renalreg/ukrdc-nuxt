@@ -6,15 +6,15 @@
           <!-- Heading -->
           <div class="col-span-1 lg:col-span-2">
             <TextL1 class="truncate"> Message ID {{ message.messageId }} </TextL1>
-            <TextP class="mt-2 line-clamp-2">{{ channelName }}</TextP>
+            <p class="mt-2 line-clamp-2">{{ channelName }}</p>
           </div>
           <!-- Received  -->
           <div class="col-span-1">
-            <TextP> {{ connectorMessagesArray.length }} messages in chain</TextP>
-            <TextP class="mt-2 line-clamp-2">
+            <p>{{ connectorMessagesArray.length }} messages in chain</p>
+            <p class="mt-2 line-clamp-2">
               {{ message.processed ? "Processed" : "Failed" }}
               {{ hasErrors ? " with errors" : "" }}
-            </TextP>
+            </p>
           </div>
         </div>
       </div>

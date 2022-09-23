@@ -43,7 +43,7 @@
 
     <!-- Header -->
     <div class="mb-6">
-      <TextH1 v-if="record"> Work Item {{ record.id }} {{ statusString }} </TextH1>
+      <h1 v-if="record">Work Item {{ record.id }} {{ statusString }}</h1>
       <SkeleText v-else class="mb-2 h-8 w-1/4" />
       <TextL1 v-if="record">
         {{ record.description }}
@@ -180,7 +180,7 @@
 
     <!-- Proposed Merge -->
     <div v-if="availableActions.merge">
-      <TextH2 class="mb-4">Proposed Merge</TextH2>
+      <h2 class="mb-4">Proposed Merge</h2>
 
       <div v-if="record" class="mb-8">
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -213,7 +213,7 @@
     <BaseCard v-if="workItemCollection.length > 0" class="mb-8">
       <!-- Card header -->
       <BaseCardHeader>
-        <TextH2>Related Work Items</TextH2>
+        <h2>Related Work Items</h2>
         <TextL2>Work Items for the same patient, raised by the same event</TextL2>
       </BaseCardHeader>
       <!-- Results list -->

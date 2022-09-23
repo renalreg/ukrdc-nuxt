@@ -67,7 +67,7 @@
         <!-- Error history -->
         <BaseCard>
           <BaseCardHeader>
-            <TextH2> Error History </TextH2>
+            <h2>Error History</h2>
           </BaseCardHeader>
           <FacilitiesErrorsHistoryPlot :facility="facility" />
         </BaseCard>
@@ -111,7 +111,7 @@
       <div class="col-span-1 flex flex-col gap-4">
         <BaseCard>
           <BaseCardHeader>
-            <TextH2>Alerts</TextH2>
+            <h2>Alerts</h2>
           </BaseCardHeader>
 
           <BaseCardContent>
@@ -119,47 +119,41 @@
               <li v-if="hasPermission('ukrdc:messages:read')" class="py-5">
                 <div v-if="!facility.lastMessageReceivedAt" class="flex items-center">
                   <IconCircle class="inline text-red-600" />
-                  <TextH3> Data flow inactive </TextH3>
+                  <h3>Data flow inactive</h3>
                 </div>
                 <div v-else-if="facilityLastMessageOver48(facility)" class="flex items-center">
                   <IconCircle class="inline text-orange-400" />
-                  <TextH3> Data flow warning </TextH3>
+                  <h3>Data flow warning</h3>
                 </div>
                 <div v-else class="flex items-center">
                   <IconCircle class="inline text-green-600" />
-                  <TextH3> Data flow active </TextH3>
+                  <h3>Data flow active</h3>
                 </div>
-                <TextP class="mt-1">
+                <p class="mt-1">
                   {{ latestDataInfo }}
-                </TextP>
+                </p>
               </li>
               <li v-if="extracts && extracts.ukrdc <= 0" class="py-5">
                 <div class="flex items-center">
                   <IconCircle class="inline text-red-600" />
-                  <TextH3> Statistics unavailable </TextH3>
+                  <h3>Statistics unavailable</h3>
                 </div>
-                <TextP class="mt-1">
-                  Statistics are based on UKRDC data, and PatientView records are not included.
-                </TextP>
-                <TextP class="mt-1">
-                  You currently have no UKRDC records, and so statistics are currently unavailable.
-                </TextP>
-                <TextP class="mt-1">
+                <p class="mt-1">Statistics are based on UKRDC data, and PatientView records are not included.</p>
+                <p class="mt-1">You currently have no UKRDC records, and so statistics are currently unavailable.</p>
+                <p class="mt-1">
                   For more information, please refer to our
                   <a href="https://renalregistry.atlassian.net/wiki/spaces/UD/overview" target="_blank">
                     UKRDC feed documentation.
                   </a>
-                </TextP>
+                </p>
               </li>
               <li v-if="extracts && extracts.ukrdc > 0" class="py-5">
                 <div class="flex items-center">
                   <IconCircle class="inline text-indigo-600" />
-                  <TextH3> UKRDC statistics </TextH3>
+                  <h3>UKRDC statistics</h3>
                 </div>
-                <TextP class="mt-1">
-                  Statistics are based on UKRDC data, and PatientView records are not included.
-                </TextP>
-                <TextP class="mt-1"> You currently have {{ extracts.ukrdc }} UKRDC records. </TextP>
+                <p class="mt-1">Statistics are based on UKRDC data, and PatientView records are not included.</p>
+                <p class="mt-1">You currently have {{ extracts.ukrdc }} UKRDC records.</p>
               </li>
             </ul>
           </BaseCardContent>
@@ -167,7 +161,7 @@
 
         <BaseCard>
           <BaseCardHeader>
-            <TextH2>Data Flow</TextH2>
+            <h2>Data Flow</h2>
           </BaseCardHeader>
 
           <BaseCardContent v-if="facility && facility.dataFlow">
@@ -176,18 +170,18 @@
                 <div class="flex items-center">
                   <IconCircle v-if="facility.dataFlow.pkbOut" class="inline text-green-600" />
                   <IconCircle v-else class="inline text-red-600" />
-                  <TextH3> PKB Outbound </TextH3>
+                  <h3>PKB Outbound</h3>
                 </div>
-                <TextP class="mt-1">
+                <p class="mt-1">
                   Data sending to
                   <a class="hover:underline" href="https://patientsknowbest.com/" target="blank">
                     Patients Know Best
                   </a>
                   is {{ facility.dataFlow.pkbOut ? "enabled" : "disabled" }}.
-                </TextP>
-                <TextP v-if="facility.dataFlow.pkbOut">
+                </p>
+                <p v-if="facility.dataFlow.pkbOut">
                   Data will only be sent to PKB for patients with a PKB membership record.
-                </TextP>
+                </p>
               </li>
             </ul>
           </BaseCardContent>

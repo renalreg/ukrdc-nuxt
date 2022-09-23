@@ -4,10 +4,12 @@
       <GenericDateRange v-model="dateRange" class="flex-1" />
       <BaseButtonMini class="flex-none" @click="toggleOrder">
         <div v-show="orderAscending" class="flex">
-          <TextP>Oldest - Newest</TextP><IconMiniSortAscending class="ml-2" />
+          <p>Oldest - Newest</p>
+          <IconMiniSortAscending class="ml-2" />
         </div>
         <div v-show="!orderAscending" class="flex">
-          <TextP>Newest - Oldest</TextP><IconMiniSortDescending class="ml-2" />
+          <p>Newest - Oldest</p>
+          <IconMiniSortDescending class="ml-2" />
         </div>
       </BaseButtonMini>
     </div>

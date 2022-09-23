@@ -1,11 +1,11 @@
 <template>
   <span>
-    <TextH2 class="sensitive inline capitalize" :class="highlight.includes('givenname') ? highlightClasses : []">{{
-      forename.toLowerCase()
-    }}</TextH2>
-    <TextH2 class="sensitive inline capitalize italic" :class="highlight.includes('surname') ? highlightClasses : []">{{
-      surname.toLowerCase()
-    }}</TextH2>
+    <h2 class="sensitive inline capitalize" :class="highlight.includes('givenname') ? highlightClasses : []">
+      {{ forename.toLowerCase() }}
+    </h2>
+    <h2 class="sensitive inline capitalize italic" :class="highlight.includes('surname') ? highlightClasses : []">
+      {{ surname.toLowerCase() }}
+    </h2>
   </span>
 </template>
 

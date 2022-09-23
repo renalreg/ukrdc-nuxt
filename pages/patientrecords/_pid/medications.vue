@@ -1,7 +1,7 @@
 <template>
   <div class="sensitive">
     <BaseLoadingContainer :loading="!medications">
-      <TextP v-if="medications && medications.length <= 0" class="text-center">No medications on record</TextP>
+      <p v-if="medications && medications.length <= 0" class="text-center">No medications on record</p>
       <div v-if="activeMedications.length > 0" class="mt-4">
         <h2 class="text-sm font-medium uppercase tracking-wide text-gray-500">Active</h2>
 

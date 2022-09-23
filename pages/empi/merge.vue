@@ -10,7 +10,7 @@
     />
 
     <div class="mx-auto mb-4 max-w-7xl">
-      <TextH1>Merge Records</TextH1>
+      <h1>Merge Records</h1>
     </div>
 
     <div class="mb-6 block gap-2 lg:flex">
@@ -76,22 +76,22 @@
 
     <div v-if="readyToMerge">
       <div class="mb-6">
-        <TextH2 class="mb-2">Merge Details</TextH2>
-        <TextP
-          >Master Record <TextL1 class="inline">{{ supersededId }}</TextL1> will be merged into Master Record
+        <h2 class="mb-2">Merge Details</h2>
+        <p>
+          Master Record <TextL1 class="inline">{{ supersededId }}</TextL1> will be merged into Master Record
           <TextL1 class="inline">{{ supersedingId }}</TextL1
           >.
-        </TextP>
-        <TextP
-          >Demographic data on record <TextL1 class="inline">{{ supersededId }}</TextL1> will be replaced by demographic
+        </p>
+        <p>
+          Demographic data on record <TextL1 class="inline">{{ supersededId }}</TextL1> will be replaced by demographic
           data from record <TextL1 class="inline">{{ supersedingId }}</TextL1
-          >.</TextP
-        >
-        <TextP
-          >All Patient Records linked to Master Record <TextL1 class="inline">{{ supersededId }}</TextL1> will be
+          >.
+        </p>
+        <p>
+          All Patient Records linked to Master Record <TextL1 class="inline">{{ supersededId }}</TextL1> will be
           re-linked to Master Record <TextL1 class="inline">{{ supersedingId }}</TextL1
-          >.</TextP
-        >
+          >.
+        </p>
       </div>
 
       <div class="flex gap-2">

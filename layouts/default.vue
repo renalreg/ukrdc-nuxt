@@ -126,6 +126,30 @@ html {
   font-size: 14px;
 }
 
+p {
+  @apply text-gray-600;
+}
+
+b {
+  @apply font-medium text-gray-900;
+}
+
+h1 {
+  @apply text-2xl font-bold text-gray-900;
+}
+
+h2 {
+  @apply text-lg font-medium leading-6 text-gray-900;
+}
+
+h3 {
+  @apply font-medium text-gray-900;
+}
+
+h4 {
+  @apply text-sm font-medium uppercase tracking-wide text-gray-600;
+}
+
 .v-popper__popper {
   font-size: 12px;
 }

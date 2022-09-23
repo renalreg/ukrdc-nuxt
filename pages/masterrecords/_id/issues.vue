@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="stats && stats.errors == 0 && stats.workitems == 0 && stats.ukrdcids == 1" class="text-center">
-      <TextP>No issues on record</TextP>
+      <p>No issues on record</p>
     </div>
 
     <!-- Multiple UKRDC IDs -->
@@ -12,7 +12,7 @@
     <!-- Related Work Items card -->
     <BaseCard v-if="workItems && workItems.length > 0" class="mt-4">
       <BaseCardHeader>
-        <TextH2> Open Work Items </TextH2>
+        <h2>Open Work Items</h2>
       </BaseCardHeader>
       <ul class="divide-y divide-gray-200">
         <div v-for="item in workItems" :key="item.id" :item="item" class="hover:bg-gray-50">
@@ -26,7 +26,7 @@
     <!-- Related errors card -->
     <BaseCard v-if="relatedErrors && relatedErrors.length > 0" class="mt-4">
       <BaseCardHeader>
-        <TextH2> Record Errors </TextH2>
+        <h2>Record Errors</h2>
       </BaseCardHeader>
       <ul class="divide-y divide-gray-200">
         <div v-for="item in relatedErrors" :key="item.id" :item="item" class="hover:bg-gray-50">

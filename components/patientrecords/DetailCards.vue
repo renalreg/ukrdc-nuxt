@@ -2,53 +2,53 @@
   <div>
     <div v-if="!isEmptyObject(record)" class="grid grid-cols-3">
       <div class="col-span-3 mb-4">
-        <TextH4 class="mb-3">Demographics</TextH4>
+        <h4 class="mb-3">Demographics</h4>
         <BaseCard class="grid w-full grid-cols-1 gap-4 px-4 py-2 sm:grid-cols-3">
           <div>
             <TextL1> Names </TextL1>
-            <TextP v-for="item in record.patient.names" :key="item.given + item.family" class="sensitive">
+            <p v-for="item in record.patient.names" :key="item.given + item.family" class="sensitive">
               {{ item.given }} {{ item.family }}
-            </TextP>
+            </p>
           </div>
           <div>
             <TextL1> Gender </TextL1>
-            <TextP class="sensitive">{{ formatGender(record.patient.gender) }}</TextP>
+            <p class="sensitive">{{ formatGender(record.patient.gender) }}</p>
           </div>
           <div>
             <TextL1> Date of Birth </TextL1>
-            <TextP class="sensitive">{{ formatDate(record.patient.birthTime, (t = false)) }}</TextP>
+            <p class="sensitive">{{ formatDate(record.patient.birthTime, (t = false)) }}</p>
           </div>
           <div>
             <TextL1> Date of Death </TextL1>
-            <TextP class="sensitive">
+            <p class="sensitive">
               {{ record.patient.deathTime ? formatDate(record.patient.deathTime, (t = false)) : "N/A" }}
-            </TextP>
+            </p>
           </div>
           <div>
             <TextL1> Ethnicity </TextL1>
-            <TextP class="sensitive">
+            <p class="sensitive">
               {{ record.patient.ethnicGroupDescription || record.patient.ethnicGroupCode || "Unknown" }}
-            </TextP>
+            </p>
           </div>
         </BaseCard>
       </div>
 
       <div class="col-span-3 mb-4 sm:col-span-2">
-        <TextH4 class="mb-3">History</TextH4>
+        <h4 class="mb-3">History</h4>
         <BaseCard class="grid w-full grid-cols-1 gap-4 px-4 py-2 sm:grid-cols-2">
           <div>
             <TextL1> Record Created </TextL1>
-            <TextP>{{ formatDate(record.repositoryCreationDate, (t = true)) }}</TextP>
+            <p>{{ formatDate(record.repositoryCreationDate, (t = true)) }}</p>
           </div>
           <div>
             <TextL1> Record Last Updated </TextL1>
-            <TextP>{{ formatDate(record.repositoryUpdateDate, (t = true)) }}</TextP>
+            <p>{{ formatDate(record.repositoryUpdateDate, (t = true)) }}</p>
           </div>
         </BaseCard>
       </div>
 
       <div class="col-span-3 mb-4">
-        <TextH4 class="mb-3">Patient Numbers</TextH4>
+        <h4 class="mb-3">Patient Numbers</h4>
         <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           <li
             v-for="item in record.patient.numbers"
@@ -63,10 +63,10 @@
               </div>
               <div class="flex flex-1 items-center justify-between truncate">
                 <div class="flex-1 truncate px-4 py-2">
-                  <TextB class="sensitive truncate">
+                  <b class="sensitive truncate">
                     {{ item.patientid }}
-                  </TextB>
-                  <TextP class="sensitive">{{ item.organization }}</TextP>
+                  </b>
+                  <p class="sensitive">{{ item.organization }}</p>
                 </div>
               </div>
             </BaseCard>
@@ -79,23 +79,23 @@
       v-if="!isEmptyObject(record) && record.patient.addresses && record.patient.addresses.length > 0"
       class="col-span-3 mb-4"
     >
-      <TextH4 class="mb-3">Addresses</TextH4>
+      <h4 class="mb-3">Addresses</h4>
 
       <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
         <li v-for="item in record.patient.addresses" :key="item.street" class="col-span-1">
           <BaseCard class="sensitive w-full px-4 py-2">
-            <TextB>
+            <b>
               {{ item.street }}
-            </TextB>
-            <TextP v-if="item.town">{{ item.town }}</TextP>
-            <TextP v-if="item.county">
+            </b>
+            <p v-if="item.town">{{ item.town }}</p>
+            <p v-if="item.county">
               {{ item.county }}
-            </TextP>
+            </p>
             <LinkPostCode v-if="item.postcode" :code="item.postcode" />
-            <TextP v-if="item.countryDescription">
+            <p v-if="item.countryDescription">
               {{ item.countryDescription }}
-            </TextP>
-            <TextP v-if="item.fromTime">Since {{ formatDate(item.fromTime, (t = false)) }}</TextP>
+            </p>
+            <p v-if="item.fromTime">Since {{ formatDate(item.fromTime, (t = false)) }}</p>
             <span
               v-if="!item.toTime"
               class="mt-2 inline-block flex-shrink-0 rounded-sm bg-green-100 px-2 py-0.5 text-sm font-medium text-green-800"
@@ -115,7 +115,7 @@
       v-if="!isEmptyObject(record) && record.programMemberships && record.programMemberships.length > 0"
       class="col-span-3 mb-4"
     >
-      <TextH4 class="mb-3">Program Memberships</TextH4>
+      <h4 class="mb-3">Program Memberships</h4>
 
       <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
         <li
@@ -124,10 +124,10 @@
           class="col-span-1 flex rounded-md shadow-sm"
         >
           <BaseCard class="w-full px-4 py-2">
-            <TextB>
+            <b>
               {{ item.programName }}
-            </TextB>
-            <TextP v-if="item.fromTime">Since {{ formatDate(item.fromTime, (t = false)) }}</TextP>
+            </b>
+            <p v-if="item.fromTime">Since {{ formatDate(item.fromTime, (t = false)) }}</p>
             <span
               v-if="!item.toTime"
               class="mt-2 inline-block flex-shrink-0 rounded-sm bg-green-100 px-2 py-0.5 text-sm font-medium text-green-800"
@@ -144,7 +144,7 @@
     </div>
 
     <div v-if="full && !isEmptyObject(record) && record.patient.familydoctor" class="col-span-3 mb-4">
-      <TextH4 class="mb-3">Family Doctor</TextH4>
+      <h4 class="mb-3">Family Doctor</h4>
 
       <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
         <li
@@ -156,20 +156,20 @@
           class="col-span-1"
         >
           <BaseCard class="sensitive w-full px-4 py-2">
-            <TextB>{{ info.type }} Information</TextB>
-            <TextP>{{ info.gpname || "GP name not known" }}</TextP>
-            <TextP>{{ info.street }}</TextP>
+            <b>{{ info.type }} Information</b>
+            <p>{{ info.gpname || "GP name not known" }}</p>
+            <p>{{ info.street }}</p>
             <LinkPostCode v-if="info.postcode" :code="info.postcode" />
-            <TextP>Contact {{ info.contactvalue }}</TextP>
+            <p>Contact {{ info.contactvalue }}</p>
           </BaseCard>
         </li>
         <li v-if="!record.patient.familydoctor.gpInfo">
           <BaseCard class="sensitive w-full px-4 py-2">
-            <TextB>GP Information</TextB>
-            <TextP>{{ record.patient.familydoctor.gpname || "GP name not known" }}</TextP>
-            <TextP>{{ record.patient.familydoctor.street }}</TextP>
+            <b>GP Information</b>
+            <p>{{ record.patient.familydoctor.gpname || "GP name not known" }}</p>
+            <p>{{ record.patient.familydoctor.street }}</p>
             <LinkPostCode v-if="record.patient.familydoctor.postcode" :code="record.patient.familydoctor.postcodee" />
-            <TextP>Contact {{ record.patient.familydoctor.contactvalue }}</TextP>
+            <p>Contact {{ record.patient.familydoctor.contactvalue }}</p>
           </BaseCard>
         </li>
       </ul>

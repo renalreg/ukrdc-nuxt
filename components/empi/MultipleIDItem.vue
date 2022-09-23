@@ -3,7 +3,7 @@
     <div class="flex items-center gap-2 border-b p-4">
       <div class="flex-grow pl-2">
         <div>
-          <TextH2 v-if="heading"> {{ heading }} </TextH2>
+          <h2 v-if="heading">{{ heading }}</h2>
           <TextL1 v-if="group && group.groupId">Record Group {{ group.groupId }}</TextL1>
         </div>
       </div>

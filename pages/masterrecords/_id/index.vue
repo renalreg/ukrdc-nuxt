@@ -79,7 +79,7 @@
     <!-- Related Patient Records card -->
     <BaseCard class="overflow-visible">
       <BaseCardHeader>
-        <TextH2> Patient Records </TextH2>
+        <h2>Patient Records</h2>
       </BaseCardHeader>
       <PatientrecordsGroupedList
         v-if="patientRecords"
@@ -95,7 +95,7 @@
     <!-- Related Master Records card -->
     <BaseCard class="mt-4">
       <BaseCardHeader>
-        <TextH2> Linked Master Records </TextH2>
+        <h2>Linked Master Records</h2>
       </BaseCardHeader>
       <ul v-if="relatedRecords" class="divide-y divide-gray-200">
         <div

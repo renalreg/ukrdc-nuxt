@@ -1,7 +1,7 @@
 <template>
   <div class="sensitive">
     <BaseLoadingContainer :loading="!observations">
-      <TextP v-if="observations && observations.length <= 0" class="text-center">No observations on record</TextP>
+      <p v-if="observations && observations.length <= 0" class="text-center">No observations on record</p>
       <div v-else>
         <GenericSearchableSelect
           v-model="selectedCode"

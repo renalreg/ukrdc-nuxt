@@ -23,9 +23,9 @@
           {{ title }}
         </h3>
         <div class="mt-2">
-          <TextP v-if="message">
+          <p v-if="message">
             {{ message }}
-          </TextP>
+          </p>
           <slot />
         </div>
       </div>

@@ -1,40 +1,38 @@
 <template>
   <BaseCard>
-    <BaseCardHeader><TextH2>Advice</TextH2></BaseCardHeader>
+    <BaseCardHeader><h2>Advice</h2></BaseCardHeader>
     <BaseCardContent>
       <ul v-if="item">
         <li v-if="workItemAdvices.includes(2)">
-          <TextP>Related Work Items labelled UKRDC should be resolved first. See below.</TextP>
+          <p>Related Work Items labelled UKRDC should be resolved first. See below.</p>
         </li>
         <li v-if="workItemAdvices.includes(4)">
-          <TextP>
+          <p>
             You may need to use PatientView, RaDaR, or DemoGraphicGenerator.exe to issue a demographic update before
             closing this Work Item.
-          </TextP>
+          </p>
         </li>
         <li v-if="workItemAdvices.includes(5)">
-          <TextP class="mb-1">
+          <p class="mb-1">
             Check the <span class="font-bold text-indigo-600">Proposed Merge</span> below, then click
             <span class="font-bold text-yellow-600">Merge Master Records</span> if the link is valid.
-          </TextP>
-          <TextP>
+          </p>
+          <p>
             You may need to use PatientView, RaDaR, or DemoGraphicGenerator.exe to issue a demographic update before
             merging records.
-          </TextP>
+          </p>
         </li>
         <li v-if="workItemAdvices.includes(6)">
-          <TextP>
+          <p>
             This Work Item was recently merged, and can now be
             <span class="font-bold text-green-600">closed</span>.
-          </TextP>
+          </p>
         </li>
         <li v-if="workItemAdvices.includes(7)">
-          <TextP>
-            A previous merge may have been completed but Person record data was not correctly updated to match.
-          </TextP>
+          <p>A previous merge may have been completed but Person record data was not correctly updated to match.</p>
         </li>
         <li v-if="workItemAdvices.includes(9)">
-          <TextP>
+          <p>
             See
             <a
               href="https://confluence.ukrdc.org/display/TNG/Person+matched+by+facility%2C+extract+and+national+id+-+not+matched+by+demographics"
@@ -43,21 +41,21 @@
               documentation on Confluence
             </a>
             for advice on resolving this work item.
-          </TextP>
+          </p>
         </li>
         <li v-if="workItemAdvices.includes(10)">
-          <TextP>This Work Item is already closed. No further action to be taken.</TextP>
+          <p>This Work Item is already closed. No further action to be taken.</p>
         </li>
-        <li v-if="workItemAdvices.includes(11)"><TextP>Related Work Items are still unresolved. See below.</TextP></li>
+        <li v-if="workItemAdvices.includes(11)"><p>Related Work Items are still unresolved. See below.</p></li>
         <li v-if="workItemAdvices.includes(12)">
-          <TextP>The records associated with this Work Item may have already been merged. </TextP>
-          <TextP>
+          <p>The records associated with this Work Item may have already been merged.</p>
+          <p>
             The destination record is missing, meaning it has either been deleted, or merged into another record
             already.
-          </TextP>
-          <TextP>
+          </p>
+          <p>
             This Work item can likely be <span class="font-bold text-green-600">closed</span> without further action.
-          </TextP>
+          </p>
         </li>
       </ul>
       <div v-else>

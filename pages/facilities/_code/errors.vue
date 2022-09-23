@@ -3,7 +3,7 @@
     <!-- Failing NIs -->
     <BaseCard v-if="errorMessages && errorMessagesTotal > 0" class="mt-4">
       <BaseCardHeader>
-        <TextH2> Records Currently Failing </TextH2>
+        <h2>Records Currently Failing</h2>
         <TextL1>Records where the most recent message received failed to process due to errors.</TextL1>
       </BaseCardHeader>
       <ul class="divide-y divide-gray-200">

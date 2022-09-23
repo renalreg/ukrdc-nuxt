@@ -1,16 +1,16 @@
 <template>
   <BaseCard class="flex items-center justify-between px-4 py-2">
     <div class="flex-1 truncate">
-      <TextH3 class="truncate">
+      <h3 class="truncate">
         {{ item.id }}
-      </TextH3>
-      <TextP class="truncate">
+      </h3>
+      <p class="truncate">
         {{
           item.specimenCollectedTime
             ? `Collected ${formatDate(item.specimenCollectedTime, (t = true))}`
             : "No collection time found"
         }}
-      </TextP>
+      </p>
     </div>
     <div class="flex-shrink-0">
       <span class="sr-only">Open options</span>

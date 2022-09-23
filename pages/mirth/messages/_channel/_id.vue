@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mb-6">
-      <TextH1 v-if="message"> Message {{ message.messageId }} </TextH1>
+      <h1 v-if="message">Message {{ message.messageId }}</h1>
       <SkeleText v-else class="mb-2 h-8 w-1/4" />
     </div>
 
