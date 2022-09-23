@@ -8,16 +8,16 @@
     <!-- Description list -->
     <BaseCard class="mb-6">
       <BaseCardContent>
-        <GenericDlGrid>
-          <GenericDlGridItem>
+        <BaseDlGrid>
+          <BaseDlGridItem>
             <dt>Patients with Multiple UKRDC IDs</dt>
             <dd v-if="total">
               {{ total }}
             </dd>
             <BaseSkeleText v-else class="mt-2 h-6 w-8" />
-          </GenericDlGridItem>
+          </BaseDlGridItem>
 
-          <GenericDlGridItem>
+          <BaseDlGridItem>
             <dt class="flex items-center gap-1">
               <span class="inline">Last Full Scan</span>
               <GenericInfoIcon class="inline">
@@ -32,8 +32,8 @@
               {{ formatDate(lastRunTime, true) }}
             </dd>
             <BaseSkeleText v-else class="mt-2 h-6 w-1/4" />
-          </GenericDlGridItem>
-        </GenericDlGrid>
+          </BaseDlGridItem>
+        </BaseDlGrid>
       </BaseCardContent>
     </BaseCard>
 
@@ -63,12 +63,15 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import { MultipleUKRDCIDGroup } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
-import { formatDate } from "~/helpers/dateUtils";
+import BaseDlGrid from "~/components/base/BaseDlGrid.vue";
+import BaseDlGridItem from "~/components/base/BaseDlGridItem.vue";
 
+import { formatDate } from "~/helpers/dateUtils";
 import usePagination from "~/composables/query/usePagination";
 import useApi from "~/composables/useApi";
 
@@ -78,6 +81,8 @@ export default defineComponent({
     BaseCardContent,
     BaseLoadingIndicator,
     BaseSkeleText,
+    BaseDlGrid,
+    BaseDlGridItem,
   },
   setup() {
     const { page, total, size } = usePagination();

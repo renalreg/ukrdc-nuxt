@@ -14,53 +14,53 @@
         </div>
       </BaseCardHeader>
       <BaseCardContent>
-        <GenericDlGrid>
-          <GenericDlGridItem>
+        <BaseDlGrid>
+          <BaseDlGridItem>
             <dt>Entered At</dt>
             <dd v-if="patientDocument">
               {{ patientDocument.enteredatdesc || patientDocument.enteredatcode || "Unknown Facility" }}
             </dd>
             <BaseSkeleText v-else class="h-6 w-1/2" />
-          </GenericDlGridItem>
-          <GenericDlGridItem>
+          </BaseDlGridItem>
+          <BaseDlGridItem>
             <dt>Entered By</dt>
             <dd v-if="patientDocument">
               {{ patientDocument.enteredbydesc || patientDocument.enteredbycode || "Unknown Person" }}
             </dd>
             <BaseSkeleText v-else class="h-6 w-1/2" />
-          </GenericDlGridItem>
-          <GenericDlGridItem>
+          </BaseDlGridItem>
+          <BaseDlGridItem>
             <dt>Clinician:</dt>
             <dd v-if="patientDocument">
               {{ patientDocument.cliniciandesc || patientDocument.cliniciancode || "Unknown Clinician" }}
             </dd>
             <BaseSkeleText v-else class="h-6 w-1/2" />
-          </GenericDlGridItem>
-          <GenericDlGridItem>
+          </BaseDlGridItem>
+          <BaseDlGridItem>
             <dt>Document Date</dt>
             <dd v-if="patientDocument">
               {{ patientDocument.documenttime ? formatDate(patientDocument.documenttime) : "Unknown date" }}
             </dd>
             <BaseSkeleText v-else class="h-6 w-1/3" />
-          </GenericDlGridItem>
-          <GenericDlGridItem>
+          </BaseDlGridItem>
+          <BaseDlGridItem>
             <dt>Creation Date</dt>
             <dd v-if="patientDocument">
               {{ patientDocument.creationDate ? formatDate(patientDocument.creationDate) : "Unknown date" }}
             </dd>
             <BaseSkeleText v-else class="h-6 w-1/3" />
-          </GenericDlGridItem>
-          <GenericDlGridItem>
+          </BaseDlGridItem>
+          <BaseDlGridItem>
             <dt>Update Date</dt>
             <dd v-if="patientDocument">
               {{ patientDocument.updateDate ? formatDate(patientDocument.updateDate) : "Unknown date" }}
             </dd>
             <BaseSkeleText v-else class="h-6 w-1/3" />
-          </GenericDlGridItem>
-          <GenericDlGridItem v-if="patientDocument && patientDocument.notetext" class="sm:col-span-3">
+          </BaseDlGridItem>
+          <BaseDlGridItem v-if="patientDocument && patientDocument.notetext" class="sm:col-span-3">
             <dt>Note</dt>
             <dd class="whitespace-pre-wrap font-mono">{{ patientDocument.notetext }}</dd>
-          </GenericDlGridItem>
+          </BaseDlGridItem>
           <div v-if="patientDocument" class="sm:col-span-2">
             <dt>Attachments</dt>
             <dd>
@@ -71,7 +71,7 @@
               </BaseCard>
             </dd>
           </div>
-        </GenericDlGrid>
+        </BaseDlGrid>
       </BaseCardContent>
     </BaseCard>
   </div>
@@ -80,12 +80,15 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useRoute } from "@nuxtjs/composition-api";
 import { DocumentSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
-import { formatDate } from "~/helpers/dateUtils";
+import BaseDlGrid from "~/components/base/BaseDlGrid.vue";
+import BaseDlGridItem from "~/components/base/BaseDlGridItem.vue";
 
+import { formatDate } from "~/helpers/dateUtils";
 import useApi from "~/composables/useApi";
 import { saveAs } from "~/helpers/fileUtils";
 
@@ -95,6 +98,8 @@ export default defineComponent({
     BaseCardContent,
     BaseCardHeader,
     BaseSkeleText,
+    BaseDlGrid,
+    BaseDlGridItem,
   },
   props: {
     record: {

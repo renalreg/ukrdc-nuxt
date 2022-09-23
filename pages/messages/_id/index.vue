@@ -3,26 +3,26 @@
     <!-- Header card -->
     <BaseCard class="mb-4">
       <BaseCardContent>
-        <GenericDlGrid>
-          <GenericDlGridItem>
+        <BaseDlGrid>
+          <BaseDlGridItem>
             <dt>Status</dt>
             <dd v-if="message">
               <MessagesStatusBadge class="mr-2 flex-shrink" :message="message" />
             </dd>
             <BaseSkeleText v-else class="h-6 w-full" />
-          </GenericDlGridItem>
-          <GenericDlGridItem>
+          </BaseDlGridItem>
+          <BaseDlGridItem>
             <dt>Received</dt>
             <dd v-if="message">{{ message.received ? formatDate(message.received) : "Unknown" }}</dd>
             <BaseSkeleText v-else class="h-6 w-full" />
-          </GenericDlGridItem>
-          <GenericDlGridItem>
+          </BaseDlGridItem>
+          <BaseDlGridItem>
             <dt>Facility</dt>
             <LinkSendingFacility v-if="message" :code="message.facility" />
             <BaseSkeleText v-else class="h-6 w-full" />
-          </GenericDlGridItem>
+          </BaseDlGridItem>
 
-          <GenericDlGridItem>
+          <BaseDlGridItem>
             <dt>Channel</dt>
             <dd v-if="message" class="flex items-center gap-1">
               <span>{{ message.mirthChannel ? message.mirthChannel : message.mirthChannelId }}</span>
@@ -32,8 +32,8 @@
               </GenericInfoIcon>
             </dd>
             <BaseSkeleText v-else class="h-6 w-full" />
-          </GenericDlGridItem>
-        </GenericDlGrid>
+          </BaseDlGridItem>
+        </BaseDlGrid>
       </BaseCardContent>
     </BaseCard>
 
@@ -113,6 +113,8 @@ import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+import BaseDlGrid from "~/components/base/BaseDlGrid.vue";
+import BaseDlGridItem from "~/components/base/BaseDlGridItem.vue";
 
 import { formatDate } from "~/helpers/dateUtils";
 import usePermissions from "~/composables/usePermissions";
@@ -127,6 +129,8 @@ export default defineComponent({
     BaseCardHeader,
     BaseSkeleText,
     BaseSkeleListItem,
+    BaseDlGrid,
+    BaseDlGridItem,
   },
   props: {
     message: {

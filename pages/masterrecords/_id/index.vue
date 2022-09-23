@@ -3,8 +3,8 @@
     <!-- Description list -->
     <BaseCard class="mb-4">
       <BaseCardContent>
-        <GenericDlGrid>
-          <GenericDlGridItem>
+        <BaseDlGrid>
+          <BaseDlGridItem>
             <dt>Full Name</dt>
             <dd>
               <div class="flex items-center gap-2">
@@ -14,9 +14,9 @@
                 <TracingBadge v-if="tracingRecord" :verified="nameMatchesTracing" />
               </div>
             </dd>
-          </GenericDlGridItem>
+          </BaseDlGridItem>
 
-          <GenericDlGridItem>
+          <BaseDlGridItem>
             <dt>Gender</dt>
             <dd>
               <div class="flex items-center gap-2">
@@ -24,9 +24,9 @@
                 <TracingBadge v-if="tracingRecord" :verified="tracingRecord.patient?.gender === record.gender" />
               </div>
             </dd>
-          </GenericDlGridItem>
+          </BaseDlGridItem>
 
-          <GenericDlGridItem>
+          <BaseDlGridItem>
             <dt>Date of Birth</dt>
             <dd>
               <div class="flex items-center gap-2">
@@ -34,9 +34,9 @@
                 <TracingBadge v-if="tracingRecord" :verified="birthTimeMatchesTracing" />
               </div>
             </dd>
-          </GenericDlGridItem>
+          </BaseDlGridItem>
 
-          <GenericDlGridItem>
+          <BaseDlGridItem>
             <dt class="font-medium text-gray-500">National ID</dt>
             <dd>
               <div class="flex items-center gap-2">
@@ -47,18 +47,18 @@
                 />
               </div>
             </dd>
-          </GenericDlGridItem>
+          </BaseDlGridItem>
 
-          <GenericDlGridItem>
+          <BaseDlGridItem>
             <dt>ID Type</dt>
             <dd>{{ record.nationalidType }}</dd>
-          </GenericDlGridItem>
+          </BaseDlGridItem>
 
-          <GenericDlGridItem>
+          <BaseDlGridItem>
             <dt>Last Updated</dt>
             <dd>{{ formatDate(record.lastUpdated) }}</dd>
-          </GenericDlGridItem>
-        </GenericDlGrid>
+          </BaseDlGridItem>
+        </BaseDlGrid>
       </BaseCardContent>
     </BaseCard>
 
@@ -131,6 +131,8 @@ import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+import BaseDlGrid from "~/components/base/BaseDlGrid.vue";
+import BaseDlGridItem from "~/components/base/BaseDlGridItem.vue";
 
 import { formatDate, datesAreEqual } from "~/helpers/dateUtils";
 import { formatGender } from "~/helpers/codeUtils";
@@ -144,6 +146,8 @@ export default defineComponent({
     BaseCardContent,
     BaseCardHeader,
     BaseSkeleListItem,
+    BaseDlGrid,
+    BaseDlGridItem,
   },
   props: {
     record: {

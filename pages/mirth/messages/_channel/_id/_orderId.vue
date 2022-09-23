@@ -2,22 +2,22 @@
   <div>
     <BaseCard class="mb-6">
       <BaseCardContent>
-        <GenericDlGrid>
-          <GenericDlGridItem>
+        <BaseDlGrid>
+          <BaseDlGridItem>
             <dt>Connector Name</dt>
             <dd v-if="connectorMessage">
               {{ connectorMessage.connectorName }}
             </dd>
             <BaseSkeleText v-else class="h-6 w-full" />
-          </GenericDlGridItem>
-          <GenericDlGridItem>
+          </BaseDlGridItem>
+          <BaseDlGridItem>
             <dt>Send Attempts</dt>
             <dd v-if="connectorMessage">
               {{ connectorMessage.sendAttempts }}
             </dd>
             <BaseSkeleText v-else class="h-6 w-full" />
-          </GenericDlGridItem>
-          <GenericDlGridItem>
+          </BaseDlGridItem>
+          <BaseDlGridItem>
             <dt>Status</dt>
             <dd v-if="connectorMessage">
               <span
@@ -32,8 +32,8 @@
               >
             </dd>
             <BaseSkeleText v-else class="h-6 w-full" />
-          </GenericDlGridItem>
-        </GenericDlGrid>
+          </BaseDlGridItem>
+        </BaseDlGrid>
         <slot></slot>
       </BaseCardContent>
     </BaseCard>
@@ -74,6 +74,8 @@ import { ConnectorMessageModel, ChannelMessageModel, ConnectorMessageData } from
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
+import BaseDlGrid from "~/components/base/BaseDlGrid.vue";
+import BaseDlGridItem from "~/components/base/BaseDlGridItem.vue";
 
 import { connectorMessageError } from "~/helpers/mirthUtils";
 
@@ -89,6 +91,8 @@ export default defineComponent({
     BaseCard,
     BaseCardContent,
     BaseSkeleText,
+    BaseDlGrid,
+    BaseDlGridItem,
   },
   props: {
     message: {
