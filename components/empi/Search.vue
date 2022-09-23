@@ -12,7 +12,7 @@ Mini (half-width) search bar and results pages used in the EMPI Merge page.
       <BaseCard>
         <!-- Skeleton results -->
         <ul v-if="searchInProgress" class="divide-y divide-gray-200">
-          <SkeleListItem v-for="n in 10" :key="n" />
+          <BaseSkeleListItem v-for="n in 10" :key="n" />
         </ul>
         <!-- Real results -->
         <ul v-else class="divide-y divide-gray-200">
@@ -47,6 +47,7 @@ import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api"
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
+import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 
 import usePagination from "~/composables/query/usePagination";
 
@@ -57,6 +58,7 @@ export default defineComponent({
   components: {
     BaseCard,
     BaseLoadingIndicator,
+    BaseSkeleListItem,
   },
   props: {
     numberTypes: {

@@ -44,11 +44,11 @@
     <!-- Header -->
     <div class="mb-6">
       <h1 v-if="record">Work Item {{ record.id }} {{ statusString }}</h1>
-      <SkeleText v-else class="mb-2 h-8 w-1/4" />
+      <BaseSkeleText v-else class="mb-2 h-8 w-1/4" />
       <h5 v-if="record">
         {{ record.description }}
       </h5>
-      <SkeleText v-else class="h-4 w-1/2" />
+      <BaseSkeleText v-else class="h-4 w-1/2" />
     </div>
 
     <!-- Info Cards -->
@@ -237,6 +237,7 @@ import { WorkItemExtendedSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseButton from "@/components/base/BaseButton.vue";
+import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 
 import { formatDate } from "~/helpers/dateUtils";
 import { formatGender } from "~/helpers/codeUtils";
@@ -261,6 +262,7 @@ export default defineComponent({
     BaseButton,
     BaseCard,
     BaseCardHeader,
+    BaseSkeleText,
   },
   setup() {
     // Dependencies

@@ -47,17 +47,17 @@
           <GenericCardDi>
             <dt>Environment</dt>
             <dd v-if="serverInfo">{{ serverInfo.deploymentEnv }}</dd>
-            <SkeleText v-else class="mb-2 h-6 w-3/4" />
+            <BaseSkeleText v-else class="mb-2 h-6 w-3/4" />
           </GenericCardDi>
           <GenericCardDi>
             <dt>Version Reference</dt>
             <dd v-if="serverInfo">{{ serverInfo.githubRef }}</dd>
-            <SkeleText v-else class="mb-2 h-6 w-3/4" />
+            <BaseSkeleText v-else class="mb-2 h-6 w-3/4" />
           </GenericCardDi>
           <GenericCardDi>
             <dt>Version Hash</dt>
             <dd v-if="serverInfo">{{ serverInfo.githubSha }}</dd>
-            <SkeleText v-else class="mb-2 h-6 w-3/4" />
+            <BaseSkeleText v-else class="mb-2 h-6 w-3/4" />
           </GenericCardDi>
         </GenericCardDl>
       </BaseCard>
@@ -72,6 +72,7 @@ import { SystemInfoSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseButton from "@/components/base/BaseButton.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 
 import useApi from "~/composables/useApi";
 
@@ -80,6 +81,7 @@ export default defineComponent({
     BaseButton,
     BaseCard,
     BaseCardHeader,
+    BaseSkeleText,
   },
   setup() {
     const { $config, $toast } = useContext();

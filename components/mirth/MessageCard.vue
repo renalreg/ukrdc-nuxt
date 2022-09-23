@@ -7,7 +7,7 @@
           <dd v-if="message && !isEmptyObject(message)">
             {{ message.messageId }}
           </dd>
-          <SkeleText v-else class="h-6 w-full" />
+          <BaseSkeleText v-else class="h-6 w-full" />
         </GenericDlGridItem>
         <GenericDlGridItem>
           <dt>Processed</dt>
@@ -15,14 +15,14 @@
             {{ message.processed ? "Yes" : "No" }}
             {{ hasErrors ? "(with errors)" : "" }}
           </dd>
-          <SkeleText v-else class="h-6 w-full" />
+          <BaseSkeleText v-else class="h-6 w-full" />
         </GenericDlGridItem>
         <GenericDlGridItem>
           <dt>Channel</dt>
           <dd v-if="message && !isEmptyObject(message)">
             {{ channelName }}
           </dd>
-          <SkeleText v-else class="h-6 w-full" />
+          <BaseSkeleText v-else class="h-6 w-full" />
         </GenericDlGridItem>
       </GenericDlGrid>
       <slot></slot>
@@ -35,6 +35,7 @@ import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { ChannelMessageModel } from "@ukkidney/ukrdc-axios-ts";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
+import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 
 import { isEmptyObject } from "~/helpers/objectUtils";
 import { messageHasErrors } from "~/helpers/mirthUtils";
@@ -43,6 +44,7 @@ export default defineComponent({
   components: {
     BaseCard,
     BaseCardContent,
+    BaseSkeleText,
   },
   props: {
     message: {

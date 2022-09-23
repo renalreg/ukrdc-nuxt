@@ -32,7 +32,7 @@
       <BaseCard>
         <!-- Skeleton results -->
         <ul class="divide-y divide-gray-200">
-          <SkeleListItem v-for="n in 10" :key="n" />
+          <BaseSkeleListItem v-for="n in 10" :key="n" />
         </ul>
       </BaseCard>
     </div>
@@ -86,6 +86,7 @@
 import { computed, defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseCard from "~/components/base/BaseCard.vue";
+import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 
 import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";
@@ -96,6 +97,7 @@ import useFacilities from "~/composables/useFacilities";
 export default defineComponent({
   components: {
     BaseCard,
+    BaseSkeleListItem,
   },
   setup() {
     const { page, total, size } = usePagination();

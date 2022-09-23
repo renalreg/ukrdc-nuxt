@@ -14,7 +14,7 @@
             <dd v-if="total">
               {{ total }}
             </dd>
-            <SkeleText v-else class="mt-2 h-6 w-8" />
+            <BaseSkeleText v-else class="mt-2 h-6 w-8" />
           </GenericDlGridItem>
 
           <GenericDlGridItem>
@@ -31,7 +31,7 @@
             <dd v-if="lastRunTime">
               {{ formatDate(lastRunTime, true) }}
             </dd>
-            <SkeleText v-else class="mt-2 h-6 w-1/4" />
+            <BaseSkeleText v-else class="mt-2 h-6 w-1/4" />
           </GenericDlGridItem>
         </GenericDlGrid>
       </BaseCardContent>
@@ -66,6 +66,7 @@ import { MultipleUKRDCIDGroup } from "@ukkidney/ukrdc-axios-ts";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
+import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import { formatDate } from "~/helpers/dateUtils";
 
 import usePagination from "~/composables/query/usePagination";
@@ -76,6 +77,7 @@ export default defineComponent({
     BaseCard,
     BaseCardContent,
     BaseLoadingIndicator,
+    BaseSkeleText,
   },
   setup() {
     const { page, total, size } = usePagination();

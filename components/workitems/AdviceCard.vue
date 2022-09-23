@@ -59,9 +59,9 @@
         </li>
       </ul>
       <div v-else>
-        <SkeleText class="mb-2 h-6 w-full" />
-        <SkeleText class="mb-2 h-6 w-1/2" />
-        <SkeleText class="mb-2 h-6 w-3/4" />
+        <BaseSkeleText class="mb-2 h-6 w-full" />
+        <BaseSkeleText class="mb-2 h-6 w-1/2" />
+        <BaseSkeleText class="mb-2 h-6 w-3/4" />
       </div>
     </BaseCardContent>
   </BaseCard>
@@ -73,6 +73,7 @@ import { WorkItemExtendedSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
+import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import {
   collectionIsUnresolved,
   workItemIsMergable,
@@ -86,6 +87,7 @@ export default defineComponent({
     BaseCard,
     BaseCardContent,
     BaseCardHeader,
+    BaseSkeleText,
   },
   props: {
     item: {

@@ -32,7 +32,7 @@
         :key="`record-${group.groupId}-${item.masterRecord.id}`"
         class="hover:bg-gray-50"
       >
-        <SkeleListItem v-if="fetchInProgress" />
+        <BaseSkeleListItem v-if="fetchInProgress" />
         <NuxtLink v-else :to="`/masterrecords/${item.masterRecord.id}`">
           <MasterrecordsListItem
             :item="item.masterRecord"
@@ -49,12 +49,14 @@
 import { defineComponent } from "@nuxtjs/composition-api";
 import { MultipleUKRDCIDGroup } from "@ukkidney/ukrdc-axios-ts";
 import BaseButtonMini from "@/components/base/BaseButtonMini.vue";
+import BaseSkeleListItem from "@/components/base/BaseSkeleListItem.vue";
 
 import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
   components: {
     BaseButtonMini,
+    BaseSkeleListItem,
   },
   props: {
     group: {

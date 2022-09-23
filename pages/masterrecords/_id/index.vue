@@ -88,7 +88,7 @@
         @refresh="refreshRecords"
       />
       <ul v-else class="divide-y divide-gray-200">
-        <SkeleListItem v-for="n in 5" :key="n" />
+        <BaseSkeleListItem v-for="n in 5" :key="n" />
       </ul>
     </BaseCard>
 
@@ -113,7 +113,7 @@
         </div>
       </ul>
       <ul v-else class="divide-y divide-gray-200">
-        <SkeleListItem v-for="n in 2" :key="n" />
+        <BaseSkeleListItem v-for="n in 2" :key="n" />
       </ul>
     </BaseCard>
   </div>
@@ -130,6 +130,7 @@ import {
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 
 import { formatDate, datesAreEqual } from "~/helpers/dateUtils";
 import { formatGender } from "~/helpers/codeUtils";
@@ -142,6 +143,7 @@ export default defineComponent({
     BaseCard,
     BaseCardContent,
     BaseCardHeader,
+    BaseSkeleListItem,
   },
   props: {
     record: {

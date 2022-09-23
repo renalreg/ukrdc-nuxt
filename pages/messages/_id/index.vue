@@ -9,17 +9,17 @@
             <dd v-if="message">
               <MessagesStatusBadge class="mr-2 flex-shrink" :message="message" />
             </dd>
-            <SkeleText v-else class="h-6 w-full" />
+            <BaseSkeleText v-else class="h-6 w-full" />
           </GenericDlGridItem>
           <GenericDlGridItem>
             <dt>Received</dt>
             <dd v-if="message">{{ message.received ? formatDate(message.received) : "Unknown" }}</dd>
-            <SkeleText v-else class="h-6 w-full" />
+            <BaseSkeleText v-else class="h-6 w-full" />
           </GenericDlGridItem>
           <GenericDlGridItem>
             <dt>Facility</dt>
             <LinkSendingFacility v-if="message" :code="message.facility" />
-            <SkeleText v-else class="h-6 w-full" />
+            <BaseSkeleText v-else class="h-6 w-full" />
           </GenericDlGridItem>
 
           <GenericDlGridItem>
@@ -31,7 +31,7 @@
                 <p>The channel may be important when debugging unexpected errors.</p>
               </GenericInfoIcon>
             </dd>
-            <SkeleText v-else class="h-6 w-full" />
+            <BaseSkeleText v-else class="h-6 w-full" />
           </GenericDlGridItem>
         </GenericDlGrid>
       </BaseCardContent>
@@ -98,7 +98,7 @@
           </NuxtLink>
         </li>
         <li v-else-if="mirthMessage === undefined">
-          <SkeleListItem />
+          <BaseSkeleListItem />
         </li>
       </ul>
     </BaseCard>
@@ -111,6 +111,9 @@ import { MasterRecordSchema, MessageSchema, ChannelMessageModel, WorkItemSchema 
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
+import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+
 import { formatDate } from "~/helpers/dateUtils";
 import usePermissions from "~/composables/usePermissions";
 import useApi from "~/composables/useApi";
@@ -122,6 +125,8 @@ export default defineComponent({
     BaseCard,
     BaseCardContent,
     BaseCardHeader,
+    BaseSkeleText,
+    BaseSkeleListItem,
   },
   props: {
     message: {

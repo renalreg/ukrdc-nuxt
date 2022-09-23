@@ -2,7 +2,7 @@
   <div>
     <div class="mb-6">
       <h1 v-if="message">Message {{ message.messageId }}</h1>
-      <SkeleText v-else class="mb-2 h-8 w-1/4" />
+      <BaseSkeleText v-else class="mb-2 h-8 w-1/4" />
     </div>
 
     <!-- Header card -->
@@ -15,10 +15,14 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
 import { ChannelMessageModel } from "@ukkidney/ukrdc-axios-ts";
+import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 
 import useApi from "~/composables/useApi";
 
 export default defineComponent({
+  components: {
+    BaseSkeleText,
+  },
   setup() {
     const route = useRoute();
     const { mirthApi } = useApi();

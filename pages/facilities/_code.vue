@@ -5,11 +5,11 @@
 
     <div class="mb-2">
       <h1 v-if="facility">{{ facility.description }}</h1>
-      <SkeleText v-else class="mb-2 h-8 w-1/4" />
+      <BaseSkeleText v-else class="mb-2 h-8 w-1/4" />
       <h5 v-if="facility">
         {{ facility.id }}
       </h5>
-      <SkeleText v-else class="h-4 w-1/2" />
+      <BaseSkeleText v-else class="h-4 w-1/2" />
     </div>
 
     <div class="mb-6"><GenericTabsNavigation :tabs="tabs" /></div>
@@ -20,8 +20,9 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
-
 import { FacilityDetailsSchema, FacilityExtractsSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
+
 import usePermissions from "~/composables/usePermissions";
 
 import { TabItem } from "~/interfaces/tabs";
@@ -29,6 +30,9 @@ import useApi from "~/composables/useApi";
 import { insertIf } from "~/helpers/arrayUtils";
 
 export default defineComponent({
+  components: {
+    BaseSkeleText,
+  },
   setup() {
     const route = useRoute();
     const { hasMultipleFacilities } = usePermissions();

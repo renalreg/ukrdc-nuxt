@@ -51,7 +51,7 @@
     <BaseCard>
       <!-- Skeleton results -->
       <ul v-if="fetchInProgress" class="divide-y divide-gray-200">
-        <SkeleListItem v-for="n in 10" :key="n" />
+        <BaseSkeleListItem v-for="n in 10" :key="n" />
       </ul>
       <!-- Real results -->
       <ul v-else class="divide-y divide-gray-200">
@@ -79,6 +79,7 @@ import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api"
 import { MessageSchema, OrderBy } from "@ukkidney/ukrdc-axios-ts";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseButtonMini from "@/components/base/BaseButtonMini.vue";
+import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 
 import { nowString } from "~/helpers/dateUtils";
 import usePagination from "~/composables/query/usePagination";
@@ -95,6 +96,7 @@ export default defineComponent({
   components: {
     BaseButtonMini,
     BaseCard,
+    BaseSkeleListItem,
   },
   setup() {
     const { page, total, size } = usePagination();

@@ -36,8 +36,8 @@
             </p>
           </div>
           <div v-else>
-            <SkeleText class="mb-2 h-8 w-24" />
-            <SkeleText class="h-6 w-32" />
+            <BaseSkeleText class="mb-2 h-8 w-24" />
+            <BaseSkeleText class="h-6 w-32" />
           </div>
         </div>
         <div
@@ -83,6 +83,7 @@
 import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
 import { UserPreferences } from "@ukkidney/ukrdc-axios-ts";
 import BaseButton from "@/components/base/BaseButton.vue";
+import BaseSkeleText from "@/components/base/BaseSkeleText.vue";
 
 import usePermissions from "~/composables/usePermissions";
 import useApi from "~/composables/useApi";
@@ -90,6 +91,7 @@ import useApi from "~/composables/useApi";
 export default defineComponent({
   components: {
     BaseButton,
+    BaseSkeleText,
   },
   setup() {
     const { $okta } = useContext();

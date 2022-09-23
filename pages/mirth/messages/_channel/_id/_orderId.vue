@@ -8,14 +8,14 @@
             <dd v-if="connectorMessage">
               {{ connectorMessage.connectorName }}
             </dd>
-            <SkeleText v-else class="h-6 w-full" />
+            <BaseSkeleText v-else class="h-6 w-full" />
           </GenericDlGridItem>
           <GenericDlGridItem>
             <dt>Send Attempts</dt>
             <dd v-if="connectorMessage">
               {{ connectorMessage.sendAttempts }}
             </dd>
-            <SkeleText v-else class="h-6 w-full" />
+            <BaseSkeleText v-else class="h-6 w-full" />
           </GenericDlGridItem>
           <GenericDlGridItem>
             <dt>Status</dt>
@@ -31,7 +31,7 @@
                 >Success</span
               >
             </dd>
-            <SkeleText v-else class="h-6 w-full" />
+            <BaseSkeleText v-else class="h-6 w-full" />
           </GenericDlGridItem>
         </GenericDlGrid>
         <slot></slot>
@@ -71,6 +71,7 @@
 <script lang="ts">
 import { computed, defineComponent, ref, useRoute, watch } from "@nuxtjs/composition-api";
 import { ConnectorMessageModel, ChannelMessageModel, ConnectorMessageData } from "@ukkidney/ukrdc-axios-ts";
+import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
 
@@ -87,6 +88,7 @@ export default defineComponent({
   components: {
     BaseCard,
     BaseCardContent,
+    BaseSkeleText,
   },
   props: {
     message: {
