@@ -11,16 +11,14 @@ Table of facilities and their basic statistics
         <tr>
           <th scope="col" class="px-4 py-3 text-left">
             <div class="flex items-center gap-1">
-              <TextTh>Code</TextTh>
+              Code
               <IconDynamicSort :active="sortBy === 'id'" :asc="isAscending['id']" @toggle="toggleSort('id')" />
             </div>
           </th>
-          <th scope="col" class="hidden px-4 py-3 text-left lg:table-cell">
-            <TextTh>Name</TextTh>
-          </th>
+          <th scope="col" class="hidden px-4 py-3 text-left lg:table-cell">Name</th>
           <th scope="col" class="px-4 py-3 text-left">
             <div class="flex items-center gap-1">
-              <TextTh>Total Records</TextTh>
+              Total Records
               <IconDynamicSort
                 :active="sortBy === 'statistics.total_patients'"
                 :asc="isAscending['statistics.total_patients']"
@@ -30,7 +28,7 @@ Table of facilities and their basic statistics
           </th>
           <th scope="col" class="px-4 py-3 text-left">
             <div class="flex items-center gap-1">
-              <TextTh>Failing Records</TextTh>
+              Failing Records
               <IconDynamicSort
                 :active="sortBy === 'statistics.patients_receiving_message_error'"
                 :asc="isAscending['statistics.patients_receiving_message_error']"
@@ -40,13 +38,13 @@ Table of facilities and their basic statistics
           </th>
           <th scope="col" class="px-4 py-3 text-left">
             <div class="flex items-center">
-              <TextTh>Sending to PKB</TextTh>
+              Sending to PKB
               <IconDynamicFilter :active="filterByPkbOut" @toggle="filterByPkbOut = !filterByPkbOut" />
             </div>
           </th>
           <th scope="col" class="px-4 py-3 text-left">
             <div class="flex items-center gap-1">
-              <TextTh>Last Received</TextTh>
+              Last Received
               <IconDynamicSort
                 :active="sortBy === 'last_message_received_at'"
                 :asc="isAscending['last_message_received_at']"

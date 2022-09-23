@@ -19,7 +19,7 @@ Includes a header with the Link Record ID and functionality to Unlink the record
 
     <BaseCard class="mb-2 flex items-center p-2">
       <div class="flex-grow pl-2">
-        <TextL1>Link Record {{ record.id }}</TextL1>
+        <h5>Link Record {{ record.id }}</h5>
       </div>
       <div class="flex-shrink">
         <BaseButtonMini @click="unlinkModal?.show()">Unlink</BaseButtonMini>

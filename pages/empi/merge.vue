@@ -78,18 +78,18 @@
       <div class="mb-6">
         <h2 class="mb-2">Merge Details</h2>
         <p>
-          Master Record <TextL1 class="inline">{{ supersededId }}</TextL1> will be merged into Master Record
-          <TextL1 class="inline">{{ supersedingId }}</TextL1
+          Master Record <h5 class="inline">{{ supersededId }}</h5> will be merged into Master Record
+          <h5 class="inline">{{ supersedingId }}</h5
           >.
         </p>
         <p>
-          Demographic data on record <TextL1 class="inline">{{ supersededId }}</TextL1> will be replaced by demographic
-          data from record <TextL1 class="inline">{{ supersedingId }}</TextL1
+          Demographic data on record <h5 class="inline">{{ supersededId }}</h5> will be replaced by demographic
+          data from record <h5 class="inline">{{ supersedingId }}</h5
           >.
         </p>
         <p>
-          All Patient Records linked to Master Record <TextL1 class="inline">{{ supersededId }}</TextL1> will be
-          re-linked to Master Record <TextL1 class="inline">{{ supersedingId }}</TextL1
+          All Patient Records linked to Master Record <h5 class="inline">{{ supersededId }}</h5> will be
+          re-linked to Master Record <h5 class="inline">{{ supersedingId }}</h5
           >.
         </p>
       </div>

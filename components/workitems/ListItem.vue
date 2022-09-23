@@ -10,13 +10,13 @@
           Closed
         </span>
         <TextNameL1 v-if="item.person" :forename="item.person.givenname" :surname="item.person.surname" />
-        <TextL1 v-if="item.person && item.masterRecord" class="inline">→</TextL1>
+        <h5 v-if="item.person && item.masterRecord" class="inline">→</h5>
         <TextNameL1
           v-if="item.masterRecord"
           :forename="item.masterRecord.givenname"
           :surname="item.masterRecord.surname"
         />
-        <TextL1 v-else class="inline truncate capitalize text-red-800"> Missing Record </TextL1>
+        <h5 v-else class="inline truncate capitalize text-red-800">Missing Record</h5>
         <p class="mt-2 truncate">{{ item.type }}: {{ item.description }}</p>
       </div>
       <!-- National ID -->

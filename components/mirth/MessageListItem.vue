@@ -5,7 +5,7 @@
         <div class="grid w-full min-w-0 grid-cols-2 lg:grid-cols-3 lg:gap-4">
           <!-- Heading -->
           <div class="col-span-1 lg:col-span-2">
-            <TextL1 class="truncate"> Message ID {{ message.messageId }} </TextL1>
+            <h5 class="truncate">Message ID {{ message.messageId }}</h5>
             <p class="mt-2 line-clamp-2">{{ channelName }}</p>
           </div>
           <!-- Received  -->

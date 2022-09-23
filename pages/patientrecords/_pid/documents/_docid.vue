@@ -7,9 +7,9 @@
           <SkeleText v-else class="h-6 w-1/2" />
         </div>
         <div>
-          <TextL1 v-if="patientDocument">{{
-            patientDocument.documenttime ? formatDate(patientDocument.documenttime) : "Unknown date"
-          }}</TextL1>
+          <h5 v-if="patientDocument">
+            {{ patientDocument.documenttime ? formatDate(patientDocument.documenttime) : "Unknown date" }}
+          </h5>
           <SkeleText v-else class="h-6 w-1/3" />
         </div>
       </BaseCardHeader>

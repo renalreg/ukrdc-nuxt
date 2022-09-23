@@ -150,6 +150,18 @@ h4 {
   @apply text-sm font-medium uppercase tracking-wide text-gray-600;
 }
 
+h5 {
+  @apply font-medium text-gray-600;
+}
+
+h6 {
+  @apply text-sm font-medium text-gray-500;
+}
+
+th {
+  @apply text-sm font-medium uppercase tracking-wider text-gray-500;
+}
+
 .v-popper__popper {
   font-size: 12px;
 }

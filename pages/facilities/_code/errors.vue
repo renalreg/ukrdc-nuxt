@@ -4,7 +4,7 @@
     <BaseCard v-if="errorMessages && errorMessagesTotal > 0" class="mt-4">
       <BaseCardHeader>
         <h2>Records Currently Failing</h2>
-        <TextL1>Records where the most recent message received failed to process due to errors.</TextL1>
+        <h5>Records where the most recent message received failed to process due to errors.</h5>
       </BaseCardHeader>
       <ul class="divide-y divide-gray-200">
         <div v-for="item in errorMessages" :key="item.id" :item="item" class="hover:bg-gray-50">

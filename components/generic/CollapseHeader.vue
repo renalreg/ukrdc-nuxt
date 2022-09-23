@@ -16,7 +16,7 @@
         />
       </svg>
     </span>
-    <TextL1>{{ label }}</TextL1>
+    <h5>{{ label }}</h5>
   </div>
 </template>
 

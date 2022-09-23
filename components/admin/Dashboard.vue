@@ -11,7 +11,7 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
             <IconUsers />
           </div>
           <div class="ml-5 w-0 flex-1">
-            <TextL1>Total Patients</TextL1>
+            <h5>Total Patients</h5>
             <h1 class="text-2xl font-semibold text-green-600">{{ counts.distinctPatients }}</h1>
           </div>
         </div>
@@ -24,7 +24,7 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
             <IconLink />
           </div>
           <div class="ml-5 w-0 flex-1">
-            <TextL1>Open Work Items</TextL1>
+            <h5>Open Work Items</h5>
             <h1 class="text-2xl font-semibold" :class="counts.openWorkitems > 0 ? 'text-yellow-600' : 'text-green-600'">
               {{ counts.openWorkitems }}
             </h1>
@@ -39,7 +39,7 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
             <IconExclamation />
           </div>
           <div class="ml-5 w-0 flex-1">
-            <TextL1>Active Failing Records</TextL1>
+            <h5>Active Failing Records</h5>
             <h1
               class="text-2xl font-semibold"
               :class="counts.patientsReceivingErrors > 0 ? 'text-red-600' : 'text-green-600'"

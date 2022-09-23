@@ -22,7 +22,7 @@
                 <dl>
                   <GenericCardDt>Total Records</GenericCardDt>
                   <dd class="flex items-baseline">
-                    <TextHc class="flex-grow">{{ facility.statistics.totalPatients }}</TextHc>
+                    <h1 class="flex-grow text-indigo-600">{{ facility.statistics.totalPatients }}</h1>
                     <NuxtLink
                       class="hover:underline"
                       :to="{ path: `/masterrecords/`, query: { facility: facility.id } }"
@@ -47,14 +47,14 @@
                 <dl>
                   <GenericCardDt>Active Failing Records</GenericCardDt>
                   <dd class="flex items-baseline">
-                    <TextHc
+                    <h1
                       class="flex-grow"
                       :class="
                         (facility.statistics.patientsReceivingMessageError || 0) > 0 ? 'text-red-600' : 'text-green-700'
                       "
                     >
                       {{ facility.statistics.patientsReceivingMessageError }}
-                    </TextHc>
+                    </h1>
                     <NuxtLink class="hover:underline" :to="`/facilities/${facility.id}/errors`"> Show errors </NuxtLink>
                   </dd>
                 </dl>
@@ -77,15 +77,9 @@
         <BaseTable>
           <thead class="bg-gray-50">
             <tr>
-              <th scope="col" class="px-4 py-3 text-left">
-                <TextTh>Feed Type</TextTh>
-              </th>
-              <th scope="col" class="hidden px-4 py-3 text-left md:table-cell">
-                <TextTh>Status</TextTh>
-              </th>
-              <th scope="col" class="px-4 py-3 text-left">
-                <TextTh>Total Records</TextTh>
-              </th>
+              <th scope="col" class="px-4 py-3 text-left">Feed Type</th>
+              <th scope="col" class="hidden px-4 py-3 text-left md:table-cell">Status</th>
+              <th scope="col" class="px-4 py-3 text-left">Total Records</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200 bg-white">

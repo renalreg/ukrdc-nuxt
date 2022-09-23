@@ -22,14 +22,14 @@
         </div>
         <!-- MRN (medium breakpoint only) -->
         <div class="hidden sm:block">
-          <TextL1 class="truncate">{{ firstMRNObject.label }} Number</TextL1>
+          <h5 class="truncate">{{ firstMRNObject.label }} Number</h5>
           <p class="sensitive mt-2 truncate">
             {{ firstMRNObject.number }}
           </p>
         </div>
         <!-- UKRDC ID (large breakpoint only) -->
         <div class="hidden lg:block">
-          <TextL1>UKRDC ID</TextL1>
+          <h5>UKRDC ID</h5>
           <p class="sensitive mt-2">
             {{ item.ukrdcid }}
           </p>

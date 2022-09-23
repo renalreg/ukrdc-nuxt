@@ -1,7 +1,7 @@
 <template>
   <div class="flex h-full flex-col items-center justify-center">
     <div class="block items-center justify-center sm:flex">
-      <TextHcxl class="sm:mr-8">{{ error.statusCode || "Error" }}</TextHcxl>
+      <h1 class="sm:mr-8">{{ error.statusCode || "Error" }}</h1>
       <div class="sm:border-l sm:pl-8">
         <h1 class="whitespace-pre">{{ errorTitle }}</h1>
         <NuxtLink to="/">Home page</NuxtLink>
@@ -70,3 +70,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="postcss">
+h1 {
+  @apply text-6xl font-bold text-indigo-600;
+}
+</style>

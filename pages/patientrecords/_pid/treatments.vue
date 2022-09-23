@@ -51,10 +51,10 @@
                     <p class="mr-2 inline font-bold">
                       <time :datetime="treatment.time">{{ treatment.time }}</time>
                     </p>
-                    <p v-if="treatment.isDischarge" class="inline">
+                    <div v-if="treatment.isDischarge" class="inline">
                       Discharged from
                       {{ treatment.admitReasonDesc ? treatment.admitReasonDesc : treatment.admitReasonCode }} at
-                      <TextL1 class="inline">{{ treatment.healthCareFacilityCode }}</TextL1>
+                      <h5 class="inline">{{ treatment.healthCareFacilityCode }}</h5>
                       {{
                         treatment.dischargeReasonDesc
                           ? `(${treatment.dischargeReasonDesc})`
@@ -62,12 +62,13 @@
                           ? `(${treatment.dischargeReasonCode})`
                           : ""
                       }}
-                    </p>
-                    <p v-else class="inline">
+                    </div>
+                    <div v-else class="inline">
                       {{ treatment.time }} - Admitted to
-                      <TextL1 class="inline">{{ treatment.healthCareFacilityCode }}</TextL1> for
+                      <h5 class="inline">{{ treatment.healthCareFacilityCode }}</h5>
+                      for
                       {{ treatment.admitReasonDesc ? treatment.admitReasonDesc : treatment.admitReasonCode }}
-                    </p>
+                    </div>
                   </div>
                   <GenericInfoIcon>
                     <div class="sensitive">

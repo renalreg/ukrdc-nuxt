@@ -5,24 +5,12 @@
     <BaseTable class="mb-4">
       <thead class="bg-gray-50">
         <tr>
-          <th scope="col" class="px-6 py-3 text-left">
-            <TextTh>Name</TextTh>
-          </th>
-          <th scope="col" class="px-6 py-3 text-left">
-            <TextTh>Visibility</TextTh>
-          </th>
-          <th scope="col" class="px-6 py-3 text-left">
-            <TextTh>Started By</TextTh>
-          </th>
-          <th scope="col" class="px-6 py-3 text-left">
-            <TextTh>Started</TextTh>
-          </th>
-          <th scope="col" class="px-6 py-3 text-left">
-            <TextTh>Finished</TextTh>
-          </th>
-          <th scope="col" class="px-6 py-3 text-left">
-            <TextTh>Status</TextTh>
-          </th>
+          <th scope="col" class="px-6 py-3 text-left">Name</th>
+          <th scope="col" class="px-6 py-3 text-left">Visibility</th>
+          <th scope="col" class="px-6 py-3 text-left">Started By</th>
+          <th scope="col" class="px-6 py-3 text-left">Started</th>
+          <th scope="col" class="px-6 py-3 text-left">Finished</th>
+          <th scope="col" class="px-6 py-3 text-left">Status</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-200 bg-white">

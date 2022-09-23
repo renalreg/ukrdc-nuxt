@@ -15,11 +15,11 @@ Single item of the codes list used in the Codes page.
       <!-- Extra fields  -->
       <div class="col-span-1 hidden lg:block">
         <div>
-          <TextL1 class="inline">Type: </TextL1>
+          <h5 class="inline">Type:</h5>
           <p class="inline">{{ code.objectType || "None" }}</p>
         </div>
         <div class="mt-2">
-          <TextL1 class="inline">Units: </TextL1>
+          <h5 class="inline">Units:</h5>
           <p class="inline">{{ code.units || "None" }}</p>
         </div>
       </div>

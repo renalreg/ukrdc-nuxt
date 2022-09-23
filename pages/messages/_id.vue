@@ -6,9 +6,9 @@
           {{ message.msgStatus === "ERROR" ? "Error" : "Message" }} {{ message.id }} from {{ message.facility }}
         </h1>
         <SkeleText v-else class="mb-2 h-8 w-1/4" />
-        <TextL1 v-if="message" class="line-clamp-1">
+        <h5 v-if="message" class="line-clamp-1">
           {{ messageSummary }}
-        </TextL1>
+        </h5>
         <SkeleText v-else class="h-4 w-1/2" />
       </div>
     </div>

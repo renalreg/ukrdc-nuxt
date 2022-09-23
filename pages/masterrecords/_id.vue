@@ -18,7 +18,7 @@
 
     <div v-if="record" class="mb-2">
       <TextNameH1 :forename="record.givenname" :surname="record.surname" />
-      <TextL1> {{ record.nationalidType }} record </TextL1>
+      <h5>{{ record.nationalidType }} record</h5>
     </div>
 
     <div class="mb-6"><GenericTabsNavigation :tabs="tabs" /></div>

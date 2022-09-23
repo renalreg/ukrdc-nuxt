@@ -1,7 +1,7 @@
 <template>
   <span class="truncate">
-    <TextL1 class="sensitive inline capitalize">{{ forename.toLowerCase() }}</TextL1>
-    <TextL1 class="sensitive inline capitalize italic">{{ surname.toLowerCase() }}</TextL1>
+    <h5 class="sensitive inline capitalize">{{ forename.toLowerCase() }}</h5>
+    <h5 class="sensitive inline capitalize italic">{{ surname.toLowerCase() }}</h5>
   </span>
 </template>
 

@@ -5,27 +5,27 @@
         <h4 class="mb-3">Demographics</h4>
         <BaseCard class="grid w-full grid-cols-1 gap-4 px-4 py-2 sm:grid-cols-3">
           <div>
-            <TextL1> Names </TextL1>
+            <h5>Names</h5>
             <p v-for="item in record.patient.names" :key="item.given + item.family" class="sensitive">
               {{ item.given }} {{ item.family }}
             </p>
           </div>
           <div>
-            <TextL1> Gender </TextL1>
+            <h5>Gender</h5>
             <p class="sensitive">{{ formatGender(record.patient.gender) }}</p>
           </div>
           <div>
-            <TextL1> Date of Birth </TextL1>
+            <h5>Date of Birth</h5>
             <p class="sensitive">{{ formatDate(record.patient.birthTime, (t = false)) }}</p>
           </div>
           <div>
-            <TextL1> Date of Death </TextL1>
+            <h5>Date of Death</h5>
             <p class="sensitive">
               {{ record.patient.deathTime ? formatDate(record.patient.deathTime, (t = false)) : "N/A" }}
             </p>
           </div>
           <div>
-            <TextL1> Ethnicity </TextL1>
+            <h5>Ethnicity</h5>
             <p class="sensitive">
               {{ record.patient.ethnicGroupDescription || record.patient.ethnicGroupCode || "Unknown" }}
             </p>
@@ -37,11 +37,11 @@
         <h4 class="mb-3">History</h4>
         <BaseCard class="grid w-full grid-cols-1 gap-4 px-4 py-2 sm:grid-cols-2">
           <div>
-            <TextL1> Record Created </TextL1>
+            <h5>Record Created</h5>
             <p>{{ formatDate(record.repositoryCreationDate, (t = true)) }}</p>
           </div>
           <div>
-            <TextL1> Record Last Updated </TextL1>
+            <h5>Record Last Updated</h5>
             <p>{{ formatDate(record.repositoryUpdateDate, (t = true)) }}</p>
           </div>
         </BaseCard>

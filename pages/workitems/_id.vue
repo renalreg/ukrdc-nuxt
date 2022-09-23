@@ -45,9 +45,9 @@
     <div class="mb-6">
       <h1 v-if="record">Work Item {{ record.id }} {{ statusString }}</h1>
       <SkeleText v-else class="mb-2 h-8 w-1/4" />
-      <TextL1 v-if="record">
+      <h5 v-if="record">
         {{ record.description }}
-      </TextL1>
+      </h5>
       <SkeleText v-else class="h-4 w-1/2" />
     </div>
 
@@ -214,7 +214,7 @@
       <!-- Card header -->
       <BaseCardHeader>
         <h2>Related Work Items</h2>
-        <TextL2>Work Items for the same patient, raised by the same event</TextL2>
+        <h6>Work Items for the same patient, raised by the same event</h6>
       </BaseCardHeader>
       <!-- Results list -->
       <ul class="divide-y divide-gray-200">

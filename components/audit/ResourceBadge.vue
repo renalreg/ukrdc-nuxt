@@ -1,12 +1,12 @@
 <template>
   <BaseCard class="px-2 py-1">
     <div class="flex">
-      <TextL2 class="flex-grow">{{ resourceName }} </TextL2>
-      <TextL2 class="flex-none">{{ identifier(1) }}</TextL2>
+      <h6 class="flex-grow">{{ resourceName }}</h6>
+      <h6 class="flex-none">{{ identifier(1) }}</h6>
     </div>
     <div class="flex">
-      <TextL2 class="sensitive flex-grow">{{ primaryIdentifier }}</TextL2>
-      <TextL2 class="sensitive flex-none">{{ identifier(2) }}</TextL2>
+      <h6 class="sensitive flex-grow">{{ primaryIdentifier }}</h6>
+      <h6 class="sensitive flex-none">{{ identifier(2) }}</h6>
     </div>
   </BaseCard>
 </template>

@@ -4,12 +4,12 @@
       <!-- Heading -->
       <div class="col-span-5 lg:col-span-3">
         <div class="truncate">
-          <TextL1 class="sensitive truncate md:inline">
+          <h5 class="sensitive truncate md:inline">
             {{ item.filename || "No filename found" }}
-          </TextL1>
-          <TextL1 class="truncate md:inline">
+          </h5>
+          <h5 class="truncate md:inline">
             {{ item.mirthChannel ? `on ${item.mirthChannel}` : "" }}
-          </TextL1>
+          </h5>
         </div>
         <div class="mt-2 flex">
           <MessagesStatusBadge class="mr-2 flex-shrink" :message="item" />
@@ -39,7 +39,7 @@
           ><IconMiniFilter
         /></BaseButton>
         <div class="flex-grow">
-          <TextL1>Patient Number</TextL1>
+          <h5>Patient Number</h5>
           <p class="sensitive mt-2">
             {{ item.ni || "None Found" }}
           </p>

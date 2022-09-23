@@ -12,7 +12,7 @@
       </div>
       <!-- Record ID (large breakpoint only if a detail column is given) -->
       <div :class="detailsValue ? 'hidden lg:block' : ''">
-        <TextL1>Record ID</TextL1>
+        <h5>Record ID</h5>
         <p class="mt-2">
           {{ item.id }}
         </p>
@@ -26,7 +26,7 @@
       </div>
       <!-- Details, defaults to record updated time, but can be overridden by props  -->
       <div v-if="detailsValue">
-        <TextL1>{{ detailsLabel }}</TextL1>
+        <h5>{{ detailsLabel }}</h5>
         <p class="mt-2">
           {{ detailsValue }}
         </p>

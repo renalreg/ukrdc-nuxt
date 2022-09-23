@@ -12,22 +12,22 @@
       <!-- Extra fields  -->
       <div class="mb-4">
         <div>
-          <TextL1 class="inline">Type: </TextL1>
+          <h5 class="inline">Type:</h5>
           <p class="inline">{{ code.objectType || "None" }}</p>
         </div>
         <div class="mt-2">
-          <TextL1 class="inline">Units: </TextL1>
+          <h5 class="inline">Units:</h5>
           <p class="inline">{{ code.units || "None" }}</p>
         </div>
       </div>
       <!-- Code lifecycle  -->
       <div class="mb-4">
         <div>
-          <TextL1 class="inline">Created: </TextL1>
+          <h5 class="inline">Created:</h5>
           <p class="inline">{{ formatDate(code.creationDate) }}</p>
         </div>
         <div class="mt-2">
-          <TextL1 class="inline">Updated: </TextL1>
+          <h5 class="inline">Updated:</h5>
           <p class="inline">{{ code.updateDate ? formatDate(code.updateDate) : "Never updated" }}</p>
         </div>
       </div>

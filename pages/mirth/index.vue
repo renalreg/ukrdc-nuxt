@@ -11,9 +11,9 @@
           <h4>
             {{ group.name }}
           </h4>
-          <TextL2>
+          <h6>
             {{ group.description }}
-          </TextL2>
+          </h6>
         </div>
 
         <ul class="my-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
@@ -22,7 +22,7 @@
               <h3 class="truncate">
                 {{ item.name }}
               </h3>
-              <TextL1> Rev. {{ item.revision }} </TextL1>
+              <h5>Rev. {{ item.revision }}</h5>
               <p>{{ item.statistics ? item.statistics.received : "Unknown" }} received</p>
               <span
                 v-if="item.statistics && item.statistics.error === 0"

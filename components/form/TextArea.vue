@@ -8,9 +8,9 @@
       @input="onInput"
     ></textarea>
     <div v-if="maxLength">
-      <TextL1 :class="[value && value.length >= maxLength ? 'text-red-600' : '']"
-        >{{ value ? value.length : 0 }}/{{ maxLength }}</TextL1
-      >
+      <h5 :class="[value && value.length >= maxLength ? 'text-red-600' : '']">
+        {{ value ? value.length : 0 }}/{{ maxLength }}
+      </h5>
     </div>
   </div>
 </template>

@@ -6,7 +6,7 @@ Basic code map description, used in the maps sections of a Code pane.
   <li>
     <div class="w-full min-w-0 px-4 py-4 sm:px-6">
       <CodesTitle class="inline" :code="map.sourceCode" :coding-standard="map.sourceCodingStandard" />
-      <TextL1 class="mx-2 inline">→</TextL1>
+      <h5 class="mx-2 inline">→</h5>
       <CodesTitle
         class="inline truncate"
         :code="map.destinationCode"

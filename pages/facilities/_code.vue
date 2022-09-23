@@ -6,9 +6,9 @@
     <div class="mb-2">
       <h1 v-if="facility">{{ facility.description }}</h1>
       <SkeleText v-else class="mb-2 h-8 w-1/4" />
-      <TextL1 v-if="facility">
+      <h5 v-if="facility">
         {{ facility.id }}
-      </TextL1>
+      </h5>
       <SkeleText v-else class="h-4 w-1/2" />
     </div>
 
