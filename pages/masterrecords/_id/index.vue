@@ -5,40 +5,40 @@
       <BaseCardContent>
         <GenericDlGrid>
           <GenericDlGridItem>
-            <TextDt>Full Name</TextDt>
-            <TextDd>
+            <dt>Full Name</dt>
+            <dd>
               <div class="flex items-center gap-2">
                 <div class="sensitive capitalize">
                   {{ record.givenname?.toLowerCase() }} {{ record.surname?.toLowerCase() }}
                 </div>
                 <TracingBadge v-if="tracingRecord" :verified="nameMatchesTracing" />
               </div>
-            </TextDd>
+            </dd>
           </GenericDlGridItem>
 
           <GenericDlGridItem>
-            <TextDt>Gender</TextDt>
-            <TextDd>
+            <dt>Gender</dt>
+            <dd>
               <div class="flex items-center gap-2">
                 <div class="sensitive">{{ record.gender ? formatGender(record.gender) : "Unknown gender" }}</div>
                 <TracingBadge v-if="tracingRecord" :verified="tracingRecord.patient?.gender === record.gender" />
               </div>
-            </TextDd>
+            </dd>
           </GenericDlGridItem>
 
           <GenericDlGridItem>
-            <TextDt>Date of Birth</TextDt>
-            <TextDd>
+            <dt>Date of Birth</dt>
+            <dd>
               <div class="flex items-center gap-2">
                 <div class="sensitive">{{ formatDate(record.dateOfBirth, false) }}</div>
                 <TracingBadge v-if="tracingRecord" :verified="birthTimeMatchesTracing" />
               </div>
-            </TextDd>
+            </dd>
           </GenericDlGridItem>
 
           <GenericDlGridItem>
-            <TextDt class="font-medium text-gray-500">National ID</TextDt>
-            <TextDd>
+            <dt class="font-medium text-gray-500">National ID</dt>
+            <dd>
               <div class="flex items-center gap-2">
                 <div class="sensitive">{{ record.nationalid }}</div>
                 <TracingBadge
@@ -46,17 +46,17 @@
                   :verified="tracingRecord.localpatientid.trim() === record.nationalid.trim()"
                 />
               </div>
-            </TextDd>
+            </dd>
           </GenericDlGridItem>
 
           <GenericDlGridItem>
-            <TextDt>ID Type</TextDt>
-            <TextDd>{{ record.nationalidType }} </TextDd>
+            <dt>ID Type</dt>
+            <dd>{{ record.nationalidType }}</dd>
           </GenericDlGridItem>
 
           <GenericDlGridItem>
-            <TextDt>Last Updated</TextDt>
-            <TextDd>{{ formatDate(record.lastUpdated) }} </TextDd>
+            <dt>Last Updated</dt>
+            <dd>{{ formatDate(record.lastUpdated) }}</dd>
           </GenericDlGridItem>
         </GenericDlGrid>
       </BaseCardContent>

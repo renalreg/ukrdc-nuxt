@@ -12,26 +12,26 @@
         <div class="mb-6 border-t border-gray-200">
           <GenericCardDl>
             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-              <dt class="font-medium text-gray-500">Entered On</dt>
-              <dd class="mt-1 text-gray-900 sm:col-span-2 sm:mt-0">
+              <dt>Entered On</dt>
+              <dd class="sm:col-span-2">
                 {{ formatDate(survey.surveytime, (t = false)) }}
               </dd>
             </div>
             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-              <dt class="font-medium text-gray-500">Facility Code</dt>
-              <dd class="mt-1 text-gray-900 sm:col-span-2 sm:mt-0">
+              <dt>Facility Code</dt>
+              <dd class="sm:col-span-2">
                 {{ survey.enteredatcode }}
               </dd>
             </div>
             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-              <dt class="font-medium text-gray-500">Entered By</dt>
-              <dd class="mt-1 text-gray-900 sm:col-span-2 sm:mt-0">
+              <dt>Entered By</dt>
+              <dd class="sm:col-span-2">
                 {{ survey.enteredbycode }}
               </dd>
             </div>
             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-              <dt class="font-medium text-gray-500">Survey Type Code</dt>
-              <dd class="mt-1 text-gray-900 sm:col-span-2 sm:mt-0">
+              <dt>Survey Type Code</dt>
+              <dd class="sm:col-span-2">
                 {{ survey.surveytypecode }}
               </dd>
             </div>

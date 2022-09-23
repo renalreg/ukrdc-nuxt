@@ -11,39 +11,39 @@
     <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
       <GenericCardDl>
         <GenericCardDi>
-          <GenericCardDt>Local ID</GenericCardDt>
-          <GenericCardDd :class="highlight.includes('localid') ? highlightClasses : []" class="sensitive">
+          <dt>Local ID</dt>
+          <dd :class="highlight.includes('localid') ? highlightClasses : []" class="sensitive">
             {{ record.localid ? formatAttributeValue(record.localid) : "Not specified" }}
-          </GenericCardDd>
+          </dd>
         </GenericCardDi>
         <GenericCardDi>
-          <GenericCardDt>Sender</GenericCardDt>
-          <GenericCardDd>
+          <dt>Sender</dt>
+          <dd>
             <span :class="highlight.includes('sendingFacility') ? highlightClasses : []">{{
               record.sendingFacility ? record.sendingFacility : ""
             }}</span>
             <span :class="highlight.includes('sendingExtract') ? highlightClasses : []">{{
               record.sendingExtract ? "via " + record.sendingExtract : "Not specified"
             }}</span>
-          </GenericCardDd>
+          </dd>
         </GenericCardDi>
         <GenericCardDi>
-          <GenericCardDt>Date of Birth</GenericCardDt>
-          <GenericCardDd :class="highlight.includes('dateOfBirth') ? highlightClasses : []" class="sensitive">
+          <dt>Date of Birth</dt>
+          <dd :class="highlight.includes('dateOfBirth') ? highlightClasses : []" class="sensitive">
             {{ formattedDoB }}
-          </GenericCardDd>
+          </dd>
         </GenericCardDi>
         <GenericCardDi>
-          <GenericCardDt>Assigned Gender</GenericCardDt>
-          <GenericCardDd :class="highlight.includes('gender') ? highlightClasses : []" class="sensitive">
+          <dt>Assigned Gender</dt>
+          <dd :class="highlight.includes('gender') ? highlightClasses : []" class="sensitive">
             {{ formattedGender }}
-          </GenericCardDd>
+          </dd>
         </GenericCardDi>
         <GenericCardDi>
-          <GenericCardDt>Date of Death</GenericCardDt>
-          <GenericCardDd :class="highlight.includes('dateOfDeath') ? highlightClasses : []" class="sensitive">
+          <dt>Date of Death</dt>
+          <dd :class="highlight.includes('dateOfDeath') ? highlightClasses : []" class="sensitive">
             {{ formattedDoD }}
-          </GenericCardDd>
+          </dd>
         </GenericCardDi>
       </GenericCardDl>
     </div>

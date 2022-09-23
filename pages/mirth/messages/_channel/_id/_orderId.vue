@@ -4,22 +4,22 @@
       <BaseCardContent>
         <GenericDlGrid>
           <GenericDlGridItem>
-            <TextDt>Connector Name</TextDt>
-            <TextDd v-if="connectorMessage">
+            <dt>Connector Name</dt>
+            <dd v-if="connectorMessage">
               {{ connectorMessage.connectorName }}
-            </TextDd>
+            </dd>
             <SkeleText v-else class="h-6 w-full" />
           </GenericDlGridItem>
           <GenericDlGridItem>
-            <TextDt>Send Attempts</TextDt>
-            <TextDd v-if="connectorMessage">
+            <dt>Send Attempts</dt>
+            <dd v-if="connectorMessage">
               {{ connectorMessage.sendAttempts }}
-            </TextDd>
+            </dd>
             <SkeleText v-else class="h-6 w-full" />
           </GenericDlGridItem>
           <GenericDlGridItem>
-            <TextDt>Status</TextDt>
-            <TextDd v-if="connectorMessage">
+            <dt>Status</dt>
+            <dd v-if="connectorMessage">
               <span
                 v-if="errorMessage"
                 class="inline-block flex-shrink-0 rounded-sm bg-red-100 px-2 py-0.5 text-sm font-medium text-red-800"
@@ -30,7 +30,7 @@
                 class="inline-block flex-shrink-0 rounded-sm bg-green-100 px-2 py-0.5 text-sm font-medium text-green-800"
                 >Success</span
               >
-            </TextDd>
+            </dd>
             <SkeleText v-else class="h-6 w-full" />
           </GenericDlGridItem>
         </GenericDlGrid>

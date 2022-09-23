@@ -12,24 +12,24 @@
     <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
       <GenericCardDl>
         <GenericCardDi>
-          <GenericCardDt>Local ID</GenericCardDt>
-          <GenericCardDd :class="highlight.includes('localid') ? highlightClasses : []" class="sensitive">
+          <dt>Local ID</dt>
+          <dd :class="highlight.includes('localid') ? highlightClasses : []" class="sensitive">
             {{ realLocalID.localid }}
-          </GenericCardDd>
+          </dd>
         </GenericCardDi>
         <GenericCardDi>
-          <GenericCardDt>Sender</GenericCardDt>
-          <GenericCardDd>
+          <dt>Sender</dt>
+          <dd>
             <span :class="highlight.includes('sendingFacility') ? highlightClasses : []">{{
               `${realLocalID.sendingFacility ? realLocalID.sendingFacility : record.localidType}`
             }}</span>
             <span :class="highlight.includes('sendingExtract') ? highlightClasses : []">{{
               `${realLocalID.sendingExtract ? "via " + realLocalID.sendingExtract : ""}`
             }}</span>
-          </GenericCardDd>
+          </dd>
         </GenericCardDi>
         <GenericCardDi>
-          <GenericCardDt>Date of Birth</GenericCardDt>
+          <dt>Date of Birth</dt>
           <dd
             class="sensitive mt-1 text-gray-900 sm:col-span-2 sm:mt-0"
             :class="highlight.includes('dateOfBirth') ? highlightClasses : []"
@@ -38,7 +38,7 @@
           </dd>
         </GenericCardDi>
         <GenericCardDi>
-          <GenericCardDt>Assigned Gender</GenericCardDt>
+          <dt>Assigned Gender</dt>
           <dd
             class="sensitive mt-1 text-gray-900 sm:col-span-2 sm:mt-0"
             :class="highlight.includes('gender') ? highlightClasses : []"
@@ -47,7 +47,7 @@
           </dd>
         </GenericCardDi>
         <GenericCardDi>
-          <GenericCardDt>Date of Death</GenericCardDt>
+          <dt>Date of Death</dt>
           <dd
             class="sensitive mt-1 text-gray-900 sm:col-span-2 sm:mt-0"
             :class="highlight.includes('dateOfDeath') ? highlightClasses : []"

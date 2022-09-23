@@ -20,7 +20,7 @@
               </div>
               <div class="ml-5 w-0 flex-1">
                 <dl>
-                  <GenericCardDt>Total Records</GenericCardDt>
+                  <dt>Total Records</dt>
                   <dd class="flex items-baseline">
                     <h1 class="flex-grow text-indigo-600">{{ facility.statistics.totalPatients }}</h1>
                     <NuxtLink
@@ -45,7 +45,7 @@
               </div>
               <div class="ml-5 w-0 flex-1">
                 <dl>
-                  <GenericCardDt>Active Failing Records</GenericCardDt>
+                  <dt>Active Failing Records</dt>
                   <dd class="flex items-baseline">
                     <h1
                       class="flex-grow"

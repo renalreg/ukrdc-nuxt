@@ -14,34 +14,34 @@
     <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
       <GenericCardDl>
         <GenericCardDi>
-          <GenericCardDt>National ID</GenericCardDt>
-          <GenericCardDd class="sensitive">
+          <dt>National ID</dt>
+          <dd class="sensitive">
             {{ record.nationalid }}
-          </GenericCardDd>
+          </dd>
         </GenericCardDi>
         <GenericCardDi>
-          <GenericCardDt>ID Type</GenericCardDt>
-          <GenericCardDd class="align-middle">
+          <dt>ID Type</dt>
+          <dd class="align-middle">
             {{ record.nationalidType }}
-          </GenericCardDd>
+          </dd>
         </GenericCardDi>
         <GenericCardDi>
-          <GenericCardDt>Date of Birth</GenericCardDt>
-          <GenericCardDd :class="highlight.includes('dateOfBirth') ? highlightClasses : []" class="sensitive">
+          <dt>Date of Birth</dt>
+          <dd :class="highlight.includes('dateOfBirth') ? highlightClasses : []" class="sensitive">
             {{ formatDate(record.dateOfBirth, false) }}
-          </GenericCardDd>
+          </dd>
         </GenericCardDi>
         <GenericCardDi>
-          <GenericCardDt>Assigned Gender</GenericCardDt>
-          <GenericCardDd :class="highlight.includes('gender') ? highlightClasses : []" class="sensitive">
+          <dt>Assigned Gender</dt>
+          <dd :class="highlight.includes('gender') ? highlightClasses : []" class="sensitive">
             {{ record.gender ? formatGender(record.gender) : "Unknown gender" }}
-          </GenericCardDd>
+          </dd>
         </GenericCardDi>
         <GenericCardDi>
-          <GenericCardDt>Last Updated</GenericCardDt>
-          <GenericCardDd>
+          <dt>Last Updated</dt>
+          <dd>
             {{ formatDate(record.lastUpdated) }}
-          </GenericCardDd>
+          </dd>
         </GenericCardDi>
       </GenericCardDl>
     </div>

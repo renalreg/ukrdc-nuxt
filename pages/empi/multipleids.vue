@@ -10,15 +10,15 @@
       <BaseCardContent>
         <GenericDlGrid>
           <GenericDlGridItem>
-            <TextDt>Patients with Multiple UKRDC IDs</TextDt>
-            <TextDd v-if="total">
+            <dt>Patients with Multiple UKRDC IDs</dt>
+            <dd v-if="total">
               {{ total }}
-            </TextDd>
+            </dd>
             <SkeleText v-else class="mt-2 h-6 w-8" />
           </GenericDlGridItem>
 
           <GenericDlGridItem>
-            <TextDt class="flex items-center gap-1">
+            <dt class="flex items-center gap-1">
               <span class="inline">Last Full Scan</span>
               <GenericInfoIcon class="inline">
                 <p>
@@ -27,10 +27,10 @@
                 </p>
                 <p>Resolved items will remain in this view until the next check.</p>
               </GenericInfoIcon>
-            </TextDt>
-            <TextDd v-if="lastRunTime">
+            </dt>
+            <dd v-if="lastRunTime">
               {{ formatDate(lastRunTime, true) }}
-            </TextDd>
+            </dd>
             <SkeleText v-else class="mt-2 h-6 w-1/4" />
           </GenericDlGridItem>
         </GenericDlGrid>

@@ -3,25 +3,25 @@
     <BaseCardContent>
       <GenericDlGrid>
         <GenericDlGridItem>
-          <TextDt>Message ID</TextDt>
-          <TextDd v-if="message && !isEmptyObject(message)">
+          <dt>Message ID</dt>
+          <dd v-if="message && !isEmptyObject(message)">
             {{ message.messageId }}
-          </TextDd>
+          </dd>
           <SkeleText v-else class="h-6 w-full" />
         </GenericDlGridItem>
         <GenericDlGridItem>
-          <TextDt>Processed</TextDt>
-          <TextDd v-if="message && !isEmptyObject(message)">
+          <dt>Processed</dt>
+          <dd v-if="message && !isEmptyObject(message)">
             {{ message.processed ? "Yes" : "No" }}
             {{ hasErrors ? "(with errors)" : "" }}
-          </TextDd>
+          </dd>
           <SkeleText v-else class="h-6 w-full" />
         </GenericDlGridItem>
         <GenericDlGridItem>
-          <TextDt>Channel</TextDt>
-          <TextDd v-if="message && !isEmptyObject(message)">
+          <dt>Channel</dt>
+          <dd v-if="message && !isEmptyObject(message)">
             {{ channelName }}
-          </TextDd>
+          </dd>
           <SkeleText v-else class="h-6 w-full" />
         </GenericDlGridItem>
       </GenericDlGrid>

@@ -5,32 +5,32 @@
       <BaseCardContent>
         <GenericDlGrid>
           <GenericDlGridItem>
-            <TextDt>Status</TextDt>
-            <TextDd v-if="message">
+            <dt>Status</dt>
+            <dd v-if="message">
               <MessagesStatusBadge class="mr-2 flex-shrink" :message="message" />
-            </TextDd>
+            </dd>
             <SkeleText v-else class="h-6 w-full" />
           </GenericDlGridItem>
           <GenericDlGridItem>
-            <TextDt>Received</TextDt>
-            <TextDd v-if="message"> {{ message.received ? formatDate(message.received) : "Unknown" }}</TextDd>
+            <dt>Received</dt>
+            <dd v-if="message">{{ message.received ? formatDate(message.received) : "Unknown" }}</dd>
             <SkeleText v-else class="h-6 w-full" />
           </GenericDlGridItem>
           <GenericDlGridItem>
-            <TextDt>Facility</TextDt>
+            <dt>Facility</dt>
             <LinkSendingFacility v-if="message" :code="message.facility" />
             <SkeleText v-else class="h-6 w-full" />
           </GenericDlGridItem>
 
           <GenericDlGridItem>
-            <TextDt>Channel</TextDt>
-            <TextDd v-if="message" class="flex items-center gap-1">
+            <dt>Channel</dt>
+            <dd v-if="message" class="flex items-center gap-1">
               <span>{{ message.mirthChannel ? message.mirthChannel : message.mirthChannelId }}</span>
               <GenericInfoIcon class="inline">
                 <p>This is the internal UKRDC channel responsible for processing this message.</p>
                 <p>The channel may be important when debugging unexpected errors.</p>
               </GenericInfoIcon>
-            </TextDd>
+            </dd>
             <SkeleText v-else class="h-6 w-full" />
           </GenericDlGridItem>
         </GenericDlGrid>

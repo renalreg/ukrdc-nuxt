@@ -4,34 +4,34 @@
     <BaseCard class="my-4 p-6">
       <GenericDlGrid>
         <GenericDlGridItem>
-          <TextDt>Local ID</TextDt>
-          <TextDd class="sensitive">
+          <dt>Local ID</dt>
+          <dd class="sensitive">
             {{ record.localpatientid }}
-          </TextDd>
+          </dd>
         </GenericDlGridItem>
 
         <GenericDlGridItem>
-          <TextDt>UKRDC ID</TextDt>
-          <TextDd class="sensitive">{{ record.ukrdcid }}</TextDd>
+          <dt>UKRDC ID</dt>
+          <dd class="sensitive">{{ record.ukrdcid }}</dd>
         </GenericDlGridItem>
 
         <GenericDlGridItem>
-          <TextDt>PID</TextDt>
-          <TextDd class="sensitive">{{ record.pid }}</TextDd>
+          <dt>PID</dt>
+          <dd class="sensitive">{{ record.pid }}</dd>
         </GenericDlGridItem>
 
         <GenericDlGridItem>
-          <TextDt>Last Updated</TextDt>
-          <TextDd>
+          <dt>Last Updated</dt>
+          <dd>
             {{ formatDate(record.repositoryUpdateDate) }}
-          </TextDd>
+          </dd>
         </GenericDlGridItem>
 
         <GenericDlGridItem>
-          <TextDt>Created</TextDt>
-          <TextDd>
+          <dt>Created</dt>
+          <dd>
             {{ formatDate(record.repositoryCreationDate) }}
-          </TextDd>
+          </dd>
         </GenericDlGridItem>
       </GenericDlGrid>
     </BaseCard>

@@ -158,6 +158,14 @@ h6 {
   @apply text-sm font-medium text-gray-500;
 }
 
+dt {
+  @apply font-medium text-gray-500;
+}
+
+dd {
+  @apply text-gray-900;
+}
+
 th {
   @apply text-sm font-medium uppercase tracking-wider text-gray-500;
 }

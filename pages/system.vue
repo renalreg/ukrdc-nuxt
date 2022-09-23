@@ -25,16 +25,16 @@
         </BaseCardHeader>
         <GenericCardDl>
           <GenericCardDi>
-            <GenericCardDt>Environment</GenericCardDt>
-            <GenericCardDd>{{ clientInfo.deploymentEnv }}</GenericCardDd>
+            <dt>Environment</dt>
+            <dd>{{ clientInfo.deploymentEnv }}</dd>
           </GenericCardDi>
           <GenericCardDi>
-            <GenericCardDt>Version Reference</GenericCardDt>
-            <GenericCardDd>{{ clientInfo.githubRef }}</GenericCardDd>
+            <dt>Version Reference</dt>
+            <dd>{{ clientInfo.githubRef }}</dd>
           </GenericCardDi>
           <GenericCardDi>
-            <GenericCardDt>Version Hash</GenericCardDt>
-            <GenericCardDd>{{ clientInfo.githubSha }}</GenericCardDd>
+            <dt>Version Hash</dt>
+            <dd>{{ clientInfo.githubSha }}</dd>
           </GenericCardDi>
         </GenericCardDl>
       </BaseCard>
@@ -45,18 +45,18 @@
         </BaseCardHeader>
         <GenericCardDl>
           <GenericCardDi>
-            <GenericCardDt>Environment</GenericCardDt>
-            <GenericCardDd v-if="serverInfo">{{ serverInfo.deploymentEnv }}</GenericCardDd>
+            <dt>Environment</dt>
+            <dd v-if="serverInfo">{{ serverInfo.deploymentEnv }}</dd>
             <SkeleText v-else class="mb-2 h-6 w-3/4" />
           </GenericCardDi>
           <GenericCardDi>
-            <GenericCardDt>Version Reference</GenericCardDt>
-            <GenericCardDd v-if="serverInfo">{{ serverInfo.githubRef }}</GenericCardDd>
+            <dt>Version Reference</dt>
+            <dd v-if="serverInfo">{{ serverInfo.githubRef }}</dd>
             <SkeleText v-else class="mb-2 h-6 w-3/4" />
           </GenericCardDi>
           <GenericCardDi>
-            <GenericCardDt>Version Hash</GenericCardDt>
-            <GenericCardDd v-if="serverInfo">{{ serverInfo.githubSha }}</GenericCardDd>
+            <dt>Version Hash</dt>
+            <dd v-if="serverInfo">{{ serverInfo.githubSha }}</dd>
             <SkeleText v-else class="mb-2 h-6 w-3/4" />
           </GenericCardDi>
         </GenericCardDl>

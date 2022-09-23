@@ -4,24 +4,24 @@
     <BaseCardContent>
       <GenericDlGrid :cols="2">
         <GenericDlGridItem>
-          <TextDt>Last Updated</TextDt>
-          <TextDd v-if="item">
+          <dt>Last Updated</dt>
+          <dd v-if="item">
             {{ item.lastUpdated ? formatDate(item.lastUpdated) : "Never" }}
-          </TextDd>
+          </dd>
           <SkeleText v-else class="h-6 w-full" />
         </GenericDlGridItem>
         <GenericDlGridItem>
-          <TextDt>Last Updated By</TextDt>
-          <TextDd v-if="item">
+          <dt>Last Updated By</dt>
+          <dd v-if="item">
             {{ item.updatedBy ? item.updatedBy : "N/A" }}
-          </TextDd>
+          </dd>
           <SkeleText v-else class="h-6 w-full" />
         </GenericDlGridItem>
         <GenericDlGridItem class="sm:col-span-2">
-          <TextDt>Comments</TextDt>
-          <TextDd v-if="item">
+          <dt>Comments</dt>
+          <dd v-if="item">
             {{ item.updateDescription ? item.updateDescription : "None" }}
-          </TextDd>
+          </dd>
           <SkeleText v-else class="h-6 w-full" />
         </GenericDlGridItem>
       </GenericDlGrid>
