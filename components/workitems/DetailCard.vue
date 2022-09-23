@@ -33,7 +33,7 @@
 import { defineComponent } from "@nuxtjs/composition-api";
 
 import { WorkItemExtendedSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/dateUtils";
+import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
   props: {

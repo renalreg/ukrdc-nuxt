@@ -128,9 +128,9 @@ import {
   MinimalMessageSchema,
   PatientRecordSummarySchema,
 } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate, datesAreEqual } from "@/helpers/dateUtils";
-import { formatGender } from "@/helpers/codeUtils";
-import { isTracing } from "@/helpers/recordUtils";
+import { formatDate, datesAreEqual } from "~/helpers/dateUtils";
+import { formatGender } from "~/helpers/codeUtils";
+import { isTracing } from "~/helpers/recordUtils";
 import useApi from "~/composables/useApi";
 import useSensitive from "~/composables/useSensitive";
 

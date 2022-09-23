@@ -72,7 +72,7 @@ import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api"
 import { ObservationSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import usePagination from "~/composables/query/usePagination";
 
-import { formatDate } from "@/helpers/dateUtils";
+import { formatDate } from "~/helpers/dateUtils";
 
 import useApi from "~/composables/useApi";
 import useQuery from "~/composables/query/useQuery";

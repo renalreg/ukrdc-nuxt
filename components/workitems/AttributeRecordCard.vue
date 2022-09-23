@@ -54,9 +54,9 @@
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 
 import { WorkItemAttributes } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/dateUtils";
-import { formatGender } from "@/helpers/codeUtils";
-import { formatAttributeValue } from "@/helpers/workItemUtils";
+import { formatDate } from "~/helpers/dateUtils";
+import { formatGender } from "~/helpers/codeUtils";
+import { formatAttributeValue } from "~/helpers/workItemUtils";
 
 export default defineComponent({
   props: {

@@ -81,7 +81,7 @@
 import { computed, defineComponent, onMounted, ref, useRoute } from "@nuxtjs/composition-api";
 
 import { DocumentSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/dateUtils";
+import { formatDate } from "~/helpers/dateUtils";
 
 import useApi from "~/composables/useApi";
 import { saveAs } from "~/helpers/fileUtils";

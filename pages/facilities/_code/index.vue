@@ -201,7 +201,7 @@
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { FacilityDetailsSchema, FacilityExtractsSchema } from "@ukkidney/ukrdc-axios-ts";
 import { formatDate } from "~/helpers/dateUtils";
-import { facilityLastMessageOver48 } from "@/helpers/facilityUtils";
+import { facilityLastMessageOver48 } from "~/helpers/facilityUtils";
 import { allStatuses } from "~/helpers/messageUtils";
 import usePermissions from "~/composables/usePermissions";
 

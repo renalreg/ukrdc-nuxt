@@ -210,8 +210,8 @@ import {
   PidXRefSchema,
   WorkItemSchema,
 } from "@ukkidney/ukrdc-axios-ts";
-import useModal from "@/composables/useModal";
-import { formatDate } from "@/helpers/dateUtils";
+import useModal from "~/composables/useModal";
+import { formatDate } from "~/helpers/dateUtils";
 import useApi from "~/composables/useApi";
 
 interface DeletePIDFromEMPISchema {

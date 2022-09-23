@@ -34,7 +34,7 @@
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 
 import { ChannelMessageModel } from "@ukkidney/ukrdc-axios-ts";
-import { isEmptyObject } from "@/helpers/objectUtils";
+import { isEmptyObject } from "~/helpers/objectUtils";
 import { messageHasErrors } from "~/helpers/mirthUtils";
 
 export default defineComponent({

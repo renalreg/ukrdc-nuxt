@@ -109,7 +109,7 @@ import {
   ResultItemServiceSchema,
 } from "@ukkidney/ukrdc-axios-ts";
 
-import { formatDate } from "@/helpers/dateUtils";
+import { formatDate } from "~/helpers/dateUtils";
 
 import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";

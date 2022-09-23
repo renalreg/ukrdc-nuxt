@@ -109,7 +109,7 @@
 import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
 import { MasterRecordSchema, MessageSchema, ChannelMessageModel, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/dateUtils";
+import { formatDate } from "~/helpers/dateUtils";
 import usePermissions from "~/composables/usePermissions";
 import useApi from "~/composables/useApi";
 import useSensitive from "~/composables/useSensitive";

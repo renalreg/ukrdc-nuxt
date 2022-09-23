@@ -31,9 +31,9 @@
 import { defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
 
 import { MasterRecordSchema, MasterRecordStatisticsSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/dateUtils";
-import { formatGender } from "@/helpers/codeUtils";
-import { insertIf } from "@/helpers/arrayUtils";
+import { formatDate } from "~/helpers/dateUtils";
+import { formatGender } from "~/helpers/codeUtils";
+import { insertIf } from "~/helpers/arrayUtils";
 
 import { TabItem } from "~/interfaces/tabs";
 import usePermissions from "~/composables/usePermissions";

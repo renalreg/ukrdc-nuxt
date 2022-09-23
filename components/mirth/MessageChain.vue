@@ -24,7 +24,7 @@ import { computed, defineComponent } from "@nuxtjs/composition-api";
 
 import { ConnectorMessageModel, ChannelMessageModel } from "@ukkidney/ukrdc-axios-ts";
 
-import { isEmptyObject } from "@/helpers/objectUtils";
+import { isEmptyObject } from "~/helpers/objectUtils";
 
 interface ChainMap {
   [key: number]: ConnectorMessageModel[];

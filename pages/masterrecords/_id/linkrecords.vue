@@ -11,8 +11,8 @@
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 
 import { LinkRecordSchema, MasterRecordSchema, MasterRecordStatisticsSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/dateUtils";
-import { formatGender } from "@/helpers/codeUtils";
+import { formatDate } from "~/helpers/dateUtils";
+import { formatGender } from "~/helpers/codeUtils";
 
 import useApi from "~/composables/useApi";
 

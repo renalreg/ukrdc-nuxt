@@ -44,9 +44,9 @@
 import { defineComponent } from "@nuxtjs/composition-api";
 
 import { PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/dateUtils";
-import { formatGender } from "@/helpers/codeUtils";
-import { isEmptyObject } from "@/helpers/objectUtils";
+import { formatDate } from "~/helpers/dateUtils";
+import { formatGender } from "~/helpers/codeUtils";
+import { isEmptyObject } from "~/helpers/objectUtils";
 
 export default defineComponent({
   props: {

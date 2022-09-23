@@ -241,11 +241,11 @@
 import { computed, defineComponent, onMounted, ref, useContext, useMeta, useRoute } from "@nuxtjs/composition-api";
 
 import { WorkItemExtendedSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/dateUtils";
-import { formatGender } from "@/helpers/codeUtils";
-import { isEmptyObject } from "@/helpers/objectUtils";
-import { delay } from "@/helpers/timeUtils";
-import { workItemIsMergable } from "@/helpers/workItemUtils";
+import { formatDate } from "~/helpers/dateUtils";
+import { formatGender } from "~/helpers/codeUtils";
+import { isEmptyObject } from "~/helpers/objectUtils";
+import { delay } from "~/helpers/timeUtils";
+import { workItemIsMergable } from "~/helpers/workItemUtils";
 
 import { modalInterface } from "~/interfaces/modal";
 

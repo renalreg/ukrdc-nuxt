@@ -78,7 +78,7 @@ import {
   workItemIsOpen,
   workItemIsSecondary,
   workItemIsUKRDC,
-} from "@/helpers/workItemUtils";
+} from "~/helpers/workItemUtils";
 
 export default defineComponent({
   props: {

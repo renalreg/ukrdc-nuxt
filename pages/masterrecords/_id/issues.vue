@@ -58,8 +58,8 @@ import {
   MessageSchema,
   WorkItemSchema,
 } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/dateUtils";
-import { formatGender } from "@/helpers/codeUtils";
+import { formatDate } from "~/helpers/dateUtils";
+import { formatGender } from "~/helpers/codeUtils";
 
 import usePermissions from "~/composables/usePermissions";
 import useApi from "~/composables/useApi";

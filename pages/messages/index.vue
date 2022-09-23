@@ -76,7 +76,7 @@
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
 import { MessageSchema, OrderBy } from "@ukkidney/ukrdc-axios-ts";
-import { nowString } from "@/helpers/dateUtils";
+import { nowString } from "~/helpers/dateUtils";
 import usePagination from "~/composables/query/usePagination";
 import useDateRange from "~/composables/query/useDateRange";
 

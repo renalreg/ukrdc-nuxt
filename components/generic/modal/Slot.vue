@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
-import useModal from "@/composables/useModal";
+import useModal from "~/composables/useModal";
 
 export default defineComponent({
   setup() {

@@ -42,7 +42,7 @@
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 
 import { AuditEventSchema, MasterRecordSchema, OrderBy } from "@ukkidney/ukrdc-axios-ts";
-import { nowString } from "@/helpers/dateUtils";
+import { nowString } from "~/helpers/dateUtils";
 import usePagination from "~/composables/query/usePagination";
 import useSortBy from "~/composables/query/useSortBy";
 import useDateRange from "~/composables/query/useDateRange";

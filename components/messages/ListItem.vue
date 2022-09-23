@@ -52,9 +52,9 @@
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { MessageSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/dateUtils";
-import { makeMessageSummary } from "@/helpers/messageUtils";
-import useSensitive from "@/composables/useSensitive";
+import { formatDate } from "~/helpers/dateUtils";
+import { makeMessageSummary } from "~/helpers/messageUtils";
+import useSensitive from "~/composables/useSensitive";
 
 export default defineComponent({
   props: {

@@ -30,7 +30,7 @@ import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api"
 
 import { DocumentSummarySchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
-import { formatDate } from "@/helpers/dateUtils";
+import { formatDate } from "~/helpers/dateUtils";
 
 import usePagination from "~/composables/query/usePagination";
 import useDateRange from "~/composables/query/useDateRange";
