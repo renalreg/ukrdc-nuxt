@@ -6,21 +6,21 @@
         <IconMiniDotsVertical class="text-gray-400 hover:text-gray-800" />
       </BaseButtonSlot>
 
-      <GenericMenu class="top-0 right-0 z-10 mx-2 my-2" :show="showMenu">
-        <GenericMenuItem @click="copyPID"> Copy PID </GenericMenuItem>
+      <BaseMenu class="top-0 right-0 z-10 mx-2 my-2" :show="showMenu">
+        <BaseMenuItem @click="copyPID"> Copy PID </BaseMenuItem>
         <div v-if="hasPermission('ukrdc:records:export') && (showPvSync || showRadarSync || showPkbSync)">
-          <GenericMenuDivider />
-          <GenericMenuItem v-if="showPvSync" @click="exportPV"> Sync Record to PatientView </GenericMenuItem>
-          <GenericMenuItem v-if="showPvSync" @click="exportPVDocs"> Sync Docs to PatientView </GenericMenuItem>
-          <GenericMenuItem v-if="showPvSync" @click="exportPVTests"> Sync Tests to PatientView </GenericMenuItem>
-          <GenericMenuItem v-if="showRadarSync" @click="exportRADAR"> Sync Record to RADAR </GenericMenuItem>
-          <GenericMenuItem v-if="showPkbSync" @click="exportPKB"> Sync Record to PKB </GenericMenuItem>
+          <BaseMenuDivider />
+          <BaseMenuItem v-if="showPvSync" @click="exportPV"> Sync Record to PatientView </BaseMenuItem>
+          <BaseMenuItem v-if="showPvSync" @click="exportPVDocs"> Sync Docs to PatientView </BaseMenuItem>
+          <BaseMenuItem v-if="showPvSync" @click="exportPVTests"> Sync Tests to PatientView </BaseMenuItem>
+          <BaseMenuItem v-if="showRadarSync" @click="exportRADAR"> Sync Record to RADAR </BaseMenuItem>
+          <BaseMenuItem v-if="showPkbSync" @click="exportPKB"> Sync Record to PKB </BaseMenuItem>
         </div>
         <div v-if="hasPermission('ukrdc:records:delete')">
-          <GenericMenuDivider />
-          <GenericMenuItem @click="showDeleteModal"> Delete Record </GenericMenuItem>
+          <BaseMenuDivider />
+          <BaseMenuItem @click="showDeleteModal"> Delete Record </BaseMenuItem>
         </div>
-      </GenericMenu>
+      </BaseMenu>
     </div>
   </div>
 </template>
@@ -29,6 +29,9 @@
 import { defineComponent, ref, useContext } from "@nuxtjs/composition-api";
 import { PatientRecordSummarySchema, TrackableTaskSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseButtonSlot from "@/components/base/BaseButtonSlot.vue";
+import BaseMenu from "@/components/base/BaseMenu.vue";
+import BaseMenuDivider from "@/components/base/BaseMenuDivider.vue";
+import BaseMenuItem from "@/components/base/BaseMenuItem.vue";
 import { modalInterface } from "~/interfaces/modal";
 import usePermissions from "~/composables/usePermissions";
 import useTasks from "~/composables/useTasks";
@@ -37,6 +40,9 @@ import useApi from "~/composables/useApi";
 export default defineComponent({
   components: {
     BaseButtonSlot,
+    BaseMenu,
+    BaseMenuDivider,
+    BaseMenuItem,
   },
   props: {
     item: {

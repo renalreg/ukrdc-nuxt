@@ -25,12 +25,12 @@
         Add Memberships
       </BaseButtonMini>
 
-      <GenericMenu class="top-8 right-2 z-10 ml-2" :show="menuAvailable && showMenu">
-        <GenericMenuItem v-if="showCreatePkbMembership" @click="showCreatePkbMembershipConfirm">
+      <BaseMenu class="top-8 right-2 z-10 ml-2" :show="menuAvailable && showMenu">
+        <BaseMenuItem v-if="showCreatePkbMembership" @click="showCreatePkbMembershipConfirm">
           Create PKB Membership
-        </GenericMenuItem>
-        <GenericMenuItem v-else :disabled="true"> PKB membership already exists </GenericMenuItem>
-      </GenericMenu>
+        </BaseMenuItem>
+        <BaseMenuItem v-else :disabled="true"> PKB membership already exists </BaseMenuItem>
+      </BaseMenu>
     </div>
   </div>
 </template>
@@ -39,6 +39,8 @@
 import { computed, defineComponent, ref, useContext } from "@nuxtjs/composition-api";
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseButtonMini from "@/components/base/BaseButtonMini.vue";
+import BaseMenu from "@/components/base/BaseMenu.vue";
+import BaseMenuItem from "@/components/base/BaseMenuItem.vue";
 
 import usePermissions from "~/composables/usePermissions";
 
@@ -48,6 +50,8 @@ import useApi from "~/composables/useApi";
 export default defineComponent({
   components: {
     BaseButtonMini,
+    BaseMenu,
+    BaseMenuItem,
   },
   props: {
     masterRecord: {

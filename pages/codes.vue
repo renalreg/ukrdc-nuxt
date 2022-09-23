@@ -14,11 +14,11 @@
               </div>
             </div>
           </BaseButton>
-          <GenericMenu class="-right-2 z-10 mb-2 mt-14" :show="showExportMenu">
-            <GenericMenuItem @click="exportCodeList"> Export Code List </GenericMenuItem>
-            <GenericMenuItem @click="exportCodeMaps"> Export Code Maps </GenericMenuItem>
-            <GenericMenuItem @click="exportCodeExclusions"> Export Code Exclusions </GenericMenuItem>
-          </GenericMenu>
+          <BaseMenu class="-right-2 z-10 mb-2 mt-14" :show="showExportMenu">
+            <BaseMenuItem @click="exportCodeList"> Export Code List </BaseMenuItem>
+            <BaseMenuItem @click="exportCodeMaps"> Export Code Maps </BaseMenuItem>
+            <BaseMenuItem @click="exportCodeExclusions"> Export Code Exclusions </BaseMenuItem>
+          </BaseMenu>
         </div>
       </div>
     </div>
@@ -87,6 +87,8 @@ import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api"
 import { CodeSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseButton from "@/components/base/BaseButton.vue";
+import BaseMenu from "~/components/base/BaseMenu.vue";
+import BaseMenuItem from "~/components/base/BaseMenuItem.vue";
 
 import useQuery from "~/composables/query/useQuery";
 import usePagination from "~/composables/query/usePagination";
@@ -97,6 +99,8 @@ export default defineComponent({
   components: {
     BaseButton,
     BaseCard,
+    BaseMenu,
+    BaseMenuItem,
   },
   setup() {
     const { page, total, size } = usePagination();

@@ -43,32 +43,38 @@
       </div>
     </BaseButtonSlot>
 
-    <GenericMenu
+    <BaseMenu
       v-if="isAuthenticated"
       class="z-10 w-full"
       :class="topToBottom ? 'top-16 right-0' : 'bottom-16 left-0 mb-1'"
       :show="showMenu"
     >
-      <GenericMenuItem to="/profile"> Profile and Settings </GenericMenuItem>
-      <GenericMenuItem :href="$config.manageAccountUrl" target="blank"> Manage Account </GenericMenuItem>
-      <GenericMenuDivider />
-      <GenericMenuItem to="/system"> Support </GenericMenuItem>
-      <GenericMenuDivider />
-      <GenericMenuItem to="/tasks"> Background Tasks </GenericMenuItem>
-      <GenericMenuDivider />
-      <GenericMenuItem @click="$okta.signOutAuto()"> Logout </GenericMenuItem>
-    </GenericMenu>
+      <BaseMenuItem to="/profile"> Profile and Settings </BaseMenuItem>
+      <BaseMenuItem :href="$config.manageAccountUrl" target="blank"> Manage Account </BaseMenuItem>
+      <BaseMenuDivider />
+      <BaseMenuItem to="/system"> Support </BaseMenuItem>
+      <BaseMenuDivider />
+      <BaseMenuItem to="/tasks"> Background Tasks </BaseMenuItem>
+      <BaseMenuDivider />
+      <BaseMenuItem @click="$okta.signOutAuto()"> Logout </BaseMenuItem>
+    </BaseMenu>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
 import BaseButtonSlot from "@/components/base/BaseButtonSlot.vue";
+import BaseMenu from "@/components/base/BaseMenu.vue";
+import BaseMenuItem from "@/components/base/BaseMenuItem.vue";
+import BaseMenuDivider from "@/components/base/BaseMenuDivider.vue";
 import useAuth from "~/composables/useAuth";
 
 export default defineComponent({
   components: {
     BaseButtonSlot,
+    BaseMenu,
+    BaseMenuItem,
+    BaseMenuDivider,
   },
   props: {
     rightToLeft: {
