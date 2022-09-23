@@ -178,7 +178,7 @@
               </div>
             </div>
             <div v-if="(!previewErrorMessage && !previewResponse) || deleteInProgress" class="w-full">
-              <LoadingIndicator></LoadingIndicator>
+              <BaseLoadingIndicator></BaseLoadingIndicator>
             </div>
             <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
               <BaseButton
@@ -211,6 +211,7 @@ import {
   WorkItemSchema,
 } from "@ukkidney/ukrdc-axios-ts";
 import BaseButton from "@/components/base/BaseButton.vue";
+import BaseLoadingIndicator from "@/components/base/BaseLoadingIndicator.vue";
 
 import useModal from "~/composables/useModal";
 import { formatDate } from "~/helpers/dateUtils";
@@ -235,6 +236,7 @@ interface DeletePIDResponseSchema {
 export default defineComponent({
   components: {
     BaseButton,
+    BaseLoadingIndicator,
   },
   props: {
     item: {

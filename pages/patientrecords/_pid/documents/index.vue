@@ -1,6 +1,6 @@
 <template>
   <div class="sensitive">
-    <LoadingContainer :loading="!documents">
+    <BaseLoadingContainer :loading="!documents">
       <TextP v-if="documents && documents.length <= 0" class="text-center">No documents on record</TextP>
       <BaseCard v-else>
         <ul class="divide-y divide-gray-200">
@@ -21,7 +21,7 @@
           @jump="page = $event"
         />
       </BaseCard>
-    </LoadingContainer>
+    </BaseLoadingContainer>
   </div>
 </template>
 
@@ -29,6 +29,7 @@
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import { DocumentSummarySchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseCard from "~/components/base/BaseCard.vue";
+import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
 
 import { formatDate } from "~/helpers/dateUtils";
 
@@ -40,6 +41,7 @@ import useApi from "~/composables/useApi";
 export default defineComponent({
   components: {
     BaseCard,
+    BaseLoadingContainer,
   },
   props: {
     record: {

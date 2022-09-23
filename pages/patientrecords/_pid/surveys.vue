@@ -2,7 +2,7 @@
   <div class="sensitive">
     <patientrecordsSurveyViewer ref="surveyViewerModal" class="md:w-large w-full" />
 
-    <LoadingContainer :loading="!surveys">
+    <BaseLoadingContainer :loading="!surveys">
       <TextP v-if="surveys && surveys.length <= 0" class="text-center">No surveys on record</TextP>
       <div class="mt-3 grid grid-cols-1 justify-center gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-2">
         <genericCardMini
@@ -33,20 +33,24 @@
           </div>
         </genericCardMini>
       </div>
-    </LoadingContainer>
+    </BaseLoadingContainer>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-
 import { PatientRecordSchema, SurveySchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
+
 import { formatDate } from "~/helpers/dateUtils";
 
 import useApi from "~/composables/useApi";
 import { surveyViewerModalInterface } from "~/interfaces/modal";
 
 export default defineComponent({
+  components: {
+    BaseLoadingContainer,
+  },
   props: {
     record: {
       type: Object as () => PatientRecordSchema,

@@ -1,5 +1,5 @@
 <template>
-  <LoadingIndicator v-if="!code"></LoadingIndicator>
+  <BaseLoadingIndicator v-if="!code"></BaseLoadingIndicator>
   <div v-else-if="code">
     <div class="px-4 sm:px-6">
       <!-- Heading -->
@@ -71,10 +71,14 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useMeta, useRoute, watch } from "@nuxtjs/composition-api";
 import { ExtendedCodeSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
 import { formatDate } from "~/helpers/dateUtils";
 import useApi from "~/composables/useApi";
 
 export default defineComponent({
+  components: {
+    BaseLoadingIndicator,
+  },
   setup() {
     const route = useRoute();
     const { codesApi } = useApi();

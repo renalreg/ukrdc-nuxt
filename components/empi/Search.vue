@@ -33,7 +33,7 @@ Mini (half-width) search bar and results pages used in the EMPI Merge page.
       </BaseCard>
     </div>
     <div v-else class="mt-2 text-center text-gray-500">
-      <LoadingIndicator v-if="searchQueryIsPopulated && searchInProgress"></LoadingIndicator>
+      <BaseLoadingIndicator v-if="searchQueryIsPopulated && searchInProgress"></BaseLoadingIndicator>
       <div v-else-if="searchQueryIsPopulated && !searchInProgress">No results found</div>
       <div v-else>
         <p class="mb-4">Search by name, date of birth, national ID, or local ID</p>
@@ -46,6 +46,7 @@ Mini (half-width) search bar and results pages used in the EMPI Merge page.
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseCard from "~/components/base/BaseCard.vue";
+import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
 
 import usePagination from "~/composables/query/usePagination";
 
@@ -55,6 +56,7 @@ import useApi from "~/composables/useApi";
 export default defineComponent({
   components: {
     BaseCard,
+    BaseLoadingIndicator,
   },
   props: {
     numberTypes: {

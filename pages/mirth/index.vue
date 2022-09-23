@@ -4,7 +4,7 @@
       <TextH1>Mirth Channels</TextH1>
     </div>
 
-    <LoadingIndicator v-if="!mirthGroups"></LoadingIndicator>
+    <BaseLoadingIndicator v-if="!mirthGroups"></BaseLoadingIndicator>
     <div v-else class="mx-auto mb-8 max-w-7xl">
       <div v-for="group in mirthGroups" :key="group.id" class="mb-6">
         <div class="mb-4">
@@ -46,12 +46,14 @@
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { ChannelGroupModel } from "@ukkidney/ukrdc-axios-ts";
 import BaseCard from "~/components/base/BaseCard.vue";
+import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
 
 import useApi from "~/composables/useApi";
 
 export default defineComponent({
   components: {
     BaseCard,
+    BaseLoadingIndicator,
   },
   setup() {
     const { mirthApi } = useApi();

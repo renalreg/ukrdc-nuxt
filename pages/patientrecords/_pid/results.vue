@@ -19,7 +19,7 @@
       @confirm="deleteLabOrder"
     />
 
-    <LoadingContainer :loading="!results">
+    <BaseLoadingContainer :loading="!results">
       <GenericDateRange v-model="dateRange" class="mb-4" />
       <GenericSearchableSelect
         v-model="selectedService"
@@ -95,7 +95,7 @@
           />
         </BaseCard>
       </div>
-    </LoadingContainer>
+    </BaseLoadingContainer>
   </div>
 </template>
 
@@ -109,6 +109,7 @@ import {
 } from "@ukkidney/ukrdc-axios-ts";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseButton from "@/components/base/BaseButton.vue";
+import BaseLoadingContainer from "@/components/base/BaseLoadingContainer.vue";
 
 import { formatDate } from "~/helpers/dateUtils";
 
@@ -123,6 +124,7 @@ export default defineComponent({
   components: {
     BaseButton,
     BaseCard,
+    BaseLoadingContainer,
   },
   props: {
     record: {

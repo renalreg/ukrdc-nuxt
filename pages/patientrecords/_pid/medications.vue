@@ -1,6 +1,6 @@
 <template>
   <div class="sensitive">
-    <LoadingContainer :loading="!medications">
+    <BaseLoadingContainer :loading="!medications">
       <TextP v-if="medications && medications.length <= 0" class="text-center">No medications on record</TextP>
       <div v-if="activeMedications.length > 0" class="mt-4">
         <h2 class="text-sm font-medium uppercase tracking-wide text-gray-500">Active</h2>
@@ -21,17 +21,21 @@
           </li>
         </ul>
       </div>
-    </LoadingContainer>
+    </BaseLoadingContainer>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-
 import { MedicationSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
+
 import useApi from "~/composables/useApi";
 
 export default defineComponent({
+  components: {
+    BaseLoadingContainer,
+  },
   props: {
     record: {
       type: Object as () => PatientRecordSchema,

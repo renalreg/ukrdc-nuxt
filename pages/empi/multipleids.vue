@@ -56,7 +56,7 @@
         />
       </BaseCard>
     </div>
-    <LoadingIndicator v-else></LoadingIndicator>
+    <BaseLoadingIndicator v-else></BaseLoadingIndicator>
   </div>
 </template>
 
@@ -65,6 +65,7 @@ import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api"
 import { MultipleUKRDCIDGroup } from "@ukkidney/ukrdc-axios-ts";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
+import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
 import { formatDate } from "~/helpers/dateUtils";
 
 import usePagination from "~/composables/query/usePagination";
@@ -74,6 +75,7 @@ export default defineComponent({
   components: {
     BaseCard,
     BaseCardContent,
+    BaseLoadingIndicator,
   },
   setup() {
     const { page, total, size } = usePagination();
