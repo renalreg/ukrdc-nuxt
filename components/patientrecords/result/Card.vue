@@ -12,23 +12,27 @@
     </div>
     <div class="col-span-1 text-sm font-medium uppercase tracking-wider text-gray-500">Entered On</div>
     <TextP class="col-span-2">
-      {{ formatDate(item.observationTime) }}
+      {{ item.observationTime ? formatDate(item.observationTime) : "Unknown time" }}
       <br />
       <BadgePrePost v-if="item.prePost" class="-ml-1 mt-2" :pre-post="item.prePost" />
     </TextP>
-    <GenericButton tooltip="Delete this result item" label="Delete this result item" @click="$emit('delete', item)">
-      Delete</GenericButton
+    <BaseButton tooltip="Delete this result item" label="Delete this result item" @click="$emit('delete', item)">
+      Delete</BaseButton
     >
   </GenericCardFlat>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
-
 import { ResultItemSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseButton from "@/components/base/BaseButton.vue";
+
 import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
+  components: {
+    BaseButton,
+  },
   props: {
     item: {
       type: Object as () => ResultItemSchema,

@@ -9,7 +9,7 @@
       </div>
       <div class="flex-shrink">
         <div v-if="!fetchInProgress">
-          <GenericButtonMini
+          <BaseButtonMini
             v-if="group.records.length == 2"
             :to="{
               path: '/empi/merge',
@@ -19,9 +19,9 @@
                 callback: $route.fullPath,
               },
             }"
-            >Start Merge</GenericButtonMini
+            >Start Merge</BaseButtonMini
           >
-          <GenericButtonMini v-else :disabled="true">Can't automatically merge more than two records</GenericButtonMini>
+          <BaseButtonMini v-else :disabled="true">Can't automatically merge more than two records</BaseButtonMini>
         </div>
       </div>
     </div>
@@ -48,9 +48,14 @@
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
 import { MultipleUKRDCIDGroup } from "@ukkidney/ukrdc-axios-ts";
+import BaseButtonMini from "@/components/base/BaseButtonMini.vue";
+
 import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
+  components: {
+    BaseButtonMini,
+  },
   props: {
     group: {
       type: Object as () => MultipleUKRDCIDGroup,

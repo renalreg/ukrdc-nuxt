@@ -16,7 +16,7 @@
     <div class="mb-6 block gap-2 lg:flex">
       <div class="flex-1">
         <div v-if="superseded">
-          <GenericButton class="w-full" @click="clearSuperceeded"> Change Superseded Record </GenericButton>
+          <BaseButton class="w-full" @click="clearSuperceeded"> Change Superseded Record </BaseButton>
           <NuxtLink :to="`/masterrecords/${superseded.id}`">
             <masterrecordsRecordCard
               class="mt-4"
@@ -28,9 +28,7 @@
         </div>
         <div v-else>
           <EmpiSearch v-if="searchingFor === 'superseded'" :number-types="['UKRDC']" @select="selectSuperceeded" />
-          <GenericButton v-else class="w-full" @click="searchingFor = 'superseded'">
-            Search for a Record
-          </GenericButton>
+          <BaseButton v-else class="w-full" @click="searchingFor = 'superseded'"> Search for a Record </BaseButton>
         </div>
       </div>
 
@@ -51,7 +49,7 @@
 
       <div class="flex-1">
         <div v-if="superseding">
-          <GenericButton class="w-full" @click="clearsuperseding"> Change Superseding Record </GenericButton>
+          <BaseButton class="w-full" @click="clearsuperseding"> Change Superseding Record </BaseButton>
           <NuxtLink :to="`/masterrecords/${superseding.id}`">
             <masterrecordsRecordCard
               class="mt-4"
@@ -63,9 +61,7 @@
         </div>
         <div v-else>
           <EmpiSearch v-if="searchingFor === 'superseding'" :number-types="['UKRDC']" @select="selectsuperseding" />
-          <GenericButton v-else class="w-full" @click="searchingFor = 'superseding'">
-            Search for a Record
-          </GenericButton>
+          <BaseButton v-else class="w-full" @click="searchingFor = 'superseding'"> Search for a Record </BaseButton>
         </div>
       </div>
     </div>
@@ -99,8 +95,8 @@
       </div>
 
       <div class="flex gap-2">
-        <GenericButton :primary="true" colour="red" @click="beginMergeAlert?.show()">Begin Record Merge</GenericButton>
-        <GenericButton v-if="callbackPath" :to="callbackPath">Cancel</GenericButton>
+        <BaseButton :primary="true" colour="red" @click="beginMergeAlert?.show()">Begin Record Merge</BaseButton>
+        <BaseButton v-if="callbackPath" :to="callbackPath">Cancel</BaseButton>
       </div>
     </div>
   </div>
@@ -117,8 +113,9 @@ import {
   onMounted,
   watch,
 } from "@nuxtjs/composition-api";
-
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseButton from "@/components/base/BaseButton.vue";
+
 import useQuery from "~/composables/query/useQuery";
 
 import { modalInterface } from "~/interfaces/modal";
@@ -127,6 +124,9 @@ import useApi from "~/composables/useApi";
 type Direction = "superseding" | "superseded";
 
 export default defineComponent({
+  components: {
+    BaseButton,
+  },
   setup() {
     const route = useRoute();
     const router = useRouter();

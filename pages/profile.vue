@@ -50,7 +50,7 @@
             class="rounded-md border border-gray-300 bg-white px-3 py-2 text-center font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >Manage Account</a
           >
-          <GenericButton @click="$okta.signOutAuto()"> Sign out </GenericButton>
+          <BaseButton @click="$okta.signOutAuto()"> Sign out </BaseButton>
         </div>
       </div>
       <div class="mb-4">
@@ -73,7 +73,7 @@
             label="Include internal UKRDC records in search results by default"
           />
         </div>
-        <GenericButton colour="indigo" :primary="true" @click="submitPreferences">Save</GenericButton>
+        <BaseButton colour="indigo" :primary="true" @click="submitPreferences">Save</BaseButton>
       </div>
     </div>
   </div>
@@ -81,12 +81,16 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
-
 import { UserPreferences } from "@ukkidney/ukrdc-axios-ts";
+import BaseButton from "@/components/base/BaseButton.vue";
+
 import usePermissions from "~/composables/usePermissions";
 import useApi from "~/composables/useApi";
 
 export default defineComponent({
+  components: {
+    BaseButton,
+  },
   setup() {
     const { $okta } = useContext();
     const { getPermissions } = usePermissions();

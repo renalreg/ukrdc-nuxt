@@ -20,14 +20,14 @@
           <FormCheckbox v-model="statuses" label="WIP" :value="2" />
           <FormCheckbox v-model="statuses" label="Closed" :value="3" />
         </div>
-        <GenericButtonMini class="flex-shrink" @click="toggleOrder">
+        <BaseButtonMini class="flex-shrink" @click="toggleOrder">
           <div v-show="orderAscending" class="flex">
             <TextP>Oldest - Newest</TextP><IconMiniSortAscending class="ml-2" />
           </div>
           <div v-show="!orderAscending" class="flex">
             <TextP>Newest - Oldest</TextP><IconMiniSortDescending class="ml-2" />
           </div>
-        </GenericButtonMini>
+        </BaseButtonMini>
       </div>
     </div>
 
@@ -59,8 +59,9 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import { OrderBy, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseButtonMini from "@/components/base/BaseButtonMini.vue";
+
 import usePagination from "~/composables/query/usePagination";
 
 import useQuery from "~/composables/query/useQuery";
@@ -71,6 +72,9 @@ import useDateRange from "~/composables/query/useDateRange";
 import useApi from "~/composables/useApi";
 
 export default defineComponent({
+  components: {
+    BaseButtonMini,
+  },
   setup() {
     const { page, total, size } = usePagination();
     const { makeDateRange } = useDateRange();

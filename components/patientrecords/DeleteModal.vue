@@ -181,7 +181,7 @@
               <LoadingIndicator></LoadingIndicator>
             </div>
             <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-              <GenericButton
+              <BaseButton
                 v-if="previewResponse && !previewErrorMessage"
                 class="ml-2"
                 colour="red"
@@ -190,8 +190,8 @@
                 @click="doRealDelete()"
               >
                 Delete
-              </GenericButton>
-              <GenericButton @click="cancel()"> Cancel </GenericButton>
+              </BaseButton>
+              <BaseButton @click="cancel()"> Cancel </BaseButton>
             </div>
           </div>
         </TransitionModal>
@@ -210,6 +210,8 @@ import {
   PidXRefSchema,
   WorkItemSchema,
 } from "@ukkidney/ukrdc-axios-ts";
+import BaseButton from "@/components/base/BaseButton.vue";
+
 import useModal from "~/composables/useModal";
 import { formatDate } from "~/helpers/dateUtils";
 import useApi from "~/composables/useApi";
@@ -231,6 +233,9 @@ interface DeletePIDResponseSchema {
 }
 
 export default defineComponent({
+  components: {
+    BaseButton,
+  },
   props: {
     item: {
       type: Object as () => PatientRecordSchema,

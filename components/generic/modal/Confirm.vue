@@ -31,21 +31,25 @@
       </div>
     </div>
     <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-      <GenericButton :primary="true" class="ml-2" :colour="danger ? 'red' : 'indigo'" @click="confirm()">
+      <BaseButton :primary="true" class="ml-2" :colour="danger ? 'red' : 'indigo'" @click="confirm()">
         {{ confirmLabel }}
-      </GenericButton>
-      <GenericButton @click="cancel()">
+      </BaseButton>
+      <BaseButton @click="cancel()">
         {{ cancelLabel }}
-      </GenericButton>
+      </BaseButton>
     </div>
   </GenericModalSlot>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
+import BaseButton from "@/components/base/BaseButton.vue";
 import { modalInterface } from "~/interfaces/modal";
 
 export default defineComponent({
+  components: {
+    BaseButton,
+  },
   props: {
     title: {
       type: String,

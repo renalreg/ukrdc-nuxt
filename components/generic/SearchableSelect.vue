@@ -44,7 +44,7 @@
             </svg>
           </div>
         </div>
-        <GenericButton colour="white" class="ml-2 w-24" @click="clear">Clear</GenericButton>
+        <BaseButton colour="white" class="ml-2 w-24" @click="clear">Clear</BaseButton>
       </div>
 
       <!-- Popover -->
@@ -90,8 +90,12 @@
 
 <script lang="ts">
 import { computed, defineComponent, nextTick, onMounted, ref } from "@nuxtjs/composition-api";
+import BaseButton from "@/components/base/BaseButton.vue";
 
 export default defineComponent({
+  components: {
+    BaseButton,
+  },
   props: {
     value: {
       type: String,

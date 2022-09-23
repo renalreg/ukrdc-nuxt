@@ -4,7 +4,7 @@
       <GenericCard class="mb-4">
         <GenericCardHeader class="flex items-center">
           <TextH2 class="flex-1"> Age Distribution </TextH2>
-          <GenericButtonMini @click="exportAgeDistribution">Export</GenericButtonMini>
+          <BaseButtonMini @click="exportAgeDistribution">Export</BaseButtonMini>
         </GenericCardHeader>
         <PlotBar
           id="ageDistributionChart"
@@ -20,7 +20,7 @@
         <GenericCard>
           <GenericCardHeader class="flex items-center">
             <TextH2 class="flex-1"> Gender Distribution </TextH2>
-            <GenericButtonMini @click="exportGenderDistribution">Export</GenericButtonMini>
+            <BaseButtonMini @click="exportGenderDistribution">Export</BaseButtonMini>
           </GenericCardHeader>
           <PlotDoughnut
             id="genderDistributionChart"
@@ -32,7 +32,7 @@
         <GenericCard>
           <GenericCardHeader class="flex items-center">
             <TextH2 class="flex-1"> Ethnicity Distribution </TextH2>
-            <GenericButtonMini @click="exportEthnicityDistribution">Export</GenericButtonMini>
+            <BaseButtonMini @click="exportEthnicityDistribution">Export</BaseButtonMini>
           </GenericCardHeader>
           <PlotDoughnut
             id="ethnicityDistributionChart"
@@ -49,6 +49,7 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { FacilityDemographicStats, FacilityDetailsSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseButtonMini from "@/components/base/BaseButtonMini.vue";
 import { NumericChartData } from "~/interfaces/charts";
 import { formatGender } from "~/helpers/codeUtils";
 import useApi from "~/composables/useApi";
@@ -56,6 +57,9 @@ import { buildCsv } from "~/helpers/exportUtils";
 import { saveAs } from "~/helpers/fileUtils";
 
 export default defineComponent({
+  components: {
+    BaseButtonMini,
+  },
   props: {
     facility: {
       type: Object as () => FacilityDetailsSchema,

@@ -38,10 +38,10 @@
       <!-- Record links -->
       <div class="flex flex-shrink-0 items-center gap-2 pr-2">
         <div class="flex flex-grow flex-col-reverse gap-2 xl:flex-row">
-          <GenericButtonMini class="h-8 truncate" @click="showDetail = !showDetail">
+          <BaseButtonMini class="h-8 truncate" @click="showDetail = !showDetail">
             {{ showDetail ? "Hide Record" : "Peek Record" }}
-          </GenericButtonMini>
-          <GenericButtonMini :to="`/patientrecords/${item.pid}`" class="h-8 truncate"> Open Record </GenericButtonMini>
+          </BaseButtonMini>
+          <BaseButtonMini :to="`/patientrecords/${item.pid}`" class="h-8 truncate"> Open Record </BaseButtonMini>
         </div>
         <div class="flex-grow-0">
           <PatientrecordsManageMenu
@@ -64,6 +64,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from "@nuxtjs/composition-api";
 import { PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseButtonMini from "@/components/base/BaseButtonMini.vue";
 import { formatDate } from "~/helpers/dateUtils";
 import { formatGenderCharacter } from "~/helpers/codeUtils";
 import { firstMRN } from "~/helpers/recordUtils";
@@ -74,6 +75,9 @@ interface localNumber {
 }
 
 export default defineComponent({
+  components: {
+    BaseButtonMini,
+  },
   props: {
     item: {
       type: Object as () => PatientRecordSummarySchema,

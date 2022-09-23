@@ -62,17 +62,21 @@
         </GenericCardDl>
       </GenericCard>
     </div>
-    <GenericButton @click="copyConfigReport">Copy Configuration Report</GenericButton>
+    <BaseButton @click="copyConfigReport">Copy Configuration Report</BaseButton>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
 import { SystemInfoSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseButton from "@/components/base/BaseButton.vue";
 
 import useApi from "~/composables/useApi";
 
 export default defineComponent({
+  components: {
+    BaseButton,
+  },
   setup() {
     const { $config, $toast } = useContext();
     const { systemInfoApi } = useApi();

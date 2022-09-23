@@ -28,21 +28,21 @@
             class="z-20 flex-grow rounded-r-none"
             placeholder="Filter by Patient Number"
           ></FormTextBoxMini>
-          <GenericButtonMini class="z-10" anchor="left" type="submit">Go</GenericButtonMini>
+          <BaseButtonMini class="z-10" anchor="left" type="submit">Go</BaseButtonMini>
         </form>
 
-        <GenericButtonMini v-show="nationalId" @click="$router.push({ query: { nationalid: null } })"
-          >Show Results From All Patients</GenericButtonMini
+        <BaseButtonMini v-show="nationalId" @click="$router.push({ query: { nationalid: null } })"
+          >Show Results From All Patients</BaseButtonMini
         >
 
-        <GenericButtonMini @click="toggleOrder">
+        <BaseButtonMini @click="toggleOrder">
           <div v-show="orderAscending" class="flex">
             <TextP>Oldest - Newest</TextP><IconMiniSortAscending class="ml-2" />
           </div>
           <div v-show="!orderAscending" class="flex">
             <TextP>Newest - Oldest</TextP><IconMiniSortDescending class="ml-2" />
           </div>
-        </GenericButtonMini>
+        </BaseButtonMini>
       </div>
     </div>
 
@@ -74,8 +74,9 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import { MessageSchema, OrderBy } from "@ukkidney/ukrdc-axios-ts";
+import BaseButtonMini from "@/components/base/BaseButtonMini.vue";
+
 import { nowString } from "~/helpers/dateUtils";
 import usePagination from "~/composables/query/usePagination";
 import useDateRange from "~/composables/query/useDateRange";
@@ -88,6 +89,9 @@ import useSortBy from "~/composables/query/useSortBy";
 import useApi from "~/composables/useApi";
 
 export default defineComponent({
+  components: {
+    BaseButtonMini,
+  },
   setup() {
     const { page, total, size } = usePagination();
     const { makeDateRange } = useDateRange();

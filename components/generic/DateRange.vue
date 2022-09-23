@@ -1,22 +1,22 @@
 <template>
   <div class="flex flex-col gap-4 lg:flex-row">
     <div class="flex flex-none gap-2">
-      <GenericButtonMini :colour="lastNDays === 7 ? 'indigo-outline' : 'white'" @click="setLastNDays(7)">
+      <BaseButtonMini :colour="lastNDays === 7 ? 'indigo-outline' : 'white'" @click="setLastNDays(7)">
         Last 7 days
-      </GenericButtonMini>
-      <GenericButtonMini :colour="lastNDays === 30 ? 'indigo-outline' : 'white'" @click="setLastNDays(30)">
+      </BaseButtonMini>
+      <BaseButtonMini :colour="lastNDays === 30 ? 'indigo-outline' : 'white'" @click="setLastNDays(30)">
         Last 30 days
-      </GenericButtonMini>
-      <GenericButtonMini :colour="lastNDays === 365 ? 'indigo-outline' : 'white'" @click="setLastNDays(365)">
+      </BaseButtonMini>
+      <BaseButtonMini :colour="lastNDays === 365 ? 'indigo-outline' : 'white'" @click="setLastNDays(365)">
         Last year
-      </GenericButtonMini>
-      <GenericButtonMini :colour="lastNDays === 3650 ? 'indigo-outline' : 'white'" @click="setLastNDays(3650)">
+      </BaseButtonMini>
+      <BaseButtonMini :colour="lastNDays === 3650 ? 'indigo-outline' : 'white'" @click="setLastNDays(3650)">
         Last 10 years
-      </GenericButtonMini>
-      <GenericButtonMini :colour="showCustom ? 'indigo-outline' : 'white'" @click="showCustom = true">
+      </BaseButtonMini>
+      <BaseButtonMini :colour="showCustom ? 'indigo-outline' : 'white'" @click="showCustom = true">
         Custom
-      </GenericButtonMini>
-      <GenericButtonMini colour="red-outline" @click="clear()"> Clear </GenericButtonMini>
+      </BaseButtonMini>
+      <BaseButtonMini colour="red-outline" @click="clear()"> Clear </BaseButtonMini>
     </div>
     <div v-show="showCustom" class="flex h-8 w-full flex-1">
       <v-date-picker
@@ -75,10 +75,14 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed } from "@nuxtjs/composition-api";
+import BaseButtonMini from "@/components/base/BaseButtonMini.vue";
 
 import { DateRange, nowString } from "~/helpers/dateUtils";
 
 export default defineComponent({
+  components: {
+    BaseButtonMini,
+  },
   props: {
     value: {
       type: Object as () => DateRange,

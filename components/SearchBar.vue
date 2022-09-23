@@ -32,8 +32,8 @@
           </form>
         </div>
       </div>
-      <GenericButton v-if="showButton" colour="indigo" :primary="true" class="w-24" @click="$emit('submit')"
-        >Search</GenericButton
+      <BaseButton v-if="showButton" colour="indigo" :primary="true" class="w-24" @click="$emit('submit')"
+        >Search</BaseButton
       >
     </div>
   </div>
@@ -41,8 +41,12 @@
 
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
+import BaseButton from "@/components/base/BaseButton.vue";
 
 export default defineComponent({
+  components: {
+    BaseButton,
+  },
   props: {
     value: {
       type: String,

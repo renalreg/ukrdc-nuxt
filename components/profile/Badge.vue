@@ -1,6 +1,6 @@
 <template>
   <div v-click-away="closeMenu" class="relative w-full justify-self-end">
-    <GenericButtonRaw
+    <BaseButtonSlot
       label="Manage profile"
       class="group block w-full rounded-md px-4 py-2 hover:bg-gray-100"
       @click="showMenu = !showMenu"
@@ -41,7 +41,7 @@
           </svg>
         </div>
       </div>
-    </GenericButtonRaw>
+    </BaseButtonSlot>
 
     <GenericMenu
       v-if="isAuthenticated"
@@ -63,9 +63,13 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
+import BaseButtonSlot from "@/components/base/BaseButtonSlot.vue";
 import useAuth from "~/composables/useAuth";
 
 export default defineComponent({
+  components: {
+    BaseButtonSlot,
+  },
   props: {
     rightToLeft: {
       type: Boolean,

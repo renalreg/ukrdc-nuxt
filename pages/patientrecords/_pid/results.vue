@@ -31,13 +31,13 @@
 
       <div class="mb-4 flex flex-grow items-center gap-2">
         <NuxtLink :to="'./laborders'">
-          <GenericButton>View Orders</GenericButton>
+          <BaseButton>View Orders</BaseButton>
         </NuxtLink>
         <NuxtLink v-if="selectedOrderId" :to="{ query: { order_id: null } }">
-          <GenericButton>Show Results From All Orders</GenericButton>
+          <BaseButton>Show Results From All Orders</BaseButton>
         </NuxtLink>
-        <GenericButton v-if="selectedOrderId && selectedOrder" colour="red" @click="deleteOrderAlert?.show()"
-          >Delete Lab Order</GenericButton
+        <BaseButton v-if="selectedOrderId && selectedOrder" colour="red" @click="deleteOrderAlert?.show()"
+          >Delete Lab Order</BaseButton
         >
       </div>
 
@@ -101,13 +101,13 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useContext, watch } from "@nuxtjs/composition-api";
-
 import {
   LabOrderSchema,
   PatientRecordSchema,
   ResultItemSchema,
   ResultItemServiceSchema,
 } from "@ukkidney/ukrdc-axios-ts";
+import BaseButton from "@/components/base/BaseButton.vue";
 
 import { formatDate } from "~/helpers/dateUtils";
 
@@ -119,6 +119,9 @@ import { modalInterface } from "~/interfaces/modal";
 import useApi from "~/composables/useApi";
 
 export default defineComponent({
+  components: {
+    BaseButton,
+  },
   props: {
     record: {
       type: Object as () => PatientRecordSchema,

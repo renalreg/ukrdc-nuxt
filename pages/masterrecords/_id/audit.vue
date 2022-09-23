@@ -3,14 +3,14 @@
     <div class="mb-4 flex flex-col">
       <div class="flex flex-row gap-2">
         <GenericDateRange v-model="dateRange" class="flex-1" />
-        <GenericButtonMini class="flex-none" @click="toggleOrder">
+        <BaseButtonMini class="flex-none" @click="toggleOrder">
           <div v-show="orderAscending" class="flex">
             <TextP>Oldest - Newest</TextP><IconMiniSortAscending class="ml-2" />
           </div>
           <div v-show="!orderAscending" class="flex">
             <TextP>Newest - Oldest</TextP><IconMiniSortDescending class="ml-2" />
           </div>
-        </GenericButtonMini>
+        </BaseButtonMini>
       </div>
     </div>
 
@@ -40,8 +40,9 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import { AuditEventSchema, MasterRecordSchema, OrderBy } from "@ukkidney/ukrdc-axios-ts";
+import BaseButtonMini from "@/components/base/BaseButtonMini.vue";
+
 import { nowString } from "~/helpers/dateUtils";
 import usePagination from "~/composables/query/usePagination";
 import useSortBy from "~/composables/query/useSortBy";
@@ -50,6 +51,9 @@ import useDateRange from "~/composables/query/useDateRange";
 import useApi from "~/composables/useApi";
 
 export default defineComponent({
+  components: {
+    BaseButtonMini,
+  },
   props: {
     record: {
       type: Object as () => MasterRecordSchema,

@@ -6,14 +6,14 @@
       </div>
       <div>
         <div v-click-away="closeExportMenu" class="relative flex">
-          <GenericButton @click="showExportMenu = !showExportMenu">
+          <BaseButton @click="showExportMenu = !showExportMenu">
             <div class="flex items-center">
               <div class="flex-grow">Export Codes</div>
               <div class="ml-2">
                 <IconChevronDown class="text-gray-700" />
               </div>
             </div>
-          </GenericButton>
+          </BaseButton>
           <GenericMenu class="-right-2 z-10 mb-2 mt-14" :show="showExportMenu">
             <GenericMenuItem @click="exportCodeList"> Export Code List </GenericMenuItem>
             <GenericMenuItem @click="exportCodeMaps"> Export Code Maps </GenericMenuItem>
@@ -84,14 +84,18 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import { CodeSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseButton from "@/components/base/BaseButton.vue";
+
 import useQuery from "~/composables/query/useQuery";
 import usePagination from "~/composables/query/usePagination";
 import useApi from "~/composables/useApi";
 import { saveAs } from "~/helpers/fileUtils";
 
 export default defineComponent({
+  components: {
+    BaseButton,
+  },
   setup() {
     const { page, total, size } = usePagination();
     const { stringQuery } = useQuery();

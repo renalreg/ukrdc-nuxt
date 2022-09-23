@@ -6,7 +6,7 @@
       </div>
       <div class="flex">
         <div v-if="record.masterId">
-          <GenericButton :to="`/masterrecords/${record.masterId}`" class="truncate"> View Master Record </GenericButton>
+          <BaseButton :to="`/masterrecords/${record.masterId}`" class="truncate"> View Master Record </BaseButton>
         </div>
         <div v-if="related" class="ml-2">
           <GenericSelect v-model="selectedPid">
@@ -35,14 +35,18 @@ import {
   useRouter,
   watch,
 } from "@nuxtjs/composition-api";
-
 import { PatientRecordSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseButton from "@/components/base/BaseButton.vue";
+
 import { TabItem } from "~/interfaces/tabs";
 
 import { firstForename, firstSurname, isMembership } from "~/helpers/recordUtils";
 import useApi from "~/composables/useApi";
 
 export default defineComponent({
+  components: {
+    BaseButton,
+  },
   setup() {
     const route = useRoute();
     const router = useRouter();

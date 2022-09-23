@@ -12,31 +12,35 @@
       </p>
     </div>
     <div class="flex flex-1 items-center justify-between gap-1 sm:justify-end">
-      <GenericButton :class="{ invisible: page <= 1 }" @click="prev()"> Previous </GenericButton>
+      <BaseButton :class="{ invisible: page <= 1 }" @click="prev()"> Previous </BaseButton>
       <div v-if="showPages" class="flex items-center justify-between gap-1 sm:justify-end">
         <div v-for="(pageLink, index) in paginationElements" :key="'paginator-' + index">
           <span v-if="pageLink === '...'" class="hidden px-2 font-medium lg:block"> ... </span>
-          <GenericButton
+          <BaseButton
             v-else
             :colour="pageLink === page ? 'indigo' : 'white'"
             class="hidden lg:block"
             @click="jump(pageLink)"
           >
             {{ pageLink }}
-          </GenericButton>
+          </BaseButton>
         </div>
       </div>
-      <GenericButton :class="{ invisible: page * size >= total }" @click="next()"> Next </GenericButton>
+      <BaseButton :class="{ invisible: page * size >= total }" @click="next()"> Next </BaseButton>
     </div>
   </nav>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
+import BaseButton from "@/components/base/BaseButton.vue";
 
 type Pages = (number | "...")[];
 
 export default defineComponent({
+  components: {
+    BaseButton,
+  },
   props: {
     page: {
       type: Number,

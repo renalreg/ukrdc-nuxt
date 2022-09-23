@@ -8,8 +8,8 @@
       </div>
 
       <div class="flex justify-end">
-        <GenericButton @click="addCommentModal?.hide()">Cancel</GenericButton>
-        <GenericButton
+        <BaseButton @click="addCommentModal?.hide()">Cancel</BaseButton>
+        <BaseButton
           :disabled="!customComment"
           colour="indigo"
           class="ml-2"
@@ -17,7 +17,7 @@
           @click="updateWorkItemComment()"
         >
           Save
-        </GenericButton>
+        </BaseButton>
       </div>
     </GenericModalSlot>
 
@@ -34,16 +34,10 @@
       </div>
 
       <div class="flex justify-end">
-        <GenericButton @click="closeModal?.hide()"> Cancel </GenericButton>
-        <GenericButton
-          :disabled="!customComment"
-          type="submit"
-          class="ml-3"
-          colour="red"
-          @click="handleCloseWorkItem()"
-        >
+        <BaseButton @click="closeModal?.hide()"> Cancel </BaseButton>
+        <BaseButton :disabled="!customComment" type="submit" class="ml-3" colour="red" @click="handleCloseWorkItem()">
           Close Work Item
-        </GenericButton>
+        </BaseButton>
       </div>
     </GenericModalSlot>
 
@@ -70,7 +64,7 @@
       v-if="hasPermission('ukrdc:workitems:write') && record"
       class="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
     >
-      <GenericButton
+      <BaseButton
         v-if="availableActions.comment"
         :primary="true"
         colour="indigo"
@@ -79,9 +73,9 @@
       >
         <IconPencil />
         Comment
-      </GenericButton>
+      </BaseButton>
 
-      <GenericButton
+      <BaseButton
         v-if="availableActions.close && record.status !== 3"
         :primary="true"
         class="inline-flex w-full items-center justify-center"
@@ -90,9 +84,9 @@
       >
         <IconCheckCircle />
         Close
-      </GenericButton>
+      </BaseButton>
 
-      <GenericButton
+      <BaseButton
         v-if="availableActions.merge && record.status !== 3"
         :primary="true"
         tooltip="You will be redirected here after merging"
@@ -109,7 +103,7 @@
       >
         <IconMiniExternalLink />
         Merge Master Records
-      </GenericButton>
+      </BaseButton>
     </div>
 
     <!-- Work Item Trigger -->
@@ -239,8 +233,9 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useContext, useMeta, useRoute } from "@nuxtjs/composition-api";
-
 import { WorkItemExtendedSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseButton from "@/components/base/BaseButton.vue";
+
 import { formatDate } from "~/helpers/dateUtils";
 import { formatGender } from "~/helpers/codeUtils";
 import { isEmptyObject } from "~/helpers/objectUtils";
@@ -260,6 +255,9 @@ interface AvailableActions {
 }
 
 export default defineComponent({
+  components: {
+    BaseButton,
+  },
   setup() {
     // Dependencies
     const route = useRoute();

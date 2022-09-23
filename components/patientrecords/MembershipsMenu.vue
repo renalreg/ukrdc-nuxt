@@ -14,7 +14,7 @@
     </GenericModalConfirm>
 
     <div v-click-away="closeMenu" class="relative flex items-center justify-self-end">
-      <GenericButtonMini
+      <BaseButtonMini
         label="Manage record"
         class="z-0 mr-2 flex gap-1"
         :tooltip="!menuAvailable ? 'You do not have permission to manage patient memberships' : null"
@@ -23,7 +23,7 @@
       >
         <IconMiniPlus class="inline text-gray-800" />
         Add Memberships
-      </GenericButtonMini>
+      </BaseButtonMini>
 
       <GenericMenu class="top-8 right-2 z-10 ml-2" :show="menuAvailable && showMenu">
         <GenericMenuItem v-if="showCreatePkbMembership" @click="showCreatePkbMembershipConfirm">
@@ -37,14 +37,18 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, useContext } from "@nuxtjs/composition-api";
-
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseButtonMini from "@/components/base/BaseButtonMini.vue";
+
 import usePermissions from "~/composables/usePermissions";
 
 import { modalInterface } from "~/interfaces/modal";
 import useApi from "~/composables/useApi";
 
 export default defineComponent({
+  components: {
+    BaseButtonMini,
+  },
   props: {
     masterRecord: {
       type: Object as () => MasterRecordSchema,
