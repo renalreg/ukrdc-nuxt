@@ -17,7 +17,7 @@
       <BaseButtonMini
         label="Manage record"
         class="z-0 mr-2 flex gap-1"
-        :tooltip="!menuAvailable ? 'You do not have permission to manage patient memberships' : null"
+        :tooltip="!menuAvailable ? 'You do not have permission to manage patient memberships' : undefined"
         :class="{ 'btn-disabled': !menuAvailable }"
         @click="showMenu = !showMenu"
       >
