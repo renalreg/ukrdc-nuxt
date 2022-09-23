@@ -19,7 +19,7 @@
           />
         </div>
         <!-- Large table display -->
-        <GenericTable class="mb-4 hidden lg:block">
+        <BaseTable class="mb-4 hidden lg:block">
           <thead class="bg-gray-50">
             <tr>
               <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
@@ -47,7 +47,7 @@
               :item="item"
             />
           </tbody>
-        </GenericTable>
+        </BaseTable>
 
         <div v-if="observations && observations.length > 0">
           <BaseCard>
@@ -71,6 +71,7 @@ import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api"
 import { ObservationSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
+import BaseTable from "~/components/base/BaseTable.vue";
 
 import usePagination from "~/composables/query/usePagination";
 
@@ -83,6 +84,7 @@ export default defineComponent({
   components: {
     BaseCard,
     BaseLoadingContainer,
+    BaseTable,
   },
   props: {
     record: {

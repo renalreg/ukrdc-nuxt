@@ -6,7 +6,7 @@ Table of facilities and their basic statistics
   <BaseLoadingIndicator v-if="!facilities"></BaseLoadingIndicator>
   <div v-else>
     <SearchBar v-model="searchboxString" :focus="false" :show-button="false" />
-    <GenericTable>
+    <BaseTable>
       <thead class="bg-gray-50">
         <tr>
           <th scope="col" class="px-4 py-3 text-left">
@@ -67,10 +67,10 @@ Table of facilities and their basic statistics
           class="cursor-pointer hover:bg-gray-50"
           @click="$emit('select', facility.id)"
         >
-          <GenericTableCell class="font-medium text-gray-900">{{ facility.id }}</GenericTableCell>
-          <GenericTableCell class="hidden max-w-sm truncate lg:table-cell">{{ facility.description }}</GenericTableCell>
-          <GenericTableCell>{{ facility.statistics.totalPatients }}</GenericTableCell>
-          <GenericTableCell>
+          <BaseTableCell class="font-medium text-gray-900">{{ facility.id }}</BaseTableCell>
+          <BaseTableCell class="hidden max-w-sm truncate lg:table-cell">{{ facility.description }}</BaseTableCell>
+          <BaseTableCell>{{ facility.statistics.totalPatients }}</BaseTableCell>
+          <BaseTableCell>
             <div class="flex items-center">
               <IconCircle
                 class="inline"
@@ -83,14 +83,14 @@ Table of facilities and their basic statistics
               />
               <p>{{ facility.statistics.patientsReceivingMessageError }}</p>
             </div>
-          </GenericTableCell>
-          <GenericTableCell>
+          </BaseTableCell>
+          <BaseTableCell>
             <div class="flex items-center">
               <IconCircle class="inline" :class="facility.dataFlow.pkbOut ? 'text-green-600' : 'text-red-700'" />
               <p>{{ facility.dataFlow.pkbOut ? "Yes" : "No" }}</p>
             </div>
-          </GenericTableCell>
-          <GenericTableCell>
+          </BaseTableCell>
+          <BaseTableCell>
             <div class="flex items-center gap-2">
               <div>
                 {{ facility.lastMessageReceivedAt ? formatDate(facility.lastMessageReceivedAt, false) : "> Year Ago" }}
@@ -101,10 +101,10 @@ Table of facilities and their basic statistics
                 class="inline text-yellow-600"
               />
             </div>
-          </GenericTableCell>
+          </BaseTableCell>
         </tr>
       </tbody>
-    </GenericTable>
+    </BaseTable>
   </div>
 </template>
 
@@ -112,6 +112,8 @@ Table of facilities and their basic statistics
 import { computed, defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import { FacilityDetailsSchema, FacilitySorterEnum, OrderBy } from "@ukkidney/ukrdc-axios-ts";
 import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
+import BaseTable from "~/components/base/BaseTable.vue";
+import BaseTableCell from "~/components/base/BaseTableCell.vue";
 import { formatDate } from "~/helpers/dateUtils";
 import { facilityLastMessageOver48 } from "~/helpers/facilityUtils";
 
@@ -124,6 +126,8 @@ interface IsAscending {
 export default defineComponent({
   components: {
     BaseLoadingIndicator,
+    BaseTable,
+    BaseTableCell,
   },
   props: {
     includeEmpty: {

@@ -74,7 +74,7 @@
 
         <!-- Record types -->
 
-        <GenericTable>
+        <BaseTable>
           <thead class="bg-gray-50">
             <tr>
               <th scope="col" class="px-4 py-3 text-left">
@@ -90,8 +90,8 @@
           </thead>
           <tbody class="divide-y divide-gray-200 bg-white">
             <tr v-for="item in feedTableItems" :key="item.key">
-              <GenericTableCell class="font-medium text-gray-900">{{ item.name }}</GenericTableCell>
-              <GenericTableCell class="hidden md:table-cell">
+              <BaseTableCell class="font-medium text-gray-900">{{ item.name }}</BaseTableCell>
+              <BaseTableCell class="hidden md:table-cell">
                 <div v-if="item.historic" class="flex items-center">
                   <IconCircle v-if="item.historic" class="inline text-orange-400" />
                   <p>Historic</p>
@@ -100,11 +100,11 @@
                   <IconCircle class="inline" :class="extracts[item.key] > 0 ? 'text-green-600' : 'text-red-700'" />
                   <p>{{ extracts[item.key] > 0 ? "Enabled" : "Unused" }}</p>
                 </div>
-              </GenericTableCell>
-              <GenericTableCell>{{ extracts[item.key] > 0 ? extracts[item.key] : "" }}</GenericTableCell>
+              </BaseTableCell>
+              <BaseTableCell>{{ extracts[item.key] > 0 ? extracts[item.key] : "" }}</BaseTableCell>
             </tr>
           </tbody>
-        </GenericTable>
+        </BaseTable>
       </div>
 
       <!-- Alerts -->
@@ -203,6 +203,8 @@ import { FacilityDetailsSchema, FacilityExtractsSchema } from "@ukkidney/ukrdc-a
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+import BaseTable from "~/components/base/BaseTable.vue";
+import BaseTableCell from "~/components/base/BaseTableCell.vue";
 import { formatDate } from "~/helpers/dateUtils";
 import { facilityLastMessageOver48 } from "~/helpers/facilityUtils";
 import { allStatuses } from "~/helpers/messageUtils";
@@ -213,6 +215,8 @@ export default defineComponent({
     BaseCard,
     BaseCardContent,
     BaseCardHeader,
+    BaseTable,
+    BaseTableCell,
   },
   props: {
     facility: {

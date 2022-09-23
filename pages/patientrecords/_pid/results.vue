@@ -51,7 +51,7 @@
         />
       </div>
       <!-- Large table display -->
-      <GenericTable class="hidden lg:block">
+      <BaseTable class="hidden lg:block">
         <thead class="bg-gray-50">
           <tr>
             <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
@@ -81,7 +81,7 @@
             @delete="showDeleteResultItemModal"
           />
         </tbody>
-      </GenericTable>
+      </BaseTable>
 
       <div v-if="results && results.length > 0" class="mt-4">
         <BaseCard>
@@ -107,9 +107,10 @@ import {
   ResultItemSchema,
   ResultItemServiceSchema,
 } from "@ukkidney/ukrdc-axios-ts";
-import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCard from "@/components/base/BaseCard.vue";
 import BaseButton from "@/components/base/BaseButton.vue";
 import BaseLoadingContainer from "@/components/base/BaseLoadingContainer.vue";
+import BaseTable from "@/components/base/BaseTable.vue";
 
 import { formatDate } from "~/helpers/dateUtils";
 
@@ -125,6 +126,7 @@ export default defineComponent({
     BaseButton,
     BaseCard,
     BaseLoadingContainer,
+    BaseTable,
   },
   props: {
     record: {
