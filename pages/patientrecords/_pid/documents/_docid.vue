@@ -91,7 +91,6 @@ import { saveAs } from "~/helpers/fileUtils";
 export default defineComponent({
   components: {
     BaseCard,
-    BaseCard,
     BaseCardContent,
     BaseCardHeader,
   },
