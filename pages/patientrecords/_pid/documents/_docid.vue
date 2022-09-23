@@ -14,53 +14,53 @@
         </div>
       </BaseCardHeader>
       <BaseCardContent>
-        <BaseDlGrid>
-          <BaseDlGridItem>
+        <BaseDescriptionListGrid>
+          <BaseDescriptionListGridItem>
             <dt>Entered At</dt>
             <dd v-if="patientDocument">
               {{ patientDocument.enteredatdesc || patientDocument.enteredatcode || "Unknown Facility" }}
             </dd>
             <BaseSkeleText v-else class="h-6 w-1/2" />
-          </BaseDlGridItem>
-          <BaseDlGridItem>
+          </BaseDescriptionListGridItem>
+          <BaseDescriptionListGridItem>
             <dt>Entered By</dt>
             <dd v-if="patientDocument">
               {{ patientDocument.enteredbydesc || patientDocument.enteredbycode || "Unknown Person" }}
             </dd>
             <BaseSkeleText v-else class="h-6 w-1/2" />
-          </BaseDlGridItem>
-          <BaseDlGridItem>
+          </BaseDescriptionListGridItem>
+          <BaseDescriptionListGridItem>
             <dt>Clinician:</dt>
             <dd v-if="patientDocument">
               {{ patientDocument.cliniciandesc || patientDocument.cliniciancode || "Unknown Clinician" }}
             </dd>
             <BaseSkeleText v-else class="h-6 w-1/2" />
-          </BaseDlGridItem>
-          <BaseDlGridItem>
+          </BaseDescriptionListGridItem>
+          <BaseDescriptionListGridItem>
             <dt>Document Date</dt>
             <dd v-if="patientDocument">
               {{ patientDocument.documenttime ? formatDate(patientDocument.documenttime) : "Unknown date" }}
             </dd>
             <BaseSkeleText v-else class="h-6 w-1/3" />
-          </BaseDlGridItem>
-          <BaseDlGridItem>
+          </BaseDescriptionListGridItem>
+          <BaseDescriptionListGridItem>
             <dt>Creation Date</dt>
             <dd v-if="patientDocument">
               {{ patientDocument.creationDate ? formatDate(patientDocument.creationDate) : "Unknown date" }}
             </dd>
             <BaseSkeleText v-else class="h-6 w-1/3" />
-          </BaseDlGridItem>
-          <BaseDlGridItem>
+          </BaseDescriptionListGridItem>
+          <BaseDescriptionListGridItem>
             <dt>Update Date</dt>
             <dd v-if="patientDocument">
               {{ patientDocument.updateDate ? formatDate(patientDocument.updateDate) : "Unknown date" }}
             </dd>
             <BaseSkeleText v-else class="h-6 w-1/3" />
-          </BaseDlGridItem>
-          <BaseDlGridItem v-if="patientDocument && patientDocument.notetext" class="sm:col-span-3">
+          </BaseDescriptionListGridItem>
+          <BaseDescriptionListGridItem v-if="patientDocument && patientDocument.notetext" class="sm:col-span-3">
             <dt>Note</dt>
             <dd class="whitespace-pre-wrap font-mono">{{ patientDocument.notetext }}</dd>
-          </BaseDlGridItem>
+          </BaseDescriptionListGridItem>
           <div v-if="patientDocument" class="sm:col-span-2">
             <dt>Attachments</dt>
             <dd>
@@ -71,7 +71,7 @@
               </BaseCard>
             </dd>
           </div>
-        </BaseDlGrid>
+        </BaseDescriptionListGrid>
       </BaseCardContent>
     </BaseCard>
   </div>
@@ -85,8 +85,8 @@ import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
-import BaseDlGrid from "~/components/base/BaseDlGrid.vue";
-import BaseDlGridItem from "~/components/base/BaseDlGridItem.vue";
+import BaseDescriptionListGrid from "~/components/base/BaseDescriptionListGrid.vue";
+import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGridItem.vue";
 
 import { formatDate } from "~/helpers/dateUtils";
 import useApi from "~/composables/useApi";
@@ -98,8 +98,8 @@ export default defineComponent({
     BaseCardContent,
     BaseCardHeader,
     BaseSkeleText,
-    BaseDlGrid,
-    BaseDlGridItem,
+    BaseDescriptionListGrid,
+    BaseDescriptionListGridItem,
   },
   props: {
     record: {

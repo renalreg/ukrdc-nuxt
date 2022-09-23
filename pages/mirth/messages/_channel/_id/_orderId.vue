@@ -2,22 +2,22 @@
   <div>
     <BaseCard class="mb-6">
       <BaseCardContent>
-        <BaseDlGrid>
-          <BaseDlGridItem>
+        <BaseDescriptionListGrid>
+          <BaseDescriptionListGridItem>
             <dt>Connector Name</dt>
             <dd v-if="connectorMessage">
               {{ connectorMessage.connectorName }}
             </dd>
             <BaseSkeleText v-else class="h-6 w-full" />
-          </BaseDlGridItem>
-          <BaseDlGridItem>
+          </BaseDescriptionListGridItem>
+          <BaseDescriptionListGridItem>
             <dt>Send Attempts</dt>
             <dd v-if="connectorMessage">
               {{ connectorMessage.sendAttempts }}
             </dd>
             <BaseSkeleText v-else class="h-6 w-full" />
-          </BaseDlGridItem>
-          <BaseDlGridItem>
+          </BaseDescriptionListGridItem>
+          <BaseDescriptionListGridItem>
             <dt>Status</dt>
             <dd v-if="connectorMessage">
               <span
@@ -32,8 +32,8 @@
               >
             </dd>
             <BaseSkeleText v-else class="h-6 w-full" />
-          </BaseDlGridItem>
-        </BaseDlGrid>
+          </BaseDescriptionListGridItem>
+        </BaseDescriptionListGrid>
         <slot></slot>
       </BaseCardContent>
     </BaseCard>
@@ -74,8 +74,8 @@ import { ConnectorMessageModel, ChannelMessageModel, ConnectorMessageData } from
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
-import BaseDlGrid from "~/components/base/BaseDlGrid.vue";
-import BaseDlGridItem from "~/components/base/BaseDlGridItem.vue";
+import BaseDescriptionListGrid from "~/components/base/BaseDescriptionListGrid.vue";
+import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGridItem.vue";
 
 import { connectorMessageError } from "~/helpers/mirthUtils";
 
@@ -91,8 +91,8 @@ export default defineComponent({
     BaseCard,
     BaseCardContent,
     BaseSkeleText,
-    BaseDlGrid,
-    BaseDlGridItem,
+    BaseDescriptionListGrid,
+    BaseDescriptionListGridItem,
   },
   props: {
     message: {

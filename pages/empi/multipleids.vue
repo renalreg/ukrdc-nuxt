@@ -8,16 +8,16 @@
     <!-- Description list -->
     <BaseCard class="mb-6">
       <BaseCardContent>
-        <BaseDlGrid>
-          <BaseDlGridItem>
+        <BaseDescriptionListGrid>
+          <BaseDescriptionListGridItem>
             <dt>Patients with Multiple UKRDC IDs</dt>
             <dd v-if="total">
               {{ total }}
             </dd>
             <BaseSkeleText v-else class="mt-2 h-6 w-8" />
-          </BaseDlGridItem>
+          </BaseDescriptionListGridItem>
 
-          <BaseDlGridItem>
+          <BaseDescriptionListGridItem>
             <dt class="flex items-center gap-1">
               <span class="inline">Last Full Scan</span>
               <GenericInfoIcon class="inline">
@@ -32,8 +32,8 @@
               {{ formatDate(lastRunTime, true) }}
             </dd>
             <BaseSkeleText v-else class="mt-2 h-6 w-1/4" />
-          </BaseDlGridItem>
-        </BaseDlGrid>
+          </BaseDescriptionListGridItem>
+        </BaseDescriptionListGrid>
       </BaseCardContent>
     </BaseCard>
 
@@ -68,8 +68,8 @@ import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
-import BaseDlGrid from "~/components/base/BaseDlGrid.vue";
-import BaseDlGridItem from "~/components/base/BaseDlGridItem.vue";
+import BaseDescriptionListGrid from "~/components/base/BaseDescriptionListGrid.vue";
+import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGridItem.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 
 import { formatDate } from "~/helpers/dateUtils";
@@ -82,8 +82,8 @@ export default defineComponent({
     BaseCardContent,
     BaseLoadingIndicator,
     BaseSkeleText,
-    BaseDlGrid,
-    BaseDlGridItem,
+    BaseDescriptionListGrid,
+    BaseDescriptionListGridItem,
     BasePaginator,
   },
   setup() {
