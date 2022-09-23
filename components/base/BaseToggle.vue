@@ -27,6 +27,10 @@
 import { defineComponent } from "@nuxtjs/composition-api";
 
 export default defineComponent({
+  model: {
+    prop: "value",
+    event: "input",
+  },
   props: {
     label: {
       type: String,
@@ -35,7 +39,8 @@ export default defineComponent({
     },
     value: {
       type: Boolean,
-      required: true,
+      required: false,
+      default: false,
     },
     rightToLeft: {
       type: Boolean,

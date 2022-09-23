@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="contentType === 'XML'" class="border-b border-gray-200 pl-8 pb-3 pt-3">
-      <GenericToggle v-model="formatMessage" label="Format XML" />
+      <BaseToggle v-model="formatMessage" label="Format XML" />
     </div>
 
     <div v-if="content" class="box-border px-4 text-left font-mono text-sm">
@@ -13,10 +13,11 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
-
 import formatXml from "xml-formatter";
+import BaseToggle from "@/components/base/BaseToggle.vue";
 
 export default defineComponent({
+  components: { BaseToggle },
   props: {
     content: {
       type: String,
