@@ -12,38 +12,38 @@
       </p>
     </div>
     <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-      <GenericCardDl>
-        <GenericCardDi>
+      <BaseCardDescriptionList>
+        <BaseCardDescriptionItem>
           <dt>National ID</dt>
           <dd class="sensitive">
             {{ record.nationalid }}
           </dd>
-        </GenericCardDi>
-        <GenericCardDi>
+        </BaseCardDescriptionItem>
+        <BaseCardDescriptionItem>
           <dt>ID Type</dt>
           <dd class="align-middle">
             {{ record.nationalidType }}
           </dd>
-        </GenericCardDi>
-        <GenericCardDi>
+        </BaseCardDescriptionItem>
+        <BaseCardDescriptionItem>
           <dt>Date of Birth</dt>
           <dd :class="highlight.includes('dateOfBirth') ? highlightClasses : []" class="sensitive">
             {{ formatDate(record.dateOfBirth, false) }}
           </dd>
-        </GenericCardDi>
-        <GenericCardDi>
+        </BaseCardDescriptionItem>
+        <BaseCardDescriptionItem>
           <dt>Assigned Gender</dt>
           <dd :class="highlight.includes('gender') ? highlightClasses : []" class="sensitive">
             {{ record.gender ? formatGender(record.gender) : "Unknown gender" }}
           </dd>
-        </GenericCardDi>
-        <GenericCardDi>
+        </BaseCardDescriptionItem>
+        <BaseCardDescriptionItem>
           <dt>Last Updated</dt>
           <dd>
             {{ formatDate(record.lastUpdated) }}
           </dd>
-        </GenericCardDi>
-      </GenericCardDl>
+        </BaseCardDescriptionItem>
+      </BaseCardDescriptionList>
     </div>
   </BaseCard>
 </template>
@@ -51,12 +51,20 @@
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardDescriptionList from "~/components/base/BaseCardDescriptionList.vue";
+import BaseCardDescriptionItem from "~/components/base/BaseCardDescriptionItem.vue";
+
 import { formatDate } from "~/helpers/dateUtils";
 import { formatGender } from "~/helpers/codeUtils";
 
 export default defineComponent({
-  components: { BaseCard },
+  components: {
+    BaseCard,
+    BaseCardDescriptionList,
+    BaseCardDescriptionItem,
+  },
   props: {
     record: {
       type: Object as () => MasterRecordSchema,

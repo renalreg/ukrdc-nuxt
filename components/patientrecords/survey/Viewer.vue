@@ -10,7 +10,7 @@
         </div>
 
         <div class="mb-6 border-t border-gray-200">
-          <GenericCardDl>
+          <BaseCardDescriptionList>
             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
               <dt>Entered On</dt>
               <dd class="sm:col-span-2">
@@ -35,7 +35,7 @@
                 {{ survey.surveytypecode }}
               </dd>
             </div>
-          </GenericCardDl>
+          </BaseCardDescriptionList>
         </div>
       </div>
 
@@ -45,7 +45,7 @@
             {{ group !== "null" ? group : "Ungrouped" }}
           </h3>
           <div class="border-t border-gray-200">
-            <GenericCardDl>
+            <BaseCardDescriptionList>
               <div v-for="question in questions" :key="question.id" class="flex items-center py-4">
                 <div class="mr-4 font-medium text-gray-900">
                   {{ question.questiontypecode }}
@@ -59,7 +59,7 @@
                   </dd>
                 </div>
               </div>
-            </GenericCardDl>
+            </BaseCardDescriptionList>
           </div>
         </div>
       </div>
@@ -69,8 +69,9 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
-
 import { SurveyQuestionSchema, SurveySchema } from "@ukkidney/ukrdc-axios-ts";
+import BaseCardDescriptionList from "~/components/base/BaseCardDescriptionList.vue";
+
 import { formatDate } from "~/helpers/dateUtils";
 
 import { modalInterface } from "~/interfaces/modal";
@@ -80,6 +81,9 @@ interface GroupedQuestions {
 }
 
 export default defineComponent({
+  components: {
+    BaseCardDescriptionList,
+  },
   setup() {
     const survey = ref({} as SurveySchema);
     const availableToOpen = computed(() => {

@@ -10,14 +10,14 @@
       </p>
     </div>
     <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-      <GenericCardDl>
-        <GenericCardDi>
+      <BaseCardDescriptionList>
+        <BaseCardDescriptionItem>
           <dt>Local ID</dt>
           <dd :class="highlight.includes('localid') ? highlightClasses : []" class="sensitive">
             {{ realLocalID.localid }}
           </dd>
-        </GenericCardDi>
-        <GenericCardDi>
+        </BaseCardDescriptionItem>
+        <BaseCardDescriptionItem>
           <dt>Sender</dt>
           <dd>
             <span :class="highlight.includes('sendingFacility') ? highlightClasses : []">{{
@@ -27,8 +27,8 @@
               `${realLocalID.sendingExtract ? "via " + realLocalID.sendingExtract : ""}`
             }}</span>
           </dd>
-        </GenericCardDi>
-        <GenericCardDi>
+        </BaseCardDescriptionItem>
+        <BaseCardDescriptionItem>
           <dt>Date of Birth</dt>
           <dd
             class="sensitive mt-1 text-gray-900 sm:col-span-2 sm:mt-0"
@@ -36,8 +36,8 @@
           >
             {{ formatDate(record.dateOfBirth, false) }}
           </dd>
-        </GenericCardDi>
-        <GenericCardDi>
+        </BaseCardDescriptionItem>
+        <BaseCardDescriptionItem>
           <dt>Assigned Gender</dt>
           <dd
             class="sensitive mt-1 text-gray-900 sm:col-span-2 sm:mt-0"
@@ -45,8 +45,8 @@
           >
             {{ formatGender(record.gender) }}
           </dd>
-        </GenericCardDi>
-        <GenericCardDi>
+        </BaseCardDescriptionItem>
+        <BaseCardDescriptionItem>
           <dt>Date of Death</dt>
           <dd
             class="sensitive mt-1 text-gray-900 sm:col-span-2 sm:mt-0"
@@ -54,8 +54,8 @@
           >
             {{ record.dateOfDeath ? formatDate(record.dateOfDeath, false) : "N/A" }}
           </dd>
-        </GenericCardDi>
-      </GenericCardDl>
+        </BaseCardDescriptionItem>
+      </BaseCardDescriptionList>
     </div>
   </BaseCard>
 </template>
@@ -63,7 +63,11 @@
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { PersonSchema } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardDescriptionList from "~/components/base/BaseCardDescriptionList.vue";
+import BaseCardDescriptionItem from "~/components/base/BaseCardDescriptionItem.vue";
+
 import { formatDate } from "~/helpers/dateUtils";
 import { formatGender } from "~/helpers/codeUtils";
 
@@ -76,6 +80,8 @@ interface realLocalId {
 export default defineComponent({
   components: {
     BaseCard,
+    BaseCardDescriptionList,
+    BaseCardDescriptionItem,
   },
   props: {
     record: {

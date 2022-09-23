@@ -23,43 +23,43 @@
         <BaseCardHeader>
           <h2>Client</h2>
         </BaseCardHeader>
-        <GenericCardDl>
-          <GenericCardDi>
+        <BaseCardDescriptionList>
+          <BaseCardDescriptionItem>
             <dt>Environment</dt>
             <dd>{{ clientInfo.deploymentEnv }}</dd>
-          </GenericCardDi>
-          <GenericCardDi>
+          </BaseCardDescriptionItem>
+          <BaseCardDescriptionItem>
             <dt>Version Reference</dt>
             <dd>{{ clientInfo.githubRef }}</dd>
-          </GenericCardDi>
-          <GenericCardDi>
+          </BaseCardDescriptionItem>
+          <BaseCardDescriptionItem>
             <dt>Version Hash</dt>
             <dd>{{ clientInfo.githubSha }}</dd>
-          </GenericCardDi>
-        </GenericCardDl>
+          </BaseCardDescriptionItem>
+        </BaseCardDescriptionList>
       </BaseCard>
 
       <BaseCard>
         <BaseCardHeader>
           <h2>Server</h2>
         </BaseCardHeader>
-        <GenericCardDl>
-          <GenericCardDi>
+        <BaseCardDescriptionList>
+          <BaseCardDescriptionItem>
             <dt>Environment</dt>
             <dd v-if="serverInfo">{{ serverInfo.deploymentEnv }}</dd>
             <BaseSkeleText v-else class="mb-2 h-6 w-3/4" />
-          </GenericCardDi>
-          <GenericCardDi>
+          </BaseCardDescriptionItem>
+          <BaseCardDescriptionItem>
             <dt>Version Reference</dt>
             <dd v-if="serverInfo">{{ serverInfo.githubRef }}</dd>
             <BaseSkeleText v-else class="mb-2 h-6 w-3/4" />
-          </GenericCardDi>
-          <GenericCardDi>
+          </BaseCardDescriptionItem>
+          <BaseCardDescriptionItem>
             <dt>Version Hash</dt>
             <dd v-if="serverInfo">{{ serverInfo.githubSha }}</dd>
             <BaseSkeleText v-else class="mb-2 h-6 w-3/4" />
-          </GenericCardDi>
-        </GenericCardDl>
+          </BaseCardDescriptionItem>
+        </BaseCardDescriptionList>
       </BaseCard>
     </div>
     <BaseButton @click="copyConfigReport">Copy Configuration Report</BaseButton>
@@ -73,6 +73,8 @@ import BaseCard from "~/components/base/BaseCard.vue";
 import BaseButton from "@/components/base/BaseButton.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
+import BaseCardDescriptionList from "~/components/base/BaseCardDescriptionList.vue";
+import BaseCardDescriptionItem from "~/components/base/BaseCardDescriptionItem.vue";
 
 import useApi from "~/composables/useApi";
 
@@ -82,6 +84,8 @@ export default defineComponent({
     BaseCard,
     BaseCardHeader,
     BaseSkeleText,
+    BaseCardDescriptionList,
+    BaseCardDescriptionItem,
   },
   setup() {
     const { $config, $toast } = useContext();

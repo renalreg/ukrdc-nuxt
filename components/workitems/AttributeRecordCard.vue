@@ -9,14 +9,14 @@
       </div>
     </div>
     <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-      <GenericCardDl>
-        <GenericCardDi>
+      <BaseCardDescriptionList>
+        <BaseCardDescriptionItem>
           <dt>Local ID</dt>
           <dd :class="highlight.includes('localid') ? highlightClasses : []" class="sensitive">
             {{ record.localid ? formatAttributeValue(record.localid) : "Not specified" }}
           </dd>
-        </GenericCardDi>
-        <GenericCardDi>
+        </BaseCardDescriptionItem>
+        <BaseCardDescriptionItem>
           <dt>Sender</dt>
           <dd>
             <span :class="highlight.includes('sendingFacility') ? highlightClasses : []">{{
@@ -26,26 +26,26 @@
               record.sendingExtract ? "via " + record.sendingExtract : "Not specified"
             }}</span>
           </dd>
-        </GenericCardDi>
-        <GenericCardDi>
+        </BaseCardDescriptionItem>
+        <BaseCardDescriptionItem>
           <dt>Date of Birth</dt>
           <dd :class="highlight.includes('dateOfBirth') ? highlightClasses : []" class="sensitive">
             {{ formattedDoB }}
           </dd>
-        </GenericCardDi>
-        <GenericCardDi>
+        </BaseCardDescriptionItem>
+        <BaseCardDescriptionItem>
           <dt>Assigned Gender</dt>
           <dd :class="highlight.includes('gender') ? highlightClasses : []" class="sensitive">
             {{ formattedGender }}
           </dd>
-        </GenericCardDi>
-        <GenericCardDi>
+        </BaseCardDescriptionItem>
+        <BaseCardDescriptionItem>
           <dt>Date of Death</dt>
           <dd :class="highlight.includes('dateOfDeath') ? highlightClasses : []" class="sensitive">
             {{ formattedDoD }}
           </dd>
-        </GenericCardDi>
-      </GenericCardDl>
+        </BaseCardDescriptionItem>
+      </BaseCardDescriptionList>
     </div>
   </BaseCard>
 </template>
@@ -53,7 +53,10 @@
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { WorkItemAttributes } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardDescriptionList from "~/components/base/BaseCardDescriptionList.vue";
+import BaseCardDescriptionItem from "~/components/base/BaseCardDescriptionItem.vue";
 
 import { formatDate } from "~/helpers/dateUtils";
 import { formatGender } from "~/helpers/codeUtils";
@@ -62,6 +65,8 @@ import { formatAttributeValue } from "~/helpers/workItemUtils";
 export default defineComponent({
   components: {
     BaseCard,
+    BaseCardDescriptionList,
+    BaseCardDescriptionItem,
   },
   props: {
     record: {
