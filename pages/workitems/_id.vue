@@ -198,7 +198,7 @@
           </NuxtLink>
         </div>
         <BaseCard v-if="record.incoming.masterRecords.length > 1" class="mt-2 pl-4">
-          <GenericItemPaginator
+          <BaseItemPaginator
             v-model="relatedRecordsIndex"
             :total="record.incoming.masterRecords.length"
             item-label="Record"
