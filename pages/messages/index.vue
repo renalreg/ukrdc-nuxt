@@ -16,10 +16,10 @@
       />
       <div class="flex flex-col gap-2 lg:flex-row">
         <div class="flex flex-grow items-center gap-4">
-          <FormCheckbox v-model="statuses" label="Stored" value="STORED" />
-          <FormCheckbox v-model="statuses" label="Received" value="RECEIVED" />
-          <FormCheckbox v-model="statuses" label="Error" value="ERROR" />
-          <FormCheckbox v-model="statuses" label="Resolved" value="RESOLVED" />
+          <BaseCheckbox v-model="statuses" label="Stored" value="STORED" />
+          <BaseCheckbox v-model="statuses" label="Received" value="RECEIVED" />
+          <BaseCheckbox v-model="statuses" label="Error" value="ERROR" />
+          <BaseCheckbox v-model="statuses" label="Resolved" value="RESOLVED" />
         </div>
 
         <form v-show="!nationalId" class="flex" @submit.prevent="nationalId = nationalIdSearchString.trim()">
@@ -80,6 +80,7 @@ import { MessageSchema, OrderBy } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCheckbox from "~/components/base/BaseCheckbox.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import useDateRange from "~/composables/query/useDateRange";
@@ -97,6 +98,7 @@ export default defineComponent({
     BaseCard,
     BaseSkeleListItem,
     BasePaginator,
+    BaseCheckbox,
   },
   setup() {
     const { page, total, size } = usePagination();

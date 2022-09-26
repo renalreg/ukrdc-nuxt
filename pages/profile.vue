@@ -68,7 +68,7 @@
         <h2 class="mb-4">Preferences</h2>
         <div class="mb-4">
           <h3 class="mb-2">Search</h3>
-          <FormCheckbox
+          <BaseCheckbox
             v-model="preferences.searchShowUkrdc"
             label="Include internal UKRDC records in search results by default"
           />
@@ -84,6 +84,7 @@ import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/c
 import { UserPreferences } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseButton from "~/components/base/BaseButton.vue";
+import BaseCheckbox from "~/components/base/BaseCheckbox.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
@@ -92,6 +93,7 @@ export default defineComponent({
   components: {
     BaseButton,
     BaseSkeleText,
+    BaseCheckbox,
   },
   setup() {
     const { $okta } = useContext();

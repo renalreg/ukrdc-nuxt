@@ -16,9 +16,9 @@
       />
       <div class="flex items-center">
         <div class="flex flex-grow items-center gap-4">
-          <FormCheckbox v-model="statuses" label="Open" :value="1" />
-          <FormCheckbox v-model="statuses" label="WIP" :value="2" />
-          <FormCheckbox v-model="statuses" label="Closed" :value="3" />
+          <BaseCheckbox v-model="statuses" label="Open" :value="1" />
+          <BaseCheckbox v-model="statuses" label="WIP" :value="2" />
+          <BaseCheckbox v-model="statuses" label="Closed" :value="3" />
         </div>
         <BaseButtonMini class="flex-shrink" @click="toggleOrder">
           <div v-show="orderAscending" class="flex">
@@ -65,6 +65,7 @@ import { OrderBy, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCheckbox from "~/components/base/BaseCheckbox.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import useDateRange from "~/composables/query/useDateRange";
@@ -80,6 +81,7 @@ export default defineComponent({
     BaseCard,
     BaseSkeleListItem,
     BasePaginator,
+    BaseCheckbox,
   },
   setup() {
     const { page, total, size } = usePagination();

@@ -5,10 +5,10 @@
         <SearchBar v-model="searchboxString" :focus="true" @submit="searchSubmit" />
         <div class="mb-4 flex items-center">
           <div class="flex flex-grow items-center gap-2">
-            <FormCheckboxPill v-model="numberTypes" label="UKRDC" value="UKRDC" colour="red" />
-            <FormCheckboxPill v-model="numberTypes" label="NHS" value="NHS" colour="blue" />
-            <FormCheckboxPill v-model="numberTypes" label="CHI" value="CHI" colour="purple" />
-            <FormCheckboxPill v-model="numberTypes" label="HSC" value="HSC" colour="green" />
+            <BaseCheckpill v-model="numberTypes" label="UKRDC" value="UKRDC" colour="red" />
+            <BaseCheckpill v-model="numberTypes" label="NHS" value="NHS" colour="blue" />
+            <BaseCheckpill v-model="numberTypes" label="CHI" value="CHI" colour="purple" />
+            <BaseCheckpill v-model="numberTypes" label="HSC" value="HSC" colour="green" />
           </div>
           <div>
             <GenericCollapseHeader v-model="advancedOpen" label="More Options"></GenericCollapseHeader>
@@ -87,6 +87,7 @@ import { computed, defineComponent, onMounted, ref, watch } from "@nuxtjs/compos
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCheckpill from "~/components/base/BaseCheckpill.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import usePagination from "~/composables/query/usePagination";
@@ -100,6 +101,7 @@ export default defineComponent({
     BaseCard,
     BaseSkeleListItem,
     BasePaginator,
+    BaseCheckpill,
   },
   setup() {
     const { page, total, size } = usePagination();

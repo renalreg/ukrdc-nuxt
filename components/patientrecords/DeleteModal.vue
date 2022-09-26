@@ -169,7 +169,7 @@
                     </ul>
                   </div>
                 </div>
-                <FormCheckbox
+                <BaseCheckbox
                   v-if="(previewResponse && !previewErrorMessage) || deleteInProgress"
                   v-model="confirmChecked"
                   :disabled="!previewResponse"
@@ -212,6 +212,7 @@ import {
 } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseButton from "~/components/base/BaseButton.vue";
+import BaseCheckbox from "~/components/base/BaseCheckbox.vue";
 import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
 import useApi from "~/composables/useApi";
 import useModal from "~/composables/useModal";
@@ -237,6 +238,7 @@ export default defineComponent({
   components: {
     BaseButton,
     BaseLoadingIndicator,
+    BaseCheckbox,
   },
   props: {
     item: {
