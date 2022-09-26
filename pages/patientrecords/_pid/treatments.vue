@@ -70,7 +70,7 @@
                       {{ treatment.admitReasonDesc ? treatment.admitReasonDesc : treatment.admitReasonCode }}
                     </div>
                   </div>
-                  <GenericInfoIcon>
+                  <BaseInfoTooltip>
                     <div class="sensitive">
                       <p><b>From time: </b>{{ treatment.fromTime }}</p>
                       <p><b>To time: </b>{{ treatment.toTime || "None" }}</p>
@@ -86,7 +86,7 @@
                         {{ treatment.dischargeReasonCode || "None" }}
                       </p>
                     </div>
-                  </GenericInfoIcon>
+                  </BaseInfoTooltip>
                 </div>
               </div>
             </div>
@@ -101,6 +101,7 @@
 import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { PatientRecordSchema, TreatmentSchema } from "@ukkidney/ukrdc-axios-ts";
 
+import BaseInfoTooltip from "~/components/base/BaseInfoTooltip.vue";
 import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
 import useApi from "~/composables/useApi";
 
@@ -112,6 +113,7 @@ interface TreatmentEvent extends TreatmentSchema {
 export default defineComponent({
   components: {
     BaseLoadingContainer,
+    BaseInfoTooltip,
   },
   props: {
     record: {

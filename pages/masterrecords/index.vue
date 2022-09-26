@@ -11,7 +11,7 @@
             <BaseCheckpill v-model="numberTypes" label="HSC" value="HSC" colour="green" />
           </div>
           <div>
-            <GenericCollapseHeader v-model="advancedOpen" label="More Options"></GenericCollapseHeader>
+            <BaseCollapseHeader v-model="advancedOpen" label="More Options"></BaseCollapseHeader>
           </div>
         </div>
         <div v-show="advancedOpen" class="mb-4 overflow-visible">
@@ -88,6 +88,7 @@ import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCheckpill from "~/components/base/BaseCheckpill.vue";
+import BaseCollapseHeader from "~/components/base/BaseCollapseHeader.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
@@ -104,6 +105,7 @@ export default defineComponent({
     BasePaginator,
     BaseCheckpill,
     BaseSelectSearchable,
+    BaseCollapseHeader,
   },
   setup() {
     const { page, total, size } = usePagination();

@@ -20,13 +20,13 @@
           <BaseDescriptionListGridItem>
             <dt class="flex items-center gap-1">
               <span class="inline">Last Full Scan</span>
-              <GenericInfoIcon class="inline">
+              <BaseInfoTooltip class="inline">
                 <p>
                   New results are identified weekly by a <b>Full Scan</b>, but existing results are re-checked hourly,
                   see <b>Last checked</b>.
                 </p>
                 <p>Resolved items will remain in this view until the next check.</p>
-              </GenericInfoIcon>
+              </BaseInfoTooltip>
             </dt>
             <dd v-if="lastRunTime">
               {{ formatDate(lastRunTime, true) }}
@@ -68,6 +68,7 @@ import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseDescriptionListGrid from "~/components/base/BaseDescriptionListGrid.vue";
 import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGridItem.vue";
+import BaseInfoTooltip from "~/components/base/BaseInfoTooltip.vue";
 import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
@@ -84,6 +85,7 @@ export default defineComponent({
     BaseDescriptionListGrid,
     BaseDescriptionListGridItem,
     BasePaginator,
+    BaseInfoTooltip,
   },
   setup() {
     const { page, total, size } = usePagination();

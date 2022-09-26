@@ -26,10 +26,10 @@
             <dt>Channel</dt>
             <dd v-if="message" class="flex items-center gap-1">
               <span>{{ message.mirthChannel ? message.mirthChannel : message.mirthChannelId }}</span>
-              <GenericInfoIcon class="inline">
+              <BaseInfoTooltip class="inline">
                 <p>This is the internal UKRDC channel responsible for processing this message.</p>
                 <p>The channel may be important when debugging unexpected errors.</p>
-              </GenericInfoIcon>
+              </BaseInfoTooltip>
             </dd>
             <BaseSkeleText v-else class="h-6 w-full" />
           </BaseDescriptionListGridItem>
@@ -116,6 +116,7 @@ import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseDescriptionListGrid from "~/components/base/BaseDescriptionListGrid.vue";
 import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGridItem.vue";
+import BaseInfoTooltip from "~/components/base/BaseInfoTooltip.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import useApi from "~/composables/useApi";
@@ -135,6 +136,7 @@ export default defineComponent({
     BaseDescriptionListGridItem,
     BaseButtonLink,
     BaseAttachment,
+    BaseInfoTooltip,
   },
   props: {
     message: {

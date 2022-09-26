@@ -23,9 +23,9 @@
           <BaseTableCell>
             <div class="flex gap-1">
               <BadgeTaskStatus :status="task.status" />
-              <GenericInfoIcon v-if="task.error" class="inline">
+              <BaseInfoTooltip v-if="task.error" class="inline">
                 <p><b>Task failed with error: </b>{{ task.error }}</p>
-              </GenericInfoIcon>
+              </BaseInfoTooltip>
             </div>
           </BaseTableCell>
         </tr>
@@ -45,6 +45,7 @@ import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { TrackableTaskSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseCard from "~/components/base/BaseCard.vue";
+import BaseInfoTooltip from "~/components/base/BaseInfoTooltip.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
 import BaseTableCell from "~/components/base/BaseTableCell.vue";
@@ -58,6 +59,7 @@ export default defineComponent({
     BaseTable,
     BaseTableCell,
     BasePaginator,
+    BaseInfoTooltip,
   },
   setup() {
     const { page, total, size } = usePagination();
