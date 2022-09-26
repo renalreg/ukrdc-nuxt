@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
-import { ChannelMessageModel,ConnectorMessageModel } from "@ukkidney/ukrdc-axios-ts";
+import { ChannelMessageModel, ConnectorMessageModel } from "@ukkidney/ukrdc-axios-ts";
 
 import { isEmptyObject } from "~/helpers/objectUtils";
 

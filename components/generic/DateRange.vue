@@ -74,7 +74,7 @@
 </template>
 
 <script lang="ts">
-import { computed,defineComponent, ref } from "@nuxtjs/composition-api";
+import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
 
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import { DateRange, nowString } from "~/helpers/dateUtils";

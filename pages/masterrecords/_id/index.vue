@@ -137,7 +137,7 @@ import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import useApi from "~/composables/useApi";
 import useSensitive from "~/composables/useSensitive";
 import { formatGender } from "~/helpers/codeUtils";
-import { datesAreEqual,formatDate } from "~/helpers/dateUtils";
+import { datesAreEqual, formatDate } from "~/helpers/dateUtils";
 import { isTracing } from "~/helpers/recordUtils";
 
 export default defineComponent({

@@ -70,7 +70,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, useRoute, watch } from "@nuxtjs/composition-api";
-import { ChannelMessageModel, ConnectorMessageData,ConnectorMessageModel } from "@ukkidney/ukrdc-axios-ts";
+import { ChannelMessageModel, ConnectorMessageData, ConnectorMessageModel } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
