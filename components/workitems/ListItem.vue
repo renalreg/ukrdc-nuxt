@@ -9,13 +9,15 @@
         >
           Closed
         </span>
-        <TextNameL1 v-if="item.person" :forename="item.person.givenname" :surname="item.person.surname" />
+        <span v-if="item.person">
+          <h5 class="sensitive inline capitalize">{{ item.person.givenname?.toLowerCase() }}</h5>
+          <h5 class="sensitive inline capitalize italic">{{ item.person.surname?.toLowerCase() }}</h5>
+        </span>
         <h5 v-if="item.person && item.masterRecord" class="inline">→</h5>
-        <TextNameL1
-          v-if="item.masterRecord"
-          :forename="item.masterRecord.givenname"
-          :surname="item.masterRecord.surname"
-        />
+        <span v-if="item.masterRecord">
+          <h5 class="sensitive inline capitalize">{{ item.masterRecord.givenname?.toLowerCase() }}</h5>
+          <h5 class="sensitive inline capitalize italic">{{ item.masterRecord.surname?.toLowerCase() }}</h5>
+        </span>
         <h5 v-else class="inline truncate capitalize text-red-800">Missing Record</h5>
         <p class="mt-2 truncate">{{ item.type }}: {{ item.description }}</p>
       </div>

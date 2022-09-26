@@ -66,7 +66,9 @@
             <dd>
               <BaseCard>
                 <GenericAttachment :filename="filename">
-                  <TextLink @click="downloadPatientRecordDocument()"> Download </TextLink>
+                  <BaseButtonLink class="font-medium" @click="downloadPatientRecordDocument()">
+                    Download
+                  </BaseButtonLink>
                 </GenericAttachment>
               </BaseCard>
             </dd>
@@ -81,6 +83,7 @@
 import { computed, defineComponent, onMounted, ref, useRoute } from "@nuxtjs/composition-api";
 import { DocumentSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
+import BaseButtonLink from "~/components/base/BaseButtonLink.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
@@ -99,6 +102,7 @@ export default defineComponent({
     BaseSkeleText,
     BaseDescriptionListGrid,
     BaseDescriptionListGridItem,
+    BaseButtonLink,
   },
   props: {
     record: {

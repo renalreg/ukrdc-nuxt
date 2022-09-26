@@ -2,7 +2,12 @@
   <div>
     <div v-if="record && record.patient" class="mb-2 items-center md:flex">
       <div class="mb-4 flex-grow text-center sm:text-left md:mb-0">
-        <TextNameH1 :forename="forename" :surname="surname" />
+        <span>
+          <h1 class="sensitive inline capitalize">{{ forename.toLowerCase() }}</h1>
+          <h1 class="sensitive inline capitalize italic">
+            {{ surname.toLowerCase() }}
+          </h1>
+        </span>
       </div>
       <div class="flex">
         <div v-if="record.masterId">

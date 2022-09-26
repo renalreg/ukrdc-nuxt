@@ -4,7 +4,10 @@
     <div class="grid w-full min-w-0 grid-cols-3 px-4 py-4 sm:px-6 md:gap-4 lg:grid-cols-4">
       <!-- Name, DoB, gender -->
       <div>
-        <TextNameL1 :forename="item.givenname" :surname="item.surname" />
+        <span class="truncate">
+          <h5 class="sensitive inline capitalize">{{ item.givenname?.toLowerCase() }}</h5>
+          <h5 class="sensitive inline capitalize italic">{{ item.surname?.toLowerCase() }}</h5>
+        </span>
         <p class="sensitive mt-2 flex items-center">
           {{ formatDate(item.dateOfBirth, false) }}
           <b class="ml-1"> {{ item.gender ? formatGenderCharacter(item.gender) : "Unknown gender" }}</b>

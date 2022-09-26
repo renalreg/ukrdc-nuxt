@@ -2,7 +2,14 @@
   <BaseCard class="border-2 border-red-500">
     <div class="flex h-24 flex-col justify-center px-4 sm:px-6">
       <span>
-        <TextNameH2 :forename="record.givenname" :surname="record.surname" :highlight="highlight" />
+        <span>
+          <h2 class="sensitive inline capitalize" :class="highlight.includes('givenname') ? highlightClasses : []">
+            {{ record.givenname?.toLowerCase() }}
+          </h2>
+          <h2 class="sensitive inline capitalize italic" :class="highlight.includes('surname') ? highlightClasses : []">
+            {{ record.surname?.toLowerCase() }}
+          </h2>
+        </span>
       </span>
 
       <p class="mt-1 max-w-2xl text-gray-500">

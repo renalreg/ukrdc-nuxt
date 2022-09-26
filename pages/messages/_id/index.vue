@@ -45,7 +45,7 @@
         <BaseCard class="w-2/3">
           <GenericAttachment :filename="message.filename || `${message.facility}-${message.id}.txt`">
             <NuxtLink :to="`/messages/${message.id}/source`" class="font-medium"> View </NuxtLink>
-            <TextLink @click="downloadMessageSource"> Download </TextLink>
+            <BaseButtonLink class="font-medium" @click="downloadMessageSource"> Download </BaseButtonLink>
           </GenericAttachment>
         </BaseCard>
       </BaseCardContent>
@@ -109,6 +109,7 @@
 import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { ChannelMessageModel, MasterRecordSchema, MessageSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 
+import BaseButtonLink from "~/components/base/BaseButtonLink.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
@@ -131,6 +132,7 @@ export default defineComponent({
     BaseSkeleListItem,
     BaseDescriptionListGrid,
     BaseDescriptionListGridItem,
+    BaseButtonLink,
   },
   props: {
     message: {

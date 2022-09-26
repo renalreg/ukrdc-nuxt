@@ -9,10 +9,10 @@
         </div>
         <!-- National ID -->
         <div>
-          <TextNameL1
-            :forename="item.patient?.names[0].given || 'Unknown forename'"
-            :surname="item.patient?.names[0].family || 'Unknown surname'"
-          />
+          <span class="truncate">
+            <h5 class="sensitive inline capitalize">{{ item.patient?.names[0].given.toLowerCase() }}</h5>
+            <h5 class="sensitive inline capitalize italic">{{ item.patient?.names[0].family.toLowerCase() }}</h5>
+          </span>
           <p class="sensitive mt-2 flex items-center">
             {{ item.patient?.birthTime ? formatDate(item.patient?.birthTime, false) : "Unknown date of birth" }}
             <b class="ml-1">

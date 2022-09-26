@@ -1,12 +1,14 @@
 <template>
   <BaseCard class="border-2 border-indigo-500">
     <div class="flex h-24 flex-col justify-center px-4 sm:px-6">
-      <TextNameH2
-        :class="highlight.includes('name') ? highlightClasses : []"
-        :forename="record.givenname"
-        :surname="record.surname"
-        :highlight="highlight"
-      />
+      <span :class="highlight.includes('name') ? highlightClasses : []">
+        <h2 class="sensitive inline capitalize" :class="highlight.includes('givenname') ? highlightClasses : []">
+          {{ record.givenname?.toLowerCase() }}
+        </h2>
+        <h2 class="sensitive inline capitalize italic" :class="highlight.includes('surname') ? highlightClasses : []">
+          {{ record.surname?.toLowerCase() }}
+        </h2>
+      </span>
       <p class="mt-1 max-w-2xl text-gray-500">
         {{ label ? label : `Master Record ${record.id}` }}
       </p>

@@ -17,7 +17,10 @@
     </div>
 
     <div v-if="record" class="mb-2">
-      <TextNameH1 :forename="record.givenname" :surname="record.surname" />
+      <span>
+        <h1 class="sensitive inline capitalize">{{ record.givenname?.toLowerCase() }}</h1>
+        <h1 class="sensitive inline capitalize italic">{{ record.surname?.toLowerCase() }}</h1>
+      </span>
       <h5>{{ record.nationalidType }} record</h5>
     </div>
 
