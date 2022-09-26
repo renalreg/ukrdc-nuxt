@@ -109,7 +109,7 @@
       <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div id="incomingCard">
           <!-- Attribute toggle -->
-          <GenericTabToggle
+          <BaseTabToggle
             v-model="showIncomingAttributes"
             true-label="Incoming Attributes"
             false-label="Incoming Person Record"
@@ -137,7 +137,7 @@
 
         <div id="destinationCard">
           <!-- Destination toggle -->
-          <GenericTabToggle
+          <BaseTabToggle
             v-model="showDestinationPersons"
             true-label="Related Person Records"
             false-label="Destination Master Record"
@@ -235,6 +235,7 @@ import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseItemPaginator from "~/components/base/BaseItemPaginator.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
+import BaseTabToggle from "~/components/base/BaseTabToggle.vue";
 import BaseTextArea from "~/components/base/BaseTextArea.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
@@ -260,6 +261,7 @@ export default defineComponent({
     BaseSkeleText,
     BaseItemPaginator,
     BaseTextArea,
+    BaseTabToggle,
   },
   setup() {
     // Dependencies

@@ -3,7 +3,7 @@
     <div v-show="visible" class="fixed inset-0 z-10 overflow-y-auto">
       <div class="flex min-h-screen w-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
         <!-- Background overlay, show/hide based on modal state. -->
-        <GenericBlackout :visible="visible" @click="hide()" />
+        <BaseBlackout :visible="visible" @click="hide()" />
 
         <!-- This element is to trick the browser into centering the modal contents. -->
         <span class="hidden sm:inline-block sm:h-screen sm:align-middle" aria-hidden="true">&#8203;</span>
@@ -211,6 +211,7 @@ import {
   WorkItemSchema,
 } from "@ukkidney/ukrdc-axios-ts";
 
+import BaseBlackout from "~/components/base/BaseBlackout.vue";
 import BaseButton from "~/components/base/BaseButton.vue";
 import BaseCheckbox from "~/components/base/BaseCheckbox.vue";
 import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
@@ -239,6 +240,7 @@ export default defineComponent({
     BaseButton,
     BaseLoadingIndicator,
     BaseCheckbox,
+    BaseBlackout,
   },
   props: {
     item: {

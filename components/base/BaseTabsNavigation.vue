@@ -4,17 +4,11 @@
   <div>
     <div class="sm:hidden">
       <label for="tabs" class="sr-only">Select a tab</label>
-      <select
-        id="tabs"
-        ref="selectEl"
-        name="tabs"
-        class="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
-        @change="changeWithSelect"
-      >
-        <option v-for="tab in tabs" :key="tab.name" :value="tab.href" :selected="urlCompare($route.path, tab.href)">
+      <BaseSelect id="tabs" ref="selectEl" name="tabs" :value="$route.path" @change="switchTab">
+        <option v-for="tab in tabs" :key="tab.name" :value="tab.href">
           {{ tab.name }}
         </option>
-      </select>
+      </BaseSelect>
     </div>
     <div class="hidden sm:block">
       <div class="border-b border-gray-200">
@@ -44,6 +38,7 @@
 <script lang="ts">
 import { defineComponent, ref, useRouter } from "@nuxtjs/composition-api";
 
+import BaseSelect from "~/components/base/BaseSelect.vue";
 import { urlCompare } from "~/helpers/pathUtils";
 
 export interface Tabs {
@@ -52,6 +47,7 @@ export interface Tabs {
 }
 
 export default defineComponent({
+  components: { BaseSelect },
   props: {
     tabs: {
       type: Array as () => Tabs[],
@@ -68,15 +64,7 @@ export default defineComponent({
       emit("input", href);
     }
 
-    function changeWithSelect() {
-      switchTab(selectEl.value?.value);
-    }
-
-    function changeWithButton(value: string) {
-      switchTab(value);
-    }
-
-    return { selectEl, urlCompare, changeWithSelect, changeWithButton };
+    return { selectEl, switchTab, urlCompare };
   },
 });
 </script>

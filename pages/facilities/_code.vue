@@ -12,7 +12,7 @@
       <BaseSkeleText v-else class="h-4 w-1/2" />
     </div>
 
-    <div class="mb-6"><GenericTabsNavigation :tabs="tabs" /></div>
+    <div class="mb-6"><BaseTabsNavigation :tabs="tabs" /></div>
 
     <NuxtChild v-if="facility && extracts" :facility="facility" :extracts="extracts" />
   </div>
@@ -23,6 +23,7 @@ import { computed, defineComponent, onMounted, ref, useMeta, useRoute } from "@n
 import { FacilityDetailsSchema, FacilityExtractsSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
+import BaseTabsNavigation from "~/components/base/BaseTabsNavigation.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import { insertIf } from "~/helpers/arrayUtils";
@@ -31,6 +32,7 @@ import { TabItem } from "~/interfaces/tabs";
 export default defineComponent({
   components: {
     BaseSkeleText,
+    BaseTabsNavigation,
   },
   setup() {
     const route = useRoute();

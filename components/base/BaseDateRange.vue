@@ -83,10 +83,18 @@ export default defineComponent({
   components: {
     BaseButtonMini,
   },
+  model: {
+    prop: "value",
+    event: "input",
+  },
   props: {
     value: {
       type: Object as () => DateRange,
-      required: true,
+      required: false,
+      default: () => ({
+        start: nowString(-365),
+        end: nowString(),
+      }),
     },
     modelConfig: {
       type: Object,

@@ -6,7 +6,7 @@
         class="content-box flex h-screen items-end justify-center px-4 pb-4 pt-32 text-center sm:items-center md:px-4 md:py-4"
       >
         <!-- Background overlay, show/hide based on modal state. -->
-        <GenericBlackout :visible="visible" @click="hide()" />
+        <BaseBlackout :visible="visible" @click="hide()" />
 
         <!-- Modal panel, show/hide based on modal state. -->
         <TransitionModal>
@@ -28,9 +28,13 @@
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
 
+import BaseBlackout from "~/components/base/BaseBlackout.vue";
 import useModal from "~/composables/useModal";
 
 export default defineComponent({
+  components: {
+    BaseBlackout,
+  },
   setup() {
     const { visible, show, hide, toggle } = useModal();
 

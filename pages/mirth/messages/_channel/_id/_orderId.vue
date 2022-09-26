@@ -38,7 +38,7 @@
       </BaseCardContent>
     </BaseCard>
 
-    <div class="mb-6"><GenericTabsMini v-model="currentTab" :tabs="tabs" /></div>
+    <div class="mb-6"><BaseTabsMini v-model="currentTab" :tabs="tabs" /></div>
     <div class="flex-1">
       <div v-if="currentTab == 'metadata'" id="viewerMetadata">
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
@@ -61,7 +61,7 @@
 
       <div v-for="(connectorMessageData, type) in availableconnectorMessageData" :key="type">
         <BaseCard v-if="currentTab == type">
-          <GenericCodeReader :content="connectorMessageData.content" :content-type="connectorMessageData.dataType" />
+          <BaseCodeReader :content="connectorMessageData.content || ''" :content-type="connectorMessageData.dataType" />
         </BaseCard>
       </div>
     </div>
@@ -74,9 +74,11 @@ import { ChannelMessageModel, ConnectorMessageData, ConnectorMessageModel } from
 
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
+import BaseCodeReader from "~/components/base/BaseCodeReader.vue";
 import BaseDescriptionListGrid from "~/components/base/BaseDescriptionListGrid.vue";
 import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGridItem.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
+import BaseTabsMini from "~/components/base/BaseTabsMini.vue";
 import { connectorMessageError } from "~/helpers/mirthUtils";
 
 interface ConnectorMessageDataTabs {
@@ -93,6 +95,8 @@ export default defineComponent({
     BaseSkeleText,
     BaseDescriptionListGrid,
     BaseDescriptionListGridItem,
+    BaseCodeReader,
+    BaseTabsMini,
   },
   props: {
     message: {
@@ -111,7 +115,7 @@ export default defineComponent({
     const formatconnectorMessage = ref(true);
 
     // Manage viewer tabs
-    const currentTab = ref("metadata");
+    const currentTab = ref<string>("metadata");
 
     const tabs = computed(() => {
       return ["metadata"].concat(Object.keys(availableconnectorMessageData.value));

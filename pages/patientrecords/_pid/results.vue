@@ -20,7 +20,7 @@
     />
 
     <BaseLoadingContainer :loading="!results">
-      <GenericDateRange v-model="dateRange" class="mb-4" />
+      <BaseDateRange v-model="dateRange" class="mb-4" />
       <GenericSearchableSelect
         v-model="selectedService"
         class="mb-4"
@@ -103,6 +103,7 @@ import {
 
 import BaseButton from "~/components/base/BaseButton.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
+import BaseDateRange from "~/components/base/BaseDateRange.vue";
 import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
@@ -120,6 +121,7 @@ export default defineComponent({
     BaseLoadingContainer,
     BaseTable,
     BasePaginator,
+    BaseDateRange,
   },
   props: {
     record: {

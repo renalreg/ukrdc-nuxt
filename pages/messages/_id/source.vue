@@ -2,7 +2,7 @@
   <div>
     <BaseLoadingIndicator v-if="fetchSourceInProgress"></BaseLoadingIndicator>
     <BaseCard v-else-if="source && source.content">
-      <GenericCodeReader
+      <BaseCodeReader
         :content="source.content"
         :content-type="source.contentType"
         class="sensitive box-border flex h-full flex-col overflow-x-scroll"
@@ -20,6 +20,7 @@ import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { MessageSchema, MessageSourceSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCodeReader from "~/components/base/BaseCodeReader.vue";
 import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
 import useApi from "~/composables/useApi";
 
@@ -27,6 +28,7 @@ export default defineComponent({
   components: {
     BaseCard,
     BaseLoadingIndicator,
+    BaseCodeReader,
   },
   props: {
     message: {

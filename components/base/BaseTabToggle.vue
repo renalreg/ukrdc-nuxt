@@ -25,6 +25,10 @@
 import { defineComponent } from "@nuxtjs/composition-api";
 
 export default defineComponent({
+  model: {
+    prop: "value",
+    event: "input",
+  },
   props: {
     value: {
       type: Boolean,

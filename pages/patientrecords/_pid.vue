@@ -14,16 +14,16 @@
           <BaseButton :to="`/masterrecords/${record.masterId}`" class="truncate"> View Master Record </BaseButton>
         </div>
         <div v-if="related" class="ml-2">
-          <GenericSelect v-model="selectedPid">
+          <BaseSelect v-model="selectedPid">
             <option v-for="(item, index) in relatedDataRecords" :key="index" :value="item.pid">
               From {{ item.sendingfacility }} via {{ item.sendingextract }}
             </option>
-          </GenericSelect>
+          </BaseSelect>
         </div>
       </div>
     </div>
 
-    <div class="mb-6"><GenericTabsNavigation :tabs="tabs" /></div>
+    <div class="mb-6"><BaseTabsNavigation :tabs="tabs" /></div>
 
     <NuxtChild v-if="record" :record="record" />
   </div>
@@ -43,6 +43,8 @@ import {
 import { PatientRecordSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseButton from "~/components/base/BaseButton.vue";
+import BaseSelect from "~/components/base/BaseSelect.vue";
+import BaseTabsNavigation from "~/components/base/BaseTabsNavigation.vue";
 import useApi from "~/composables/useApi";
 import { firstForename, firstSurname, isMembership } from "~/helpers/recordUtils";
 import { TabItem } from "~/interfaces/tabs";
@@ -50,6 +52,8 @@ import { TabItem } from "~/interfaces/tabs";
 export default defineComponent({
   components: {
     BaseButton,
+    BaseSelect,
+    BaseTabsNavigation,
   },
   setup() {
     const route = useRoute();

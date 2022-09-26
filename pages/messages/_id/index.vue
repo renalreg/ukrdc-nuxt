@@ -43,10 +43,10 @@
       </BaseCardHeader>
       <BaseCardContent>
         <BaseCard class="w-2/3">
-          <GenericAttachment :filename="message.filename || `${message.facility}-${message.id}.txt`">
+          <BaseAttachment :filename="message.filename || `${message.facility}-${message.id}.txt`">
             <NuxtLink :to="`/messages/${message.id}/source`" class="font-medium"> View </NuxtLink>
             <BaseButtonLink class="font-medium" @click="downloadMessageSource"> Download </BaseButtonLink>
-          </GenericAttachment>
+          </BaseAttachment>
         </BaseCard>
       </BaseCardContent>
     </BaseCard>
@@ -109,6 +109,7 @@
 import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { ChannelMessageModel, MasterRecordSchema, MessageSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 
+import BaseAttachment from "~/components/base/BaseAttachment.vue";
 import BaseButtonLink from "~/components/base/BaseButtonLink.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
@@ -133,6 +134,7 @@ export default defineComponent({
     BaseDescriptionListGrid,
     BaseDescriptionListGridItem,
     BaseButtonLink,
+    BaseAttachment,
   },
   props: {
     message: {

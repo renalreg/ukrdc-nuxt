@@ -5,7 +5,7 @@
     </div>
 
     <div class="mb-4 flex flex-col">
-      <GenericDateRange v-model="dateRange" class="mb-4" />
+      <BaseDateRange v-model="dateRange" class="mb-4" />
       <GenericSearchableSelect
         v-if="facilityIds.length > 1"
         v-model="selectedFacility"
@@ -66,6 +66,7 @@ import { OrderBy, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCheckbox from "~/components/base/BaseCheckbox.vue";
+import BaseDateRange from "~/components/base/BaseDateRange.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import useDateRange from "~/composables/query/useDateRange";
@@ -82,6 +83,7 @@ export default defineComponent({
     BaseSkeleListItem,
     BasePaginator,
     BaseCheckbox,
+    BaseDateRange,
   },
   setup() {
     const { page, total, size } = usePagination();

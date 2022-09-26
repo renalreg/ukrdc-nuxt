@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mb-4 flex flex-col gap-2 lg:flex-row">
-      <GenericDateRange v-model="dateRange" class="flex-1" />
+      <BaseDateRange v-model="dateRange" class="flex-1" />
       <BaseButtonMini class="flex-none" @click="toggleOrder">
         <div v-show="orderAscending" class="flex">
           <p>Oldest - Newest</p>
@@ -46,6 +46,7 @@ import { MasterRecordSchema, MasterRecordStatisticsSchema, MessageSchema, OrderB
 
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
+import BaseDateRange from "~/components/base/BaseDateRange.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import useDateRange from "~/composables/query/useDateRange";
@@ -60,6 +61,7 @@ export default defineComponent({
     BaseCard,
     BaseSkeleListItem,
     BasePaginator,
+    BaseDateRange,
   },
   props: {
     record: {

@@ -24,7 +24,7 @@
       <h5>{{ record.nationalidType }} record</h5>
     </div>
 
-    <div class="mb-6"><GenericTabsNavigation :tabs="tabs" /></div>
+    <div class="mb-6"><BaseTabsNavigation :tabs="tabs" /></div>
 
     <NuxtChild v-if="record" :record="record" :stats="stats" />
   </div>
@@ -34,6 +34,7 @@
 import { defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
 import { MasterRecordSchema, MasterRecordStatisticsSchema } from "@ukkidney/ukrdc-axios-ts";
 
+import BaseTabsNavigation from "~/components/base/BaseTabsNavigation.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import { insertIf } from "~/helpers/arrayUtils";
@@ -42,6 +43,9 @@ import { formatDate } from "~/helpers/dateUtils";
 import { TabItem } from "~/interfaces/tabs";
 
 export default defineComponent({
+  components: {
+    BaseTabsNavigation,
+  },
   setup() {
     const route = useRoute();
     const { masterRecordsApi } = useApi();

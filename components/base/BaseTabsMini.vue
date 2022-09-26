@@ -4,15 +4,9 @@
   <div>
     <div class="sm:hidden">
       <label for="tabs" class="sr-only">Select a tab</label>
-      <select
-        id="tabs"
-        ref="selectEl"
-        name="tabs"
-        class="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
-        @change="changeWithSelect"
-      >
+      <BaseSelect id="tabs" ref="selectEl" name="tabs" :value="$route.path" @change="switchTab">
         <option v-for="tab in tabs" :key="tab">{{ tab }}</option>
-      </select>
+      </BaseSelect>
     </div>
     <div class="hidden sm:block">
       <nav class="flex space-x-2" aria-label="Tabs">
@@ -23,7 +17,7 @@
           class="rounded-md px-3 py-2 font-medium capitalize"
           :class="value === tab ? 'bg-indigo-100 text-indigo-700 ' : 'text-gray-500 hover:text-gray-700'"
           :aria-selected="value === tab"
-          @click="changeWithButton(tab)"
+          @click="switchTab(tab)"
         >
           {{ tab }}
         </button>
@@ -36,6 +30,10 @@
 import { defineComponent, ref } from "@nuxtjs/composition-api";
 
 export default defineComponent({
+  model: {
+    prop: "value",
+    event: "input",
+  },
   props: {
     tabs: {
       type: Array as () => string[],
@@ -43,21 +41,18 @@ export default defineComponent({
     },
     value: {
       type: String,
-      required: true,
+      required: false,
+      default: "",
     },
   },
   setup(_, { emit }) {
     const selectEl = ref<HTMLFormElement>();
 
-    function changeWithSelect() {
-      emit("input", selectEl.value?.value);
-    }
-
-    function changeWithButton(value: string) {
+    function switchTab(value: string) {
       emit("input", value);
     }
 
-    return { selectEl, changeWithSelect, changeWithButton };
+    return { selectEl, switchTab };
   },
 });
 </script>

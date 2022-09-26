@@ -2,7 +2,7 @@
   <transition :duration="200">
     <div class="relative">
       <!-- Background overlay, show/hide based on modal state. -->
-      <GenericBlackout :visible="closable && isOpen" @click="cancel()" />
+      <BaseBlackout :visible="closable && isOpen" @click="cancel()" />
 
       <!-- Main component -->
       <div class="flex w-full">
@@ -91,11 +91,13 @@
 <script lang="ts">
 import { computed, defineComponent, nextTick, onMounted, ref } from "@nuxtjs/composition-api";
 
+import BaseBlackout from "~/components/base/BaseBlackout.vue";
 import BaseButton from "~/components/base/BaseButton.vue";
 
 export default defineComponent({
   components: {
     BaseButton,
+    BaseBlackout,
   },
   props: {
     value: {
