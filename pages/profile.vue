@@ -82,11 +82,11 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
 import { UserPreferences } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseButton from "~/components/base/BaseButton.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
-
-import usePermissions from "~/composables/usePermissions";
 import useApi from "~/composables/useApi";
+import usePermissions from "~/composables/usePermissions";
 
 export default defineComponent({
   components: {

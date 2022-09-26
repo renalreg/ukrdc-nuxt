@@ -70,9 +70,10 @@
 <script lang="ts">
 import { computed, defineComponent, useRoute } from "@nuxtjs/composition-api";
 import { WorkItemExtendedSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseCard from "~/components/base/BaseCard.vue";
-import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
+import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import {
   collectionIsUnresolved,

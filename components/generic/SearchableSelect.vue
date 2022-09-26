@@ -90,6 +90,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, nextTick, onMounted, ref } from "@nuxtjs/composition-api";
+
 import BaseButton from "~/components/base/BaseButton.vue";
 
 export default defineComponent({

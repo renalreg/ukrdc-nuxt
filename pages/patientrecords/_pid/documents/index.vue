@@ -32,13 +32,10 @@ import { DocumentSummarySchema, PatientRecordSchema } from "@ukkidney/ukrdc-axio
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
-
-import { formatDate } from "~/helpers/dateUtils";
-
-import usePagination from "~/composables/query/usePagination";
 import useDateRange from "~/composables/query/useDateRange";
-
+import usePagination from "~/composables/query/usePagination";
 import useApi from "~/composables/useApi";
+import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
   components: {

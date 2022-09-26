@@ -70,13 +70,13 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, useRoute, watch } from "@nuxtjs/composition-api";
-import { ConnectorMessageModel, ChannelMessageModel, ConnectorMessageData } from "@ukkidney/ukrdc-axios-ts";
-import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
+import { ChannelMessageModel, ConnectorMessageData,ConnectorMessageModel } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseDescriptionListGrid from "~/components/base/BaseDescriptionListGrid.vue";
 import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGridItem.vue";
-
+import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import { connectorMessageError } from "~/helpers/mirthUtils";
 
 interface ConnectorMessageDataTabs {

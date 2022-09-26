@@ -21,13 +21,12 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
 import { FacilityDetailsSchema, FacilityExtractsSchema } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
-
-import usePermissions from "~/composables/usePermissions";
-
-import { TabItem } from "~/interfaces/tabs";
 import useApi from "~/composables/useApi";
+import usePermissions from "~/composables/usePermissions";
 import { insertIf } from "~/helpers/arrayUtils";
+import { TabItem } from "~/interfaces/tabs";
 
 export default defineComponent({
   components: {

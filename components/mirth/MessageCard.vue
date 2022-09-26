@@ -33,14 +33,14 @@
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { ChannelMessageModel } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
-import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import BaseDescriptionListGrid from "~/components/base/BaseDescriptionListGrid.vue";
 import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGridItem.vue";
-
-import { isEmptyObject } from "~/helpers/objectUtils";
+import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import { messageHasErrors } from "~/helpers/mirthUtils";
+import { isEmptyObject } from "~/helpers/objectUtils";
 
 export default defineComponent({
   components: {

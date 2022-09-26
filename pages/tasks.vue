@@ -43,14 +43,14 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { TrackableTaskSchema } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseCard from "~/components/base/BaseCard.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
 import BaseTableCell from "~/components/base/BaseTableCell.vue";
-import BasePaginator from "~/components/base/BasePaginator.vue";
-
-import { formatDate } from "~/helpers/dateUtils";
-import useTasks from "~/composables/useTasks";
 import usePagination from "~/composables/query/usePagination";
+import useTasks from "~/composables/useTasks";
+import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
   components: {

@@ -72,15 +72,12 @@ import { ObservationSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts
 
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
-import BaseTable from "~/components/base/BaseTable.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
-
+import BaseTable from "~/components/base/BaseTable.vue";
 import usePagination from "~/composables/query/usePagination";
-
-import { formatDate } from "~/helpers/dateUtils";
-
-import useApi from "~/composables/useApi";
 import useQuery from "~/composables/query/useQuery";
+import useApi from "~/composables/useApi";
+import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
   components: {

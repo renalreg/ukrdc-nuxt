@@ -28,10 +28,10 @@
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
 import { MedicationSchema } from "@ukkidney/ukrdc-axios-ts";
-import BaseCard from "~/components/base/BaseCard.vue";
 
-import { formatDate } from "~/helpers/dateUtils";
+import BaseCard from "~/components/base/BaseCard.vue";
 import { formatGender } from "~/helpers/codeUtils";
+import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
   components: {

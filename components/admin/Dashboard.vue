@@ -91,9 +91,10 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
 import { computed, defineComponent, onMounted, ref, useRouter } from "@nuxtjs/composition-api";
 import { AdminCountsSchema, HistoryPoint } from "@ukkidney/ukrdc-axios-ts";
 import { PlotDatum } from "plotly.js";
+
 import BaseCard from "~/components/base/BaseCard.vue";
-import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseCardFooter from "~/components/base/BaseCardFooter.vue";
+import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import useApi from "~/composables/useApi";
 import { getPointDateRange, unpackHistoryPoints } from "~/helpers/chartUtils";
 

@@ -74,9 +74,10 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useMeta, useRoute, watch } from "@nuxtjs/composition-api";
 import { ExtendedCodeSchema } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
-import { formatDate } from "~/helpers/dateUtils";
 import useApi from "~/composables/useApi";
+import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
   components: {

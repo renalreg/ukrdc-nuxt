@@ -87,9 +87,8 @@ import { computed, defineComponent, onMounted, ref, watch } from "@nuxtjs/compos
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseCard from "~/components/base/BaseCard.vue";
-import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
-
+import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";
 import useRecordSearch from "~/composables/query/useRecordSearch";

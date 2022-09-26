@@ -29,15 +29,14 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
-
 import { MasterRecordSchema, MasterRecordStatisticsSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "~/helpers/dateUtils";
-import { formatGender } from "~/helpers/codeUtils";
-import { insertIf } from "~/helpers/arrayUtils";
 
-import { TabItem } from "~/interfaces/tabs";
-import usePermissions from "~/composables/usePermissions";
 import useApi from "~/composables/useApi";
+import usePermissions from "~/composables/usePermissions";
+import { insertIf } from "~/helpers/arrayUtils";
+import { formatGender } from "~/helpers/codeUtils";
+import { formatDate } from "~/helpers/dateUtils";
+import { TabItem } from "~/interfaces/tabs";
 
 export default defineComponent({
   setup() {

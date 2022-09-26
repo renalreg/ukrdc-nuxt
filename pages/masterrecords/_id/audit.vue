@@ -44,17 +44,15 @@
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import { AuditEventSchema, MasterRecordSchema, OrderBy } from "@ukkidney/ukrdc-axios-ts";
 
-import BaseCard from "~/components/base/BaseCard.vue";
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
-import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+import BaseCard from "~/components/base/BaseCard.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
-
-import { nowString } from "~/helpers/dateUtils";
+import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+import useDateRange from "~/composables/query/useDateRange";
 import usePagination from "~/composables/query/usePagination";
 import useSortBy from "~/composables/query/useSortBy";
-import useDateRange from "~/composables/query/useDateRange";
-
 import useApi from "~/composables/useApi";
+import { nowString } from "~/helpers/dateUtils";
 
 export default defineComponent({
   components: {

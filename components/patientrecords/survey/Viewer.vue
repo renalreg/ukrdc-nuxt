@@ -70,10 +70,9 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
 import { SurveyQuestionSchema, SurveySchema } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseCardDescriptionList from "~/components/base/BaseCardDescriptionList.vue";
-
 import { formatDate } from "~/helpers/dateUtils";
-
 import { modalInterface } from "~/interfaces/modal";
 
 interface GroupedQuestions {

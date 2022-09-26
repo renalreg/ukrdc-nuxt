@@ -7,6 +7,7 @@
 
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
+
 import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
 
 export default defineComponent({

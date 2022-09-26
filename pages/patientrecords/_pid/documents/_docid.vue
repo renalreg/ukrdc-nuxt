@@ -84,12 +84,11 @@ import { DocumentSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
-import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import BaseDescriptionListGrid from "~/components/base/BaseDescriptionListGrid.vue";
 import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGridItem.vue";
-
-import { formatDate } from "~/helpers/dateUtils";
+import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import useApi from "~/composables/useApi";
+import { formatDate } from "~/helpers/dateUtils";
 import { saveAs } from "~/helpers/fileUtils";
 
 export default defineComponent({

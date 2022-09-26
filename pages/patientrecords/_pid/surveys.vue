@@ -40,11 +40,10 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { PatientRecordSchema, SurveySchema } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
-
-import { formatDate } from "~/helpers/dateUtils";
-
 import useApi from "~/composables/useApi";
+import { formatDate } from "~/helpers/dateUtils";
 import { surveyViewerModalInterface } from "~/interfaces/modal";
 
 export default defineComponent({

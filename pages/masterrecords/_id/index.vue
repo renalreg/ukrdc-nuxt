@@ -127,18 +127,18 @@ import {
   MinimalMessageSchema,
   PatientRecordSummarySchema,
 } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
-import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import BaseDescriptionListGrid from "~/components/base/BaseDescriptionListGrid.vue";
 import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGridItem.vue";
-
-import { formatDate, datesAreEqual } from "~/helpers/dateUtils";
-import { formatGender } from "~/helpers/codeUtils";
-import { isTracing } from "~/helpers/recordUtils";
+import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import useApi from "~/composables/useApi";
 import useSensitive from "~/composables/useSensitive";
+import { formatGender } from "~/helpers/codeUtils";
+import { datesAreEqual,formatDate } from "~/helpers/dateUtils";
+import { isTracing } from "~/helpers/recordUtils";
 
 export default defineComponent({
   components: {

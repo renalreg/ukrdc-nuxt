@@ -53,11 +53,10 @@ import { defineComponent } from "@nuxtjs/composition-api";
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseCard from "~/components/base/BaseCard.vue";
-import BaseCardDescriptionList from "~/components/base/BaseCardDescriptionList.vue";
 import BaseCardDescriptionItem from "~/components/base/BaseCardDescriptionItem.vue";
-
-import { formatDate } from "~/helpers/dateUtils";
+import BaseCardDescriptionList from "~/components/base/BaseCardDescriptionList.vue";
 import { formatGender } from "~/helpers/codeUtils";
+import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
   components: {

@@ -43,6 +43,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
+
 import BaseButton from "~/components/base/BaseButton.vue";
 import { modalInterface } from "~/interfaces/modal";
 

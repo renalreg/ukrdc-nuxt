@@ -98,9 +98,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, useMeta } from "@nuxtjs/composition-api";
-import useSensitive from "~/composables/useSensitive";
 import "floating-vue/dist/style.css";
+
+import { defineComponent, ref, useContext, useMeta } from "@nuxtjs/composition-api";
+
+import useSensitive from "~/composables/useSensitive";
 
 export default defineComponent({
   setup() {

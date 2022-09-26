@@ -45,9 +45,9 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { ChannelGroupModel } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
-
 import useApi from "~/composables/useApi";
 
 export default defineComponent({

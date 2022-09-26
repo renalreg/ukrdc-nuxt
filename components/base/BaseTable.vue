@@ -12,6 +12,7 @@
 
 <script>
 import { defineComponent } from "@nuxtjs/composition-api";
+
 import BaseCard from "~/components/base/BaseCard.vue";
 
 export default defineComponent({

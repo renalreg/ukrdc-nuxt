@@ -65,11 +65,10 @@ import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { PersonSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseCard from "~/components/base/BaseCard.vue";
-import BaseCardDescriptionList from "~/components/base/BaseCardDescriptionList.vue";
 import BaseCardDescriptionItem from "~/components/base/BaseCardDescriptionItem.vue";
-
-import { formatDate } from "~/helpers/dateUtils";
+import BaseCardDescriptionList from "~/components/base/BaseCardDescriptionList.vue";
 import { formatGender } from "~/helpers/codeUtils";
+import { formatDate } from "~/helpers/dateUtils";
 
 interface realLocalId {
   localid: string;

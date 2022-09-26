@@ -10,12 +10,11 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { LinkRecordSchema, MasterRecordSchema, MasterRecordStatisticsSchema } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
-
-import { formatDate } from "~/helpers/dateUtils";
-import { formatGender } from "~/helpers/codeUtils";
-
 import useApi from "~/composables/useApi";
+import { formatGender } from "~/helpers/codeUtils";
+import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
   components: {

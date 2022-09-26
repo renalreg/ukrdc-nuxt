@@ -29,11 +29,9 @@ import { LabOrderShortSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-
 
 import BaseCard from "~/components/base/BaseCard.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
-
-import { formatDate } from "~/helpers/dateUtils";
-
 import usePagination from "~/composables/query/usePagination";
 import useApi from "~/composables/useApi";
+import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
   components: {

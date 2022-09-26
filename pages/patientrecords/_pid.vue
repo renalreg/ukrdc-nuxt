@@ -36,12 +36,11 @@ import {
   watch,
 } from "@nuxtjs/composition-api";
 import { PatientRecordSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseButton from "~/components/base/BaseButton.vue";
-
-import { TabItem } from "~/interfaces/tabs";
-
-import { firstForename, firstSurname, isMembership } from "~/helpers/recordUtils";
 import useApi from "~/composables/useApi";
+import { firstForename, firstSurname, isMembership } from "~/helpers/recordUtils";
+import { TabItem } from "~/interfaces/tabs";
 
 export default defineComponent({
   components: {

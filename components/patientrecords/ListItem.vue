@@ -62,11 +62,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from "@nuxtjs/composition-api";
+import { computed,defineComponent, ref } from "@nuxtjs/composition-api";
 import { PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
-import { formatDate } from "~/helpers/dateUtils";
 import { formatGenderCharacter } from "~/helpers/codeUtils";
+import { formatDate } from "~/helpers/dateUtils";
 import { firstMRN } from "~/helpers/recordUtils";
 
 interface localNumber {

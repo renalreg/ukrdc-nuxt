@@ -33,6 +33,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
+
 import BaseButton from "~/components/base/BaseButton.vue";
 
 type Pages = (number | "...")[];

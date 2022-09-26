@@ -45,13 +45,12 @@ Mini (half-width) search bar and results pages used in the EMPI Merge page.
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
-import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
-
+import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import usePagination from "~/composables/query/usePagination";
-
 import useRecordSearch from "~/composables/query/useRecordSearch";
 import useApi from "~/composables/useApi";
 

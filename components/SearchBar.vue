@@ -41,6 +41,7 @@
 
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
+
 import BaseButton from "~/components/base/BaseButton.vue";
 
 export default defineComponent({

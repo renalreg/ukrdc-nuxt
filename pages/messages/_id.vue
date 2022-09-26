@@ -20,12 +20,11 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
 import { MessageSchema } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
-
-import { makeMessageSummary } from "~/helpers/messageUtils";
-
 import useApi from "~/composables/useApi";
 import useSensitive from "~/composables/useSensitive";
+import { makeMessageSummary } from "~/helpers/messageUtils";
 
 export default defineComponent({
   components: {

@@ -28,10 +28,9 @@
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import { MessageSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 
-import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
-
 import useApi from "~/composables/useApi";
 
 export default defineComponent({

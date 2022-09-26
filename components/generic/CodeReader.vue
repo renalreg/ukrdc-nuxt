@@ -14,6 +14,7 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
 import formatXml from "xml-formatter";
+
 import BaseToggle from "~/components/base/BaseToggle.vue";
 
 export default defineComponent({

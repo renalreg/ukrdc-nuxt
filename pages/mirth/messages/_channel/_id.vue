@@ -15,8 +15,8 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
 import { ChannelMessageModel } from "@ukkidney/ukrdc-axios-ts";
-import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 
+import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import useApi from "~/composables/useApi";
 
 export default defineComponent({

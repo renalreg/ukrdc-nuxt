@@ -16,6 +16,7 @@
 import { computed, defineComponent, onMounted, ref, useRouter } from "@nuxtjs/composition-api";
 import { FacilityDetailsSchema, HistoryPoint } from "@ukkidney/ukrdc-axios-ts";
 import { PlotDatum } from "plotly.js";
+
 import useApi from "~/composables/useApi";
 import { getPointDateRange, unpackHistoryPoints } from "~/helpers/chartUtils";
 

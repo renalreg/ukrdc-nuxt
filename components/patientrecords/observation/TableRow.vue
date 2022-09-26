@@ -20,6 +20,7 @@
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
 import { ObservationSchema } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseTableCell from "~/components/base/BaseTableCell.vue";
 import { formatDate } from "~/helpers/dateUtils";
 

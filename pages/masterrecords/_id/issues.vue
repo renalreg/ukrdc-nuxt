@@ -61,12 +61,10 @@ import {
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
-
-import { formatDate } from "~/helpers/dateUtils";
-import { formatGender } from "~/helpers/codeUtils";
-
-import usePermissions from "~/composables/usePermissions";
 import useApi from "~/composables/useApi";
+import usePermissions from "~/composables/usePermissions";
+import { formatGender } from "~/helpers/codeUtils";
+import { formatDate } from "~/helpers/dateUtils";
 
 interface MultipleUKRDCIDsGroupItem {
   lastUpdated: string | null;

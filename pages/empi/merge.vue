@@ -104,21 +104,20 @@
 <script lang="ts">
 import {
   computed,
+  defineComponent,
+  onMounted,
   ref,
   useContext,
   useRoute,
   useRouter,
-  defineComponent,
-  onMounted,
   watch,
 } from "@nuxtjs/composition-api";
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseButton from "~/components/base/BaseButton.vue";
-
 import useQuery from "~/composables/query/useQuery";
-
-import { modalInterface } from "~/interfaces/modal";
 import useApi from "~/composables/useApi";
+import { modalInterface } from "~/interfaces/modal";
 
 type Direction = "superseding" | "superseded";
 

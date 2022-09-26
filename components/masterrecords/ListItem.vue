@@ -38,8 +38,9 @@
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "~/helpers/dateUtils";
+
 import { formatGenderCharacter } from "~/helpers/codeUtils";
+import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
   props: {

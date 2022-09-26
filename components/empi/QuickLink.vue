@@ -43,6 +43,7 @@ Big link cards used in the EMPI page, to direct to Merge etc.
 
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
+
 import BaseCard from "~/components/base/BaseCard.vue";
 
 export default defineComponent({

@@ -109,13 +109,13 @@ Table of facilities and their basic statistics
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import { FacilityDetailsSchema, FacilitySorterEnum, OrderBy } from "@ukkidney/ukrdc-axios-ts";
+
 import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
 import BaseTableCell from "~/components/base/BaseTableCell.vue";
+import useApi from "~/composables/useApi";
 import { formatDate } from "~/helpers/dateUtils";
 import { facilityLastMessageOver48 } from "~/helpers/facilityUtils";
-
-import useApi from "~/composables/useApi";
 
 interface IsAscending {
   [key: string]: boolean | null;

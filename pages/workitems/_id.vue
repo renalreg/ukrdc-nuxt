@@ -232,22 +232,19 @@
 import { computed, defineComponent, onMounted, ref, useContext, useMeta, useRoute } from "@nuxtjs/composition-api";
 import { WorkItemExtendedSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 
+import BaseButton from "~/components/base/BaseButton.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
-import BaseButton from "~/components/base/BaseButton.vue";
-import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import BaseItemPaginator from "~/components/base/BaseItemPaginator.vue";
-
-import { formatDate } from "~/helpers/dateUtils";
+import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
+import useApi from "~/composables/useApi";
+import usePermissions from "~/composables/usePermissions";
 import { formatGender } from "~/helpers/codeUtils";
+import { formatDate } from "~/helpers/dateUtils";
 import { isEmptyObject } from "~/helpers/objectUtils";
 import { delay } from "~/helpers/timeUtils";
 import { workItemIsMergable } from "~/helpers/workItemUtils";
-
 import { modalInterface } from "~/interfaces/modal";
-
-import usePermissions from "~/composables/usePermissions";
-import useApi from "~/composables/useApi";
 
 interface AvailableActions {
   close: boolean;
