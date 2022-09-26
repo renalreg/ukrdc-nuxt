@@ -110,7 +110,7 @@ export default defineComponent({
       required: true,
     },
     labels: {
-      type: Array as () => string[],
+      type: Array as () => (string | undefined)[],
       required: false,
       default: null,
     },
@@ -201,14 +201,14 @@ export default defineComponent({
       highlight(highlightedIndex.value + 1 >= filteredOptions.value.length ? 0 : highlightedIndex.value + 1);
     }
 
-    function labelFor(value: string): string | null {
+    function labelFor(value: string): string | undefined {
       if (props.labels) {
         const index = props.options.indexOf(value);
         if (index) {
           return props.labels[index];
         }
       }
-      return null;
+      return undefined;
     }
 
     onMounted(() => {

@@ -3,7 +3,7 @@
     <BaseLoadingContainer :loading="!observations">
       <p v-if="observations && observations.length <= 0" class="text-center">No observations on record</p>
       <div v-else>
-        <GenericSearchableSelect
+        <BaseSelectSearchable
           v-model="selectedCode"
           class="mb-4"
           :options="availableCodes"
@@ -73,6 +73,7 @@ import { ObservationSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
+import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
 import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";
@@ -85,6 +86,7 @@ export default defineComponent({
     BaseLoadingContainer,
     BaseTable,
     BasePaginator,
+    BaseSelectSearchable,
   },
   props: {
     record: {

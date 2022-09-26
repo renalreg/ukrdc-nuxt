@@ -24,7 +24,7 @@
     </div>
 
     <div v-if="standards && standards.length > 1" :class="$route.params.id ? 'hidden lg:block' : 'block'">
-      <GenericSearchableSelect
+      <BaseSelectSearchable
         v-model="selectedStandard"
         class="mb-4"
         :options="standards"
@@ -91,6 +91,7 @@ import BaseCard from "~/components/base/BaseCard.vue";
 import BaseMenu from "~/components/base/BaseMenu.vue";
 import BaseMenuItem from "~/components/base/BaseMenuItem.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
+import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";
@@ -105,6 +106,7 @@ export default defineComponent({
     BaseMenuItem,
     BaseSkeleListItem,
     BasePaginator,
+    BaseSelectSearchable,
   },
   setup() {
     const { page, total, size } = usePagination();

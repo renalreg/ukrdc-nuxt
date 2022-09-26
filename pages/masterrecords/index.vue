@@ -15,7 +15,7 @@
           </div>
         </div>
         <div v-show="advancedOpen" class="mb-4 overflow-visible">
-          <GenericSearchableSelect
+          <BaseSelectSearchable
             v-if="facilityIds.length > 1"
             v-model="selectedFacility"
             class="mb-4"
@@ -89,6 +89,7 @@ import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCheckpill from "~/components/base/BaseCheckpill.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
+import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";
@@ -102,6 +103,7 @@ export default defineComponent({
     BaseSkeleListItem,
     BasePaginator,
     BaseCheckpill,
+    BaseSelectSearchable,
   },
   setup() {
     const { page, total, size } = usePagination();

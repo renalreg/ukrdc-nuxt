@@ -6,7 +6,7 @@
 
     <div class="mb-4 flex flex-col">
       <BaseDateRange v-model="dateRange" class="mb-4" />
-      <GenericSearchableSelect
+      <BaseSelectSearchable
         v-if="facilityIds.length > 1"
         v-model="selectedFacility"
         class="mb-4"
@@ -68,6 +68,7 @@ import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCheckbox from "~/components/base/BaseCheckbox.vue";
 import BaseDateRange from "~/components/base/BaseDateRange.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
+import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import useDateRange from "~/composables/query/useDateRange";
 import usePagination from "~/composables/query/usePagination";
@@ -84,6 +85,7 @@ export default defineComponent({
     BasePaginator,
     BaseCheckbox,
     BaseDateRange,
+    BaseSelectSearchable,
   },
   setup() {
     const { page, total, size } = usePagination();
