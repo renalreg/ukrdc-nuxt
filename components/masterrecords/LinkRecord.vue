@@ -8,7 +8,7 @@ Includes a header with the Link Record ID and functionality to Unlink the record
     <GenericModalSlot ref="unlinkModal">
       <div class="text-left">
         <div class="mb-4">Unlink comment</div>
-        <FormTextArea v-model="unlinkComment" :max-length="100" rows="3"></FormTextArea>
+        <BaseTextArea v-model="unlinkComment" :max-length="100" rows="3"></BaseTextArea>
       </div>
 
       <div class="flex justify-end">
@@ -42,6 +42,7 @@ import { LinkRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseButton from "~/components/base/BaseButton.vue";
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
+import BaseTextArea from "~/components/base/BaseTextArea.vue";
 import useApi from "~/composables/useApi";
 import { formatGender } from "~/helpers/codeUtils";
 import { formatDate } from "~/helpers/dateUtils";
@@ -52,6 +53,7 @@ export default defineComponent({
     BaseButton,
     BaseButtonMini,
     BaseCard,
+    BaseTextArea,
   },
   props: {
     record: {

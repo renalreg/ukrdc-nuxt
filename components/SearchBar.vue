@@ -21,7 +21,7 @@
             </svg>
           </div>
           <form @submit.prevent="$emit('submit')">
-            <FormTextBox
+            <BaseTextBox
               :focus="true"
               class="w-full pl-10"
               placeholder="Search"
@@ -43,10 +43,12 @@
 import { defineComponent } from "@nuxtjs/composition-api";
 
 import BaseButton from "~/components/base/BaseButton.vue";
+import BaseTextBox from "~/components/base/BaseTextBox.vue";
 
 export default defineComponent({
   components: {
     BaseButton,
+    BaseTextBox,
   },
   props: {
     value: {

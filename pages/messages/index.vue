@@ -23,11 +23,11 @@
         </div>
 
         <form v-show="!nationalId" class="flex" @submit.prevent="nationalId = nationalIdSearchString.trim()">
-          <FormTextBoxMini
+          <BaseTextBoxMini
             v-model="nationalIdSearchString"
             class="z-20 flex-grow rounded-r-none"
             placeholder="Filter by Patient Number"
-          ></FormTextBoxMini>
+          ></BaseTextBoxMini>
           <BaseButtonMini class="z-10" anchor="left" type="submit">Go</BaseButtonMini>
         </form>
 
@@ -83,6 +83,7 @@ import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCheckbox from "~/components/base/BaseCheckbox.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+import BaseTextBoxMini from "~/components/base/BaseTextBoxMini.vue";
 import useDateRange from "~/composables/query/useDateRange";
 import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";
@@ -99,6 +100,7 @@ export default defineComponent({
     BaseSkeleListItem,
     BasePaginator,
     BaseCheckbox,
+    BaseTextBoxMini,
   },
   setup() {
     const { page, total, size } = usePagination();

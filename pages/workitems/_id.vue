@@ -4,7 +4,7 @@
     <GenericModalSlot v-if="hasPermission('ukrdc:workitems:write')" ref="addCommentModal">
       <div class="text-left">
         <div class="mb-4">Add Work Item comment</div>
-        <FormTextArea v-model="customComment" :max-length="100" rows="3"></FormTextArea>
+        <BaseTextArea v-model="customComment" :max-length="100" rows="3"></BaseTextArea>
       </div>
 
       <div class="flex justify-end">
@@ -25,12 +25,10 @@
       <div class="text-left">
         <div class="mb-4">{{ closeMessageOverride ? closeMessageOverride : "Close the Work Item" }}</div>
 
-        <div>
-          <FormLabel>
-            Comments
-            <FormTextArea v-model="customComment" :max-length="100" rows="3"></FormTextArea>
-          </FormLabel>
-        </div>
+        <label>
+          Comments
+          <BaseTextArea v-model="customComment" :max-length="100" rows="3"></BaseTextArea>
+        </label>
       </div>
 
       <div class="flex justify-end">
@@ -237,6 +235,7 @@ import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseItemPaginator from "~/components/base/BaseItemPaginator.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
+import BaseTextArea from "~/components/base/BaseTextArea.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import { formatGender } from "~/helpers/codeUtils";
@@ -260,6 +259,7 @@ export default defineComponent({
     BaseCardHeader,
     BaseSkeleText,
     BaseItemPaginator,
+    BaseTextArea,
   },
   setup() {
     // Dependencies

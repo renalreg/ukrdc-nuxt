@@ -172,6 +172,10 @@ th {
   @apply text-sm font-medium uppercase tracking-wider text-gray-500;
 }
 
+label {
+  @apply font-medium text-gray-500;
+}
+
 .v-popper__popper {
   font-size: 12px;
 }
