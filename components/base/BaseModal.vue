@@ -29,7 +29,7 @@
 import { defineComponent } from "@nuxtjs/composition-api";
 
 import BaseBlackout from "~/components/base/BaseBlackout.vue";
-import ModalTransition from "~/components/base/ModalTransition.vue";
+import ModalTransition from "~/components/transition/ModalTransition.vue";
 import useModal from "~/composables/useModal";
 
 export default defineComponent({

@@ -215,7 +215,7 @@ import BaseBlackout from "~/components/base/BaseBlackout.vue";
 import BaseButton from "~/components/base/BaseButton.vue";
 import BaseCheckbox from "~/components/base/BaseCheckbox.vue";
 import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
-import ModalTransition from "~/components/base/ModalTransition.vue";
+import ModalTransition from "~/components/transition/ModalTransition.vue";
 import useApi from "~/composables/useApi";
 import useModal from "~/composables/useModal";
 import { formatDate } from "~/helpers/dateUtils";

@@ -128,10 +128,10 @@ import {
   PatientRecordSummarySchema,
 } from "@ukkidney/ukrdc-axios-ts";
 
-import BaseAlertError from "~/components/base/alerts/BaseAlertError.vue";
-import BaseAlertInfo from "~/components/base/alerts/BaseAlertInfo.vue";
-import BaseAlertPlaceholder from "~/components/base/alerts/BaseAlertPlaceholder.vue";
-import BaseAlertWarning from "~/components/base/alerts/BaseAlertWarning.vue";
+import BaseAlertError from "~/components/base/BaseAlertError.vue";
+import BaseAlertInfo from "~/components/base/BaseAlertInfo.vue";
+import BaseAlertPlaceholder from "~/components/base/BaseAlertPlaceholder.vue";
+import BaseAlertWarning from "~/components/base/BaseAlertWarning.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
