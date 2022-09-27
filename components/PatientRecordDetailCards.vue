@@ -16,12 +16,12 @@
           </div>
           <div>
             <h5>Date of Birth</h5>
-            <p class="sensitive">{{ formatDate(record.patient.birthTime, (t = false)) }}</p>
+            <p class="sensitive">{{ formatDate(record.patient.birthTime, false) }}</p>
           </div>
           <div>
             <h5>Date of Death</h5>
             <p class="sensitive">
-              {{ record.patient.deathTime ? formatDate(record.patient.deathTime, (t = false)) : "N/A" }}
+              {{ record.patient.deathTime ? formatDate(record.patient.deathTime, false) : "N/A" }}
             </p>
           </div>
           <div>
@@ -95,7 +95,7 @@
             <p v-if="item.countryDescription">
               {{ item.countryDescription }}
             </p>
-            <p v-if="item.fromTime">Since {{ formatDate(item.fromTime, (t = false)) }}</p>
+            <p v-if="item.fromTime">Since {{ formatDate(item.fromTime, false) }}</p>
             <span
               v-if="!item.toTime"
               class="mt-2 inline-block flex-shrink-0 rounded-sm bg-green-100 px-2 py-0.5 text-sm font-medium text-green-800"
@@ -104,7 +104,7 @@
             <span
               v-else
               class="mt-2 inline-block flex-shrink-0 rounded-sm bg-red-100 px-2 py-0.5 text-sm font-medium text-red-800"
-              >Inactive since {{ formatDate(item.toTime, (t = false)) }}</span
+              >Inactive since {{ formatDate(item.toTime, false) }}</span
             >
           </BaseCard>
         </li>
@@ -127,7 +127,7 @@
             <b>
               {{ item.programName }}
             </b>
-            <p v-if="item.fromTime">Since {{ formatDate(item.fromTime, (t = false)) }}</p>
+            <p v-if="item.fromTime">Since {{ formatDate(item.fromTime, false) }}</p>
             <span
               v-if="!item.toTime"
               class="mt-2 inline-block flex-shrink-0 rounded-sm bg-green-100 px-2 py-0.5 text-sm font-medium text-green-800"
@@ -136,7 +136,7 @@
             <span
               v-else
               class="mt-2 inline-block flex-shrink-0 rounded-sm bg-red-100 px-2 py-0.5 text-sm font-medium text-red-800"
-              >Closed on {{ formatDate(item.toTime, (t = false)) }}</span
+              >Closed on {{ formatDate(item.toTime, false) }}</span
             >
           </BaseCard>
         </li>

@@ -14,7 +14,7 @@
             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
               <dt>Entered On</dt>
               <dd class="sm:col-span-2">
-                {{ formatDate(survey.surveytime, (t = false)) }}
+                {{ formatDate(survey.surveytime, false) }}
               </dd>
             </div>
             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">

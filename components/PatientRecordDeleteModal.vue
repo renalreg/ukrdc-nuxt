@@ -51,7 +51,7 @@
                       <li>
                         Patient record {{ previewResponse.patientRecord.pid }} - UKRDCID
                         {{ previewResponse.patientRecord.ukrdcid }} - Created
-                        {{ formatDate(previewResponse.patientRecord.repositoryCreationDate, (t = false)) }}
+                        {{ formatDate(previewResponse.patientRecord.repositoryCreationDate, false) }}
                         <ul class="ml-4 list-disc">
                           <li v-if="previewResponse.patientRecord.programMemberships.length > 0">
                             {{ previewResponse.patientRecord.programMemberships.length }} program memberships
@@ -60,7 +60,7 @@
                                 v-for="membership in previewResponse.patientRecord.programMemberships"
                                 :key="membership.programName"
                               >
-                                {{ membership.programName }} since {{ formatDate(membership.fromTime, (t = false)) }}
+                                {{ membership.programName }} since {{ formatDate(membership.fromTime, false) }}
                               </li>
                             </ul>
                           </li>
@@ -102,7 +102,7 @@
                           </li>
                           <li v-if="previewResponse.patientRecord.patient">
                             Patient - Date of Birth
-                            {{ formatDate(previewResponse.patientRecord.patient.birthTime, (t = false)) }}
+                            {{ formatDate(previewResponse.patientRecord.patient.birthTime, false) }}
                             <ul class="ml-4 list-disc">
                               <li
                                 v-for="name in previewResponse.patientRecord.patient.names"
@@ -128,7 +128,7 @@
                           <li v-for="masterRecord in previewResponse.empi.masterRecords" :key="masterRecord.id">
                             Master Record {{ masterRecord.id }} - {{ masterRecord.givenname }}
                             {{ masterRecord.surname }} - Date of Birth
-                            {{ formatDate(masterRecord.dateOfBirth, (t = false)) }}
+                            {{ formatDate(masterRecord.dateOfBirth, false) }}
                           </li>
                         </ul>
                       </li>
@@ -138,7 +138,7 @@
                         <ul class="ml-4 list-disc">
                           <li v-for="person in previewResponse.empi.persons" :key="person.id">
                             Person {{ person.id }} - {{ person.givenname }} {{ person.surname }} - Date of Birth
-                            {{ formatDate(person.dateOfBirth, (t = false)) }}
+                            {{ formatDate(person.dateOfBirth, false) }}
                           </li>
                         </ul>
                       </li>
