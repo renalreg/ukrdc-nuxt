@@ -16,7 +16,7 @@ Basic code map description, used in the maps sections of a Code pane.
 import { defineComponent } from "@nuxtjs/composition-api";
 import { CodeMapSchema } from "@ukkidney/ukrdc-axios-ts";
 
-import CodeTitle from "./CodeTitle.vue";
+import CodeTitle from "~/components/CodeTitle.vue";
 
 export default defineComponent({
   components: {

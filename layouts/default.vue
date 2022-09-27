@@ -102,12 +102,14 @@ import "floating-vue/dist/style.css";
 
 import { defineComponent, ref, useContext, useMeta } from "@nuxtjs/composition-api";
 
+import ProfileBadge from "~/components/ProfileBadge.vue";
 import Sidebar from "~/components/Sidebar.vue";
 import useSensitive from "~/composables/useSensitive";
 
 export default defineComponent({
   components: {
     Sidebar,
+    ProfileBadge,
   },
   setup() {
     const { base } = useContext();

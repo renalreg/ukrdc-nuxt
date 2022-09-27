@@ -17,11 +17,13 @@ import { defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/comp
 import { ChannelMessageModel } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
+import MirthMessageCard from "~/components/MirthMessageCard.vue";
 import useApi from "~/composables/useApi";
 
 export default defineComponent({
   components: {
     BaseSkeleText,
+    MirthMessageCard,
   },
   setup() {
     const route = useRoute();

@@ -73,6 +73,7 @@
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 
+import ProfileBadge from "~/components/ProfileBadge.vue";
 import usePermissions from "~/composables/usePermissions";
 
 interface NavItem {
@@ -84,6 +85,9 @@ interface NavItem {
 }
 
 export default defineComponent({
+  components: {
+    ProfileBadge,
+  },
   props: {
     showCloseButton: {
       type: Boolean,

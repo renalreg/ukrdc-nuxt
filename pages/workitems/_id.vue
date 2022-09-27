@@ -52,9 +52,9 @@
     <!-- Info Cards -->
     <div class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
       <!-- Work Item Details -->
-      <WorkitemsDetailCard :item="record" />
+      <WorkItemDetailCard :item="record" />
       <!-- Work Item Advice -->
-      <WorkitemsAdviceCard :item="record" :related="workItemCollection" />
+      <WorkItemAdviceCard :item="record" :related="workItemCollection" />
     </div>
 
     <!-- Action Buttons -->
@@ -116,7 +116,7 @@
             class="mb-2"
           />
           <!-- Type 9 incoming attribute card -->
-          <WorkitemsAttributeRecordCard
+          <WorkItemAttributesCard
             v-if="showIncomingAttributes"
             :record="record.attributes"
             label="Incoming Attributes"
@@ -215,14 +215,14 @@
       <ul class="divide-y divide-gray-200">
         <div v-for="item in workItemCollection" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/workitems/${item.id}`">
-            <workitemsListItem :item="item" />
+            <WorkItemsListItem :item="item" />
           </NuxtLink>
         </div>
       </ul>
     </BaseCard>
 
     <!-- Related errors card -->
-    <WorkitemsRelatedErrorsList v-if="record" class="mt-4 mb-8" :workitem="record" :size="5" />
+    <WorkItemRelatedErrorsList v-if="record" class="mt-4 mb-8" :workitem="record" :size="5" />
   </div>
 </template>
 
@@ -243,6 +243,11 @@ import IconCheckCircle from "~/components/icons/hero/20/solid/IconCheckCircle.vu
 import IconPencil from "~/components/icons/hero/20/solid/IconPencil.vue";
 import MasterRecordCard from "~/components/MasterRecordCard.vue";
 import PersonRecordCard from "~/components/PersonRecordCard.vue";
+import WorkItemAdviceCard from "~/components/WorkItemAdviceCard.vue";
+import WorkItemAttributesCard from "~/components/WorkItemAttributesCard.vue";
+import WorkItemDetailCard from "~/components/WorkItemDetailCard.vue";
+import WorkItemRelatedErrorsList from "~/components/WorkItemRelatedErrorsList.vue";
+import WorkItemsListItem from "~/components/WorkItemsListItem.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import { formatGender } from "~/helpers/codeUtils";
@@ -274,6 +279,11 @@ export default defineComponent({
     IconPencil,
     PersonRecordCard,
     MasterRecordCard,
+    WorkItemAdviceCard,
+    WorkItemDetailCard,
+    WorkItemAttributesCard,
+    WorkItemRelatedErrorsList,
+    WorkItemsListItem,
   },
   setup() {
     // Dependencies

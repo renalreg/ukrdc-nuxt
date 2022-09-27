@@ -82,7 +82,7 @@
         <h2>Related Work Items</h2>
       </BaseCardHeader>
       <ul class="divide-y divide-gray-200">
-        <workitemsListItem v-for="item in workItems" :key="item.id" :item="item" />
+        <WorkItemsListItem v-for="item in workItems" :key="item.id" :item="item" />
       </ul>
     </BaseCard>
 
@@ -121,7 +121,9 @@ import BaseInfoTooltip from "~/components/base/BaseInfoTooltip.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import MasterRecordsListItem from "~/components/MasterRecordsListItem.vue";
+import MirthMessageListItem from "~/components/MirthMessageListItem.vue";
 import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
+import WorkItemsListItem from "~/components/WorkItemsListItem.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import useSensitive from "~/composables/useSensitive";
@@ -143,6 +145,8 @@ export default defineComponent({
     SendingFacilityLink,
     MasterRecordsListItem,
     BadgeMessageStatus,
+    MirthMessageListItem,
+    WorkItemsListItem,
   },
   props: {
     message: {

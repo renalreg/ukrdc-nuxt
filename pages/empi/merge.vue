@@ -27,7 +27,7 @@
           </NuxtLink>
         </div>
         <div v-else>
-          <EmpiSearch v-if="searchingFor === 'superseded'" :number-types="['UKRDC']" @select="selectSuperceeded" />
+          <EMPISearch v-if="searchingFor === 'superseded'" :number-types="['UKRDC']" @select="selectSuperceeded" />
           <BaseButton v-else class="w-full" @click="searchingFor = 'superseded'"> Search for a Record </BaseButton>
         </div>
       </div>
@@ -63,7 +63,7 @@
           </NuxtLink>
         </div>
         <div v-else>
-          <EmpiSearch v-if="searchingFor === 'superseding'" :number-types="['UKRDC']" @select="selectsuperseding" />
+          <EMPISearch v-if="searchingFor === 'superseding'" :number-types="['UKRDC']" @select="selectsuperseding" />
           <BaseButton v-else class="w-full" @click="searchingFor = 'superseding'"> Search for a Record </BaseButton>
         </div>
       </div>
@@ -121,6 +121,7 @@ import BaseAlertError from "~/components/base/BaseAlertError.vue";
 import BaseAlertWarning from "~/components/base/BaseAlertWarning.vue";
 import BaseButton from "~/components/base/BaseButton.vue";
 import BaseModalConfirm from "~/components/base/BaseModalConfirm.vue";
+import EMPISearch from "~/components/EMPISearch.vue";
 import IconArrowsRightLeft from "~/components/icons/hero/20/solid/IconArrowsRightLeft.vue";
 import IconArrowsUpDown from "~/components/icons/hero/20/solid/IconArrowsUpDown.vue";
 import IconArrowRight from "~/components/icons/hero/24/solid/IconArrowRight.vue";
@@ -141,6 +142,7 @@ export default defineComponent({
     IconArrowsRightLeft,
     IconArrowsUpDown,
     MasterRecordCard,
+    EMPISearch,
   },
   setup() {
     const route = useRoute();

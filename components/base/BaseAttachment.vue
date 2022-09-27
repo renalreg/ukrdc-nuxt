@@ -15,7 +15,7 @@
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
 
-import IconPaperClip from "../icons/hero/20/solid/IconPaperClip.vue";
+import IconPaperClip from "~/components/icons/hero/20/solid/IconPaperClip.vue";
 
 export default defineComponent({
   components: {

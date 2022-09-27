@@ -14,7 +14,7 @@
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
 
-import IconInformationCircle from "../icons/hero/20/solid/IconInformationCircle.vue";
+import IconInformationCircle from "~/components/icons/hero/20/solid/IconInformationCircle.vue";
 
 export default defineComponent({
   components: {

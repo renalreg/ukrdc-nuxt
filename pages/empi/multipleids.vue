@@ -40,7 +40,7 @@
     <div v-if="groups">
       <div v-for="group in groups" :key="`group-${group.groupId}`">
         <BaseCard class="mb-4">
-          <empiMultipleIDItem :group="group" :fetch-in-progress="fetchInProgress" />
+          <EMPIMultipleIDItem :group="group" :fetch-in-progress="fetchInProgress" />
         </BaseCard>
       </div>
 
@@ -72,6 +72,7 @@ import BaseInfoTooltip from "~/components/base/BaseInfoTooltip.vue";
 import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
+import EMPIMultipleIDItem from "~/components/EMPIMultipleIDItem.vue";
 import usePagination from "~/composables/query/usePagination";
 import useApi from "~/composables/useApi";
 import { formatDate } from "~/helpers/dateUtils";
@@ -86,6 +87,7 @@ export default defineComponent({
     BaseDescriptionListGridItem,
     BasePaginator,
     BaseInfoTooltip,
+    EMPIMultipleIDItem,
   },
   setup() {
     const { page, total, size } = usePagination();

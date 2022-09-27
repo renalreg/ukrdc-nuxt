@@ -9,7 +9,12 @@
 import { defineComponent } from "@nuxtjs/composition-api";
 import { ChannelMessageModel } from "@ukkidney/ukrdc-axios-ts";
 
+import MirthMessageChain from "~/components/MirthMessageChain.vue";
+
 export default defineComponent({
+  components: {
+    MirthMessageChain,
+  },
   props: {
     message: {
       type: Object as () => ChannelMessageModel,
