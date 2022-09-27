@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PatientrecordsDeleteModal ref="deleteModal" :item="item" @deleted="$emit('deleted')" />
+    <PatientRecordDeleteModal ref="deleteModal" :item="item" @deleted="$emit('deleted')" />
     <div v-click-away="closeMenu" class="relative flex items-center justify-self-end">
       <BaseButtonSlot label="Manage record" class="z-0" @click="showMenu = !showMenu">
         <IconEllipsisVertical class="text-gray-600 hover:text-gray-800" />
@@ -34,6 +34,7 @@ import BaseMenu from "~/components/base/BaseMenu.vue";
 import BaseMenuDivider from "~/components/base/BaseMenuDivider.vue";
 import BaseMenuItem from "~/components/base/BaseMenuItem.vue";
 import IconEllipsisVertical from "~/components/icons/hero/24/solid/IconEllipsisVertical.vue";
+import PatientRecordDeleteModal from "~/components/PatientRecordDeleteModal.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import useTasks from "~/composables/useTasks";
@@ -46,6 +47,7 @@ export default defineComponent({
     BaseMenuDivider,
     BaseMenuItem,
     IconEllipsisVertical,
+    PatientRecordDeleteModal,
   },
   props: {
     item: {

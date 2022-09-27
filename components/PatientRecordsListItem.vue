@@ -44,7 +44,7 @@
           <BaseButtonMini :to="`/patientrecords/${item.pid}`" class="h-8 truncate"> Open Record </BaseButtonMini>
         </div>
         <div class="flex-grow-0">
-          <PatientrecordsManageMenu
+          <PatientRecordManageMenu
             :show-pv-sync="showPvSync"
             :show-radar-sync="showRadarSync"
             :show-pkb-sync="showPkbSync"
@@ -56,7 +56,7 @@
     </div>
     <!-- Collapsible details -->
     <div v-show="showDetail" class="bg-gray-50 px-4 py-4 shadow-inner sm:px-6">
-      <PatientrecordsDetailCards :record="item" />
+      <PatientRecordDetailCards :record="item" />
     </div>
   </li>
 </template>
@@ -66,6 +66,8 @@ import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
 import { PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
+import PatientRecordDetailCards from "~/components/PatientRecordDetailCards.vue";
+import PatientRecordManageMenu from "~/components/PatientRecordManageMenu.vue";
 import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
 import { formatGenderCharacter } from "~/helpers/codeUtils";
 import { formatDate } from "~/helpers/dateUtils";
@@ -80,6 +82,8 @@ export default defineComponent({
   components: {
     BaseButtonMini,
     SendingFacilityLink,
+    PatientRecordManageMenu,
+    PatientRecordDetailCards,
   },
   props: {
     item: {

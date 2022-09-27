@@ -43,7 +43,7 @@
 
       <!-- Small data card display -->
       <div class="lg:hidden">
-        <PatientrecordsResultCard
+        <PatientRecordResultCard
           v-for="(item, index) in results"
           :key="`${index}-card`"
           :item="item"
@@ -74,7 +74,7 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 bg-white">
-          <PatientrecordsResultRow
+          <PatientRecordResultRow
             v-for="(item, index) in results"
             :key="index"
             :item="item"
@@ -109,6 +109,8 @@ import BaseModalConfirm from "~/components/base/BaseModalConfirm.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
+import PatientRecordResultCard from "~/components/PatientRecordResultCard.vue";
+import PatientRecordResultRow from "~/components/PatientRecordResultRow.vue";
 import useDateRange from "~/composables/query/useDateRange";
 import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";
@@ -126,6 +128,8 @@ export default defineComponent({
     BaseDateRange,
     BaseSelectSearchable,
     BaseModalConfirm,
+    PatientRecordResultCard,
+    PatientRecordResultRow,
   },
   props: {
     record: {

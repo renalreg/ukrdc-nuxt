@@ -10,7 +10,7 @@
           }"
           class="col-span-1 flex rounded-md shadow-sm"
         >
-          <PatientrecordsLaborderCard :item="item" class="w-full" />
+          <PatientRecordLabOrderCard :item="item" class="w-full" />
         </NuxtLink>
       </li>
     </ul>
@@ -29,6 +29,7 @@ import { LabOrderShortSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-
 
 import BaseCard from "~/components/base/BaseCard.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
+import PatientRecordLabOrderCard from "~/components/PatientRecordLabOrderCard.vue";
 import usePagination from "~/composables/query/usePagination";
 import useApi from "~/composables/useApi";
 import { formatDate } from "~/helpers/dateUtils";
@@ -37,6 +38,7 @@ export default defineComponent({
   components: {
     BaseCard,
     BasePaginator,
+    PatientRecordLabOrderCard,
   },
   props: {
     record: {

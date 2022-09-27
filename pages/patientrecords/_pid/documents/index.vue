@@ -6,7 +6,7 @@
         <ul class="divide-y divide-gray-200">
           <div v-for="item in documents" :key="item.id" :item="item" class="hover:bg-gray-50">
             <NuxtLink :to="`/patientrecords/${$route.params.pid}/documents/${item.id}`">
-              <PatientrecordsDocumentListItem :item="item" />
+              <PatientRecordDocumentListItem :item="item" />
             </NuxtLink>
           </div>
         </ul>
@@ -32,6 +32,7 @@ import { DocumentSummarySchema, PatientRecordSchema } from "@ukkidney/ukrdc-axio
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
+import PatientRecordDocumentListItem from "~/components/PatientRecordDocumentListItem.vue";
 import useDateRange from "~/composables/query/useDateRange";
 import usePagination from "~/composables/query/usePagination";
 import useApi from "~/composables/useApi";
@@ -42,6 +43,7 @@ export default defineComponent({
     BaseCard,
     BaseLoadingContainer,
     BasePaginator,
+    PatientRecordDocumentListItem,
   },
   props: {
     record: {

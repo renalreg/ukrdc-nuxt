@@ -12,7 +12,7 @@
 
         <!-- Small data card display -->
         <div class="lg:hidden">
-          <PatientrecordsObservationCard
+          <PatientrecordObservationCard
             v-for="(item, index) in observations"
             :key="`${item.observationCode}-${index}-card`"
             :item="item"
@@ -41,7 +41,7 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200 bg-white">
-            <PatientrecordsObservationTableRow
+            <PatientrecordObservationRow
               v-for="(item, index) in observations"
               :key="`${item.observationCode}-${index}`"
               :item="item"
@@ -75,6 +75,8 @@ import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
+import PatientrecordObservationCard from "~/components/PatientRecordObservationCard.vue";
+import PatientrecordObservationRow from "~/components/PatientRecordObservationRow.vue";
 import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";
 import useApi from "~/composables/useApi";
@@ -87,6 +89,8 @@ export default defineComponent({
     BaseTable,
     BasePaginator,
     BaseSelectSearchable,
+    PatientrecordObservationCard,
+    PatientrecordObservationRow,
   },
   props: {
     record: {

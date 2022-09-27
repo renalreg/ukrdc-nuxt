@@ -3,7 +3,7 @@
     <div v-if="groupedRecords.data.length > 0" class="patientrecords-list-header">
       <h4>Data feeds</h4>
     </div>
-    <patientrecordsListItem
+    <PatientRecordsListItem
       v-for="item in groupedRecords.data"
       :key="item.pid + '_data'"
       :item="item"
@@ -16,7 +16,7 @@
     <div v-if="groupedRecords.surveys.length > 0" class="patientrecords-list-header">
       <h4>Survey feeds</h4>
     </div>
-    <patientrecordsListItem
+    <PatientRecordsListItem
       v-for="item in groupedRecords.surveys"
       :key="item.pid + '_survey'"
       :item="item"
@@ -29,7 +29,7 @@
     <div v-if="groupedRecords.migrated.length > 0" class="patientrecords-list-header">
       <h4>Historic Migrated Data</h4>
     </div>
-    <patientrecordsListItem
+    <PatientRecordsListItem
       v-for="item in groupedRecords.migrated"
       :key="item.pid + '_mig'"
       :item="item"
@@ -42,7 +42,7 @@
     <div class="patientrecords-list-header">
       <h4 class="flex-grow">Membership Records</h4>
       <div class="mr-2 flex-grow-0">
-        <PatientrecordsMembershipsMenu
+        <PatientRecordMembershipsMenu
           :master-record="masterRecord"
           :show-create-pkb-membership="!hasPKBMembership"
           @refresh="$emit('refresh')"
@@ -52,7 +52,7 @@
     <div v-if="groupedRecords.memberships.length < 1" class="py-2 pl-4 sm:pl-6">
       <p>No membership records</p>
     </div>
-    <patientrecordsListItem
+    <PatientRecordsListItem
       v-for="item in groupedRecords.memberships"
       :key="item.pid + '_membership'"
       :item="item"
@@ -62,7 +62,7 @@
     <div v-if="groupedRecords.tracing.length > 0" class="patientrecords-list-header">
       <h4>Tracing Records</h4>
     </div>
-    <patientrecordsListItem
+    <PatientRecordsListItem
       v-for="item in groupedRecords.tracing"
       :key="item.pid + '_tracing'"
       :item="item"
@@ -75,6 +75,8 @@
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { MasterRecordSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 
+import PatientRecordMembershipsMenu from "~/components/PatientRecordMembershipsMenu.vue";
+import PatientRecordsListItem from "~/components/PatientRecordsListItem.vue";
 import usePermissions from "~/composables/usePermissions";
 import { isData, isMembership, isMigrated, isSurvey, isTracing } from "~/helpers/recordUtils";
 
@@ -87,6 +89,10 @@ interface PRGroups {
 }
 
 export default defineComponent({
+  components: {
+    PatientRecordsListItem,
+    PatientRecordMembershipsMenu,
+  },
   props: {
     masterRecord: {
       type: Object as () => MasterRecordSchema,

@@ -1,6 +1,6 @@
 <template>
   <div class="sensitive">
-    <patientrecordsSurveyViewer ref="surveyViewerModal" class="md:w-large w-full" />
+    <PatientRecordSurveyViewer ref="surveyViewerModal" class="md:w-large w-full" />
 
     <BaseLoadingContainer :loading="!surveys">
       <p v-if="surveys && surveys.length <= 0" class="text-center">No surveys on record</p>
@@ -39,6 +39,7 @@ import { PatientRecordSchema, SurveySchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
+import PatientRecordSurveyViewer from "~/components/PatientRecordSurveyViewer.vue";
 import useApi from "~/composables/useApi";
 import { formatDate } from "~/helpers/dateUtils";
 import { surveyViewerModalInterface } from "~/interfaces/modal";
@@ -47,6 +48,7 @@ export default defineComponent({
   components: {
     BaseLoadingContainer,
     BaseCard,
+    PatientRecordSurveyViewer,
   },
   props: {
     record: {

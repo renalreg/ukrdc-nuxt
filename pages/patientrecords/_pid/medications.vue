@@ -7,7 +7,7 @@
 
         <ul class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
           <li v-for="(item, index) of activeMedications" :key="index" class="col-span-1">
-            <patientrecordsMedicationCard :item="item" />
+            <PatientRecordMedicationCard :item="item" />
           </li>
         </ul>
       </div>
@@ -17,7 +17,7 @@
 
         <ul class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
           <li v-for="(item, index) of inactiveMedications" :key="index" class="col-span-1">
-            <patientrecordsMedicationCard :item="item" />
+            <PatientRecordMedicationCard :item="item" />
           </li>
         </ul>
       </div>
@@ -30,11 +30,13 @@ import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-a
 import { MedicationSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
+import PatientRecordMedicationCard from "~/components/PatientRecordMedicationCard.vue";
 import useApi from "~/composables/useApi";
 
 export default defineComponent({
   components: {
     BaseLoadingContainer,
+    PatientRecordMedicationCard,
   },
   props: {
     record: {

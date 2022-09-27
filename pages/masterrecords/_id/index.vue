@@ -85,7 +85,7 @@
       <BaseCardHeader>
         <h2>Patient Records</h2>
       </BaseCardHeader>
-      <PatientrecordsGroupedList
+      <PatientRecordsGroupedList
         v-if="patientRecords"
         :master-record="record"
         :records="patientRecords"
@@ -143,6 +143,7 @@ import BaseDescriptionListGrid from "~/components/base/BaseDescriptionListGrid.v
 import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGridItem.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import MasterRecordsListItem from "~/components/MasterRecordsListItem.vue";
+import PatientRecordsGroupedList from "~/components/PatientRecordsGroupedList.vue";
 import TracingBadge from "~/components/TracingBadge.vue";
 import useApi from "~/composables/useApi";
 import useSensitive from "~/composables/useSensitive";
@@ -164,6 +165,7 @@ export default defineComponent({
     BaseAlertWarning,
     TracingBadge,
     MasterRecordsListItem,
+    PatientRecordsGroupedList,
   },
   props: {
     record: {
