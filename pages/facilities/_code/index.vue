@@ -16,21 +16,16 @@
           <BaseCard>
             <div class="flex items-center p-4">
               <div class="flex-shrink-0">
-                <IconUsers />
+                <IconUsers class="text-gray-600" />
               </div>
               <div class="ml-5 w-0 flex-1">
-                <dl>
-                  <dt>Total Records</dt>
-                  <dd class="flex items-baseline">
-                    <h1 class="flex-grow text-indigo-600">{{ facility.statistics.totalPatients }}</h1>
-                    <NuxtLink
-                      class="hover:underline"
-                      :to="{ path: `/masterrecords/`, query: { facility: facility.id } }"
-                    >
-                      Show all records
-                    </NuxtLink>
-                  </dd>
-                </dl>
+                <h5>Total Records</h5>
+                <div class="flex items-baseline">
+                  <h1 class="flex-grow text-indigo-600">{{ facility.statistics.totalPatients }}</h1>
+                  <NuxtLink class="hover:underline" :to="{ path: `/masterrecords/`, query: { facility: facility.id } }">
+                    Show all records
+                  </NuxtLink>
+                </div>
               </div>
             </div>
             <div class="bg-gray-50 px-4 py-2 text-sm text-gray-500">
@@ -41,23 +36,21 @@
           <BaseCard>
             <div class="flex items-center p-4">
               <div class="flex-shrink-0">
-                <IconExclamation />
+                <IconExclamationTriangle class="text-gray-600" />
               </div>
               <div class="ml-5 w-0 flex-1">
-                <dl>
-                  <dt>Active Failing Records</dt>
-                  <dd class="flex items-baseline">
-                    <h1
-                      class="flex-grow"
-                      :class="
-                        (facility.statistics.patientsReceivingMessageError || 0) > 0 ? 'text-red-600' : 'text-green-700'
-                      "
-                    >
-                      {{ facility.statistics.patientsReceivingMessageError }}
-                    </h1>
-                    <NuxtLink class="hover:underline" :to="`/facilities/${facility.id}/errors`"> Show errors </NuxtLink>
-                  </dd>
-                </dl>
+                <h5>Active Failing Records</h5>
+                <div class="flex items-baseline">
+                  <h1
+                    class="flex-grow"
+                    :class="
+                      (facility.statistics.patientsReceivingMessageError || 0) > 0 ? 'text-red-600' : 'text-green-700'
+                    "
+                  >
+                    {{ facility.statistics.patientsReceivingMessageError }}
+                  </h1>
+                  <NuxtLink class="hover:underline" :to="`/facilities/${facility.id}/errors`"> Show errors </NuxtLink>
+                </div>
               </div>
             </div>
             <div class="bg-gray-50 px-4 py-2 text-sm text-gray-500">Active records currently failing due to errors</div>
@@ -77,7 +70,7 @@
         <BaseTable>
           <thead class="bg-gray-50">
             <tr>
-              <th scope="col" class="px-4 py-3 text-left">Feed Type</th>
+              <th scope="col" class="px-4 py-3 text-left">Record Type</th>
               <th scope="col" class="hidden px-4 py-3 text-left md:table-cell">Status</th>
               <th scope="col" class="px-4 py-3 text-left">Total Records</th>
             </tr>
@@ -195,6 +188,8 @@ import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
 import BaseTableCell from "~/components/base/BaseTableCell.vue";
+import IconExclamationTriangle from "~/components/icons/hero/24/outline/IconExclamationTriangle.vue";
+import IconUsers from "~/components/icons/hero/24/outline/IconUsers.vue";
 import IconCircle from "~/components/icons/IconCircle.vue";
 import usePermissions from "~/composables/usePermissions";
 import { formatDate } from "~/helpers/dateUtils";
@@ -210,6 +205,8 @@ export default defineComponent({
     BaseTable,
     BaseTableCell,
     BaseAlertError,
+    IconExclamationTriangle,
+    IconUsers,
   },
   props: {
     facility: {
@@ -242,17 +239,17 @@ export default defineComponent({
 
     const feedTableItems: FeedTableItem[] = [
       {
-        name: "UKRDC Records",
+        name: "UKRDC Feeds",
         key: "ukrdc",
         historic: false,
       },
       {
-        name: "PatientView Records",
+        name: "PatientView Feeds",
         key: "pv",
         historic: false,
       },
       {
-        name: "RADAR Records",
+        name: "RADAR Feeds",
         key: "radar",
         historic: false,
       },

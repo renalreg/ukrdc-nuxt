@@ -69,7 +69,7 @@
         class="inline-flex w-full items-center justify-center"
         @click="addCommentModal?.show()"
       >
-        <IconPencil />
+        <IconPencil class="-ml-1 mr-2" />
         Comment
       </BaseButton>
 
@@ -80,7 +80,7 @@
         colour="green"
         @click="closeModal?.show()"
       >
-        <IconCheckCircle />
+        <IconCheckCircle class="-ml-1 mr-2" />
         Close
       </BaseButton>
 
@@ -99,7 +99,7 @@
         class="inline-flex w-full items-center justify-center"
         colour="yellow"
       >
-        <IconMiniExternalLink />
+        <IconArrowTopRightOnSquare class="-ml-1 mr-2" />
         Merge Master Records
       </BaseButton>
     </div>
@@ -238,6 +238,9 @@ import BaseModal from "~/components/base/BaseModal.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import BaseTabToggle from "~/components/base/BaseTabToggle.vue";
 import BaseTextArea from "~/components/base/BaseTextArea.vue";
+import IconArrowTopRightOnSquare from "~/components/icons/hero/20/solid/IconArrowTopRightOnSquare.vue";
+import IconCheckCircle from "~/components/icons/hero/20/solid/IconCheckCircle.vue";
+import IconPencil from "~/components/icons/hero/20/solid/IconPencil.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import { formatGender } from "~/helpers/codeUtils";
@@ -264,6 +267,9 @@ export default defineComponent({
     BaseTextArea,
     BaseTabToggle,
     BaseModal,
+    IconCheckCircle,
+    IconArrowTopRightOnSquare,
+    IconPencil,
   },
   setup() {
     // Dependencies

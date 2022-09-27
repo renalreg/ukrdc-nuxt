@@ -8,11 +8,11 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
       <BaseCard>
         <div class="flex items-center p-4">
           <div class="flex-shrink-0">
-            <IconUsers />
+            <IconUsers class="text-gray-600" />
           </div>
           <div class="ml-5 w-0 flex-1">
             <h5>Total Patients</h5>
-            <h1 class="text-2xl font-semibold text-green-600">{{ counts.distinctPatients }}</h1>
+            <h1 class="text-green-600">{{ counts.distinctPatients }}</h1>
           </div>
         </div>
         <BaseCardFooter>Total distinct UKRDC IDs in the database</BaseCardFooter>
@@ -21,11 +21,11 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
       <BaseCard>
         <div class="flex items-center p-4">
           <div class="flex-shrink-0">
-            <IconLink />
+            <IconLink class="text-gray-600" />
           </div>
           <div class="ml-5 w-0 flex-1">
             <h5>Open Work Items</h5>
-            <h1 class="text-2xl font-semibold" :class="counts.openWorkitems > 0 ? 'text-yellow-600' : 'text-green-600'">
+            <h1 :class="counts.openWorkitems > 0 ? 'text-yellow-600' : 'text-green-600'">
               {{ counts.openWorkitems }}
             </h1>
           </div>
@@ -36,14 +36,11 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
       <BaseCard>
         <div class="flex items-center p-4">
           <div class="flex-shrink-0">
-            <IconExclamation />
+            <IconExclamationTriangle class="text-gray-600" />
           </div>
           <div class="ml-5 w-0 flex-1">
             <h5>Active Failing Records</h5>
-            <h1
-              class="text-2xl font-semibold"
-              :class="counts.patientsReceivingErrors > 0 ? 'text-red-600' : 'text-green-600'"
-            >
+            <h1 :class="counts.patientsReceivingErrors > 0 ? 'text-red-600' : 'text-green-600'">
               {{ counts.patientsReceivingErrors }}
             </h1>
           </div>
@@ -95,6 +92,9 @@ import { PlotDatum } from "plotly.js";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardFooter from "~/components/base/BaseCardFooter.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+import IconExclamationTriangle from "~/components/icons/hero/24/outline/IconExclamationTriangle.vue";
+import IconLink from "~/components/icons/hero/24/outline/IconLink.vue";
+import IconUsers from "~/components/icons/hero/24/outline/IconUsers.vue";
 import useApi from "~/composables/useApi";
 import { getPointDateRange, unpackHistoryPoints } from "~/helpers/chartUtils";
 
@@ -103,6 +103,9 @@ export default defineComponent({
     BaseCard,
     BaseCardHeader,
     BaseCardFooter,
+    IconExclamationTriangle,
+    IconLink,
+    IconUsers,
   },
   setup() {
     const router = useRouter();

@@ -39,11 +39,14 @@
             class="mx-auto block w-8 rounded-md border border-gray-300 bg-white font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             @click="switchRecords"
           >
-            <IconSwitchH class="my-2 hidden lg:block" /><IconSwitchV class="my-2 block lg:hidden" />
+            <IconArrowsRightLeft class="my-2 mx-auto hidden text-gray-400 lg:block" />
+            <IconArrowsUpDown class="my-2 mx-auto block text-gray-400 lg:hidden" />
           </button>
         </div>
         <div class="hidden flex-grow flex-col justify-center lg:flex">
-          <div v-show="superseded && superseding" class="h-8"><IconArrowRight /></div>
+          <div v-show="superseded && superseding" class="h-8">
+            <IconArrowRight class="mx-auto my-2 text-gray-400" />
+          </div>
         </div>
       </div>
 
@@ -118,6 +121,9 @@ import BaseAlertError from "~/components/base/BaseAlertError.vue";
 import BaseAlertWarning from "~/components/base/BaseAlertWarning.vue";
 import BaseButton from "~/components/base/BaseButton.vue";
 import BaseModalConfirm from "~/components/base/BaseModalConfirm.vue";
+import IconArrowsRightLeft from "~/components/icons/hero/20/solid/IconArrowsRightLeft.vue";
+import IconArrowsUpDown from "~/components/icons/hero/20/solid/IconArrowsUpDown.vue";
+import IconArrowRight from "~/components/icons/hero/24/solid/IconArrowRight.vue";
 import useQuery from "~/composables/query/useQuery";
 import useApi from "~/composables/useApi";
 import { modalInterface } from "~/interfaces/modal";
@@ -130,6 +136,9 @@ export default defineComponent({
     BaseModalConfirm,
     BaseAlertError,
     BaseAlertWarning,
+    IconArrowRight,
+    IconArrowsRightLeft,
+    IconArrowsUpDown,
   },
   setup() {
     const route = useRoute();

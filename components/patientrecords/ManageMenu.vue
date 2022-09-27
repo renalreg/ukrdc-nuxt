@@ -3,7 +3,7 @@
     <PatientrecordsDeleteModal ref="deleteModal" :item="item" @deleted="$emit('deleted')" />
     <div v-click-away="closeMenu" class="relative flex items-center justify-self-end">
       <BaseButtonSlot label="Manage record" class="z-0" @click="showMenu = !showMenu">
-        <IconMiniDotsVertical class="text-gray-400 hover:text-gray-800" />
+        <IconEllipsisVertical class="text-gray-600 hover:text-gray-800" />
       </BaseButtonSlot>
 
       <BaseMenu class="top-0 right-0 z-10 mx-2 my-2" :show="showMenu">
@@ -33,6 +33,7 @@ import BaseButtonSlot from "~/components/base/BaseButtonSlot.vue";
 import BaseMenu from "~/components/base/BaseMenu.vue";
 import BaseMenuDivider from "~/components/base/BaseMenuDivider.vue";
 import BaseMenuItem from "~/components/base/BaseMenuItem.vue";
+import IconEllipsisVertical from "~/components/icons/hero/24/solid/IconEllipsisVertical.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import useTasks from "~/composables/useTasks";
@@ -44,6 +45,7 @@ export default defineComponent({
     BaseMenu,
     BaseMenuDivider,
     BaseMenuItem,
+    IconEllipsisVertical,
   },
   props: {
     item: {

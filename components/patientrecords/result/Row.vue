@@ -12,8 +12,8 @@
         tooltip="Filter by this lab order"
         label="Filter by this lab order"
         :to="{ query: { order_id: item.orderId } }"
-        ><IconMiniFilter
-      /></BaseButton>
+        ><IconFunnel />
+      </BaseButton>
       <div class="w-48 truncate text-gray-500">
         {{ item.orderId }}
       </div>
@@ -32,8 +32,8 @@
         tooltip="Delete this result item"
         label="Delete this result item"
         @click="$emit('delete', item)"
-        ><IconMiniTrash
-      /></BaseButton>
+        ><IconTrash />
+      </BaseButton>
     </td>
   </tr>
 </template>
@@ -43,11 +43,15 @@ import { defineComponent } from "@nuxtjs/composition-api";
 import { ResultItemSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseButton from "~/components/base/BaseButton.vue";
+import IconFunnel from "~/components/icons/hero/20/solid/IconFunnel.vue";
+import IconTrash from "~/components/icons/hero/20/solid/IconTrash.vue";
 import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
   components: {
     BaseButton,
+    IconFunnel,
+    IconTrash,
   },
   props: {
     item: {

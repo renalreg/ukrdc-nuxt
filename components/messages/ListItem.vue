@@ -36,8 +36,8 @@
           :to="{ path: '/messages', query: { nationalid: item.ni } }"
           tooltip="Filter errors by this patient"
           :label="`Filter errors by patient ${item.ni}`"
-          ><IconMiniFilter
-        /></BaseButton>
+          ><IconFunnel class="h-5 w-5" />
+        </BaseButton>
         <div class="flex-grow">
           <h5>Patient Number</h5>
           <p class="sensitive mt-2">
@@ -54,6 +54,7 @@ import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { MessageSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseButton from "~/components/base/BaseButton.vue";
+import IconFunnel from "~/components/icons/hero/20/solid/IconFunnel.vue";
 import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
 import useSensitive from "~/composables/useSensitive";
 import { formatDate } from "~/helpers/dateUtils";
@@ -63,6 +64,7 @@ export default defineComponent({
   components: {
     BaseButton,
     SendingFacilityLink,
+    IconFunnel,
   },
   props: {
     item: {

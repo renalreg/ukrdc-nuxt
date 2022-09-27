@@ -19,7 +19,7 @@
         </div>
       </div>
       <div>
-        <IconChevronRight />
+        <IconChevronRight class="h-5 w-5 text-gray-400" />
       </div>
     </div>
   </li>
@@ -29,10 +29,14 @@
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { ChannelMessageModel } from "@ukkidney/ukrdc-axios-ts";
 
+import IconChevronRight from "~/components/icons/hero/24/solid/IconChevronRight.vue";
 import { messageHasErrors } from "~/helpers/mirthUtils";
 import { isEmptyObject } from "~/helpers/objectUtils";
 
 export default defineComponent({
+  components: {
+    IconChevronRight,
+  },
   props: {
     message: {
       type: Object as () => ChannelMessageModel,

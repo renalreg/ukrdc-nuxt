@@ -14,7 +14,7 @@
     </div>
     <div class="flex-shrink-0">
       <span class="sr-only">Open options</span>
-      <IconChevronRight />
+      <IconChevronRight class="h-5 w-5 text-gray-400" />
     </div>
   </BaseCard>
 </template>
@@ -24,11 +24,13 @@ import { defineComponent } from "@nuxtjs/composition-api";
 import { LabOrderShortSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseCard from "~/components/base/BaseCard.vue";
+import IconChevronRight from "~/components/icons/hero/24/solid/IconChevronRight.vue";
 import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
   components: {
     BaseCard,
+    IconChevronRight,
   },
   props: {
     item: {

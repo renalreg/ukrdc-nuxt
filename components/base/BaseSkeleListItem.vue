@@ -21,9 +21,6 @@
             </div>
           </div>
         </div>
-        <div>
-          <IconChevronRight />
-        </div>
       </div>
     </div>
   </li>

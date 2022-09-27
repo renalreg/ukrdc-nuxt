@@ -10,7 +10,7 @@
             <div class="flex items-center">
               <div class="flex-grow">Export Codes</div>
               <div class="ml-2">
-                <IconChevronDown class="text-gray-700" />
+                <IconChevronDown class="h-5 w-5 text-gray-700" />
               </div>
             </div>
           </BaseButton>
@@ -93,6 +93,7 @@ import BaseMenuItem from "~/components/base/BaseMenuItem.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+import IconChevronDown from "~/components/icons/hero/24/solid/IconChevronDown.vue";
 import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";
 import useApi from "~/composables/useApi";
@@ -107,6 +108,7 @@ export default defineComponent({
     BaseSkeleListItem,
     BasePaginator,
     BaseSelectSearchable,
+    IconChevronDown,
   },
   setup() {
     const { page, total, size } = usePagination();

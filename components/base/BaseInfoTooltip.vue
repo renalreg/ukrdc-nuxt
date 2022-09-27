@@ -1,7 +1,7 @@
 <template>
   <VMenu class="flex items-center">
     <button class="cursor-pointer text-gray-500 hover:text-gray-800">
-      <IconMiniInformationCircle />
+      <IconInformationCircle />
     </button>
 
     <!-- Popover content -->
@@ -14,7 +14,11 @@
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
 
+import IconInformationCircle from "../icons/hero/20/solid/IconInformationCircle.vue";
+
 export default defineComponent({
-  setup() {},
+  components: {
+    IconInformationCircle,
+  },
 });
 </script>

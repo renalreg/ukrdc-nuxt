@@ -23,11 +23,11 @@
         <BaseButtonMini class="flex-shrink" @click="toggleOrder">
           <div v-show="orderAscending" class="flex">
             <p>Oldest - Newest</p>
-            <IconMiniSortAscending class="ml-2" />
+            <IconBarsArrowUp class="ml-2 h-5 w-5" />
           </div>
           <div v-show="!orderAscending" class="flex">
             <p>Newest - Oldest</p>
-            <IconMiniSortDescending class="ml-2" />
+            <IconBarsArrowDown class="ml-2 h-5 w-5" />
           </div>
         </BaseButtonMini>
       </div>
@@ -70,6 +70,8 @@ import BaseDateRange from "~/components/base/BaseDateRange.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+import IconBarsArrowDown from "~/components/icons/hero/20/solid/IconBarsArrowDown.vue";
+import IconBarsArrowUp from "~/components/icons/hero/20/solid/IconBarsArrowUp.vue";
 import useDateRange from "~/composables/query/useDateRange";
 import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";
@@ -86,6 +88,8 @@ export default defineComponent({
     BaseCheckbox,
     BaseDateRange,
     BaseSelectSearchable,
+    IconBarsArrowDown,
+    IconBarsArrowUp,
   },
   setup() {
     const { page, total, size } = usePagination();

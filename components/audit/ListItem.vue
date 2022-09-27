@@ -8,8 +8,8 @@
             class="flex h-full flex-none cursor-pointer items-center justify-center self-stretch"
             @click="showChildren = !showChildren"
           >
-            <IconChevronDown v-show="showChildren" />
-            <IconChevronRight v-show="!showChildren" />
+            <IconChevronDown v-show="showChildren" class="h-5 w-5 text-gray-400" />
+            <IconChevronRight v-show="!showChildren" class="h-5 w-5 text-gray-400" />
           </div>
         </div>
 
@@ -38,7 +38,14 @@ import { AuditEventSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import { formatDate } from "~/helpers/dateUtils";
 
+import IconChevronDown from "../icons/hero/24/solid/IconChevronDown.vue";
+import IconChevronRight from "../icons/hero/24/solid/IconChevronRight.vue";
+
 export default defineComponent({
+  components: {
+    IconChevronRight,
+    IconChevronDown,
+  },
   props: {
     item: {
       type: Object as () => AuditEventSchema,

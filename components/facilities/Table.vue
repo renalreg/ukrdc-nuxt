@@ -12,14 +12,14 @@ Table of facilities and their basic statistics
           <th scope="col" class="px-4 py-3 text-left">
             <div class="flex items-center gap-1">
               Code
-              <IconDynamicSort :active="sortBy === 'id'" :asc="isAscending['id']" @toggle="toggleSort('id')" />
+              <BaseSortIcon :active="sortBy === 'id'" :asc="isAscending['id']" @toggle="toggleSort('id')" />
             </div>
           </th>
           <th scope="col" class="hidden px-4 py-3 text-left lg:table-cell">Name</th>
           <th scope="col" class="px-4 py-3 text-left">
             <div class="flex items-center gap-1">
               Total Records
-              <IconDynamicSort
+              <BaseSortIcon
                 :active="sortBy === 'statistics.total_patients'"
                 :asc="isAscending['statistics.total_patients']"
                 @toggle="toggleSort('statistics.total_patients')"
@@ -29,7 +29,7 @@ Table of facilities and their basic statistics
           <th scope="col" class="px-4 py-3 text-left">
             <div class="flex items-center gap-1">
               Failing Records
-              <IconDynamicSort
+              <BaseSortIcon
                 :active="sortBy === 'statistics.patients_receiving_message_error'"
                 :asc="isAscending['statistics.patients_receiving_message_error']"
                 @toggle="toggleSort('statistics.patients_receiving_message_error')"
@@ -39,18 +39,18 @@ Table of facilities and their basic statistics
           <th scope="col" class="px-4 py-3 text-left">
             <div class="flex items-center">
               Sending to PKB
-              <IconDynamicFilter :active="filterByPkbOut" @toggle="filterByPkbOut = !filterByPkbOut" />
+              <BaseFilterIcon :active="filterByPkbOut" @toggle="filterByPkbOut = !filterByPkbOut" />
             </div>
           </th>
           <th scope="col" class="px-4 py-3 text-left">
             <div class="flex items-center gap-1">
               Last Received
-              <IconDynamicSort
+              <BaseSortIcon
                 :active="sortBy === 'last_message_received_at'"
                 :asc="isAscending['last_message_received_at']"
                 @toggle="toggleSort('last_message_received_at')"
               />
-              <IconDynamicFilter
+              <BaseFilterIcon
                 :active="filterByLastMessageOver48"
                 @toggle="filterByLastMessageOver48 = !filterByLastMessageOver48"
               />
@@ -93,10 +93,10 @@ Table of facilities and their basic statistics
               <div>
                 {{ facility.lastMessageReceivedAt ? formatDate(facility.lastMessageReceivedAt, false) : "> Year Ago" }}
               </div>
-              <IconExclamation
+              <IconExclamationTriangle
                 v-if="facilityLastMessageOver48(facility)"
                 v-tooltip="'No files received in over 48 hours'"
-                class="inline text-yellow-600"
+                class="inline h-6 w-6 text-yellow-600"
               />
             </div>
           </BaseTableCell>
@@ -110,16 +110,19 @@ Table of facilities and their basic statistics
 import { computed, defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import { FacilityDetailsSchema, FacilitySorterEnum, OrderBy } from "@ukkidney/ukrdc-axios-ts";
 
+import BaseFilterIcon from "~/components/base/BaseFilterIcon.vue";
 import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
+import BaseSortIcon from "~/components/base/BaseSortIcon.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
 import BaseTableCell from "~/components/base/BaseTableCell.vue";
+import IconExclamationTriangle from "~/components/icons/hero/24/outline/IconExclamationTriangle.vue";
 import IconCircle from "~/components/icons/IconCircle.vue";
 import useApi from "~/composables/useApi";
 import { formatDate } from "~/helpers/dateUtils";
 import { facilityLastMessageOver48 } from "~/helpers/facilityUtils";
 
 interface IsAscending {
-  [key: string]: boolean | null;
+  [key: string]: boolean;
 }
 
 export default defineComponent({
@@ -128,6 +131,9 @@ export default defineComponent({
     BaseLoadingIndicator,
     BaseTable,
     BaseTableCell,
+    BaseSortIcon,
+    BaseFilterIcon,
+    IconExclamationTriangle,
   },
   props: {
     includeEmpty: {

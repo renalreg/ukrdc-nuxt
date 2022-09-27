@@ -12,7 +12,7 @@
         </div>
 
         <div v-if="index < Object.keys(chain).length - 1" class="align-center">
-          <IconArrowDown />
+          <IconArrowDown class="mx-auto my-2 text-gray-400" />
         </div>
       </div>
     </div>
@@ -25,11 +25,16 @@ import { ChannelMessageModel, ConnectorMessageModel } from "@ukkidney/ukrdc-axio
 
 import { isEmptyObject } from "~/helpers/objectUtils";
 
+import IconArrowDown from "../icons/hero/24/solid/IconArrowDown.vue";
+
 interface ChainMap {
   [key: number]: ConnectorMessageModel[];
 }
 
 export default defineComponent({
+  components: {
+    IconArrowDown,
+  },
   props: {
     message: {
       type: Object as () => ChannelMessageModel,

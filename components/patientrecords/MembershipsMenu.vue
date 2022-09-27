@@ -21,7 +21,7 @@
         :class="{ 'btn-disabled': !menuAvailable }"
         @click="showMenu = !showMenu"
       >
-        <IconMiniPlus class="inline text-gray-800" />
+        <IconPlus class="inline text-gray-800" />
         Add Memberships
       </BaseButtonMini>
 
@@ -43,6 +43,7 @@ import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import BaseMenu from "~/components/base/BaseMenu.vue";
 import BaseMenuItem from "~/components/base/BaseMenuItem.vue";
 import BaseModalConfirm from "~/components/base/BaseModalConfirm.vue";
+import IconPlus from "~/components/icons/hero/20/solid/IconPlus.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import { modalInterface } from "~/interfaces/modal";
@@ -53,6 +54,7 @@ export default defineComponent({
     BaseMenu,
     BaseMenuItem,
     BaseModalConfirm,
+    IconPlus,
   },
   props: {
     masterRecord: {
