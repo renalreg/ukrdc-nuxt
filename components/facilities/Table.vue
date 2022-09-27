@@ -113,6 +113,7 @@ import { FacilityDetailsSchema, FacilitySorterEnum, OrderBy } from "@ukkidney/uk
 import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
 import BaseTableCell from "~/components/base/BaseTableCell.vue";
+import IconCircle from "~/components/icons/IconCircle.vue";
 import useApi from "~/composables/useApi";
 import { formatDate } from "~/helpers/dateUtils";
 import { facilityLastMessageOver48 } from "~/helpers/facilityUtils";
@@ -123,6 +124,7 @@ interface IsAscending {
 
 export default defineComponent({
   components: {
+    IconCircle,
     BaseLoadingIndicator,
     BaseTable,
     BaseTableCell,

@@ -195,6 +195,7 @@ import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
 import BaseTableCell from "~/components/base/BaseTableCell.vue";
+import IconCircle from "~/components/icons/IconCircle.vue";
 import usePermissions from "~/composables/usePermissions";
 import { formatDate } from "~/helpers/dateUtils";
 import { facilityLastMessageOver48 } from "~/helpers/facilityUtils";
@@ -202,6 +203,7 @@ import { allStatuses } from "~/helpers/messageUtils";
 
 export default defineComponent({
   components: {
+    IconCircle,
     BaseCard,
     BaseCardContent,
     BaseCardHeader,
