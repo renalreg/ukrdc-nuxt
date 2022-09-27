@@ -6,7 +6,7 @@
           <h2 class="flex-1">Age Distribution</h2>
           <BaseButtonMini @click="exportAgeDistribution">Export</BaseButtonMini>
         </BaseCardHeader>
-        <PlotBar
+        <BarPlot
           id="ageDistributionChart"
           :y="ageDistributionChartData.data"
           :x="ageDistributionChartData.labels"
@@ -22,7 +22,7 @@
             <h2 class="flex-1">Gender Distribution</h2>
             <BaseButtonMini @click="exportGenderDistribution">Export</BaseButtonMini>
           </BaseCardHeader>
-          <PlotDoughnut
+          <PiePlot
             id="genderDistributionChart"
             :data="genderDistributionChartData.data"
             :labels="genderDistributionChartData.labels"
@@ -34,7 +34,7 @@
             <h2 class="flex-1">Ethnicity Distribution</h2>
             <BaseButtonMini @click="exportEthnicityDistribution">Export</BaseButtonMini>
           </BaseCardHeader>
-          <PlotDoughnut
+          <PiePlot
             id="ethnicityDistributionChart"
             :data="ethnicityDistributionChartData.data"
             :labels="ethnicityDistributionChartData.labels"
@@ -53,6 +53,8 @@ import { FacilityDemographicStats, FacilityDetailsSchema } from "@ukkidney/ukrdc
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+import BarPlot from "~/components/plots/BarPlot.vue";
+import PiePlot from "~/components/plots/PiePlot.vue";
 import useApi from "~/composables/useApi";
 import { formatGender } from "~/helpers/codeUtils";
 import { buildCsv } from "~/helpers/exportUtils";
@@ -64,6 +66,8 @@ export default defineComponent({
     BaseButtonMini,
     BaseCard,
     BaseCardHeader,
+    BarPlot,
+    PiePlot,
   },
   props: {
     facility: {

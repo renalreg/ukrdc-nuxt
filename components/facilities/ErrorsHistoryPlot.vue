@@ -1,6 +1,6 @@
 <template>
   <div class="mb-2">
-    <PlotTimeSeries
+    <TimeSeriesLinePlot
       v-if="facilityErrorsHistory"
       class="h-64"
       :x="facilityErrorsHistoryData.x"
@@ -17,10 +17,14 @@ import { computed, defineComponent, onMounted, ref, useRouter } from "@nuxtjs/co
 import { FacilityDetailsSchema, HistoryPoint } from "@ukkidney/ukrdc-axios-ts";
 import { PlotDatum } from "plotly.js";
 
+import TimeSeriesLinePlot from "~/components/plots/TimeSeriesLinePlot.vue";
 import useApi from "~/composables/useApi";
 import { getPointDateRange, unpackHistoryPoints } from "~/helpers/chartUtils";
 
 export default defineComponent({
+  components: {
+    TimeSeriesLinePlot,
+  },
   props: {
     facility: {
       type: Object as () => FacilityDetailsSchema,
