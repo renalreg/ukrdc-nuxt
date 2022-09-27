@@ -36,7 +36,7 @@
       </div>
       <!-- Last updated (small and up) -->
       <div class="hidden lg:block">
-        <p><LinkSendingFacility class="inline" :code="facility" /> via {{ extract }}</p>
+        <p><SendingFacilityLink class="inline" :code="facility" /> via {{ extract }}</p>
         <p class="mt-2">
           {{ formatDate(item.creationDate) }}
         </p>
@@ -49,9 +49,11 @@
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 
+import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
 import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
+  components: { SendingFacilityLink },
   props: {
     item: {
       type: Object as () => WorkItemSchema,

@@ -20,7 +20,7 @@
       </div>
       <!-- Recieved  -->
       <div class="col-span-2 lg:col-span-1">
-        <p>From <LinkSendingFacility class="inline" :code="item.facility" /></p>
+        <p>From <SendingFacilityLink class="inline" :code="item.facility" /></p>
         <p class="mt-2">
           {{ item.received ? formatDate(item.received) : "Unknown time" }}
         </p>
@@ -54,6 +54,7 @@ import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { MessageSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseButton from "~/components/base/BaseButton.vue";
+import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
 import useSensitive from "~/composables/useSensitive";
 import { formatDate } from "~/helpers/dateUtils";
 import { makeMessageSummary } from "~/helpers/messageUtils";
@@ -61,6 +62,7 @@ import { makeMessageSummary } from "~/helpers/messageUtils";
 export default defineComponent({
   components: {
     BaseButton,
+    SendingFacilityLink,
   },
   props: {
     item: {

@@ -91,7 +91,7 @@
             <p v-if="item.county">
               {{ item.county }}
             </p>
-            <LinkPostCode v-if="item.postcode" :code="item.postcode" />
+            <PostCodeLink v-if="item.postcode" :code="item.postcode" />
             <p v-if="item.countryDescription">
               {{ item.countryDescription }}
             </p>
@@ -159,7 +159,7 @@
             <b>{{ info.type }} Information</b>
             <p>{{ info.gpname || "GP name not known" }}</p>
             <p>{{ info.street }}</p>
-            <LinkPostCode v-if="info.postcode" :code="info.postcode" />
+            <PostCodeLink v-if="info.postcode" :code="info.postcode" />
             <p>Contact {{ info.contactvalue }}</p>
           </BaseCard>
         </li>
@@ -168,7 +168,7 @@
             <b>GP Information</b>
             <p>{{ record.patient.familydoctor.gpname || "GP name not known" }}</p>
             <p>{{ record.patient.familydoctor.street }}</p>
-            <LinkPostCode v-if="record.patient.familydoctor.postcode" :code="record.patient.familydoctor.postcodee" />
+            <PostCodeLink v-if="record.patient.familydoctor.postcode" :code="record.patient.familydoctor.postcodee" />
             <p>Contact {{ record.patient.familydoctor.contactvalue }}</p>
           </BaseCard>
         </li>
@@ -182,6 +182,7 @@ import { defineComponent } from "@nuxtjs/composition-api";
 import { PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseCard from "~/components/base/BaseCard.vue";
+import PostCodeLink from "~/components/PostCodeLink.vue";
 import { formatGender } from "~/helpers/codeUtils";
 import { formatDate } from "~/helpers/dateUtils";
 import { isEmptyObject } from "~/helpers/objectUtils";
@@ -189,6 +190,7 @@ import { isEmptyObject } from "~/helpers/objectUtils";
 export default defineComponent({
   components: {
     BaseCard,
+    PostCodeLink,
   },
   props: {
     record: {

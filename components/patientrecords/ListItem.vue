@@ -4,7 +4,7 @@
       <div class="grid w-full min-w-0 flex-1 grid-cols-2 gap-2 py-4 pl-4 sm:grid-cols-3 sm:pl-6 lg:grid-cols-4">
         <!-- Name, DoB, gender -->
         <div>
-          <LinkSendingFacility class="font-medium" :code="item.sendingfacility" />
+          <SendingFacilityLink class="font-medium" :code="item.sendingfacility" />
           <p class="mt-2">via {{ item.sendingextract }}</p>
         </div>
         <!-- National ID -->
@@ -66,6 +66,7 @@ import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
 import { PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
+import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
 import { formatGenderCharacter } from "~/helpers/codeUtils";
 import { formatDate } from "~/helpers/dateUtils";
 import { firstMRN } from "~/helpers/recordUtils";
@@ -78,6 +79,7 @@ interface localNumber {
 export default defineComponent({
   components: {
     BaseButtonMini,
+    SendingFacilityLink,
   },
   props: {
     item: {

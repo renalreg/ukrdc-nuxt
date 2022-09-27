@@ -18,7 +18,7 @@
           </BaseDescriptionListGridItem>
           <BaseDescriptionListGridItem>
             <dt>Facility</dt>
-            <LinkSendingFacility v-if="message" :code="message.facility" />
+            <SendingFacilityLink v-if="message" :code="message.facility" />
             <BaseSkeleText v-else class="h-6 w-full" />
           </BaseDescriptionListGridItem>
 
@@ -119,6 +119,7 @@ import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGr
 import BaseInfoTooltip from "~/components/base/BaseInfoTooltip.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
+import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import useSensitive from "~/composables/useSensitive";
@@ -137,6 +138,7 @@ export default defineComponent({
     BaseButtonLink,
     BaseAttachment,
     BaseInfoTooltip,
+    SendingFacilityLink,
   },
   props: {
     message: {
