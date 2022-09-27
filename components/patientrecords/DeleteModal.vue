@@ -8,7 +8,7 @@
         <!-- This element is to trick the browser into centering the modal contents. -->
         <span class="hidden sm:inline-block sm:h-screen sm:align-middle" aria-hidden="true">&#8203;</span>
         <!-- Modal panel, show/hide based on modal state. -->
-        <TransitionModal>
+        <ModalTransition>
           <div
             v-show="visible"
             class="inline-block w-full transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-3/4 sm:max-w-3xl sm:p-6 sm:align-middle"
@@ -194,7 +194,7 @@
               <BaseButton @click="cancel()"> Cancel </BaseButton>
             </div>
           </div>
-        </TransitionModal>
+        </ModalTransition>
       </div>
     </div>
   </transition>
@@ -215,6 +215,7 @@ import BaseBlackout from "~/components/base/BaseBlackout.vue";
 import BaseButton from "~/components/base/BaseButton.vue";
 import BaseCheckbox from "~/components/base/BaseCheckbox.vue";
 import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
+import ModalTransition from "~/components/base/ModalTransition.vue";
 import useApi from "~/composables/useApi";
 import useModal from "~/composables/useModal";
 import { formatDate } from "~/helpers/dateUtils";
@@ -241,6 +242,7 @@ export default defineComponent({
     BaseLoadingIndicator,
     BaseCheckbox,
     BaseBlackout,
+    ModalTransition,
   },
   props: {
     item: {

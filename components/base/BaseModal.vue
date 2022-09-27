@@ -9,7 +9,7 @@
         <BaseBlackout :visible="visible" @click="hide()" />
 
         <!-- Modal panel, show/hide based on modal state. -->
-        <TransitionModal>
+        <ModalTransition>
           <div
             v-show="visible"
             class="inline-block max-h-full w-full transform overflow-auto rounded-lg bg-white p-4 text-left align-bottom shadow-xl transition-all sm:max-w-xl sm:p-6 sm:align-middle"
@@ -19,7 +19,7 @@
           >
             <slot></slot>
           </div>
-        </TransitionModal>
+        </ModalTransition>
       </div>
     </div>
   </transition>
@@ -29,11 +29,13 @@
 import { defineComponent } from "@nuxtjs/composition-api";
 
 import BaseBlackout from "~/components/base/BaseBlackout.vue";
+import ModalTransition from "~/components/base/ModalTransition.vue";
 import useModal from "~/composables/useModal";
 
 export default defineComponent({
   components: {
     BaseBlackout,
+    ModalTransition,
   },
   setup() {
     const { visible, show, hide, toggle } = useModal();
