@@ -22,7 +22,7 @@
         <div class="shadow-xs z-100 overflow-hidden rounded-lg">
           <div class="p-4">
             <div class="flex items-start">
-              <toastIcon class="flex-shrink-0" :type="type" :icon="icon" />
+              <BaseToastIcon class="flex-shrink-0" :type="type" :icon="icon" />
               <div class="ml-3 w-0 flex-1 pt-0.5">
                 <p v-if="title" :class="classTitle" class="font-medium leading-5">
                   {{ title }}
@@ -64,7 +64,7 @@
         ></div>
         <div class="shadow-xs flex rounded-lg">
           <div class="flex w-0 flex-1 items-center p-4">
-            <toastIcon class="mr-4 flex-shrink-0" :type="type" :icon="icon" />
+            <BaseToastIcon class="mr-4 flex-shrink-0" :type="type" :icon="icon" />
             <div class="w-full">
               <p v-if="title" :class="classTitle" class="font-medium leading-5">
                 {{ title }}
@@ -109,7 +109,7 @@
         <div class="shadow-xs overflow-hidden rounded-lg">
           <div class="p-4">
             <div class="flex items-center">
-              <toastIcon class="mr-4 flex-shrink-0" :type="type" :icon="icon" />
+              <BaseToastIcon class="mr-4 flex-shrink-0" :type="type" :icon="icon" />
               <div class="flex w-0 flex-1 justify-between">
                 <p class="w-0 flex-1 leading-5">{{ message }}</p>
                 <button
@@ -149,12 +149,17 @@ import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-a
 
 import { removeElement } from "~/helpers/domUtils";
 
+import BaseToastIcon from "./BaseToastIcon.vue";
+
 interface Action {
   label: string;
   action(): void;
 }
 
 export default defineComponent({
+  components: {
+    BaseToastIcon,
+  },
   props: {
     title: {
       type: [Boolean, String],
