@@ -21,10 +21,12 @@
 import { defineComponent, ref } from "@nuxtjs/composition-api";
 
 import BaseCheckbox from "~/components/base/BaseCheckbox.vue";
+import FacilitiesTable from "~/components/FacilitiesTable.vue";
 
 export default defineComponent({
   components: {
     BaseCheckbox,
+    FacilitiesTable,
   },
   setup() {
     const includeInactive = ref(true);

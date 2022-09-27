@@ -4,7 +4,7 @@
       <div class="min-h-20 lg:min-h-12 flex w-full min-w-0 items-center gap-2">
         <div class="h-full w-8">
           <div
-            v-show="item.children.length > 0"
+            v-show="item.children && item.children.length > 0"
             class="flex h-full flex-none cursor-pointer items-center justify-center self-stretch"
             @click="showChildren = !showChildren"
           >
@@ -16,8 +16,8 @@
         <div class="grid flex-grow grid-cols-6 items-center gap-2 py-2 pr-2 lg:grid-cols-12">
           <p class="col-span-2 truncate lg:col-span-3">{{ formatDate(item.accessEvent.time, true, true) }}</p>
           <p class="sensitive col-span-4 lg:col-span-4">{{ item.accessEvent.userEmail }}</p>
-          <p class="col-span-2 lg:col-span-1"><BadgeCrud :operation="item.operation" /></p>
-          <AuditResourceBadge class="col-span-4 lg:col-span-4" :item="item" />
+          <p class="col-span-2 lg:col-span-1"><BadgeCRUD :operation="item.operation" /></p>
+          <AuditResourceCard class="col-span-4 lg:col-span-4" :item="item" />
         </div>
       </div>
       <ul
@@ -36,15 +36,19 @@
 import { defineComponent, ref } from "@nuxtjs/composition-api";
 import { AuditEventSchema } from "@ukkidney/ukrdc-axios-ts";
 
+import AuditResourceCard from "~/components/AuditResourceCard.vue";
+import BadgeCRUD from "~/components/BadgeCRUD.vue";
+import IconChevronDown from "~/components/icons/hero/24/solid/IconChevronDown.vue";
+import IconChevronRight from "~/components/icons/hero/24/solid/IconChevronRight.vue";
 import { formatDate } from "~/helpers/dateUtils";
 
-import IconChevronDown from "../icons/hero/24/solid/IconChevronDown.vue";
-import IconChevronRight from "../icons/hero/24/solid/IconChevronRight.vue";
-
 export default defineComponent({
+  name: "AuditListItem",
   components: {
     IconChevronRight,
     IconChevronDown,
+    BadgeCRUD,
+    AuditResourceCard,
   },
   props: {
     item: {

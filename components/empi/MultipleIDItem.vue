@@ -34,10 +34,10 @@
       >
         <BaseSkeleListItem v-if="fetchInProgress" />
         <NuxtLink v-else :to="`/masterrecords/${item.masterRecord.id}`">
-          <MasterrecordsListItem
+          <MasterRecordsListItem
             :item="item.masterRecord"
-            :details-label="item.lastUpdated ? 'Last checked' : null"
-            :details-value="item.lastUpdated ? formatDate(item.lastUpdated) : null"
+            :details-label="item.lastUpdated ? 'Last checked' : undefined"
+            :details-value="item.lastUpdated ? formatDate(item.lastUpdated) : undefined"
           />
         </NuxtLink>
       </div>
@@ -51,12 +51,14 @@ import { MultipleUKRDCIDGroup } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+import MasterRecordsListItem from "~/components/MasterRecordsListItem.vue";
 import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
   components: {
     BaseButtonMini,
     BaseSkeleListItem,
+    MasterRecordsListItem,
   },
   props: {
     group: {

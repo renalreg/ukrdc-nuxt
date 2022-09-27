@@ -29,7 +29,7 @@
         <p v-else-if="item.person" class="sensitive">
           {{ item.person.localid.trim() }}
         </p>
-        <masterrecordsNationalIdTypeTag
+        <BadgeNationalID
           class="mt-2"
           :nationalid-type="item.masterRecord ? item.masterRecord.nationalidType : 'Unknown Type'"
         />
@@ -49,11 +49,12 @@
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 
+import BadgeNationalID from "~/components/BadgeNationalID.vue";
 import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
 import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
-  components: { SendingFacilityLink },
+  components: { SendingFacilityLink, BadgeNationalID },
   props: {
     item: {
       type: Object as () => WorkItemSchema,

@@ -29,7 +29,7 @@
             leave-class="translate-x-0"
             leave-to-class="-translate-x-full"
           >
-            <NavigationSidebar
+            <Sidebar
               v-show="sbOpen"
               :show-close-button="true"
               :show-profile="false"
@@ -55,7 +55,7 @@
     <!-- Static sidebar for desktop -->
     <div class="hidden md:flex md:flex-shrink-0">
       <div class="flex w-64 flex-col">
-        <NavigationSidebar class="flex h-0 flex-1 flex-col border-r border-gray-200" />
+        <Sidebar class="flex h-0 flex-1 flex-col border-r border-gray-200" />
       </div>
     </div>
 
@@ -102,9 +102,13 @@ import "floating-vue/dist/style.css";
 
 import { defineComponent, ref, useContext, useMeta } from "@nuxtjs/composition-api";
 
+import Sidebar from "~/components/Sidebar.vue";
 import useSensitive from "~/composables/useSensitive";
 
 export default defineComponent({
+  components: {
+    Sidebar,
+  },
   setup() {
     const { base } = useContext();
     const { link } = useMeta();

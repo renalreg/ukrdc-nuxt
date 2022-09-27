@@ -124,9 +124,9 @@
             :full="showDestinationPersons"
           />
           <!-- Else incoming person card -->
-          <personsRecordCard
+          <PersonRecordCard
             v-else-if="record.incoming.person"
-            :record="record.person"
+            :record="record.incoming.person"
             :label="`Incoming Person Record ${record.incoming.person.id}`"
             :highlight="highlightedAttributes"
             :full="showDestinationPersons"
@@ -144,7 +144,7 @@
             class="mb-2"
           />
           <!-- Destination person card -->
-          <personsRecordCard
+          <PersonRecordCard
             v-if="showDestinationPersons && record.destination.persons.length > 0"
             :record="record.destination.persons[relatedPersonsIndex]"
             :label="`Related Person Record ${relatedPersonsIndex + 1} of ${record.destination.persons.length}`"
@@ -156,7 +156,7 @@
             v-else-if="record.destination.masterRecord"
             :to="`/masterrecords/${record.destination.masterRecord.id}`"
           >
-            <masterrecordsRecordCard
+            <MasterRecordCard
               :record="record.destination.masterRecord"
               :label="`Destination Master Record ${record.destination.masterRecord.id}`"
             />
@@ -184,7 +184,7 @@
             v-if="record.incoming.masterRecords.length > 0"
             :to="`/masterrecords/${record.incoming.masterRecords[relatedRecordsIndex].id}`"
           >
-            <masterrecordsRecordCard
+            <MasterRecordCard
               :record="record.incoming.masterRecords[relatedRecordsIndex]"
               :label="`Incoming Master Record ${relatedRecordsIndex + 1} of ${record.incoming.masterRecords.length}`"
             />
@@ -192,7 +192,7 @@
           <!-- Empty incoming records card -->
           <div v-else class="rounded-md bg-red-50 p-4 font-medium text-red-800">No new incoming Master Records</div>
           <NuxtLink v-if="record.destination.masterRecord" :to="`/masterrecords/${record.destination.masterRecord.id}`">
-            <masterrecordsRecordCard :record="record.destination.masterRecord" label="Destination Master Record" />
+            <MasterRecordCard :record="record.destination.masterRecord" label="Destination Master Record" />
           </NuxtLink>
         </div>
         <BaseCard v-if="record.incoming.masterRecords.length > 1" class="mt-2 pl-4">
@@ -241,6 +241,8 @@ import BaseTextArea from "~/components/base/BaseTextArea.vue";
 import IconArrowTopRightOnSquare from "~/components/icons/hero/20/solid/IconArrowTopRightOnSquare.vue";
 import IconCheckCircle from "~/components/icons/hero/20/solid/IconCheckCircle.vue";
 import IconPencil from "~/components/icons/hero/20/solid/IconPencil.vue";
+import MasterRecordCard from "~/components/MasterRecordCard.vue";
+import PersonRecordCard from "~/components/PersonRecordCard.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import { formatGender } from "~/helpers/codeUtils";
@@ -270,6 +272,8 @@ export default defineComponent({
     IconCheckCircle,
     IconArrowTopRightOnSquare,
     IconPencil,
+    PersonRecordCard,
+    MasterRecordCard,
   },
   setup() {
     // Dependencies

@@ -12,7 +12,7 @@
           </h5>
         </div>
         <div class="mt-2 flex">
-          <MessagesStatusBadge class="mr-2 flex-shrink" :message="item" />
+          <BadgeMessageStatus class="mr-2 flex-shrink" :message="item" />
           <p class="flex-grow line-clamp-1">
             {{ itemDescription }}
           </p>
@@ -53,6 +53,7 @@
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { MessageSchema } from "@ukkidney/ukrdc-axios-ts";
 
+import BadgeMessageStatus from "~/components/BadgeMessageStatus.vue";
 import BaseButton from "~/components/base/BaseButton.vue";
 import IconFunnel from "~/components/icons/hero/20/solid/IconFunnel.vue";
 import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
@@ -65,6 +66,7 @@ export default defineComponent({
     BaseButton,
     SendingFacilityLink,
     IconFunnel,
+    BadgeMessageStatus,
   },
   props: {
     item: {

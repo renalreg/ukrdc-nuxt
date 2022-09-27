@@ -44,6 +44,8 @@
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { TrackableTaskSchema } from "@ukkidney/ukrdc-axios-ts";
 
+import BadgePublicPrivate from "~/components/BadgePublicPrivate.vue";
+import BadgeTaskStatus from "~/components/BadgeTaskStatus.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseInfoTooltip from "~/components/base/BaseInfoTooltip.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
@@ -60,6 +62,8 @@ export default defineComponent({
     BaseTableCell,
     BasePaginator,
     BaseInfoTooltip,
+    BadgePublicPrivate,
+    BadgeTaskStatus,
   },
   setup() {
     const { page, total, size } = usePagination();

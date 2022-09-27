@@ -62,7 +62,7 @@
           <BaseCardHeader>
             <h2>Error History</h2>
           </BaseCardHeader>
-          <FacilitiesErrorsHistoryPlot :facility="facility" />
+          <FacilityErrorsHistoryPlot :facility="facility" />
         </BaseCard>
 
         <!-- Record types -->
@@ -188,6 +188,7 @@ import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
 import BaseTableCell from "~/components/base/BaseTableCell.vue";
+import FacilityErrorsHistoryPlot from "~/components/FacilityErrorsHistoryPlot.vue";
 import IconExclamationTriangle from "~/components/icons/hero/24/outline/IconExclamationTriangle.vue";
 import IconUsers from "~/components/icons/hero/24/outline/IconUsers.vue";
 import IconCircle from "~/components/icons/IconCircle.vue";
@@ -207,6 +208,7 @@ export default defineComponent({
     BaseAlertError,
     IconExclamationTriangle,
     IconUsers,
+    FacilityErrorsHistoryPlot,
   },
   props: {
     facility: {

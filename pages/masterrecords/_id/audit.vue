@@ -44,6 +44,7 @@
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import { AuditEventSchema, MasterRecordSchema, OrderBy } from "@ukkidney/ukrdc-axios-ts";
 
+import AuditListItem from "~/components/AuditListItem.vue";
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseDateRange from "~/components/base/BaseDateRange.vue";
@@ -66,6 +67,7 @@ export default defineComponent({
     BaseDateRange,
     IconBarsArrowDown,
     IconBarsArrowUp,
+    AuditListItem,
   },
   props: {
     record: {

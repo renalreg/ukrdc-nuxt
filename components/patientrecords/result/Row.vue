@@ -42,6 +42,7 @@
 import { defineComponent } from "@nuxtjs/composition-api";
 import { ResultItemSchema } from "@ukkidney/ukrdc-axios-ts";
 
+import BadgePrePost from "~/components/BadgePrePost.vue";
 import BaseButton from "~/components/base/BaseButton.vue";
 import IconFunnel from "~/components/icons/hero/20/solid/IconFunnel.vue";
 import IconTrash from "~/components/icons/hero/20/solid/IconTrash.vue";
@@ -52,6 +53,7 @@ export default defineComponent({
     BaseButton,
     IconFunnel,
     IconTrash,
+    BadgePrePost,
   },
   props: {
     item: {

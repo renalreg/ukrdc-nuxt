@@ -21,12 +21,14 @@
 import { defineComponent } from "@nuxtjs/composition-api";
 import { ObservationSchema } from "@ukkidney/ukrdc-axios-ts";
 
+import BadgePrePost from "~/components/BadgePrePost.vue";
 import BaseTableCell from "~/components/base/BaseTableCell.vue";
 import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
   components: {
     BaseTableCell,
+    BadgePrePost,
   },
   props: {
     item: {

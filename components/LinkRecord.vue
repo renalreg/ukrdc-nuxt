@@ -27,9 +27,9 @@ Includes a header with the Link Record ID and functionality to Unlink the record
     </BaseCard>
 
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-      <PersonsRecordCard :record="record.person" />
+      <PersonRecordCard :record="record.person" />
       <NuxtLink :to="`/masterrecords/${record.masterRecord.id}`">
-        <masterrecordsRecordCard :record="record.masterRecord" />
+        <MasterRecordCard :record="record.masterRecord" />
       </NuxtLink>
     </div>
   </div>
@@ -44,6 +44,8 @@ import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseModal from "~/components/base/BaseModal.vue";
 import BaseTextArea from "~/components/base/BaseTextArea.vue";
+import MasterRecordCard from "~/components/MasterRecordCard.vue";
+import PersonRecordCard from "~/components/PersonRecordCard.vue";
 import useApi from "~/composables/useApi";
 import { formatGender } from "~/helpers/codeUtils";
 import { formatDate } from "~/helpers/dateUtils";
@@ -56,6 +58,8 @@ export default defineComponent({
     BaseCard,
     BaseTextArea,
     BaseModal,
+    PersonRecordCard,
+    MasterRecordCard,
   },
   props: {
     record: {

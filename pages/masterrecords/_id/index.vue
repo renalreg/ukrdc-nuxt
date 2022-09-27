@@ -71,8 +71,12 @@
         <BaseAlertWarning class="mb-4" message="No new patient data received in the last year" />
       </div>
       <div v-if="latestMessage">
-        <BaseAlertError v-if="latestMessage.msgStatus === 'ERROR'" class="mb-4" :message="latestMessageInfo" />
-        <BaseAlertInfo v-else class="mb-4" :message="latestMessageInfo" />
+        <BaseAlertError
+          v-if="latestMessage.msgStatus === 'ERROR' && latestMessageInfo"
+          class="mb-4"
+          :message="latestMessageInfo"
+        />
+        <BaseAlertInfo v-else class="mb-4" :message="latestMessageInfo || 'No message information available'" />
       </div>
     </div>
 
@@ -108,7 +112,7 @@
             v-tooltip="item.id === record.id ? 'You are currently viewing this record' : null"
             :to="`/masterrecords/${item.id}`"
           >
-            <MasterrecordsListItem :item="item" />
+            <MasterRecordsListItem :item="item" />
           </NuxtLink>
         </div>
       </ul>
@@ -138,6 +142,8 @@ import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseDescriptionListGrid from "~/components/base/BaseDescriptionListGrid.vue";
 import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGridItem.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+import MasterRecordsListItem from "~/components/MasterRecordsListItem.vue";
+import TracingBadge from "~/components/TracingBadge.vue";
 import useApi from "~/composables/useApi";
 import useSensitive from "~/composables/useSensitive";
 import { formatGender } from "~/helpers/codeUtils";
@@ -156,6 +162,8 @@ export default defineComponent({
     BaseAlertInfo,
     BaseAlertPlaceholder,
     BaseAlertWarning,
+    TracingBadge,
+    MasterRecordsListItem,
   },
   props: {
     record: {

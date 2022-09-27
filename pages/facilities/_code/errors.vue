@@ -35,6 +35,7 @@ import { PlotDatum } from "plotly.js";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
+import MessagesListItem from "~/components/MessagesListItem.vue";
 import useApi from "~/composables/useApi";
 import { getPointDateRange } from "~/helpers/chartUtils";
 
@@ -43,6 +44,7 @@ export default defineComponent({
     BaseCard,
     BaseCardHeader,
     BasePaginator,
+    MessagesListItem,
   },
   props: {
     facility: {

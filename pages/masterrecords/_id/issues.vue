@@ -61,6 +61,7 @@ import {
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
+import MessagesListItem from "~/components/MessagesListItem.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import { formatGender } from "~/helpers/codeUtils";
@@ -81,6 +82,7 @@ export default defineComponent({
     BaseCard,
     BaseCardHeader,
     BasePaginator,
+    MessagesListItem,
   },
   props: {
     record: {

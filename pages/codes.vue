@@ -93,6 +93,7 @@ import BaseMenuItem from "~/components/base/BaseMenuItem.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+import CodesListItem from "~/components/CodesListItem.vue";
 import IconChevronDown from "~/components/icons/hero/24/solid/IconChevronDown.vue";
 import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";
@@ -109,6 +110,7 @@ export default defineComponent({
     BasePaginator,
     BaseSelectSearchable,
     IconChevronDown,
+    CodesListItem,
   },
   setup() {
     const { page, total, size } = usePagination();

@@ -31,6 +31,7 @@ import { MessageSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
+import MessagesListItem from "~/components/MessagesListItem.vue";
 import useApi from "~/composables/useApi";
 
 export default defineComponent({
@@ -38,6 +39,7 @@ export default defineComponent({
     BaseCard,
     BaseCardHeader,
     BasePaginator,
+    MessagesListItem,
   },
   props: {
     workitem: {

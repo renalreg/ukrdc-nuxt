@@ -5,13 +5,9 @@ Basic code map description, used in the maps sections of a Code pane.
 <template>
   <li>
     <div class="w-full min-w-0 px-4 py-4 sm:px-6">
-      <CodesTitle class="inline" :code="map.sourceCode" :coding-standard="map.sourceCodingStandard" />
+      <CodeTitle class="inline" :code="map.sourceCode" :coding-standard="map.sourceCodingStandard" />
       <h5 class="mx-2 inline">→</h5>
-      <CodesTitle
-        class="inline truncate"
-        :code="map.destinationCode"
-        :coding-standard="map.destinationCodingStandard"
-      />
+      <CodeTitle class="inline truncate" :code="map.destinationCode" :coding-standard="map.destinationCodingStandard" />
     </div>
   </li>
 </template>
@@ -20,7 +16,12 @@ Basic code map description, used in the maps sections of a Code pane.
 import { defineComponent } from "@nuxtjs/composition-api";
 import { CodeMapSchema } from "@ukkidney/ukrdc-axios-ts";
 
+import CodeTitle from "./CodeTitle.vue";
+
 export default defineComponent({
+  components: {
+    CodeTitle,
+  },
   props: {
     map: {
       type: Object as () => CodeMapSchema,

@@ -88,6 +88,7 @@ import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import BaseTextBoxMini from "~/components/base/BaseTextBoxMini.vue";
 import IconBarsArrowDown from "~/components/icons/hero/20/solid/IconBarsArrowDown.vue";
 import IconBarsArrowUp from "~/components/icons/hero/20/solid/IconBarsArrowUp.vue";
+import MessagesListItem from "~/components/MessagesListItem.vue";
 import useDateRange from "~/composables/query/useDateRange";
 import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";
@@ -109,6 +110,7 @@ export default defineComponent({
     BaseSelectSearchable,
     IconBarsArrowDown,
     IconBarsArrowUp,
+    MessagesListItem,
   },
   setup() {
     const { page, total, size } = usePagination();

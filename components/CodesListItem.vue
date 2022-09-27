@@ -7,7 +7,7 @@ Single item of the codes list used in the Codes page.
     <div class="grid w-full min-w-0 grid-cols-2 px-4 py-4 sm:px-6 md:gap-4 lg:grid-cols-3">
       <!-- Heading -->
       <div class="col-span-2">
-        <CodesTitle :code="code.code" :coding-standard="code.codingStandard" />
+        <CodeTitle :code="code.code" :coding-standard="code.codingStandard" />
         <p class="mt-2 truncate">
           {{ code.description || "No description found" }}
         </p>
@@ -31,7 +31,12 @@ Single item of the codes list used in the Codes page.
 import { defineComponent } from "@nuxtjs/composition-api";
 import { CodeSchema } from "@ukkidney/ukrdc-axios-ts";
 
+import CodeTitle from "~/components/CodeTitle.vue";
+
 export default defineComponent({
+  components: {
+    CodeTitle,
+  },
   props: {
     code: {
       type: Object as () => CodeSchema,

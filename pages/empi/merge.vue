@@ -18,7 +18,7 @@
         <div v-if="superseded">
           <BaseButton class="w-full" @click="clearSuperceeded"> Change Superseded Record </BaseButton>
           <NuxtLink :to="`/masterrecords/${superseded.id}`">
-            <masterrecordsRecordCard
+            <MasterRecordCard
               class="mt-4"
               :record="superseded"
               :label="`Superseded Record ${superseded.id.toString()}`"
@@ -54,7 +54,7 @@
         <div v-if="superseding">
           <BaseButton class="w-full" @click="clearsuperseding"> Change Superseding Record </BaseButton>
           <NuxtLink :to="`/masterrecords/${superseding.id}`">
-            <masterrecordsRecordCard
+            <MasterRecordCard
               class="mt-4"
               :record="superseding"
               :label="`Superseding Record ${superseding.id.toString()}`"
@@ -124,6 +124,7 @@ import BaseModalConfirm from "~/components/base/BaseModalConfirm.vue";
 import IconArrowsRightLeft from "~/components/icons/hero/20/solid/IconArrowsRightLeft.vue";
 import IconArrowsUpDown from "~/components/icons/hero/20/solid/IconArrowsUpDown.vue";
 import IconArrowRight from "~/components/icons/hero/24/solid/IconArrowRight.vue";
+import MasterRecordCard from "~/components/MasterRecordCard.vue";
 import useQuery from "~/composables/query/useQuery";
 import useApi from "~/composables/useApi";
 import { modalInterface } from "~/interfaces/modal";
@@ -139,6 +140,7 @@ export default defineComponent({
     IconArrowRight,
     IconArrowsRightLeft,
     IconArrowsUpDown,
+    MasterRecordCard,
   },
   setup() {
     const route = useRoute();

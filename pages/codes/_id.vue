@@ -4,7 +4,7 @@
     <div class="px-4 sm:px-6">
       <!-- Heading -->
       <div class="mb-4">
-        <CodesTitle :code="code.code" :coding-standard="code.codingStandard" />
+        <CodeTitle :code="code.code" :coding-standard="code.codingStandard" />
         <p class="mt-2">
           {{ code.description || "No description found" }}
         </p>
@@ -45,7 +45,7 @@
           <h4>Maps To</h4>
         </div>
         <ul class="divide-y divide-gray-200">
-          <CodesMapListItem
+          <CodeMapItem
             v-for="mappedCode in code.mapsTo"
             :key="`${mappedCode.destinationCodingStandard}.${mappedCode.destinationCode}`"
             :map="mappedCode"
@@ -59,7 +59,7 @@
           <h4>Mapped By</h4>
         </div>
         <ul class="divide-y divide-gray-200">
-          <CodesMapListItem
+          <CodeMapItem
             v-for="mappedCode in code.mappedBy"
             :key="`${mappedCode.sourceCodingStandard}.${mappedCode.sourceCode}`"
             :map="mappedCode"
@@ -76,12 +76,16 @@ import { computed, defineComponent, onMounted, ref, useMeta, useRoute, watch } f
 import { ExtendedCodeSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
+import CodeMapItem from "~/components/CodeMapItem.vue";
+import CodeTitle from "~/components/CodeTitle.vue";
 import useApi from "~/composables/useApi";
 import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
   components: {
     BaseLoadingIndicator,
+    CodeTitle,
+    CodeMapItem,
   },
   setup() {
     const route = useRoute();

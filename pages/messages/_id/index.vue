@@ -7,7 +7,7 @@
           <BaseDescriptionListGridItem>
             <dt>Status</dt>
             <dd v-if="message">
-              <MessagesStatusBadge class="mr-2 flex-shrink" :message="message" />
+              <BadgeMessageStatus class="mr-2 flex-shrink" :message="message" />
             </dd>
             <BaseSkeleText v-else class="h-6 w-full" />
           </BaseDescriptionListGridItem>
@@ -70,7 +70,7 @@
       <ul class="divide-y divide-gray-200">
         <div v-for="item in masterRecords" :key="item.id" class="hover:bg-gray-50">
           <NuxtLink :to="`/masterrecords/${item.id}`">
-            <MasterrecordsListItem :item="item" />
+            <MasterRecordsListItem :item="item" />
           </NuxtLink>
         </div>
       </ul>
@@ -109,6 +109,7 @@
 import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { ChannelMessageModel, MasterRecordSchema, MessageSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 
+import BadgeMessageStatus from "~/components/BadgeMessageStatus.vue";
 import BaseAttachment from "~/components/base/BaseAttachment.vue";
 import BaseButtonLink from "~/components/base/BaseButtonLink.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
@@ -119,6 +120,7 @@ import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGr
 import BaseInfoTooltip from "~/components/base/BaseInfoTooltip.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
+import MasterRecordsListItem from "~/components/MasterRecordsListItem.vue";
 import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
@@ -139,6 +141,8 @@ export default defineComponent({
     BaseAttachment,
     BaseInfoTooltip,
     SendingFacilityLink,
+    MasterRecordsListItem,
+    BadgeMessageStatus,
   },
   props: {
     message: {

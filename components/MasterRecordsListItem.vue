@@ -25,7 +25,7 @@
         <p class="sensitive">
           {{ item.nationalid.trim() }}
         </p>
-        <masterrecordsNationalIdTypeTag class="mt-2" :nationalid-type="item.nationalidType" />
+        <BadgeNationalID class="mt-2" :nationalid-type="item.nationalidType" />
       </div>
       <!-- Details, defaults to record updated time, but can be overridden by props  -->
       <div v-if="detailsValue">
@@ -42,10 +42,12 @@
 import { defineComponent } from "@nuxtjs/composition-api";
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
+import BadgeNationalID from "~/components/BadgeNationalID.vue";
 import { formatGenderCharacter } from "~/helpers/codeUtils";
 import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
+  components: { BadgeNationalID },
   props: {
     item: {
       type: Object as () => MasterRecordSchema,

@@ -17,7 +17,7 @@ Mini (half-width) search bar and results pages used in the EMPI Merge page.
         <!-- Real results -->
         <ul v-else class="divide-y divide-gray-200">
           <div v-for="item in masterrecords" :key="item.id" class="hover:bg-gray-50">
-            <MasterrecordsListItem class="cursor-pointer" :item="item" @click.native="$emit('select', item.id)" />
+            <MasterRecordsListItem class="cursor-pointer" :item="item" @click.native="$emit('select', item.id)" />
           </div>
         </ul>
         <BasePaginator
@@ -50,6 +50,7 @@ import BaseCard from "~/components/base/BaseCard.vue";
 import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+import MasterRecordsListItem from "~/components/MasterRecordsListItem.vue";
 import usePagination from "~/composables/query/usePagination";
 import useRecordSearch from "~/composables/query/useRecordSearch";
 import useApi from "~/composables/useApi";
@@ -60,6 +61,7 @@ export default defineComponent({
     BaseLoadingIndicator,
     BaseSkeleListItem,
     BasePaginator,
+    MasterRecordsListItem,
   },
   props: {
     numberTypes: {

@@ -43,7 +43,7 @@
         <ul class="divide-y divide-gray-200">
           <div v-for="item in masterrecords" :key="item.id" class="hover:bg-gray-50">
             <NuxtLink :to="`/masterrecords/${item.id}`">
-              <MasterrecordsListItem :item="item" />
+              <MasterRecordsListItem :item="item" />
             </NuxtLink>
           </div>
         </ul>
@@ -92,6 +92,7 @@ import BaseCollapseHeader from "~/components/base/BaseCollapseHeader.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+import MasterRecordsListItem from "~/components/MasterRecordsListItem.vue";
 import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";
 import useRecordSearch from "~/composables/query/useRecordSearch";
@@ -106,6 +107,7 @@ export default defineComponent({
     BaseCheckpill,
     BaseSelectSearchable,
     BaseCollapseHeader,
+    MasterRecordsListItem,
   },
   setup() {
     const { page, total, size } = usePagination();
