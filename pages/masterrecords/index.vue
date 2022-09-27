@@ -93,6 +93,7 @@ import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import MasterRecordsListItem from "~/components/MasterRecordsListItem.vue";
+import SearchBar from "~/components/SearchBar.vue";
 import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";
 import useRecordSearch from "~/composables/query/useRecordSearch";
@@ -108,6 +109,7 @@ export default defineComponent({
     BaseSelectSearchable,
     BaseCollapseHeader,
     MasterRecordsListItem,
+    SearchBar,
   },
   setup() {
     const { page, total, size } = usePagination();

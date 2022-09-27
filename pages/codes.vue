@@ -95,6 +95,7 @@ import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import CodesListItem from "~/components/CodesListItem.vue";
 import IconChevronDown from "~/components/icons/hero/24/solid/IconChevronDown.vue";
+import SearchBar from "~/components/SearchBar.vue";
 import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";
 import useApi from "~/composables/useApi";
@@ -111,6 +112,7 @@ export default defineComponent({
     BaseSelectSearchable,
     IconChevronDown,
     CodesListItem,
+    SearchBar,
   },
   setup() {
     const { page, total, size } = usePagination();

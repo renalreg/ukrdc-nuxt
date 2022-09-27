@@ -51,6 +51,7 @@ import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import MasterRecordsListItem from "~/components/MasterRecordsListItem.vue";
+import SearchBar from "~/components/SearchBar.vue";
 import usePagination from "~/composables/query/usePagination";
 import useRecordSearch from "~/composables/query/useRecordSearch";
 import useApi from "~/composables/useApi";
@@ -62,6 +63,7 @@ export default defineComponent({
     BaseSkeleListItem,
     BasePaginator,
     MasterRecordsListItem,
+    SearchBar,
   },
   props: {
     numberTypes: {

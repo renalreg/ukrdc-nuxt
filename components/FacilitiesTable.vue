@@ -117,6 +117,7 @@ import BaseTable from "~/components/base/BaseTable.vue";
 import BaseTableCell from "~/components/base/BaseTableCell.vue";
 import IconExclamationTriangle from "~/components/icons/hero/24/outline/IconExclamationTriangle.vue";
 import IconCircle from "~/components/icons/IconCircle.vue";
+import SearchBar from "~/components/SearchBar.vue";
 import useApi from "~/composables/useApi";
 import { formatDate } from "~/helpers/dateUtils";
 import { facilityLastMessageOver48 } from "~/helpers/facilityUtils";
@@ -134,6 +135,7 @@ export default defineComponent({
     BaseSortIcon,
     BaseFilterIcon,
     IconExclamationTriangle,
+    SearchBar,
   },
   props: {
     includeEmpty: {
