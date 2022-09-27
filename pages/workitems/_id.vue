@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Modals -->
-    <GenericModalSlot v-if="hasPermission('ukrdc:workitems:write')" ref="addCommentModal">
+    <BaseModal v-if="hasPermission('ukrdc:workitems:write')" ref="addCommentModal">
       <div class="text-left">
         <div class="mb-4">Add Work Item comment</div>
         <BaseTextArea v-model="customComment" :max-length="100" rows="3"></BaseTextArea>
@@ -19,9 +19,9 @@
           Save
         </BaseButton>
       </div>
-    </GenericModalSlot>
+    </BaseModal>
 
-    <GenericModalSlot v-if="hasPermission('ukrdc:workitems:write')" ref="closeModal">
+    <BaseModal v-if="hasPermission('ukrdc:workitems:write')" ref="closeModal">
       <div class="text-left">
         <div class="mb-4">{{ closeMessageOverride ? closeMessageOverride : "Close the Work Item" }}</div>
 
@@ -37,7 +37,7 @@
           Close Work Item
         </BaseButton>
       </div>
-    </GenericModalSlot>
+    </BaseModal>
 
     <!-- Header -->
     <div class="mb-6">
@@ -234,6 +234,7 @@ import BaseButton from "~/components/base/BaseButton.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseItemPaginator from "~/components/base/BaseItemPaginator.vue";
+import BaseModal from "~/components/base/BaseModal.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import BaseTabToggle from "~/components/base/BaseTabToggle.vue";
 import BaseTextArea from "~/components/base/BaseTextArea.vue";
@@ -262,6 +263,7 @@ export default defineComponent({
     BaseItemPaginator,
     BaseTextArea,
     BaseTabToggle,
+    BaseModal,
   },
   setup() {
     // Dependencies

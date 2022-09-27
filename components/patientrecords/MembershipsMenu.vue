@@ -1,6 +1,6 @@
 <template>
   <div>
-    <GenericModalConfirm
+    <BaseModalConfirm
       ref="createPkbMembershipConfirm"
       title="Create PKB Membership"
       icon="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
@@ -11,7 +11,7 @@
       <p>
         Data will only be sent to PKB if/when at least one of the patient's renal units enrolls in PKB data sending.
       </p>
-    </GenericModalConfirm>
+    </BaseModalConfirm>
 
     <div v-click-away="closeMenu" class="relative flex items-center justify-self-end">
       <BaseButtonMini
@@ -42,6 +42,7 @@ import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import BaseMenu from "~/components/base/BaseMenu.vue";
 import BaseMenuItem from "~/components/base/BaseMenuItem.vue";
+import BaseModalConfirm from "~/components/base/BaseModalConfirm.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import { modalInterface } from "~/interfaces/modal";
@@ -51,6 +52,7 @@ export default defineComponent({
     BaseButtonMini,
     BaseMenu,
     BaseMenuItem,
+    BaseModalConfirm,
   },
   props: {
     masterRecord: {

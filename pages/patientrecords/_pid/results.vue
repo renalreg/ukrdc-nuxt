@@ -1,6 +1,6 @@
 <template>
   <div class="sensitive">
-    <GenericModalConfirm
+    <BaseModalConfirm
       ref="deleteResultAlert"
       title="Delete Result Item"
       message="Are you sure you want to delete this result item?"
@@ -10,7 +10,7 @@
       @cancel="cancelDeleteResultItem"
     />
 
-    <GenericModalConfirm
+    <BaseModalConfirm
       ref="deleteOrderAlert"
       title="Delete Lab Order"
       message="Are you sure you want to delete this lab order and all associated result items?"
@@ -108,6 +108,7 @@ import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
+import BaseModalConfirm from "~/components/base/modal/BaseModalConfirm.vue";
 import useDateRange from "~/composables/query/useDateRange";
 import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";
@@ -124,6 +125,7 @@ export default defineComponent({
     BasePaginator,
     BaseDateRange,
     BaseSelectSearchable,
+    BaseModalConfirm,
   },
   props: {
     record: {

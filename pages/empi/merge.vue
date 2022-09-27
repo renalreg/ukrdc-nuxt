@@ -1,6 +1,6 @@
 <template>
   <div>
-    <GenericModalConfirm
+    <BaseModalConfirm
       ref="beginMergeAlert"
       title="Begin Record Merge"
       message="Are you sure you want to begin merging these records?"
@@ -66,9 +66,9 @@
       </div>
     </div>
 
-    <GenericAlertWarning v-if="mergeBlockDescription" class="mb-4" :message="mergeBlockDescription" />
+    <BaseAlertWarning v-if="mergeBlockDescription" class="mb-4" :message="mergeBlockDescription" />
 
-    <GenericAlertError
+    <BaseAlertError
       v-if="highlightSections.length > 0"
       class="mb-4"
       :message="`You are about to merge records with mismatching demographics for: ${highlightSections.join(', ')}`"
@@ -114,7 +114,10 @@ import {
 } from "@nuxtjs/composition-api";
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
+import BaseAlertError from "~/components/base/BaseAlertError.vue";
+import BaseAlertWarning from "~/components/base/BaseAlertWarning.vue";
 import BaseButton from "~/components/base/BaseButton.vue";
+import BaseModalConfirm from "~/components/base/BaseModalConfirm.vue";
 import useQuery from "~/composables/query/useQuery";
 import useApi from "~/composables/useApi";
 import { modalInterface } from "~/interfaces/modal";
@@ -124,6 +127,9 @@ type Direction = "superseding" | "superseded";
 export default defineComponent({
   components: {
     BaseButton,
+    BaseModalConfirm,
+    BaseAlertError,
+    BaseAlertWarning,
   },
   setup() {
     const route = useRoute();

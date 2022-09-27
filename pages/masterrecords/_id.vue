@@ -3,7 +3,7 @@
     <!-- Issues alert -->
     <div v-if="record && stats && stats.ukrdcids > 1">
       <NuxtLink :to="`/masterrecords/${record.id}/issues`">
-        <GenericAlertError
+        <BaseAlertError
           class="mb-4"
           :message="`${stats.ukrdcids} UKRDC IDs found for this patient. Click for details.`"
         />
@@ -12,7 +12,7 @@
 
     <div v-if="record && issueMessage">
       <NuxtLink :to="`/masterrecords/${record.id}/issues`">
-        <GenericAlertWarning class="mb-4" :message="issueMessage" />
+        <BaseAlertWarning class="mb-4" :message="issueMessage" />
       </NuxtLink>
     </div>
 
@@ -34,6 +34,8 @@
 import { defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
 import { MasterRecordSchema, MasterRecordStatisticsSchema } from "@ukkidney/ukrdc-axios-ts";
 
+import BaseAlertError from "~/components/base/BaseAlertError.vue";
+import BaseAlertWarning from "~/components/base/BaseAlertWarning.vue";
 import BaseTabsNavigation from "~/components/base/BaseTabsNavigation.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
@@ -45,6 +47,8 @@ import { TabItem } from "~/interfaces/tabs";
 export default defineComponent({
   components: {
     BaseTabsNavigation,
+    BaseAlertError,
+    BaseAlertWarning,
   },
   setup() {
     const route = useRoute();

@@ -1,5 +1,5 @@
 <template>
-  <GenericModalSlot ref="surveyViewerModal">
+  <BaseModal ref="surveyViewerModal">
     <div v-if="availableToOpen">
       <div class="sm:rounded-lg">
         <div class="mb-4">
@@ -64,7 +64,7 @@
         </div>
       </div>
     </div>
-  </GenericModalSlot>
+  </BaseModal>
 </template>
 
 <script lang="ts">
@@ -72,6 +72,7 @@ import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
 import { SurveyQuestionSchema, SurveySchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseCardDescriptionList from "~/components/base/BaseCardDescriptionList.vue";
+import BaseModal from "~/components/base/BaseModal.vue";
 import { formatDate } from "~/helpers/dateUtils";
 import { modalInterface } from "~/interfaces/modal";
 
@@ -82,6 +83,7 @@ interface GroupedQuestions {
 export default defineComponent({
   components: {
     BaseCardDescriptionList,
+    BaseModal,
   },
   setup() {
     const survey = ref({} as SurveySchema);

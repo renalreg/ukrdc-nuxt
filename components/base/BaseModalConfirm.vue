@@ -1,5 +1,5 @@
 <template>
-  <GenericModalSlot ref="confirmModal">
+  <BaseModal ref="confirmModal">
     <div class="sm:flex sm:items-start">
       <div
         class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full sm:mx-0 sm:h-10 sm:w-10"
@@ -38,18 +38,20 @@
         {{ cancelLabel }}
       </BaseButton>
     </div>
-  </GenericModalSlot>
+  </BaseModal>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
 
 import BaseButton from "~/components/base/BaseButton.vue";
+import BaseModal from "~/components/base/BaseModal.vue";
 import { modalInterface } from "~/interfaces/modal";
 
 export default defineComponent({
   components: {
     BaseButton,
+    BaseModal,
   },
   props: {
     title: {

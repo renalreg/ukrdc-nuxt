@@ -1,12 +1,12 @@
 <template>
   <div>
     <NuxtLink :to="`/facilities/${facility.id}/errors`">
-      <genericAlertError
+      <BaseAlertError
         v-if="(facility.statistics.patientsReceivingMessageError || 0) > 0"
         class="mb-4"
         :message="`${facility.statistics.patientsReceivingMessageError} patients are not receiving data due to errors in their incoming files. Click for details.`"
       >
-      </genericAlertError>
+      </BaseAlertError>
     </NuxtLink>
 
     <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
@@ -189,6 +189,7 @@
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { FacilityDetailsSchema, FacilityExtractsSchema } from "@ukkidney/ukrdc-axios-ts";
 
+import BaseAlertError from "~/components/base/BaseAlertError.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
@@ -206,6 +207,7 @@ export default defineComponent({
     BaseCardHeader,
     BaseTable,
     BaseTableCell,
+    BaseAlertError,
   },
   props: {
     facility: {

@@ -65,14 +65,14 @@
     <!-- Record message banners -->
     <div>
       <div v-if="latestMessage === undefined">
-        <GenericAlertPlaceholder class="mb-4" />
+        <BaseAlertPlaceholder class="mb-4" />
       </div>
       <div v-if="latestMessage === null">
-        <GenericAlertWarning class="mb-4" message="No new patient data received in the last year" />
+        <BaseAlertWarning class="mb-4" message="No new patient data received in the last year" />
       </div>
       <div v-if="latestMessage">
-        <GenericAlertError v-if="latestMessage.msgStatus === 'ERROR'" class="mb-4" :message="latestMessageInfo" />
-        <GenericAlertInfo v-else class="mb-4" :message="latestMessageInfo" />
+        <BaseAlertError v-if="latestMessage.msgStatus === 'ERROR'" class="mb-4" :message="latestMessageInfo" />
+        <BaseAlertInfo v-else class="mb-4" :message="latestMessageInfo" />
       </div>
     </div>
 
@@ -128,6 +128,10 @@ import {
   PatientRecordSummarySchema,
 } from "@ukkidney/ukrdc-axios-ts";
 
+import BaseAlertError from "~/components/base/alerts/BaseAlertError.vue";
+import BaseAlertInfo from "~/components/base/alerts/BaseAlertInfo.vue";
+import BaseAlertPlaceholder from "~/components/base/alerts/BaseAlertPlaceholder.vue";
+import BaseAlertWarning from "~/components/base/alerts/BaseAlertWarning.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
@@ -148,6 +152,10 @@ export default defineComponent({
     BaseSkeleListItem,
     BaseDescriptionListGrid,
     BaseDescriptionListGridItem,
+    BaseAlertError,
+    BaseAlertInfo,
+    BaseAlertPlaceholder,
+    BaseAlertWarning,
   },
   props: {
     record: {

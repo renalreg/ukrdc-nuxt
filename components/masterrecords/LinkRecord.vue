@@ -5,7 +5,7 @@ Includes a header with the Link Record ID and functionality to Unlink the record
 
 <template>
   <div>
-    <GenericModalSlot ref="unlinkModal">
+    <BaseModal ref="unlinkModal">
       <div class="text-left">
         <div class="mb-4">Unlink comment</div>
         <BaseTextArea v-model="unlinkComment" :max-length="100" rows="3"></BaseTextArea>
@@ -15,7 +15,7 @@ Includes a header with the Link Record ID and functionality to Unlink the record
         <BaseButton @click="unlinkModal?.hide()">Cancel</BaseButton>
         <BaseButton :primary="true" colour="red" class="ml-2" type="submit" @click="doUnlink()"> Unlink </BaseButton>
       </div>
-    </GenericModalSlot>
+    </BaseModal>
 
     <BaseCard class="mb-2 flex items-center p-2">
       <div class="flex-grow pl-2">
@@ -42,6 +42,7 @@ import { LinkRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseButton from "~/components/base/BaseButton.vue";
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
+import BaseModal from "~/components/base/BaseModal.vue";
 import BaseTextArea from "~/components/base/BaseTextArea.vue";
 import useApi from "~/composables/useApi";
 import { formatGender } from "~/helpers/codeUtils";
@@ -54,6 +55,7 @@ export default defineComponent({
     BaseButtonMini,
     BaseCard,
     BaseTextArea,
+    BaseModal,
   },
   props: {
     record: {
