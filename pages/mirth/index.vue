@@ -1,29 +1,29 @@
 <template>
   <div>
     <div class="mx-auto mb-4 max-w-7xl">
-      <TextH1>Mirth Channels</TextH1>
+      <h1>Mirth Channels</h1>
     </div>
 
-    <LoadingIndicator v-if="!mirthGroups"></LoadingIndicator>
+    <BaseLoadingIndicator v-if="!mirthGroups"></BaseLoadingIndicator>
     <div v-else class="mx-auto mb-8 max-w-7xl">
       <div v-for="group in mirthGroups" :key="group.id" class="mb-6">
         <div class="mb-4">
-          <TextH4>
+          <h4>
             {{ group.name }}
-          </TextH4>
-          <TextL2>
+          </h4>
+          <h6>
             {{ group.description }}
-          </TextL2>
+          </h6>
         </div>
 
         <ul class="my-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
           <li v-for="item in group.channels" :key="item.id" class="col-span-1">
-            <GenericCard class="px-4 py-2">
-              <TextH3 class="truncate">
+            <BaseCard class="px-4 py-2">
+              <h3 class="truncate">
                 {{ item.name }}
-              </TextH3>
-              <TextL1> Rev. {{ item.revision }} </TextL1>
-              <TextP> {{ item.statistics ? item.statistics.received : "Unknown" }} received </TextP>
+              </h3>
+              <h5>Rev. {{ item.revision }}</h5>
+              <p>{{ item.statistics ? item.statistics.received : "Unknown" }} received</p>
               <span
                 v-if="item.statistics && item.statistics.error === 0"
                 class="mt-2 inline-block rounded-sm bg-green-100 px-2 py-0.5 text-sm font-medium text-green-800"
@@ -34,7 +34,7 @@
                 class="mt-2 inline-block rounded-sm bg-red-100 px-2 py-0.5 text-sm font-medium text-red-800"
                 >{{ item.statistics.error }} errors</span
               >
-            </GenericCard>
+            </BaseCard>
           </li>
         </ul>
       </div>
@@ -46,9 +46,15 @@
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { ChannelGroupModel } from "@ukkidney/ukrdc-axios-ts";
 
-import useApi from "~/helpers/useApi";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
+import useApi from "~/composables/useApi";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseLoadingIndicator,
+  },
   setup() {
     const { mirthApi } = useApi();
 

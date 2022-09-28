@@ -1,6 +1,6 @@
 <template>
   <div>
-    <GenericModalConfirm
+    <BaseModalConfirm
       ref="beginMergeAlert"
       title="Begin Record Merge"
       message="Are you sure you want to begin merging these records?"
@@ -10,15 +10,15 @@
     />
 
     <div class="mx-auto mb-4 max-w-7xl">
-      <TextH1>Merge Records</TextH1>
+      <h1>Merge Records</h1>
     </div>
 
     <div class="mb-6 block gap-2 lg:flex">
       <div class="flex-1">
         <div v-if="superseded">
-          <GenericButton class="w-full" @click="clearSuperceeded"> Change Superseded Record </GenericButton>
+          <BaseButton class="w-full" @click="clearSuperceeded"> Change Superseded Record </BaseButton>
           <NuxtLink :to="`/masterrecords/${superseded.id}`">
-            <masterrecordsRecordCard
+            <MasterRecordCard
               class="mt-4"
               :record="superseded"
               :label="`Superseded Record ${superseded.id.toString()}`"
@@ -27,10 +27,8 @@
           </NuxtLink>
         </div>
         <div v-else>
-          <EmpiSearch v-if="searchingFor === 'superseded'" :number-types="['UKRDC']" @select="selectSuperceeded" />
-          <GenericButton v-else class="w-full" @click="searchingFor = 'superseded'">
-            Search for a Record
-          </GenericButton>
+          <EMPISearch v-if="searchingFor === 'superseded'" :number-types="['UKRDC']" @select="selectSuperceeded" />
+          <BaseButton v-else class="w-full" @click="searchingFor = 'superseded'"> Search for a Record </BaseButton>
         </div>
       </div>
 
@@ -41,19 +39,22 @@
             class="mx-auto block w-8 rounded-md border border-gray-300 bg-white font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             @click="switchRecords"
           >
-            <IconSwitchH class="my-2 hidden lg:block" /><IconSwitchV class="my-2 block lg:hidden" />
+            <IconArrowsRightLeft class="my-2 mx-auto hidden text-gray-400 lg:block" />
+            <IconArrowsUpDown class="my-2 mx-auto block text-gray-400 lg:hidden" />
           </button>
         </div>
         <div class="hidden flex-grow flex-col justify-center lg:flex">
-          <div v-show="superseded && superseding" class="h-8"><IconArrowRight /></div>
+          <div v-show="superseded && superseding" class="h-8">
+            <IconArrowRight class="mx-auto my-2 text-gray-400" />
+          </div>
         </div>
       </div>
 
       <div class="flex-1">
         <div v-if="superseding">
-          <GenericButton class="w-full" @click="clearsuperseding"> Change Superseding Record </GenericButton>
+          <BaseButton class="w-full" @click="clearsuperseding"> Change Superseding Record </BaseButton>
           <NuxtLink :to="`/masterrecords/${superseding.id}`">
-            <masterrecordsRecordCard
+            <MasterRecordCard
               class="mt-4"
               :record="superseding"
               :label="`Superseding Record ${superseding.id.toString()}`"
@@ -62,17 +63,15 @@
           </NuxtLink>
         </div>
         <div v-else>
-          <EmpiSearch v-if="searchingFor === 'superseding'" :number-types="['UKRDC']" @select="selectsuperseding" />
-          <GenericButton v-else class="w-full" @click="searchingFor = 'superseding'">
-            Search for a Record
-          </GenericButton>
+          <EMPISearch v-if="searchingFor === 'superseding'" :number-types="['UKRDC']" @select="selectsuperseding" />
+          <BaseButton v-else class="w-full" @click="searchingFor = 'superseding'"> Search for a Record </BaseButton>
         </div>
       </div>
     </div>
 
-    <GenericAlertWarning v-if="mergeBlockDescription" class="mb-4" :message="mergeBlockDescription" />
+    <BaseAlertWarning v-if="mergeBlockDescription" class="mb-4" :message="mergeBlockDescription" />
 
-    <GenericAlertError
+    <BaseAlertError
       v-if="highlightSections.length > 0"
       class="mb-4"
       :message="`You are about to merge records with mismatching demographics for: ${highlightSections.join(', ')}`"
@@ -80,27 +79,26 @@
 
     <div v-if="readyToMerge">
       <div class="mb-6">
-        <TextH2 class="mb-2">Merge Details</TextH2>
-        <TextP
-          >Master Record <TextL1 class="inline">{{ supersededId }}</TextL1> will be merged into Master Record
-          <TextL1 class="inline">{{ supersedingId }}</TextL1
+        <h2 class="mb-2">Merge Details</h2>
+        <p>
+          Master Record <b>{{ supersededId }}</b> will be merged into Master Record <b>{{ supersedingId }}</b
           >.
-        </TextP>
-        <TextP
-          >Demographic data on record <TextL1 class="inline">{{ supersededId }}</TextL1> will be replaced by demographic
-          data from record <TextL1 class="inline">{{ supersedingId }}</TextL1
-          >.</TextP
-        >
-        <TextP
-          >All Patient Records linked to Master Record <TextL1 class="inline">{{ supersededId }}</TextL1> will be
-          re-linked to Master Record <TextL1 class="inline">{{ supersedingId }}</TextL1
-          >.</TextP
-        >
+        </p>
+        <p>
+          Demographic data on record <b>{{ supersededId }}</b> will be replaced by demographic data from record
+          <b>{{ supersedingId }}</b
+          >.
+        </p>
+        <p>
+          All Patient Records linked to Master Record <b>{{ supersededId }}</b> will be re-linked to Master Record
+          <b>{{ supersedingId }}</b
+          >.
+        </p>
       </div>
 
       <div class="flex gap-2">
-        <GenericButton :primary="true" colour="red" @click="beginMergeAlert?.show()">Begin Record Merge</GenericButton>
-        <GenericButton v-if="callbackPath" :to="callbackPath">Cancel</GenericButton>
+        <BaseButton :primary="true" colour="red" @click="beginMergeAlert?.show()">Begin Record Merge</BaseButton>
+        <BaseButton v-if="callbackPath" :to="callbackPath">Cancel</BaseButton>
       </div>
     </div>
   </div>
@@ -109,24 +107,43 @@
 <script lang="ts">
 import {
   computed,
+  defineComponent,
+  onMounted,
   ref,
   useContext,
   useRoute,
   useRouter,
-  defineComponent,
-  onMounted,
   watch,
 } from "@nuxtjs/composition-api";
-
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
-import useQuery from "~/helpers/query/useQuery";
 
+import BaseAlertError from "~/components/base/BaseAlertError.vue";
+import BaseAlertWarning from "~/components/base/BaseAlertWarning.vue";
+import BaseButton from "~/components/base/BaseButton.vue";
+import BaseModalConfirm from "~/components/base/BaseModalConfirm.vue";
+import EMPISearch from "~/components/EMPISearch.vue";
+import IconArrowsRightLeft from "~/components/icons/hero/20/solid/IconArrowsRightLeft.vue";
+import IconArrowsUpDown from "~/components/icons/hero/20/solid/IconArrowsUpDown.vue";
+import IconArrowRight from "~/components/icons/hero/24/solid/IconArrowRight.vue";
+import MasterRecordCard from "~/components/MasterRecordCard.vue";
+import useQuery from "~/composables/query/useQuery";
+import useApi from "~/composables/useApi";
 import { modalInterface } from "~/interfaces/modal";
-import useApi from "~/helpers/useApi";
 
 type Direction = "superseding" | "superseded";
 
 export default defineComponent({
+  components: {
+    BaseButton,
+    BaseModalConfirm,
+    BaseAlertError,
+    BaseAlertWarning,
+    IconArrowRight,
+    IconArrowsRightLeft,
+    IconArrowsUpDown,
+    MasterRecordCard,
+    EMPISearch,
+  },
   setup() {
     const route = useRoute();
     const router = useRouter();

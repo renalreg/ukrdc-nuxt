@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="mx-auto mb-4 max-w-7xl">
-      <TextH1>Work Items</TextH1>
+      <h1>Work Items</h1>
     </div>
 
     <div class="mb-4 flex flex-col">
-      <GenericDateRange v-model="dateRange" class="mb-4" />
-      <GenericSearchableSelect
+      <BaseDateRange v-model="dateRange" class="mb-4" />
+      <BaseSelectSearchable
         v-if="facilityIds.length > 1"
         v-model="selectedFacility"
         class="mb-4"
@@ -16,35 +16,37 @@
       />
       <div class="flex items-center">
         <div class="flex flex-grow items-center gap-4">
-          <FormCheckbox v-model="statuses" label="Open" :value="1" />
-          <FormCheckbox v-model="statuses" label="WIP" :value="2" />
-          <FormCheckbox v-model="statuses" label="Closed" :value="3" />
+          <BaseCheckbox v-model="statuses" label="Open" :value="1" />
+          <BaseCheckbox v-model="statuses" label="WIP" :value="2" />
+          <BaseCheckbox v-model="statuses" label="Closed" :value="3" />
         </div>
-        <GenericButtonMini class="flex-shrink" @click="toggleOrder">
+        <BaseButtonMini class="flex-shrink" @click="toggleOrder">
           <div v-show="orderAscending" class="flex">
-            <TextP>Oldest - Newest</TextP><IconMiniSortAscending class="ml-2" />
+            <p>Oldest - Newest</p>
+            <IconBarsArrowUp class="ml-2 h-5 w-5" />
           </div>
           <div v-show="!orderAscending" class="flex">
-            <TextP>Newest - Oldest</TextP><IconMiniSortDescending class="ml-2" />
+            <p>Newest - Oldest</p>
+            <IconBarsArrowDown class="ml-2 h-5 w-5" />
           </div>
-        </GenericButtonMini>
+        </BaseButtonMini>
       </div>
     </div>
 
-    <GenericCard>
+    <BaseCard>
       <!-- Skeleton results -->
       <ul v-if="fetchInProgress" class="divide-y divide-gray-200">
-        <SkeleListItem v-for="n in 10" :key="n" />
+        <BaseSkeleListItem v-for="n in 10" :key="n" />
       </ul>
       <!-- Real results -->
       <ul v-else class="divide-y divide-gray-200">
         <div v-for="item in workitems" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/workitems/${item.id}`">
-            <workitemsListItem :item="item" />
+            <WorkItemsListItem :item="item" />
           </NuxtLink>
         </div>
       </ul>
-      <GenericPaginator
+      <BasePaginator
         class="border-t border-gray-200 bg-white"
         :page="page"
         :size="size"
@@ -53,24 +55,44 @@
         @prev="page--"
         @jump="page = $event"
       />
-    </GenericCard>
+    </BaseCard>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import { OrderBy, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
-import usePagination from "~/helpers/query/usePagination";
 
-import useQuery from "~/helpers/query/useQuery";
-import useFacilities from "~/helpers/useFacilities";
-import useSortBy from "~/helpers/query/useSortBy";
-
-import useDateRange from "~/helpers/query/useDateRange";
-import useApi from "~/helpers/useApi";
+import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCheckbox from "~/components/base/BaseCheckbox.vue";
+import BaseDateRange from "~/components/base/BaseDateRange.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
+import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
+import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+import IconBarsArrowDown from "~/components/icons/hero/20/solid/IconBarsArrowDown.vue";
+import IconBarsArrowUp from "~/components/icons/hero/20/solid/IconBarsArrowUp.vue";
+import WorkItemsListItem from "~/components/WorkItemsListItem.vue";
+import useDateRange from "~/composables/query/useDateRange";
+import usePagination from "~/composables/query/usePagination";
+import useQuery from "~/composables/query/useQuery";
+import useSortBy from "~/composables/query/useSortBy";
+import useApi from "~/composables/useApi";
+import useFacilities from "~/composables/useFacilities";
 
 export default defineComponent({
+  components: {
+    BaseButtonMini,
+    BaseCard,
+    BaseSkeleListItem,
+    BasePaginator,
+    BaseCheckbox,
+    BaseDateRange,
+    BaseSelectSearchable,
+    IconBarsArrowDown,
+    IconBarsArrowUp,
+    WorkItemsListItem,
+  },
   setup() {
     const { page, total, size } = usePagination();
     const { makeDateRange } = useDateRange();

@@ -1,13 +1,13 @@
 <template>
   <div>
-    <LoadingIndicator v-if="fetchSourceInProgress"></LoadingIndicator>
-    <GenericCard v-else-if="source && source.content">
-      <GenericCodeReader
+    <BaseLoadingIndicator v-if="fetchSourceInProgress"></BaseLoadingIndicator>
+    <BaseCard v-else-if="source && source.content">
+      <BaseCodeReader
         :content="source.content"
         :content-type="source.contentType"
         class="sensitive box-border flex h-full flex-col overflow-x-scroll"
       />
-    </GenericCard>
+    </BaseCard>
 
     <div v-else class="flex h-full w-full">
       <div class="mb-auto mt-auto w-full text-center">Missing or empty source file</div>
@@ -18,9 +18,18 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { MessageSchema, MessageSourceSchema } from "@ukkidney/ukrdc-axios-ts";
-import useApi from "~/helpers/useApi";
+
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCodeReader from "~/components/base/BaseCodeReader.vue";
+import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
+import useApi from "~/composables/useApi";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseLoadingIndicator,
+    BaseCodeReader,
+  },
   props: {
     message: {
       type: Object as () => MessageSchema,

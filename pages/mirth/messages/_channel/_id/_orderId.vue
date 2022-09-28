@@ -1,25 +1,25 @@
 <template>
   <div>
-    <GenericCard class="mb-6">
-      <GenericCardContent>
-        <GenericDlGrid>
-          <GenericDlGridItem>
-            <TextDt>Connector Name</TextDt>
-            <TextDd v-if="connectorMessage">
+    <BaseCard class="mb-6">
+      <BaseCardContent>
+        <BaseDescriptionListGrid>
+          <BaseDescriptionListGridItem>
+            <dt>Connector Name</dt>
+            <dd v-if="connectorMessage">
               {{ connectorMessage.connectorName }}
-            </TextDd>
-            <SkeleText v-else class="h-6 w-full" />
-          </GenericDlGridItem>
-          <GenericDlGridItem>
-            <TextDt>Send Attempts</TextDt>
-            <TextDd v-if="connectorMessage">
+            </dd>
+            <BaseSkeleText v-else class="h-6 w-full" />
+          </BaseDescriptionListGridItem>
+          <BaseDescriptionListGridItem>
+            <dt>Send Attempts</dt>
+            <dd v-if="connectorMessage">
               {{ connectorMessage.sendAttempts }}
-            </TextDd>
-            <SkeleText v-else class="h-6 w-full" />
-          </GenericDlGridItem>
-          <GenericDlGridItem>
-            <TextDt>Status</TextDt>
-            <TextDd v-if="connectorMessage">
+            </dd>
+            <BaseSkeleText v-else class="h-6 w-full" />
+          </BaseDescriptionListGridItem>
+          <BaseDescriptionListGridItem>
+            <dt>Status</dt>
+            <dd v-if="connectorMessage">
               <span
                 v-if="errorMessage"
                 class="inline-block flex-shrink-0 rounded-sm bg-red-100 px-2 py-0.5 text-sm font-medium text-red-800"
@@ -30,19 +30,19 @@
                 class="inline-block flex-shrink-0 rounded-sm bg-green-100 px-2 py-0.5 text-sm font-medium text-green-800"
                 >Success</span
               >
-            </TextDd>
-            <SkeleText v-else class="h-6 w-full" />
-          </GenericDlGridItem>
-        </GenericDlGrid>
+            </dd>
+            <BaseSkeleText v-else class="h-6 w-full" />
+          </BaseDescriptionListGridItem>
+        </BaseDescriptionListGrid>
         <slot></slot>
-      </GenericCardContent>
-    </GenericCard>
+      </BaseCardContent>
+    </BaseCard>
 
-    <div class="mb-6"><GenericTabsMini v-model="currentTab" :tabs="tabs" /></div>
+    <div class="mb-6"><BaseTabsMini v-model="currentTab" :tabs="tabs" /></div>
     <div class="flex-1">
       <div v-if="currentTab == 'metadata'" id="viewerMetadata">
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-          <GenericCardFlat
+          <BaseCard
             v-for="(value, key) in nonNullMetadata"
             :key="key"
             class="relative flex items-center space-x-2 px-4 py-4"
@@ -55,14 +55,14 @@
                 {{ value }}
               </p>
             </div>
-          </GenericCardFlat>
+          </BaseCard>
         </div>
       </div>
 
       <div v-for="(connectorMessageData, type) in availableconnectorMessageData" :key="type">
-        <GenericCard v-if="currentTab == type">
-          <GenericCodeReader :content="connectorMessageData.content" :content-type="connectorMessageData.dataType" />
-        </GenericCard>
+        <BaseCard v-if="currentTab == type">
+          <BaseCodeReader :content="connectorMessageData.content || ''" :content-type="connectorMessageData.dataType" />
+        </BaseCard>
       </div>
     </div>
   </div>
@@ -70,9 +70,16 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, useRoute, watch } from "@nuxtjs/composition-api";
+import { ChannelMessageModel, ConnectorMessageData, ConnectorMessageModel } from "@ukkidney/ukrdc-axios-ts";
 
-import { ConnectorMessageModel, ChannelMessageModel, ConnectorMessageData } from "@ukkidney/ukrdc-axios-ts";
-import { connectorMessageError } from "~/helpers/utils/mirthUtils";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardContent from "~/components/base/BaseCardContent.vue";
+import BaseCodeReader from "~/components/base/BaseCodeReader.vue";
+import BaseDescriptionListGrid from "~/components/base/BaseDescriptionListGrid.vue";
+import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGridItem.vue";
+import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
+import BaseTabsMini from "~/components/base/BaseTabsMini.vue";
+import { connectorMessageError } from "~/helpers/mirthUtils";
 
 interface ConnectorMessageDataTabs {
   raw: ConnectorMessageData;
@@ -82,6 +89,15 @@ interface ConnectorMessageDataTabs {
 }
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseCardContent,
+    BaseSkeleText,
+    BaseDescriptionListGrid,
+    BaseDescriptionListGridItem,
+    BaseCodeReader,
+    BaseTabsMini,
+  },
   props: {
     message: {
       type: Object as () => ChannelMessageModel,
@@ -99,7 +115,7 @@ export default defineComponent({
     const formatconnectorMessage = ref(true);
 
     // Manage viewer tabs
-    const currentTab = ref("metadata");
+    const currentTab = ref<string>("metadata");
 
     const tabs = computed(() => {
       return ["metadata"].concat(Object.keys(availableconnectorMessageData.value));

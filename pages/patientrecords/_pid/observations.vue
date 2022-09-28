@@ -1,9 +1,9 @@
 <template>
   <div class="sensitive">
-    <LoadingContainer :loading="!observations">
-      <TextP v-if="observations && observations.length <= 0" class="text-center">No observations on record</TextP>
+    <BaseLoadingContainer :loading="!observations">
+      <p v-if="observations && observations.length <= 0" class="text-center">No observations on record</p>
       <div v-else>
-        <GenericSearchableSelect
+        <BaseSelectSearchable
           v-model="selectedCode"
           class="mb-4"
           :options="availableCodes"
@@ -12,14 +12,14 @@
 
         <!-- Small data card display -->
         <div class="lg:hidden">
-          <PatientrecordsObservationCard
+          <PatientrecordObservationCard
             v-for="(item, index) in observations"
             :key="`${item.observationCode}-${index}-card`"
             :item="item"
           />
         </div>
         <!-- Large table display -->
-        <GenericTable class="mb-4 hidden lg:block">
+        <BaseTable class="mb-4 hidden lg:block">
           <thead class="bg-gray-50">
             <tr>
               <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
@@ -41,17 +41,17 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200 bg-white">
-            <PatientrecordsObservationTableRow
+            <PatientrecordObservationRow
               v-for="(item, index) in observations"
               :key="`${item.observationCode}-${index}`"
               :item="item"
             />
           </tbody>
-        </GenericTable>
+        </BaseTable>
 
         <div v-if="observations && observations.length > 0">
-          <GenericCard>
-            <GenericPaginator
+          <BaseCard>
+            <BasePaginator
               :page="page"
               :size="size"
               :total="total"
@@ -59,25 +59,39 @@
               @prev="page--"
               @jump="page = $event"
             />
-          </GenericCard>
+          </BaseCard>
         </div>
       </div>
-    </LoadingContainer>
+    </BaseLoadingContainer>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import { ObservationSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
-import usePagination from "~/helpers/query/usePagination";
 
-import { formatDate } from "@/helpers/utils/dateUtils";
-
-import useApi from "~/helpers/useApi";
-import useQuery from "~/helpers/query/useQuery";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
+import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
+import BaseTable from "~/components/base/BaseTable.vue";
+import PatientrecordObservationCard from "~/components/PatientRecordObservationCard.vue";
+import PatientrecordObservationRow from "~/components/PatientRecordObservationRow.vue";
+import usePagination from "~/composables/query/usePagination";
+import useQuery from "~/composables/query/useQuery";
+import useApi from "~/composables/useApi";
+import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseLoadingContainer,
+    BaseTable,
+    BasePaginator,
+    BaseSelectSearchable,
+    PatientrecordObservationCard,
+    PatientrecordObservationRow,
+  },
   props: {
     record: {
       type: Object as () => PatientRecordSchema,

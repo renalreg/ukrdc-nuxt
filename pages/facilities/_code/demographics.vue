@@ -1,6 +1,6 @@
 <template>
   <div>
-    <FacilitiesStatsDemographics v-if="facility" :facility="facility" />
+    <FacilityStatsDemographics v-if="facility" :facility="facility" />
   </div>
 </template>
 
@@ -8,7 +8,12 @@
 import { defineComponent } from "@nuxtjs/composition-api";
 import { FacilityDetailsSchema, FacilityExtractsSchema } from "@ukkidney/ukrdc-axios-ts";
 
+import FacilityStatsDemographics from "~/components/FacilityStatsDemographics.vue";
+
 export default defineComponent({
+  components: {
+    FacilityStatsDemographics,
+  },
   props: {
     facility: {
       type: Object as () => FacilityDetailsSchema,

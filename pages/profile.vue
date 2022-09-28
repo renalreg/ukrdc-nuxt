@@ -36,8 +36,8 @@
             </p>
           </div>
           <div v-else>
-            <SkeleText class="mb-2 h-8 w-24" />
-            <SkeleText class="h-6 w-32" />
+            <BaseSkeleText class="mb-2 h-8 w-24" />
+            <BaseSkeleText class="h-6 w-32" />
           </div>
         </div>
         <div
@@ -50,11 +50,11 @@
             class="rounded-md border border-gray-300 bg-white px-3 py-2 text-center font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >Manage Account</a
           >
-          <GenericButton @click="$okta.signOutAuto()"> Sign out </GenericButton>
+          <BaseButton @click="$okta.signOutAuto()"> Sign out </BaseButton>
         </div>
       </div>
       <div class="mb-4">
-        <TextH2 class="mb-4">Permissions</TextH2>
+        <h2 class="mb-4">Permissions</h2>
         <div v-for="group in perms" :key="group" class="inline">
           <span
             class="mr-2 mb-2 inline-flex items-center rounded-full px-3 py-0.5 font-medium"
@@ -65,15 +65,15 @@
         </div>
       </div>
       <div v-if="preferences" class="mb-4">
-        <TextH2 class="mb-4">Preferences</TextH2>
+        <h2 class="mb-4">Preferences</h2>
         <div class="mb-4">
-          <TextH3 class="mb-2">Search</TextH3>
-          <FormCheckbox
+          <h3 class="mb-2">Search</h3>
+          <BaseCheckbox
             v-model="preferences.searchShowUkrdc"
             label="Include internal UKRDC records in search results by default"
           />
         </div>
-        <GenericButton colour="indigo" :primary="true" @click="submitPreferences">Save</GenericButton>
+        <BaseButton colour="indigo" :primary="true" @click="submitPreferences">Save</BaseButton>
       </div>
     </div>
   </div>
@@ -81,12 +81,20 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
-
 import { UserPreferences } from "@ukkidney/ukrdc-axios-ts";
-import usePermissions from "~/helpers/usePermissions";
-import useApi from "~/helpers/useApi";
+
+import BaseButton from "~/components/base/BaseButton.vue";
+import BaseCheckbox from "~/components/base/BaseCheckbox.vue";
+import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
+import useApi from "~/composables/useApi";
+import usePermissions from "~/composables/usePermissions";
 
 export default defineComponent({
+  components: {
+    BaseButton,
+    BaseSkeleText,
+    BaseCheckbox,
+  },
   setup() {
     const { $okta } = useContext();
     const { getPermissions } = usePermissions();

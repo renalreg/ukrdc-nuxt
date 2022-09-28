@@ -1,21 +1,21 @@
 <template>
   <div>
     <div class="overflow-visible">
-      <GenericCard class="mb-4 overflow-visible px-4 pt-4">
+      <BaseCard class="mb-4 overflow-visible px-4 pt-4">
         <SearchBar v-model="searchboxString" :focus="true" @submit="searchSubmit" />
         <div class="mb-4 flex items-center">
           <div class="flex flex-grow items-center gap-2">
-            <FormCheckboxPill v-model="numberTypes" label="UKRDC" value="UKRDC" colour="red" />
-            <FormCheckboxPill v-model="numberTypes" label="NHS" value="NHS" colour="blue" />
-            <FormCheckboxPill v-model="numberTypes" label="CHI" value="CHI" colour="purple" />
-            <FormCheckboxPill v-model="numberTypes" label="HSC" value="HSC" colour="green" />
+            <BaseCheckpill v-model="numberTypes" label="UKRDC" value="UKRDC" colour="red" />
+            <BaseCheckpill v-model="numberTypes" label="NHS" value="NHS" colour="blue" />
+            <BaseCheckpill v-model="numberTypes" label="CHI" value="CHI" colour="purple" />
+            <BaseCheckpill v-model="numberTypes" label="HSC" value="HSC" colour="green" />
           </div>
           <div>
-            <GenericCollapseHeader v-model="advancedOpen" label="More Options"></GenericCollapseHeader>
+            <BaseCollapseHeader v-model="advancedOpen" label="More Options"></BaseCollapseHeader>
           </div>
         </div>
         <div v-show="advancedOpen" class="mb-4 overflow-visible">
-          <GenericSearchableSelect
+          <BaseSelectSearchable
             v-if="facilityIds.length > 1"
             v-model="selectedFacility"
             class="mb-4"
@@ -24,30 +24,30 @@
             hint="Select a facility..."
           />
         </div>
-      </GenericCard>
+      </BaseCard>
     </div>
 
     <!-- If loading -->
     <div v-if="searchInProgress">
-      <GenericCard>
+      <BaseCard>
         <!-- Skeleton results -->
         <ul class="divide-y divide-gray-200">
-          <SkeleListItem v-for="n in 10" :key="n" />
+          <BaseSkeleListItem v-for="n in 10" :key="n" />
         </ul>
-      </GenericCard>
+      </BaseCard>
     </div>
     <!-- If not loading, and results are not empty -->
     <div v-else-if="masterrecords.length > 0">
-      <GenericCard>
+      <BaseCard>
         <!-- Real results -->
         <ul class="divide-y divide-gray-200">
           <div v-for="item in masterrecords" :key="item.id" class="hover:bg-gray-50">
             <NuxtLink :to="`/masterrecords/${item.id}`">
-              <MasterrecordsListItem :item="item" />
+              <MasterRecordsListItem :item="item" />
             </NuxtLink>
           </div>
         </ul>
-        <GenericPaginator
+        <BasePaginator
           class="border-t border-gray-200 bg-white"
           :page="page"
           :size="size"
@@ -56,7 +56,7 @@
           @prev="page--"
           @jump="page = $event"
         />
-      </GenericCard>
+      </BaseCard>
     </div>
     <!-- If not loading, and results are empty -->
     <div v-else class="mt-2 text-center text-gray-500">
@@ -84,15 +84,33 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
-import usePagination from "~/helpers/query/usePagination";
-import useQuery from "~/helpers/query/useQuery";
-import useRecordSearch from "~/helpers/query/useRecordSearch";
-import useApi from "~/helpers/useApi";
-import useFacilities from "~/helpers/useFacilities";
+
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCheckpill from "~/components/base/BaseCheckpill.vue";
+import BaseCollapseHeader from "~/components/base/BaseCollapseHeader.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
+import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
+import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+import MasterRecordsListItem from "~/components/MasterRecordsListItem.vue";
+import SearchBar from "~/components/SearchBar.vue";
+import usePagination from "~/composables/query/usePagination";
+import useQuery from "~/composables/query/useQuery";
+import useRecordSearch from "~/composables/query/useRecordSearch";
+import useApi from "~/composables/useApi";
+import useFacilities from "~/composables/useFacilities";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseSkeleListItem,
+    BasePaginator,
+    BaseCheckpill,
+    BaseSelectSearchable,
+    BaseCollapseHeader,
+    MasterRecordsListItem,
+    SearchBar,
+  },
   setup() {
     const { page, total, size } = usePagination();
     const { arrayQuery } = useQuery();

@@ -1,21 +1,23 @@
 <template>
   <div>
     <div class="mb-4 flex flex-col gap-2 lg:flex-row">
-      <GenericDateRange v-model="dateRange" class="flex-1" />
-      <GenericButtonMini class="flex-none" @click="toggleOrder">
+      <BaseDateRange v-model="dateRange" class="flex-1" />
+      <BaseButtonMini class="flex-none" @click="toggleOrder">
         <div v-show="orderAscending" class="flex">
-          <TextP>Oldest - Newest</TextP><IconMiniSortAscending class="ml-2" />
+          <p>Oldest - Newest</p>
+          <IconBarsArrowUp class="ml-2 h-5 w-5" />
         </div>
         <div v-show="!orderAscending" class="flex">
-          <TextP>Newest - Oldest</TextP><IconMiniSortDescending class="ml-2" />
+          <p>Newest - Oldest</p>
+          <IconBarsArrowDown class="ml-2 h-5 w-5" />
         </div>
-      </GenericButtonMini>
+      </BaseButtonMini>
     </div>
 
-    <GenericCard>
+    <BaseCard>
       <!-- Skeleton results -->
       <ul v-if="!messages" class="divide-y divide-gray-200">
-        <SkeleListItem v-for="n in 10" :key="n" />
+        <BaseSkeleListItem v-for="n in 10" :key="n" />
       </ul>
       <!-- Real results -->
       <ul v-else class="divide-y divide-gray-200">
@@ -25,7 +27,7 @@
           </NuxtLink>
         </div>
       </ul>
-      <GenericPaginator
+      <BasePaginator
         class="border-t border-gray-200 bg-white"
         :page="page"
         :size="size"
@@ -34,22 +36,39 @@
         @prev="page--"
         @jump="page = $event"
       />
-    </GenericCard>
+    </BaseCard>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import { MasterRecordSchema, MasterRecordStatisticsSchema, MessageSchema, OrderBy } from "@ukkidney/ukrdc-axios-ts";
-import { nowString } from "@/helpers/utils/dateUtils";
-import usePagination from "~/helpers/query/usePagination";
-import useSortBy from "~/helpers/query/useSortBy";
-import useDateRange from "~/helpers/query/useDateRange";
 
-import useApi from "~/helpers/useApi";
+import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseDateRange from "~/components/base/BaseDateRange.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
+import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+import IconBarsArrowDown from "~/components/icons/hero/20/solid/IconBarsArrowDown.vue";
+import IconBarsArrowUp from "~/components/icons/hero/20/solid/IconBarsArrowUp.vue";
+import MessagesListItem from "~/components/MessagesListItem.vue";
+import useDateRange from "~/composables/query/useDateRange";
+import usePagination from "~/composables/query/usePagination";
+import useSortBy from "~/composables/query/useSortBy";
+import useApi from "~/composables/useApi";
+import { nowString } from "~/helpers/dateUtils";
 
 export default defineComponent({
+  components: {
+    BaseButtonMini,
+    BaseCard,
+    BaseSkeleListItem,
+    BasePaginator,
+    BaseDateRange,
+    IconBarsArrowDown,
+    IconBarsArrowUp,
+    MessagesListItem,
+  },
   props: {
     record: {
       type: Object as () => MasterRecordSchema,

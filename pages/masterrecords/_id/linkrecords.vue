@@ -1,22 +1,27 @@
 <template>
   <div>
-    <LoadingIndicator v-if="!linkRecords"></LoadingIndicator>
+    <BaseLoadingIndicator v-if="!linkRecords"></BaseLoadingIndicator>
     <div v-else class="grid grid-cols-1 gap-6">
-      <MasterrecordsLinkRecord v-for="link in linkRecords" :key="link.id" :record="link" />
+      <LinkRecord v-for="link in linkRecords" :key="link.id" :record="link" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-
 import { LinkRecordSchema, MasterRecordSchema, MasterRecordStatisticsSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/utils/dateUtils";
-import { formatGender } from "@/helpers/utils/codeUtils";
 
-import useApi from "~/helpers/useApi";
+import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
+import LinkRecord from "~/components/LinkRecord.vue";
+import useApi from "~/composables/useApi";
+import { formatGender } from "~/helpers/codeUtils";
+import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
+  components: {
+    BaseLoadingIndicator,
+    LinkRecord,
+  },
   props: {
     record: {
       type: Object as () => MasterRecordSchema,

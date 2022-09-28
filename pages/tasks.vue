@@ -1,73 +1,70 @@
 <template>
   <div>
-    <TextH1 class="mb-4">Background Tasks</TextH1>
+    <h1 class="mb-4">Background Tasks</h1>
 
-    <GenericTable class="mb-4">
+    <BaseTable class="mb-4">
       <thead class="bg-gray-50">
         <tr>
-          <th scope="col" class="px-6 py-3 text-left">
-            <TextTh>Name</TextTh>
-          </th>
-          <th scope="col" class="px-6 py-3 text-left">
-            <TextTh>Visibility</TextTh>
-          </th>
-          <th scope="col" class="px-6 py-3 text-left">
-            <TextTh>Started By</TextTh>
-          </th>
-          <th scope="col" class="px-6 py-3 text-left">
-            <TextTh>Started</TextTh>
-          </th>
-          <th scope="col" class="px-6 py-3 text-left">
-            <TextTh>Finished</TextTh>
-          </th>
-          <th scope="col" class="px-6 py-3 text-left">
-            <TextTh>Status</TextTh>
-          </th>
+          <th scope="col" class="px-6 py-3 text-left">Name</th>
+          <th scope="col" class="px-6 py-3 text-left">Visibility</th>
+          <th scope="col" class="px-6 py-3 text-left">Started By</th>
+          <th scope="col" class="px-6 py-3 text-left">Started</th>
+          <th scope="col" class="px-6 py-3 text-left">Finished</th>
+          <th scope="col" class="px-6 py-3 text-left">Status</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-200 bg-white">
         <tr v-for="task in tasks" :key="task.id">
-          <GenericTableCell class="font-medium text-gray-900">{{ task.name }}</GenericTableCell>
-          <GenericTableCell><BadgePublicPrivate :visibility="task.visibility" /></GenericTableCell>
-          <GenericTableCell>{{ task.owner }}</GenericTableCell>
-          <GenericTableCell>{{ task.started ? formatDate(task.started) : "Unknown start time" }}</GenericTableCell>
-          <GenericTableCell>{{ task.finished ? formatDate(task.finished) : "" }}</GenericTableCell>
-          <GenericTableCell>
+          <BaseTableCell class="font-medium text-gray-900">{{ task.name }}</BaseTableCell>
+          <BaseTableCell><BadgePublicPrivate :visibility="task.visibility" /></BaseTableCell>
+          <BaseTableCell>{{ task.owner }}</BaseTableCell>
+          <BaseTableCell>{{ task.started ? formatDate(task.started) : "Unknown start time" }}</BaseTableCell>
+          <BaseTableCell>{{ task.finished ? formatDate(task.finished) : "" }}</BaseTableCell>
+          <BaseTableCell>
             <div class="flex gap-1">
               <BadgeTaskStatus :status="task.status" />
-              <GenericInfoIcon v-if="task.error" class="inline">
+              <BaseInfoTooltip v-if="task.error" class="inline">
                 <p><b>Task failed with error: </b>{{ task.error }}</p>
-              </GenericInfoIcon>
+              </BaseInfoTooltip>
             </div>
-          </GenericTableCell>
+          </BaseTableCell>
         </tr>
       </tbody>
-    </GenericTable>
+    </BaseTable>
 
     <div v-if="tasks && tasks.length > 0" class="mb-4">
-      <GenericCard>
-        <GenericPaginator
-          :page="page"
-          :size="size"
-          :total="total"
-          @next="page++"
-          @prev="page--"
-          @jump="page = $event"
-        />
-      </GenericCard>
+      <BaseCard>
+        <BasePaginator :page="page" :size="size" :total="total" @next="page++" @prev="page--" @jump="page = $event" />
+      </BaseCard>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-
 import { TrackableTaskSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/utils/dateUtils";
-import useTasks from "~/helpers/useTasks";
-import usePagination from "~/helpers/query/usePagination";
+
+import BadgePublicPrivate from "~/components/BadgePublicPrivate.vue";
+import BadgeTaskStatus from "~/components/BadgeTaskStatus.vue";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseInfoTooltip from "~/components/base/BaseInfoTooltip.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
+import BaseTable from "~/components/base/BaseTable.vue";
+import BaseTableCell from "~/components/base/BaseTableCell.vue";
+import usePagination from "~/composables/query/usePagination";
+import useTasks from "~/composables/useTasks";
+import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseTable,
+    BaseTableCell,
+    BasePaginator,
+    BaseInfoTooltip,
+    BadgePublicPrivate,
+    BadgeTaskStatus,
+  },
   setup() {
     const { page, total, size } = usePagination();
     const { fetchTasksList } = useTasks();

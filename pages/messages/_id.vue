@@ -2,14 +2,14 @@
   <div>
     <div class="mb-6 flex items-end gap-4">
       <div class="flex-grow">
-        <TextH1 v-if="message">
+        <h1 v-if="message">
           {{ message.msgStatus === "ERROR" ? "Error" : "Message" }} {{ message.id }} from {{ message.facility }}
-        </TextH1>
-        <SkeleText v-else class="mb-2 h-8 w-1/4" />
-        <TextL1 v-if="message" class="line-clamp-1">
+        </h1>
+        <BaseSkeleText v-else class="mb-2 h-8 w-1/4" />
+        <h5 v-if="message" class="line-clamp-1">
           {{ messageSummary }}
-        </TextL1>
-        <SkeleText v-else class="h-4 w-1/2" />
+        </h5>
+        <BaseSkeleText v-else class="h-4 w-1/2" />
       </div>
     </div>
 
@@ -19,14 +19,17 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
-
 import { MessageSchema } from "@ukkidney/ukrdc-axios-ts";
-import { makeMessageSummary } from "@/helpers/utils/messageUtils";
 
-import useApi from "~/helpers/useApi";
-import useSensitive from "~/helpers/useSensitive";
+import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
+import useApi from "~/composables/useApi";
+import useSensitive from "~/composables/useSensitive";
+import { makeMessageSummary } from "~/helpers/messageUtils";
 
 export default defineComponent({
+  components: {
+    BaseSkeleText,
+  },
   setup() {
     const route = useRoute();
     const { messagesApi } = useApi();

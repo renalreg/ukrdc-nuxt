@@ -1,7 +1,7 @@
 <template>
   <div class="sensitive">
-    <LoadingContainer :loading="!treatments">
-      <TextP v-if="treatments && treatments.length <= 0" class="text-center"> No treatments on record </TextP>
+    <BaseLoadingContainer :loading="!treatments">
+      <p v-if="treatments && treatments.length <= 0" class="text-center">No treatments on record</p>
       <div v-else-if="treatments && treatments.length > 0" class="flow-root">
         <ul role="list" class="-mb-8">
           <li v-for="(treatment, index) in treatmentEvents" :key="index">
@@ -48,13 +48,13 @@
                 </div>
                 <div class="flex min-w-0 items-center gap-2">
                   <div class="flex-shrink">
-                    <TextP class="mr-2 inline font-bold">
+                    <p class="mr-2 inline font-bold">
                       <time :datetime="treatment.time">{{ treatment.time }}</time>
-                    </TextP>
-                    <TextP v-if="treatment.isDischarge" class="inline">
+                    </p>
+                    <div v-if="treatment.isDischarge" class="inline">
                       Discharged from
                       {{ treatment.admitReasonDesc ? treatment.admitReasonDesc : treatment.admitReasonCode }} at
-                      <TextL1 class="inline">{{ treatment.healthCareFacilityCode }}</TextL1>
+                      <h5 class="inline">{{ treatment.healthCareFacilityCode }}</h5>
                       {{
                         treatment.dischargeReasonDesc
                           ? `(${treatment.dischargeReasonDesc})`
@@ -62,14 +62,15 @@
                           ? `(${treatment.dischargeReasonCode})`
                           : ""
                       }}
-                    </TextP>
-                    <TextP v-else class="inline">
+                    </div>
+                    <div v-else class="inline">
                       {{ treatment.time }} - Admitted to
-                      <TextL1 class="inline">{{ treatment.healthCareFacilityCode }}</TextL1> for
+                      <h5 class="inline">{{ treatment.healthCareFacilityCode }}</h5>
+                      for
                       {{ treatment.admitReasonDesc ? treatment.admitReasonDesc : treatment.admitReasonCode }}
-                    </TextP>
+                    </div>
                   </div>
-                  <GenericInfoIcon>
+                  <BaseInfoTooltip>
                     <div class="sensitive">
                       <p><b>From time: </b>{{ treatment.fromTime }}</p>
                       <p><b>To time: </b>{{ treatment.toTime || "None" }}</p>
@@ -85,22 +86,24 @@
                         {{ treatment.dischargeReasonCode || "None" }}
                       </p>
                     </div>
-                  </GenericInfoIcon>
+                  </BaseInfoTooltip>
                 </div>
               </div>
             </div>
           </li>
         </ul>
       </div>
-    </LoadingContainer>
+    </BaseLoadingContainer>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-
 import { PatientRecordSchema, TreatmentSchema } from "@ukkidney/ukrdc-axios-ts";
-import useApi from "~/helpers/useApi";
+
+import BaseInfoTooltip from "~/components/base/BaseInfoTooltip.vue";
+import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
+import useApi from "~/composables/useApi";
 
 interface TreatmentEvent extends TreatmentSchema {
   time?: string;
@@ -108,6 +111,10 @@ interface TreatmentEvent extends TreatmentSchema {
 }
 
 export default defineComponent({
+  components: {
+    BaseLoadingContainer,
+    BaseInfoTooltip,
+  },
   props: {
     record: {
       type: Object as () => PatientRecordSchema,

@@ -1,44 +1,44 @@
 <template>
   <div>
     <!-- Description list -->
-    <GenericCard class="mb-4">
-      <GenericCardContent>
-        <GenericDlGrid>
-          <GenericDlGridItem>
-            <TextDt>Full Name</TextDt>
-            <TextDd>
+    <BaseCard class="mb-4">
+      <BaseCardContent>
+        <BaseDescriptionListGrid>
+          <BaseDescriptionListGridItem>
+            <dt>Full Name</dt>
+            <dd>
               <div class="flex items-center gap-2">
                 <div class="sensitive capitalize">
                   {{ record.givenname?.toLowerCase() }} {{ record.surname?.toLowerCase() }}
                 </div>
                 <TracingBadge v-if="tracingRecord" :verified="nameMatchesTracing" />
               </div>
-            </TextDd>
-          </GenericDlGridItem>
+            </dd>
+          </BaseDescriptionListGridItem>
 
-          <GenericDlGridItem>
-            <TextDt>Gender</TextDt>
-            <TextDd>
+          <BaseDescriptionListGridItem>
+            <dt>Gender</dt>
+            <dd>
               <div class="flex items-center gap-2">
                 <div class="sensitive">{{ record.gender ? formatGender(record.gender) : "Unknown gender" }}</div>
                 <TracingBadge v-if="tracingRecord" :verified="tracingRecord.patient?.gender === record.gender" />
               </div>
-            </TextDd>
-          </GenericDlGridItem>
+            </dd>
+          </BaseDescriptionListGridItem>
 
-          <GenericDlGridItem>
-            <TextDt>Date of Birth</TextDt>
-            <TextDd>
+          <BaseDescriptionListGridItem>
+            <dt>Date of Birth</dt>
+            <dd>
               <div class="flex items-center gap-2">
                 <div class="sensitive">{{ formatDate(record.dateOfBirth, false) }}</div>
                 <TracingBadge v-if="tracingRecord" :verified="birthTimeMatchesTracing" />
               </div>
-            </TextDd>
-          </GenericDlGridItem>
+            </dd>
+          </BaseDescriptionListGridItem>
 
-          <GenericDlGridItem>
-            <TextDt class="font-medium text-gray-500">National ID</TextDt>
-            <TextDd>
+          <BaseDescriptionListGridItem>
+            <dt class="font-medium text-gray-500">National ID</dt>
+            <dd>
               <div class="flex items-center gap-2">
                 <div class="sensitive">{{ record.nationalid }}</div>
                 <TracingBadge
@@ -46,57 +46,61 @@
                   :verified="tracingRecord.localpatientid.trim() === record.nationalid.trim()"
                 />
               </div>
-            </TextDd>
-          </GenericDlGridItem>
+            </dd>
+          </BaseDescriptionListGridItem>
 
-          <GenericDlGridItem>
-            <TextDt>ID Type</TextDt>
-            <TextDd>{{ record.nationalidType }} </TextDd>
-          </GenericDlGridItem>
+          <BaseDescriptionListGridItem>
+            <dt>ID Type</dt>
+            <dd>{{ record.nationalidType }}</dd>
+          </BaseDescriptionListGridItem>
 
-          <GenericDlGridItem>
-            <TextDt>Last Updated</TextDt>
-            <TextDd>{{ formatDate(record.lastUpdated) }} </TextDd>
-          </GenericDlGridItem>
-        </GenericDlGrid>
-      </GenericCardContent>
-    </GenericCard>
+          <BaseDescriptionListGridItem>
+            <dt>Last Updated</dt>
+            <dd>{{ formatDate(record.lastUpdated) }}</dd>
+          </BaseDescriptionListGridItem>
+        </BaseDescriptionListGrid>
+      </BaseCardContent>
+    </BaseCard>
 
     <!-- Record message banners -->
     <div>
       <div v-if="latestMessage === undefined">
-        <GenericAlertPlaceholder class="mb-4" />
+        <BaseAlertPlaceholder class="mb-4" />
       </div>
       <div v-if="latestMessage === null">
-        <GenericAlertWarning class="mb-4" message="No new patient data received in the last year" />
+        <BaseAlertWarning class="mb-4" message="No new patient data received in the last year" />
       </div>
       <div v-if="latestMessage">
-        <GenericAlertError v-if="latestMessage.msgStatus === 'ERROR'" class="mb-4" :message="latestMessageInfo" />
-        <GenericAlertInfo v-else class="mb-4" :message="latestMessageInfo" />
+        <BaseAlertError
+          v-if="latestMessage.msgStatus === 'ERROR' && latestMessageInfo"
+          class="mb-4"
+          :message="latestMessageInfo"
+        />
+        <BaseAlertInfo v-else class="mb-4" :message="latestMessageInfo || 'No message information available'" />
       </div>
     </div>
 
     <!-- Related Patient Records card -->
-    <GenericCard class="overflow-visible">
-      <GenericCardHeader>
-        <TextH2> Patient Records </TextH2>
-      </GenericCardHeader>
-      <PatientrecordsGroupedList
+    <BaseCard class="overflow-visible">
+      <BaseCardHeader>
+        <h2>Patient Records</h2>
+      </BaseCardHeader>
+      <PatientRecordsGroupedList
         v-if="patientRecords"
         :master-record="record"
         :records="patientRecords"
         @refresh="refreshRecords"
       />
       <ul v-else class="divide-y divide-gray-200">
-        <SkeleListItem v-for="n in 5" :key="n" />
+        <BaseSkeleListItem v-for="n in 5" :key="n" />
       </ul>
-    </GenericCard>
+    </BaseCard>
 
     <!-- Related Master Records card -->
-    <GenericCard class="mt-4">
-      <GenericCardHeader>
-        <TextH2> Linked Master Records </TextH2>
-      </GenericCardHeader>
+    <BaseCard class="mt-4">
+      <BaseCardHeader>
+        <h2>Linked Master Records</h2>
+      </BaseCardHeader>
       <ul v-if="relatedRecords" class="divide-y divide-gray-200">
         <div
           v-for="item in relatedRecords"
@@ -108,33 +112,61 @@
             v-tooltip="item.id === record.id ? 'You are currently viewing this record' : null"
             :to="`/masterrecords/${item.id}`"
           >
-            <MasterrecordsListItem :item="item" />
+            <MasterRecordsListItem :item="item" />
           </NuxtLink>
         </div>
       </ul>
       <ul v-else class="divide-y divide-gray-200">
-        <SkeleListItem v-for="n in 2" :key="n" />
+        <BaseSkeleListItem v-for="n in 2" :key="n" />
       </ul>
-    </GenericCard>
+    </BaseCard>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-
 import {
   MasterRecordSchema,
   MasterRecordStatisticsSchema,
   MinimalMessageSchema,
   PatientRecordSummarySchema,
 } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate, datesAreEqual } from "@/helpers/utils/dateUtils";
-import { formatGender } from "@/helpers/utils/codeUtils";
-import { isTracing } from "@/helpers/utils/recordUtils";
-import useApi from "~/helpers/useApi";
-import useSensitive from "~/helpers/useSensitive";
+
+import BaseAlertError from "~/components/base/BaseAlertError.vue";
+import BaseAlertInfo from "~/components/base/BaseAlertInfo.vue";
+import BaseAlertPlaceholder from "~/components/base/BaseAlertPlaceholder.vue";
+import BaseAlertWarning from "~/components/base/BaseAlertWarning.vue";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardContent from "~/components/base/BaseCardContent.vue";
+import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+import BaseDescriptionListGrid from "~/components/base/BaseDescriptionListGrid.vue";
+import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGridItem.vue";
+import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+import MasterRecordsListItem from "~/components/MasterRecordsListItem.vue";
+import PatientRecordsGroupedList from "~/components/PatientRecordsGroupedList.vue";
+import TracingBadge from "~/components/TracingBadge.vue";
+import useApi from "~/composables/useApi";
+import useSensitive from "~/composables/useSensitive";
+import { formatGender } from "~/helpers/codeUtils";
+import { datesAreEqual, formatDate } from "~/helpers/dateUtils";
+import { isTracing } from "~/helpers/recordUtils";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseCardContent,
+    BaseCardHeader,
+    BaseSkeleListItem,
+    BaseDescriptionListGrid,
+    BaseDescriptionListGridItem,
+    BaseAlertError,
+    BaseAlertInfo,
+    BaseAlertPlaceholder,
+    BaseAlertWarning,
+    TracingBadge,
+    MasterRecordsListItem,
+    PatientRecordsGroupedList,
+  },
   props: {
     record: {
       type: Object as () => MasterRecordSchema,

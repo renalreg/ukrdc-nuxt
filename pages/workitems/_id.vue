@@ -1,15 +1,15 @@
 <template>
   <div>
     <!-- Modals -->
-    <GenericModalSlot v-if="hasPermission('ukrdc:workitems:write')" ref="addCommentModal">
+    <BaseModal v-if="hasPermission('ukrdc:workitems:write')" ref="addCommentModal">
       <div class="text-left">
         <div class="mb-4">Add Work Item comment</div>
-        <FormTextArea v-model="customComment" :max-length="100" rows="3"></FormTextArea>
+        <BaseTextArea v-model="customComment" :max-length="100" rows="3"></BaseTextArea>
       </div>
 
       <div class="flex justify-end">
-        <GenericButton @click="addCommentModal?.hide()">Cancel</GenericButton>
-        <GenericButton
+        <BaseButton @click="addCommentModal?.hide()">Cancel</BaseButton>
+        <BaseButton
           :disabled="!customComment"
           colour="indigo"
           class="ml-2"
@@ -17,52 +17,44 @@
           @click="updateWorkItemComment()"
         >
           Save
-        </GenericButton>
+        </BaseButton>
       </div>
-    </GenericModalSlot>
+    </BaseModal>
 
-    <GenericModalSlot v-if="hasPermission('ukrdc:workitems:write')" ref="closeModal">
+    <BaseModal v-if="hasPermission('ukrdc:workitems:write')" ref="closeModal">
       <div class="text-left">
         <div class="mb-4">{{ closeMessageOverride ? closeMessageOverride : "Close the Work Item" }}</div>
 
-        <div>
-          <FormLabel>
-            Comments
-            <FormTextArea v-model="customComment" :max-length="100" rows="3"></FormTextArea>
-          </FormLabel>
-        </div>
+        <label>
+          Comments
+          <BaseTextArea v-model="customComment" :max-length="100" rows="3"></BaseTextArea>
+        </label>
       </div>
 
       <div class="flex justify-end">
-        <GenericButton @click="closeModal?.hide()"> Cancel </GenericButton>
-        <GenericButton
-          :disabled="!customComment"
-          type="submit"
-          class="ml-3"
-          colour="red"
-          @click="handleCloseWorkItem()"
-        >
+        <BaseButton @click="closeModal?.hide()"> Cancel </BaseButton>
+        <BaseButton :disabled="!customComment" type="submit" class="ml-3" colour="red" @click="handleCloseWorkItem()">
           Close Work Item
-        </GenericButton>
+        </BaseButton>
       </div>
-    </GenericModalSlot>
+    </BaseModal>
 
     <!-- Header -->
     <div class="mb-6">
-      <TextH1 v-if="record"> Work Item {{ record.id }} {{ statusString }} </TextH1>
-      <SkeleText v-else class="mb-2 h-8 w-1/4" />
-      <TextL1 v-if="record">
+      <h1 v-if="record">Work Item {{ record.id }} {{ statusString }}</h1>
+      <BaseSkeleText v-else class="mb-2 h-8 w-1/4" />
+      <h5 v-if="record">
         {{ record.description }}
-      </TextL1>
-      <SkeleText v-else class="h-4 w-1/2" />
+      </h5>
+      <BaseSkeleText v-else class="h-4 w-1/2" />
     </div>
 
     <!-- Info Cards -->
     <div class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
       <!-- Work Item Details -->
-      <WorkitemsDetailCard :item="record" />
+      <WorkItemDetailCard :item="record" />
       <!-- Work Item Advice -->
-      <WorkitemsAdviceCard :item="record" :related="workItemCollection" />
+      <WorkItemAdviceCard :item="record" :related="workItemCollection" />
     </div>
 
     <!-- Action Buttons -->
@@ -70,29 +62,29 @@
       v-if="hasPermission('ukrdc:workitems:write') && record"
       class="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
     >
-      <GenericButton
+      <BaseButton
         v-if="availableActions.comment"
         :primary="true"
         colour="indigo"
         class="inline-flex w-full items-center justify-center"
         @click="addCommentModal?.show()"
       >
-        <IconPencil />
+        <IconPencil class="-ml-1 mr-2" />
         Comment
-      </GenericButton>
+      </BaseButton>
 
-      <GenericButton
+      <BaseButton
         v-if="availableActions.close && record.status !== 3"
         :primary="true"
         class="inline-flex w-full items-center justify-center"
         colour="green"
         @click="closeModal?.show()"
       >
-        <IconCheckCircle />
+        <IconCheckCircle class="-ml-1 mr-2" />
         Close
-      </GenericButton>
+      </BaseButton>
 
-      <GenericButton
+      <BaseButton
         v-if="availableActions.merge && record.status !== 3"
         :primary="true"
         tooltip="You will be redirected here after merging"
@@ -107,9 +99,9 @@
         class="inline-flex w-full items-center justify-center"
         colour="yellow"
       >
-        <IconMiniExternalLink />
+        <IconArrowTopRightOnSquare class="-ml-1 mr-2" />
         Merge Master Records
-      </GenericButton>
+      </BaseButton>
     </div>
 
     <!-- Work Item Trigger -->
@@ -117,14 +109,14 @@
       <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div id="incomingCard">
           <!-- Attribute toggle -->
-          <GenericTabToggle
+          <BaseTabToggle
             v-model="showIncomingAttributes"
             true-label="Incoming Attributes"
             false-label="Incoming Person Record"
             class="mb-2"
           />
           <!-- Type 9 incoming attribute card -->
-          <WorkitemsAttributeRecordCard
+          <WorkItemAttributesCard
             v-if="showIncomingAttributes"
             :record="record.attributes"
             label="Incoming Attributes"
@@ -132,9 +124,9 @@
             :full="showDestinationPersons"
           />
           <!-- Else incoming person card -->
-          <personsRecordCard
+          <PersonRecordCard
             v-else-if="record.incoming.person"
-            :record="record.person"
+            :record="record.incoming.person"
             :label="`Incoming Person Record ${record.incoming.person.id}`"
             :highlight="highlightedAttributes"
             :full="showDestinationPersons"
@@ -145,14 +137,14 @@
 
         <div id="destinationCard">
           <!-- Destination toggle -->
-          <GenericTabToggle
+          <BaseTabToggle
             v-model="showDestinationPersons"
             true-label="Related Person Records"
             false-label="Destination Master Record"
             class="mb-2"
           />
           <!-- Destination person card -->
-          <personsRecordCard
+          <PersonRecordCard
             v-if="showDestinationPersons && record.destination.persons.length > 0"
             :record="record.destination.persons[relatedPersonsIndex]"
             :label="`Related Person Record ${relatedPersonsIndex + 1} of ${record.destination.persons.length}`"
@@ -164,7 +156,7 @@
             v-else-if="record.destination.masterRecord"
             :to="`/masterrecords/${record.destination.masterRecord.id}`"
           >
-            <masterrecordsRecordCard
+            <MasterRecordCard
               :record="record.destination.masterRecord"
               :label="`Destination Master Record ${record.destination.masterRecord.id}`"
             />
@@ -176,17 +168,14 @@
           </div>
         </div>
       </div>
-      <GenericCard v-if="showDestinationPersons && record.destination.persons.length > 1" class="mt-2 pl-4">
-        <GenericItemPaginator
-          v-model="relatedPersonsIndex"
-          :total="record.destination.persons.length"
-          item-label="Record"
-      /></GenericCard>
+      <BaseCard v-if="showDestinationPersons && record.destination.persons.length > 1" class="mt-2 pl-4">
+        <BaseItemPaginator v-model="relatedPersonsIndex" :total="record.destination.persons.length" item-label="Record"
+      /></BaseCard>
     </div>
 
     <!-- Proposed Merge -->
     <div v-if="availableActions.merge">
-      <TextH2 class="mb-4">Proposed Merge</TextH2>
+      <h2 class="mb-4">Proposed Merge</h2>
 
       <div v-if="record" class="mb-8">
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -195,7 +184,7 @@
             v-if="record.incoming.masterRecords.length > 0"
             :to="`/masterrecords/${record.incoming.masterRecords[relatedRecordsIndex].id}`"
           >
-            <masterrecordsRecordCard
+            <MasterRecordCard
               :record="record.incoming.masterRecords[relatedRecordsIndex]"
               :label="`Incoming Master Record ${relatedRecordsIndex + 1} of ${record.incoming.masterRecords.length}`"
             />
@@ -203,54 +192,70 @@
           <!-- Empty incoming records card -->
           <div v-else class="rounded-md bg-red-50 p-4 font-medium text-red-800">No new incoming Master Records</div>
           <NuxtLink v-if="record.destination.masterRecord" :to="`/masterrecords/${record.destination.masterRecord.id}`">
-            <masterrecordsRecordCard :record="record.destination.masterRecord" label="Destination Master Record" />
+            <MasterRecordCard :record="record.destination.masterRecord" label="Destination Master Record" />
           </NuxtLink>
         </div>
-        <GenericCard v-if="record.incoming.masterRecords.length > 1" class="mt-2 pl-4">
-          <GenericItemPaginator
+        <BaseCard v-if="record.incoming.masterRecords.length > 1" class="mt-2 pl-4">
+          <BaseItemPaginator
             v-model="relatedRecordsIndex"
             :total="record.incoming.masterRecords.length"
             item-label="Record"
-        /></GenericCard>
+        /></BaseCard>
       </div>
     </div>
 
     <!-- Related Work Items  -->
-    <GenericCard v-if="workItemCollection.length > 0" class="mb-8">
+    <BaseCard v-if="workItemCollection.length > 0" class="mb-8">
       <!-- Card header -->
-      <GenericCardHeader>
-        <TextH2>Related Work Items</TextH2>
-        <TextL2>Work Items for the same patient, raised by the same event</TextL2>
-      </GenericCardHeader>
+      <BaseCardHeader>
+        <h2>Related Work Items</h2>
+        <h6>Work Items for the same patient, raised by the same event</h6>
+      </BaseCardHeader>
       <!-- Results list -->
       <ul class="divide-y divide-gray-200">
         <div v-for="item in workItemCollection" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/workitems/${item.id}`">
-            <workitemsListItem :item="item" />
+            <WorkItemsListItem :item="item" />
           </NuxtLink>
         </div>
       </ul>
-    </GenericCard>
+    </BaseCard>
 
     <!-- Related errors card -->
-    <WorkitemsRelatedErrorsList v-if="record" class="mt-4 mb-8" :workitem="record" :size="5" />
+    <WorkItemRelatedErrorsList v-if="record" class="mt-4 mb-8" :workitem="record" :size="5" />
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useContext, useMeta, useRoute } from "@nuxtjs/composition-api";
-
 import { WorkItemExtendedSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/utils/dateUtils";
-import { formatGender } from "@/helpers/utils/codeUtils";
-import { isEmptyObject } from "@/helpers/utils/objectUtils";
-import { delay } from "@/helpers/utils/timeUtils";
-import { workItemIsMergable } from "@/helpers/utils/workItemUtils";
 
+import BaseButton from "~/components/base/BaseButton.vue";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+import BaseItemPaginator from "~/components/base/BaseItemPaginator.vue";
+import BaseModal from "~/components/base/BaseModal.vue";
+import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
+import BaseTabToggle from "~/components/base/BaseTabToggle.vue";
+import BaseTextArea from "~/components/base/BaseTextArea.vue";
+import IconArrowTopRightOnSquare from "~/components/icons/hero/20/solid/IconArrowTopRightOnSquare.vue";
+import IconCheckCircle from "~/components/icons/hero/20/solid/IconCheckCircle.vue";
+import IconPencil from "~/components/icons/hero/20/solid/IconPencil.vue";
+import MasterRecordCard from "~/components/MasterRecordCard.vue";
+import PersonRecordCard from "~/components/PersonRecordCard.vue";
+import WorkItemAdviceCard from "~/components/WorkItemAdviceCard.vue";
+import WorkItemAttributesCard from "~/components/WorkItemAttributesCard.vue";
+import WorkItemDetailCard from "~/components/WorkItemDetailCard.vue";
+import WorkItemRelatedErrorsList from "~/components/WorkItemRelatedErrorsList.vue";
+import WorkItemsListItem from "~/components/WorkItemsListItem.vue";
+import useApi from "~/composables/useApi";
+import usePermissions from "~/composables/usePermissions";
+import { formatGender } from "~/helpers/codeUtils";
+import { formatDate } from "~/helpers/dateUtils";
+import { isEmptyObject } from "~/helpers/objectUtils";
+import { delay } from "~/helpers/timeUtils";
+import { workItemIsMergable } from "~/helpers/workItemUtils";
 import { modalInterface } from "~/interfaces/modal";
-
-import usePermissions from "~/helpers/usePermissions";
-import useApi from "~/helpers/useApi";
 
 interface AvailableActions {
   close: boolean;
@@ -260,6 +265,26 @@ interface AvailableActions {
 }
 
 export default defineComponent({
+  components: {
+    BaseButton,
+    BaseCard,
+    BaseCardHeader,
+    BaseSkeleText,
+    BaseItemPaginator,
+    BaseTextArea,
+    BaseTabToggle,
+    BaseModal,
+    IconCheckCircle,
+    IconArrowTopRightOnSquare,
+    IconPencil,
+    PersonRecordCard,
+    MasterRecordCard,
+    WorkItemAdviceCard,
+    WorkItemDetailCard,
+    WorkItemAttributesCard,
+    WorkItemRelatedErrorsList,
+    WorkItemsListItem,
+  },
   setup() {
     // Dependencies
     const route = useRoute();

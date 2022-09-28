@@ -1,15 +1,11 @@
 <template>
   <div class="sensitive">
-    <patientrecordsSurveyViewer ref="surveyViewerModal" class="md:w-large w-full" />
+    <PatientRecordSurveyViewer ref="surveyViewerModal" class="md:w-large w-full" />
 
-    <LoadingContainer :loading="!surveys">
-      <TextP v-if="surveys && surveys.length <= 0" class="text-center">No surveys on record</TextP>
+    <BaseLoadingContainer :loading="!surveys">
+      <p v-if="surveys && surveys.length <= 0" class="text-center">No surveys on record</p>
       <div class="mt-3 grid grid-cols-1 justify-center gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-2">
-        <genericCardMini
-          v-for="item in surveys"
-          :key="item.id"
-          class="col-span-1 flex items-center justify-between truncate"
-        >
+        <BaseCard v-for="item in surveys" :key="item.id" class="col-span-1 flex items-center justify-between truncate">
           <div class="flex-1 truncate px-4 py-2">
             <p class="mb-2 font-medium text-gray-900 hover:text-gray-600">
               {{ formatDate(item.surveytime, false) }}
@@ -31,22 +27,29 @@
               </genericButtonMini>
             </div>
           </div>
-        </genericCardMini>
+        </BaseCard>
       </div>
-    </LoadingContainer>
+    </BaseLoadingContainer>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-
 import { PatientRecordSchema, SurveySchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/utils/dateUtils";
 
-import useApi from "~/helpers/useApi";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
+import PatientRecordSurveyViewer from "~/components/PatientRecordSurveyViewer.vue";
+import useApi from "~/composables/useApi";
+import { formatDate } from "~/helpers/dateUtils";
 import { surveyViewerModalInterface } from "~/interfaces/modal";
 
 export default defineComponent({
+  components: {
+    BaseLoadingContainer,
+    BaseCard,
+    PatientRecordSurveyViewer,
+  },
   props: {
     record: {
       type: Object as () => PatientRecordSchema,

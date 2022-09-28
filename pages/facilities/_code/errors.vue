@@ -1,11 +1,11 @@
 <template>
   <div>
     <!-- Failing NIs -->
-    <GenericCard v-if="errorMessages && errorMessagesTotal > 0" class="mt-4">
-      <GenericCardHeader>
-        <TextH2> Records Currently Failing </TextH2>
-        <TextL1>Records where the most recent message received failed to process due to errors.</TextL1>
-      </GenericCardHeader>
+    <BaseCard v-if="errorMessages && errorMessagesTotal > 0" class="mt-4">
+      <BaseCardHeader>
+        <h2>Records Currently Failing</h2>
+        <h5>Records where the most recent message received failed to process due to errors.</h5>
+      </BaseCardHeader>
       <ul class="divide-y divide-gray-200">
         <div v-for="item in errorMessages" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/messages/${item.id}`">
@@ -13,7 +13,7 @@
           </NuxtLink>
         </div>
       </ul>
-      <GenericPaginator
+      <BasePaginator
         class="border-t border-gray-200 bg-white"
         :jump-to-top="false"
         :page="errorMessagesPage"
@@ -23,7 +23,7 @@
         @prev="errorMessagesPage--"
         @jump="errorMessagesPage = $event"
       />
-    </GenericCard>
+    </BaseCard>
   </div>
 </template>
 
@@ -31,10 +31,21 @@
 import { defineComponent, onMounted, ref, useRouter, watch } from "@nuxtjs/composition-api";
 import { FacilityDetailsSchema, MessageSchema } from "@ukkidney/ukrdc-axios-ts";
 import { PlotDatum } from "plotly.js";
-import useApi from "~/helpers/useApi";
-import { getPointDateRange } from "~/helpers/utils/chartUtils";
+
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
+import MessagesListItem from "~/components/MessagesListItem.vue";
+import useApi from "~/composables/useApi";
+import { getPointDateRange } from "~/helpers/chartUtils";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseCardHeader,
+    BasePaginator,
+    MessagesListItem,
+  },
   props: {
     facility: {
       type: Object as () => FacilityDetailsSchema,

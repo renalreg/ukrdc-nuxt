@@ -1,6 +1,6 @@
 <template>
   <div class="sensitive">
-    <GenericModalConfirm
+    <BaseModalConfirm
       ref="deleteResultAlert"
       title="Delete Result Item"
       message="Are you sure you want to delete this result item?"
@@ -10,7 +10,7 @@
       @cancel="cancelDeleteResultItem"
     />
 
-    <GenericModalConfirm
+    <BaseModalConfirm
       ref="deleteOrderAlert"
       title="Delete Lab Order"
       message="Are you sure you want to delete this lab order and all associated result items?"
@@ -19,9 +19,9 @@
       @confirm="deleteLabOrder"
     />
 
-    <LoadingContainer :loading="!results">
-      <GenericDateRange v-model="dateRange" class="mb-4" />
-      <GenericSearchableSelect
+    <BaseLoadingContainer :loading="!results">
+      <BaseDateRange v-model="dateRange" class="mb-4" />
+      <BaseSelectSearchable
         v-model="selectedService"
         class="mb-4"
         :options="availableServicesIds"
@@ -31,19 +31,19 @@
 
       <div class="mb-4 flex flex-grow items-center gap-2">
         <NuxtLink :to="'./laborders'">
-          <GenericButton>View Orders</GenericButton>
+          <BaseButton>View Orders</BaseButton>
         </NuxtLink>
         <NuxtLink v-if="selectedOrderId" :to="{ query: { order_id: null } }">
-          <GenericButton>Show Results From All Orders</GenericButton>
+          <BaseButton>Show Results From All Orders</BaseButton>
         </NuxtLink>
-        <GenericButton v-if="selectedOrderId && selectedOrder" colour="red" @click="deleteOrderAlert?.show()"
-          >Delete Lab Order</GenericButton
+        <BaseButton v-if="selectedOrderId && selectedOrder" colour="red" @click="deleteOrderAlert?.show()"
+          >Delete Lab Order</BaseButton
         >
       </div>
 
       <!-- Small data card display -->
       <div class="lg:hidden">
-        <PatientrecordsResultCard
+        <PatientRecordResultCard
           v-for="(item, index) in results"
           :key="`${index}-card`"
           :item="item"
@@ -51,7 +51,7 @@
         />
       </div>
       <!-- Large table display -->
-      <GenericTable class="hidden lg:block">
+      <BaseTable class="hidden lg:block">
         <thead class="bg-gray-50">
           <tr>
             <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
@@ -74,34 +74,26 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 bg-white">
-          <PatientrecordsResultRow
+          <PatientRecordResultRow
             v-for="(item, index) in results"
             :key="index"
             :item="item"
             @delete="showDeleteResultItemModal"
           />
         </tbody>
-      </GenericTable>
+      </BaseTable>
 
       <div v-if="results && results.length > 0" class="mt-4">
-        <GenericCard>
-          <GenericPaginator
-            :page="page"
-            :size="size"
-            :total="total"
-            @next="page++"
-            @prev="page--"
-            @jump="page = $event"
-          />
-        </GenericCard>
+        <BaseCard>
+          <BasePaginator :page="page" :size="size" :total="total" @next="page++" @prev="page--" @jump="page = $event" />
+        </BaseCard>
       </div>
-    </LoadingContainer>
+    </BaseLoadingContainer>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useContext, watch } from "@nuxtjs/composition-api";
-
 import {
   LabOrderSchema,
   PatientRecordSchema,
@@ -109,16 +101,36 @@ import {
   ResultItemServiceSchema,
 } from "@ukkidney/ukrdc-axios-ts";
 
-import { formatDate } from "@/helpers/utils/dateUtils";
-
-import usePagination from "~/helpers/query/usePagination";
-import useQuery from "~/helpers/query/useQuery";
-import useDateRange from "~/helpers/query/useDateRange";
-
+import BaseButton from "~/components/base/BaseButton.vue";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseDateRange from "~/components/base/BaseDateRange.vue";
+import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
+import BaseModalConfirm from "~/components/base/BaseModalConfirm.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
+import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
+import BaseTable from "~/components/base/BaseTable.vue";
+import PatientRecordResultCard from "~/components/PatientRecordResultCard.vue";
+import PatientRecordResultRow from "~/components/PatientRecordResultRow.vue";
+import useDateRange from "~/composables/query/useDateRange";
+import usePagination from "~/composables/query/usePagination";
+import useQuery from "~/composables/query/useQuery";
+import useApi from "~/composables/useApi";
+import { formatDate } from "~/helpers/dateUtils";
 import { modalInterface } from "~/interfaces/modal";
-import useApi from "~/helpers/useApi";
 
 export default defineComponent({
+  components: {
+    BaseButton,
+    BaseCard,
+    BaseLoadingContainer,
+    BaseTable,
+    BasePaginator,
+    BaseDateRange,
+    BaseSelectSearchable,
+    BaseModalConfirm,
+    PatientRecordResultCard,
+    PatientRecordResultRow,
+  },
   props: {
     record: {
       type: Object as () => PatientRecordSchema,

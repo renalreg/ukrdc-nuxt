@@ -2,23 +2,28 @@
   <div>
     <div v-if="record && record.patient" class="mb-2 items-center md:flex">
       <div class="mb-4 flex-grow text-center sm:text-left md:mb-0">
-        <TextNameH1 :forename="forename" :surname="surname" />
+        <span>
+          <h1 class="sensitive inline capitalize">{{ forename.toLowerCase() }}</h1>
+          <h1 class="sensitive inline capitalize italic">
+            {{ surname.toLowerCase() }}
+          </h1>
+        </span>
       </div>
       <div class="flex">
         <div v-if="record.masterId">
-          <GenericButton :to="`/masterrecords/${record.masterId}`" class="truncate"> View Master Record </GenericButton>
+          <BaseButton :to="`/masterrecords/${record.masterId}`" class="truncate"> View Master Record </BaseButton>
         </div>
         <div v-if="related" class="ml-2">
-          <GenericSelect v-model="selectedPid">
+          <BaseSelect v-model="selectedPid">
             <option v-for="(item, index) in relatedDataRecords" :key="index" :value="item.pid">
               From {{ item.sendingfacility }} via {{ item.sendingextract }}
             </option>
-          </GenericSelect>
+          </BaseSelect>
         </div>
       </div>
     </div>
 
-    <div class="mb-6"><GenericTabsNavigation :tabs="tabs" /></div>
+    <div class="mb-6"><BaseTabsNavigation :tabs="tabs" /></div>
 
     <NuxtChild v-if="record" :record="record" />
   </div>
@@ -35,14 +40,21 @@ import {
   useRouter,
   watch,
 } from "@nuxtjs/composition-api";
-
 import { PatientRecordSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
+
+import BaseButton from "~/components/base/BaseButton.vue";
+import BaseSelect from "~/components/base/BaseSelect.vue";
+import BaseTabsNavigation from "~/components/base/BaseTabsNavigation.vue";
+import useApi from "~/composables/useApi";
+import { firstForename, firstSurname, isMembership } from "~/helpers/recordUtils";
 import { TabItem } from "~/interfaces/tabs";
 
-import { firstForename, firstSurname, isMembership } from "@/helpers/utils/recordUtils";
-import useApi from "~/helpers/useApi";
-
 export default defineComponent({
+  components: {
+    BaseButton,
+    BaseSelect,
+    BaseTabsNavigation,
+  },
   setup() {
     const route = useRoute();
     const router = useRouter();

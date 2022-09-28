@@ -21,7 +21,7 @@
             </svg>
           </div>
           <form @submit.prevent="$emit('submit')">
-            <FormTextBox
+            <BaseTextBox
               :focus="true"
               class="w-full pl-10"
               placeholder="Search"
@@ -32,8 +32,8 @@
           </form>
         </div>
       </div>
-      <GenericButton v-if="showButton" colour="indigo" :primary="true" class="w-24" @click="$emit('submit')"
-        >Search</GenericButton
+      <BaseButton v-if="showButton" colour="indigo" :primary="true" class="w-24" @click="$emit('submit')"
+        >Search</BaseButton
       >
     </div>
   </div>
@@ -42,7 +42,14 @@
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
 
+import BaseButton from "~/components/base/BaseButton.vue";
+import BaseTextBox from "~/components/base/BaseTextBox.vue";
+
 export default defineComponent({
+  components: {
+    BaseButton,
+    BaseTextBox,
+  },
   props: {
     value: {
       type: String,

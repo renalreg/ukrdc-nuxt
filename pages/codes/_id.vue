@@ -1,31 +1,34 @@
 <template>
-  <LoadingIndicator v-if="!code"></LoadingIndicator>
+  <BaseLoadingIndicator v-if="!code"></BaseLoadingIndicator>
   <div v-else-if="code">
     <div class="px-4 sm:px-6">
       <!-- Heading -->
       <div class="mb-4">
-        <CodesTitle :code="code.code" :coding-standard="code.codingStandard" />
-        <TextP class="mt-2">
+        <CodeTitle :code="code.code" :coding-standard="code.codingStandard" />
+        <p class="mt-2">
           {{ code.description || "No description found" }}
-        </TextP>
+        </p>
       </div>
       <!-- Extra fields  -->
       <div class="mb-4">
         <div>
-          <TextL1 class="inline">Type: </TextL1><TextP class="inline">{{ code.objectType || "None" }} </TextP>
+          <h5 class="inline">Type:</h5>
+          <p class="inline">{{ code.objectType || "None" }}</p>
         </div>
         <div class="mt-2">
-          <TextL1 class="inline">Units: </TextL1><TextP class="inline">{{ code.units || "None" }} </TextP>
+          <h5 class="inline">Units:</h5>
+          <p class="inline">{{ code.units || "None" }}</p>
         </div>
       </div>
       <!-- Code lifecycle  -->
       <div class="mb-4">
         <div>
-          <TextL1 class="inline">Created: </TextL1><TextP class="inline">{{ formatDate(code.creationDate) }} </TextP>
+          <h5 class="inline">Created:</h5>
+          <p class="inline">{{ formatDate(code.creationDate) }}</p>
         </div>
         <div class="mt-2">
-          <TextL1 class="inline">Updated: </TextL1
-          ><TextP class="inline">{{ code.updateDate ? formatDate(code.updateDate) : "Never updated" }} </TextP>
+          <h5 class="inline">Updated:</h5>
+          <p class="inline">{{ code.updateDate ? formatDate(code.updateDate) : "Never updated" }}</p>
         </div>
       </div>
       <!-- Links -->
@@ -39,10 +42,10 @@
       <!-- Maps to  -->
       <div v-if="code.mapsTo.length > 0">
         <div class="border-t border-b bg-gray-50 py-1 pl-4 sm:pl-6">
-          <TextH4>Maps To</TextH4>
+          <h4>Maps To</h4>
         </div>
         <ul class="divide-y divide-gray-200">
-          <CodesMapListItem
+          <CodeMapItem
             v-for="mappedCode in code.mapsTo"
             :key="`${mappedCode.destinationCodingStandard}.${mappedCode.destinationCode}`"
             :map="mappedCode"
@@ -53,10 +56,10 @@
       <!-- Mapped by  -->
       <div v-if="code.mappedBy.length > 0">
         <div class="border-t border-b bg-gray-50 py-1 pl-4 sm:pl-6">
-          <TextH4>Mapped By</TextH4>
+          <h4>Mapped By</h4>
         </div>
         <ul class="divide-y divide-gray-200">
-          <CodesMapListItem
+          <CodeMapItem
             v-for="mappedCode in code.mappedBy"
             :key="`${mappedCode.sourceCodingStandard}.${mappedCode.sourceCode}`"
             :map="mappedCode"
@@ -71,10 +74,19 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useMeta, useRoute, watch } from "@nuxtjs/composition-api";
 import { ExtendedCodeSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/utils/dateUtils";
-import useApi from "~/helpers/useApi";
+
+import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
+import CodeMapItem from "~/components/CodeMapItem.vue";
+import CodeTitle from "~/components/CodeTitle.vue";
+import useApi from "~/composables/useApi";
+import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
+  components: {
+    BaseLoadingIndicator,
+    CodeTitle,
+    CodeMapItem,
+  },
   setup() {
     const route = useRoute();
     const { codesApi } = useApi();

@@ -1,54 +1,64 @@
 <template>
   <div>
     <!-- Description list -->
-    <GenericCard class="my-4 p-6">
-      <GenericDlGrid>
-        <GenericDlGridItem>
-          <TextDt>Local ID</TextDt>
-          <TextDd class="sensitive">
+    <BaseCard class="my-4 p-6">
+      <BaseDescriptionListGrid>
+        <BaseDescriptionListGridItem>
+          <dt>Local ID</dt>
+          <dd class="sensitive">
             {{ record.localpatientid }}
-          </TextDd>
-        </GenericDlGridItem>
+          </dd>
+        </BaseDescriptionListGridItem>
 
-        <GenericDlGridItem>
-          <TextDt>UKRDC ID</TextDt>
-          <TextDd class="sensitive">{{ record.ukrdcid }}</TextDd>
-        </GenericDlGridItem>
+        <BaseDescriptionListGridItem>
+          <dt>UKRDC ID</dt>
+          <dd class="sensitive">{{ record.ukrdcid }}</dd>
+        </BaseDescriptionListGridItem>
 
-        <GenericDlGridItem>
-          <TextDt>PID</TextDt>
-          <TextDd class="sensitive">{{ record.pid }}</TextDd>
-        </GenericDlGridItem>
+        <BaseDescriptionListGridItem>
+          <dt>PID</dt>
+          <dd class="sensitive">{{ record.pid }}</dd>
+        </BaseDescriptionListGridItem>
 
-        <GenericDlGridItem>
-          <TextDt>Last Updated</TextDt>
-          <TextDd>
+        <BaseDescriptionListGridItem>
+          <dt>Last Updated</dt>
+          <dd>
             {{ formatDate(record.repositoryUpdateDate) }}
-          </TextDd>
-        </GenericDlGridItem>
+          </dd>
+        </BaseDescriptionListGridItem>
 
-        <GenericDlGridItem>
-          <TextDt>Created</TextDt>
-          <TextDd>
+        <BaseDescriptionListGridItem>
+          <dt>Created</dt>
+          <dd>
             {{ formatDate(record.repositoryCreationDate) }}
-          </TextDd>
-        </GenericDlGridItem>
-      </GenericDlGrid>
-    </GenericCard>
+          </dd>
+        </BaseDescriptionListGridItem>
+      </BaseDescriptionListGrid>
+    </BaseCard>
 
-    <PatientrecordsDetailCards :full="true" :record="record" />
+    <PatientRecordDetailCards :full="true" :record="record" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api";
-
 import { PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/utils/dateUtils";
-import { formatGender } from "@/helpers/utils/codeUtils";
-import { isEmptyObject } from "@/helpers/utils/objectUtils";
+
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseDescriptionListGrid from "~/components/base/BaseDescriptionListGrid.vue";
+import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGridItem.vue";
+import PatientRecordDetailCards from "~/components/PatientRecordDetailCards.vue";
+import { formatGender } from "~/helpers/codeUtils";
+import { formatDate } from "~/helpers/dateUtils";
+import { isEmptyObject } from "~/helpers/objectUtils";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseDescriptionListGrid,
+    BaseDescriptionListGridItem,
+    PatientRecordDetailCards,
+  },
   props: {
     record: {
       type: Object as () => PatientRecordSchema,

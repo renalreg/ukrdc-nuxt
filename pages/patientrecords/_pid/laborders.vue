@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TextP v-if="orders.length <= 0" class="text-center"> No lab orders on record </TextP>
+    <p v-if="orders.length <= 0" class="text-center">No lab orders on record</p>
     <ul class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
       <li v-for="item in orders" :key="item.id">
         <NuxtLink
@@ -10,36 +10,36 @@
           }"
           class="col-span-1 flex rounded-md shadow-sm"
         >
-          <PatientrecordsLaborderCard :item="item" class="w-full" />
+          <PatientRecordLabOrderCard :item="item" class="w-full" />
         </NuxtLink>
       </li>
     </ul>
 
     <div v-if="orders.length > 0" class="mt-4">
-      <GenericCard>
-        <GenericPaginator
-          :page="page"
-          :size="size"
-          :total="total"
-          @next="page++"
-          @prev="page--"
-          @jump="page = $event"
-        />
-      </GenericCard>
+      <BaseCard>
+        <BasePaginator :page="page" :size="size" :total="total" @next="page++" @prev="page--" @jump="page = $event" />
+      </BaseCard>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import { LabOrderShortSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/utils/dateUtils";
 
-import usePagination from "~/helpers/query/usePagination";
-import useApi from "~/helpers/useApi";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
+import PatientRecordLabOrderCard from "~/components/PatientRecordLabOrderCard.vue";
+import usePagination from "~/composables/query/usePagination";
+import useApi from "~/composables/useApi";
+import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BasePaginator,
+    PatientRecordLabOrderCard,
+  },
   props: {
     record: {
       type: Object as () => PatientRecordSchema,

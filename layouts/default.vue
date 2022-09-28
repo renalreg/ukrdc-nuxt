@@ -29,7 +29,7 @@
             leave-class="translate-x-0"
             leave-to-class="-translate-x-full"
           >
-            <NavigationSidebar
+            <Sidebar
               v-show="sbOpen"
               :show-close-button="true"
               :show-profile="false"
@@ -55,7 +55,7 @@
     <!-- Static sidebar for desktop -->
     <div class="hidden md:flex md:flex-shrink-0">
       <div class="flex w-64 flex-col">
-        <NavigationSidebar class="flex h-0 flex-1 flex-col border-r border-gray-200" />
+        <Sidebar class="flex h-0 flex-1 flex-col border-r border-gray-200" />
       </div>
     </div>
 
@@ -98,11 +98,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext, useMeta } from "@nuxtjs/composition-api";
-import useSensitive from "~/helpers/useSensitive";
 import "floating-vue/dist/style.css";
 
+import { defineComponent, ref, useContext, useMeta } from "@nuxtjs/composition-api";
+
+import ProfileBadge from "~/components/ProfileBadge.vue";
+import Sidebar from "~/components/Sidebar.vue";
+import useSensitive from "~/composables/useSensitive";
+
 export default defineComponent({
+  components: {
+    Sidebar,
+    ProfileBadge,
+  },
   setup() {
     const { base } = useContext();
     const { link } = useMeta();
@@ -124,6 +132,58 @@ export default defineComponent({
 <style lang="postcss">
 html {
   font-size: 14px;
+}
+
+p {
+  @apply text-gray-600;
+}
+
+b {
+  @apply font-medium text-gray-900;
+}
+
+h1 {
+  @apply text-2xl font-bold text-gray-900;
+}
+
+h2 {
+  @apply text-lg font-medium leading-6 text-gray-900;
+}
+
+h3 {
+  @apply font-medium text-gray-900;
+}
+
+h4 {
+  @apply text-sm font-medium uppercase tracking-wide text-gray-600;
+}
+
+h5 {
+  @apply font-medium text-gray-600;
+}
+
+h6 {
+  @apply text-sm font-medium text-gray-500;
+}
+
+dt {
+  @apply font-medium text-gray-500;
+}
+
+dd {
+  @apply text-gray-900;
+}
+
+th {
+  @apply text-sm font-medium uppercase tracking-wider text-gray-500;
+}
+
+label {
+  @apply font-medium text-gray-500;
+}
+
+.borderless-card {
+  @apply rounded-md bg-white shadow-sm;
 }
 
 .v-popper__popper {

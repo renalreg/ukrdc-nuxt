@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="mx-auto mb-4 max-w-7xl">
-      <TextH1>Data Files</TextH1>
+      <h1>Data Files</h1>
     </div>
 
     <div class="mb-4 flex flex-col">
-      <GenericDateRange v-model="dateRange" class="mb-4" />
-      <GenericSearchableSelect
+      <BaseDateRange v-model="dateRange" class="mb-4" />
+      <BaseSelectSearchable
         v-if="facilityIds.length > 1"
         v-model="selectedFacility"
         class="mb-4"
@@ -16,40 +16,42 @@
       />
       <div class="flex flex-col gap-2 lg:flex-row">
         <div class="flex flex-grow items-center gap-4">
-          <FormCheckbox v-model="statuses" label="Stored" value="STORED" />
-          <FormCheckbox v-model="statuses" label="Received" value="RECEIVED" />
-          <FormCheckbox v-model="statuses" label="Error" value="ERROR" />
-          <FormCheckbox v-model="statuses" label="Resolved" value="RESOLVED" />
+          <BaseCheckbox v-model="statuses" label="Stored" value="STORED" />
+          <BaseCheckbox v-model="statuses" label="Received" value="RECEIVED" />
+          <BaseCheckbox v-model="statuses" label="Error" value="ERROR" />
+          <BaseCheckbox v-model="statuses" label="Resolved" value="RESOLVED" />
         </div>
 
         <form v-show="!nationalId" class="flex" @submit.prevent="nationalId = nationalIdSearchString.trim()">
-          <FormTextBoxMini
+          <BaseTextBoxMini
             v-model="nationalIdSearchString"
             class="z-20 flex-grow rounded-r-none"
             placeholder="Filter by Patient Number"
-          ></FormTextBoxMini>
-          <GenericButtonMini class="z-10" anchor="left" type="submit">Go</GenericButtonMini>
+          ></BaseTextBoxMini>
+          <BaseButtonMini class="z-10" anchor="left" type="submit">Go</BaseButtonMini>
         </form>
 
-        <GenericButtonMini v-show="nationalId" @click="$router.push({ query: { nationalid: null } })"
-          >Show Results From All Patients</GenericButtonMini
+        <BaseButtonMini v-show="nationalId" @click="$router.push({ query: { nationalid: null } })"
+          >Show Results From All Patients</BaseButtonMini
         >
 
-        <GenericButtonMini @click="toggleOrder">
+        <BaseButtonMini @click="toggleOrder">
           <div v-show="orderAscending" class="flex">
-            <TextP>Oldest - Newest</TextP><IconMiniSortAscending class="ml-2" />
+            <p>Oldest - Newest</p>
+            <IconBarsArrowUp class="ml-2 h-5 w-5" />
           </div>
           <div v-show="!orderAscending" class="flex">
-            <TextP>Newest - Oldest</TextP><IconMiniSortDescending class="ml-2" />
+            <p>Newest - Oldest</p>
+            <IconBarsArrowDown class="ml-2 h-5 w-5" />
           </div>
-        </GenericButtonMini>
+        </BaseButtonMini>
       </div>
     </div>
 
-    <GenericCard>
+    <BaseCard>
       <!-- Skeleton results -->
       <ul v-if="fetchInProgress" class="divide-y divide-gray-200">
-        <SkeleListItem v-for="n in 10" :key="n" />
+        <BaseSkeleListItem v-for="n in 10" :key="n" />
       </ul>
       <!-- Real results -->
       <ul v-else class="divide-y divide-gray-200">
@@ -59,7 +61,7 @@
           </NuxtLink>
         </div>
       </ul>
-      <GenericPaginator
+      <BasePaginator
         class="border-t border-gray-200 bg-white"
         :page="page"
         :size="size"
@@ -68,26 +70,48 @@
         @prev="page--"
         @jump="page = $event"
       />
-    </GenericCard>
+    </BaseCard>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import { MessageSchema, OrderBy } from "@ukkidney/ukrdc-axios-ts";
-import { nowString } from "@/helpers/utils/dateUtils";
-import usePagination from "~/helpers/query/usePagination";
-import useDateRange from "~/helpers/query/useDateRange";
 
-import usePermissions from "~/helpers/usePermissions";
-import useFacilities from "~/helpers/useFacilities";
-import useQuery from "~/helpers/query/useQuery";
-import useSortBy from "~/helpers/query/useSortBy";
-
-import useApi from "~/helpers/useApi";
+import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCheckbox from "~/components/base/BaseCheckbox.vue";
+import BaseDateRange from "~/components/base/BaseDateRange.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
+import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
+import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+import BaseTextBoxMini from "~/components/base/BaseTextBoxMini.vue";
+import IconBarsArrowDown from "~/components/icons/hero/20/solid/IconBarsArrowDown.vue";
+import IconBarsArrowUp from "~/components/icons/hero/20/solid/IconBarsArrowUp.vue";
+import MessagesListItem from "~/components/MessagesListItem.vue";
+import useDateRange from "~/composables/query/useDateRange";
+import usePagination from "~/composables/query/usePagination";
+import useQuery from "~/composables/query/useQuery";
+import useSortBy from "~/composables/query/useSortBy";
+import useApi from "~/composables/useApi";
+import useFacilities from "~/composables/useFacilities";
+import usePermissions from "~/composables/usePermissions";
+import { nowString } from "~/helpers/dateUtils";
 
 export default defineComponent({
+  components: {
+    BaseButtonMini,
+    BaseCard,
+    BaseSkeleListItem,
+    BasePaginator,
+    BaseCheckbox,
+    BaseTextBoxMini,
+    BaseDateRange,
+    BaseSelectSearchable,
+    IconBarsArrowDown,
+    IconBarsArrowUp,
+    MessagesListItem,
+  },
   setup() {
     const { page, total, size } = usePagination();
     const { makeDateRange } = useDateRange();

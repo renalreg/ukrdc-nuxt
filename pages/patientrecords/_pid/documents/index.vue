@@ -1,16 +1,16 @@
 <template>
   <div class="sensitive">
-    <LoadingContainer :loading="!documents">
-      <TextP v-if="documents && documents.length <= 0" class="text-center">No documents on record</TextP>
-      <GenericCard v-else>
+    <BaseLoadingContainer :loading="!documents">
+      <p v-if="documents && documents.length <= 0" class="text-center">No documents on record</p>
+      <BaseCard v-else>
         <ul class="divide-y divide-gray-200">
           <div v-for="item in documents" :key="item.id" :item="item" class="hover:bg-gray-50">
             <NuxtLink :to="`/patientrecords/${$route.params.pid}/documents/${item.id}`">
-              <PatientrecordsDocumentListItem :item="item" />
+              <PatientRecordDocumentListItem :item="item" />
             </NuxtLink>
           </div>
         </ul>
-        <GenericPaginator
+        <BasePaginator
           v-if="documents && documents.length > 0"
           class="border-t border-gray-200 bg-white"
           :page="page"
@@ -20,24 +20,31 @@
           @prev="page--"
           @jump="page = $event"
         />
-      </GenericCard>
-    </LoadingContainer>
+      </BaseCard>
+    </BaseLoadingContainer>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import { DocumentSummarySchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
-import { formatDate } from "@/helpers/utils/dateUtils";
-
-import usePagination from "~/helpers/query/usePagination";
-import useDateRange from "~/helpers/query/useDateRange";
-
-import useApi from "~/helpers/useApi";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
+import PatientRecordDocumentListItem from "~/components/PatientRecordDocumentListItem.vue";
+import useDateRange from "~/composables/query/useDateRange";
+import usePagination from "~/composables/query/usePagination";
+import useApi from "~/composables/useApi";
+import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseLoadingContainer,
+    BasePaginator,
+    PatientRecordDocumentListItem,
+  },
   props: {
     record: {
       type: Object as () => PatientRecordSchema,

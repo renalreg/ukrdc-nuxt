@@ -1,8 +1,8 @@
 <template>
   <div>
-    <TextH1 class="mb-4">Support</TextH1>
-    <TextH3>UK Renal Registry users</TextH3>
-    <TextP>
+    <h1 class="mb-4">Support</h1>
+    <h3>UK Renal Registry users</h3>
+    <p>
       Please use the
       <a
         class="font-medium text-indigo-600 hover:text-indigo-500"
@@ -11,58 +11,58 @@
         >Jira issue tracker</a
       >
       to report issues with this application.
-    </TextP>
-    <TextP>Where possible, please include the configuration report shown below.</TextP>
+    </p>
+    <p>Where possible, please include the configuration report shown below.</p>
 
-    <TextH3 class="mt-2">External users</TextH3>
-    <TextP>Support lines for external users are yet to be confirmed. </TextP>
+    <h3 class="mt-2">External users</h3>
+    <p>Support lines for external users are yet to be confirmed.</p>
 
-    <TextH2 class="my-4">System Configuration</TextH2>
+    <h2 class="my-4">System Configuration</h2>
     <div class="mb-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
-      <GenericCard>
-        <GenericCardHeader>
-          <TextH2>Client</TextH2>
-        </GenericCardHeader>
-        <GenericCardDl>
-          <GenericCardDi>
-            <GenericCardDt>Environment</GenericCardDt>
-            <GenericCardDd>{{ clientInfo.deploymentEnv }}</GenericCardDd>
-          </GenericCardDi>
-          <GenericCardDi>
-            <GenericCardDt>Version Reference</GenericCardDt>
-            <GenericCardDd>{{ clientInfo.githubRef }}</GenericCardDd>
-          </GenericCardDi>
-          <GenericCardDi>
-            <GenericCardDt>Version Hash</GenericCardDt>
-            <GenericCardDd>{{ clientInfo.githubSha }}</GenericCardDd>
-          </GenericCardDi>
-        </GenericCardDl>
-      </GenericCard>
+      <BaseCard>
+        <BaseCardHeader>
+          <h2>Client</h2>
+        </BaseCardHeader>
+        <BaseCardDescriptionList>
+          <BaseCardDescriptionItem>
+            <dt>Environment</dt>
+            <dd>{{ clientInfo.deploymentEnv }}</dd>
+          </BaseCardDescriptionItem>
+          <BaseCardDescriptionItem>
+            <dt>Version Reference</dt>
+            <dd>{{ clientInfo.githubRef }}</dd>
+          </BaseCardDescriptionItem>
+          <BaseCardDescriptionItem>
+            <dt>Version Hash</dt>
+            <dd>{{ clientInfo.githubSha }}</dd>
+          </BaseCardDescriptionItem>
+        </BaseCardDescriptionList>
+      </BaseCard>
 
-      <GenericCard>
-        <GenericCardHeader>
-          <TextH2>Server</TextH2>
-        </GenericCardHeader>
-        <GenericCardDl>
-          <GenericCardDi>
-            <GenericCardDt>Environment</GenericCardDt>
-            <GenericCardDd v-if="serverInfo">{{ serverInfo.deploymentEnv }}</GenericCardDd>
-            <SkeleText v-else class="mb-2 h-6 w-3/4" />
-          </GenericCardDi>
-          <GenericCardDi>
-            <GenericCardDt>Version Reference</GenericCardDt>
-            <GenericCardDd v-if="serverInfo">{{ serverInfo.githubRef }}</GenericCardDd>
-            <SkeleText v-else class="mb-2 h-6 w-3/4" />
-          </GenericCardDi>
-          <GenericCardDi>
-            <GenericCardDt>Version Hash</GenericCardDt>
-            <GenericCardDd v-if="serverInfo">{{ serverInfo.githubSha }}</GenericCardDd>
-            <SkeleText v-else class="mb-2 h-6 w-3/4" />
-          </GenericCardDi>
-        </GenericCardDl>
-      </GenericCard>
+      <BaseCard>
+        <BaseCardHeader>
+          <h2>Server</h2>
+        </BaseCardHeader>
+        <BaseCardDescriptionList>
+          <BaseCardDescriptionItem>
+            <dt>Environment</dt>
+            <dd v-if="serverInfo">{{ serverInfo.deploymentEnv }}</dd>
+            <BaseSkeleText v-else class="mb-2 h-6 w-3/4" />
+          </BaseCardDescriptionItem>
+          <BaseCardDescriptionItem>
+            <dt>Version Reference</dt>
+            <dd v-if="serverInfo">{{ serverInfo.githubRef }}</dd>
+            <BaseSkeleText v-else class="mb-2 h-6 w-3/4" />
+          </BaseCardDescriptionItem>
+          <BaseCardDescriptionItem>
+            <dt>Version Hash</dt>
+            <dd v-if="serverInfo">{{ serverInfo.githubSha }}</dd>
+            <BaseSkeleText v-else class="mb-2 h-6 w-3/4" />
+          </BaseCardDescriptionItem>
+        </BaseCardDescriptionList>
+      </BaseCard>
     </div>
-    <GenericButton @click="copyConfigReport">Copy Configuration Report</GenericButton>
+    <BaseButton @click="copyConfigReport">Copy Configuration Report</BaseButton>
   </div>
 </template>
 
@@ -70,9 +70,23 @@
 import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
 import { SystemInfoSchema } from "@ukkidney/ukrdc-axios-ts";
 
-import useApi from "~/helpers/useApi";
+import BaseButton from "~/components/base/BaseButton.vue";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardDescriptionItem from "~/components/base/BaseCardDescriptionItem.vue";
+import BaseCardDescriptionList from "~/components/base/BaseCardDescriptionList.vue";
+import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
+import useApi from "~/composables/useApi";
 
 export default defineComponent({
+  components: {
+    BaseButton,
+    BaseCard,
+    BaseCardHeader,
+    BaseSkeleText,
+    BaseCardDescriptionList,
+    BaseCardDescriptionItem,
+  },
   setup() {
     const { $config, $toast } = useContext();
     const { systemInfoApi } = useApi();

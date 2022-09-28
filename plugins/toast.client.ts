@@ -5,8 +5,9 @@ allowing programatic toast creation.
 
 import { Plugin } from "@nuxt/types";
 import Vue from "vue";
-import { spawn } from "@/helpers/utils/domUtils";
-import Toast from "~/components/generic/Toast.vue";
+
+import BaseToast from "~/components/base/BaseToast.vue";
+import { spawn } from "~/helpers/domUtils";
 
 const containerClasses = [
   "z-40",
@@ -27,22 +28,22 @@ const containerClasses = [
 const toastProgrammatic = {
   show(props: object | string): Vue {
     if (typeof props === "string") props = { message: props };
-    return spawn("toasts", props, Toast, Vue);
+    return spawn("toasts", props, BaseToast, Vue);
   },
   success(message: string) {
-    return spawn("toasts", { type: "success", message }, Toast, Vue);
+    return spawn("toasts", { type: "success", message }, BaseToast, Vue);
   },
   info(message: string) {
-    return spawn("toasts", { type: "info", message }, Toast, Vue);
+    return spawn("toasts", { type: "info", message }, BaseToast, Vue);
   },
   danger(message: string) {
-    return spawn("toasts", { type: "danger", message }, Toast, Vue);
+    return spawn("toasts", { type: "danger", message }, BaseToast, Vue);
   },
   warning(message: string) {
-    return spawn("toasts", { type: "warning", message }, Toast, Vue);
+    return spawn("toasts", { type: "warning", message }, BaseToast, Vue);
   },
   denied(message: string) {
-    return spawn("toasts", { type: "denied", message }, Toast, Vue);
+    return spawn("toasts", { type: "denied", message }, BaseToast, Vue);
   },
 };
 

@@ -1,51 +1,51 @@
 <template>
   <div>
     <div class="mx-auto mb-4 max-w-7xl">
-      <TextH1>Multiple UKRDC IDs</TextH1>
-      <TextP>Results of a scan that detect patients with more than one UKRDC Master Record.</TextP>
+      <h1>Multiple UKRDC IDs</h1>
+      <p>Results of a scan that detect patients with more than one UKRDC Master Record.</p>
     </div>
 
     <!-- Description list -->
-    <GenericCard class="mb-6">
-      <GenericCardContent>
-        <GenericDlGrid>
-          <GenericDlGridItem>
-            <TextDt>Patients with Multiple UKRDC IDs</TextDt>
-            <TextDd v-if="total">
+    <BaseCard class="mb-6">
+      <BaseCardContent>
+        <BaseDescriptionListGrid>
+          <BaseDescriptionListGridItem>
+            <dt>Patients with Multiple UKRDC IDs</dt>
+            <dd v-if="total">
               {{ total }}
-            </TextDd>
-            <SkeleText v-else class="mt-2 h-6 w-8" />
-          </GenericDlGridItem>
+            </dd>
+            <BaseSkeleText v-else class="mt-2 h-6 w-8" />
+          </BaseDescriptionListGridItem>
 
-          <GenericDlGridItem>
-            <TextDt class="flex items-center gap-1">
+          <BaseDescriptionListGridItem>
+            <dt class="flex items-center gap-1">
               <span class="inline">Last Full Scan</span>
-              <GenericInfoIcon class="inline">
+              <BaseInfoTooltip class="inline">
                 <p>
                   New results are identified weekly by a <b>Full Scan</b>, but existing results are re-checked hourly,
                   see <b>Last checked</b>.
                 </p>
                 <p>Resolved items will remain in this view until the next check.</p>
-              </GenericInfoIcon>
-            </TextDt>
-            <TextDd v-if="lastRunTime">
+              </BaseInfoTooltip>
+            </dt>
+            <dd v-if="lastRunTime">
               {{ formatDate(lastRunTime, true) }}
-            </TextDd>
-            <SkeleText v-else class="mt-2 h-6 w-1/4" />
-          </GenericDlGridItem>
-        </GenericDlGrid>
-      </GenericCardContent>
-    </GenericCard>
+            </dd>
+            <BaseSkeleText v-else class="mt-2 h-6 w-1/4" />
+          </BaseDescriptionListGridItem>
+        </BaseDescriptionListGrid>
+      </BaseCardContent>
+    </BaseCard>
 
     <div v-if="groups">
       <div v-for="group in groups" :key="`group-${group.groupId}`">
-        <GenericCard class="mb-4">
-          <empiMultipleIDItem :group="group" :fetch-in-progress="fetchInProgress" />
-        </GenericCard>
+        <BaseCard class="mb-4">
+          <EMPIMultipleIDItem :group="group" :fetch-in-progress="fetchInProgress" />
+        </BaseCard>
       </div>
 
-      <GenericCard>
-        <GenericPaginator
+      <BaseCard>
+        <BasePaginator
           class="bg-white"
           :page="page"
           :size="size"
@@ -54,21 +54,41 @@
           @prev="page--"
           @jump="page = $event"
         />
-      </GenericCard>
+      </BaseCard>
     </div>
-    <LoadingIndicator v-else></LoadingIndicator>
+    <BaseLoadingIndicator v-else></BaseLoadingIndicator>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
 import { MultipleUKRDCIDGroup } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/utils/dateUtils";
 
-import usePagination from "~/helpers/query/usePagination";
-import useApi from "~/helpers/useApi";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardContent from "~/components/base/BaseCardContent.vue";
+import BaseDescriptionListGrid from "~/components/base/BaseDescriptionListGrid.vue";
+import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGridItem.vue";
+import BaseInfoTooltip from "~/components/base/BaseInfoTooltip.vue";
+import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
+import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
+import EMPIMultipleIDItem from "~/components/EMPIMultipleIDItem.vue";
+import usePagination from "~/composables/query/usePagination";
+import useApi from "~/composables/useApi";
+import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseCardContent,
+    BaseLoadingIndicator,
+    BaseSkeleText,
+    BaseDescriptionListGrid,
+    BaseDescriptionListGridItem,
+    BasePaginator,
+    BaseInfoTooltip,
+    EMPIMultipleIDItem,
+  },
   setup() {
     const { page, total, size } = usePagination();
     const { adminApi } = useApi();

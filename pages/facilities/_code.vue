@@ -4,15 +4,15 @@
     <DashboardAlerts v-if="!hasMultipleFacilities" class="mb-4" />
 
     <div class="mb-2">
-      <TextH1 v-if="facility"> {{ facility.description }} </TextH1>
-      <SkeleText v-else class="mb-2 h-8 w-1/4" />
-      <TextL1 v-if="facility">
+      <h1 v-if="facility">{{ facility.description }}</h1>
+      <BaseSkeleText v-else class="mb-2 h-8 w-1/4" />
+      <h5 v-if="facility">
         {{ facility.id }}
-      </TextL1>
-      <SkeleText v-else class="h-4 w-1/2" />
+      </h5>
+      <BaseSkeleText v-else class="h-4 w-1/2" />
     </div>
 
-    <div class="mb-6"><GenericTabsNavigation :tabs="tabs" /></div>
+    <div class="mb-6"><BaseTabsNavigation :tabs="tabs" /></div>
 
     <NuxtChild v-if="facility && extracts" :facility="facility" :extracts="extracts" />
   </div>
@@ -20,15 +20,20 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
-
 import { FacilityDetailsSchema, FacilityExtractsSchema } from "@ukkidney/ukrdc-axios-ts";
-import usePermissions from "~/helpers/usePermissions";
 
+import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
+import BaseTabsNavigation from "~/components/base/BaseTabsNavigation.vue";
+import useApi from "~/composables/useApi";
+import usePermissions from "~/composables/usePermissions";
+import { insertIf } from "~/helpers/arrayUtils";
 import { TabItem } from "~/interfaces/tabs";
-import useApi from "~/helpers/useApi";
-import { insertIf } from "~/helpers/utils/arrayUtils";
 
 export default defineComponent({
+  components: {
+    BaseSkeleText,
+    BaseTabsNavigation,
+  },
   setup() {
     const route = useRoute();
     const { hasMultipleFacilities } = usePermissions();

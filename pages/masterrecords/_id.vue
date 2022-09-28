@@ -3,7 +3,7 @@
     <!-- Issues alert -->
     <div v-if="record && stats && stats.ukrdcids > 1">
       <NuxtLink :to="`/masterrecords/${record.id}/issues`">
-        <GenericAlertError
+        <BaseAlertError
           class="mb-4"
           :message="`${stats.ukrdcids} UKRDC IDs found for this patient. Click for details.`"
         />
@@ -12,16 +12,19 @@
 
     <div v-if="record && issueMessage">
       <NuxtLink :to="`/masterrecords/${record.id}/issues`">
-        <GenericAlertWarning class="mb-4" :message="issueMessage" />
+        <BaseAlertWarning class="mb-4" :message="issueMessage" />
       </NuxtLink>
     </div>
 
     <div v-if="record" class="mb-2">
-      <TextNameH1 :forename="record.givenname" :surname="record.surname" />
-      <TextL1> {{ record.nationalidType }} record </TextL1>
+      <span>
+        <h1 class="sensitive inline capitalize">{{ record.givenname?.toLowerCase() }}</h1>
+        <h1 class="sensitive inline capitalize italic">{{ record.surname?.toLowerCase() }}</h1>
+      </span>
+      <h5>{{ record.nationalidType }} record</h5>
     </div>
 
-    <div class="mb-6"><GenericTabsNavigation :tabs="tabs" /></div>
+    <div class="mb-6"><BaseTabsNavigation :tabs="tabs" /></div>
 
     <NuxtChild v-if="record" :record="record" :stats="stats" />
   </div>
@@ -29,17 +32,24 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
-
 import { MasterRecordSchema, MasterRecordStatisticsSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/utils/dateUtils";
-import { formatGender } from "@/helpers/utils/codeUtils";
-import { insertIf } from "@/helpers/utils/arrayUtils";
 
+import BaseAlertError from "~/components/base/BaseAlertError.vue";
+import BaseAlertWarning from "~/components/base/BaseAlertWarning.vue";
+import BaseTabsNavigation from "~/components/base/BaseTabsNavigation.vue";
+import useApi from "~/composables/useApi";
+import usePermissions from "~/composables/usePermissions";
+import { insertIf } from "~/helpers/arrayUtils";
+import { formatGender } from "~/helpers/codeUtils";
+import { formatDate } from "~/helpers/dateUtils";
 import { TabItem } from "~/interfaces/tabs";
-import usePermissions from "~/helpers/usePermissions";
-import useApi from "~/helpers/useApi";
 
 export default defineComponent({
+  components: {
+    BaseTabsNavigation,
+    BaseAlertError,
+    BaseAlertWarning,
+  },
   setup() {
     const route = useRoute();
     const { masterRecordsApi } = useApi();

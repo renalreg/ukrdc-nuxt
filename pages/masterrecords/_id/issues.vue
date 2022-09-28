@@ -1,33 +1,33 @@
 <template>
   <div>
     <div v-if="stats && stats.errors == 0 && stats.workitems == 0 && stats.ukrdcids == 1" class="text-center">
-      <TextP>No issues on record</TextP>
+      <p>No issues on record</p>
     </div>
 
     <!-- Multiple UKRDC IDs -->
-    <GenericCard v-if="ukrdcIdGroup" class="mb-4">
-      <empiMultipleIDItem :group="ukrdcIdGroup" heading="Multiple UKRDC IDs" />
-    </GenericCard>
+    <BaseCard v-if="ukrdcIdGroup" class="mb-4">
+      <EMPIMultipleIDItem :group="ukrdcIdGroup" heading="Multiple UKRDC IDs" />
+    </BaseCard>
 
     <!-- Related Work Items card -->
-    <GenericCard v-if="workItems && workItems.length > 0" class="mt-4">
-      <GenericCardHeader>
-        <TextH2> Open Work Items </TextH2>
-      </GenericCardHeader>
+    <BaseCard v-if="workItems && workItems.length > 0" class="mt-4">
+      <BaseCardHeader>
+        <h2>Open Work Items</h2>
+      </BaseCardHeader>
       <ul class="divide-y divide-gray-200">
         <div v-for="item in workItems" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/workitems/${item.id}`">
-            <workitemsListItem :item="item" />
+            <WorkItemsListItem :item="item" />
           </NuxtLink>
         </div>
       </ul>
-    </GenericCard>
+    </BaseCard>
 
     <!-- Related errors card -->
-    <GenericCard v-if="relatedErrors && relatedErrors.length > 0" class="mt-4">
-      <GenericCardHeader>
-        <TextH2> Record Errors </TextH2>
-      </GenericCardHeader>
+    <BaseCard v-if="relatedErrors && relatedErrors.length > 0" class="mt-4">
+      <BaseCardHeader>
+        <h2>Record Errors</h2>
+      </BaseCardHeader>
       <ul class="divide-y divide-gray-200">
         <div v-for="item in relatedErrors" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/messages/${item.id}`">
@@ -35,7 +35,7 @@
           </NuxtLink>
         </div>
       </ul>
-      <GenericPaginator
+      <BasePaginator
         class="border-t border-gray-200 bg-white"
         :jump-to-top="false"
         :page="relatedErrorsPage"
@@ -45,36 +45,40 @@
         @prev="relatedErrorsPage--"
         @jump="relatedErrorsPage = $event"
       />
-    </GenericCard>
+    </BaseCard>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-
 import {
   MasterRecordSchema,
   MasterRecordStatisticsSchema,
   MessageSchema,
+  MultipleUKRDCIDGroup,
   WorkItemSchema,
 } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/utils/dateUtils";
-import { formatGender } from "@/helpers/utils/codeUtils";
 
-import usePermissions from "~/helpers/usePermissions";
-import useApi from "~/helpers/useApi";
-
-interface MultipleUKRDCIDsGroupItem {
-  lastUpdated: string | null;
-  masterRecord: MasterRecordSchema;
-}
-
-export interface MultipleUKRDCIDsGroup {
-  groupId: number | null;
-  records: MultipleUKRDCIDsGroupItem[];
-}
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
+import EMPIMultipleIDItem from "~/components/EMPIMultipleIDItem.vue";
+import MessagesListItem from "~/components/MessagesListItem.vue";
+import WorkItemsListItem from "~/components/WorkItemsListItem.vue";
+import useApi from "~/composables/useApi";
+import usePermissions from "~/composables/usePermissions";
+import { formatGender } from "~/helpers/codeUtils";
+import { formatDate, nowString } from "~/helpers/dateUtils";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseCardHeader,
+    BasePaginator,
+    MessagesListItem,
+    EMPIMultipleIDItem,
+    WorkItemsListItem,
+  },
   props: {
     record: {
       type: Object as () => MasterRecordSchema,
@@ -98,7 +102,7 @@ export default defineComponent({
     const relatedErrorsSize = ref(5);
     const relatedErrorsTotal = ref(0);
 
-    const ukrdcIdGroup = ref<MultipleUKRDCIDsGroup>();
+    const ukrdcIdGroup = ref<MultipleUKRDCIDGroup>();
     const hasMultipleUKRDCIDs = ref(false);
 
     // Data fetching
@@ -149,13 +153,13 @@ export default defineComponent({
             // Create a "synthetic" MultipleUKRDCIDsGroup
             // We do this so that we can re-use the component used in the EMPI Data Health page
             const multipleIdsGroup = {
-              groupId: null,
+              groupId: 0,
               records: [],
-            } as MultipleUKRDCIDsGroup;
+            } as MultipleUKRDCIDGroup;
 
             for (const record of response.data) {
               multipleIdsGroup.records.push({
-                lastUpdated: null,
+                lastUpdated: nowString(),
                 masterRecord: record,
               });
             }

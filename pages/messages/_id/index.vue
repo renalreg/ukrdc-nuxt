@@ -1,96 +1,96 @@
 <template>
   <div>
     <!-- Header card -->
-    <GenericCard class="mb-4">
-      <GenericCardContent>
-        <GenericDlGrid>
-          <GenericDlGridItem>
-            <TextDt>Status</TextDt>
-            <TextDd v-if="message">
-              <MessagesStatusBadge class="mr-2 flex-shrink" :message="message" />
-            </TextDd>
-            <SkeleText v-else class="h-6 w-full" />
-          </GenericDlGridItem>
-          <GenericDlGridItem>
-            <TextDt>Received</TextDt>
-            <TextDd v-if="message"> {{ message.received ? formatDate(message.received) : "Unknown" }}</TextDd>
-            <SkeleText v-else class="h-6 w-full" />
-          </GenericDlGridItem>
-          <GenericDlGridItem>
-            <TextDt>Facility</TextDt>
-            <LinkSendingFacility v-if="message" :code="message.facility" />
-            <SkeleText v-else class="h-6 w-full" />
-          </GenericDlGridItem>
+    <BaseCard class="mb-4">
+      <BaseCardContent>
+        <BaseDescriptionListGrid>
+          <BaseDescriptionListGridItem>
+            <dt>Status</dt>
+            <dd v-if="message">
+              <BadgeMessageStatus class="mr-2 flex-shrink" :message="message" />
+            </dd>
+            <BaseSkeleText v-else class="h-6 w-full" />
+          </BaseDescriptionListGridItem>
+          <BaseDescriptionListGridItem>
+            <dt>Received</dt>
+            <dd v-if="message">{{ message.received ? formatDate(message.received) : "Unknown" }}</dd>
+            <BaseSkeleText v-else class="h-6 w-full" />
+          </BaseDescriptionListGridItem>
+          <BaseDescriptionListGridItem>
+            <dt>Facility</dt>
+            <SendingFacilityLink v-if="message" :code="message.facility" />
+            <BaseSkeleText v-else class="h-6 w-full" />
+          </BaseDescriptionListGridItem>
 
-          <GenericDlGridItem>
-            <TextDt>Channel</TextDt>
-            <TextDd v-if="message" class="flex items-center gap-1">
+          <BaseDescriptionListGridItem>
+            <dt>Channel</dt>
+            <dd v-if="message" class="flex items-center gap-1">
               <span>{{ message.mirthChannel ? message.mirthChannel : message.mirthChannelId }}</span>
-              <GenericInfoIcon class="inline">
+              <BaseInfoTooltip class="inline">
                 <p>This is the internal UKRDC channel responsible for processing this message.</p>
                 <p>The channel may be important when debugging unexpected errors.</p>
-              </GenericInfoIcon>
-            </TextDd>
-            <SkeleText v-else class="h-6 w-full" />
-          </GenericDlGridItem>
-        </GenericDlGrid>
-      </GenericCardContent>
-    </GenericCard>
+              </BaseInfoTooltip>
+            </dd>
+            <BaseSkeleText v-else class="h-6 w-full" />
+          </BaseDescriptionListGridItem>
+        </BaseDescriptionListGrid>
+      </BaseCardContent>
+    </BaseCard>
 
-    <GenericCard v-if="message" class="mb-4">
-      <GenericCardHeader>
-        <TextH2>Files</TextH2>
-      </GenericCardHeader>
-      <GenericCardContent>
-        <GenericCardMini class="w-2/3">
-          <GenericAttachment :filename="message.filename || `${message.facility}-${message.id}.txt`">
+    <BaseCard v-if="message" class="mb-4">
+      <BaseCardHeader>
+        <h2>Files</h2>
+      </BaseCardHeader>
+      <BaseCardContent>
+        <BaseCard class="w-2/3">
+          <BaseAttachment :filename="message.filename || `${message.facility}-${message.id}.txt`">
             <NuxtLink :to="`/messages/${message.id}/source`" class="font-medium"> View </NuxtLink>
-            <TextLink @click="downloadMessageSource"> Download </TextLink>
-          </GenericAttachment>
-        </GenericCardMini>
-      </GenericCardContent>
-    </GenericCard>
+            <BaseButtonLink class="font-medium" @click="downloadMessageSource"> Download </BaseButtonLink>
+          </BaseAttachment>
+        </BaseCard>
+      </BaseCardContent>
+    </BaseCard>
 
-    <GenericCard v-if="message && message.error" class="mb-4">
-      <GenericCardHeader>
-        <TextH2>Error message</TextH2>
-      </GenericCardHeader>
-      <GenericCardContent>
+    <BaseCard v-if="message && message.error" class="mb-4">
+      <BaseCardHeader>
+        <h2>Error message</h2>
+      </BaseCardHeader>
+      <BaseCardContent>
         <div class="whitespace-pre-wrap font-mono">
           {{ messageText }}
         </div>
-      </GenericCardContent>
-    </GenericCard>
+      </BaseCardContent>
+    </BaseCard>
 
     <!-- Related Master Records card -->
-    <GenericCard v-if="masterRecords.length > 0" class="mt-4">
-      <GenericCardHeader>
-        <TextH2> Related Records </TextH2>
-      </GenericCardHeader>
+    <BaseCard v-if="masterRecords.length > 0" class="mt-4">
+      <BaseCardHeader>
+        <h2>Related Records</h2>
+      </BaseCardHeader>
       <ul class="divide-y divide-gray-200">
         <div v-for="item in masterRecords" :key="item.id" class="hover:bg-gray-50">
           <NuxtLink :to="`/masterrecords/${item.id}`">
-            <MasterrecordsListItem :item="item" />
+            <MasterRecordsListItem :item="item" />
           </NuxtLink>
         </div>
       </ul>
-    </GenericCard>
+    </BaseCard>
 
     <!-- Related Work Items card -->
-    <GenericCard v-if="workItems.length > 0" class="mt-4">
-      <GenericCardHeader>
-        <TextH2> Related Work Items </TextH2>
-      </GenericCardHeader>
+    <BaseCard v-if="workItems.length > 0" class="mt-4">
+      <BaseCardHeader>
+        <h2>Related Work Items</h2>
+      </BaseCardHeader>
       <ul class="divide-y divide-gray-200">
-        <workitemsListItem v-for="item in workItems" :key="item.id" :item="item" />
+        <WorkItemsListItem v-for="item in workItems" :key="item.id" :item="item" />
       </ul>
-    </GenericCard>
+    </BaseCard>
 
     <!-- Mirth Messages card -->
-    <GenericCard v-if="hasPermission('ukrdc:mirth:read')" class="mt-4">
-      <GenericCardHeader>
-        <TextH2> Mirth Messages </TextH2>
-      </GenericCardHeader>
+    <BaseCard v-if="hasPermission('ukrdc:mirth:read')" class="mt-4">
+      <BaseCardHeader>
+        <h2>Mirth Messages</h2>
+      </BaseCardHeader>
       <ul class="divide-y divide-gray-200">
         <li v-if="mirthMessage" class="hover:bg-gray-50">
           <NuxtLink :to="`/mirth/messages/${mirthMessage.channelId}/${mirthMessage.messageId}`">
@@ -98,24 +98,56 @@
           </NuxtLink>
         </li>
         <li v-else-if="mirthMessage === undefined">
-          <SkeleListItem />
+          <BaseSkeleListItem />
         </li>
       </ul>
-    </GenericCard>
+    </BaseCard>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
+import { ChannelMessageModel, MasterRecordSchema, MessageSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 
-import { MasterRecordSchema, MessageSchema, ChannelMessageModel, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "@/helpers/utils/dateUtils";
-import usePermissions from "~/helpers/usePermissions";
-import useApi from "~/helpers/useApi";
-import useSensitive from "~/helpers/useSensitive";
-import { saveAs } from "~/helpers/utils/fileUtils";
+import BadgeMessageStatus from "~/components/BadgeMessageStatus.vue";
+import BaseAttachment from "~/components/base/BaseAttachment.vue";
+import BaseButtonLink from "~/components/base/BaseButtonLink.vue";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardContent from "~/components/base/BaseCardContent.vue";
+import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+import BaseDescriptionListGrid from "~/components/base/BaseDescriptionListGrid.vue";
+import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGridItem.vue";
+import BaseInfoTooltip from "~/components/base/BaseInfoTooltip.vue";
+import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
+import MasterRecordsListItem from "~/components/MasterRecordsListItem.vue";
+import MirthMessageListItem from "~/components/MirthMessageListItem.vue";
+import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
+import WorkItemsListItem from "~/components/WorkItemsListItem.vue";
+import useApi from "~/composables/useApi";
+import usePermissions from "~/composables/usePermissions";
+import useSensitive from "~/composables/useSensitive";
+import { formatDate } from "~/helpers/dateUtils";
+import { saveAs } from "~/helpers/fileUtils";
 
 export default defineComponent({
+  components: {
+    BaseCard,
+    BaseCardContent,
+    BaseCardHeader,
+    BaseSkeleText,
+    BaseSkeleListItem,
+    BaseDescriptionListGrid,
+    BaseDescriptionListGridItem,
+    BaseButtonLink,
+    BaseAttachment,
+    BaseInfoTooltip,
+    SendingFacilityLink,
+    MasterRecordsListItem,
+    BadgeMessageStatus,
+    MirthMessageListItem,
+    WorkItemsListItem,
+  },
   props: {
     message: {
       type: Object as () => MessageSchema,

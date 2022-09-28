@@ -1,97 +1,84 @@
 <template>
   <div>
     <NuxtLink :to="`/facilities/${facility.id}/errors`">
-      <genericAlertError
+      <BaseAlertError
         v-if="(facility.statistics.patientsReceivingMessageError || 0) > 0"
         class="mb-4"
         :message="`${facility.statistics.patientsReceivingMessageError} patients are not receiving data due to errors in their incoming files. Click for details.`"
       >
-      </genericAlertError>
+      </BaseAlertError>
     </NuxtLink>
 
     <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
       <div class="col-span-1 flex flex-col gap-4 lg:col-span-2">
         <!-- Basic stats -->
         <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          <GenericCard>
+          <BaseCard>
             <div class="flex items-center p-4">
               <div class="flex-shrink-0">
-                <IconUsers />
+                <IconUsers class="text-gray-600" />
               </div>
               <div class="ml-5 w-0 flex-1">
-                <dl>
-                  <GenericCardDt>Total Records</GenericCardDt>
-                  <dd class="flex items-baseline">
-                    <TextHc class="flex-grow">{{ facility.statistics.totalPatients }}</TextHc>
-                    <NuxtLink
-                      class="hover:underline"
-                      :to="{ path: `/masterrecords/`, query: { facility: facility.id } }"
-                    >
-                      Show all records
-                    </NuxtLink>
-                  </dd>
-                </dl>
+                <h5>Total Records</h5>
+                <div class="flex items-baseline">
+                  <h1 class="flex-grow text-indigo-600">{{ facility.statistics.totalPatients }}</h1>
+                  <NuxtLink class="hover:underline" :to="{ path: `/masterrecords/`, query: { facility: facility.id } }">
+                    Show all records
+                  </NuxtLink>
+                </div>
               </div>
             </div>
             <div class="bg-gray-50 px-4 py-2 text-sm text-gray-500">
               Total records ever stored in the UKRDC for this facility
             </div>
-          </GenericCard>
+          </BaseCard>
 
-          <GenericCard>
+          <BaseCard>
             <div class="flex items-center p-4">
               <div class="flex-shrink-0">
-                <IconExclamation />
+                <IconExclamationTriangle class="text-gray-600" />
               </div>
               <div class="ml-5 w-0 flex-1">
-                <dl>
-                  <GenericCardDt>Active Failing Records</GenericCardDt>
-                  <dd class="flex items-baseline">
-                    <TextHc
-                      class="flex-grow"
-                      :class="
-                        (facility.statistics.patientsReceivingMessageError || 0) > 0 ? 'text-red-600' : 'text-green-700'
-                      "
-                    >
-                      {{ facility.statistics.patientsReceivingMessageError }}
-                    </TextHc>
-                    <NuxtLink class="hover:underline" :to="`/facilities/${facility.id}/errors`"> Show errors </NuxtLink>
-                  </dd>
-                </dl>
+                <h5>Active Failing Records</h5>
+                <div class="flex items-baseline">
+                  <h1
+                    class="flex-grow"
+                    :class="
+                      (facility.statistics.patientsReceivingMessageError || 0) > 0 ? 'text-red-600' : 'text-green-700'
+                    "
+                  >
+                    {{ facility.statistics.patientsReceivingMessageError }}
+                  </h1>
+                  <NuxtLink class="hover:underline" :to="`/facilities/${facility.id}/errors`"> Show errors </NuxtLink>
+                </div>
               </div>
             </div>
             <div class="bg-gray-50 px-4 py-2 text-sm text-gray-500">Active records currently failing due to errors</div>
-          </GenericCard>
+          </BaseCard>
         </div>
 
         <!-- Error history -->
-        <GenericCard>
-          <GenericCardHeader>
-            <TextH2> Error History </TextH2>
-          </GenericCardHeader>
-          <FacilitiesErrorsHistoryPlot :facility="facility" />
-        </GenericCard>
+        <BaseCard>
+          <BaseCardHeader>
+            <h2>Error History</h2>
+          </BaseCardHeader>
+          <FacilityErrorsHistoryPlot :facility="facility" />
+        </BaseCard>
 
         <!-- Record types -->
 
-        <GenericTable>
+        <BaseTable>
           <thead class="bg-gray-50">
             <tr>
-              <th scope="col" class="px-4 py-3 text-left">
-                <TextTh>Feed Type</TextTh>
-              </th>
-              <th scope="col" class="hidden px-4 py-3 text-left md:table-cell">
-                <TextTh>Status</TextTh>
-              </th>
-              <th scope="col" class="px-4 py-3 text-left">
-                <TextTh>Total Records</TextTh>
-              </th>
+              <th scope="col" class="px-4 py-3 text-left">Record Type</th>
+              <th scope="col" class="hidden px-4 py-3 text-left md:table-cell">Status</th>
+              <th scope="col" class="px-4 py-3 text-left">Total Records</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200 bg-white">
             <tr v-for="item in feedTableItems" :key="item.key">
-              <GenericTableCell class="font-medium text-gray-900">{{ item.name }}</GenericTableCell>
-              <GenericTableCell class="hidden md:table-cell">
+              <BaseTableCell class="font-medium text-gray-900">{{ item.name }}</BaseTableCell>
+              <BaseTableCell class="hidden md:table-cell">
                 <div v-if="item.historic" class="flex items-center">
                   <IconCircle v-if="item.historic" class="inline text-orange-400" />
                   <p>Historic</p>
@@ -100,98 +87,92 @@
                   <IconCircle class="inline" :class="extracts[item.key] > 0 ? 'text-green-600' : 'text-red-700'" />
                   <p>{{ extracts[item.key] > 0 ? "Enabled" : "Unused" }}</p>
                 </div>
-              </GenericTableCell>
-              <GenericTableCell>{{ extracts[item.key] > 0 ? extracts[item.key] : "" }}</GenericTableCell>
+              </BaseTableCell>
+              <BaseTableCell>{{ extracts[item.key] > 0 ? extracts[item.key] : "" }}</BaseTableCell>
             </tr>
           </tbody>
-        </GenericTable>
+        </BaseTable>
       </div>
 
       <!-- Alerts -->
       <div class="col-span-1 flex flex-col gap-4">
-        <GenericCard>
-          <GenericCardHeader>
-            <TextH2>Alerts</TextH2>
-          </GenericCardHeader>
+        <BaseCard>
+          <BaseCardHeader>
+            <h2>Alerts</h2>
+          </BaseCardHeader>
 
-          <GenericCardContent>
+          <BaseCardContent>
             <ul role="list" class="-my-5 divide-y divide-gray-200">
               <li v-if="hasPermission('ukrdc:messages:read')" class="py-5">
                 <div v-if="!facility.lastMessageReceivedAt" class="flex items-center">
                   <IconCircle class="inline text-red-600" />
-                  <TextH3> Data flow inactive </TextH3>
+                  <h3>Data flow inactive</h3>
                 </div>
                 <div v-else-if="facilityLastMessageOver48(facility)" class="flex items-center">
                   <IconCircle class="inline text-orange-400" />
-                  <TextH3> Data flow warning </TextH3>
+                  <h3>Data flow warning</h3>
                 </div>
                 <div v-else class="flex items-center">
                   <IconCircle class="inline text-green-600" />
-                  <TextH3> Data flow active </TextH3>
+                  <h3>Data flow active</h3>
                 </div>
-                <TextP class="mt-1">
+                <p class="mt-1">
                   {{ latestDataInfo }}
-                </TextP>
+                </p>
               </li>
               <li v-if="extracts && extracts.ukrdc <= 0" class="py-5">
                 <div class="flex items-center">
                   <IconCircle class="inline text-red-600" />
-                  <TextH3> Statistics unavailable </TextH3>
+                  <h3>Statistics unavailable</h3>
                 </div>
-                <TextP class="mt-1">
-                  Statistics are based on UKRDC data, and PatientView records are not included.
-                </TextP>
-                <TextP class="mt-1">
-                  You currently have no UKRDC records, and so statistics are currently unavailable.
-                </TextP>
-                <TextP class="mt-1">
+                <p class="mt-1">Statistics are based on UKRDC data, and PatientView records are not included.</p>
+                <p class="mt-1">You currently have no UKRDC records, and so statistics are currently unavailable.</p>
+                <p class="mt-1">
                   For more information, please refer to our
                   <a href="https://renalregistry.atlassian.net/wiki/spaces/UD/overview" target="_blank">
                     UKRDC feed documentation.
                   </a>
-                </TextP>
+                </p>
               </li>
               <li v-if="extracts && extracts.ukrdc > 0" class="py-5">
                 <div class="flex items-center">
                   <IconCircle class="inline text-indigo-600" />
-                  <TextH3> UKRDC statistics </TextH3>
+                  <h3>UKRDC statistics</h3>
                 </div>
-                <TextP class="mt-1">
-                  Statistics are based on UKRDC data, and PatientView records are not included.
-                </TextP>
-                <TextP class="mt-1"> You currently have {{ extracts.ukrdc }} UKRDC records. </TextP>
+                <p class="mt-1">Statistics are based on UKRDC data, and PatientView records are not included.</p>
+                <p class="mt-1">You currently have {{ extracts.ukrdc }} UKRDC records.</p>
               </li>
             </ul>
-          </GenericCardContent>
-        </GenericCard>
+          </BaseCardContent>
+        </BaseCard>
 
-        <GenericCard>
-          <GenericCardHeader>
-            <TextH2>Data Flow</TextH2>
-          </GenericCardHeader>
+        <BaseCard>
+          <BaseCardHeader>
+            <h2>Data Flow</h2>
+          </BaseCardHeader>
 
-          <GenericCardContent v-if="facility && facility.dataFlow">
+          <BaseCardContent v-if="facility && facility.dataFlow">
             <ul role="list" class="-my-5 divide-y divide-gray-200">
               <li class="py-5">
                 <div class="flex items-center">
                   <IconCircle v-if="facility.dataFlow.pkbOut" class="inline text-green-600" />
                   <IconCircle v-else class="inline text-red-600" />
-                  <TextH3> PKB Outbound </TextH3>
+                  <h3>PKB Outbound</h3>
                 </div>
-                <TextP class="mt-1">
+                <p class="mt-1">
                   Data sending to
                   <a class="hover:underline" href="https://patientsknowbest.com/" target="blank">
                     Patients Know Best
                   </a>
                   is {{ facility.dataFlow.pkbOut ? "enabled" : "disabled" }}.
-                </TextP>
-                <TextP v-if="facility.dataFlow.pkbOut">
+                </p>
+                <p v-if="facility.dataFlow.pkbOut">
                   Data will only be sent to PKB for patients with a PKB membership record.
-                </TextP>
+                </p>
               </li>
             </ul>
-          </GenericCardContent>
-        </GenericCard>
+          </BaseCardContent>
+        </BaseCard>
       </div>
     </div>
   </div>
@@ -200,12 +181,35 @@
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { FacilityDetailsSchema, FacilityExtractsSchema } from "@ukkidney/ukrdc-axios-ts";
-import { formatDate } from "~/helpers/utils/dateUtils";
-import { facilityLastMessageOver48 } from "@/helpers/utils/facilityUtils";
-import { allStatuses } from "~/helpers/utils/messageUtils";
-import usePermissions from "~/helpers/usePermissions";
+
+import BaseAlertError from "~/components/base/BaseAlertError.vue";
+import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardContent from "~/components/base/BaseCardContent.vue";
+import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+import BaseTable from "~/components/base/BaseTable.vue";
+import BaseTableCell from "~/components/base/BaseTableCell.vue";
+import FacilityErrorsHistoryPlot from "~/components/FacilityErrorsHistoryPlot.vue";
+import IconExclamationTriangle from "~/components/icons/hero/24/outline/IconExclamationTriangle.vue";
+import IconUsers from "~/components/icons/hero/24/outline/IconUsers.vue";
+import IconCircle from "~/components/icons/IconCircle.vue";
+import usePermissions from "~/composables/usePermissions";
+import { formatDate } from "~/helpers/dateUtils";
+import { facilityLastMessageOver48 } from "~/helpers/facilityUtils";
+import { allStatuses } from "~/helpers/messageUtils";
 
 export default defineComponent({
+  components: {
+    IconCircle,
+    BaseCard,
+    BaseCardContent,
+    BaseCardHeader,
+    BaseTable,
+    BaseTableCell,
+    BaseAlertError,
+    IconExclamationTriangle,
+    IconUsers,
+    FacilityErrorsHistoryPlot,
+  },
   props: {
     facility: {
       type: Object as () => FacilityDetailsSchema,
@@ -237,17 +241,17 @@ export default defineComponent({
 
     const feedTableItems: FeedTableItem[] = [
       {
-        name: "UKRDC Records",
+        name: "UKRDC Feeds",
         key: "ukrdc",
         historic: false,
       },
       {
-        name: "PatientView Records",
+        name: "PatientView Feeds",
         key: "pv",
         historic: false,
       },
       {
-        name: "RADAR Records",
+        name: "RADAR Feeds",
         key: "radar",
         historic: false,
       },
