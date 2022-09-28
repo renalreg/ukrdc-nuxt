@@ -10,6 +10,13 @@
     </BaseCard>
 
     <!-- Related Work Items card -->
+    <!-- Skeleton results -->
+    <BaseCard v-if="!workItems" class="mt-4">
+      <ul class="divide-y divide-gray-200">
+        <BaseSkeleListItem v-for="n in 10" :key="n" />
+      </ul>
+    </BaseCard>
+    <!-- Real results -->
     <BaseCard v-if="workItems && workItems.length > 0" class="mt-4">
       <BaseCardHeader>
         <h2>Open Work Items</h2>
@@ -24,6 +31,13 @@
     </BaseCard>
 
     <!-- Related errors card -->
+    <!-- Skeleton results -->
+    <BaseCard v-if="!relatedErrors" class="mt-4">
+      <ul class="divide-y divide-gray-200">
+        <BaseSkeleListItem v-for="n in 5" :key="n" />
+      </ul>
+    </BaseCard>
+    <!-- Real results -->
     <BaseCard v-if="relatedErrors && relatedErrors.length > 0" class="mt-4">
       <BaseCardHeader>
         <h2>Record Errors</h2>
@@ -62,6 +76,7 @@ import {
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
+import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import EMPIMultipleIDItem from "~/components/EMPIMultipleIDItem.vue";
 import MessagesListItem from "~/components/MessagesListItem.vue";
 import WorkItemsListItem from "~/components/WorkItemsListItem.vue";
@@ -78,6 +93,7 @@ export default defineComponent({
     MessagesListItem,
     EMPIMultipleIDItem,
     WorkItemsListItem,
+    BaseSkeleListItem,
   },
   props: {
     record: {
@@ -95,9 +111,9 @@ export default defineComponent({
     const { hasPermission } = usePermissions();
 
     // Data refs
-    const workItems = ref([] as WorkItemSchema[]);
+    const workItems = ref<WorkItemSchema[]>();
 
-    const relatedErrors = ref([] as MessageSchema[]);
+    const relatedErrors = ref<MessageSchema[]>();
     const relatedErrorsPage = ref(1);
     const relatedErrorsSize = ref(5);
     const relatedErrorsTotal = ref(0);
