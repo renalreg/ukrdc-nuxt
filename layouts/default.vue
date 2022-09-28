@@ -183,7 +183,7 @@ label {
 }
 
 .borderless-card {
-  @apply rounded-md bg-white shadow-sm;
+  @apply overflow-hidden rounded-md bg-white shadow-sm;
 }
 
 .v-popper__popper {
