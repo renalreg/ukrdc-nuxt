@@ -133,14 +133,6 @@ Removing our reliance on Nuxt modules is an ongoing process, but has already bee
 
 Although we disable server-side rendering and build a "traditional" Vue single-page application, we make use of the internal Nuxt server to allow runtime configuration of the application. The Nuxt server essentially populates the SPA with runtime variables before serving it unrendered to the client, just like a normal Vue application.
 
-### UKRDC API
-
-We automatically handle adding authentication headers to UKRDC API requests by making all API requests from a custom Axios instance, created in `plugins/axios-ukrdc-api.client.ts`. This custom instance is injected into the application context and Vue instance as `$api`.
-
-As well as adding authentication headers, `$api` also ensures that all API calls include the correct base path and API hostname.
-
-An additional plugin `plugins/axios-error-handlers.ts` adds error handling to the `$api` instance.
-
 ### Upcoming Nuxt 3 changes
 
 Once Nuxt 3 has launched and is stable, we will begin migration from Nuxt 2 to Nuxt 3. We will need to wait for a couple of Nuxt modules to confirm compatibility (or remove our dependence on them), but otherwise the transition should be fairly straightforward.
