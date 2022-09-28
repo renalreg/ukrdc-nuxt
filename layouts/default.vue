@@ -182,6 +182,10 @@ label {
   @apply font-medium text-gray-500;
 }
 
+.borderless-card {
+  @apply rounded-md bg-white shadow-sm;
+}
+
 .v-popper__popper {
   font-size: 12px;
 }

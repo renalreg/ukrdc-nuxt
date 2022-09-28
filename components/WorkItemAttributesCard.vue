@@ -1,5 +1,5 @@
 <template>
-  <BaseCard class="border-2 border-green-500">
+  <div class="borderless-card border-2 border-green-500">
     <div class="flex h-24 flex-col justify-center px-4 sm:px-6">
       <div class="sensitive text-gray-500" :class="highlight.includes('givenname') ? highlightClasses : []">
         {{ record.givenname ? formatAttributeValue(record.givenname) : "Given Name not specified" }}
@@ -47,7 +47,7 @@
         </BaseCardDescriptionItem>
       </BaseCardDescriptionList>
     </div>
-  </BaseCard>
+  </div>
 </template>
 
 <script lang="ts">
