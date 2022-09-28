@@ -3,8 +3,7 @@ Table of facilities and their basic statistics
 -->
 
 <template>
-  <BaseLoadingIndicator v-if="!facilities"></BaseLoadingIndicator>
-  <div v-else>
+  <div>
     <SearchBar v-model="searchboxString" :focus="false" :show-button="false" />
     <BaseTable>
       <thead class="bg-gray-50">
@@ -58,7 +57,17 @@ Table of facilities and their basic statistics
           </th>
         </tr>
       </thead>
-      <tbody class="divide-y divide-gray-200 bg-white">
+      <tbody v-if="!facilities" class="divide-y divide-gray-200 bg-white">
+        <tr v-for="n in 20" :key="n">
+          <BaseTableCell><BaseSkeleText class="h-6 w-12" /></BaseTableCell>
+          <BaseTableCell><BaseSkeleText class="h-6 w-64" /></BaseTableCell>
+          <BaseTableCell><BaseSkeleText class="h-6 w-12" /></BaseTableCell>
+          <BaseTableCell><BaseSkeleText class="h-6 w-12" /></BaseTableCell>
+          <BaseTableCell><BaseSkeleText class="h-6 w-12" /></BaseTableCell>
+          <BaseTableCell><BaseSkeleText class="h-6 w-32" /></BaseTableCell>
+        </tr>
+      </tbody>
+      <tbody v-else class="divide-y divide-gray-200 bg-white">
         <tr
           v-for="facility in filteredFacilities"
           :key="facility.id"
@@ -111,7 +120,7 @@ import { computed, defineComponent, onMounted, ref, watch } from "@nuxtjs/compos
 import { FacilityDetailsSchema, FacilitySorterEnum, OrderBy } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseFilterIcon from "~/components/base/BaseFilterIcon.vue";
-import BaseLoadingIndicator from "~/components/base/BaseLoadingIndicator.vue";
+import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import BaseSortIcon from "~/components/base/BaseSortIcon.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
 import BaseTableCell from "~/components/base/BaseTableCell.vue";
@@ -129,13 +138,13 @@ interface IsAscending {
 export default defineComponent({
   components: {
     IconCircle,
-    BaseLoadingIndicator,
     BaseTable,
     BaseTableCell,
     BaseSortIcon,
     BaseFilterIcon,
     IconExclamationTriangle,
     SearchBar,
+    BaseSkeleText,
   },
   props: {
     includeEmpty: {
