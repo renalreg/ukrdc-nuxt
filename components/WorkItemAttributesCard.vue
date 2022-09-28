@@ -54,7 +54,6 @@
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { WorkItemAttributes } from "@ukkidney/ukrdc-axios-ts";
 
-import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardDescriptionItem from "~/components/base/BaseCardDescriptionItem.vue";
 import BaseCardDescriptionList from "~/components/base/BaseCardDescriptionList.vue";
 import { formatGender } from "~/helpers/codeUtils";
@@ -63,7 +62,6 @@ import { formatAttributeValue } from "~/helpers/workItemUtils";
 
 export default defineComponent({
   components: {
-    BaseCard,
     BaseCardDescriptionList,
     BaseCardDescriptionItem,
   },
