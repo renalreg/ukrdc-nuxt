@@ -1,5 +1,5 @@
-import checkIE from "check-ie";
 import { Context } from "@nuxt/types";
+import checkIE from "check-ie";
 
 export default function (context: Context) {
   const ua = process.server ? context.ssrContext?.req.headers["user-agent"] : window.navigator.userAgent;
