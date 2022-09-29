@@ -9,6 +9,7 @@
       hovertemplate="<b>%{x}</b><br>New errors: %{y}<extra></extra>"
       @click="historyPointClickHandler"
     />
+    <BaseSkeleImage v-else class="h-64 w-full" />
   </div>
 </template>
 
@@ -17,6 +18,7 @@ import { computed, defineComponent, onMounted, ref, useRouter } from "@nuxtjs/co
 import { FacilityDetailsSchema, HistoryPoint } from "@ukkidney/ukrdc-axios-ts";
 import { PlotDatum } from "plotly.js";
 
+import BaseSkeleImage from "~/components/base/BaseSkeleImage.vue";
 import TimeSeriesLinePlot from "~/components/plots/TimeSeriesLinePlot.vue";
 import useApi from "~/composables/useApi";
 import { getPointDateRange, unpackHistoryPoints } from "~/helpers/chartUtils";
@@ -24,6 +26,7 @@ import { getPointDateRange, unpackHistoryPoints } from "~/helpers/chartUtils";
 export default defineComponent({
   components: {
     TimeSeriesLinePlot,
+    BaseSkeleImage,
   },
   props: {
     facility: {
