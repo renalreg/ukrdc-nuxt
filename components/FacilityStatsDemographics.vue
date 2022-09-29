@@ -1,12 +1,13 @@
 <template>
   <div>
-    <div v-if="facilityDemographicStats">
+    <div>
       <BaseCard class="mb-4">
         <BaseCardHeader class="flex items-center">
           <h2 class="flex-1">Age Distribution</h2>
-          <BaseButtonMini @click="exportAgeDistribution">Export</BaseButtonMini>
+          <BaseButtonMini v-if="facilityDemographicStats" @click="exportAgeDistribution">Export</BaseButtonMini>
         </BaseCardHeader>
         <BarPlot
+          v-if="facilityDemographicStats"
           id="ageDistributionChart"
           :y="ageDistributionChartData.data"
           :x="ageDistributionChartData.labels"
@@ -15,31 +16,36 @@
           class="h-64"
           hovertemplate="Age: <b>%{x}</b><br>%{y}<extra></extra>"
         />
+        <BaseSkeleImage v-else class="h-64 w-full" />
       </BaseCard>
       <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <BaseCard>
           <BaseCardHeader class="flex items-center">
             <h2 class="flex-1">Gender Distribution</h2>
-            <BaseButtonMini @click="exportGenderDistribution">Export</BaseButtonMini>
+            <BaseButtonMini v-if="facilityDemographicStats" @click="exportGenderDistribution">Export</BaseButtonMini>
           </BaseCardHeader>
           <PiePlot
+            v-if="facilityDemographicStats"
             id="genderDistributionChart"
             :data="genderDistributionChartData.data"
             :labels="genderDistributionChartData.labels"
             class="h-64"
           />
+          <BaseSkeleImage v-else class="h-64 w-full" />
         </BaseCard>
         <BaseCard>
           <BaseCardHeader class="flex items-center">
             <h2 class="flex-1">Ethnicity Distribution</h2>
-            <BaseButtonMini @click="exportEthnicityDistribution">Export</BaseButtonMini>
+            <BaseButtonMini v-if="facilityDemographicStats" @click="exportEthnicityDistribution">Export</BaseButtonMini>
           </BaseCardHeader>
           <PiePlot
+            v-if="facilityDemographicStats"
             id="ethnicityDistributionChart"
             :data="ethnicityDistributionChartData.data"
             :labels="ethnicityDistributionChartData.labels"
             class="h-64"
           />
+          <BaseSkeleImage v-else class="h-64 w-full" />
         </BaseCard>
       </div>
     </div>
@@ -53,6 +59,7 @@ import { FacilityDemographicStats, FacilityDetailsSchema } from "@ukkidney/ukrdc
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+import BaseSkeleImage from "~/components/base/BaseSkeleImage.vue";
 import BarPlot from "~/components/plots/BarPlot.vue";
 import PiePlot from "~/components/plots/PiePlot.vue";
 import useApi from "~/composables/useApi";
@@ -66,6 +73,7 @@ export default defineComponent({
     BaseButtonMini,
     BaseCard,
     BaseCardHeader,
+    BaseSkeleImage,
     BarPlot,
     PiePlot,
   },

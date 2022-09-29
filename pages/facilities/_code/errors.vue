@@ -1,6 +1,16 @@
 <template>
   <div>
+    <div v-if="errorMessages && errorMessagesTotal == 0" class="text-center">
+      <p>No active failing records</p>
+    </div>
     <!-- Failing NIs -->
+    <!-- Skeleton results -->
+    <BaseCard v-if="!errorMessages" class="mt-4">
+      <ul class="divide-y divide-gray-200">
+        <BaseSkeleListItem v-for="n in 10" :key="n" />
+      </ul>
+    </BaseCard>
+    <!-- Real results -->
     <BaseCard v-if="errorMessages && errorMessagesTotal > 0" class="mt-4">
       <BaseCardHeader>
         <h2>Records Currently Failing</h2>
@@ -35,6 +45,7 @@ import { PlotDatum } from "plotly.js";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
+import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import MessagesListItem from "~/components/MessagesListItem.vue";
 import useApi from "~/composables/useApi";
 import { getPointDateRange } from "~/helpers/chartUtils";
@@ -44,6 +55,7 @@ export default defineComponent({
     BaseCard,
     BaseCardHeader,
     BasePaginator,
+    BaseSkeleListItem,
     MessagesListItem,
   },
   props: {
@@ -57,7 +69,7 @@ export default defineComponent({
     const { facilitiesApi } = useApi();
 
     // Failing NIs data
-    const errorMessages = ref([] as MessageSchema[]);
+    const errorMessages = ref<MessageSchema[]>();
     const errorMessagesPage = ref(1);
     const errorMessagesSize = ref(10);
     const errorMessagesTotal = ref(0);
