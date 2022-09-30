@@ -22,7 +22,7 @@
           </div>
           <form @submit.prevent="$emit('submit')">
             <BaseTextBox
-              :focus="true"
+              :focus="focus"
               class="w-full pl-10"
               placeholder="Search"
               type="search"
