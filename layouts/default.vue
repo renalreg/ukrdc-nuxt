@@ -142,6 +142,10 @@ b {
   @apply font-medium text-gray-900;
 }
 
+a {
+  @apply text-indigo-600;
+}
+
 h1 {
   @apply text-2xl font-bold text-gray-900;
 }
