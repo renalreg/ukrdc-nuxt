@@ -12,6 +12,18 @@
         Data will only be sent to PKB if/when at least one of the patient's renal units enrolls in PKB data sending.
       </p>
     </BaseModalConfirm>
+    <BaseModalSuccess
+      ref="createPkbMembershipSuccess"
+      title="PKB Membership Created"
+      confirm-label="Go back to records"
+    >
+      <p><b>No data has been automatically sent</b></p>
+      <p class="mt-4">
+        To send data, click <b>Sync Record to PKB</b> from a patient record's menu (<IconEllipsisVertical
+          class="inline text-gray-600"
+        />)
+      </p>
+    </BaseModalSuccess>
 
     <div v-click-away="closeMenu" class="relative flex items-center justify-self-end">
       <BaseButtonMini
@@ -43,7 +55,9 @@ import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import BaseMenu from "~/components/base/BaseMenu.vue";
 import BaseMenuItem from "~/components/base/BaseMenuItem.vue";
 import BaseModalConfirm from "~/components/base/BaseModalConfirm.vue";
+import BaseModalSuccess from "~/components/base/BaseModalSuccess.vue";
 import IconPlus from "~/components/icons/hero/20/solid/IconPlus.vue";
+import IconEllipsisVertical from "~/components/icons/hero/24/solid/IconEllipsisVertical.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import { modalInterface } from "~/interfaces/modal";
@@ -53,8 +67,10 @@ export default defineComponent({
     BaseButtonMini,
     BaseMenu,
     BaseMenuItem,
+    BaseModalSuccess,
     BaseModalConfirm,
     IconPlus,
+    IconEllipsisVertical,
   },
   props: {
     masterRecord: {
@@ -75,6 +91,7 @@ export default defineComponent({
     // Modals
 
     const createPkbMembershipConfirm = ref<modalInterface>();
+    const createPkbMembershipSuccess = ref<modalInterface>();
 
     // Data refs
 
@@ -98,13 +115,7 @@ export default defineComponent({
           recordId: props.masterRecord.id,
         })
         .then(() => {
-          $toast.show({
-            type: "success",
-            title: "Success",
-            message: "PKB membership created",
-            timeout: 10,
-            classTimeout: "bg-green-600",
-          });
+          createPkbMembershipSuccess.value?.show();
         })
         .catch((error) => {
           // Notify of task error
@@ -127,6 +138,7 @@ export default defineComponent({
       menuAvailable,
       closeMenu,
       createPkbMembershipConfirm,
+      createPkbMembershipSuccess,
       showCreatePkbMembershipConfirm,
       createPkbMembership,
     };
