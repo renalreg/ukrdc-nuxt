@@ -88,7 +88,7 @@ export function collectionIsUnresolved(related: WorkItemSchema[]) {
 export function formatAttributeValue(attributeString: String) {
   const splitString = attributeString.split(":");
   if (splitString.length > 1) {
-    return `${attributeString.split(":")[1]} → ${attributeString.split(":")[0]}`;
+    return `${attributeString.split(":")[0]} (incoming) → ${attributeString.split(":")[1]} (current)`;
   } else {
     return attributeString.split(":")[0];
   }

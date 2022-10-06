@@ -1,10 +1,10 @@
 <template>
   <div class="borderless-card border-2 border-green-500">
     <div class="flex h-24 flex-col justify-center px-4 sm:px-6">
-      <div class="sensitive text-gray-500" :class="highlight.includes('givenname') ? highlightClasses : []">
+      <div class="sensitive" :class="highlight.includes('givenname') ? highlightClasses : []">
         {{ record.givenname ? formatAttributeValue(record.givenname) : "Given Name not specified" }}
       </div>
-      <div class="sensitive mt-1 text-gray-500" :class="highlight.includes('surname') ? highlightClasses : []">
+      <div class="sensitive mt-1" :class="highlight.includes('surname') ? highlightClasses : []">
         {{ record.surname ? formatAttributeValue(record.surname) : "Surname not specified" }}
       </div>
     </div>
@@ -12,13 +12,13 @@
       <BaseCardDescriptionList>
         <BaseCardDescriptionItem>
           <dt>Local ID</dt>
-          <dd :class="highlight.includes('localid') ? highlightClasses : []" class="sensitive">
+          <dd :class="highlight.includes('localid') ? highlightClasses : []" class="sensitive col-span-2">
             {{ record.localid ? formatAttributeValue(record.localid) : "Not specified" }}
           </dd>
         </BaseCardDescriptionItem>
         <BaseCardDescriptionItem>
           <dt>Sender</dt>
-          <dd>
+          <dd class="col-span-2">
             <span :class="highlight.includes('sendingFacility') ? highlightClasses : []">{{
               record.sendingFacility ? record.sendingFacility : ""
             }}</span>
@@ -29,19 +29,19 @@
         </BaseCardDescriptionItem>
         <BaseCardDescriptionItem>
           <dt>Date of Birth</dt>
-          <dd :class="highlight.includes('dateOfBirth') ? highlightClasses : []" class="sensitive">
+          <dd :class="highlight.includes('dateOfBirth') ? highlightClasses : []" class="sensitive col-span-2">
             {{ formattedDoB }}
           </dd>
         </BaseCardDescriptionItem>
         <BaseCardDescriptionItem>
           <dt>Assigned Gender</dt>
-          <dd :class="highlight.includes('gender') ? highlightClasses : []" class="sensitive">
+          <dd :class="highlight.includes('gender') ? highlightClasses : []" class="sensitive col-span-2">
             {{ formattedGender }}
           </dd>
         </BaseCardDescriptionItem>
         <BaseCardDescriptionItem>
           <dt>Date of Death</dt>
-          <dd :class="highlight.includes('dateOfDeath') ? highlightClasses : []" class="sensitive">
+          <dd :class="highlight.includes('dateOfDeath') ? highlightClasses : []" class="sensitive col-span-2">
             {{ formattedDoD }}
           </dd>
         </BaseCardDescriptionItem>
@@ -96,24 +96,24 @@ export default defineComponent({
     const formattedDoB = computed(() => {
       return props.record.dateOfBirth
         ? `
-        ${formatDate(props.record.dateOfBirth.split(":")[0], false)} →
-        ${formatDate(props.record.dateOfBirth.split(":")[1], false)}`
+        ${formatDate(props.record.dateOfBirth.split(":")[0], false)} (incoming) →
+        ${formatDate(props.record.dateOfBirth.split(":")[1], false)} (current)`
         : "Not specified";
     });
 
     const formattedDoD = computed(() => {
       return props.record.dateOfDeath
         ? `
-        ${formatDate(props.record.dateOfDeath.split(":")[0], false)} →
-        ${formatDate(props.record.dateOfDeath.split(":")[1], false)}`
+        ${formatDate(props.record.dateOfDeath.split(":")[0], false)} (incoming) →
+        ${formatDate(props.record.dateOfDeath.split(":")[1], false)} (current)`
         : "Not specified";
     });
 
     const formattedGender = computed(() => {
       return props.record.gender
         ? `
-        ${formatGender(props.record.gender.split(":")[0])} →
-        ${formatGender(props.record.gender.split(":")[1])}`
+        ${formatGender(props.record.gender.split(":")[0])} (incoming) →
+        ${formatGender(props.record.gender.split(":")[1])} (current)`
         : "Not specified";
     });
 
