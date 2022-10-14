@@ -15,7 +15,7 @@
         </div>
         <div v-if="related" class="ml-2">
           <BaseSelect v-model="selectedPid">
-            <option v-for="(item, index) in relatedDataRecords" :key="index" :value="item.pid">
+            <option v-for="(item, index) in related" :key="index" :value="item.pid">
               From {{ item.sendingfacility }} via {{ item.sendingextract }}
             </option>
           </BaseSelect>
@@ -25,7 +25,7 @@
 
     <div class="mb-6"><BaseTabsNavigation :tabs="tabs" /></div>
 
-    <NuxtChild v-if="record" :record="record" />
+    <NuxtChild v-if="record" :record="record" :related="related" />
   </div>
 </template>
 
@@ -46,7 +46,7 @@ import BaseButton from "~/components/base/BaseButton.vue";
 import BaseSelect from "~/components/base/BaseSelect.vue";
 import BaseTabsNavigation from "~/components/base/BaseTabsNavigation.vue";
 import useApi from "~/composables/useApi";
-import { firstForename, firstSurname, isMembership } from "~/helpers/recordUtils";
+import { firstForename, firstSurname } from "~/helpers/recordUtils";
 import { TabItem } from "~/interfaces/tabs";
 
 export default defineComponent({
@@ -94,13 +94,6 @@ export default defineComponent({
     });
 
     // PID Switcher UI
-
-    const relatedDataRecords = computed<PatientRecordSummarySchema[]>(() => {
-      if (related.value) {
-        return related.value.filter((record) => !isMembership(record));
-      }
-      return [];
-    });
 
     const selectedPid = ref(route.value.params.pid);
 
@@ -154,7 +147,6 @@ export default defineComponent({
     return {
       record,
       related,
-      relatedDataRecords,
       selectedPid,
       forename,
       surname,
