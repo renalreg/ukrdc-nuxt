@@ -197,7 +197,7 @@ import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import { formatGender } from "~/helpers/codeUtils";
 import { formatDate } from "~/helpers/dateUtils";
-import { isEmptyObject } from "~/helpers/objectUtils";
+import { isEmptyObject, shallowEqual } from "~/helpers/objectUtils";
 import { ModalInterface } from "~/interfaces/modal";
 
 type SelectableBlock = "name" | "dob" | "gender" | "address";
@@ -222,20 +222,6 @@ interface AvailableGender {
 interface AvailableAddress {
   address: AddressSchema | undefined;
   source: string;
-}
-
-function shallowEqual(object1: Object, object2: Object) {
-  const keys1 = Object.keys(object1);
-  const keys2 = Object.keys(object2);
-  if (keys1.length !== keys2.length) {
-    return false;
-  }
-  for (const key of keys1) {
-    if (object1[key as keyof typeof object1] !== object2[key as keyof typeof object2]) {
-      return false;
-    }
-  }
-  return true;
 }
 
 export default defineComponent({
