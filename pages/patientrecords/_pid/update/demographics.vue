@@ -286,7 +286,7 @@ export default defineComponent({
       // For each related record
       for (const record of props.related ?? []) {
         // If the record has a name
-        if (record.patient?.names[0]) {
+        if (record.patient?.names[0] && record.pid !== props.record.pid) {
           names.push({
             name: record.patient?.names[0],
             source: getRecordSourceName(record),
@@ -307,7 +307,7 @@ export default defineComponent({
       // For each related record
       for (const record of props.related ?? []) {
         // If the record has a name
-        if (record.patient?.birthTime) {
+        if (record.patient?.birthTime && record.pid !== props.record.pid) {
           birthTimes.push({
             birthTime: record.patient?.birthTime,
             source: getRecordSourceName(record),
@@ -328,7 +328,7 @@ export default defineComponent({
       // For each related record
       for (const record of props.related ?? []) {
         // If the record has a name
-        if (record.patient?.gender) {
+        if (record.patient?.gender && record.pid !== props.record.pid) {
           genders.push({
             gender: record.patient?.gender,
             source: getRecordSourceName(record),
@@ -349,7 +349,7 @@ export default defineComponent({
       // For each related record
       for (const record of props.related ?? []) {
         // If the record has a name
-        if (record.patient?.addresses[0]) {
+        if (record.patient?.addresses[0] && record.pid !== props.record.pid) {
           addresses.push({
             address: record.patient?.addresses[0],
             source: getRecordSourceName(record),
