@@ -79,7 +79,7 @@
               v-for="(name, index) in namesAvailable"
               :key="`name-${index}`"
               class="demo-section-card-base"
-              :class="[isEqual(name, nameToUse) ? 'demo-section-card-selected' : 'demo-section-card-inactive']"
+              :class="[shallowEqual(name, nameToUse) ? 'demo-section-card-selected' : 'demo-section-card-inactive']"
               @click="nameToUse = name"
             >
               <div>
@@ -110,7 +110,7 @@
               :key="`birthtime-${index}`"
               class="demo-section-card-base"
               :class="[
-                isEqual(birthTime, birthTimeToUse) ? 'demo-section-card-selected' : 'demo-section-card-inactive',
+                shallowEqual(birthTime, birthTimeToUse) ? 'demo-section-card-selected' : 'demo-section-card-inactive',
               ]"
               @click="birthTimeToUse = birthTime"
             >
@@ -135,7 +135,7 @@
               v-for="(gender, index) in gendersAvailable"
               :key="`gender-${index}`"
               class="demo-section-card-base"
-              :class="[isEqual(gender, genderToUse) ? 'demo-section-card-selected' : 'demo-section-card-inactive']"
+              :class="[shallowEqual(gender, genderToUse) ? 'demo-section-card-selected' : 'demo-section-card-inactive']"
               @click="genderToUse = gender"
             >
               <div>
@@ -159,7 +159,9 @@
               v-for="(address, index) in addressesAvailable"
               :key="`address-${index}`"
               class="demo-section-card-base"
-              :class="[isEqual(address, addressToUse) ? 'demo-section-card-selected' : 'demo-section-card-inactive']"
+              :class="[
+                shallowEqual(address, addressToUse) ? 'demo-section-card-selected' : 'demo-section-card-inactive',
+              ]"
               @click="addressToUse = address"
             >
               <div class="md:col-span-2">
@@ -186,7 +188,6 @@
 <script lang="ts">
 import { computed, defineComponent, ref, useContext, useRouter } from "@nuxtjs/composition-api";
 import { AddressSchema, NameSchema, PatientRecordSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
-import { isEqual } from "lodash";
 
 import BaseButton from "~/components/base/BaseButton.vue";
 import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
@@ -221,6 +222,20 @@ interface AvailableGender {
 interface AvailableAddress {
   address: AddressSchema | undefined;
   source: string;
+}
+
+function shallowEqual(object1: Object, object2: Object) {
+  const keys1 = Object.keys(object1);
+  const keys2 = Object.keys(object2);
+  if (keys1.length !== keys2.length) {
+    return false;
+  }
+  for (const key of keys1) {
+    if (object1[key as keyof typeof object1] !== object2[key as keyof typeof object2]) {
+      return false;
+    }
+  }
+  return true;
 }
 
 export default defineComponent({
@@ -397,7 +412,7 @@ export default defineComponent({
       formatDate,
       formatGender,
       isEmptyObject,
-      isEqual,
+      shallowEqual,
       hasPermission,
       postUpdateConfirm,
       selectedBlock,
