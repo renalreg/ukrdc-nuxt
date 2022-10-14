@@ -49,7 +49,7 @@ import PersonRecordCard from "~/components/PersonRecordCard.vue";
 import useApi from "~/composables/useApi";
 import { formatGender } from "~/helpers/codeUtils";
 import { formatDate } from "~/helpers/dateUtils";
-import { modalInterface } from "~/interfaces/modal";
+import { ModalInterface } from "~/interfaces/modal";
 
 export default defineComponent({
   components: {
@@ -72,7 +72,7 @@ export default defineComponent({
     const { $toast } = useContext();
     const { patientIndexOperationsApi } = useApi();
 
-    const unlinkModal = ref<modalInterface>();
+    const unlinkModal = ref<ModalInterface>();
     const unlinkComment = ref("");
 
     function doUnlink() {

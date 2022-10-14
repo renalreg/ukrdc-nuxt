@@ -36,7 +36,7 @@ import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
 
 import BaseButton from "~/components/base/BaseButton.vue";
 import BaseModal from "~/components/base/BaseModal.vue";
-import { modalInterface } from "~/interfaces/modal";
+import { ModalInterface } from "~/interfaces/modal";
 
 export default defineComponent({
   components: {
@@ -61,7 +61,7 @@ export default defineComponent({
   },
 
   setup(_, { emit }) {
-    const successModal = ref<modalInterface>();
+    const successModal = ref<ModalInterface>();
 
     const visible = computed(() => {
       return successModal.value?.visible || false;

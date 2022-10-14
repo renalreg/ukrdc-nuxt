@@ -255,7 +255,7 @@ import { formatDate } from "~/helpers/dateUtils";
 import { isEmptyObject } from "~/helpers/objectUtils";
 import { delay } from "~/helpers/timeUtils";
 import { workItemIsMergable } from "~/helpers/workItemUtils";
-import { modalInterface } from "~/interfaces/modal";
+import { ModalInterface } from "~/interfaces/modal";
 
 interface AvailableActions {
   close: boolean;
@@ -399,8 +399,8 @@ export default defineComponent({
     const closeMessageOverride = ref<String>();
 
     // Template refs
-    const addCommentModal = ref<modalInterface>();
-    const closeModal = ref<modalInterface>();
+    const addCommentModal = ref<ModalInterface>();
+    const closeModal = ref<ModalInterface>();
 
     // Workitem actions
     function updateWorkItemComment() {
@@ -436,7 +436,7 @@ export default defineComponent({
           });
         });
 
-      const el = addCommentModal.value as modalInterface;
+      const el = addCommentModal.value as ModalInterface;
       el.toggle();
     }
 
@@ -473,7 +473,7 @@ export default defineComponent({
           });
         });
 
-      const el = closeModal.value as modalInterface;
+      const el = closeModal.value as ModalInterface;
       el.toggle();
     }
 

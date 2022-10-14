@@ -81,3 +81,13 @@ export function firstMRN(record: PatientRecordSummarySchema): localNumber {
     number: "",
   };
 }
+
+export function demographicsUpdateAllowed(record: PatientRecordSummarySchema) {
+  if (record.sendingfacility === "PKB" && record.sendingextract === "UKRDC") {
+    return true;
+  }
+  if (record.sendingextract === "PVMIG" || record.sendingextract === "HSMIG") {
+    return true;
+  }
+  return false;
+}

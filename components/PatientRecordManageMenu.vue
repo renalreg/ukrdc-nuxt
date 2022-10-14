@@ -16,6 +16,12 @@
           <BaseMenuItem v-if="showRadarSync" @click="exportRADAR"> Sync Record to RADAR </BaseMenuItem>
           <BaseMenuItem v-if="showPkbSync" @click="exportPKB"> Sync Record to PKB </BaseMenuItem>
         </div>
+        <div v-if="hasPermission('ukrdc:records:write') && demographicsUpdatable">
+          <BaseMenuDivider />
+          <BaseMenuItem @click="$router.push(`/patientrecords/${item.pid}/update/demographics`)">
+            Edit Demographics
+          </BaseMenuItem>
+        </div>
         <div v-if="hasPermission('ukrdc:records:delete')">
           <BaseMenuDivider />
           <BaseMenuItem @click="showDeleteModal"> Delete Record </BaseMenuItem>
@@ -26,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext } from "@nuxtjs/composition-api";
+import { computed, defineComponent, ref, useContext } from "@nuxtjs/composition-api";
 import { PatientRecordSummarySchema, TrackableTaskSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseButtonSlot from "~/components/base/BaseButtonSlot.vue";
@@ -38,7 +44,8 @@ import PatientRecordDeleteModal from "~/components/PatientRecordDeleteModal.vue"
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import useTasks from "~/composables/useTasks";
-import { modalInterface } from "~/interfaces/modal";
+import { demographicsUpdateAllowed } from "~/helpers/recordUtils";
+import { ModalInterface } from "~/interfaces/modal";
 
 export default defineComponent({
   components: {
@@ -76,9 +83,13 @@ export default defineComponent({
     const { patientRecordsApi } = useApi();
     const { pollTask } = useTasks();
 
-    const deleteModal = ref<modalInterface>();
+    const deleteModal = ref<ModalInterface>();
 
     const showMenu = ref(false);
+
+    const demographicsUpdatable = computed<Boolean>(() => {
+      return demographicsUpdateAllowed(props.item);
+    });
 
     function closeMenu() {
       showMenu.value = false;
@@ -236,6 +247,7 @@ export default defineComponent({
     return {
       deleteModal,
       showMenu,
+      demographicsUpdatable,
       closeMenu,
       copyPID,
       showDeleteModal,

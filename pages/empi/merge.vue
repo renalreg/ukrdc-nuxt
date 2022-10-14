@@ -128,7 +128,7 @@ import IconArrowRight from "~/components/icons/hero/24/solid/IconArrowRight.vue"
 import MasterRecordCard from "~/components/MasterRecordCard.vue";
 import useQuery from "~/composables/query/useQuery";
 import useApi from "~/composables/useApi";
-import { modalInterface } from "~/interfaces/modal";
+import { ModalInterface } from "~/interfaces/modal";
 
 type Direction = "superseding" | "superseded";
 
@@ -153,7 +153,7 @@ export default defineComponent({
 
     // Modals
 
-    const beginMergeAlert = ref<modalInterface>();
+    const beginMergeAlert = ref<ModalInterface>();
 
     // Data refs
 
@@ -304,7 +304,7 @@ export default defineComponent({
             }
           })
           .finally(() => {
-            const el = beginMergeAlert.value as modalInterface;
+            const el = beginMergeAlert.value as ModalInterface;
             el.hide();
           });
       }

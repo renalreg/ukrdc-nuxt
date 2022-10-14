@@ -44,7 +44,7 @@ import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
 
 import BaseButton from "~/components/base/BaseButton.vue";
 import BaseModal from "~/components/base/BaseModal.vue";
-import { modalInterface } from "~/interfaces/modal";
+import { ModalInterface } from "~/interfaces/modal";
 
 export default defineComponent({
   components: {
@@ -84,7 +84,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const confirmModal = ref<modalInterface>();
+    const confirmModal = ref<ModalInterface>();
 
     const visible = computed(() => {
       return confirmModal.value?.visible || false;
@@ -106,9 +106,9 @@ export default defineComponent({
       if (props.icon !== null) {
         return props.icon;
       } else if (props.danger) {
-        return "M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z";
+        return "M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z";
       } else {
-        return "M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z";
+        return "M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z";
       }
     });
 

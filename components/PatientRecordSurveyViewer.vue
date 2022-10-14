@@ -74,7 +74,7 @@ import { SurveyQuestionSchema, SurveySchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseCardDescriptionList from "~/components/base/BaseCardDescriptionList.vue";
 import BaseModal from "~/components/base/BaseModal.vue";
 import { formatDate } from "~/helpers/dateUtils";
-import { modalInterface } from "~/interfaces/modal";
+import { ModalInterface } from "~/interfaces/modal";
 
 interface GroupedQuestions {
   [key: string]: SurveyQuestionSchema[];
@@ -104,7 +104,7 @@ export default defineComponent({
       return groups;
     });
 
-    const surveyViewerModal = ref<modalInterface>();
+    const surveyViewerModal = ref<ModalInterface>();
     function hide(): void {
       surveyViewerModal.value?.hide();
     }

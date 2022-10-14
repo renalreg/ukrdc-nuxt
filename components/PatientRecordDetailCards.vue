@@ -83,30 +83,7 @@
 
       <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
         <li v-for="item in record.patient.addresses" :key="item.street" class="col-span-1">
-          <BaseCard class="sensitive w-full px-4 py-2">
-            <b>
-              {{ item.street }}
-            </b>
-            <p v-if="item.town">{{ item.town }}</p>
-            <p v-if="item.county">
-              {{ item.county }}
-            </p>
-            <PostCodeLink v-if="item.postcode" :code="item.postcode" />
-            <p v-if="item.countryDescription">
-              {{ item.countryDescription }}
-            </p>
-            <p v-if="item.fromTime">Since {{ formatDate(item.fromTime, false) }}</p>
-            <span
-              v-if="!item.toTime"
-              class="mt-2 inline-block flex-shrink-0 rounded-sm bg-green-100 px-2 py-0.5 text-sm font-medium text-green-800"
-              >Active</span
-            >
-            <span
-              v-else
-              class="mt-2 inline-block flex-shrink-0 rounded-sm bg-red-100 px-2 py-0.5 text-sm font-medium text-red-800"
-              >Inactive since {{ formatDate(item.toTime, false) }}</span
-            >
-          </BaseCard>
+          <BaseCard class="sensitive w-full px-4 py-2"> <PatientRecordAddress :address="item" /> </BaseCard>
         </li>
       </ul>
     </div>
@@ -182,6 +159,7 @@ import { defineComponent } from "@nuxtjs/composition-api";
 import { PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseCard from "~/components/base/BaseCard.vue";
+import PatientRecordAddress from "~/components/PatientRecordAddress.vue";
 import PostCodeLink from "~/components/PostCodeLink.vue";
 import { formatGender } from "~/helpers/codeUtils";
 import { formatDate } from "~/helpers/dateUtils";
@@ -191,6 +169,7 @@ export default defineComponent({
   components: {
     BaseCard,
     PostCodeLink,
+    PatientRecordAddress,
   },
   props: {
     record: {

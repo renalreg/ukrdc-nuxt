@@ -42,7 +42,7 @@ import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
 import PatientRecordSurveyViewer from "~/components/PatientRecordSurveyViewer.vue";
 import useApi from "~/composables/useApi";
 import { formatDate } from "~/helpers/dateUtils";
-import { surveyViewerModalInterface } from "~/interfaces/modal";
+import { SurveyViewerModalInterface } from "~/interfaces/modal";
 
 export default defineComponent({
   components: {
@@ -61,7 +61,7 @@ export default defineComponent({
     const { patientRecordsApi } = useApi();
 
     // Element refs
-    const surveyViewerModal = ref<surveyViewerModalInterface>();
+    const surveyViewerModal = ref<SurveyViewerModalInterface>();
 
     // Data refs
     const surveys = ref<SurveySchema[]>();

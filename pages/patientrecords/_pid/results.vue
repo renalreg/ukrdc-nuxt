@@ -132,7 +132,7 @@ import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";
 import useApi from "~/composables/useApi";
 import { formatDate } from "~/helpers/dateUtils";
-import { modalInterface } from "~/interfaces/modal";
+import { ModalInterface } from "~/interfaces/modal";
 
 export default defineComponent({
   components: {
@@ -216,8 +216,8 @@ export default defineComponent({
 
     // Data deletion
 
-    const deleteResultAlert = ref<modalInterface>();
-    const deleteOrderAlert = ref<modalInterface>();
+    const deleteResultAlert = ref<ModalInterface>();
+    const deleteOrderAlert = ref<ModalInterface>();
 
     const itemToDelete = ref<ResultItemSchema | null>(null);
 
