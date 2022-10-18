@@ -1,7 +1,7 @@
 <template>
   <router-link v-if="to" v-slot="{ navigate }" custom :to="to">
     <button
-      v-tooltip="{ content: tooltip, delay: { show: 500, hide: 0 } }"
+      v-tooltip="{ content: tooltip, delay: { show: 250, hide: 0 } }"
       :class="{ 'btn-disabled': disabled }"
       :disabled="disabled"
       :aria-label="label"
@@ -13,7 +13,7 @@
   </router-link>
   <button
     v-else
-    v-tooltip="{ content: tooltip, delay: { show: 500, hide: 0 } }"
+    v-tooltip="{ content: tooltip, delay: { show: 250, hide: 0 } }"
     :class="{ 'btn-disabled': disabled }"
     :disabled="disabled"
     :aria-label="label"

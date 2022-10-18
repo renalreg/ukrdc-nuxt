@@ -1,7 +1,7 @@
 <template>
   <NuxtLink
     v-if="to"
-    v-tooltip="{ content: tooltip, delay: { show: 500, hide: 0 } }"
+    v-tooltip="{ content: tooltip, delay: { show: 250, hide: 0 } }"
     :aria-label="label"
     type="button"
     :disabled="disabled"
@@ -20,7 +20,7 @@
   </NuxtLink>
   <button
     v-else
-    v-tooltip="{ content: tooltip, delay: { show: 500, hide: 0 } }"
+    v-tooltip="{ content: tooltip, delay: { show: 250, hide: 0 } }"
     :aria-label="label"
     type="button"
     :disabled="disabled"
