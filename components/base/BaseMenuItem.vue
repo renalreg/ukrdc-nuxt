@@ -1,8 +1,22 @@
 <template>
-  <router-link v-if="to" v-slot="{ navigate }" custom :to="to">
+  <span
+    v-if="disabled"
+    v-tooltip="{ content: tooltip, delay: { show: 250, hide: 0 } }"
+    class="menu-item-disabled"
+    role="menuitem"
+    :tabindex="disabled ? -1 : 0"
+  >
+    <slot />
+  </span>
+  <router-link
+    v-else-if="to"
+    v-slot="{ navigate }"
+    v-tooltip="{ content: tooltip, delay: { show: 250, hide: 0 } }"
+    custom
+    :to="to"
+  >
     <span
-      class="menu-item-base"
-      :class="classes"
+      class="menu-item"
       role="menuitem"
       :tabindex="disabled ? -1 : 0"
       @click="navigate"
@@ -13,10 +27,10 @@
   </router-link>
   <a
     v-else-if="href"
+    v-tooltip="{ content: tooltip, delay: { show: 250, hide: 0 } }"
     :href="href"
     :target="target"
-    class="menu-item-base"
-    :class="classes"
+    class="menu-item"
     role="menuitem"
     :tabindex="disabled ? -1 : 0"
   >
@@ -24,8 +38,8 @@
   </a>
   <span
     v-else
-    class="menu-item-base"
-    :class="classes"
+    v-tooltip="{ content: tooltip, delay: { show: 250, hide: 0 } }"
+    class="menu-item"
     role="menuitem"
     :tabindex="disabled ? -1 : 0"
     @click="
@@ -42,7 +56,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "@nuxtjs/composition-api";
+import { defineComponent } from "@nuxtjs/composition-api";
 
 export default defineComponent({
   props: {
@@ -66,25 +80,11 @@ export default defineComponent({
       required: false,
       default: null,
     },
-  },
-
-  setup(props) {
-    const classes = computed(() => {
-      if (props.disabled) {
-        return ["text-gray-400"];
-      } else {
-        return [
-          "text-gray-700",
-          "hover:bg-gray-100",
-          "hover:text-gray-900",
-          "focus:bg-indigo-100",
-          "focus:text-gray-900",
-          "cursor-pointer",
-        ];
-      }
-    });
-
-    return { classes };
+    tooltip: {
+      type: String,
+      required: false,
+      default: null,
+    },
   },
 });
 </script>
@@ -92,5 +92,11 @@ export default defineComponent({
 <style lang="postcss">
 .menu-item-base {
   @apply block px-4 py-2 text-sm;
+}
+.menu-item {
+  @apply menu-item-base cursor-pointer text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:bg-indigo-100 focus:text-gray-900;
+}
+.menu-item-disabled {
+  @apply menu-item-base cursor-default text-gray-400;
 }
 </style>
