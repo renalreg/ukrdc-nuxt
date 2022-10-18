@@ -16,9 +16,15 @@
           <BaseMenuItem v-if="showRadarSync" @click="exportRADAR"> Sync Record to RADAR </BaseMenuItem>
           <BaseMenuItem v-if="showPkbSync" @click="exportPKB"> Sync Record to PKB </BaseMenuItem>
         </div>
-        <div v-if="hasPermission('ukrdc:records:write') && demographicsUpdatable">
+        <div v-if="hasPermission('ukrdc:records:write')">
           <BaseMenuDivider />
-          <BaseMenuItem @click="$router.push(`/patientrecords/${item.pid}/update/demographics`)">
+          <BaseMenuItem
+            :disabled="!demographicsUpdatable"
+            :tooltip="
+              demographicsUpdatable ? undefined : 'Demographics cannot be directly modified for this record type'
+            "
+            @click="$router.push(`/patientrecords/${item.pid}/update/demographics`)"
+          >
             Edit Demographics
           </BaseMenuItem>
         </div>
