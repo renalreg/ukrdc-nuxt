@@ -1,31 +1,30 @@
 <template>
   <div>
-    <div class="overflow-visible">
-      <BaseCard class="mb-4 overflow-visible px-4 pt-4">
-        <SearchBar v-model="searchboxString" :focus="true" @submit="searchSubmit" />
-        <div class="mb-4 flex items-center">
-          <div class="flex flex-grow items-center gap-2">
-            <BaseCheckpill v-model="numberTypes" label="UKRDC" value="UKRDC" colour="red" />
-            <BaseCheckpill v-model="numberTypes" label="NHS" value="NHS" colour="blue" />
-            <BaseCheckpill v-model="numberTypes" label="CHI" value="CHI" colour="purple" />
-            <BaseCheckpill v-model="numberTypes" label="HSC" value="HSC" colour="green" />
-          </div>
-          <div>
-            <BaseCollapseHeader v-model="advancedOpen" label="More Options"></BaseCollapseHeader>
-          </div>
+    <BaseCard class="mb-4 !overflow-visible px-4 pt-4">
+      <SearchBar v-model="searchboxString" :focus="true" @submit="searchSubmit" />
+      <div class="mb-4 flex items-center">
+        <div class="flex flex-grow items-center gap-2">
+          <BaseCheckpill v-model="numberTypes" label="UKRDC" value="UKRDC" colour="red" />
+          <BaseCheckpill v-model="numberTypes" label="NHS" value="NHS" colour="blue" />
+          <BaseCheckpill v-model="numberTypes" label="CHI" value="CHI" colour="purple" />
+          <BaseCheckpill v-model="numberTypes" label="HSC" value="HSC" colour="green" />
         </div>
-        <div v-show="advancedOpen" class="mb-4 overflow-visible">
-          <BaseSelectSearchable
-            v-if="facilityIds.length > 1"
-            v-model="selectedFacility"
-            class="mb-4"
-            :options="facilityIds"
-            :labels="facilityLabels"
-            hint="Select a facility..."
-          />
+        <div>
+          <BaseCollapseHeader v-model="advancedOpen" label="More Options"></BaseCollapseHeader>
         </div>
-      </BaseCard>
-    </div>
+      </div>
+      <!-- More Options -->
+      <div v-show="advancedOpen">
+        <BaseSelectSearchable
+          v-if="facilityIds.length > 1"
+          v-model="selectedFacility"
+          class="mb-4"
+          :options="facilityIds"
+          :labels="facilityLabels"
+          hint="Select a facility..."
+        />
+      </div>
+    </BaseCard>
 
     <!-- If loading -->
     <div v-if="searchInProgress">
