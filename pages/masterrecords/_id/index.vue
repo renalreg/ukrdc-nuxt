@@ -81,7 +81,7 @@
     </div>
 
     <!-- Related Patient Records card -->
-    <BaseCard class="overflow-visible">
+    <BaseCard class="!overflow-visible">
       <BaseCardHeader>
         <h2>Patient Records</h2>
       </BaseCardHeader>
