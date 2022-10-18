@@ -82,7 +82,11 @@
         <h2>Related Work Items</h2>
       </BaseCardHeader>
       <ul class="divide-y divide-gray-200">
-        <WorkItemsListItem v-for="item in workItems" :key="item.id" :item="item" />
+        <div v-for="item in workItems" :key="item.id" :item="item" class="hover:bg-gray-50">
+          <NuxtLink :to="`/workitems/${item.id}`">
+            <WorkItemsListItem :item="item" />
+          </NuxtLink>
+        </div>
       </ul>
     </BaseCard>
 
