@@ -384,7 +384,7 @@ export default defineComponent({
         })
         .catch((error) => {
           $toast.show({
-            type: "error",
+            type: "danger",
             title: "Error",
             message: "Failed to update record demographics",
             timeout: 10,

@@ -119,7 +119,7 @@ export default defineComponent({
         .catch((error) => {
           // Notify of task error
           $toast.show({
-            type: "error",
+            type: "danger",
             title: "Error creating PKB membership",
             message: error.response.data.detail,
             timeout: 10,
