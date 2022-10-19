@@ -143,7 +143,7 @@ export default defineComponent({
       console.log(e);
       // Notify of task finished
       $toast.show({
-        type: "error",
+        type: "danger",
         title: "Export Failed",
         message: e.message,
         timeout: 10,
