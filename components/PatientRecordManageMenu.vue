@@ -139,12 +139,13 @@ export default defineComponent({
       });
     }
 
-    function showExportErrorToast() {
+    function showExportErrorToast(e: Error) {
+      console.log(e);
       // Notify of task finished
       $toast.show({
         type: "error",
         title: "Export Failed",
-        message: "Export failed",
+        message: e.message,
         timeout: 10,
         classTimeout: "bg-red-600",
       });
@@ -160,8 +161,8 @@ export default defineComponent({
             .then(() => {
               showExportSuccessToast();
             })
-            .catch(() => {
-              showExportErrorToast();
+            .catch((e) => {
+              showExportErrorToast(e);
             });
         })
         .finally(() => {
@@ -179,8 +180,8 @@ export default defineComponent({
             .then(() => {
               showExportSuccessToast();
             })
-            .catch(() => {
-              showExportErrorToast();
+            .catch((e) => {
+              showExportErrorToast(e);
             });
         })
         .finally(() => {
@@ -198,8 +199,8 @@ export default defineComponent({
             .then(() => {
               showExportSuccessToast();
             })
-            .catch(() => {
-              showExportErrorToast();
+            .catch((e) => {
+              showExportErrorToast(e);
             });
         })
         .finally(() => {
@@ -217,8 +218,8 @@ export default defineComponent({
             .then(() => {
               showExportSuccessToast();
             })
-            .catch(() => {
-              showExportErrorToast();
+            .catch((e) => {
+              showExportErrorToast(e);
             });
         })
         .finally(() => {
@@ -236,8 +237,8 @@ export default defineComponent({
             .then(() => {
               showExportSuccessToast();
             })
-            .catch(() => {
-              showExportErrorToast();
+            .catch((e) => {
+              showExportErrorToast(e);
             });
         })
         .finally(() => {
