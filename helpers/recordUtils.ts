@@ -2,6 +2,7 @@ import { NumberSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-
 
 const membershipFacilities = ["UKRR", "PV", "PKB"];
 const migratedExtracts = ["PVMIG", "HSMIG"];
+const informationalFacilities = ["TRACING", "NHSBT"];
 
 /*
   Notation: 
@@ -30,7 +31,7 @@ export function isMigrated(record: PatientRecordSummarySchema) {
 
 export function isInformational(record: PatientRecordSummarySchema) {
   // All informaitonal records, such as TRACING or NHSBT
-  return record.sendingfacility === "TRACING" || record.sendingfacility === "NHSBT";
+  return informationalFacilities.includes(record.sendingfacility);
 }
 
 export function isTracing(record: PatientRecordSummarySchema) {
