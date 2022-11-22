@@ -7,7 +7,7 @@
       :class="{ 'btn-disabled': !hasPkbMembership || syncInProgress }"
       @click="exportAllToPKB"
     >
-      <IconArrowPath class="inline text-gray-800" />
+      <IconCloudArrowUp class="inline text-gray-800" />
       Sync to PKB
     </BaseButtonMini>
   </div>
@@ -18,14 +18,14 @@ import { computed, defineComponent, ref, useContext } from "@nuxtjs/composition-
 import { PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
-import IconArrowPath from "~/components/icons/hero/20/solid/IconArrowPath.vue";
+import IconCloudArrowUp from "~/components/icons/hero/20/solid/IconCloudArrowUp.vue";
 import usePermissions from "~/composables/usePermissions";
 import useRecordExport from "~/composables/useRecordExport";
 
 export default defineComponent({
   components: {
     BaseButtonMini,
-    IconArrowPath,
+    IconCloudArrowUp,
   },
   props: {
     records: {
