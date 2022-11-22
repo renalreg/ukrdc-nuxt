@@ -1,6 +1,6 @@
 import { NumberSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 
-const ukrdcMembershipFacilities = ["PV", "PKB"];
+const membershipFacilities = ["UKRR", "PV", "PKB"];
 const migratedExtracts = ["PVMIG", "HSMIG"];
 
 /*
@@ -39,16 +39,8 @@ export function isTracing(record: PatientRecordSummarySchema) {
 }
 
 export function isMembership(record: PatientRecordSummarySchema) {
-  // All RADAR extracts are membership records
-  if (record.sendingextract === "RADAR") {
-    return true;
-  }
-  // All UKRR facilities are membership records
-  if (record.sendingfacility === "UKRR") {
-    return true;
-  }
   // UKRDC extracts are only memberships if they are from certain facilities
-  if (record.sendingextract === "UKRDC" && ukrdcMembershipFacilities.includes(record.sendingfacility)) {
+  if (membershipFacilities.includes(record.sendingfacility) || record.sendingextract === "RADAR") {
     return true;
   }
   return false;
