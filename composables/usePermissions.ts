@@ -1,4 +1,5 @@
 import { computed } from "@nuxtjs/composition-api";
+
 import useAuth, { UKRDCClaims, UKRDCJWTObject } from "./useAuth";
 
 export default function () {

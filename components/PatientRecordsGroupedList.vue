@@ -1,15 +1,22 @@
 <template>
   <ul class="divide-y divide-gray-200">
     <div v-if="groupedRecords.data.length > 0" class="patientrecords-list-header">
-      <h4>Data feeds</h4>
+      <h4 class="flex-grow">Data feeds</h4>
+      <div class="mr-2 flex-grow-0">
+        <PatientRecordSyncAllMenu
+          :records="groupedRecords.data"
+          :has-pkb-membership="hasPKBMembership"
+          @refresh="$emit('refresh')"
+        />
+      </div>
     </div>
     <PatientRecordsListItem
       v-for="item in groupedRecords.data"
       :key="item.pid + '_data'"
       :item="item"
-      :show-pv-sync="hasPVMembership && item.sendingfacility !== 'NHSBT'"
-      :show-radar-sync="hasRADARMembership && item.sendingfacility !== 'NHSBT'"
-      :show-pkb-sync="hasPKBMembership && item.sendingfacility !== 'NHSBT'"
+      :show-pv-sync="hasPVMembership"
+      :show-radar-sync="hasRADARMembership"
+      :show-pkb-sync="hasPKBMembership"
       @deleted="$emit('refresh')"
     />
 
@@ -59,12 +66,22 @@
       @deleted="$emit('refresh')"
     />
 
-    <div v-if="groupedRecords.tracing.length > 0" class="patientrecords-list-header">
-      <h4>Tracing Records</h4>
+    <div v-if="groupedRecords.ukrr.length > 0" class="patientrecords-list-header">
+      <h4>Registry Data Records</h4>
     </div>
     <PatientRecordsListItem
-      v-for="item in groupedRecords.tracing"
-      :key="item.pid + '_tracing'"
+      v-for="item in groupedRecords.ukrr"
+      :key="item.pid + '_ukrr'"
+      :item="item"
+      @deleted="$emit('refresh')"
+    />
+
+    <div v-if="groupedRecords.informational.length > 0" class="patientrecords-list-header">
+      <h4>Informational Records</h4>
+    </div>
+    <PatientRecordsListItem
+      v-for="item in groupedRecords.informational"
+      :key="item.pid + '_informational'"
       :item="item"
       @deleted="$emit('refresh')"
     />
@@ -77,21 +94,24 @@ import { MasterRecordSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-
 
 import PatientRecordMembershipsMenu from "~/components/PatientRecordMembershipsMenu.vue";
 import PatientRecordsListItem from "~/components/PatientRecordsListItem.vue";
+import PatientRecordSyncAllMenu from "~/components/PatientRecordSyncAllMenu.vue";
 import usePermissions from "~/composables/usePermissions";
-import { isData, isMembership, isMigrated, isSurvey, isTracing } from "~/helpers/recordUtils";
+import { isData, isInformational, isMembership, isMigrated, isSurvey, isUKRR } from "~/helpers/recordUtils";
 
 interface PRGroups {
   data: PatientRecordSummarySchema[];
   surveys: PatientRecordSummarySchema[];
   migrated: PatientRecordSummarySchema[];
   memberships: PatientRecordSummarySchema[];
-  tracing: PatientRecordSummarySchema[];
+  ukrr: PatientRecordSummarySchema[];
+  informational: PatientRecordSummarySchema[];
 }
 
 export default defineComponent({
   components: {
     PatientRecordsListItem,
     PatientRecordMembershipsMenu,
+    PatientRecordSyncAllMenu,
   },
   props: {
     masterRecord: {
@@ -113,7 +133,8 @@ export default defineComponent({
           surveys: [],
           migrated: [],
           memberships: [],
-          tracing: [],
+          ukrr: [],
+          informational: [],
         } as PRGroups;
       }
 
@@ -122,7 +143,8 @@ export default defineComponent({
         surveys: props.records.filter(isSurvey),
         migrated: props.records.filter(isMigrated),
         memberships: props.records.filter(isMembership),
-        tracing: props.records.filter(isTracing),
+        ukrr: props.records.filter(isUKRR),
+        informational: props.records.filter(isInformational),
       } as PRGroups;
     });
 
