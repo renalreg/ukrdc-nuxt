@@ -24,6 +24,7 @@ import { FacilityDetailsSchema, FacilityExtractsSchema } from "@ukkidney/ukrdc-a
 
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import BaseTabsNavigation from "~/components/base/BaseTabsNavigation.vue";
+import DashboardAlerts from "~/components/DashboardAlerts.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import { insertIf } from "~/helpers/arrayUtils";
@@ -31,6 +32,7 @@ import { TabItem } from "~/interfaces/tabs";
 
 export default defineComponent({
   components: {
+    DashboardAlerts,
     BaseSkeleText,
     BaseTabsNavigation,
   },

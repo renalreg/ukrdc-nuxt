@@ -1,7 +1,8 @@
 import { NumberSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 
-const ukrdcMembershipFacilities = ["PV", "PKB"];
+const membershipFacilities = ["UKRR", "PV", "PKB"];
 const migratedExtracts = ["PVMIG", "HSMIG"];
+const informationalFacilities = ["TRACING", "NHSBT"];
 
 /*
   Notation: 
@@ -15,39 +16,32 @@ export interface localNumber {
 
 export function isSurvey(record: PatientRecordSummarySchema): boolean {
   // All SURVEY extracts are survey records
-  if (record.sendingextract === "SURVEY") {
-    return true;
-  }
-  return false;
+  return record.sendingextract === "SURVEY";
+}
+
+export function isUKRR(record: PatientRecordSummarySchema): boolean {
+  // All UKRR extracts are UKRR records, unless sendingfacility is UKRR (then it's a membership)
+  return record.sendingextract === "UKRR" && record.sendingfacility !== "UKRR";
 }
 
 export function isMigrated(record: PatientRecordSummarySchema) {
   // All *MIG extracts are migrated records
-  if (migratedExtracts.includes(record.sendingextract)) {
-    return true;
-  }
-  return false;
+  return migratedExtracts.includes(record.sendingextract);
+}
+
+export function isInformational(record: PatientRecordSummarySchema) {
+  // All informaitonal records, such as TRACING or NHSBT
+  return informationalFacilities.includes(record.sendingfacility);
 }
 
 export function isTracing(record: PatientRecordSummarySchema) {
-  // All TRACING facilities are tracing records
-  if (record.sendingfacility === "TRACING") {
-    return true;
-  }
-  return false;
+  // Specifically TRACING records
+  return record.sendingfacility === "TRACING";
 }
 
 export function isMembership(record: PatientRecordSummarySchema) {
-  // All RADAR extracts are membership records
-  if (record.sendingextract === "RADAR") {
-    return true;
-  }
-  // All UKRR facilities are membership records
-  if (record.sendingfacility === "UKRR") {
-    return true;
-  }
   // UKRDC extracts are only memberships if they are from certain facilities
-  if (record.sendingextract === "UKRDC" && ukrdcMembershipFacilities.includes(record.sendingfacility)) {
+  if (membershipFacilities.includes(record.sendingfacility) || record.sendingextract === "RADAR") {
     return true;
   }
   return false;
@@ -55,7 +49,7 @@ export function isMembership(record: PatientRecordSummarySchema) {
 
 export function isData(record: PatientRecordSummarySchema): boolean {
   // Everything else is a data record
-  return !(isSurvey(record) || isMigrated(record) || isTracing(record) || isMembership(record));
+  return !(isSurvey(record) || isUKRR(record) || isMigrated(record) || isInformational(record) || isMembership(record));
 }
 
 // General record utilities
