@@ -16,12 +16,12 @@
       title="PKB Membership Created"
       confirm-label="Go back to records"
     >
-      <p><b>No data has been automatically sent</b></p>
-      <p class="mt-4">
-        To send data, click <b>Sync Record to PKB</b> from a patient record's menu (<IconEllipsisVertical
-          class="inline text-gray-600"
-        />)
-      </p>
+      <p class="mb-4"><b>No data has been automatically sent</b></p>
+      <p>To send data, click</p>
+      <div class="my-1 flex items-center justify-center gap-2">
+        <IconCloudArrowUp class="inline text-gray-800" /><b>Sync to PKB</b>
+      </div>
+      <p>from the Data Feeds section</p>
     </BaseModalSuccess>
 
     <div v-click-away="closeMenu" class="relative flex items-center justify-self-end">
@@ -55,8 +55,8 @@ import BaseMenu from "~/components/base/BaseMenu.vue";
 import BaseMenuItem from "~/components/base/BaseMenuItem.vue";
 import BaseModalConfirm from "~/components/base/BaseModalConfirm.vue";
 import BaseModalSuccess from "~/components/base/BaseModalSuccess.vue";
+import IconCloudArrowUp from "~/components/icons/hero/20/solid/IconCloudArrowUp.vue";
 import IconPlus from "~/components/icons/hero/20/solid/IconPlus.vue";
-import IconEllipsisVertical from "~/components/icons/hero/24/solid/IconEllipsisVertical.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import { ModalInterface } from "~/interfaces/modal";
@@ -69,7 +69,7 @@ export default defineComponent({
     BaseModalSuccess,
     BaseModalConfirm,
     IconPlus,
-    IconEllipsisVertical,
+    IconCloudArrowUp,
   },
   props: {
     masterRecord: {
