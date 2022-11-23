@@ -47,7 +47,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
+import { computed, defineComponent, ref, useContext } from "@nuxtjs/composition-api";
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
@@ -91,10 +91,6 @@ export default defineComponent({
 
     const createPkbMembershipConfirm = ref<ModalInterface>();
     const createPkbMembershipSuccess = ref<ModalInterface>();
-
-    onMounted(() => {
-      createPkbMembershipSuccess.value?.show();
-    });
 
     // Data refs
 
