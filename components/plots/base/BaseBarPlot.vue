@@ -42,6 +42,11 @@ export default defineComponent({
       required: false,
       default: true,
     },
+    orientation: {
+      type: String as () => "v" | "h",
+      required: false,
+      default: "v",
+    },
     id: {
       type: String,
       default: "bar",
@@ -51,9 +56,10 @@ export default defineComponent({
   setup(props) {
     const data: Data[] = [
       {
-        x: props.x as number[] | string[],
-        y: props.y as number[],
+        x: (props.orientation === "h" ? props.y : props.x) as number[] | string[],
+        y: (props.orientation === "h" ? props.x : props.y) as number[],
         type: "bar",
+        orientation: props.orientation as "v" | "h",
         marker: {
           color: tailwindColours.indigo[400],
           opacity: 0.7,
@@ -70,18 +76,20 @@ export default defineComponent({
     const layout = {
       autosize: true,
       bargap: 0.3,
-      margin: { l: props.yLabel ? 60 : 40, t: 10, r: 10, b: props.xLabel ? 30 : 10 },
+      margin: { t: 10, r: 10, b: 20, l: 20 },
       xaxis: {
-        title: props.xLabel,
+        title: props.orientation === "h" ? props.yLabel : props.xLabel,
         fixedrange: props.fixedrange,
+        automargin: true,
         titlefont: {
           size: 12,
           color: tailwindColours.gray[600],
         },
       },
       yaxis: {
-        title: props.yLabel,
+        title: props.orientation === "h" ? props.xLabel : props.yLabel,
         fixedrange: props.fixedrange,
+        automargin: true,
         titlefont: {
           size: 12,
           color: tailwindColours.gray[600],

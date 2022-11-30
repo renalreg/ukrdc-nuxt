@@ -65,7 +65,7 @@
     <!-- Record message banners -->
     <div>
       <div v-if="latestMessage === undefined">
-        <BaseAlertPlaceholder class="mb-4" />
+        <AlertFilePlaceholder class="mb-4" />
       </div>
       <div v-if="latestMessage === null">
         <BaseAlertWarning class="mb-4" message="No new patient data received in the last year" />
@@ -132,9 +132,9 @@ import {
   PatientRecordSummarySchema,
 } from "@ukkidney/ukrdc-axios-ts";
 
+import AlertFilePlaceholder from "~/components/AlertFilePlaceholder.vue";
 import BaseAlertError from "~/components/base/BaseAlertError.vue";
 import BaseAlertInfo from "~/components/base/BaseAlertInfo.vue";
-import BaseAlertPlaceholder from "~/components/base/BaseAlertPlaceholder.vue";
 import BaseAlertWarning from "~/components/base/BaseAlertWarning.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
@@ -161,7 +161,7 @@ export default defineComponent({
     BaseDescriptionListGridItem,
     BaseAlertError,
     BaseAlertInfo,
-    BaseAlertPlaceholder,
+    AlertFilePlaceholder,
     BaseAlertWarning,
     TracingBadge,
     MasterRecordsListItem,

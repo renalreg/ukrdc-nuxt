@@ -64,6 +64,7 @@ export default defineComponent({
         ...insertIf(showStats.value, {
           name: "Statistics",
           href: `/facilities/${route.value.params.code}/statistics`,
+          hasChildren: true,
         }),
       ];
     });

@@ -4,11 +4,11 @@
     <BaseCardHeader class="flex items-center">
       <div class="flex-1">
         <div class="flex gap-2">
-          <h2>{{ labelled2d.metadata.title }}</h2>
+          <h2>{{ labelled2d ? labelled2d.metadata.title : "" }}</h2>
         </div>
         <div class="flex items-center gap-2">
-          <h6>{{ labelled2d.metadata.summary || "No plot summary available" }}</h6>
-          <BaseMarkdownDescriptionTooltip :description-markdown="labelled2d.metadata.description" />
+          <h6>{{ labelled2d ? labelled2d.metadata.summary : "" }}</h6>
+          <BaseMarkdownDescriptionTooltip v-if="labelled2d" :description-markdown="labelled2d.metadata.description" />
         </div>
       </div>
       <BaseButtonMini v-if="labelled2d" @click="exportData">Export</BaseButtonMini>
@@ -23,7 +23,8 @@
       :hoverinfo="hoverinfo"
       :hovertemplate="hovertemplate"
       :fixedrange="fixedrange"
-      class="h-72"
+      :orientation="orientation"
+      class="m-2 h-72"
     />
     <BaseSkeleImage v-else class="h-72 w-full" />
   </BaseCard>
@@ -76,6 +77,11 @@ export default defineComponent({
       type: Boolean,
       required: false,
       default: true,
+    },
+    orientation: {
+      type: String as () => "v" | "h",
+      required: false,
+      default: "v",
     },
     id: {
       type: String,
