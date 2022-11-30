@@ -10,11 +10,11 @@ import { plotColours } from "~/helpers/colourUtils";
 
 export default defineComponent({
   props: {
-    data: {
+    x: {
       type: Array,
       default: null,
     },
-    labels: {
+    y: {
       type: Array,
       default: null,
     },
@@ -37,8 +37,8 @@ export default defineComponent({
   setup(props) {
     const data: Data[] = [
       {
-        values: props.data as number[],
-        labels: props.labels as string[],
+        values: props.y as number[],
+        labels: props.x as string[],
         type: "pie",
         marker: {
           colors: props.colors as string[],

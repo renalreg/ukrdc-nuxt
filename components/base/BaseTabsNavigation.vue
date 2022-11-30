@@ -10,33 +10,32 @@
         </option>
       </BaseSelect>
     </div>
-    <div class="hidden sm:block">
-      <div class="border-b border-gray-200">
-        <nav class="-mb-px flex space-x-6" aria-label="Tabs">
-          <NuxtLink
-            v-for="tab in tabs"
-            :key="tab.name"
-            :to="tab.href"
-            role="tab"
-            class="whitespace-nowrap border-b-2 py-4 px-1 font-medium"
-            :class="[
-              urlCompare($route.path, tab.href)
-                ? 'border-indigo-500 text-indigo-600'
-                : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
-            ]"
-            :aria-current="urlCompare($route.path, tab.href) ? 'page' : undefined"
-            @click="$emit('input', tab)"
-          >
-            {{ tab.name }}
-          </NuxtLink>
-        </nav>
-      </div>
+    <div class="hidden sm:block" :class="{ 'tab-container-primary': !mini }">
+      <nav class="-mb-px flex space-x-6" aria-label="Tabs">
+        <NuxtLink
+          v-for="tab in tabs"
+          :key="tab.name"
+          :to="tab.href"
+          role="tab"
+          :class="[
+            mini ? 'tab-base-mini' : 'tab-base-primary',
+            { 'tab-active-mini': tabIsActive(tab) && mini },
+            { 'tab-active-primary': tabIsActive(tab) && !mini },
+            { 'tab-inactive-mini': !tabIsActive(tab) && mini },
+            { 'tab-inactive-primary': !tabIsActive(tab) && !mini },
+          ]"
+          :aria-current="tabIsActive(tab) ? 'page' : undefined"
+          @click="$emit('input', tab)"
+        >
+          {{ tab.name }}
+        </NuxtLink>
+      </nav>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useRouter } from "@nuxtjs/composition-api";
+import { defineComponent, ref, useRoute, useRouter } from "@nuxtjs/composition-api";
 
 import BaseSelect from "~/components/base/BaseSelect.vue";
 import { urlCompare } from "~/helpers/pathUtils";
@@ -53,18 +52,58 @@ export default defineComponent({
       type: Array as () => Tabs[],
       required: true,
     },
+    mini: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   setup(_, { emit }) {
     const router = useRouter();
+    const route = useRoute();
 
     const selectEl = ref<HTMLFormElement>();
+
+    function tabIsActive(tab: Tabs) {
+      return urlCompare(route.value.path, tab.href);
+    }
 
     function switchTab(href: string) {
       router.push({ path: href });
       emit("input", href);
     }
 
-    return { selectEl, switchTab, urlCompare };
+    return { selectEl, tabIsActive, switchTab, urlCompare };
   },
 });
 </script>
+
+<style scoped lang="postcss">
+.tab-container-primary {
+  @apply border-b border-gray-200;
+}
+
+.tab-base-primary {
+  @apply whitespace-nowrap border-b-2 py-4 px-1 font-medium;
+}
+
+.tab-active-primary {
+  @apply border-indigo-500 text-indigo-600;
+}
+
+.tab-inactive-primary {
+  @apply border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700;
+}
+
+.tab-base-mini {
+  @apply rounded-md px-3 py-2 font-medium capitalize;
+}
+
+.tab-active-mini {
+  @apply bg-indigo-100 text-indigo-700;
+}
+
+.tab-inactive-mini {
+  @apply text-gray-500 hover:text-gray-700;
+}
+</style>

@@ -35,7 +35,7 @@ export default defineComponent({
       // Note https://community.plotly.com/t/remove-trace-0-next-to-hover/33731/2
       type: String,
       required: false,
-      default: undefined,
+      default: "<extra></extra>",
     },
     fixedrange: {
       type: Boolean,

@@ -1,6 +1,6 @@
 <template>
   <div class="mb-2">
-    <TimeSeriesLinePlot
+    <BaseTimeSeriesLinePlot
       v-if="facilityErrorsHistory"
       class="h-64"
       :x="facilityErrorsHistoryData.x"
@@ -19,13 +19,13 @@ import { FacilityDetailsSchema, HistoryPoint } from "@ukkidney/ukrdc-axios-ts";
 import { PlotDatum } from "plotly.js";
 
 import BaseSkeleImage from "~/components/base/BaseSkeleImage.vue";
-import TimeSeriesLinePlot from "~/components/plots/TimeSeriesLinePlot.vue";
+import BaseTimeSeriesLinePlot from "~/components/plots/base/BaseTimeSeriesLinePlot.vue";
 import useApi from "~/composables/useApi";
 import { getPointDateRange, unpackHistoryPoints } from "~/helpers/chartUtils";
 
 export default defineComponent({
   components: {
-    TimeSeriesLinePlot,
+    BaseTimeSeriesLinePlot,
     BaseSkeleImage,
   },
   props: {

@@ -51,17 +51,6 @@ export default defineComponent({
 
     // Navigation
 
-    // const tabs = [
-    //   {
-    //     name: "Overview",
-    //     href: `/facilities/${route.value.params.code}`,
-    //   },
-    //   {
-    //     name: "Errors",
-    //     href: `/facilities/${route.value.params.code}/errors`,
-    //   },
-    // ] as TabItem[];
-
     const tabs = computed<TabItem[]>(() => {
       return [
         {
@@ -73,8 +62,8 @@ export default defineComponent({
           href: `/facilities/${route.value.params.code}/errors`,
         },
         ...insertIf(showStats.value, {
-          name: "Demographics",
-          href: `/facilities/${route.value.params.code}/demographics`,
+          name: "Statistics",
+          href: `/facilities/${route.value.params.code}/statistics`,
         }),
       ];
     });

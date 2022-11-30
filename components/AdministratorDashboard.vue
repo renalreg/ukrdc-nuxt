@@ -58,7 +58,7 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
         <BaseCardHeader>
           <h2>Error History</h2>
         </BaseCardHeader>
-        <TimeSeriesLinePlot
+        <BaseTimeSeriesLinePlot
           v-if="errorsHistory"
           id="error-history-time-series"
           class="h-64"
@@ -75,7 +75,7 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
         <BaseCardHeader>
           <h2>Work Items History</h2>
         </BaseCardHeader>
-        <TimeSeriesLinePlot
+        <BaseTimeSeriesLinePlot
           v-if="workitemsHistory"
           id="workitem-history-time-series"
           class="h-64"
@@ -104,7 +104,7 @@ import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import IconExclamationTriangle from "~/components/icons/hero/24/outline/IconExclamationTriangle.vue";
 import IconLink from "~/components/icons/hero/24/outline/IconLink.vue";
 import IconUsers from "~/components/icons/hero/24/outline/IconUsers.vue";
-import TimeSeriesLinePlot from "~/components/plots/TimeSeriesLinePlot.vue";
+import BaseTimeSeriesLinePlot from "~/components/plots/base/BaseTimeSeriesLinePlot.vue";
 import useApi from "~/composables/useApi";
 import { getPointDateRange, unpackHistoryPoints } from "~/helpers/chartUtils";
 
@@ -118,7 +118,7 @@ export default defineComponent({
     IconExclamationTriangle,
     IconLink,
     IconUsers,
-    TimeSeriesLinePlot,
+    BaseTimeSeriesLinePlot,
   },
   setup() {
     const router = useRouter();
