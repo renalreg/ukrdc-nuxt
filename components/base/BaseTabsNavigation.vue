@@ -38,18 +38,14 @@
 import { defineComponent, ref, useRoute, useRouter } from "@nuxtjs/composition-api";
 
 import BaseSelect from "~/components/base/BaseSelect.vue";
-import { urlCompare } from "~/helpers/pathUtils";
-
-export interface Tabs {
-  name: string;
-  href: string;
-}
+import { urlCompare, urlStartsWith } from "~/helpers/pathUtils";
+import { TabItem } from "~/interfaces/tabs";
 
 export default defineComponent({
   components: { BaseSelect },
   props: {
     tabs: {
-      type: Array as () => Tabs[],
+      type: Array as () => TabItem[],
       required: true,
     },
     mini: {
@@ -64,7 +60,10 @@ export default defineComponent({
 
     const selectEl = ref<HTMLFormElement>();
 
-    function tabIsActive(tab: Tabs) {
+    function tabIsActive(tab: TabItem) {
+      if (tab.hasChildren) {
+        return urlStartsWith(route.value.path, tab.href);
+      }
       return urlCompare(route.value.path, tab.href);
     }
 
@@ -73,7 +72,7 @@ export default defineComponent({
       emit("input", href);
     }
 
-    return { selectEl, tabIsActive, switchTab, urlCompare };
+    return { selectEl, tabIsActive, switchTab };
   },
 });
 </script>
