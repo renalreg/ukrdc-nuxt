@@ -4,8 +4,8 @@
   <div>
     <div class="sm:hidden">
       <label for="tabs" class="sr-only">Select a tab</label>
-      <BaseSelect id="tabs" ref="selectEl" name="tabs" :value="$route.path" @change="switchTab">
-        <option v-for="tab in tabs" :key="tab.name" :value="tab.href">
+      <BaseSelect id="tabs" ref="selectEl" name="tabs" :value="selectedHref" @change="switchTab">
+        <option v-for="tab in tabs" :key="tab.name" :value="tab.href" :selected="tabIsActive(tab)">
           {{ tab.name }}
         </option>
       </BaseSelect>
@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useRoute, useRouter } from "@nuxtjs/composition-api";
+import { computed, defineComponent, ref, useRoute, useRouter } from "@nuxtjs/composition-api";
 
 import BaseSelect from "~/components/base/BaseSelect.vue";
 import { urlCompare, urlStartsWith } from "~/helpers/pathUtils";
@@ -53,12 +53,29 @@ export default defineComponent({
       required: false,
       default: false,
     },
+    id: {
+      type: String,
+      required: false,
+      default: "tabs",
+    },
   },
-  setup(_, { emit }) {
+  setup(props, { emit }) {
     const router = useRouter();
     const route = useRoute();
 
     const selectEl = ref<HTMLFormElement>();
+
+    const selectedHref = computed(() => {
+      // We need to allow our BaseSelect component's current value to account for tabs having children,
+      // so we use tabIsActive to find the current active tab, and set the value to that.
+      // Without this, any href tab items with children will break the currently selected tab in
+      // the select/option UI for these tabs.
+      for (const tab of props.tabs) {
+        if (tabIsActive(tab)) {
+          return tab.href;
+        }
+      }
+    });
 
     function tabIsActive(tab: TabItem) {
       if (tab.hasChildren) {
@@ -72,7 +89,7 @@ export default defineComponent({
       emit("input", href);
     }
 
-    return { selectEl, tabIsActive, switchTab };
+    return { selectEl, selectedHref, tabIsActive, switchTab };
   },
 });
 </script>
