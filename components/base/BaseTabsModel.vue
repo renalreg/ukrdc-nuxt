@@ -1,21 +1,18 @@
-<!-- Tabs component formatted as a tab line. Tab elements include a name and href, and trigger router navigation on click. -->
+<!-- Tabs component formatted as floating buttons. 'input' event emitted on tab switch. -->
 
 <template>
   <div>
     <div class="sm:hidden">
       <label for="tabs" class="sr-only">Select a tab</label>
       <BaseSelect id="tabs" ref="selectEl" name="tabs" :value="$route.path" @change="switchTab">
-        <option v-for="tab in tabs" :key="tab.name" :value="tab.href">
-          {{ tab.name }}
-        </option>
+        <option v-for="tab in tabs" :key="tab">{{ tab }}</option>
       </BaseSelect>
     </div>
     <div class="hidden sm:block" :class="{ 'tab-container-primary': !mini }">
       <nav class="flex" :class="[mini ? 'tab-nav-mini' : 'tab-nav-primary']" aria-label="Tabs">
-        <NuxtLink
+        <button
           v-for="tab in tabs"
-          :key="tab.name"
-          :to="tab.href"
+          :key="tab"
           role="tab"
           :class="[
             mini ? 'tab-base-mini' : 'tab-base-primary',
@@ -24,33 +21,33 @@
             { 'tab-inactive-mini': !tabIsActive(tab) && mini },
             { 'tab-inactive-primary': !tabIsActive(tab) && !mini },
           ]"
-          :aria-current="tabIsActive(tab) ? 'page' : undefined"
-          @click="$emit('input', tab)"
+          :aria-selected="tabIsActive(tab)"
+          @click="switchTab(tab)"
         >
-          {{ tab.name }}
-        </NuxtLink>
+          {{ tab }}
+        </button>
       </nav>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useRoute, useRouter } from "@nuxtjs/composition-api";
-
-import BaseSelect from "~/components/base/BaseSelect.vue";
-import { urlCompare } from "~/helpers/pathUtils";
-
-export interface Tabs {
-  name: string;
-  href: string;
-}
+import { defineComponent, ref } from "@nuxtjs/composition-api";
 
 export default defineComponent({
-  components: { BaseSelect },
+  model: {
+    prop: "value",
+    event: "input",
+  },
   props: {
     tabs: {
-      type: Array as () => Tabs[],
+      type: Array as () => string[],
       required: true,
+    },
+    value: {
+      type: String,
+      required: false,
+      default: "",
     },
     mini: {
       type: Boolean,
@@ -58,22 +55,18 @@ export default defineComponent({
       default: false,
     },
   },
-  setup(_, { emit }) {
-    const router = useRouter();
-    const route = useRoute();
-
+  setup(props, { emit }) {
     const selectEl = ref<HTMLFormElement>();
 
-    function tabIsActive(tab: Tabs) {
-      return urlCompare(route.value.path, tab.href);
+    function tabIsActive(tab: String) {
+      return props.value === tab;
     }
 
-    function switchTab(href: string) {
-      router.push({ path: href });
-      emit("input", href);
+    function switchTab(value: string) {
+      emit("input", value);
     }
 
-    return { selectEl, tabIsActive, switchTab, urlCompare };
+    return { selectEl, tabIsActive, switchTab };
   },
 });
 </script>
