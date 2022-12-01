@@ -4,17 +4,18 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from "@nuxtjs/composition-api";
+import { Vertices } from "@ukkidney/ukrdc-axios-ts";
 import { Data, newPlot } from "plotly.js";
 
 import { plotColours } from "~/helpers/colourUtils";
 
 export default defineComponent({
   props: {
-    data: {
-      type: Array,
+    link: {
+      type: Object as () => Vertices,
       default: null,
     },
-    labels: {
+    label: {
       type: Array,
       default: null,
     },
@@ -24,10 +25,6 @@ export default defineComponent({
         return plotColours;
       },
     },
-    legend: {
-      type: Boolean,
-      default: true,
-    },
     id: {
       type: String,
       default: "doughnut",
@@ -35,28 +32,30 @@ export default defineComponent({
   },
 
   setup(props) {
+    // NOTE:  We need to coerce `data` here into Data type because the
+    //        Plotly type definitions don't seem to know about Sankey plots
     const data: Data[] = [
       {
-        values: props.data as number[],
-        labels: props.labels as string[],
-        type: "pie",
-        marker: {
-          colors: props.colors as string[],
+        type: "sankey",
+        orientation: "h",
+        node: {
+          pad: 15,
+          thickness: 30,
+          line: {
+            color: "black",
+            width: 0.5,
+          },
+          color: props.colors as string[],
+          label: props.label,
         },
-        hoverinfo: "label+value",
-        textinfo: "none",
-        hole: 0.5,
-      },
+
+        link: props.link,
+      } as Data,
     ];
 
     const layout = {
       autosize: true,
-      margin: { l: 10, t: 10, r: 10, b: 10 },
-      showlegend: props.legend,
-      legend: {
-        x: 1,
-        y: 0.5,
-      },
+      margin: { l: 20, t: 20, r: 20, b: 20 },
     };
 
     const config = { responsive: true };

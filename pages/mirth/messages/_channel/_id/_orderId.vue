@@ -38,7 +38,7 @@
       </BaseCardContent>
     </BaseCard>
 
-    <div class="mb-6"><BaseTabsMini v-model="currentTab" :tabs="tabs" /></div>
+    <div class="mb-6"><BaseTabsModel v-model="currentTab" :tabs="tabs" :mini="true" /></div>
     <div class="flex-1">
       <div v-if="currentTab == 'metadata'" id="viewerMetadata">
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
@@ -78,7 +78,7 @@ import BaseCodeReader from "~/components/base/BaseCodeReader.vue";
 import BaseDescriptionListGrid from "~/components/base/BaseDescriptionListGrid.vue";
 import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGridItem.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
-import BaseTabsMini from "~/components/base/BaseTabsMini.vue";
+import BaseTabsModel from "~/components/base/BaseTabsModel.vue";
 import { connectorMessageError } from "~/helpers/mirthUtils";
 
 interface ConnectorMessageDataTabs {
@@ -96,7 +96,7 @@ export default defineComponent({
     BaseDescriptionListGrid,
     BaseDescriptionListGridItem,
     BaseCodeReader,
-    BaseTabsMini,
+    BaseTabsModel,
   },
   props: {
     message: {
