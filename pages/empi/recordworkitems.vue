@@ -24,7 +24,7 @@
         <!-- Real results -->
         <ul class="divide-y divide-gray-200">
           <div v-for="group in groups" :key="`group-${group.masterRecord.id}`" class="hover:bg-gray-50">
-            <NuxtLink :to="`/masterrecords/${group.masterRecord.id}`">
+            <NuxtLink :to="`/masterrecords/${group.masterRecord.id}/issues`">
               <MasterRecordsListItem
                 :item="group.masterRecord"
                 details-label="Open Work Items"
