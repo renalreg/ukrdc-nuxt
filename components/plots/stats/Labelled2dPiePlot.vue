@@ -1,14 +1,14 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
   <BaseCard class="mb-4">
-    <BaseCardHeader class="flex items-center">
+    <BaseCardHeader class="flex items-center gap-2">
+      <BaseMarkdownDescriptionTooltip v-if="labelled2d" :description-markdown="labelled2d.metadata.description" />
       <div class="flex-1">
         <div class="flex gap-2">
           <h2>{{ labelled2d ? labelled2d.metadata.title : "" }}</h2>
         </div>
         <div class="flex items-center gap-2">
           <h6>{{ labelled2d ? labelled2d.metadata.summary : "" }}</h6>
-          <BaseMarkdownDescriptionTooltip v-if="labelled2d" :description-markdown="labelled2d.metadata.description" />
         </div>
       </div>
       <BaseButtonMini v-if="labelled2d" @click="exportData">Export</BaseButtonMini>
