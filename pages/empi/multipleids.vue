@@ -2,7 +2,7 @@
   <div>
     <div class="mx-auto mb-4 max-w-7xl">
       <h1>Multiple UKRDC IDs</h1>
-      <p>Results of a scan that detect patients with more than one UKRDC Master Record.</p>
+      <h3>Results of a scan that detect patients with more than one UKRDC Master Record.</h3>
     </div>
 
     <!-- Description list -->
