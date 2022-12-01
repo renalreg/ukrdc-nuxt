@@ -1,17 +1,17 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
   <BaseCard class="mb-4">
-    <BaseCardHeader class="flex items-center">
+    <BaseCardHeader class="flex items-center gap-2">
+      <BaseMarkdownDescriptionTooltip
+        v-if="labelledNetwork"
+        :description-markdown="labelledNetwork.metadata.description"
+      />
       <div class="flex-1">
         <div class="flex gap-2">
           <h2>{{ labelledNetwork ? labelledNetwork.metadata.title : "" }}</h2>
         </div>
         <div class="flex items-center gap-2">
           <h6>{{ labelledNetwork ? labelledNetwork.metadata.summary : "" }}</h6>
-          <BaseMarkdownDescriptionTooltip
-            v-if="labelledNetwork"
-            :description-markdown="labelledNetwork.metadata.description"
-          />
         </div>
       </div>
       <BaseButtonMini v-if="labelledNetwork" @click="exportData">Export</BaseButtonMini>
