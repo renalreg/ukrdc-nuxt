@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from "@nuxtjs/composition-api";
-import { Vertices } from "@ukkidney/ukrdc-axios-ts";
+import { Link } from "@ukkidney/ukrdc-axios-ts";
 import { Data, newPlot } from "plotly.js";
 
 import { plotColours } from "~/helpers/colourUtils";
@@ -12,7 +12,7 @@ import { plotColours } from "~/helpers/colourUtils";
 export default defineComponent({
   props: {
     link: {
-      type: Object as () => Vertices,
+      type: Object as () => Link,
       default: null,
     },
     label: {
