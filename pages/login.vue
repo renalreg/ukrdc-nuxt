@@ -5,7 +5,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeMount, useContext, useRouter } from "@nuxtjs/composition-api";
+import { defineComponent, onBeforeMount, useContext, useRoute, useRouter } from "@nuxtjs/composition-api";
+
+import useAuth from "~/composables/useAuth";
 
 export default defineComponent({
   // Override auth middleware. We handle redirects here ourselves in mounted()
@@ -13,17 +15,23 @@ export default defineComponent({
 
   setup() {
     const { $okta } = useContext();
+    const { isAuthenticated } = useAuth();
     const router = useRouter();
+    const route = useRoute();
 
-    onBeforeMount(async () => {
+    onBeforeMount(() => {
       // If an originalUri was stored before navigating to this page, keep using it
-      const originalUri = $okta.getOriginalUri();
+      let originalUri = $okta.getOriginalUri();
+      // Original URI should never be the login page (otherwise you just get stuck here)
+      if (originalUri && originalUri !== route.value.path) {
+        originalUri = undefined;
+      }
 
       if ($okta.isLoginRedirect()) {
         // If we're in the middle of a sign-in flow
         // Fetch tokens and redirect back to originalUri
         $okta.handleLoginRedirect();
-      } else if (!(await $okta.isAuthenticated())) {
+      } else if (!isAuthenticated.value) {
         // Start sign-in flow
         $okta.signInAuto(originalUri || "/");
       } else if (originalUri) {

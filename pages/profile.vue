@@ -87,6 +87,7 @@ import BaseButton from "~/components/base/BaseButton.vue";
 import BaseCheckbox from "~/components/base/BaseCheckbox.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import useApi from "~/composables/useApi";
+import useAuth from "~/composables/useAuth";
 import usePermissions from "~/composables/usePermissions";
 
 export default defineComponent({
@@ -99,13 +100,12 @@ export default defineComponent({
     const { $okta } = useContext();
     const { getPermissions } = usePermissions();
     const { systemInfoApi } = useApi();
+    const { isAuthenticated } = useAuth();
 
     // User info
-    const isAuthenticated = ref(false);
     const user = ref();
 
     onMounted(async () => {
-      isAuthenticated.value = await $okta.isAuthenticated();
       if (isAuthenticated.value) {
         user.value = await $okta.getUser();
       }

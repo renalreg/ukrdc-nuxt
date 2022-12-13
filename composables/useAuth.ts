@@ -2,8 +2,8 @@
 Utility functions to simplify interacting with a reactive Okta Auth state.
 */
 
-import { onBeforeUnmount, ref, useContext, computed } from "@nuxtjs/composition-api";
-import { AuthState, JWTPayload, JWTObject } from "@okta/okta-auth-js";
+import { computed, onBeforeUnmount, ref, useContext } from "@nuxtjs/composition-api";
+import { AuthState, JWTObject, JWTPayload } from "@okta/okta-auth-js";
 
 export declare type UKRDCClaims = JWTPayload & {
   "org.ukrdc.permissions": string[];
@@ -15,7 +15,7 @@ export interface UKRDCJWTObject extends JWTObject {
 
 export default function () {
   const { $okta } = useContext();
-  const authState = ref($okta.authStateManager.getAuthState());
+  const authState = ref<AuthState | null>($okta.authStateManager.getAuthState());
 
   // When auth state changes, update authState.value
   function _handleAuthStateUpdate(newAuthState: AuthState) {
@@ -46,9 +46,15 @@ export default function () {
     return null;
   });
 
+  // Reactive isAuthenticated
+  const isAuthenticated = computed(() => {
+    return authState.value?.isAuthenticated || false;
+  });
+
   return {
     authState,
     idToken,
     accessToken,
+    isAuthenticated,
   };
 }

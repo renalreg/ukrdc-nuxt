@@ -62,7 +62,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
+import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
 
 import BaseButtonSlot from "~/components/base/BaseButtonSlot.vue";
 import BaseMenu from "~/components/base/BaseMenu.vue";
@@ -90,8 +90,7 @@ export default defineComponent({
     },
   },
   setup() {
-    const { $okta } = useContext();
-    const { idToken } = useAuth();
+    const { idToken, isAuthenticated } = useAuth();
 
     // Menu
     const showMenu = ref(false);
@@ -100,16 +99,11 @@ export default defineComponent({
     }
 
     // User info
-    const isAuthenticated = ref(false);
     const displayName = computed(() => {
       if (idToken.value) {
         return idToken.value.payload.name;
       }
       return "Signed Out";
-    });
-
-    onMounted(async () => {
-      isAuthenticated.value = await $okta.isAuthenticated();
     });
 
     return {
