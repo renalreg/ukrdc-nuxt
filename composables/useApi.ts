@@ -32,7 +32,7 @@ function decodePydanticErrors(errors: PydanticError[]) {
 }
 
 export default function () {
-  const { $okta, $toast, $sentry, $config } = useContext();
+  const { $okta, $toast, $sentry, $config, error } = useContext();
 
   const defaultHeaders = {
     Accept: "application/json",
@@ -60,43 +60,48 @@ export default function () {
   // Response interceptor to handle API errors
   apiInstance.interceptors.response.use(
     (response) => response,
-    (error) => {
+    (e) => {
+      // We handle some error status codes specially
+
       // A 401 error from the API means unauthenticated, which usually only happens if the user
       // has started a new session and the API Axios instance has sent a request before Okta has
       // had chance to refresh. In this case we just want to exit the request early and let Okta
       // handle the refresh.
-      if (error.response?.status === 401) {
+      if (e.response?.status === 401) {
         // Return early
-        throw error;
+        throw e;
       }
 
       // For API 404 errors a resource is usually missing or unavailable, and is
       // generally handled by the component that triggered the request. Don't show toasts or log.
-      if (error.response?.status === 404) {
+      if (e.response?.status === 404) {
         // Return early
-        throw error;
+        throw e;
       }
 
       // For internal API server errors, redirect to 500 without propagating Sentry or toast
       // We're assuming here that the API server will log the related error, and so logging
       // here just leads to duplicate messages.
-      if (error.response?.status === 500) {
-        error({ statusCode: 500, message: "Internal server error" });
+      if (e.response?.status === 0 || e.response?.status === 500) {
+        error({ statusCode: 500, message: "An internal error occured. Our developers have been notified." });
         // Return early
-        throw error;
+        throw e;
       }
 
       // Build message and redirect to 422 without propagating Sentry or toast
-      if (error.response?.status === 422) {
-        const msg = decodePydanticErrors(error.response.data.detail);
+      if (e.response?.status === 422) {
+        const msg = decodePydanticErrors(e.response.data.detail);
         error({ statusCode: 422, message: msg });
         // Return early
-        throw error;
+        throw e;
       }
+
+      // All other error status codes
 
       // Compute what message to show in the toast
       if (process.client) {
-        const msgToShow = error.response ? error.response.data.detail : error.message;
+        const msgToShow = e.response?.data ? e.response.data.detail : e.message;
+
         // If we have no message to show, don't create a toast
         if (msgToShow) {
           $toast.show({
@@ -109,7 +114,10 @@ export default function () {
       }
 
       // Log the error to Sentry
-      $sentry.captureException(error);
+      $sentry.captureException(e);
+
+      // Re-throw the error so that the component that triggered the request can handle it
+      throw e;
     }
   );
 

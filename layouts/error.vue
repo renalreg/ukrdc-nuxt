@@ -4,11 +4,10 @@
       <h1 class="sm:mr-8">{{ error.statusCode || "Error" }}</h1>
       <div class="sm:border-l sm:pl-8">
         <h1 class="whitespace-pre">{{ errorTitle }}</h1>
-        <NuxtLink to="/">Home page</NuxtLink>
+        <div v-if="error.message">
+          <p>{{ error.message }}</p>
+        </div>
       </div>
-    </div>
-    <div v-if="errorDetail">
-      <p>{{ errorDetail }}</p>
     </div>
   </div>
 </template>
@@ -59,14 +58,10 @@ export default defineComponent({
       if (props.error.statusCode && props.error.statusCode in friendlyErrorStatus) {
         return friendlyErrorStatus[props.error.statusCode] || "Error";
       }
-      return "Error";
+      return "An unknown error occured";
     });
 
-    const errorDetail = computed(() => {
-      return props.error.message || "";
-    });
-
-    return { errorTitle, errorDetail };
+    return { errorTitle };
   },
 });
 </script>
