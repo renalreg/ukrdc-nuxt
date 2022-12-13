@@ -26,7 +26,7 @@
       :orientation="orientation"
       class="m-2 h-72"
     />
-    <BaseSkeleImage v-else class="h-72 w-full" />
+    <SkelePlot v-else />
   </BaseCard>
 </template>
 
@@ -37,9 +37,9 @@ import { Labelled2d } from "@ukkidney/ukrdc-axios-ts";
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
-import BaseSkeleImage from "~/components/base/BaseSkeleImage.vue";
 import BaseBarPlot from "~/components/plots/base/BaseBarPlot.vue";
 import BaseMarkdownDescriptionTooltip from "~/components/plots/stats/BaseMarkdownDescriptionTooltip.vue";
+import SkelePlot from "~/components/plots/stats/SkelePlot.vue";
 import { buildCsv } from "~/helpers/exportUtils";
 import { saveAs } from "~/helpers/fileUtils";
 
@@ -49,7 +49,7 @@ export default defineComponent({
     BaseBarPlot,
     BaseCard,
     BaseCardHeader,
-    BaseSkeleImage,
+    SkelePlot,
     BaseMarkdownDescriptionTooltip,
   },
   props: {

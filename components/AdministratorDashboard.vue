@@ -68,7 +68,7 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
           hovertemplate="<b>%{x}</b><br>New errors: %{y}<extra></extra>"
           @click="errorHistoryPointClickHandler"
         />
-        <BaseSkeleImage v-else class="h-64 w-full" />
+        <BaseSkeleDiv v-else class="h-64 w-full" />
       </BaseCard>
       <!-- WorkItems history -->
       <BaseCard>
@@ -85,7 +85,7 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
           hovertemplate="<b>%{x}</b><br>New work items: %{y}<extra></extra>"
           @click="workitemHistoryPointClickHandler"
         />
-        <BaseSkeleImage v-else class="h-64 w-full" />
+        <BaseSkeleDiv v-else class="h-64 w-full" />
       </BaseCard>
     </div>
   </div>
@@ -99,7 +99,7 @@ import { PlotDatum } from "plotly.js";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardFooter from "~/components/base/BaseCardFooter.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
-import BaseSkeleImage from "~/components/base/BaseSkeleImage.vue";
+import BaseSkeleDiv from "~/components/base/BaseSkeleDiv.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import IconExclamationTriangle from "~/components/icons/hero/24/outline/IconExclamationTriangle.vue";
 import IconLink from "~/components/icons/hero/24/outline/IconLink.vue";
@@ -114,7 +114,7 @@ export default defineComponent({
     BaseCardHeader,
     BaseCardFooter,
     BaseSkeleText,
-    BaseSkeleImage,
+    BaseSkeleDiv,
     IconExclamationTriangle,
     IconLink,
     IconUsers,

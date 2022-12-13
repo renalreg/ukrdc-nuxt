@@ -23,20 +23,20 @@
       :link="labelledNetwork.link"
       class="h-72"
     />
-    <BaseSkeleImage v-else class="h-72 w-full" />
+    <SkelePlot v-else />
   </BaseCard>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@nuxtjs/composition-api";
+import { defineComponent, onMounted } from "@nuxtjs/composition-api";
 import { LabelledNetwork } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
-import BaseSkeleImage from "~/components/base/BaseSkeleImage.vue";
 import BaseSankeyPlot from "~/components/plots/base/BaseSankeyPlot.vue";
 import BaseMarkdownDescriptionTooltip from "~/components/plots/stats/BaseMarkdownDescriptionTooltip.vue";
+import SkelePlot from "~/components/plots/stats/SkelePlot.vue";
 import { saveAs } from "~/helpers/fileUtils";
 
 export default defineComponent({
@@ -45,7 +45,7 @@ export default defineComponent({
     BaseSankeyPlot,
     BaseCard,
     BaseCardHeader,
-    BaseSkeleImage,
+    SkelePlot,
     BaseMarkdownDescriptionTooltip,
   },
   props: {
@@ -80,6 +80,8 @@ export default defineComponent({
       const blob = new Blob([JSON.stringify(exportJSON)], { type: "text/plain;charset=utf-8" });
       saveAs(blob, `${props.exportFileName}.json`);
     }
+
+    onMounted(() => {});
 
     return {
       exportData,
