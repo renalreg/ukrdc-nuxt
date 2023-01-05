@@ -102,10 +102,6 @@ export default defineComponent({
     // Data fetching
 
     function getCode() {
-      // Scroll to top every time we fetch a new code
-      if (process.client) {
-        document.getElementsByTagName("main")[0].scrollTop = 0;
-      }
       // Fetch code details
 
       codesApi

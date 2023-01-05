@@ -67,7 +67,7 @@
         </BaseCard>
       </div>
       <!-- Code details -->
-      <div>
+      <div class="sticky top-4 h-screen grow">
         <BaseButton
           v-show="$route.params.id"
           class="mb-4 w-full lg:hidden"
