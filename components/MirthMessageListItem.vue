@@ -48,7 +48,7 @@ export default defineComponent({
       return Object.values(props.message.connectorMessages);
     });
     const channelName = computed(() => {
-      let name: string = "";
+      let name = "";
       for (const msg of connectorMessagesArray.value) {
         if (!name.includes(msg.channelName)) {
           name = name + "/" + msg.channelName;
