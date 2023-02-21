@@ -20,7 +20,7 @@
     "@ukkidney/ukrdc-axios-ts": "^2.3.0",
     "check-ie": "^2.0.1",
     "defu": "^6.1.0",
-    "dompurify": "^2.4.1",
+    "dompurify": "^3.0.0",
     "floating-vue": "^1.0.0-beta.18",
     "luxon": "^3.2.1",
     "marked": "^4.2.3",
