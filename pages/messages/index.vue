@@ -31,9 +31,7 @@
           <BaseButtonMini class="z-10" anchor="left" type="submit">Go</BaseButtonMini>
         </form>
 
-        <BaseButtonMini v-show="nationalId" @click="$router.push({ query: { nationalid: null } })"
-          >Show Results From All Patients</BaseButtonMini
-        >
+        <BaseButtonMini v-show="nationalId" @click="nationalId = null">Show Results From All Patients</BaseButtonMini>
 
         <BaseButtonMini @click="toggleOrder">
           <div v-show="orderAscending" class="flex">

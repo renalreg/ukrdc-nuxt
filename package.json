@@ -6,7 +6,7 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "check": "npm run eslint:check && npm run prettier:check",
+    "check": "npm run eslint && npm run prettier",
     "eslint": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "eslint:fix": "eslint --ext \".js,.vue\" --ignore-path .gitignore --fix .",
     "prettier": "prettier . --check",
@@ -14,13 +14,13 @@
   },
   "dependencies": {
     "@nuxtjs/composition-api": "^0.33.1",
-    "@nuxtjs/sentry": "^6.0.0",
-    "@okta/okta-auth-js": "^6.0.0",
-    "@sentry/tracing": "^6.13.2",
-    "@ukkidney/ukrdc-axios-ts": "^2.2.0",
+    "@nuxtjs/sentry": "^7.0.4",
+    "@okta/okta-auth-js": "^7.2.0",
+    "@sentry/tracing": "^7.38.0",
+    "@ukkidney/ukrdc-axios-ts": "^2.3.0",
     "check-ie": "^2.0.1",
     "defu": "^6.1.0",
-    "dompurify": "^2.4.1",
+    "dompurify": "^3.0.0",
     "floating-vue": "^1.0.0-beta.18",
     "luxon": "^3.2.1",
     "marked": "^4.2.3",
@@ -28,13 +28,13 @@
     "plotly.js": "^2.14.0",
     "url-join": "^5.0.0",
     "v-calendar": "^2.4.1",
-    "xml-formatter": "^2.4.1"
+    "xml-formatter": "^3.2.0"
   },
   "devDependencies": {
     "@nuxt/postcss8": "^1.1.3",
     "@nuxt/types": "^2.15.3",
     "@nuxt/typescript-build": "^2.0.4",
-    "@nuxtjs/eslint-config-typescript": "^11.0.0",
+    "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "@nuxtjs/eslint-module": "^3.0.2",
     "@sentry/webpack-plugin": "^1.19.0",
     "@tailwindcss/forms": "^0.5.2",
@@ -47,10 +47,10 @@
     "eslint": "^8.24.0",
     "eslint-config-prettier": "^8.2.0",
     "eslint-plugin-nuxt": "^4.0.0",
-    "eslint-plugin-simple-import-sort": "^8.0.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
     "postcss": "^8.4.5",
     "prettier": "^2.4.1",
-    "prettier-plugin-tailwindcss": "^0.1.3",
+    "prettier-plugin-tailwindcss": "^0.2.3",
     "tailwindcss": "^3.1.8"
   }
 }

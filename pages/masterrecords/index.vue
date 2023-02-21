@@ -2,19 +2,10 @@
   <div>
     <BaseCard class="mb-4 !overflow-visible px-4 pt-4">
       <SearchBar v-model="searchboxString" :focus="true" @submit="searchSubmit" />
-      <div class="mb-4 flex items-center">
-        <div class="flex flex-grow items-center gap-2">
-          <BaseCheckpill v-model="numberTypes" label="UKRDC" value="UKRDC" colour="red" />
-          <BaseCheckpill v-model="numberTypes" label="NHS" value="NHS" colour="blue" />
-          <BaseCheckpill v-model="numberTypes" label="CHI" value="CHI" colour="purple" />
-          <BaseCheckpill v-model="numberTypes" label="HSC" value="HSC" colour="green" />
-        </div>
-        <div>
-          <BaseCollapseHeader v-model="advancedOpen" label="More Options"></BaseCollapseHeader>
-        </div>
-      </div>
+      <BaseCollapseHeader v-model="advancedOpen" class="mb-4" label="More Options"></BaseCollapseHeader>
       <!-- More Options -->
       <div v-show="advancedOpen">
+        <!-- Facility filter -->
         <BaseSelectSearchable
           v-if="facilityIds.length > 1"
           v-model="selectedFacility"
@@ -23,6 +14,13 @@
           :labels="facilityLabels"
           hint="Select a facility..."
         />
+        <!-- MasterRecord type filter (will be redundant with new EMPI)-->
+        <div class="mb-4 flex flex-grow items-center gap-2">
+          <BaseCheckpill v-model="numberTypes" label="UKRDC" value="UKRDC" colour="red" />
+          <BaseCheckpill v-model="numberTypes" label="NHS" value="NHS" colour="blue" />
+          <BaseCheckpill v-model="numberTypes" label="CHI" value="CHI" colour="purple" />
+          <BaseCheckpill v-model="numberTypes" label="HSC" value="HSC" colour="green" />
+        </div>
       </div>
     </BaseCard>
 
