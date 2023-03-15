@@ -1,5 +1,14 @@
 // Colours taken from https://github.com/tailwindlabs/tailwindcss/blob/master/src/public/colors.js
 
+export const UKKAColours = {
+  primary: "#9c1f4c",
+  secondary: "#233c73",
+  tertiary: "#fcbf27",
+  quaternary: "#80007d",
+  quinary: "#3984c2",
+  senary: "#70ad47",
+};
+
 export const tailwindColours = {
   black: "#000",
   white: "#fff",
@@ -270,6 +279,12 @@ export const tailwindColours = {
 };
 
 export const plotColours = [
+  UKKAColours.primary,
+  UKKAColours.secondary,
+  UKKAColours.tertiary,
+  UKKAColours.quaternary,
+  UKKAColours.quinary,
+  UKKAColours.senary,
   tailwindColours.indigo[400],
   tailwindColours.orange[400],
   tailwindColours.emerald[400],

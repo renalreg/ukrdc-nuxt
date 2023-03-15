@@ -6,7 +6,7 @@
 import { defineComponent, onMounted } from "@nuxtjs/composition-api";
 import { Data, newPlot, PlotData } from "plotly.js";
 
-import { tailwindColours } from "~/helpers/colourUtils";
+import { plotColours, tailwindColours } from "~/helpers/colourUtils";
 
 export default defineComponent({
   props: {
@@ -61,10 +61,10 @@ export default defineComponent({
         type: "bar",
         orientation: props.orientation as "v" | "h",
         marker: {
-          color: tailwindColours.indigo[400],
-          opacity: 0.7,
+          color: plotColours[0],
+          opacity: 0.9,
           line: {
-            color: tailwindColours.indigo[800],
+            color: plotColours[0],
             width: 1,
           },
         },
