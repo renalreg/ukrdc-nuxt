@@ -18,7 +18,17 @@
         :export-file-name="`incident-initial-access-${facility.id}`"
         :text="facilityStatsDialysis?.all.allPatientsHomeTherapies?.metadata?.populationSize?.toString()"
       />
+      <Labelled2dBarPlot
+        id="incentreDialysisFrequencyPlot"
+        :labelled2d="facilityStatsDialysis?.all.incentreDialysisFrequency"
+        :export-file-name="`incentre-dialysis-freq-${facility.id}`"
+        hovertemplate="Days per week: <b>%{x}</b><br>%{y}<extra></extra>"
+        orientation="h"
+        x-type="category"
+      />
     </div>
+
+    <br />
 
     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
       <Labelled2dPiePlot
@@ -28,28 +38,21 @@
         :text="facilityStatsDialysis?.all.incidentHomeTherapies?.metadata?.populationSize?.toString()"
       />
       <Labelled2dPiePlot
-        id="prevalentHomeTherapiesPlot"
-        :labelled2d="facilityStatsDialysis?.all.prevalentHomeTherapies"
-        :export-file-name="`prevalent-home-therapies-${facility.id}`"
-        :text="facilityStatsDialysis?.all.prevalentHomeTherapies?.metadata?.populationSize?.toString()"
+        id="incidentInitialAccessPlot"
+        :labelled2d="facilityStatsDialysis?.all.incidentInitialAccess"
+        :export-file-name="`incident-initial-access-${facility.id}`"
+        :text="facilityStatsDialysis?.all.incidentInitialAccess?.metadata?.populationSize?.toString()"
       />
     </div>
 
     <br />
 
     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-      <Labelled2dBarPlot
-        id="incentreDialysisFrequencyPlot"
-        :labelled2d="facilityStatsDialysis?.all.incentreDialysisFrequency"
-        :export-file-name="`incentre-dialysis-freq-${facility.id}`"
-        hovertemplate="Days per week: <b>%{x}</b><br>%{y}<extra></extra>"
-        orientation="h"
-      />
       <Labelled2dPiePlot
-        id="incidentInitialAccessPlot"
-        :labelled2d="facilityStatsDialysis?.all.incidentInitialAccess"
-        :export-file-name="`incident-initial-access-${facility.id}`"
-        :text="facilityStatsDialysis?.all.incidentInitialAccess?.metadata?.populationSize?.toString()"
+        id="prevalentHomeTherapiesPlot"
+        :labelled2d="facilityStatsDialysis?.all.prevalentHomeTherapies"
+        :export-file-name="`prevalent-home-therapies-${facility.id}`"
+        :text="facilityStatsDialysis?.all.prevalentHomeTherapies?.metadata?.populationSize?.toString()"
       />
     </div>
   </div>
