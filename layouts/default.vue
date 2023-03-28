@@ -195,7 +195,7 @@ label {
 }
 
 .v-popper--theme-dropdown .v-popper__inner {
-  @apply rounded-md border border-gray-300 p-4 shadow-sm;
+  @apply rounded-md border border-gray-300 p-4 shadow-lg;
 }
 
 .sensitive {

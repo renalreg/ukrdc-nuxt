@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
   <BaseInfoTooltip>
-    <div class="max-w-lg [&>ul]:list-inside [&>ul]:list-disc" v-html="sanitisedDescriptionHTML"></div>
+    <div class="max-h-96 max-w-2xl [&>ul]:list-inside [&>ul]:list-disc" v-html="sanitisedDescriptionHTML"></div>
   </BaseInfoTooltip>
 </template>
 
