@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from "@nuxtjs/composition-api";
-import { Data, newPlot, PlotData } from "plotly.js";
+import { AxisType, Data, newPlot, PlotData } from "plotly.js";
 
 import { plotColours, tailwindColours } from "~/helpers/colourUtils";
 
@@ -18,13 +18,23 @@ export default defineComponent({
       type: Array,
       default: null,
     },
+    xLabel: {
+      type: String,
+      default: null,
+    },
     yLabel: {
       type: String,
       default: null,
     },
-    xLabel: {
+    xType: {
+      // See https://plotly.com/javascript/reference/layout/xaxis/#layout-xaxis-type
       type: String,
-      default: null,
+      default: "-",
+    },
+    yType: {
+      // See https://plotly.com/javascript/reference/layout/yaxis/#layout-yaxis-type
+      type: String,
+      default: "-",
     },
     hoverinfo: {
       type: String,
@@ -79,6 +89,7 @@ export default defineComponent({
       margin: { t: 10, r: 10, b: 20, l: 20 },
       xaxis: {
         title: props.orientation === "h" ? props.yLabel : props.xLabel,
+        type: (props.orientation === "h" ? props.yType : props.xType) as AxisType,
         fixedrange: props.fixedrange,
         automargin: true,
         titlefont: {
@@ -88,6 +99,7 @@ export default defineComponent({
       },
       yaxis: {
         title: props.orientation === "h" ? props.xLabel : props.yLabel,
+        type: (props.orientation === "h" ? props.xType : props.yType) as AxisType,
         fixedrange: props.fixedrange,
         automargin: true,
         titlefont: {

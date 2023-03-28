@@ -20,6 +20,8 @@
       :y="labelled2d.data.y"
       :x-label="labelled2d.metadata.axisTitles?.x"
       :y-label="labelled2d.metadata.axisTitles?.y"
+      :x-type="xType"
+      :y-type="yType"
       :hoverinfo="hoverinfo"
       :hovertemplate="hovertemplate"
       :fixedrange="fixedrange"
@@ -57,6 +59,16 @@ export default defineComponent({
       type: Object as () => Labelled2d,
       required: false,
       default: undefined,
+    },
+    xType: {
+      // See https://plotly.com/javascript/reference/layout/xaxis/#layout-xaxis-type
+      type: String,
+      default: "-",
+    },
+    yType: {
+      // See https://plotly.com/javascript/reference/layout/yaxis/#layout-yaxis-type
+      type: String,
+      default: "-",
     },
     hoverinfo: {
       type: String,
