@@ -4,7 +4,12 @@
       <div class="grid w-full min-w-0 flex-1 grid-cols-2 gap-2 py-4 pl-4 sm:grid-cols-3 sm:pl-6 lg:grid-cols-4">
         <!-- Name, DoB, gender -->
         <div>
-          <SendingFacilityLink class="font-medium" :code="item.sendingfacility" />
+          <div class="flex items-center gap-2">
+            <SendingFacilityLink class="font-medium" :code="item.sendingfacility" />
+            <BaseBadge v-if="badgeStatus === 2" class="bg-red-100 text-red-800">Closed</BaseBadge>
+            <BaseBadge v-if="badgeStatus === 3" class="bg-yellow-100 text-yellow-800">Mixed</BaseBadge>
+          </div>
+
           <p class="mt-2">via {{ item.sendingextract }}</p>
         </div>
         <!-- National ID -->
@@ -65,6 +70,7 @@
 import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
 import { PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 
+import BaseBadge from "~/components/base/BaseBadge.vue";
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import PatientRecordDetailCards from "~/components/PatientRecordDetailCards.vue";
 import PatientRecordManageMenu from "~/components/PatientRecordManageMenu.vue";
@@ -78,9 +84,17 @@ interface localNumber {
   number: string;
 }
 
+enum BadgeStatusEnum {
+  Open = 1,
+  Closed = 2,
+  Mixed = 3,
+  Unknown = 0,
+}
+
 export default defineComponent({
   components: {
     BaseButtonMini,
+    BaseBadge,
     SendingFacilityLink,
     PatientRecordManageMenu,
     PatientRecordDetailCards,
@@ -113,7 +127,25 @@ export default defineComponent({
       return firstMRN(props.item);
     });
 
-    return { showDetail, formatDate, formatGenderCharacter, firstMRNObject };
+    const badgeStatus = computed(() => {
+      if (props.item.programMemberships) {
+        const open = props.item.programMemberships.filter((pm) => !pm.toTime).length;
+        const closed = props.item.programMemberships.filter((pm) => pm.toTime).length;
+        if (open > 0 && closed > 0) {
+          return BadgeStatusEnum.Mixed;
+        } else if (open > 0) {
+          return BadgeStatusEnum.Open;
+        } else if (closed > 0) {
+          return BadgeStatusEnum.Closed;
+        } else {
+          return BadgeStatusEnum.Unknown;
+        }
+      } else {
+        return BadgeStatusEnum.Unknown;
+      }
+    });
+
+    return { showDetail, formatDate, formatGenderCharacter, firstMRNObject, badgeStatus };
   },
 });
 </script>
