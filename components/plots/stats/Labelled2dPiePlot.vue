@@ -13,7 +13,7 @@
       </div>
       <BaseButtonMini v-if="labelled2d" @click="exportData">Export</BaseButtonMini>
     </BaseCardHeader>
-    <BasePiePlot v-if="labelled2d" :id="id" :x="labelled2d.data.x" :y="labelled2d.data.y" class="h-72" />
+    <BasePiePlot v-if="labelled2d" :id="id" :x="labelled2d.data.x" :y="labelled2d.data.y" :text="text" class="h-72" />
     <SkelePlot v-else />
   </BaseCard>
 </template>
@@ -65,6 +65,11 @@ export default defineComponent({
       type: Boolean,
       required: false,
       default: true,
+    },
+    text: {
+      type: String,
+      required: false,
+      default: null,
     },
     id: {
       type: String,

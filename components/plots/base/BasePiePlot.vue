@@ -28,6 +28,11 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    text: {
+      type: String,
+      required: false,
+      default: null,
+    },
     id: {
       type: String,
       default: "doughnut",
@@ -46,6 +51,7 @@ export default defineComponent({
         hoverinfo: "label+value",
         textinfo: "none",
         hole: 0.5,
+        opacity: 0.9,
       },
     ];
 
@@ -57,6 +63,14 @@ export default defineComponent({
         x: 1,
         y: 0.5,
       },
+      annotations: [
+        {
+          showarrow: false,
+          text: props.text ? props.text : "",
+          x: 0.5,
+          y: 0.5,
+        },
+      ],
     };
 
     const config = { responsive: true };

@@ -48,8 +48,8 @@ export default defineComponent({
         href: `/facilities/${route.value.params.code}/statistics/demographics`,
       },
       {
-        name: "Dialysis",
-        href: `/facilities/${route.value.params.code}/statistics/dialysis`,
+        name: "KRT",
+        href: `/facilities/${route.value.params.code}/statistics/krt`,
       },
     ];
 

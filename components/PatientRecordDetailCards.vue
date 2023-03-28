@@ -105,16 +105,12 @@
               {{ item.programName }}
             </b>
             <p v-if="item.fromTime">Since {{ formatDate(item.fromTime, false) }}</p>
-            <span
-              v-if="!item.toTime"
-              class="mt-2 inline-block flex-shrink-0 rounded-sm bg-green-100 px-2 py-0.5 text-sm font-medium text-green-800"
-              >Active</span
-            >
-            <span
-              v-else
-              class="mt-2 inline-block flex-shrink-0 rounded-sm bg-red-100 px-2 py-0.5 text-sm font-medium text-red-800"
-              >Closed on {{ formatDate(item.toTime, false) }}</span
-            >
+            <div class="mt-2">
+              <BaseBadge v-if="!item.toTime" class="bg-green-100 text-green-800">Active</BaseBadge>
+              <BaseBadge v-else class="bg-red-100 text-red-800"
+                >Closed on {{ formatDate(item.toTime, false) }}</BaseBadge
+              >
+            </div>
           </BaseCard>
         </li>
       </ul>
@@ -158,6 +154,7 @@
 import { defineComponent } from "@nuxtjs/composition-api";
 import { PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
+import BaseBadge from "~/components/base/BaseBadge.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import PatientRecordAddress from "~/components/PatientRecordAddress.vue";
 import PostCodeLink from "~/components/PostCodeLink.vue";
@@ -168,6 +165,7 @@ import { isEmptyObject } from "~/helpers/objectUtils";
 export default defineComponent({
   components: {
     BaseCard,
+    BaseBadge,
     PostCodeLink,
     PatientRecordAddress,
   },
