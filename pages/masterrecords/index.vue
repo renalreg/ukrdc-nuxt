@@ -132,9 +132,9 @@ export default defineComponent({
         systemInfoApi.getSystemUserPreferences().then((response) => {
           const showUkrdcByDefault = response.data.searchShowUkrdc;
           if (showUkrdcByDefault) {
-            numberTypes.value = ["UKRDC", "NHS", "CHI", "HSC"];
+            numberTypes.value = ["UKRDC", "NHS", "CHI", "HSC", "UKRR_UID"];
           } else {
-            numberTypes.value = ["NHS", "CHI", "HSC"];
+            numberTypes.value = ["NHS", "CHI", "HSC", "UKRR_UID"];
           }
         });
       }
