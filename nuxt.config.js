@@ -46,11 +46,7 @@ export default {
   components: false,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [
-    "@nuxt/typescript-build",
-    "@nuxtjs/composition-api/module",
-    "@nuxt/postcss8", // Required for TailwindCSS
-  ],
+  buildModules: ["@nuxt/typescript-build", "@nuxtjs/composition-api/module"],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: ["~/modules/okta-auth", "@nuxtjs/sentry"],

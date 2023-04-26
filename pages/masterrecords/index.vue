@@ -158,9 +158,9 @@ export default defineComponent({
           })
           .then((response) => {
             masterrecords.value = response.data.items;
-            page.value = response.data.page;
+            page.value = response.data.page ?? 0;
             total.value = response.data.total;
-            size.value = response.data.size;
+            size.value = response.data.size ?? 0;
 
             searchInProgress.value = false;
           });

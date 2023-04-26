@@ -98,8 +98,8 @@ export default defineComponent({
         })
         .then((response) => {
           errorMessages.value = response.data.items;
-          errorMessagesPage.value = response.data.page;
-          errorMessagesSize.value = response.data.size;
+          errorMessagesPage.value = response.data.page ?? 0;
+          errorMessagesSize.value = response.data.size ?? 0;
           errorMessagesTotal.value = response.data.total;
         });
     }
