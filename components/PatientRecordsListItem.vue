@@ -5,9 +5,10 @@
         <!-- Name, DoB, gender -->
         <div>
           <div class="flex items-center gap-2">
+            <BaseBadge v-if="badgeStatus === 1" class="w-14 bg-green-100 text-center text-green-800">Active</BaseBadge>
+            <BaseBadge v-if="badgeStatus === 2" class="w-14 text-center bg-red-100 text-red-800">Closed</BaseBadge>
+            <BaseBadge v-if="badgeStatus === 3" class="w-14 text-center bg-yellow-100 text-yellow-800">Mixed</BaseBadge>
             <SendingFacilityLink class="font-medium" :code="item.sendingfacility" />
-            <BaseBadge v-if="badgeStatus === 2" class="bg-red-100 text-red-800">Closed</BaseBadge>
-            <BaseBadge v-if="badgeStatus === 3" class="bg-yellow-100 text-yellow-800">Mixed</BaseBadge>
           </div>
 
           <p class="mt-2">via {{ item.sendingextract }}</p>
