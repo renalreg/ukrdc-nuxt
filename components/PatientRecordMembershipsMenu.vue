@@ -36,7 +36,7 @@
         Add Memberships
       </BaseButtonMini>
 
-      <BaseMenu class="top-8 right-2 z-10 ml-2" :show="menuAvailable && showMenu">
+      <BaseMenu class="right-2 top-8 z-10 ml-2" :show="menuAvailable && showMenu">
         <BaseMenuItem v-if="showCreatePkbMembership" @click="showCreatePkbMembershipConfirm">
           Create PKB Membership
         </BaseMenuItem>

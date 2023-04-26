@@ -1,7 +1,7 @@
 <template>
   <transition :duration="200">
     <div v-show="visible" class="fixed inset-0 z-10 overflow-y-auto">
-      <div class="flex min-h-screen w-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+      <div class="flex min-h-screen w-screen items-end justify-center px-4 pb-20 pt-4 text-center sm:block sm:p-0">
         <!-- Background overlay, show/hide based on modal state. -->
         <BaseBlackout :visible="visible" @click="hide()" />
 
@@ -11,7 +11,7 @@
         <ModalTransition>
           <div
             v-show="visible"
-            class="inline-block w-full transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-3/4 sm:max-w-3xl sm:p-6 sm:align-middle"
+            class="inline-block w-full transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-3/4 sm:max-w-3xl sm:p-6 sm:align-middle"
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-headline"
@@ -37,11 +37,11 @@
                   />
                 </svg>
               </div>
-              <div class="mt-3 ml-8 text-left sm:mt-0 sm:ml-4">
+              <div class="ml-8 mt-3 text-left sm:ml-4 sm:mt-0">
                 <h3 id="modal-headline" class="text-lg font-medium leading-6 text-gray-900">
                   {{ previewErrorMessage ? "Unable to delete patient record" : "Delete patient record" }}
                 </h3>
-                <div class="mt-2 mb-4">
+                <div class="mb-4 mt-2">
                   <div v-if="previewErrorMessage">
                     <p>{{ previewErrorMessage }}</p>
                   </div>

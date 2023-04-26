@@ -39,8 +39,8 @@
             class="mx-auto block w-8 rounded-md border border-gray-300 bg-white font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             @click="switchRecords"
           >
-            <IconArrowsRightLeft class="my-2 mx-auto hidden text-gray-400 lg:block" />
-            <IconArrowsUpDown class="my-2 mx-auto block text-gray-400 lg:hidden" />
+            <IconArrowsRightLeft class="mx-auto my-2 hidden text-gray-400 lg:block" />
+            <IconArrowsUpDown class="mx-auto my-2 block text-gray-400 lg:hidden" />
           </button>
         </div>
         <div class="hidden flex-grow flex-col justify-center lg:flex">

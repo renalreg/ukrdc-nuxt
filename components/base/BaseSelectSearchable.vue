@@ -22,11 +22,11 @@
         @keydown.enter.prevent="open"
       >
         <div class="flex-grow truncate">
-          <span v-if="value && labelFor(value)" class="truncate line-clamp-1">{{
+          <span v-if="value && labelFor(value)" class="line-clamp-1 truncate">{{
             `${value} (${labelFor(value)})`
           }}</span>
-          <span v-else-if="value" class="truncate line-clamp-1">{{ value }}</span>
-          <span v-else class="text-grey-dark truncate text-base line-clamp-1">{{ hint }}</span>
+          <span v-else-if="value" class="line-clamp-1 truncate">{{ value }}</span>
+          <span v-else class="text-grey-dark line-clamp-1 truncate text-base">{{ hint }}</span>
         </div>
 
         <div class="pointer-events-none flex-shrink items-center">
@@ -52,7 +52,7 @@
     <!-- Popover -->
     <div
       v-show="isOpen"
-      class="absolute top-0 left-0 z-50 w-full rounded-md bg-white px-2 pt-2 shadow-lg ring-1 ring-black ring-opacity-5"
+      class="absolute left-0 top-0 z-50 w-full rounded-md bg-white px-2 pt-2 shadow-lg ring-1 ring-black ring-opacity-5"
     >
       <input
         ref="searchInput"

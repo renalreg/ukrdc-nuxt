@@ -91,7 +91,7 @@
 
       <!-- Main page content -->
       <main class="relative z-0 flex-1 overflow-y-auto focus:outline-none" tabindex="0">
-        <Nuxt class="mx-auto max-w-7xl py-6 px-4 sm:px-6 md:px-8" />
+        <Nuxt class="mx-auto max-w-7xl px-4 py-6 sm:px-6 md:px-8" />
       </main>
     </div>
   </div>

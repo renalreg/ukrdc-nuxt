@@ -1,7 +1,7 @@
 <template>
   <BaseCard class="px-4 py-2">
     <div class="mb-2">
-      <p class="font-medium text-gray-900 line-clamp-2 hover:text-gray-600">
+      <p class="line-clamp-2 font-medium text-gray-900 hover:text-gray-600">
         {{ item.drugProductGeneric }}
       </p>
       <p v-if="item.comment" class="text-gray-500">

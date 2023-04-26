@@ -222,7 +222,7 @@
     </BaseCard>
 
     <!-- Related errors card -->
-    <WorkItemRelatedErrorsList v-if="record" class="mt-4 mb-8" :workitem="record" :size="5" />
+    <WorkItemRelatedErrorsList v-if="record" class="mb-8 mt-4" :workitem="record" :size="5" />
   </div>
 </template>
 

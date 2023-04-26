@@ -13,7 +13,7 @@
         </div>
         <div class="mt-2 flex">
           <BadgeMessageStatus class="mr-2 flex-shrink" :message="item" />
-          <p class="flex-grow line-clamp-1">
+          <p class="line-clamp-1 flex-grow">
             {{ itemDescription }}
           </p>
         </div>
