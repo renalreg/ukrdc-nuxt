@@ -81,7 +81,7 @@ export default defineComponent({
 }
 
 .tab-base-primary {
-  @apply whitespace-nowrap border-b-2 py-4 px-1 font-medium;
+  @apply whitespace-nowrap border-b-2 px-1 py-4 font-medium;
 }
 
 .tab-active-primary {

@@ -16,7 +16,7 @@
         <div
           v-if="progress && timeout"
           :class="classTimeout"
-          class="absolute left-0 bottom-0 right-0 h-1 rounded"
+          class="absolute bottom-0 left-0 right-0 h-1 rounded"
           :style="progressStyle"
         ></div>
         <div class="shadow-xs z-100 overflow-hidden rounded-lg">
@@ -59,7 +59,7 @@
       >
         <div
           v-if="progress && timeout"
-          class="absolute left-0 bottom-0 right-0 h-1 rounded bg-gray-100"
+          class="absolute bottom-0 left-0 right-0 h-1 rounded bg-gray-100"
           :style="progressStyle"
         ></div>
         <div class="shadow-xs flex rounded-lg">
@@ -103,7 +103,7 @@
       >
         <div
           v-if="progress && timeout"
-          class="absolute left-0 bottom-0 right-0 h-1 rounded bg-gray-100"
+          class="absolute bottom-0 left-0 right-0 h-1 rounded bg-gray-100"
           :style="progressStyle"
         ></div>
         <div class="shadow-xs overflow-hidden rounded-lg">

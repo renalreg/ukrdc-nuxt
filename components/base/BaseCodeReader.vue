@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="contentType === 'XML'" class="border-b border-gray-200 pl-8 pb-3 pt-3">
+    <div v-if="contentType === 'XML'" class="border-b border-gray-200 pb-3 pl-8 pt-3">
       <BaseToggle v-model="formatMessage" label="Format XML" />
     </div>
 

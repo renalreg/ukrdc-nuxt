@@ -147,8 +147,6 @@ It may be simpler to start a fresh Nuxt 3 project and add the application back i
   - In progress: https://github.com/renalreg/ukrdc-nuxt/pull/157
 - Phase 2: Migrate to [Nuxt 3](https://v3.nuxtjs.org/guide/getting-started/)
   - **Requires Sentry module compatibility update**
-  - Replace/remove @nuxt/postcss8
-    - See https://tailwindcss.com/docs/guides/nuxtjs and https://stackoverflow.com/questions/70302520/nuxtjs-v3-and-tailwindcss-v3-postcss8-not-compatible
   - Update requirements to Vue 3 compatible versions
     - `v-calendar` to `v-calendar@next`
     - `floating-vue@nuxt2` to `floating-vue@latest`

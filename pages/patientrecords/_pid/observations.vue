@@ -124,8 +124,8 @@ export default defineComponent({
         .then((response) => {
           observations.value = response.data.items;
           total.value = response.data.total;
-          page.value = response.data.page;
-          size.value = response.data.size;
+          page.value = response.data.page ?? 0;
+          size.value = response.data.size ?? 0;
         });
 
       // If we don't already have a list of available codes, fetch one

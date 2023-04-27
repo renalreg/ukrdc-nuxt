@@ -78,8 +78,8 @@ export default defineComponent({
       const tasksPage = await fetchTasksList(page.value || 1, size.value);
       tasks.value = tasksPage.items;
       total.value = tasksPage.total;
-      page.value = tasksPage.page;
-      size.value = tasksPage.size;
+      page.value = tasksPage.page ?? 0;
+      size.value = tasksPage.size ?? 0;
     }
 
     onMounted(async () => {

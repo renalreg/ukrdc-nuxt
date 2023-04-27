@@ -8,7 +8,7 @@
             <div class="relative pb-8">
               <span
                 v-if="index != treatmentEvents.length - 1"
-                class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200"
+                class="absolute left-4 top-4 -ml-px h-full w-0.5 bg-gray-200"
                 aria-hidden="true"
               ></span>
               <div class="relative flex space-x-3">

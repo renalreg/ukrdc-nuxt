@@ -1,12 +1,10 @@
 <template>
   <div>
     <div class="mx-auto mb-4 max-w-7xl">
-      <h1>Records with Open Work Items</h1>
-      <h3 class="mb-1">Quickly identifies Master Records with the largest number of open Work Items.</h3>
-      <p>
-        Note that this does not attempt to group Master Records by their link records.
-        <br />
-        For example, both the UKRDC and NHS Master Records for a patient will appear here separately.
+      <h2 class="mb-2">PKB Program Membership Report</h2>
+      <p>List of patients with no active PKB membership record, preventing outbound data flow to Patients Know Best.</p>
+      <p v-if="records">
+        <b>{{ total }}</b> records currently match this condition.
       </p>
     </div>
 
@@ -23,14 +21,13 @@
       <BaseCard>
         <!-- Real results -->
         <ul class="divide-y divide-gray-200">
-          <div v-for="group in groups" :key="`group-${group.masterRecord.id}`" class="hover:bg-gray-50">
-            <NuxtLink :to="`/masterrecords/${group.masterRecord.id}/issues`">
-              <MasterRecordsListItem
-                :item="group.masterRecord"
-                details-label="Open Work Items"
-                :details-value="group.workItemCount.toString()"
-              />
-            </NuxtLink>
+          <div v-for="record in records" :key="`record-${record.pid}`" class="hover:bg-gray-50">
+            <PatientRecordsListItem
+              :item="record"
+              :show-manage-menu="false"
+              :show-sender="false"
+              :prefer-ni-over-mrn="true"
+            />
           </div>
         </ul>
 
@@ -50,46 +47,48 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-import { WorkItemGroup } from "@ukkidney/ukrdc-axios-ts";
+import { FacilityDetailsSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseCard from "~/components/base/BaseCard.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
-import MasterRecordsListItem from "~/components/MasterRecordsListItem.vue";
+import PatientRecordsListItem from "~/components/PatientRecordsListItem.vue";
 import usePagination from "~/composables/query/usePagination";
 import useApi from "~/composables/useApi";
-import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
   components: {
     BaseCard,
     BaseSkeleListItem,
     BasePaginator,
-    MasterRecordsListItem,
+    PatientRecordsListItem,
   },
-  setup() {
+  props: {
+    facility: {
+      type: Object as () => FacilityDetailsSchema,
+      required: true,
+    },
+  },
+  setup(props) {
     const { page, total, size } = usePagination();
-    const { adminApi } = useApi();
+    const { facilitiesApi } = useApi();
 
     // Data refs
-    size.value = 10; // Get 10 groups as we expect a couple of records per group
-
-    const groups = ref<WorkItemGroup[]>();
     const fetchInProgress = ref(false);
-
-    const lastRunTime = ref<string>();
+    const records = ref<PatientRecordSummarySchema[]>();
 
     // Data fetching
-    function getGroups() {
+    function getRecords() {
       fetchInProgress.value = true;
 
-      adminApi
-        .getRecordWorkitemCounts({
+      facilitiesApi
+        .getFacilityReportsPm001({
+          code: props.facility.id,
           page: page.value || 1,
           size: size.value,
         })
         .then((response) => {
-          groups.value = response.data.items;
+          records.value = response.data.items;
           total.value = response.data.total;
           page.value = response.data.page ?? 0;
           size.value = response.data.size ?? 0;
@@ -99,21 +98,19 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      getGroups();
+      getRecords();
     });
 
     watch(page, () => {
-      getGroups();
+      getRecords();
     });
 
     return {
-      groups,
+      records,
       fetchInProgress,
-      lastRunTime,
       page,
       total,
       size,
-      formatDate,
     };
   },
 });

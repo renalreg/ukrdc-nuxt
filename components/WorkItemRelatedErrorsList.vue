@@ -71,8 +71,8 @@ export default defineComponent({
         })
         .then((response) => {
           relatedErrors.value = response.data.items;
-          relatedErrorsPage.value = response.data.page;
-          relatedErrorsSize.value = response.data.size;
+          relatedErrorsPage.value = response.data.page ?? 0;
+          relatedErrorsSize.value = response.data.size ?? 0;
           relatedErrorsTotal.value = response.data.total;
         });
     }

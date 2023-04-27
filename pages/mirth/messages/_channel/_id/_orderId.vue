@@ -51,7 +51,7 @@
             <div class="min-w-0 flex-1">
               <span class="absolute inset-0" aria-hidden="true" />
               <p class="font-medium text-gray-900">{{ key }}</p>
-              <p class="text-gray-500 line-clamp-3">
+              <p class="line-clamp-3 text-gray-500">
                 {{ value }}
               </p>
             </div>

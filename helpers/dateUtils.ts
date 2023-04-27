@@ -1,10 +1,10 @@
 import { DateTime } from "luxon";
 
-export function nowString(addDays: number = 0): string {
+export function nowString(addDays = 0): string | null {
   return DateTime.now().plus({ days: addDays }).toISO();
 }
 
-export function formatDate(rawDate: string, t: boolean = true, s: boolean = false): string {
+export function formatDate(rawDate: string, t = true, s = false): string {
   return DateTime.fromISO(rawDate)
     .setLocale("en-GB")
     .toLocaleString(t ? (s ? DateTime.DATETIME_SHORT_WITH_SECONDS : DateTime.DATETIME_SHORT) : DateTime.DATE_SHORT);

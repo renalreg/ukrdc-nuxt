@@ -1,6 +1,6 @@
 <template>
   <div class="bg-gray-50">
-    <div v-if="showCloseButton" class="absolute top-0 right-0 -mr-12 pt-2">
+    <div v-if="showCloseButton" class="absolute right-0 top-0 -mr-12 pt-2">
       <button
         class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
         @click="$emit('toggle')"
@@ -19,7 +19,7 @@
         </svg>
       </button>
     </div>
-    <div class="h-0 flex-1 overflow-y-auto pt-6 pb-4">
+    <div class="h-0 flex-1 overflow-y-auto pb-4 pt-6">
       <div class="mb-2 flex flex-shrink-0 items-center px-4">
         <img class="h-auto w-full" src="~/assets/UKKA_UKRDC.svg" alt="Workflow" />
       </div>
@@ -55,7 +55,7 @@
           <div v-else-if="item.visible">
             <h3
               :id="item.title + '_Heading'"
-              class="mt-5 mb-3 px-3 text-sm font-semibold uppercase tracking-wider text-gray-500"
+              class="mb-3 mt-5 px-3 text-sm font-semibold uppercase tracking-wider text-gray-500"
             >
               {{ item.title }}
             </h3>

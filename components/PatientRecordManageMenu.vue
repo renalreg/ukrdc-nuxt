@@ -6,7 +6,7 @@
         <IconEllipsisVertical class="text-gray-600 hover:text-gray-800" />
       </BaseButtonSlot>
 
-      <BaseMenu class="top-0 right-0 z-10 mx-2 my-2" :show="showMenu">
+      <BaseMenu class="right-0 top-0 z-10 mx-2 my-2" :show="showMenu">
         <BaseMenuItem @click="copyPID"> Copy PID </BaseMenuItem>
         <div v-if="hasPermission('ukrdc:records:export') && (showPvSync || showRadarSync || showPkbSync)">
           <BaseMenuDivider />

@@ -46,7 +46,7 @@
     <BaseMenu
       v-if="isAuthenticated"
       class="z-10 w-full"
-      :class="topToBottom ? 'top-16 right-0' : 'bottom-16 left-0 mb-1'"
+      :class="topToBottom ? 'right-0 top-16' : 'bottom-16 left-0 mb-1'"
       :show="showMenu"
     >
       <BaseMenuItem to="/profile"> Profile and Settings </BaseMenuItem>

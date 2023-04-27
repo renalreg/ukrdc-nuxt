@@ -2,21 +2,24 @@
   <li>
     <div class="flex min-w-0 items-center gap-2">
       <div class="grid w-full min-w-0 flex-1 grid-cols-2 gap-2 py-4 pl-4 sm:grid-cols-3 sm:pl-6 lg:grid-cols-4">
-        <!-- Name, DoB, gender -->
-        <div>
+        <!-- Sender -->
+        <div v-if="showSender">
           <div class="flex items-center gap-2">
+            <BaseBadge v-if="badgeStatus === 1" class="w-14 bg-green-100 text-center text-green-800">Active</BaseBadge>
+            <BaseBadge v-if="badgeStatus === 2" class="w-14 bg-red-100 text-center text-red-800">Closed</BaseBadge>
+            <BaseBadge v-if="badgeStatus === 3" class="w-14 bg-yellow-100 text-center text-yellow-800">Mixed</BaseBadge>
             <SendingFacilityLink class="font-medium" :code="item.sendingfacility" />
-            <BaseBadge v-if="badgeStatus === 2" class="bg-red-100 text-red-800">Closed</BaseBadge>
-            <BaseBadge v-if="badgeStatus === 3" class="bg-yellow-100 text-yellow-800">Mixed</BaseBadge>
           </div>
 
           <p class="mt-2">via {{ item.sendingextract }}</p>
         </div>
-        <!-- National ID -->
+        <!-- Name, DoB, gender -->
         <div>
-          <span class="truncate">
-            <h5 class="sensitive inline capitalize">{{ item.patient?.names[0].given.toLowerCase() }}</h5>
-            <h5 class="sensitive inline capitalize italic">{{ item.patient?.names[0].family.toLowerCase() }}</h5>
+          <span class="line-clamp-1">
+            <h5 class="sensitive inline truncate capitalize">{{ item.patient?.names[0].given.toLowerCase() }}</h5>
+            <h5 class="sensitive inline truncate capitalize italic">
+              {{ item.patient?.names[0].family.toLowerCase() }}
+            </h5>
           </span>
           <p class="sensitive mt-2 flex items-center">
             {{ item.patient?.birthTime ? formatDate(item.patient?.birthTime, false) : "Unknown date of birth" }}
@@ -25,11 +28,11 @@
             >
           </p>
         </div>
-        <!-- MRN (medium breakpoint only) -->
-        <div class="hidden sm:block">
-          <h5 class="truncate">{{ firstMRNObject.label }} Number</h5>
+        <!-- Primary Identifier (medium breakpoint only) -->
+        <div v-if="primaryIdentifier" class="hidden sm:block">
+          <h5 class="truncate">{{ primaryIdentifier.label }} Number</h5>
           <p class="sensitive mt-2 truncate">
-            {{ firstMRNObject.number }}
+            {{ primaryIdentifier.number ?? "" }}
           </p>
         </div>
         <!-- UKRDC ID (large breakpoint only) -->
@@ -37,6 +40,13 @@
           <h5>UKRDC ID</h5>
           <p class="sensitive mt-2">
             {{ item.ukrdcid }}
+          </p>
+        </div>
+        <!-- PID (only if sender column is hidden) -->
+        <div v-if="!showSender">
+          <h5>PID</h5>
+          <p class="sensitive mt-2">
+            {{ item.pid }}
           </p>
         </div>
       </div>
@@ -50,6 +60,7 @@
         </div>
         <div class="flex-grow-0">
           <PatientRecordManageMenu
+            v-if="showManageMenu"
             :show-pv-sync="showPvSync"
             :show-radar-sync="showRadarSync"
             :show-pkb-sync="showPkbSync"
@@ -77,7 +88,7 @@ import PatientRecordManageMenu from "~/components/PatientRecordManageMenu.vue";
 import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
 import { formatGenderCharacter } from "~/helpers/codeUtils";
 import { formatDate } from "~/helpers/dateUtils";
-import { firstMRN } from "~/helpers/recordUtils";
+import { firstMRN, firstNI } from "~/helpers/recordUtils";
 
 interface localNumber {
   label: string;
@@ -104,6 +115,21 @@ export default defineComponent({
       type: Object as () => PatientRecordSummarySchema,
       required: true,
     },
+    showSender: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+    showManageMenu: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+    preferNiOverMrn: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     showPvSync: {
       type: Boolean,
       required: false,
@@ -123,8 +149,20 @@ export default defineComponent({
   setup(props) {
     const showDetail = ref(false);
 
-    const firstMRNObject = computed<localNumber>(() => {
+    const firstMRNObject = computed<localNumber | null>(() => {
       return firstMRN(props.item);
+    });
+
+    const firstNIObject = computed<localNumber | null>(() => {
+      return firstNI(props.item);
+    });
+
+    const primaryIdentifier = computed<localNumber | null>(() => {
+      if (props.preferNiOverMrn) {
+        return firstNIObject.value ?? firstMRNObject.value;
+      } else {
+        return firstMRNObject.value ?? firstNIObject.value;
+      }
     });
 
     const badgeStatus = computed(() => {
@@ -145,7 +183,7 @@ export default defineComponent({
       }
     });
 
-    return { showDetail, formatDate, formatGenderCharacter, firstMRNObject, badgeStatus };
+    return { showDetail, formatDate, formatGenderCharacter, primaryIdentifier, badgeStatus };
   },
 });
 </script>

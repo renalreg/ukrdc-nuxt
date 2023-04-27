@@ -150,8 +150,8 @@ export default defineComponent({
         .then((response) => {
           messages.value = response.data.items;
           total.value = response.data.total;
-          page.value = response.data.page;
-          size.value = response.data.size;
+          page.value = response.data.page ?? 0;
+          size.value = response.data.size ?? 0;
         })
         .finally(() => {
           fetchInProgress.value = false;
