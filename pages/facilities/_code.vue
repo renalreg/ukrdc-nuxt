@@ -38,7 +38,7 @@ export default defineComponent({
   },
   setup() {
     const route = useRoute();
-    const { hasMultipleFacilities } = usePermissions();
+    const { hasMultipleFacilities, hasPermission } = usePermissions();
 
     const { facilitiesApi } = useApi();
 
@@ -64,6 +64,11 @@ export default defineComponent({
         ...insertIf(showStats.value, {
           name: "Statistics",
           href: `/facilities/${route.value.params.code}/statistics`,
+          hasChildren: true,
+        }),
+        ...insertIf(hasPermission("ukrdc:reports:read"), {
+          name: "Reports",
+          href: `/facilities/${route.value.params.code}/reports`,
           hasChildren: true,
         }),
       ];

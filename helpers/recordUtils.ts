@@ -62,7 +62,7 @@ export function firstSurname(record: PatientRecordSummarySchema): string {
   return record.patient?.names[0]?.family || "";
 }
 
-export function firstMRN(record: PatientRecordSummarySchema): localNumber {
+export function firstMRN(record: PatientRecordSummarySchema): localNumber | null {
   const mrn = record.patient?.numbers.find((i: NumberSchema) => i.numbertype === "MRN");
   if (mrn) {
     return {
@@ -70,10 +70,18 @@ export function firstMRN(record: PatientRecordSummarySchema): localNumber {
       number: mrn.patientid,
     };
   }
-  return {
-    label: "",
-    number: "",
-  };
+  return null;
+}
+
+export function firstNI(record: PatientRecordSummarySchema): localNumber | null {
+  const ni = record.patient?.numbers.find((i: NumberSchema) => i.numbertype === "NI");
+  if (ni) {
+    return {
+      label: ni.organization,
+      number: ni.patientid,
+    };
+  }
+  return null;
 }
 
 export function demographicsUpdateAllowed(record: PatientRecordSummarySchema) {
