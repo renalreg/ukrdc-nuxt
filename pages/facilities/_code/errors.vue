@@ -9,7 +9,7 @@
           <BaseCollapseHeader v-model="advancedOpen" label="More Options"></BaseCollapseHeader>
         </div>
         <!-- More Options -->
-        <div class="mt-4" v-show="advancedOpen">
+        <div v-show="advancedOpen" class="mt-4">
           <BaseSelectSearchable
             v-if="channelIds.length > 1"
             v-model="selectedChannel"
