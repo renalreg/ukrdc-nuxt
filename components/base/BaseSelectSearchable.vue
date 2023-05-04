@@ -22,9 +22,9 @@
         @keydown.enter.prevent="open"
       >
         <div class="flex-grow truncate">
-          <span v-if="value && labelFor(value)" class="line-clamp-1 truncate">{{
-            `${value} (${labelFor(value)})`
-          }}</span>
+          <span v-if="value && labelFor(value)" class="line-clamp-1 truncate">
+            {{ labelFor(value) }}
+          </span>
           <span v-else-if="value" class="line-clamp-1 truncate">{{ value }}</span>
           <span v-else class="text-grey-dark line-clamp-1 truncate text-base">{{ hint }}</span>
         </div>
@@ -80,7 +80,7 @@
           :class="[i === highlightedIndex ? 'bg-indigo-50' : 'hover:bg-grey-darker']"
           @click="select(i)"
         >
-          {{ labels && labelFor(option) ? `${option} (${labelFor(option)})` : option }}
+          {{ labels && labelFor(option) ? labelFor(option) : option }}
         </li>
       </ul>
       <div v-show="filteredOptions.length === 0" class="text-grey px-3 py-2">No results found for "{{ search }}"</div>
@@ -128,6 +128,11 @@ export default defineComponent({
       type: Boolean,
       required: false,
       default: true,
+    },
+    showLabelsOnly: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
 
@@ -205,7 +210,10 @@ export default defineComponent({
       if (props.labels) {
         const index = props.options.indexOf(value);
         if (index) {
-          return props.labels[index];
+          if (props.showLabelsOnly) {
+            return props.labels[index];
+          }
+          return `${value} (${props.labels[index]})`;
         }
       }
       return undefined;
