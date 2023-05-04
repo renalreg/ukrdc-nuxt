@@ -5,7 +5,9 @@
       <BaseCardHeader>
         <h2>Records Currently Failing</h2>
         <div class="flex w-full">
-          <div class="flex-grow"><h5>Records where the most recent message received failed to process due to errors.</h5></div>
+          <div class="flex-grow">
+            <h5>Records where the most recent message received failed to process due to errors.</h5>
+          </div>
           <BaseCollapseHeader v-model="advancedOpen" label="More Options"></BaseCollapseHeader>
         </div>
         <!-- More Options -->
@@ -20,7 +22,7 @@
           />
         </div>
       </BaseCardHeader>
-      <div v-if="errorMessages && errorMessagesTotal == 0" class="text-center p-8">
+      <div v-if="errorMessages && errorMessagesTotal == 0" class="p-8 text-center">
         <p>No active failing records</p>
       </div>
       <div v-else>
@@ -36,18 +38,17 @@
             </NuxtLink>
           </div>
         </ul>
-      <BasePaginator
-        class="border-t border-gray-200 bg-white"
-        :jump-to-top="false"
-        :page="errorMessagesPage"
-        :size="errorMessagesSize"
-        :total="errorMessagesTotal"
-        @next="errorMessagesPage++"
-        @prev="errorMessagesPage--"
-        @jump="errorMessagesPage = $event"
-      />
+        <BasePaginator
+          class="border-t border-gray-200 bg-white"
+          :jump-to-top="false"
+          :page="errorMessagesPage"
+          :size="errorMessagesSize"
+          :total="errorMessagesTotal"
+          @next="errorMessagesPage++"
+          @prev="errorMessagesPage--"
+          @jump="errorMessagesPage = $event"
+        />
       </div>
-
     </BaseCard>
   </div>
 </template>
@@ -109,7 +110,6 @@ export default defineComponent({
             until: pointRange.until,
             facility: props.facility.id,
             status: ["ERROR", "RESOLVED"],
-            
           },
         });
       }
@@ -135,7 +135,7 @@ export default defineComponent({
     onMounted(() => {
       // Auto-open advanced options if any are active
       if (selectedChannel.value) {
-        advancedOpen.value = true
+        advancedOpen.value = true;
       }
       updateErrorMessages();
     });
@@ -154,7 +154,7 @@ export default defineComponent({
       channels,
       channelIds,
       channelLabels,
-      selectedChannel
+      selectedChannel,
     };
   },
 });
