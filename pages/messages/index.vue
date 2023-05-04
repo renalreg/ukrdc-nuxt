@@ -183,6 +183,10 @@ export default defineComponent({
     }
 
     onMounted(() => {
+      // Auto-open advanced options if any are active
+      if (selectedChannel.value) {
+        advancedOpen.value = true
+      }
       getMessages();
     });
 
