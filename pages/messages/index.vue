@@ -15,7 +15,9 @@
         hint="Select a facility..."
       />
       <div class="flex flex-col gap-2 lg:flex-row">
-        <div class="flex flex-grow items-center gap-4">
+        <BaseCollapseHeader v-model="advancedOpen" class="flex-grow" label="More Options"></BaseCollapseHeader>
+
+        <div class="mr-8 flex items-center gap-4">
           <BaseCheckbox v-model="statuses" label="Stored" value="STORED" />
           <BaseCheckbox v-model="statuses" label="Received" value="RECEIVED" />
           <BaseCheckbox v-model="statuses" label="Error" value="ERROR" />
@@ -25,10 +27,10 @@
         <form v-show="!nationalId" class="flex" @submit.prevent="nationalId = nationalIdSearchString.trim()">
           <BaseTextBoxMini
             v-model="nationalIdSearchString"
-            class="z-20 flex-grow rounded-r-none"
+            class="flex-grow rounded-r-none"
             placeholder="Filter by Patient Number"
           ></BaseTextBoxMini>
-          <BaseButtonMini class="z-10" anchor="left" type="submit">Go</BaseButtonMini>
+          <BaseButtonMini anchor="left" type="submit">Go</BaseButtonMini>
         </form>
 
         <BaseButtonMini v-show="nationalId" @click="nationalId = null">Show Results From All Patients</BaseButtonMini>
@@ -44,6 +46,19 @@
           </div>
         </BaseButtonMini>
       </div>
+    </div>
+
+    <!-- More Options -->
+    <div v-show="advancedOpen">
+      <BaseSelectSearchable
+        v-if="channelIds.length > 1"
+        v-model="selectedChannel"
+        class="mb-4"
+        :options="channelIds"
+        :labels="channelLabels"
+        hint="Select a message channel..."
+        :show-labels-only="true"
+      />
     </div>
 
     <BaseCard>
@@ -79,6 +94,7 @@ import { MessageSchema, OrderBy } from "@ukkidney/ukrdc-axios-ts";
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCheckbox from "~/components/base/BaseCheckbox.vue";
+import BaseCollapseHeader from "~/components/base/BaseCollapseHeader.vue";
 import BaseDateRange from "~/components/base/BaseDateRange.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
@@ -92,6 +108,7 @@ import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";
 import useSortBy from "~/composables/query/useSortBy";
 import useApi from "~/composables/useApi";
+import useChannels from "~/composables/useChannels";
 import useFacilities from "~/composables/useFacilities";
 import usePermissions from "~/composables/usePermissions";
 import { nowString } from "~/helpers/dateUtils";
@@ -106,6 +123,7 @@ export default defineComponent({
     BaseTextBoxMini,
     BaseDateRange,
     BaseSelectSearchable,
+    BaseCollapseHeader,
     IconBarsArrowDown,
     IconBarsArrowUp,
     MessagesListItem,
@@ -114,7 +132,10 @@ export default defineComponent({
     const { page, total, size } = usePagination();
     const { makeDateRange } = useDateRange();
     const { stringQuery, arrayQuery } = useQuery();
+
     const { facilities, facilityIds, facilityLabels, selectedFacility } = useFacilities();
+    const { channels, channelIds, channelLabels, selectedChannel } = useChannels();
+
     const { orderAscending, orderBy, toggleOrder } = useSortBy();
     const { messagesApi } = useApi();
     const { isAdmin } = usePermissions();
@@ -129,6 +150,8 @@ export default defineComponent({
     // Data refs
     const messages = ref<MessageSchema[]>();
     const statuses = arrayQuery("status", ["ERROR"], true, true);
+
+    const advancedOpen = ref(false);
 
     const fetchInProgress = ref(false);
 
@@ -145,6 +168,7 @@ export default defineComponent({
           since: dateRange.value.start || undefined,
           until: dateRange.value.end || undefined,
           facility: selectedFacility.value || undefined,
+          channel: [selectedChannel.value].filter((n) => n) as string[],
           ni: [nationalId.value].filter((n) => n) as string[],
         })
         .then((response) => {
@@ -167,6 +191,7 @@ export default defineComponent({
         page,
         orderBy,
         selectedFacility,
+        selectedChannel,
         nationalId,
         () => JSON.stringify(dateRange.value), // Stringify to watch for actual value changes
         () => JSON.stringify(statuses.value), // Stringify to watch for actual value changes
@@ -178,6 +203,7 @@ export default defineComponent({
 
     return {
       fetchInProgress,
+      advancedOpen,
       page,
       total,
       size,
@@ -188,6 +214,10 @@ export default defineComponent({
       facilityIds,
       facilityLabels,
       selectedFacility,
+      channels,
+      channelIds,
+      channelLabels,
+      selectedChannel,
       nationalId,
       nationalIdSearchString,
       orderAscending,
