@@ -209,7 +209,7 @@ export default defineComponent({
     function labelFor(value: string): string | undefined {
       if (props.labels) {
         const index = props.options.indexOf(value);
-        if (index) {
+        if (index !== undefined) {
           if (props.showLabelsOnly) {
             return props.labels[index];
           }
