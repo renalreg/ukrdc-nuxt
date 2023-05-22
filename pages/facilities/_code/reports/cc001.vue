@@ -6,7 +6,8 @@
         List of patients with no treatment items or programme memberships to explain the presence of the record in the
         UKRDC.
       </p>
-      <p v-if="records">
+      <p>Excludes patients with a known date of death prior to 5 years ago from the time of query.</p>
+      <p v-if="records" class="mt-2">
         <b>{{ total }}</b> records currently match this condition.
       </p>
     </div>
