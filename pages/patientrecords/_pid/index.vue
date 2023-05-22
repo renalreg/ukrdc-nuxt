@@ -1,27 +1,5 @@
 <template>
   <div>
-    <!-- Description list -->
-    <BaseCard class="my-4 p-6">
-      <BaseDescriptionListGrid>
-        <BaseDescriptionListGridItem>
-          <dt>Local ID</dt>
-          <dd class="sensitive">
-            {{ record.localpatientid }}
-          </dd>
-        </BaseDescriptionListGridItem>
-
-        <BaseDescriptionListGridItem>
-          <dt>UKRDC ID</dt>
-          <dd class="sensitive">{{ record.ukrdcid }}</dd>
-        </BaseDescriptionListGridItem>
-
-        <BaseDescriptionListGridItem>
-          <dt>PID</dt>
-          <dd class="sensitive">{{ record.pid }}</dd>
-        </BaseDescriptionListGridItem>
-      </BaseDescriptionListGrid>
-    </BaseCard>
-
     <PatientRecordDetailCards :full="true" :record="record" />
   </div>
 </template>

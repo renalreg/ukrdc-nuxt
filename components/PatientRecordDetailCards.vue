@@ -50,7 +50,7 @@
       <div class="col-span-3 mb-4">
         <h4 class="mb-3">Patient Numbers</h4>
         <!-- External patient numbers -->
-        <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+        <ul class="patient-infocard-ul">
           <li
             v-for="item in record.patient.numbers"
             :key="item.numbertype + item.organization + item.patientid"
@@ -65,7 +65,7 @@
           </li>
         </ul>
         <!-- Internal patient numbers -->
-        <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 mt-2">
+        <ul class="patient-infocard-ul mt-2">
           <li class="col-span-1">
             <PatientRecordNumberCard class="w-full" :number="record.ukrdcid" numbertype="UKRDC" organization="UKKA" />
           </li>
@@ -105,7 +105,7 @@
     >
       <h4 class="mb-3">Addresses</h4>
 
-      <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+      <ul class="patient-infocard-ul">
         <li v-for="item in record.patient.addresses" :key="item.street" class="col-span-1">
           <BaseCard class="sensitive w-full px-4 py-2"> <PatientRecordAddress :address="item" /> </BaseCard>
         </li>
@@ -118,7 +118,7 @@
     >
       <h4 class="mb-3">Program Memberships</h4>
 
-      <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+      <ul class="patient-infocard-ul">
         <li
           v-for="(item, index) in record.programMemberships"
           :key="item.programName + index"
@@ -143,7 +143,7 @@
     <div v-if="full && !isEmptyObject(record) && record.patient.familydoctor" class="col-span-3 mb-4">
       <h4 class="mb-3">Family Doctor</h4>
 
-      <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+      <ul class="patient-infocard-ul">
         <li
           v-for="(info, index) in [
             record.patient.familydoctor.gpInfo,
@@ -216,4 +216,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style lang="postcss" scoped>
+.patient-infocard-ul {
+  @apply grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3
+}
+</style>
