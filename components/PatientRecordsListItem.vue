@@ -1,7 +1,9 @@
 <template>
   <li>
     <div class="flex min-w-0 items-center gap-2">
-      <div class="grid w-full min-w-0 flex-1 grid-cols-2 gap-2 py-4 pl-4 sm:grid-cols-3 sm:pl-6 lg:grid-cols-4">
+      <div
+        class="grid w-full min-w-0 flex-1 grid-cols-2 items-center gap-2 py-4 pl-4 sm:grid-cols-3 sm:pl-6 lg:grid-cols-4"
+      >
         <!-- Sender -->
         <div v-if="showSender">
           <div class="flex items-center gap-2">
@@ -20,12 +22,13 @@
             <h5 class="sensitive inline truncate capitalize italic">
               {{ item.patient?.names[0].family.toLowerCase() }}
             </h5>
+            <h5 class="sensitive ml-1 inline">
+              {{ item.patient?.gender ? formatGenderCharacter(item.patient?.gender) : "?" }}
+            </h5>
           </span>
           <p class="sensitive mt-2 flex items-center">
             {{ item.patient?.birthTime ? formatDate(item.patient?.birthTime, false) : "Unknown date of birth" }}
-            <b class="ml-1">
-              {{ item.patient?.gender ? formatGenderCharacter(item.patient?.gender) : "Unknown gender" }}</b
-            >
+            {{ item.patient?.deathTime ? ` – ${formatDate(item.patient?.deathTime, false)}` : "" }}
           </p>
         </div>
         <!-- Primary Identifier (medium breakpoint only) -->
