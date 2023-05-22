@@ -96,7 +96,6 @@
           </div>
         </BaseCard>
       </div>
-
     </div>
 
     <div
@@ -218,6 +217,6 @@ export default defineComponent({
 
 <style lang="postcss" scoped>
 .patient-infocard-ul {
-  @apply grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3
+  @apply grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3;
 }
 </style>
