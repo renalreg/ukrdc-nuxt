@@ -42,7 +42,7 @@
     "@types/marked": "^4.2.3",
     "@types/plotly.js": "^2.12.2",
     "autoprefixer": "^10.4.8",
-    "eslint": "^8.40.0",
+    "eslint": "^8.41.0",
     "eslint-config-prettier": "^8.2.0",
     "eslint-plugin-nuxt": "^4.0.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
