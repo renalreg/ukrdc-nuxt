@@ -19,20 +19,6 @@
           <dt>PID</dt>
           <dd class="sensitive">{{ record.pid }}</dd>
         </BaseDescriptionListGridItem>
-
-        <BaseDescriptionListGridItem>
-          <dt>Last Updated</dt>
-          <dd>
-            {{ formatDate(record.repositoryUpdateDate) }}
-          </dd>
-        </BaseDescriptionListGridItem>
-
-        <BaseDescriptionListGridItem>
-          <dt>Created</dt>
-          <dd>
-            {{ formatDate(record.repositoryCreationDate) }}
-          </dd>
-        </BaseDescriptionListGridItem>
       </BaseDescriptionListGrid>
     </BaseCard>
 
