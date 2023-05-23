@@ -35,11 +35,11 @@
 
     <BaseCard>
       <!-- Skeleton results -->
-      <ul v-if="fetchInProgress" class="divide-y divide-gray-200">
+      <ul v-if="fetchInProgress" class="divide-y divide-gray-300">
         <BaseSkeleListItem v-for="n in 10" :key="n" />
       </ul>
       <!-- Real results -->
-      <ul v-else class="divide-y divide-gray-200">
+      <ul v-else class="divide-y divide-gray-300">
         <div v-for="item in workitems" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/workitems/${item.id}`">
             <WorkItemsListItem :item="item" />

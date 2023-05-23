@@ -28,7 +28,7 @@
     <div v-if="searchInProgress">
       <BaseCard>
         <!-- Skeleton results -->
-        <ul class="divide-y divide-gray-200">
+        <ul class="divide-y divide-gray-300">
           <BaseSkeleListItem v-for="n in 10" :key="n" />
         </ul>
       </BaseCard>
@@ -37,7 +37,7 @@
     <div v-else-if="masterrecords.length > 0">
       <BaseCard>
         <!-- Real results -->
-        <ul class="divide-y divide-gray-200">
+        <ul class="divide-y divide-gray-300">
           <div v-for="item in masterrecords" :key="item.id" class="hover:bg-gray-50">
             <NuxtLink :to="`/masterrecords/${item.id}`">
               <MasterRecordsListItem :item="item" />

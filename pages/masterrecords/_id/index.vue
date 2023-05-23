@@ -91,7 +91,7 @@
         :records="patientRecords"
         @refresh="refreshRecords"
       />
-      <ul v-else class="divide-y divide-gray-200">
+      <ul v-else class="divide-y divide-gray-300">
         <BaseSkeleListItem v-for="n in 5" :key="n" />
       </ul>
     </BaseCard>
@@ -101,7 +101,7 @@
       <BaseCardHeader>
         <h2>Linked Master Records</h2>
       </BaseCardHeader>
-      <ul v-if="relatedRecords" class="divide-y divide-gray-200">
+      <ul v-if="relatedRecords" class="divide-y divide-gray-300">
         <div
           v-for="item in relatedRecords"
           :key="item.id"
@@ -116,7 +116,7 @@
           </NuxtLink>
         </div>
       </ul>
-      <ul v-else class="divide-y divide-gray-200">
+      <ul v-else class="divide-y divide-gray-300">
         <BaseSkeleListItem v-for="n in 2" :key="n" />
       </ul>
     </BaseCard>

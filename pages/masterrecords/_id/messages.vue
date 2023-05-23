@@ -16,11 +16,11 @@
 
     <BaseCard>
       <!-- Skeleton results -->
-      <ul v-if="!messages" class="divide-y divide-gray-200">
+      <ul v-if="!messages" class="divide-y divide-gray-300">
         <BaseSkeleListItem v-for="n in 10" :key="n" />
       </ul>
       <!-- Real results -->
-      <ul v-else class="divide-y divide-gray-200">
+      <ul v-else class="divide-y divide-gray-300">
         <div v-for="item in messages" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/messages/${item.id}`">
             <MessagesListItem :show-patient-filter="false" :item="item" />

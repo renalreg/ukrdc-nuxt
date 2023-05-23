@@ -1,78 +1,100 @@
 <template>
   <li>
-    <div class="flex min-w-0 items-center gap-2">
-      <div
-        class="grid w-full min-w-0 flex-1 grid-cols-2 items-center gap-2 py-4 pl-4 sm:grid-cols-3 sm:pl-6 lg:grid-cols-4"
-      >
-        <!-- Sender -->
-        <div v-if="showSender">
-          <div class="flex items-center gap-2">
-            <BaseBadge v-if="badgeStatus === 1" class="w-14 bg-green-100 text-center text-green-800">Active</BaseBadge>
-            <BaseBadge v-if="badgeStatus === 2" class="w-14 bg-red-100 text-center text-red-800">Closed</BaseBadge>
-            <BaseBadge v-if="badgeStatus === 3" class="w-14 bg-yellow-100 text-center text-yellow-800">Mixed</BaseBadge>
-            <SendingFacilityLink class="font-medium" :code="item.sendingfacility" />
-          </div>
+    <div class="flex flex-col divide-y divide-gray-200">
+      <!-- Main record info and menu button -->
+      <div class="flex">
+        <!-- Main record info -->
+        <NuxtLink :to="`/patientrecords/${item.pid}`" class="flex-grow">
+          <div class="flex min-w-0 items-center gap-2 hover:bg-gray-50">
+            <div
+              class="grid w-full min-w-0 flex-1 grid-cols-3 items-center gap-2 py-4 pl-4 md:grid-cols-4 sm:pl-6"
+            >
+              <!-- Sender -->
+              <div v-if="showSender">
+                <div class="flex items-center gap-2">
+                  <BaseBadge v-if="badgeStatus === 1" class="w-14 bg-green-100 text-center text-green-800"
+                    >Active</BaseBadge
+                  >
+                  <BaseBadge v-if="badgeStatus === 2" class="w-14 bg-red-100 text-center text-red-800"
+                    >Closed</BaseBadge
+                  >
+                  <BaseBadge v-if="badgeStatus === 3" class="w-14 bg-yellow-100 text-center text-yellow-800"
+                    >Mixed</BaseBadge
+                  >
+                  <SendingFacilityLink class="font-medium" :code="item.sendingfacility" />
+                </div>
 
-          <p class="mt-2">via {{ item.sendingextract }}</p>
-        </div>
-        <!-- Name, DoB, gender -->
-        <div>
-          <span class="line-clamp-1">
-            <h5 class="sensitive inline truncate capitalize">{{ item.patient?.names[0].given.toLowerCase() }}</h5>
-            <h5 class="sensitive inline truncate capitalize italic">
-              {{ item.patient?.names[0].family.toLowerCase() }}
-            </h5>
-            <h5 class="sensitive ml-1 inline">
-              {{ item.patient?.gender ? formatGenderCharacter(item.patient?.gender) : "?" }}
-            </h5>
-          </span>
-          <p class="sensitive mt-2 flex items-center">
-            {{ item.patient?.birthTime ? formatDate(item.patient?.birthTime, false) : "Unknown date of birth" }}
-            {{ item.patient?.deathTime ? ` – ${formatDate(item.patient?.deathTime, false)}` : "" }}
-          </p>
-        </div>
-        <!-- Primary Identifier (medium breakpoint only) -->
-        <div v-if="primaryIdentifier" class="hidden sm:block">
-          <h5 class="truncate">{{ primaryIdentifier.label }} Number</h5>
-          <p class="sensitive mt-2 truncate">
-            {{ primaryIdentifier.number ?? "" }}
-          </p>
-        </div>
-        <!-- UKRDC ID (large breakpoint only) -->
-        <div class="hidden lg:block">
-          <h5>UKRDC ID</h5>
-          <p class="sensitive mt-2">
-            {{ item.ukrdcid }}
-          </p>
-        </div>
-        <!-- PID (only if sender column is hidden) -->
-        <div v-if="!showSender">
-          <h5>PID</h5>
-          <p class="sensitive mt-2">
-            {{ item.pid }}
-          </p>
-        </div>
+                <p class="mt-2">via {{ item.sendingextract }}</p>
+              </div>
+              <!-- Name, DoB, gender -->
+              <div>
+                <span class="line-clamp-1">
+                  <h5 class="sensitive inline truncate capitalize">{{ item.patient?.names[0].given.toLowerCase() }}</h5>
+                  <h5 class="sensitive inline truncate capitalize italic">
+                    {{ item.patient?.names[0].family.toLowerCase() }}
+                  </h5>
+                  <h5 class="sensitive ml-1 inline">
+                    {{ item.patient?.gender ? formatGenderCharacter(item.patient?.gender) : "?" }}
+                  </h5>
+                </span>
+                <p class="sensitive mt-2 flex items-center">
+                  {{ item.patient?.birthTime ? formatDate(item.patient?.birthTime, false) : "Unknown date of birth" }}
+                  {{ item.patient?.deathTime ? ` – ${formatDate(item.patient?.deathTime, false)}` : "" }}
+                </p>
+              </div>
+              <!-- Primary Identifier (medium breakpoint only) -->
+              <div v-if="primaryIdentifier" class="hidden sm:block">
+                <h5 class="truncate">{{ primaryIdentifier.label }} Number</h5>
+                <p class="sensitive mt-2 truncate">
+                  {{ primaryIdentifier.number ?? "" }}
+                </p>
+              </div>
+              <!-- UKRDC ID (large breakpoint only) -->
+              <div class="hidden md:block">
+                <h5>UKRDC ID</h5>
+                <p class="sensitive mt-2">
+                  {{ item.ukrdcid }}
+                </p>
+              </div>
+              <!-- PID (only if sender column is hidden) -->
+              <div v-if="!showSender">
+                <h5>PID</h5>
+                <p class="sensitive mt-2">
+                  {{ item.pid }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </NuxtLink>
+
+        <PatientRecordManageMenu
+          v-if="showManageMenu"
+          class="flex flex-grow-0 items-center"
+          :show-pv-sync="showPvSync"
+          :show-radar-sync="showRadarSync"
+          :show-pkb-sync="showPkbSync"
+          :item="item"
+          @deleted="$emit('deleted')"
+        />
       </div>
-      <!-- Record links -->
-      <div class="flex flex-shrink-0 items-center gap-2 pr-2">
-        <div class="flex flex-grow flex-col-reverse gap-2 xl:flex-row">
-          <BaseButtonMini class="h-8 truncate" @click="showDetail = !showDetail">
-            {{ showDetail ? "Hide Record" : "Peek Record" }}
-          </BaseButtonMini>
-          <BaseButtonMini :to="`/patientrecords/${item.pid}`" class="h-8 truncate"> Open Record </BaseButtonMini>
-        </div>
-        <div class="flex-grow-0">
-          <PatientRecordManageMenu
-            v-if="showManageMenu"
-            :show-pv-sync="showPvSync"
-            :show-radar-sync="showRadarSync"
-            :show-pkb-sync="showPkbSync"
-            :item="item"
-            @deleted="$emit('deleted')"
+
+      <!-- Peek button -->
+      <div
+        class="group flex h-8 w-full cursor-pointer justify-center gap-2 hover:bg-gray-50"
+        @click="showDetail = !showDetail"
+      >
+        <div class="flex items-center gap-2">
+          <IconChevronDown
+            class="inline h-5 w-5 text-gray-500 group-hover:text-gray-800"
+            :class="[showDetail ? 'rotate-180' : '']"
           />
+          <p class="text-sm text-gray-500 group-hover:text-gray-800">
+            {{ showDetail ? "HIDE RECORD" : "PEEK RECORD" }}
+          </p>
         </div>
       </div>
     </div>
+
     <!-- Collapsible details -->
     <div v-show="showDetail" class="bg-gray-50 px-4 py-4 shadow-inner sm:px-6">
       <PatientRecordDetailCards :record="item" />
@@ -92,6 +114,7 @@ import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
 import { formatGenderCharacter } from "~/helpers/codeUtils";
 import { formatDate } from "~/helpers/dateUtils";
 import { firstMRN, firstNI } from "~/helpers/recordUtils";
+import IconChevronDown from "./icons/hero/24/solid/IconChevronDown.vue";
 
 interface localNumber {
   label: string;
@@ -107,6 +130,7 @@ enum BadgeStatusEnum {
 
 export default defineComponent({
   components: {
+    IconChevronDown,
     BaseButtonMini,
     BaseBadge,
     SendingFacilityLink,

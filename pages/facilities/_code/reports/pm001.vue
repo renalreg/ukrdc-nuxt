@@ -12,7 +12,7 @@
     <div v-if="fetchInProgress">
       <BaseCard>
         <!-- Skeleton results -->
-        <ul class="divide-y divide-gray-200">
+        <ul class="divide-y divide-gray-300">
           <BaseSkeleListItem v-for="n in 10" :key="n" />
         </ul>
       </BaseCard>
@@ -20,7 +20,7 @@
     <div v-else>
       <BaseCard>
         <!-- Real results -->
-        <ul class="divide-y divide-gray-200">
+        <ul class="divide-y divide-gray-300">
           <div v-for="record in records" :key="`record-${record.pid}`" class="hover:bg-gray-50">
             <PatientRecordsListItem
               :item="record"

@@ -1,5 +1,5 @@
 <template>
-  <ul class="divide-y divide-gray-200">
+  <ul class="divide-y divide-gray-300">
     <div v-if="groupedRecords.data.length > 0" class="patientrecords-list-header">
       <h4 class="flex-grow">Data feeds</h4>
       <div class="mr-2 flex-grow-0">

@@ -212,7 +212,7 @@
         <h6>Work Items for the same patient, raised by the same event</h6>
       </BaseCardHeader>
       <!-- Results list -->
-      <ul class="divide-y divide-gray-200">
+      <ul class="divide-y divide-gray-300">
         <div v-for="item in workItemCollection" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/workitems/${item.id}`">
             <WorkItemsListItem :item="item" />

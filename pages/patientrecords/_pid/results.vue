@@ -81,7 +81,7 @@
               ></th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-gray-200 bg-white">
+          <tbody class="divide-y divide-gray-300 bg-white">
             <PatientRecordResultRow
               v-for="(item, index) in results"
               :key="index"

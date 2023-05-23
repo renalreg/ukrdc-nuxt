@@ -3,7 +3,7 @@
     <BaseLoadingContainer :loading="!documents">
       <p v-if="documents && documents.length <= 0" class="text-center">No documents on record</p>
       <BaseCard v-else>
-        <ul class="divide-y divide-gray-200">
+        <ul class="divide-y divide-gray-300">
           <div v-for="item in documents" :key="item.id" :item="item" class="hover:bg-gray-50">
             <NuxtLink :to="`/patientrecords/${$route.params.pid}/documents/${item.id}`">
               <PatientRecordDocumentListItem :item="item" />

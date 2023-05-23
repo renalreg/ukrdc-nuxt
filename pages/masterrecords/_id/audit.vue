@@ -18,11 +18,11 @@
 
     <BaseCard>
       <!-- Skeleton results -->
-      <ul v-if="!events" class="divide-y divide-gray-200">
+      <ul v-if="!events" class="divide-y divide-gray-300">
         <BaseSkeleListItem v-for="n in 10" :key="n" />
       </ul>
       <!-- Real results -->
-      <ul v-else class="divide-y divide-gray-200">
+      <ul v-else class="divide-y divide-gray-300">
         <div v-for="item in events" :key="item.id" :item="item">
           <AuditListItem :item="item" />
         </div>

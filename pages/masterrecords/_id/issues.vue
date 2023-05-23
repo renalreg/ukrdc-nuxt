@@ -12,7 +12,7 @@
     <!-- Related Work Items card -->
     <!-- Skeleton results -->
     <BaseCard v-if="!workItems" class="mt-4">
-      <ul class="divide-y divide-gray-200">
+      <ul class="divide-y divide-gray-300">
         <BaseSkeleListItem v-for="n in 10" :key="n" />
       </ul>
     </BaseCard>
@@ -21,7 +21,7 @@
       <BaseCardHeader>
         <h2>Open Work Items</h2>
       </BaseCardHeader>
-      <ul class="divide-y divide-gray-200">
+      <ul class="divide-y divide-gray-300">
         <div v-for="item in workItems" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/workitems/${item.id}`">
             <WorkItemsListItem :item="item" />
@@ -33,7 +33,7 @@
     <!-- Related errors card -->
     <!-- Skeleton results -->
     <BaseCard v-if="!relatedErrors" class="mt-4">
-      <ul class="divide-y divide-gray-200">
+      <ul class="divide-y divide-gray-300">
         <BaseSkeleListItem v-for="n in 5" :key="n" />
       </ul>
     </BaseCard>
@@ -42,7 +42,7 @@
       <BaseCardHeader>
         <h2>Record Errors</h2>
       </BaseCardHeader>
-      <ul class="divide-y divide-gray-200">
+      <ul class="divide-y divide-gray-300">
         <div v-for="item in relatedErrors" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/messages/${item.id}`">
             <MessagesListItem :item="item" />

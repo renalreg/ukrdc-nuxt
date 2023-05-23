@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <ul class="divide-y divide-gray-200">
+    <ul class="divide-y divide-gray-300">
       <div
         v-for="item in group.records"
         :key="`record-${group.groupId}-${item.masterRecord.id}`"

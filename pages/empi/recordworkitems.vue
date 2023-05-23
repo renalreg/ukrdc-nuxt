@@ -14,7 +14,7 @@
     <div v-if="fetchInProgress">
       <BaseCard>
         <!-- Skeleton results -->
-        <ul class="divide-y divide-gray-200">
+        <ul class="divide-y divide-gray-300">
           <BaseSkeleListItem v-for="n in 10" :key="n" />
         </ul>
       </BaseCard>
@@ -22,7 +22,7 @@
     <div v-else>
       <BaseCard>
         <!-- Real results -->
-        <ul class="divide-y divide-gray-200">
+        <ul class="divide-y divide-gray-300">
           <div v-for="group in groups" :key="`group-${group.masterRecord.id}`" class="hover:bg-gray-50">
             <NuxtLink :to="`/masterrecords/${group.masterRecord.id}/issues`">
               <MasterRecordsListItem

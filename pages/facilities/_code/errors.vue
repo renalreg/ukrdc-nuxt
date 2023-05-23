@@ -27,11 +27,11 @@
       </div>
       <div v-else>
         <!-- Skeleton results -->
-        <ul v-if="!errorMessages" class="divide-y divide-gray-200">
+        <ul v-if="!errorMessages" class="divide-y divide-gray-300">
           <BaseSkeleListItem v-for="n in 10" :key="n" />
         </ul>
         <!-- Real results -->
-        <ul class="divide-y divide-gray-200">
+        <ul class="divide-y divide-gray-300">
           <div v-for="item in errorMessages" :key="item.id" :item="item" class="hover:bg-gray-50">
             <NuxtLink :to="`/messages/${item.id}`">
               <MessagesListItem :item="item" />

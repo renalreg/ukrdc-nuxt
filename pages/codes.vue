@@ -43,11 +43,11 @@
       <div :class="$route.params.id ? 'hidden lg:block' : 'block'">
         <BaseCard>
           <!-- Skeleton results -->
-          <ul v-if="fetchInProgress" class="divide-y divide-gray-200">
+          <ul v-if="fetchInProgress" class="divide-y divide-gray-300">
             <BaseSkeleListItem v-for="n in 10" :key="n" />
           </ul>
           <!-- Real results -->
-          <ul v-else class="divide-y divide-gray-200">
+          <ul v-else class="divide-y divide-gray-300">
             <div v-for="code in codes" :key="`${code.codingStandard}.${code.code}`">
               <NuxtLink :to="{ path: `/codes/${code.codingStandard}.${code.code}/`, query: $route.query }">
                 <CodesListItem class="hover:bg-gray-50" :code="code" />

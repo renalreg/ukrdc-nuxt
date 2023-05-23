@@ -44,7 +44,7 @@
         <div class="border-b border-t bg-gray-50 py-1 pl-4 sm:pl-6">
           <h4>Maps To</h4>
         </div>
-        <ul class="divide-y divide-gray-200">
+        <ul class="divide-y divide-gray-300">
           <CodeMapItem
             v-for="mappedCode in code.mapsTo"
             :key="`${mappedCode.destinationCodingStandard}.${mappedCode.destinationCode}`"
@@ -58,7 +58,7 @@
         <div class="border-b border-t bg-gray-50 py-1 pl-4 sm:pl-6">
           <h4>Mapped By</h4>
         </div>
-        <ul class="divide-y divide-gray-200">
+        <ul class="divide-y divide-gray-300">
           <CodeMapItem
             v-for="mappedCode in code.mappedBy"
             :key="`${mappedCode.sourceCodingStandard}.${mappedCode.sourceCode}`"

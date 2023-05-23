@@ -67,7 +67,7 @@
       <BaseCardHeader>
         <h2>Related Records</h2>
       </BaseCardHeader>
-      <ul class="divide-y divide-gray-200">
+      <ul class="divide-y divide-gray-300">
         <div v-for="item in masterRecords" :key="item.id" class="hover:bg-gray-50">
           <NuxtLink :to="`/masterrecords/${item.id}`">
             <MasterRecordsListItem :item="item" />
@@ -81,7 +81,7 @@
       <BaseCardHeader>
         <h2>Related Work Items</h2>
       </BaseCardHeader>
-      <ul class="divide-y divide-gray-200">
+      <ul class="divide-y divide-gray-300">
         <div v-for="item in workItems" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/workitems/${item.id}`">
             <WorkItemsListItem :item="item" />
@@ -95,7 +95,7 @@
       <BaseCardHeader>
         <h2>Mirth Messages</h2>
       </BaseCardHeader>
-      <ul class="divide-y divide-gray-200">
+      <ul class="divide-y divide-gray-300">
         <li v-if="mirthMessage" class="hover:bg-gray-50">
           <NuxtLink :to="`/mirth/messages/${mirthMessage.channelId}/${mirthMessage.messageId}`">
             <MirthMessageListItem :message="mirthMessage" />
