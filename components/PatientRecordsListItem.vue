@@ -6,9 +6,7 @@
         <!-- Main record info -->
         <NuxtLink :to="`/patientrecords/${item.pid}`" class="flex-grow">
           <div class="flex min-w-0 items-center gap-2 hover:bg-gray-50">
-            <div
-              class="grid w-full min-w-0 flex-1 grid-cols-3 items-center gap-2 py-4 pl-4 md:grid-cols-4 sm:pl-6"
-            >
+            <div class="grid w-full min-w-0 flex-1 grid-cols-3 items-center gap-2 py-4 pl-4 sm:pl-6 md:grid-cols-4">
               <!-- Sender -->
               <div v-if="showSender">
                 <div class="flex items-center gap-2">
@@ -107,13 +105,13 @@ import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
 import { PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseBadge from "~/components/base/BaseBadge.vue";
-import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import PatientRecordDetailCards from "~/components/PatientRecordDetailCards.vue";
 import PatientRecordManageMenu from "~/components/PatientRecordManageMenu.vue";
 import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
 import { formatGenderCharacter } from "~/helpers/codeUtils";
 import { formatDate } from "~/helpers/dateUtils";
 import { firstMRN, firstNI } from "~/helpers/recordUtils";
+
 import IconChevronDown from "./icons/hero/24/solid/IconChevronDown.vue";
 
 interface localNumber {
@@ -131,7 +129,6 @@ enum BadgeStatusEnum {
 export default defineComponent({
   components: {
     IconChevronDown,
-    BaseButtonMini,
     BaseBadge,
     SendingFacilityLink,
     PatientRecordManageMenu,
