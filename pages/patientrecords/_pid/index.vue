@@ -1,41 +1,5 @@
 <template>
   <div>
-    <!-- Description list -->
-    <BaseCard class="my-4 p-6">
-      <BaseDescriptionListGrid>
-        <BaseDescriptionListGridItem>
-          <dt>Local ID</dt>
-          <dd class="sensitive">
-            {{ record.localpatientid }}
-          </dd>
-        </BaseDescriptionListGridItem>
-
-        <BaseDescriptionListGridItem>
-          <dt>UKRDC ID</dt>
-          <dd class="sensitive">{{ record.ukrdcid }}</dd>
-        </BaseDescriptionListGridItem>
-
-        <BaseDescriptionListGridItem>
-          <dt>PID</dt>
-          <dd class="sensitive">{{ record.pid }}</dd>
-        </BaseDescriptionListGridItem>
-
-        <BaseDescriptionListGridItem>
-          <dt>Last Updated</dt>
-          <dd>
-            {{ formatDate(record.repositoryUpdateDate) }}
-          </dd>
-        </BaseDescriptionListGridItem>
-
-        <BaseDescriptionListGridItem>
-          <dt>Created</dt>
-          <dd>
-            {{ formatDate(record.repositoryCreationDate) }}
-          </dd>
-        </BaseDescriptionListGridItem>
-      </BaseDescriptionListGrid>
-    </BaseCard>
-
     <PatientRecordDetailCards :full="true" :record="record" />
   </div>
 </template>
@@ -44,9 +8,6 @@
 import { defineComponent } from "@nuxtjs/composition-api";
 import { PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
-import BaseCard from "~/components/base/BaseCard.vue";
-import BaseDescriptionListGrid from "~/components/base/BaseDescriptionListGrid.vue";
-import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGridItem.vue";
 import PatientRecordDetailCards from "~/components/PatientRecordDetailCards.vue";
 import { formatGender } from "~/helpers/codeUtils";
 import { formatDate } from "~/helpers/dateUtils";
@@ -54,9 +15,6 @@ import { isEmptyObject } from "~/helpers/objectUtils";
 
 export default defineComponent({
   components: {
-    BaseCard,
-    BaseDescriptionListGrid,
-    BaseDescriptionListGridItem,
     PatientRecordDetailCards,
   },
   props: {

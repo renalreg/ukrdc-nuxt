@@ -33,7 +33,7 @@
         </BaseCard>
       </div>
 
-      <div class="col-span-3 mb-4 sm:col-span-2">
+      <div v-if="full" class="col-span-3 mb-4 sm:col-span-2">
         <h4 class="mb-3">History</h4>
         <BaseCard class="grid w-full grid-cols-1 gap-4 px-4 py-2 sm:grid-cols-2">
           <div>
@@ -49,29 +49,52 @@
 
       <div class="col-span-3 mb-4">
         <h4 class="mb-3">Patient Numbers</h4>
-        <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+        <!-- External patient numbers -->
+        <ul class="patient-infocard-ul">
           <li
             v-for="item in record.patient.numbers"
             :key="item.numbertype + item.organization + item.patientid"
-            class="col-span-1 flex"
+            class="col-span-1"
           >
-            <BaseCard class="flex w-full">
-              <div
-                class="flex w-16 flex-shrink-0 items-center justify-center rounded-l-md bg-indigo-600 font-medium text-white"
-              >
-                {{ item.numbertype }}
-              </div>
-              <div class="flex flex-1 items-center justify-between truncate">
-                <div class="flex-1 truncate px-4 py-2">
-                  <b class="sensitive truncate">
-                    {{ item.patientid }}
-                  </b>
-                  <p class="sensitive">{{ item.organization }}</p>
-                </div>
-              </div>
-            </BaseCard>
+            <PatientRecordNumberCard
+              class="w-full"
+              :number="item.patientid"
+              :numbertype="item.numbertype"
+              :organization="item.organization"
+            />
           </li>
         </ul>
+        <!-- Internal patient numbers -->
+        <ul class="patient-infocard-ul mt-2">
+          <li class="col-span-1">
+            <PatientRecordNumberCard class="w-full" :number="record.ukrdcid" numbertype="UKRDC" organization="UKKA" />
+          </li>
+          <li class="col-span-1">
+            <PatientRecordNumberCard class="w-full" :number="record.pid" numbertype="PID" organization="UKKA" />
+          </li>
+        </ul>
+      </div>
+
+      <div v-if="record.pvdata" class="col-span-3 mb-4 sm:col-span-2">
+        <h4 class="mb-3">RRT Information</h4>
+        <BaseCard class="grid w-full grid-cols-1 gap-4 px-4 py-2 sm:grid-cols-2">
+          <div>
+            <h5>RRT Status</h5>
+            <p>{{ record.pvdata.rrtstatus || "Unknown" }}</p>
+          </div>
+          <div>
+            <h5>Transplant Status</h5>
+            <p>{{ record.pvdata.tpstatus || "Unknown" }}</p>
+          </div>
+          <div>
+            <h5>Blood Group</h5>
+            <p>{{ record.pvdata.bloodgroup || "Unknown" }}</p>
+          </div>
+          <div>
+            <h5>Last Updated</h5>
+            <p>{{ formatDate(record.pvdata.updateDate || record.pvdata.creationDate, (t = true)) }}</p>
+          </div>
+        </BaseCard>
       </div>
     </div>
 
@@ -81,7 +104,7 @@
     >
       <h4 class="mb-3">Addresses</h4>
 
-      <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+      <ul class="patient-infocard-ul">
         <li v-for="item in record.patient.addresses" :key="item.street" class="col-span-1">
           <BaseCard class="sensitive w-full px-4 py-2"> <PatientRecordAddress :address="item" /> </BaseCard>
         </li>
@@ -94,7 +117,7 @@
     >
       <h4 class="mb-3">Program Memberships</h4>
 
-      <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+      <ul class="patient-infocard-ul">
         <li
           v-for="(item, index) in record.programMemberships"
           :key="item.programName + index"
@@ -119,7 +142,7 @@
     <div v-if="full && !isEmptyObject(record) && record.patient.familydoctor" class="col-span-3 mb-4">
       <h4 class="mb-3">Family Doctor</h4>
 
-      <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+      <ul class="patient-infocard-ul">
         <li
           v-for="(info, index) in [
             record.patient.familydoctor.gpInfo,
@@ -157,6 +180,7 @@ import { PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseBadge from "~/components/base/BaseBadge.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import PatientRecordAddress from "~/components/PatientRecordAddress.vue";
+import PatientRecordNumberCard from "~/components/PatientRecordNumberCard.vue";
 import PostCodeLink from "~/components/PostCodeLink.vue";
 import { formatGender } from "~/helpers/codeUtils";
 import { formatDate } from "~/helpers/dateUtils";
@@ -168,6 +192,7 @@ export default defineComponent({
     BaseBadge,
     PostCodeLink,
     PatientRecordAddress,
+    PatientRecordNumberCard,
   },
   props: {
     record: {
@@ -190,4 +215,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style lang="postcss" scoped>
+.patient-infocard-ul {
+  @apply grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3;
+}
+</style>
