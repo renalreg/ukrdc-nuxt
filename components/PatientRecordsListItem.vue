@@ -2,7 +2,7 @@
   <li>
     <div class="flex flex-col divide-y divide-gray-200">
       <!-- Main record info and menu button -->
-      <div class="flex">
+      <div class="flex divide-x divide-gray-200">
         <!-- Main record info -->
         <NuxtLink :to="`/patientrecords/${item.pid}`" class="flex-grow">
           <div class="flex min-w-0 items-center gap-2 hover:bg-gray-50">
