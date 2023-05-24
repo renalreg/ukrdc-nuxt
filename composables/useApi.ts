@@ -13,7 +13,8 @@ import {
   SearchApi,
   SystemInfoApi,
   UKRDCRecordGroupApi,
-  WorkItemsApi} from "@ukkidney/ukrdc-axios-ts";
+  WorkItemsApi,
+} from "@ukkidney/ukrdc-axios-ts";
 import axios from "axios";
 
 interface PydanticError {
@@ -161,6 +162,6 @@ export default function () {
     mirthApi,
     workItemsApi,
     messagesApi,
-    ukrdcRecordGroupApi
+    ukrdcRecordGroupApi,
   };
 }
