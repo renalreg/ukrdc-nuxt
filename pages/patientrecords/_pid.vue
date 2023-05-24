@@ -58,7 +58,7 @@ export default defineComponent({
   setup() {
     const route = useRoute();
     const router = useRouter();
-    const { patientRecordsApi } = useApi();
+    const { patientRecordsApi, ukrdcRecordGroupApi } = useApi();
 
     // Head
     const { title } = useMeta();
@@ -72,20 +72,22 @@ export default defineComponent({
     // Data fetching
 
     function getRecord() {
+      // Fetch patient record
       patientRecordsApi
         .getPatient({
           pid: route.value.params.pid,
         })
         .then((response) => {
           record.value = response.data;
-        });
 
-      patientRecordsApi
-        .getPatientRelated({
-          pid: route.value.params.pid,
-        })
-        .then((response) => {
-          related.value = response.data;
+          // Now we have the record, find other records with the same UKRDC ID
+          ukrdcRecordGroupApi
+            .getUkrdcidRecords({
+              ukrdcid: record.value.ukrdcid,
+            })
+            .then((response) => {
+              related.value = response.data;
+            });
         });
     }
 
