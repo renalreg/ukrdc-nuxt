@@ -6,7 +6,7 @@
         <!-- Main record info -->
         <NuxtLink :to="`/patientrecords/${item.pid}`" class="flex-grow">
           <div class="flex min-w-0 items-center gap-2 hover:bg-gray-50">
-            <div class="grid w-full min-w-0 flex-1 grid-cols-3 items-center gap-2 py-4 pl-4 sm:pl-6 md:grid-cols-4">
+            <div class="grid w-full min-w-0 flex-1 grid-cols-3 items-center gap-2 py-4 pl-4 sm:pl-6 lg:grid-cols-4">
               <!-- Sender -->
               <div v-if="showSender">
                 <div class="flex items-center gap-2">
@@ -48,7 +48,7 @@
                 </p>
               </div>
               <!-- UKRDC ID (large breakpoint only) -->
-              <div class="hidden md:block">
+              <div class="hidden lg:block">
                 <h5>UKRDC ID</h5>
                 <p class="sensitive mt-2">
                   {{ item.ukrdcid }}
@@ -83,7 +83,7 @@
       >
         <div class="flex items-center gap-2">
           <IconChevronDown
-            class="inline h-5 w-5 text-gray-500 group-hover:text-gray-800"
+            class="inline h-5 w-5 transform text-gray-500 transition group-hover:text-gray-800"
             :class="[showDetail ? 'rotate-180' : '']"
           />
           <p class="text-sm text-gray-500 group-hover:text-gray-800">
