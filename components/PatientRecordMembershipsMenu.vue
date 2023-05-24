@@ -100,21 +100,21 @@ export default defineComponent({
     });
     const menuTooltip = computed(() => {
       if (!hasPermission("ukrdc:memberships:create")) {
-        return 'You do not have permission to manage patient memberships'
+        return "You do not have permission to manage patient memberships";
       } else if (ukrdcids.value.length !== 1) {
         // TODO: Once JTRACE has been replaced with CUPID, this won't be relevant since UKRDCID will be the only grouping mechanism
-        return 'Record has multiple UKRDC IDs. Please resolve before creating a membership'
+        return "Record has multiple UKRDC IDs. Please resolve before creating a membership";
       }
-      return null
-    })
+      return undefined;
+    });
 
     function closeMenu() {
       showMenu.value = false;
     }
 
     const ukrdcids = computed<string[]>(() => {
-      return props.records.map(record => record.ukrdcid)
-    })
+      return props.records.map((record) => record.ukrdcid);
+    });
 
     function showCreatePkbMembershipConfirm() {
       closeMenu();
@@ -123,8 +123,7 @@ export default defineComponent({
 
     function createPkbMembership() {
       ukrdcRecordGroupApi
-        // TODO: Update to new name in beta 5
-        .postMasterRecordMembershipsCreatePkb({
+        .postUkrdcidMembershipsCreatePkb({
           ukrdcid: ukrdcids.value[0],
         })
         .then(() => {
