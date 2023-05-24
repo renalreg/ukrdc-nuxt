@@ -1,30 +1,26 @@
 <template>
-  <div>
-    <!-- External patient numbers -->
-    <ul class="patient-infocard-ul">
-      <li
-        v-for="item in record.patient.numbers"
-        :key="item.numbertype + item.organization + item.patientid"
-        class="col-span-1"
-      >
-        <PatientRecordNumberCard
-          class="w-full"
-          :number="item.patientid"
-          :numbertype="item.numbertype"
-          :organization="item.organization"
-        />
-      </li>
-    </ul>
+  <!-- External patient numbers -->
+  <ul>
+    <li
+      v-for="item in record.patient.numbers"
+      :key="item.numbertype + item.organization + item.patientid"
+      class="col-span-1"
+    >
+      <PatientRecordNumberCard
+        class="w-full"
+        :number="item.patientid"
+        :numbertype="item.numbertype"
+        :organization="item.organization"
+      />
+    </li>
     <!-- Internal patient numbers -->
-    <ul class="patient-infocard-ul mt-2">
-      <li class="col-span-1">
-        <PatientRecordNumberCard class="w-full" :number="record.ukrdcid" numbertype="UKRDC" organization="UKKA" />
-      </li>
-      <li class="col-span-1">
-        <PatientRecordNumberCard class="w-full" :number="record.pid" numbertype="PID" organization="UKKA" />
-      </li>
-    </ul>
-  </div>
+    <li class="col-span-1">
+      <PatientRecordNumberCard class="w-full" :number="record.ukrdcid" numbertype="UKRDC" organization="UKKA" />
+    </li>
+    <li class="col-span-1">
+      <PatientRecordNumberCard class="w-full" :number="record.pid" numbertype="PID" organization="UKKA" />
+    </li>
+  </ul>
 </template>
 
 <script lang="ts">

@@ -94,6 +94,11 @@ export default defineComponent({
 
     // Data refs
 
+    const ukrdcids = computed<string[]>(() => {
+      // Create an array from the unique set of UKRDC IDs of the related records
+      return [...new Set(props.records.map((record) => record.ukrdcid))];
+    });
+
     const showMenu = ref(false);
     const menuAvailable = computed(() => {
       return hasPermission("ukrdc:memberships:create") && ukrdcids.value.length === 1;
@@ -111,10 +116,6 @@ export default defineComponent({
     function closeMenu() {
       showMenu.value = false;
     }
-
-    const ukrdcids = computed<string[]>(() => {
-      return props.records.map((record) => record.ukrdcid);
-    });
 
     function showCreatePkbMembershipConfirm() {
       closeMenu();
@@ -146,6 +147,7 @@ export default defineComponent({
     }
 
     return {
+      ukrdcids,
       showMenu,
       menuAvailable,
       menuTooltip,

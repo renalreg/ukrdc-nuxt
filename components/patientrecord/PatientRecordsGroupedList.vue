@@ -90,7 +90,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
-import { MasterRecordSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
+import { PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 
 import PatientRecordMembershipsMenu from "~/components/patientrecord/PatientRecordMembershipsMenu.vue";
 import PatientRecordsListItem from "~/components/patientrecord/PatientRecordsListItem.vue";
@@ -114,10 +114,6 @@ export default defineComponent({
     PatientRecordSyncAllMenu,
   },
   props: {
-    masterRecord: {
-      type: Object as () => MasterRecordSchema,
-      required: true,
-    },
     records: {
       type: Array as () => PatientRecordSummarySchema[],
       required: true,

@@ -1,11 +1,9 @@
 <template>
-  <div>
-    <ul class="patient-infocard-ul">
-      <li v-for="item in record.patient.addresses" :key="item.street" class="col-span-1">
-        <BaseCard class="sensitive w-full px-4 py-2"> <PatientRecordAddress :address="item" /> </BaseCard>
-      </li>
-    </ul>
-  </div>
+  <ul>
+    <li v-for="item in record.patient.addresses" :key="item.street" class="col-span-1">
+      <BaseCard class="sensitive w-full px-4 py-2"> <PatientRecordAddress :address="item" /> </BaseCard>
+    </li>
+  </ul>
 </template>
 
 <script lang="ts">

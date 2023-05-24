@@ -1,7 +1,7 @@
 <template>
   <BaseCard class="flex">
     <div
-      class="flex w-16 flex-shrink-0 items-center justify-center rounded-l-md font-medium text-white"
+      class="flex w-16 flex-shrink-0 items-center justify-center overflow-visible rounded-l-md font-medium text-white"
       :class="[organization == 'UKKA' ? 'bg-red-700' : 'bg-indigo-600']"
     >
       {{ numbertype }}
