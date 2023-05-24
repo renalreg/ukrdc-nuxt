@@ -79,5 +79,3 @@ label {
 .sensitive {
   filter: v-bind(sensitiveCssFilter);
 }
-
-

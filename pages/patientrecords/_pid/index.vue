@@ -65,17 +65,17 @@ import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import LatestMessageAlert from "~/components/messages/AlertFileLatest.vue";
 import PatientRecordsGroupedList from "~/components/patientrecord/PatientRecordsGroupedList.vue";
+import PatientRecordSummaryAddresses from "~/components/patientrecord/summary/PatientRecordSummaryAddresses.vue";
 import PatientRecordSummaryDemographics from "~/components/patientrecord/summary/PatientRecordSummaryDemographics.vue";
+import PatientRecordSummaryFamilyDoctor from "~/components/patientrecord/summary/PatientRecordSummaryFamilyDoctor.vue";
+import PatientRecordSummaryHistory from "~/components/patientrecord/summary/PatientRecordSummaryHistory.vue";
+import PatientRecordSummaryMemberships from "~/components/patientrecord/summary/PatientRecordSummaryMemberships.vue";
+import PatientRecordSummaryNumbers from "~/components/patientrecord/summary/PatientRecordSummaryNumbers.vue";
+import PatientRecordSummaryPVData from "~/components/patientrecord/summary/PatientRecordSummaryPVData.vue";
 import useApi from "~/composables/useApi";
 import { formatGender } from "~/helpers/codeUtils";
 import { formatDate } from "~/helpers/dateUtils";
 import { isEmptyObject } from "~/helpers/objectUtils";
-import PatientRecordSummaryHistory from "~/components/patientrecord/summary/PatientRecordSummaryHistory.vue";
-import PatientRecordSummaryNumbers from "~/components/patientrecord/summary/PatientRecordSummaryNumbers.vue";
-import PatientRecordSummaryPVData from "~/components/patientrecord/summary/PatientRecordSummaryPVData.vue";
-import PatientRecordSummaryAddresses from "~/components/patientrecord/summary/PatientRecordSummaryAddresses.vue";
-import PatientRecordSummaryMemberships from "~/components/patientrecord/summary/PatientRecordSummaryMemberships.vue";
-import PatientRecordSummaryFamilyDoctor from "~/components/patientrecord/summary/PatientRecordSummaryFamilyDoctor.vue";
 
 export default defineComponent({
   components: {

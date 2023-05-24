@@ -40,7 +40,8 @@ export default defineComponent({
   props: {
     message: {
       type: Object as () => MinimalMessageSchema,
-      required: true,
+      required: false,
+      default: null,
     },
     isLoading: {
       type: Boolean,

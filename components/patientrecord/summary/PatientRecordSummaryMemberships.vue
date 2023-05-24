@@ -23,9 +23,9 @@
 import { defineComponent } from "@nuxtjs/composition-api";
 import { PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
+import BaseBadge from "~/components/base/BaseBadge.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import { formatDate } from "~/helpers/dateUtils";
-import BaseBadge from "~/components/base/BaseBadge.vue";
 
 export default defineComponent({
   components: {
