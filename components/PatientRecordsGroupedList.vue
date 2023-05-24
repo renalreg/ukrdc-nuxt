@@ -50,7 +50,7 @@
       <h4 class="flex-grow">Membership Records</h4>
       <div class="mr-2 flex-grow-0">
         <PatientRecordMembershipsMenu
-          :master-record="masterRecord"
+          :records="records"
           :show-create-pkb-membership="!hasPKBMembership"
           @refresh="$emit('refresh')"
         />
