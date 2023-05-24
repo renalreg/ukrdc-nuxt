@@ -12,8 +12,8 @@ import {
   PatientRecordsApi,
   SearchApi,
   SystemInfoApi,
-  WorkItemsApi,
-} from "@ukkidney/ukrdc-axios-ts";
+  UKRDCRecordGroupApi,
+  WorkItemsApi} from "@ukkidney/ukrdc-axios-ts";
 import axios from "axios";
 
 interface PydanticError {
@@ -145,6 +145,7 @@ export default function () {
   const mirthApi = new MirthApi(undefined, baseUrl, apiInstance);
   const workItemsApi = new WorkItemsApi(undefined, baseUrl, apiInstance);
   const messagesApi = new MessagesApi(undefined, baseUrl, apiInstance);
+  const ukrdcRecordGroupApi = new UKRDCRecordGroupApi(undefined, baseUrl, apiInstance);
 
   return {
     adminApi,
@@ -160,5 +161,6 @@ export default function () {
     mirthApi,
     workItemsApi,
     messagesApi,
+    ukrdcRecordGroupApi
   };
 }
