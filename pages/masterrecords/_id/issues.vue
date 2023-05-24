@@ -79,7 +79,7 @@ import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import EMPIMultipleIDItem from "~/components/EMPIMultipleIDItem.vue";
 import MessagesListItem from "~/components/MessagesListItem.vue";
-import WorkItemsListItem from "~/components/WorkItemsListItem.vue";
+import WorkItemsListItem from "~/components/workitem/WorkItemsListItem.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import { formatGender } from "~/helpers/codeUtils";

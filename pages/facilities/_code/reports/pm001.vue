@@ -52,7 +52,7 @@ import { FacilityDetailsSchema, PatientRecordSummarySchema } from "@ukkidney/ukr
 import BaseCard from "~/components/base/BaseCard.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
-import PatientRecordsListItem from "~/components/PatientRecordsListItem.vue";
+import PatientRecordsListItem from "~/components/patientrecord/PatientRecordsListItem.vue";
 import usePagination from "~/composables/query/usePagination";
 import useApi from "~/composables/useApi";
 

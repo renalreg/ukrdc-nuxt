@@ -48,7 +48,7 @@ import BaseMenu from "~/components/base/BaseMenu.vue";
 import BaseMenuDivider from "~/components/base/BaseMenuDivider.vue";
 import BaseMenuItem from "~/components/base/BaseMenuItem.vue";
 import IconEllipsisVertical from "~/components/icons/hero/24/solid/IconEllipsisVertical.vue";
-import PatientRecordDeleteModal from "~/components/PatientRecordDeleteModal.vue";
+import PatientRecordDeleteModal from "~/components/patientrecord/PatientRecordDeleteModal.vue";
 import usePermissions from "~/composables/usePermissions";
 import useRecordExport from "~/composables/useRecordExport";
 import { demographicsUpdateAllowed } from "~/helpers/recordUtils";

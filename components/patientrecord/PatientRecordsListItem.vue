@@ -95,7 +95,7 @@
 
     <!-- Collapsible details -->
     <div v-show="showDetail" class="bg-gray-50 px-4 py-4 shadow-inner sm:px-6">
-      <PatientRecordDetailCards :record="item" />
+      <PatientRecordPeek :record="item" />
     </div>
   </li>
 </template>
@@ -105,14 +105,14 @@ import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
 import { PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseBadge from "~/components/base/BaseBadge.vue";
-import PatientRecordDetailCards from "~/components/PatientRecordDetailCards.vue";
-import PatientRecordManageMenu from "~/components/PatientRecordManageMenu.vue";
+import PatientRecordManageMenu from "~/components/patientrecord/PatientRecordManageMenu.vue";
+import PatientRecordPeek from "~/components/patientrecord/PatientRecordPeek.vue";
 import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
 import { formatGenderCharacter } from "~/helpers/codeUtils";
 import { formatDate } from "~/helpers/dateUtils";
 import { firstMRN, firstNI } from "~/helpers/recordUtils";
 
-import IconChevronDown from "./icons/hero/24/solid/IconChevronDown.vue";
+import IconChevronDown from "../icons/hero/24/solid/IconChevronDown.vue";
 
 interface localNumber {
   label: string;
@@ -132,7 +132,7 @@ export default defineComponent({
     BaseBadge,
     SendingFacilityLink,
     PatientRecordManageMenu,
-    PatientRecordDetailCards,
+    PatientRecordPeek,
   },
   props: {
     item: {

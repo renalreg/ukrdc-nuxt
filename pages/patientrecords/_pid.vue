@@ -8,24 +8,21 @@
             {{ surname.toLowerCase() }}
           </h1>
         </span>
+        <div>
+          <SendingFacilityLink class="inline font-medium" :code="record.sendingfacility" />
+          <p class="inline">via {{ record.sendingextract }}</p>
+        </div>
       </div>
       <div class="flex">
         <div v-if="record.masterId">
           <BaseButton :to="`/masterrecords/${record.masterId}`" class="truncate"> View Master Record </BaseButton>
-        </div>
-        <div v-if="related" class="ml-2">
-          <BaseSelect v-model="selectedPid">
-            <option v-for="(item, index) in related" :key="index" :value="item.pid">
-              From {{ item.sendingfacility }} via {{ item.sendingextract }}
-            </option>
-          </BaseSelect>
         </div>
       </div>
     </div>
 
     <div class="mb-6"><BaseTabsNavigation :tabs="tabs" /></div>
 
-    <NuxtChild v-if="record" :record="record" :related="related" />
+    <NuxtChild v-if="record" :record="record" />
   </div>
 </template>
 
@@ -40,25 +37,25 @@ import {
   useRouter,
   watch,
 } from "@nuxtjs/composition-api";
-import { PatientRecordSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
+import { PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseButton from "~/components/base/BaseButton.vue";
-import BaseSelect from "~/components/base/BaseSelect.vue";
 import BaseTabsNavigation from "~/components/base/BaseTabsNavigation.vue";
+import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
 import useApi from "~/composables/useApi";
 import { firstForename, firstSurname } from "~/helpers/recordUtils";
 import { TabItem } from "~/interfaces/tabs";
 
 export default defineComponent({
   components: {
+    SendingFacilityLink,
     BaseButton,
-    BaseSelect,
     BaseTabsNavigation,
   },
   setup() {
     const route = useRoute();
     const router = useRouter();
-    const { patientRecordsApi, ukrdcRecordGroupApi } = useApi();
+    const { patientRecordsApi } = useApi();
 
     // Head
     const { title } = useMeta();
@@ -67,7 +64,6 @@ export default defineComponent({
     // Data refs
 
     const record = ref<PatientRecordSchema>();
-    const related = ref<PatientRecordSummarySchema[]>();
 
     // Data fetching
 
@@ -79,15 +75,6 @@ export default defineComponent({
         })
         .then((response) => {
           record.value = response.data;
-
-          // Now we have the record, find other records with the same UKRDC ID
-          ukrdcRecordGroupApi
-            .getUkrdcidRecords({
-              ukrdcid: record.value.ukrdcid,
-            })
-            .then((response) => {
-              related.value = response.data;
-            });
         });
     }
 
@@ -148,7 +135,6 @@ export default defineComponent({
 
     return {
       record,
-      related,
       selectedPid,
       forename,
       surname,

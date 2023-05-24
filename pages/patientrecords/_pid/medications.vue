@@ -30,7 +30,7 @@ import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-a
 import { MedicationSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
-import PatientRecordMedicationCard from "~/components/PatientRecordMedicationCard.vue";
+import PatientRecordMedicationCard from "~/components/patientrecord/medical/PatientRecordMedicationCard.vue";
 import useApi from "~/composables/useApi";
 
 export default defineComponent({

@@ -5,10 +5,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@nuxtjs/composition-api";
-import { PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
+import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
+import { PatientRecordSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 
-import PatientRecordDetailCards from "~/components/PatientRecordDetailCards.vue";
+import PatientRecordDetailCards from "~/components/patientrecord/PatientRecordPeek.vue";
+import useApi from "~/composables/useApi";
 import { formatGender } from "~/helpers/codeUtils";
 import { formatDate } from "~/helpers/dateUtils";
 import { isEmptyObject } from "~/helpers/objectUtils";
@@ -24,8 +25,30 @@ export default defineComponent({
     },
   },
 
-  setup() {
+  setup(props) {
+    const { ukrdcRecordGroupApi } = useApi();
+
+    // Data refs
+    const related = ref<PatientRecordSummarySchema[]>();
+
+    // Data fetching
+
+    function getRelated() {
+      ukrdcRecordGroupApi
+        .getUkrdcidRecords({
+          ukrdcid: props.record.ukrdcid,
+        })
+        .then((response) => {
+          related.value = response.data;
+        });
+    }
+
+    onMounted(() => {
+      getRelated();
+    });
+
     return {
+      related,
       formatDate,
       formatGender,
       isEmptyObject,

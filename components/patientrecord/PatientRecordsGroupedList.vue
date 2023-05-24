@@ -92,9 +92,9 @@
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { MasterRecordSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 
-import PatientRecordMembershipsMenu from "~/components/PatientRecordMembershipsMenu.vue";
-import PatientRecordsListItem from "~/components/PatientRecordsListItem.vue";
-import PatientRecordSyncAllMenu from "~/components/PatientRecordSyncAllMenu.vue";
+import PatientRecordMembershipsMenu from "~/components/patientrecord/PatientRecordMembershipsMenu.vue";
+import PatientRecordsListItem from "~/components/patientrecord/PatientRecordsListItem.vue";
+import PatientRecordSyncAllMenu from "~/components/patientrecord/PatientRecordSyncAllMenu.vue";
 import usePermissions from "~/composables/usePermissions";
 import { isData, isInformational, isMembership, isMigrated, isSurvey, isUKRR } from "~/helpers/recordUtils";
 

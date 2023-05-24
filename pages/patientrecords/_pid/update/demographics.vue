@@ -186,13 +186,13 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, useContext, useRouter } from "@nuxtjs/composition-api";
+import { computed, defineComponent, onMounted, ref, useContext, useRouter } from "@nuxtjs/composition-api";
 import { AddressSchema, NameSchema, PatientRecordSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseButton from "~/components/base/BaseButton.vue";
 import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
 import BaseModalConfirm from "~/components/base/BaseModalConfirm.vue";
-import PatientRecordAddress from "~/components/PatientRecordAddress.vue";
+import PatientRecordAddress from "~/components/patientrecord/summary/PatientRecordAddress.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import { formatGender } from "~/helpers/codeUtils";
@@ -236,24 +236,40 @@ export default defineComponent({
       type: Object as () => PatientRecordSchema,
       required: true,
     },
-    related: {
-      type: Array as () => PatientRecordSummarySchema[],
-      required: false,
-      default: undefined,
-    },
   },
 
   setup(props) {
     const router = useRouter();
     const { $toast } = useContext();
     const { hasPermission } = usePermissions();
-    const { patientRecordsApi } = useApi();
+    const { patientRecordsApi, ukrdcRecordGroupApi } = useApi();
+
+    // Data refs - Requirements
+    const related = ref<PatientRecordSummarySchema[]>();
+
+    // Data fetching
+
+    function getRelated() {
+      ukrdcRecordGroupApi
+        .getUkrdcidRecords({
+          ukrdcid: props.record.ukrdcid,
+        })
+        .then((response) => {
+          related.value = response.data;
+        });
+    }
+
+    onMounted(() => {
+      getRelated();
+    });
 
     // Modals
 
     const postUpdateConfirm = ref<ModalInterface>();
 
     const selectedBlock = ref<SelectableBlock>();
+
+    // Data refs - Values to use
 
     const nameToUse = ref<AvailableName>({
       name: props.record.patient?.names[0],
@@ -272,6 +288,8 @@ export default defineComponent({
       source: currentRecordSource,
     });
 
+    // Available values
+
     function getRecordSourceName(record: PatientRecordSummarySchema) {
       return `From ${record.sendingfacility} via ${record.sendingextract}`;
     }
@@ -285,7 +303,7 @@ export default defineComponent({
       ];
 
       // For each related record
-      for (const record of props.related ?? []) {
+      for (const record of related.value ?? []) {
         // If the record has a name
         if (record.patient?.names[0] && record.pid !== props.record.pid) {
           names.push({
@@ -306,7 +324,7 @@ export default defineComponent({
       ];
 
       // For each related record
-      for (const record of props.related ?? []) {
+      for (const record of related.value ?? []) {
         // If the record has a name
         if (record.patient?.birthTime && record.pid !== props.record.pid) {
           birthTimes.push({
@@ -327,7 +345,7 @@ export default defineComponent({
       ];
 
       // For each related record
-      for (const record of props.related ?? []) {
+      for (const record of related.value ?? []) {
         // If the record has a name
         if (record.patient?.gender && record.pid !== props.record.pid) {
           genders.push({
@@ -348,7 +366,7 @@ export default defineComponent({
       ];
 
       // For each related record
-      for (const record of props.related ?? []) {
+      for (const record of related.value ?? []) {
         // If the record has a name
         if (record.patient?.addresses[0] && record.pid !== props.record.pid) {
           addresses.push({
@@ -359,6 +377,8 @@ export default defineComponent({
       }
       return addresses;
     });
+
+    // Data posting
 
     function postUpdate() {
       const requestParams = {
@@ -395,6 +415,7 @@ export default defineComponent({
     }
 
     return {
+      related,
       formatDate,
       formatGender,
       isEmptyObject,

@@ -143,7 +143,7 @@ import BaseDescriptionListGrid from "~/components/base/BaseDescriptionListGrid.v
 import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGridItem.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import MasterRecordsListItem from "~/components/MasterRecordsListItem.vue";
-import PatientRecordsGroupedList from "~/components/PatientRecordsGroupedList.vue";
+import PatientRecordsGroupedList from "~/components/patientrecord/PatientRecordsGroupedList.vue";
 import TracingBadge from "~/components/TracingBadge.vue";
 import useApi from "~/composables/useApi";
 import useSensitive from "~/composables/useSensitive";

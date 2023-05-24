@@ -39,7 +39,7 @@ import { PatientRecordSchema, SurveySchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
-import PatientRecordSurveyViewer from "~/components/PatientRecordSurveyViewer.vue";
+import PatientRecordSurveyViewer from "~/components/patientrecord/medical/PatientRecordSurveyViewer.vue";
 import useApi from "~/composables/useApi";
 import { formatDate } from "~/helpers/dateUtils";
 import { SurveyViewerModalInterface } from "~/interfaces/modal";

@@ -72,7 +72,7 @@ import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import IconBarsArrowDown from "~/components/icons/hero/20/solid/IconBarsArrowDown.vue";
 import IconBarsArrowUp from "~/components/icons/hero/20/solid/IconBarsArrowUp.vue";
-import WorkItemsListItem from "~/components/WorkItemsListItem.vue";
+import WorkItemsListItem from "~/components/workitem/WorkItemsListItem.vue";
 import useDateRange from "~/composables/query/useDateRange";
 import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";
