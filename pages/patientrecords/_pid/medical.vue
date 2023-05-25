@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BaseTabsNavigation class="mb-6" id="stats-tabs" :tabs="tabs" :mini="true" />
+    <BaseTabsNavigation id="stats-tabs" class="mb-6" :tabs="tabs" :mini="true" />
     <NuxtChild v-if="record" :record="record" />
   </div>
 </template>

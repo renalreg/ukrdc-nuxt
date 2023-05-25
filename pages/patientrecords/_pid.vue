@@ -43,10 +43,10 @@ import BaseButton from "~/components/base/BaseButton.vue";
 import BaseTabsNavigation from "~/components/base/BaseTabsNavigation.vue";
 import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
 import useApi from "~/composables/useApi";
+import usePermissions from "~/composables/usePermissions";
+import { insertIf } from "~/helpers/arrayUtils";
 import { firstForename, firstSurname } from "~/helpers/recordUtils";
 import { TabItem } from "~/interfaces/tabs";
-import { insertIf } from "~/helpers/arrayUtils";
-import usePermissions from "~/composables/usePermissions";
 
 export default defineComponent({
   components: {
