@@ -78,6 +78,7 @@
 
       <!-- Peek button -->
       <div
+        v-if="showPeek"
         class="group flex h-8 w-full cursor-pointer justify-center gap-2 hover:bg-gray-50"
         @click="showDetail = !showDetail"
       >
@@ -94,7 +95,7 @@
     </div>
 
     <!-- Collapsible details -->
-    <div v-show="showDetail" class="bg-gray-50 px-4 py-4 shadow-inner sm:px-6">
+    <div v-show="showDetail && showPeek" class="bg-gray-50 px-4 py-4 shadow-inner sm:px-6">
       <PatientRecordPeek :record="item" />
     </div>
   </li>
@@ -140,6 +141,11 @@ export default defineComponent({
       required: true,
     },
     showSender: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+    showPeek: {
       type: Boolean,
       required: false,
       default: true,

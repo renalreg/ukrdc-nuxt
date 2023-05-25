@@ -400,7 +400,7 @@ export default defineComponent({
             timeout: 10,
             classTimeout: "bg-green-600",
           });
-          router.push(`/masterrecords/${props.record.masterId}`);
+          router.push(`/patientrecords/${props.record.pid}`);
         })
         .catch((error) => {
           $toast.show({

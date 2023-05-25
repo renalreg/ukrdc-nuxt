@@ -22,7 +22,10 @@
                 <h5>Total Records</h5>
                 <div class="flex items-baseline">
                   <h1 class="flex-grow text-indigo-600">{{ facility.statistics.totalPatients }}</h1>
-                  <NuxtLink class="hover:underline" :to="{ path: `/masterrecords/`, query: { facility: facility.id } }">
+                  <NuxtLink
+                    class="hover:underline"
+                    :to="{ path: `/patientrecords/`, query: { facility: facility.id } }"
+                  >
                     Show all records
                   </NuxtLink>
                 </div>
