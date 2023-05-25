@@ -117,8 +117,8 @@ import {
 } from "@nuxtjs/composition-api";
 import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
-import BaseAlertError from "~/components/base/BaseAlertError.vue";
-import BaseAlertWarning from "~/components/base/BaseAlertWarning.vue";
+import BaseAlertError from "~/components/base/alert/BaseAlertError.vue";
+import BaseAlertWarning from "~/components/base/alert/BaseAlertWarning.vue";
 import BaseButton from "~/components/base/BaseButton.vue";
 import BaseModalConfirm from "~/components/base/BaseModalConfirm.vue";
 import EMPISearch from "~/components/EMPISearch.vue";

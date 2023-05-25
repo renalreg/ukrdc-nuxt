@@ -1,7 +1,7 @@
 <!-- Tabs component formatted as a tab line. Tab elements include a name and href, and trigger router navigation on click. -->
 
 <template>
-  <div>
+  <div :class="[sticky ? 'sticky top-4 z-50' : '']">
     <div class="sm:hidden">
       <label for="tabs" class="sr-only">Select a tab</label>
       <BaseSelect id="tabs" ref="selectEl" name="tabs" :value="selectedHref" @change="switchTab">
@@ -10,8 +10,8 @@
         </option>
       </BaseSelect>
     </div>
-    <div class="hidden sm:block" :class="{ 'tab-container-primary': !mini }">
-      <nav class="flex" :class="[mini ? 'tab-nav-mini' : 'tab-nav-primary']" aria-label="Tabs">
+    <div class="hidden sm:block">
+      <nav :class="[mini ? 'tab-nav-mini' : 'tab-nav-primary']" aria-label="Tabs">
         <NuxtLink
           v-for="tab in tabs"
           :key="tab.name"
@@ -58,6 +58,11 @@ export default defineComponent({
       required: false,
       default: "tabs",
     },
+    sticky: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   setup(props, { emit }) {
     const router = useRouter();
@@ -95,12 +100,8 @@ export default defineComponent({
 </script>
 
 <style scoped lang="postcss">
-.tab-container-primary {
-  @apply border-b border-gray-200;
-}
-
 .tab-nav-primary {
-  @apply -mb-px space-x-6;
+  @apply -mb-px flex space-x-6 border-b border-gray-200;
 }
 
 .tab-base-primary {
@@ -116,15 +117,15 @@ export default defineComponent({
 }
 
 .tab-nav-mini {
-  @apply space-x-2;
+  @apply inline-flex space-x-2 rounded-lg bg-gray-100 p-1;
 }
 
 .tab-base-mini {
-  @apply rounded-md px-3 py-2 font-medium capitalize;
+  @apply rounded-md px-3 py-2 font-medium capitalize text-gray-600;
 }
 
 .tab-active-mini {
-  @apply bg-indigo-100 text-indigo-700;
+  @apply bg-white text-gray-900 shadow;
 }
 
 .tab-inactive-mini {

@@ -9,8 +9,8 @@
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { DashboardSchema } from "@ukkidney/ukrdc-axios-ts";
 
-import BaseAlertInfo from "~/components/base/BaseAlertInfo.vue";
-import BaseAlertWarning from "~/components/base/BaseAlertWarning.vue";
+import BaseAlertInfo from "~/components/base/alert/BaseAlertInfo.vue";
+import BaseAlertWarning from "~/components/base/alert/BaseAlertWarning.vue";
 import useApi from "~/composables/useApi";
 
 export default defineComponent({

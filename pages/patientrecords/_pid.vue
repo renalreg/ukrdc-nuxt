@@ -45,6 +45,8 @@ import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
 import useApi from "~/composables/useApi";
 import { firstForename, firstSurname } from "~/helpers/recordUtils";
 import { TabItem } from "~/interfaces/tabs";
+import { insertIf } from "~/helpers/arrayUtils";
+import usePermissions from "~/composables/usePermissions";
 
 export default defineComponent({
   components: {
@@ -56,6 +58,7 @@ export default defineComponent({
     const route = useRoute();
     const router = useRouter();
     const { patientRecordsApi } = useApi();
+    const { hasPermission } = usePermissions();
 
     // Head
     const { title } = useMeta();
@@ -108,29 +111,18 @@ export default defineComponent({
         href: `/patientrecords/${route.value.params.pid}`,
       },
       {
-        name: "Medications",
-        href: `/patientrecords/${route.value.params.pid}/medications`,
+        name: "Medical Record",
+        href: `/patientrecords/${route.value.params.pid}/medical`,
+        hasChildren: true,
       },
       {
-        name: "Treatments",
-        href: `/patientrecords/${route.value.params.pid}/treatments`,
+        name: "Data Files",
+        href: `/patientrecords/${route.value.params.pid}/messages`,
       },
-      {
-        name: "Results",
-        href: `/patientrecords/${route.value.params.pid}/results`,
-      },
-      {
-        name: "Observations",
-        href: `/patientrecords/${route.value.params.pid}/observations`,
-      },
-      {
-        name: "Documents",
-        href: `/patientrecords/${route.value.params.pid}/documents`,
-      },
-      {
-        name: "Surveys",
-        href: `/patientrecords/${route.value.params.pid}/surveys`,
-      },
+      ...insertIf(hasPermission("ukrdc:audit:records:read"), {
+        name: "Audit",
+        href: `/patientrecords/${route.value.params.pid}/audit`,
+      }),
     ] as TabItem[];
 
     return {

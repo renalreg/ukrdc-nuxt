@@ -3,8 +3,10 @@
     <!-- Demographics header-->
     <PatientRecordSummaryDemographics class="col-span-3 mb-4" :record="record" />
     <!-- Record message banners -->
-    <!-- TODO: Create record messages page and make this a link with a View All text on the right-->
-    <LatestMessageAlert :message="latestMessage" :is-loading="latestMessageIsLoading" />
+    <NuxtLink :to="`/patientrecords/${record.pid}/messages`">
+      <LatestMessageAlert :message="latestMessage" :is-loading="latestMessageIsLoading" />
+    </NuxtLink>
+
     <!-- Main content container-->
     <div class="grid grid-cols-3 gap-4">
       <!-- Record summary -->

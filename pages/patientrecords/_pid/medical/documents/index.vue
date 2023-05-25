@@ -5,7 +5,7 @@
       <BaseCard v-else>
         <ul class="divide-y divide-gray-300">
           <div v-for="item in documents" :key="item.id" :item="item" class="hover:bg-gray-50">
-            <NuxtLink :to="`/patientrecords/${$route.params.pid}/documents/${item.id}`">
+            <NuxtLink :to="`/patientrecords/${$route.params.pid}/medical/documents/${item.id}`">
               <PatientRecordDocumentListItem :item="item" />
             </NuxtLink>
           </div>

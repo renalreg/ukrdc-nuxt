@@ -63,7 +63,9 @@
     </BaseCard>
 
     <!-- Record message banners -->
-    <LatestMessageAlert :message="latestMessage" :is-loading="latestMessageIsLoading" />
+    <NuxtLink :to="`/masterrecords/${record.id}/messages`">
+      <LatestMessageAlert :message="latestMessage" :is-loading="latestMessageIsLoading" />
+    </NuxtLink>
 
     <!-- Related Patient Records card -->
     <BaseCard class="!overflow-visible">
