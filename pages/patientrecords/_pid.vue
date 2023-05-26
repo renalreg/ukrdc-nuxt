@@ -8,10 +8,7 @@
             {{ surname.toLowerCase() }}
           </h1>
         </span>
-        <div>
-          <SendingFacilityLink class="inline font-medium" :code="record.sendingfacility" />
-          <p class="inline">via {{ record.sendingextract }}</p>
-        </div>
+        <PatientRecordExtractSummary :record="record" />
       </div>
       <div class="flex">
         <div v-if="record.masterId">
@@ -41,7 +38,7 @@ import { PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseButton from "~/components/base/BaseButton.vue";
 import BaseTabsNavigation from "~/components/base/BaseTabsNavigation.vue";
-import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
+import PatientRecordExtractSummary from "~/components/patientrecord/PatientRecordExtractSummary.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import { insertIf } from "~/helpers/arrayUtils";
@@ -50,7 +47,7 @@ import { TabItem } from "~/interfaces/tabs";
 
 export default defineComponent({
   components: {
-    SendingFacilityLink,
+    PatientRecordExtractSummary,
     BaseButton,
     BaseTabsNavigation,
   },
