@@ -2,7 +2,7 @@
   <BaseCard class="grid w-full grid-cols-1 gap-4 px-4 py-2 sm:grid-cols-3">
     <div>
       <h5>Names</h5>
-      <p v-for="item in record.patient.names" :key="item.given + item.family" class="sensitive">
+      <p v-for="item in record.patient?.names || []" :key="item.given + item.family" class="sensitive">
         {{ item.given }} {{ item.family }}
       </p>
     </div>

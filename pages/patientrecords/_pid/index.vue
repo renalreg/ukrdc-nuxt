@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Demographics header-->
-    <PatientRecordSummaryDemographics class="col-span-3 mb-4" :record="record" />
+    <PatientRecordDemographics class="mb-4" :record="record" />
     <!-- Record message banners -->
     <NuxtLink :to="`/patientrecords/${record.pid}/messages`">
       <LatestMessageAlert :message="latestMessage" :is-loading="latestMessageIsLoading" />
@@ -66,9 +66,9 @@ import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import LatestMessageAlert from "~/components/messages/AlertFileLatest.vue";
+import PatientRecordDemographics from "~/components/patientrecord/PatientRecordDemographics.vue";
 import PatientRecordsGroupedList from "~/components/patientrecord/PatientRecordsGroupedList.vue";
 import PatientRecordSummaryAddresses from "~/components/patientrecord/summary/PatientRecordSummaryAddresses.vue";
-import PatientRecordSummaryDemographics from "~/components/patientrecord/summary/PatientRecordSummaryDemographics.vue";
 import PatientRecordSummaryFamilyDoctor from "~/components/patientrecord/summary/PatientRecordSummaryFamilyDoctor.vue";
 import PatientRecordSummaryHistory from "~/components/patientrecord/summary/PatientRecordSummaryHistory.vue";
 import PatientRecordSummaryMemberships from "~/components/patientrecord/summary/PatientRecordSummaryMemberships.vue";
@@ -92,7 +92,7 @@ export default defineComponent({
     BaseSkeleListItem,
     PatientRecordsGroupedList,
     LatestMessageAlert,
-    PatientRecordSummaryDemographics,
+    PatientRecordDemographics,
   },
   props: {
     record: {
