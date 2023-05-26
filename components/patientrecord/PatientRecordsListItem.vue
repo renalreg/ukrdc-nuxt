@@ -102,7 +102,7 @@
 import { computed, defineComponent, ref } from "@nuxtjs/composition-api";
 import { PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 
-import BaseBadge from "~/components/base/BaseBadge.vue";
+import MembershipStatusBadge from "~/components/MembershipStatusBadge.vue";
 import PatientRecordManageMenu from "~/components/patientrecord/PatientRecordManageMenu.vue";
 import PatientRecordPeek from "~/components/patientrecord/PatientRecordPeek.vue";
 import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
@@ -111,25 +111,16 @@ import { formatDate } from "~/helpers/dateUtils";
 import { firstMRN, firstNI } from "~/helpers/recordUtils";
 
 import IconChevronDown from "../icons/hero/24/solid/IconChevronDown.vue";
-import MembershipStatusBadge from "~/components/MembershipStatusBadge.vue";
 
 interface localNumber {
   label: string;
   number: string;
 }
 
-enum BadgeStatusEnum {
-  Open = 1,
-  Closed = 2,
-  Mixed = 3,
-  Unknown = 0,
-}
-
 export default defineComponent({
   components: {
     MembershipStatusBadge,
     IconChevronDown,
-    BaseBadge,
     SendingFacilityLink,
     PatientRecordManageMenu,
     PatientRecordPeek,
@@ -199,25 +190,7 @@ export default defineComponent({
       }
     });
 
-    const badgeStatus = computed(() => {
-      if (props.item.programMemberships) {
-        const open = props.item.programMemberships.filter((pm) => !pm.toTime).length;
-        const closed = props.item.programMemberships.filter((pm) => pm.toTime).length;
-        if (open > 0 && closed > 0) {
-          return BadgeStatusEnum.Mixed;
-        } else if (open > 0) {
-          return BadgeStatusEnum.Open;
-        } else if (closed > 0) {
-          return BadgeStatusEnum.Closed;
-        } else {
-          return BadgeStatusEnum.Unknown;
-        }
-      } else {
-        return BadgeStatusEnum.Unknown;
-      }
-    });
-
-    return { showDetail, formatDate, formatGenderCharacter, primaryIdentifier, badgeStatus };
+    return { showDetail, formatDate, formatGenderCharacter, primaryIdentifier };
   },
 });
 </script>
