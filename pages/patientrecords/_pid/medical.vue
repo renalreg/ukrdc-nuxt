@@ -31,20 +31,20 @@ export default defineComponent({
 
     const tabs = [
       {
-        name: "Medications",
-        href: `/patientrecords/${route.value.params.pid}/medical/medications`,
-      },
-      {
-        name: "Treatments",
-        href: `/patientrecords/${route.value.params.pid}/medical/treatments`,
-      },
-      {
         name: "Results",
         href: `/patientrecords/${route.value.params.pid}/medical/results`,
       },
       {
         name: "Observations",
         href: `/patientrecords/${route.value.params.pid}/medical/observations`,
+      },
+      {
+        name: "Medications",
+        href: `/patientrecords/${route.value.params.pid}/medical/medications`,
+      },
+      {
+        name: "Treatments",
+        href: `/patientrecords/${route.value.params.pid}/medical/treatments`,
       },
       {
         name: "Documents",
@@ -59,7 +59,7 @@ export default defineComponent({
     onMounted(() => {
       // Default to first child tab
       if (route.value.path === `/patientrecords/${route.value.params.pid}/medical`) {
-        router.push(`/patientrecords/${route.value.params.pid}/medical/medications`);
+        router.push(`/patientrecords/${route.value.params.pid}/medical/results`);
       }
     });
 
