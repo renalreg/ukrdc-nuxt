@@ -8,24 +8,18 @@
           <div class="flex min-w-0 items-center gap-2 hover:bg-gray-50">
             <div class="grid w-full min-w-0 flex-1 grid-cols-3 items-center gap-2 py-4 pl-4 sm:pl-6 lg:grid-cols-4">
               <!-- Sender -->
-              <div v-if="showSender">
+              <div v-if="showSender" :class="[showSenderFirst ? 'order-1' : 'order-2']">
                 <div class="flex items-center gap-2">
-                  <BaseBadge v-if="badgeStatus === 1" class="w-14 bg-green-100 text-center text-green-800"
-                    >Active</BaseBadge
-                  >
-                  <BaseBadge v-if="badgeStatus === 2" class="w-14 bg-red-100 text-center text-red-800"
-                    >Closed</BaseBadge
-                  >
-                  <BaseBadge v-if="badgeStatus === 3" class="w-14 bg-yellow-100 text-center text-yellow-800"
-                    >Mixed</BaseBadge
-                  >
                   <SendingFacilityLink class="font-medium" :code="item.sendingfacility" />
                 </div>
-
-                <p class="mt-2">via {{ item.sendingextract }}</p>
+                <div class="flex items-center gap-1">
+                  <MembershipStatusBadge :item="item" />
+                  <p>via {{ item.sendingextract }}</p>
+                </div>
               </div>
+
               <!-- Name, DoB, gender -->
-              <div>
+              <div :class="[!showSenderFirst ? 'order-1' : 'order-2']">
                 <span class="line-clamp-1">
                   <h5 class="sensitive inline truncate capitalize">{{ item.patient?.names[0].given.toLowerCase() }}</h5>
                   <h5 class="sensitive inline truncate capitalize italic">
@@ -40,22 +34,25 @@
                   {{ item.patient?.deathTime ? ` – ${formatDate(item.patient?.deathTime, false)}` : "" }}
                 </p>
               </div>
+
               <!-- Primary Identifier (medium breakpoint only) -->
-              <div v-if="primaryIdentifier" class="hidden sm:block">
+              <div v-if="primaryIdentifier" class="order-3 hidden sm:block">
                 <h5 class="truncate">{{ primaryIdentifier.label }} Number</h5>
                 <p class="sensitive mt-2 truncate">
                   {{ primaryIdentifier.number ?? "" }}
                 </p>
               </div>
+
               <!-- UKRDC ID (large breakpoint only) -->
-              <div class="hidden lg:block">
+              <div class="order-4 hidden lg:block">
                 <h5>UKRDC ID</h5>
                 <p class="sensitive mt-2">
                   {{ item.ukrdcid }}
                 </p>
               </div>
+
               <!-- PID (only if sender column is hidden) -->
-              <div v-if="!showSender">
+              <div v-if="!showSender" class="order-5">
                 <h5>PID</h5>
                 <p class="sensitive mt-2">
                   {{ item.pid }}
@@ -114,6 +111,7 @@ import { formatDate } from "~/helpers/dateUtils";
 import { firstMRN, firstNI } from "~/helpers/recordUtils";
 
 import IconChevronDown from "../icons/hero/24/solid/IconChevronDown.vue";
+import MembershipStatusBadge from "~/components/MembershipStatusBadge.vue";
 
 interface localNumber {
   label: string;
@@ -129,6 +127,7 @@ enum BadgeStatusEnum {
 
 export default defineComponent({
   components: {
+    MembershipStatusBadge,
     IconChevronDown,
     BaseBadge,
     SendingFacilityLink,
@@ -141,6 +140,11 @@ export default defineComponent({
       required: true,
     },
     showSender: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+    showSenderFirst: {
       type: Boolean,
       required: false,
       default: true,

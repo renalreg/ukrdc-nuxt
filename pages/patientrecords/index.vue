@@ -45,6 +45,7 @@
             :show-manage-menu="false"
             :prefer-ni-over-mrn="true"
             :show-peek="false"
+            :show-sender-first="false"
           />
         </ul>
         <BasePaginator
