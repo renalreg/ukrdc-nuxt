@@ -42,12 +42,14 @@ import { PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseDescriptionListGrid from "~/components/base/BaseDescriptionListGrid.vue";
+import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGridItem.vue";
 import { formatGender } from "~/helpers/codeUtils";
 import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
   components: {
     BaseDescriptionListGrid,
+    BaseDescriptionListGridItem,
     BaseCardContent,
     BaseCard,
   },
