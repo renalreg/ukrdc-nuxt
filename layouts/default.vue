@@ -129,4 +129,8 @@ export default defineComponent({
 });
 </script>
 
-<style lang="postcss"></style>
+<style lang="postcss">
+.sensitive {
+  filter: v-bind(sensitiveCssFilter);
+}
+</style>

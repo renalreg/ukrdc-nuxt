@@ -75,7 +75,3 @@ label {
 .borderless-card {
   @apply overflow-hidden rounded-md bg-white shadow-sm;
 }
-
-.sensitive {
-  filter: v-bind(sensitiveCssFilter);
-}
