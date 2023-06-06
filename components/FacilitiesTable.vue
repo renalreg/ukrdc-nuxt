@@ -57,7 +57,7 @@ Table of facilities and their basic statistics
           </th>
         </tr>
       </thead>
-      <tbody v-if="!facilities" class="divide-y divide-gray-200 bg-white">
+      <tbody v-if="!facilities" class="divide-y divide-gray-300 bg-white">
         <tr v-for="n in 20" :key="n">
           <BaseTableCell><BaseSkeleText class="h-6 w-12" /></BaseTableCell>
           <BaseTableCell><BaseSkeleText class="h-6 w-64" /></BaseTableCell>
@@ -67,7 +67,7 @@ Table of facilities and their basic statistics
           <BaseTableCell><BaseSkeleText class="h-6 w-32" /></BaseTableCell>
         </tr>
       </tbody>
-      <tbody v-else class="divide-y divide-gray-200 bg-white">
+      <tbody v-else class="divide-y divide-gray-300 bg-white">
         <tr
           v-for="facility in filteredFacilities"
           :key="facility.id"

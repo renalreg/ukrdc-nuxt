@@ -1,5 +1,5 @@
 <template>
-  <ul class="divide-y divide-gray-200">
+  <ul class="divide-y divide-gray-300">
     <div v-if="groupedRecords.data.length > 0" class="patientrecords-list-header">
       <h4 class="flex-grow">Data feeds</h4>
       <div class="mr-2 flex-grow-0">
@@ -50,7 +50,7 @@
       <h4 class="flex-grow">Membership Records</h4>
       <div class="mr-2 flex-grow-0">
         <PatientRecordMembershipsMenu
-          :master-record="masterRecord"
+          :records="records"
           :show-create-pkb-membership="!hasPKBMembership"
           @refresh="$emit('refresh')"
         />
@@ -90,11 +90,11 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "@nuxtjs/composition-api";
-import { MasterRecordSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
+import { PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 
-import PatientRecordMembershipsMenu from "~/components/PatientRecordMembershipsMenu.vue";
-import PatientRecordsListItem from "~/components/PatientRecordsListItem.vue";
-import PatientRecordSyncAllMenu from "~/components/PatientRecordSyncAllMenu.vue";
+import PatientRecordMembershipsMenu from "~/components/patientrecord/PatientRecordMembershipsMenu.vue";
+import PatientRecordsListItem from "~/components/patientrecord/PatientRecordsListItem.vue";
+import PatientRecordSyncAllMenu from "~/components/patientrecord/PatientRecordSyncAllMenu.vue";
 import usePermissions from "~/composables/usePermissions";
 import { isData, isInformational, isMembership, isMigrated, isSurvey, isUKRR } from "~/helpers/recordUtils";
 
@@ -114,10 +114,6 @@ export default defineComponent({
     PatientRecordSyncAllMenu,
   },
   props: {
-    masterRecord: {
-      type: Object as () => MasterRecordSchema,
-      required: true,
-    },
     records: {
       type: Array as () => PatientRecordSummarySchema[],
       required: true,

@@ -3,9 +3,9 @@
     <BaseLoadingContainer :loading="!documents">
       <p v-if="documents && documents.length <= 0" class="text-center">No documents on record</p>
       <BaseCard v-else>
-        <ul class="divide-y divide-gray-200">
+        <ul class="divide-y divide-gray-300">
           <div v-for="item in documents" :key="item.id" :item="item" class="hover:bg-gray-50">
-            <NuxtLink :to="`/patientrecords/${$route.params.pid}/documents/${item.id}`">
+            <NuxtLink :to="`/patientrecords/${$route.params.pid}/medical/documents/${item.id}`">
               <PatientRecordDocumentListItem :item="item" />
             </NuxtLink>
           </div>
@@ -32,7 +32,7 @@ import { DocumentSummarySchema, PatientRecordSchema } from "@ukkidney/ukrdc-axio
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
-import PatientRecordDocumentListItem from "~/components/PatientRecordDocumentListItem.vue";
+import PatientRecordDocumentListItem from "~/components/patientrecord/medical/PatientRecordDocumentListItem.vue";
 import useDateRange from "~/composables/query/useDateRange";
 import usePagination from "~/composables/query/usePagination";
 import useApi from "~/composables/useApi";

@@ -35,11 +35,11 @@
 
     <BaseCard>
       <!-- Skeleton results -->
-      <ul v-if="fetchInProgress" class="divide-y divide-gray-200">
+      <ul v-if="fetchInProgress" class="divide-y divide-gray-300">
         <BaseSkeleListItem v-for="n in 10" :key="n" />
       </ul>
       <!-- Real results -->
-      <ul v-else class="divide-y divide-gray-200">
+      <ul v-else class="divide-y divide-gray-300">
         <div v-for="item in workitems" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/workitems/${item.id}`">
             <WorkItemsListItem :item="item" />
@@ -72,7 +72,7 @@ import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import IconBarsArrowDown from "~/components/icons/hero/20/solid/IconBarsArrowDown.vue";
 import IconBarsArrowUp from "~/components/icons/hero/20/solid/IconBarsArrowUp.vue";
-import WorkItemsListItem from "~/components/WorkItemsListItem.vue";
+import WorkItemsListItem from "~/components/workitem/WorkItemsListItem.vue";
 import useDateRange from "~/composables/query/useDateRange";
 import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";

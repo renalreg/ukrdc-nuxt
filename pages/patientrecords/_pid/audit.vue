@@ -42,7 +42,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-import { AuditEventSchema, MasterRecordSchema, OrderBy } from "@ukkidney/ukrdc-axios-ts";
+import { AuditEventSchema, OrderBy, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import AuditListItem from "~/components/AuditListItem.vue";
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
@@ -71,7 +71,7 @@ export default defineComponent({
   },
   props: {
     record: {
-      type: Object as () => MasterRecordSchema,
+      type: Object as () => PatientRecordSchema,
       required: true,
     },
   },
@@ -79,7 +79,7 @@ export default defineComponent({
     const { page, total, size } = usePagination();
     const { makeDateRange } = useDateRange();
     const { orderAscending, orderBy, toggleOrder } = useSortBy();
-    const { masterRecordsApi } = useApi();
+    const { patientRecordsApi } = useApi();
 
     // Set initial date dateRange
     const dateRange = makeDateRange(nowString(-30), nowString(0), true);
@@ -90,9 +90,9 @@ export default defineComponent({
     // Data fetching
 
     function fetchEvents() {
-      masterRecordsApi
-        .getMasterRecordAudit({
-          recordId: props.record.id,
+      patientRecordsApi
+        .getPatientAudit({
+          pid: props.record.pid,
           page: page.value || 1,
           size: size.value,
           orderBy: orderBy.value as OrderBy,

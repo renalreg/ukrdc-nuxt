@@ -1,3 +1,77 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*Basic elements*/
+
+html {
+  font-size: 14px;
+}
+
+p {
+  @apply text-gray-600;
+}
+
+b {
+  @apply font-medium text-gray-900;
+}
+
+a {
+  @apply text-indigo-600;
+}
+
+h1 {
+  @apply text-2xl font-bold text-gray-900;
+}
+
+h2 {
+  @apply text-lg font-medium leading-6 text-gray-900;
+}
+
+h3 {
+  @apply font-medium text-gray-900;
+}
+
+h4 {
+  @apply text-sm font-medium uppercase tracking-wide text-gray-600;
+}
+
+h5 {
+  @apply font-medium text-gray-600;
+}
+
+h6 {
+  @apply text-sm font-medium text-gray-500;
+}
+
+dt {
+  @apply font-medium text-gray-500;
+}
+
+dd {
+  @apply text-gray-900;
+}
+
+th {
+  @apply text-sm font-medium uppercase tracking-wider text-gray-500;
+}
+
+label {
+  @apply font-medium text-gray-500;
+}
+
+/*Plugin styles*/
+
+.v-popper__popper {
+  font-size: 12px;
+}
+
+.v-popper--theme-dropdown .v-popper__inner {
+  @apply rounded-md border border-gray-300 p-4 shadow-lg;
+}
+
+/*Common component styles*/
+
+.borderless-card {
+  @apply overflow-hidden rounded-md bg-white shadow-sm;
+}

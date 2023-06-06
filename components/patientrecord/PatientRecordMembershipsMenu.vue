@@ -28,7 +28,7 @@
       <BaseButtonMini
         label="Manage record"
         class="z-0 mr-2 flex gap-1"
-        :tooltip="!menuAvailable ? 'You do not have permission to manage patient memberships' : undefined"
+        :tooltip="!menuAvailable ? menuTooltip : undefined"
         :class="{ 'btn-disabled': !menuAvailable }"
         @click="showMenu = !showMenu"
       >
@@ -48,7 +48,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, useContext } from "@nuxtjs/composition-api";
-import { MasterRecordSchema } from "@ukkidney/ukrdc-axios-ts";
+import { PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import BaseMenu from "~/components/base/BaseMenu.vue";
@@ -72,8 +72,8 @@ export default defineComponent({
     IconCloudArrowUp,
   },
   props: {
-    masterRecord: {
-      type: Object as () => MasterRecordSchema,
+    records: {
+      type: Array as () => PatientRecordSummarySchema[],
       required: true,
     },
     showCreatePkbMembership: {
@@ -85,7 +85,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const { $toast } = useContext();
     const { hasPermission } = usePermissions();
-    const { masterRecordsApi } = useApi();
+    const { ukrdcRecordGroupApi } = useApi();
 
     // Modals
 
@@ -94,9 +94,23 @@ export default defineComponent({
 
     // Data refs
 
+    const ukrdcids = computed<string[]>(() => {
+      // Create an array from the unique set of UKRDC IDs of the related records
+      return [...new Set(props.records.map((record) => record.ukrdcid))];
+    });
+
     const showMenu = ref(false);
     const menuAvailable = computed(() => {
-      return hasPermission("ukrdc:memberships:create");
+      return hasPermission("ukrdc:memberships:create") && ukrdcids.value.length === 1;
+    });
+    const menuTooltip = computed(() => {
+      if (!hasPermission("ukrdc:memberships:create")) {
+        return "You do not have permission to manage patient memberships";
+      } else if (ukrdcids.value.length !== 1) {
+        // TODO: Once JTRACE has been replaced with CUPID, this won't be relevant since UKRDCID will be the only grouping mechanism
+        return "Record has multiple UKRDC IDs. Please resolve before creating a membership";
+      }
+      return undefined;
     });
 
     function closeMenu() {
@@ -109,9 +123,9 @@ export default defineComponent({
     }
 
     function createPkbMembership() {
-      masterRecordsApi
-        .postMasterRecordMembershipsCreatePkb({
-          recordId: props.masterRecord.id,
+      ukrdcRecordGroupApi
+        .postUkrdcidMembershipsCreatePkb({
+          ukrdcid: ukrdcids.value[0],
         })
         .then(() => {
           createPkbMembershipSuccess.value?.show();
@@ -133,8 +147,10 @@ export default defineComponent({
     }
 
     return {
+      ukrdcids,
       showMenu,
       menuAvailable,
+      menuTooltip,
       closeMenu,
       createPkbMembershipConfirm,
       createPkbMembershipSuccess,

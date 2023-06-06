@@ -4,7 +4,7 @@
     <BaseCardHeader>
       <h2>Related Errors</h2>
     </BaseCardHeader>
-    <ul class="divide-y divide-gray-200">
+    <ul class="divide-y divide-gray-300">
       <div v-for="item in relatedErrors" :key="item.id" :item="item" class="hover:bg-gray-50">
         <NuxtLink :to="`/messages/${item.id}`">
           <MessagesListItem :item="item" />
@@ -31,7 +31,7 @@ import { MessageSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
-import MessagesListItem from "~/components/MessagesListItem.vue";
+import MessagesListItem from "~/components/messages/MessagesListItem.vue";
 import useApi from "~/composables/useApi";
 
 export default defineComponent({

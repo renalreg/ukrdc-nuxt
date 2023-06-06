@@ -13,7 +13,7 @@
           <th scope="col" class="px-6 py-3 text-left">Status</th>
         </tr>
       </thead>
-      <tbody class="divide-y divide-gray-200 bg-white">
+      <tbody class="divide-y divide-gray-300 bg-white">
         <tr v-for="task in tasks" :key="task.id">
           <BaseTableCell class="font-medium text-gray-900">{{ task.name }}</BaseTableCell>
           <BaseTableCell><BadgePublicPrivate :visibility="task.visibility" /></BaseTableCell>

@@ -27,11 +27,11 @@
       </div>
       <div v-else>
         <!-- Skeleton results -->
-        <ul v-if="!errorMessages" class="divide-y divide-gray-200">
+        <ul v-if="!errorMessages" class="divide-y divide-gray-300">
           <BaseSkeleListItem v-for="n in 10" :key="n" />
         </ul>
         <!-- Real results -->
-        <ul class="divide-y divide-gray-200">
+        <ul class="divide-y divide-gray-300">
           <div v-for="item in errorMessages" :key="item.id" :item="item" class="hover:bg-gray-50">
             <NuxtLink :to="`/messages/${item.id}`">
               <MessagesListItem :item="item" />
@@ -64,7 +64,7 @@ import BaseCollapseHeader from "~/components/base/BaseCollapseHeader.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
-import MessagesListItem from "~/components/MessagesListItem.vue";
+import MessagesListItem from "~/components/messages/MessagesListItem.vue";
 import useApi from "~/composables/useApi";
 import useChannels from "~/composables/useChannels";
 import { getPointDateRange } from "~/helpers/chartUtils";

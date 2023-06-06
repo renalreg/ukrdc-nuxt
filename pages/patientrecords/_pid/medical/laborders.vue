@@ -29,7 +29,7 @@ import { LabOrderShortSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-
 
 import BaseCard from "~/components/base/BaseCard.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
-import PatientRecordLabOrderCard from "~/components/PatientRecordLabOrderCard.vue";
+import PatientRecordLabOrderCard from "~/components/patientrecord/medical/PatientRecordLabOrderCard.vue";
 import usePagination from "~/composables/query/usePagination";
 import useApi from "~/composables/useApi";
 import { formatDate } from "~/helpers/dateUtils";

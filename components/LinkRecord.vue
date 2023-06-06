@@ -1,4 +1,4 @@
-<!-- 
+<!--
 Shows a Link Record as a Person card and a Master Record card.
 Includes a header with the Link Record ID and functionality to Unlink the records.
 -->

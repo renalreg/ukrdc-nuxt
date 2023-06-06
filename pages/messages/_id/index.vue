@@ -62,16 +62,14 @@
       </BaseCardContent>
     </BaseCard>
 
-    <!-- Related Master Records card -->
-    <BaseCard v-if="masterRecords.length > 0" class="mt-4">
+    <!-- Related Patient Records card -->
+    <BaseCard v-if="patientRecords.length > 0" class="mt-4">
       <BaseCardHeader>
         <h2>Related Records</h2>
       </BaseCardHeader>
-      <ul class="divide-y divide-gray-200">
-        <div v-for="item in masterRecords" :key="item.id" class="hover:bg-gray-50">
-          <NuxtLink :to="`/masterrecords/${item.id}`">
-            <MasterRecordsListItem :item="item" />
-          </NuxtLink>
+      <ul class="divide-y divide-gray-300">
+        <div v-for="item in patientRecords" :key="item.pid">
+          <PatientRecordsListItem :item="item" :show-manage-menu="false" />
         </div>
       </ul>
     </BaseCard>
@@ -81,7 +79,7 @@
       <BaseCardHeader>
         <h2>Related Work Items</h2>
       </BaseCardHeader>
-      <ul class="divide-y divide-gray-200">
+      <ul class="divide-y divide-gray-300">
         <div v-for="item in workItems" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/workitems/${item.id}`">
             <WorkItemsListItem :item="item" />
@@ -95,7 +93,7 @@
       <BaseCardHeader>
         <h2>Mirth Messages</h2>
       </BaseCardHeader>
-      <ul class="divide-y divide-gray-200">
+      <ul class="divide-y divide-gray-300">
         <li v-if="mirthMessage" class="hover:bg-gray-50">
           <NuxtLink :to="`/mirth/messages/${mirthMessage.channelId}/${mirthMessage.messageId}`">
             <MirthMessageListItem :message="mirthMessage" />
@@ -111,7 +109,12 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-import { ChannelMessageModel, MasterRecordSchema, MessageSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
+import {
+  ChannelMessageModel,
+  MessageSchema,
+  PatientRecordSummarySchema,
+  WorkItemSchema,
+} from "@ukkidney/ukrdc-axios-ts";
 
 import BadgeMessageStatus from "~/components/BadgeMessageStatus.vue";
 import BaseAttachment from "~/components/base/BaseAttachment.vue";
@@ -124,10 +127,10 @@ import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGr
 import BaseInfoTooltip from "~/components/base/BaseInfoTooltip.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
-import MasterRecordsListItem from "~/components/MasterRecordsListItem.vue";
 import MirthMessageListItem from "~/components/MirthMessageListItem.vue";
+import PatientRecordsListItem from "~/components/patientrecord/PatientRecordsListItem.vue";
 import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
-import WorkItemsListItem from "~/components/WorkItemsListItem.vue";
+import WorkItemsListItem from "~/components/workitem/WorkItemsListItem.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import useSensitive from "~/composables/useSensitive";
@@ -147,7 +150,7 @@ export default defineComponent({
     BaseAttachment,
     BaseInfoTooltip,
     SendingFacilityLink,
-    MasterRecordsListItem,
+    PatientRecordsListItem,
     BadgeMessageStatus,
     MirthMessageListItem,
     WorkItemsListItem,
@@ -166,7 +169,7 @@ export default defineComponent({
     // Data refs
     const mirthMessage = ref<ChannelMessageModel | null | undefined>(undefined);
     const workItems = ref([] as WorkItemSchema[]);
-    const masterRecords = ref([] as MasterRecordSchema[]);
+    const patientRecords = ref([] as PatientRecordSummarySchema[]);
 
     const messageText = computed(() => {
       return sensitiveNumbers(props.message.error?.trim());
@@ -178,11 +181,11 @@ export default defineComponent({
       // Get auxilalry record data
       if (hasPermission("ukrdc:records:read")) {
         messagesApi
-          .getMessageMasterrecords({
+          .getMessagePatientrecords({
             messageId: props.message.id,
           })
           .then((response) => {
-            masterRecords.value = response.data;
+            patientRecords.value = response.data;
           });
       }
       if (hasPermission("ukrdc:workitems:read")) {
@@ -227,7 +230,7 @@ export default defineComponent({
     });
 
     return {
-      masterRecords,
+      patientRecords,
       workItems,
       mirthMessage,
       messageText,

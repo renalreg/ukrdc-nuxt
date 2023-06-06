@@ -40,7 +40,7 @@
               ></th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-gray-200 bg-white">
+          <tbody class="divide-y divide-gray-300 bg-white">
             <PatientrecordObservationRow
               v-for="(item, index) in observations"
               :key="`${item.observationCode}-${index}`"
@@ -75,8 +75,8 @@ import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
-import PatientrecordObservationCard from "~/components/PatientRecordObservationCard.vue";
-import PatientrecordObservationRow from "~/components/PatientRecordObservationRow.vue";
+import PatientrecordObservationCard from "~/components/patientrecord/medical/PatientRecordObservationCard.vue";
+import PatientrecordObservationRow from "~/components/patientrecord/medical/PatientRecordObservationRow.vue";
 import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";
 import useApi from "~/composables/useApi";

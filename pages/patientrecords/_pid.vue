@@ -8,24 +8,18 @@
             {{ surname.toLowerCase() }}
           </h1>
         </span>
+        <PatientRecordExtractSummary :record="record" />
       </div>
       <div class="flex">
         <div v-if="record.masterId">
           <BaseButton :to="`/masterrecords/${record.masterId}`" class="truncate"> View Master Record </BaseButton>
-        </div>
-        <div v-if="related" class="ml-2">
-          <BaseSelect v-model="selectedPid">
-            <option v-for="(item, index) in related" :key="index" :value="item.pid">
-              From {{ item.sendingfacility }} via {{ item.sendingextract }}
-            </option>
-          </BaseSelect>
         </div>
       </div>
     </div>
 
     <div class="mb-6"><BaseTabsNavigation :tabs="tabs" /></div>
 
-    <NuxtChild v-if="record" :record="record" :related="related" />
+    <NuxtChild v-if="record" :record="record" />
   </div>
 </template>
 
@@ -40,25 +34,28 @@ import {
   useRouter,
   watch,
 } from "@nuxtjs/composition-api";
-import { PatientRecordSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
+import { PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseButton from "~/components/base/BaseButton.vue";
-import BaseSelect from "~/components/base/BaseSelect.vue";
 import BaseTabsNavigation from "~/components/base/BaseTabsNavigation.vue";
+import PatientRecordExtractSummary from "~/components/patientrecord/PatientRecordExtractSummary.vue";
 import useApi from "~/composables/useApi";
+import usePermissions from "~/composables/usePermissions";
+import { insertIf } from "~/helpers/arrayUtils";
 import { firstForename, firstSurname } from "~/helpers/recordUtils";
 import { TabItem } from "~/interfaces/tabs";
 
 export default defineComponent({
   components: {
+    PatientRecordExtractSummary,
     BaseButton,
-    BaseSelect,
     BaseTabsNavigation,
   },
   setup() {
     const route = useRoute();
     const router = useRouter();
     const { patientRecordsApi } = useApi();
+    const { hasPermission } = usePermissions();
 
     // Head
     const { title } = useMeta();
@@ -67,25 +64,17 @@ export default defineComponent({
     // Data refs
 
     const record = ref<PatientRecordSchema>();
-    const related = ref<PatientRecordSummarySchema[]>();
 
     // Data fetching
 
     function getRecord() {
+      // Fetch patient record
       patientRecordsApi
         .getPatient({
           pid: route.value.params.pid,
         })
         .then((response) => {
           record.value = response.data;
-        });
-
-      patientRecordsApi
-        .getPatientRelated({
-          pid: route.value.params.pid,
-        })
-        .then((response) => {
-          related.value = response.data;
         });
     }
 
@@ -119,34 +108,22 @@ export default defineComponent({
         href: `/patientrecords/${route.value.params.pid}`,
       },
       {
-        name: "Medications",
-        href: `/patientrecords/${route.value.params.pid}/medications`,
+        name: "Medical Record",
+        href: `/patientrecords/${route.value.params.pid}/medical`,
+        hasChildren: true,
       },
       {
-        name: "Treatments",
-        href: `/patientrecords/${route.value.params.pid}/treatments`,
+        name: "Data Files",
+        href: `/patientrecords/${route.value.params.pid}/messages`,
       },
-      {
-        name: "Results",
-        href: `/patientrecords/${route.value.params.pid}/results`,
-      },
-      {
-        name: "Observations",
-        href: `/patientrecords/${route.value.params.pid}/observations`,
-      },
-      {
-        name: "Documents",
-        href: `/patientrecords/${route.value.params.pid}/documents`,
-      },
-      {
-        name: "Surveys",
-        href: `/patientrecords/${route.value.params.pid}/surveys`,
-      },
+      ...insertIf(hasPermission("ukrdc:audit:records:read"), {
+        name: "Audit",
+        href: `/patientrecords/${route.value.params.pid}/audit`,
+      }),
     ] as TabItem[];
 
     return {
       record,
-      related,
       selectedPid,
       forename,
       surname,

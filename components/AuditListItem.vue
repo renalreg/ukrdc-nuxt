@@ -22,7 +22,7 @@
       </div>
       <ul
         v-if="showChildren && item.children && item.children.length > 0"
-        class="divide-y divide-gray-200 border-t border-gray-200"
+        class="divide-y divide-gray-300 border-t border-gray-200"
       >
         <div v-for="child in item.children" :key="child.id" :item="child">
           <AuditListItem :item="child" :parent="item" :is-child="true" />

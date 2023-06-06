@@ -212,7 +212,7 @@
         <h6>Work Items for the same patient, raised by the same event</h6>
       </BaseCardHeader>
       <!-- Results list -->
-      <ul class="divide-y divide-gray-200">
+      <ul class="divide-y divide-gray-300">
         <div v-for="item in workItemCollection" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/workitems/${item.id}`">
             <WorkItemsListItem :item="item" />
@@ -243,11 +243,11 @@ import IconCheckCircle from "~/components/icons/hero/20/solid/IconCheckCircle.vu
 import IconPencil from "~/components/icons/hero/20/solid/IconPencil.vue";
 import MasterRecordCard from "~/components/MasterRecordCard.vue";
 import PersonRecordCard from "~/components/PersonRecordCard.vue";
-import WorkItemAdviceCard from "~/components/WorkItemAdviceCard.vue";
-import WorkItemAttributesCard from "~/components/WorkItemAttributesCard.vue";
-import WorkItemDetailCard from "~/components/WorkItemDetailCard.vue";
-import WorkItemRelatedErrorsList from "~/components/WorkItemRelatedErrorsList.vue";
-import WorkItemsListItem from "~/components/WorkItemsListItem.vue";
+import WorkItemAdviceCard from "~/components/workitem/WorkItemAdviceCard.vue";
+import WorkItemAttributesCard from "~/components/workitem/WorkItemAttributesCard.vue";
+import WorkItemDetailCard from "~/components/workitem/WorkItemDetailCard.vue";
+import WorkItemRelatedErrorsList from "~/components/workitem/WorkItemRelatedErrorsList.vue";
+import WorkItemsListItem from "~/components/workitem/WorkItemsListItem.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import { formatGender } from "~/helpers/codeUtils";

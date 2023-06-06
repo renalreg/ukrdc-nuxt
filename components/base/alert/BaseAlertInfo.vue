@@ -16,12 +16,10 @@
         />
       </svg>
       <div class="ml-3 flex-1 md:flex md:justify-between">
-        <div class="text-blue-700">
-          <p class="text-blue-700">
-            {{ message }}
-          </p>
-          <slot />
+        <div class="text-red-700">
+          {{ message }}
         </div>
+        <slot />
       </div>
     </div>
   </div>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="mb-6"><BaseTabsNavigation id="stats-tabs" :tabs="tabs" :mini="true" /></div>
+    <BaseTabsNavigation id="stats-tabs" class="mb-6" :tabs="tabs" :mini="true" />
 
     <NuxtChild v-if="facility && extracts" :facility="facility" :extracts="extracts" />
 
@@ -17,7 +17,7 @@
 import { defineComponent, onMounted, useRoute, useRouter } from "@nuxtjs/composition-api";
 import { FacilityDetailsSchema, FacilityExtractsSchema } from "@ukkidney/ukrdc-axios-ts";
 
-import BaseAlertInfo from "~/components/base/BaseAlertInfo.vue";
+import BaseAlertInfo from "~/components/base/alert/BaseAlertInfo.vue";
 import BaseTabsNavigation from "~/components/base/BaseTabsNavigation.vue";
 
 export default defineComponent({

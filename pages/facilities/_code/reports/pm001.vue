@@ -12,7 +12,7 @@
     <div v-if="fetchInProgress">
       <BaseCard>
         <!-- Skeleton results -->
-        <ul class="divide-y divide-gray-200">
+        <ul class="divide-y divide-gray-300">
           <BaseSkeleListItem v-for="n in 10" :key="n" />
         </ul>
       </BaseCard>
@@ -20,7 +20,7 @@
     <div v-else>
       <BaseCard>
         <!-- Real results -->
-        <ul class="divide-y divide-gray-200">
+        <ul class="divide-y divide-gray-300">
           <div v-for="record in records" :key="`record-${record.pid}`" class="hover:bg-gray-50">
             <PatientRecordsListItem
               :item="record"
@@ -52,7 +52,7 @@ import { FacilityDetailsSchema, PatientRecordSummarySchema } from "@ukkidney/ukr
 import BaseCard from "~/components/base/BaseCard.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
-import PatientRecordsListItem from "~/components/PatientRecordsListItem.vue";
+import PatientRecordsListItem from "~/components/patientrecord/PatientRecordsListItem.vue";
 import usePagination from "~/composables/query/usePagination";
 import useApi from "~/composables/useApi";
 

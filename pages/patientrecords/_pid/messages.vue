@@ -1,30 +1,30 @@
 <template>
   <div>
-    <div class="mb-4 flex flex-col">
-      <div class="flex flex-row gap-2">
-        <BaseDateRange v-model="dateRange" class="flex-1" />
-        <BaseButtonMini class="flex-none" @click="toggleOrder">
-          <div v-show="orderAscending" class="flex">
-            <p>Oldest - Newest</p>
-            <IconBarsArrowUp class="ml-2 h-5 w-5" />
-          </div>
-          <div v-show="!orderAscending" class="flex">
-            <p>Newest - Oldest</p>
-            <IconBarsArrowDown class="ml-2 h-5 w-5" />
-          </div>
-        </BaseButtonMini>
-      </div>
+    <div class="mb-4 flex flex-col gap-2 lg:flex-row">
+      <BaseDateRange v-model="dateRange" class="flex-1" />
+      <BaseButtonMini class="flex-none" @click="toggleOrder">
+        <div v-show="orderAscending" class="flex">
+          <p>Oldest - Newest</p>
+          <IconBarsArrowUp class="ml-2 h-5 w-5" />
+        </div>
+        <div v-show="!orderAscending" class="flex">
+          <p>Newest - Oldest</p>
+          <IconBarsArrowDown class="ml-2 h-5 w-5" />
+        </div>
+      </BaseButtonMini>
     </div>
 
     <BaseCard>
       <!-- Skeleton results -->
-      <ul v-if="!events" class="divide-y divide-gray-300">
+      <ul v-if="!messages" class="divide-y divide-gray-300">
         <BaseSkeleListItem v-for="n in 10" :key="n" />
       </ul>
       <!-- Real results -->
       <ul v-else class="divide-y divide-gray-300">
-        <div v-for="item in events" :key="item.id" :item="item">
-          <AuditListItem :item="item" />
+        <div v-for="item in messages" :key="item.id" :item="item" class="hover:bg-gray-50">
+          <NuxtLink :to="`/messages/${item.id}`">
+            <MessagesListItem :show-patient-filter="false" :item="item" />
+          </NuxtLink>
         </div>
       </ul>
       <BasePaginator
@@ -42,9 +42,8 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-import { AuditEventSchema, MasterRecordSchema, OrderBy } from "@ukkidney/ukrdc-axios-ts";
+import { MessageSchema, OrderBy, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
-import AuditListItem from "~/components/AuditListItem.vue";
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseDateRange from "~/components/base/BaseDateRange.vue";
@@ -52,6 +51,7 @@ import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import IconBarsArrowDown from "~/components/icons/hero/20/solid/IconBarsArrowDown.vue";
 import IconBarsArrowUp from "~/components/icons/hero/20/solid/IconBarsArrowUp.vue";
+import MessagesListItem from "~/components/messages/MessagesListItem.vue";
 import useDateRange from "~/composables/query/useDateRange";
 import usePagination from "~/composables/query/usePagination";
 import useSortBy from "~/composables/query/useSortBy";
@@ -67,11 +67,11 @@ export default defineComponent({
     BaseDateRange,
     IconBarsArrowDown,
     IconBarsArrowUp,
-    AuditListItem,
+    MessagesListItem,
   },
   props: {
     record: {
-      type: Object as () => MasterRecordSchema,
+      type: Object as () => PatientRecordSchema,
       required: true,
     },
   },
@@ -79,20 +79,20 @@ export default defineComponent({
     const { page, total, size } = usePagination();
     const { makeDateRange } = useDateRange();
     const { orderAscending, orderBy, toggleOrder } = useSortBy();
-    const { masterRecordsApi } = useApi();
+    const { patientRecordsApi } = useApi();
 
     // Set initial date dateRange
-    const dateRange = makeDateRange(nowString(-30), nowString(0), true);
+    const dateRange = makeDateRange(nowString(-365), nowString(0), true);
 
     // Data refs
-    const events = ref<AuditEventSchema[]>();
+    const messages = ref<MessageSchema[]>();
 
     // Data fetching
 
-    function fetchEvents() {
-      masterRecordsApi
-        .getMasterRecordAudit({
-          recordId: props.record.id,
+    function fetchMessages() {
+      patientRecordsApi
+        .getPatientMessages({
+          pid: props.record.pid,
           page: page.value || 1,
           size: size.value,
           orderBy: orderBy.value as OrderBy,
@@ -100,7 +100,7 @@ export default defineComponent({
           until: dateRange.value.end || undefined,
         })
         .then((response) => {
-          events.value = response.data.items;
+          messages.value = response.data.items;
           total.value = response.data.total;
           page.value = response.data.page ?? 0;
           size.value = response.data.size ?? 0;
@@ -108,7 +108,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      fetchEvents();
+      fetchMessages();
     });
 
     watch(
@@ -118,7 +118,7 @@ export default defineComponent({
         () => JSON.stringify(dateRange.value), // Stringify to watch for actual value changes
       ],
       () => {
-        fetchEvents();
+        fetchMessages();
       }
     );
 
@@ -127,7 +127,7 @@ export default defineComponent({
       total,
       size,
       dateRange,
-      events,
+      messages,
       orderAscending,
       orderBy,
       toggleOrder,

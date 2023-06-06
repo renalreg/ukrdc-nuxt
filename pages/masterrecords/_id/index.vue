@@ -63,35 +63,17 @@
     </BaseCard>
 
     <!-- Record message banners -->
-    <div>
-      <div v-if="latestMessage === undefined">
-        <AlertFilePlaceholder class="mb-4" />
-      </div>
-      <div v-if="latestMessage === null">
-        <BaseAlertWarning class="mb-4" message="No new patient data received in the last year" />
-      </div>
-      <div v-if="latestMessage">
-        <BaseAlertError
-          v-if="latestMessage.msgStatus === 'ERROR' && latestMessageInfo"
-          class="mb-4"
-          :message="latestMessageInfo"
-        />
-        <BaseAlertInfo v-else class="mb-4" :message="latestMessageInfo || 'No message information available'" />
-      </div>
-    </div>
+    <NuxtLink :to="`/masterrecords/${record.id}/messages`">
+      <LatestMessageAlert :message="latestMessage" :is-loading="latestMessageIsLoading" />
+    </NuxtLink>
 
     <!-- Related Patient Records card -->
     <BaseCard class="!overflow-visible">
       <BaseCardHeader>
         <h2>Patient Records</h2>
       </BaseCardHeader>
-      <PatientRecordsGroupedList
-        v-if="patientRecords"
-        :master-record="record"
-        :records="patientRecords"
-        @refresh="refreshRecords"
-      />
-      <ul v-else class="divide-y divide-gray-200">
+      <PatientRecordsGroupedList v-if="patientRecords" :records="patientRecords" @refresh="refreshRecords" />
+      <ul v-else class="divide-y divide-gray-300">
         <BaseSkeleListItem v-for="n in 5" :key="n" />
       </ul>
     </BaseCard>
@@ -101,7 +83,7 @@
       <BaseCardHeader>
         <h2>Linked Master Records</h2>
       </BaseCardHeader>
-      <ul v-if="relatedRecords" class="divide-y divide-gray-200">
+      <ul v-if="relatedRecords" class="divide-y divide-gray-300">
         <div
           v-for="item in relatedRecords"
           :key="item.id"
@@ -116,7 +98,7 @@
           </NuxtLink>
         </div>
       </ul>
-      <ul v-else class="divide-y divide-gray-200">
+      <ul v-else class="divide-y divide-gray-300">
         <BaseSkeleListItem v-for="n in 2" :key="n" />
       </ul>
     </BaseCard>
@@ -132,10 +114,6 @@ import {
   PatientRecordSummarySchema,
 } from "@ukkidney/ukrdc-axios-ts";
 
-import AlertFilePlaceholder from "~/components/AlertFilePlaceholder.vue";
-import BaseAlertError from "~/components/base/BaseAlertError.vue";
-import BaseAlertInfo from "~/components/base/BaseAlertInfo.vue";
-import BaseAlertWarning from "~/components/base/BaseAlertWarning.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
@@ -143,26 +121,23 @@ import BaseDescriptionListGrid from "~/components/base/BaseDescriptionListGrid.v
 import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGridItem.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import MasterRecordsListItem from "~/components/MasterRecordsListItem.vue";
-import PatientRecordsGroupedList from "~/components/PatientRecordsGroupedList.vue";
+import AlertFileLatest from "~/components/messages/AlertFileLatest.vue";
+import PatientRecordsGroupedList from "~/components/patientrecord/PatientRecordsGroupedList.vue";
 import TracingBadge from "~/components/TracingBadge.vue";
 import useApi from "~/composables/useApi";
-import useSensitive from "~/composables/useSensitive";
 import { formatGender } from "~/helpers/codeUtils";
 import { datesAreEqual, formatDate } from "~/helpers/dateUtils";
 import { isTracing } from "~/helpers/recordUtils";
 
 export default defineComponent({
   components: {
+    LatestMessageAlert: AlertFileLatest,
     BaseCard,
     BaseCardContent,
     BaseCardHeader,
     BaseSkeleListItem,
     BaseDescriptionListGrid,
     BaseDescriptionListGridItem,
-    BaseAlertError,
-    BaseAlertInfo,
-    AlertFilePlaceholder,
-    BaseAlertWarning,
     TracingBadge,
     MasterRecordsListItem,
     PatientRecordsGroupedList,
@@ -181,13 +156,14 @@ export default defineComponent({
 
   setup(props) {
     const { masterRecordsApi } = useApi();
-    const { sensitive } = useSensitive();
 
     // Data refs
 
     const relatedRecords = ref<MasterRecordSchema[]>();
     const patientRecords = ref<PatientRecordSummarySchema[]>();
-    const latestMessage = ref<MinimalMessageSchema | null | undefined>(undefined);
+
+    const latestMessage = ref<MinimalMessageSchema>();
+    const latestMessageIsLoading = ref(true);
 
     // Data fetching
     function fetchRelatedRecordData() {
@@ -213,6 +189,7 @@ export default defineComponent({
         })
         .then((response) => {
           latestMessage.value = response.data;
+          latestMessageIsLoading.value = false;
         });
     }
 
@@ -272,36 +249,12 @@ export default defineComponent({
       return givenNameMatchesTracing() && surnameMatchesTracing();
     });
 
-    // Dynamic UI elements
-
-    const latestMessageInfo = computed(() => {
-      if (!latestMessage.value) {
-        return null;
-      }
-      if (latestMessage.value.msgStatus === "ERROR") {
-        if (latestMessage.value.received) {
-          return `Latest file ${sensitive(latestMessage.value.filename)} failed from ${
-            latestMessage.value.facility
-          } on ${formatDate(latestMessage.value.received, false)}`;
-        } else {
-          return `Latest file ${sensitive(latestMessage.value.filename)} failed from ${latestMessage.value.facility}`;
-        }
-      }
-      if (latestMessage.value.received) {
-        return `Latest file ${sensitive(latestMessage.value.filename)} recieved from ${
-          latestMessage.value.facility
-        } on ${formatDate(latestMessage.value.received, false)}`;
-      } else {
-        return `Latest file ${sensitive(latestMessage.value.filename)} recieved from ${latestMessage.value.facility}`;
-      }
-    });
-
     return {
       patientRecords,
       relatedRecords,
       tracingRecord,
       latestMessage,
-      latestMessageInfo,
+      latestMessageIsLoading,
       refreshRecords,
       formatGender,
       formatDate,

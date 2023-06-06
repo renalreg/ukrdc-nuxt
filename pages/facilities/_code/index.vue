@@ -22,7 +22,10 @@
                 <h5>Total Records</h5>
                 <div class="flex items-baseline">
                   <h1 class="flex-grow text-indigo-600">{{ facility.statistics.totalPatients }}</h1>
-                  <NuxtLink class="hover:underline" :to="{ path: `/masterrecords/`, query: { facility: facility.id } }">
+                  <NuxtLink
+                    class="hover:underline"
+                    :to="{ path: `/patientrecords/`, query: { facility: facility.id } }"
+                  >
                     Show all records
                   </NuxtLink>
                 </div>
@@ -75,7 +78,7 @@
               <th scope="col" class="px-4 py-3 text-left">Total Records</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-gray-200 bg-white">
+          <tbody class="divide-y divide-gray-300 bg-white">
             <tr v-for="item in feedTableItems" :key="item.key">
               <BaseTableCell class="font-medium text-gray-900">{{ item.name }}</BaseTableCell>
               <BaseTableCell class="hidden md:table-cell">
@@ -102,7 +105,7 @@
           </BaseCardHeader>
 
           <BaseCardContent>
-            <ul role="list" class="-my-5 divide-y divide-gray-200">
+            <ul role="list" class="-my-5 divide-y divide-gray-300">
               <li v-if="hasPermission('ukrdc:messages:read')" class="py-5">
                 <div v-if="!facility.lastMessageReceivedAt" class="flex items-center">
                   <IconCircle class="inline text-red-600" />
@@ -152,7 +155,7 @@
           </BaseCardHeader>
 
           <BaseCardContent v-if="facility && facility.dataFlow">
-            <ul role="list" class="-my-5 divide-y divide-gray-200">
+            <ul role="list" class="-my-5 divide-y divide-gray-300">
               <li class="py-5">
                 <div class="flex items-center">
                   <IconCircle v-if="facility.dataFlow.pkbOut" class="inline text-green-600" />
@@ -182,7 +185,7 @@
 import { computed, defineComponent } from "@nuxtjs/composition-api";
 import { FacilityDetailsSchema, FacilityExtractsSchema } from "@ukkidney/ukrdc-axios-ts";
 
-import BaseAlertError from "~/components/base/BaseAlertError.vue";
+import BaseAlertError from "~/components/base/alert/BaseAlertError.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";

@@ -11,11 +11,11 @@ Mini (half-width) search bar and results pages used in the EMPI Merge page.
     <div v-if="masterrecords.length > 0">
       <BaseCard>
         <!-- Skeleton results -->
-        <ul v-if="searchInProgress" class="divide-y divide-gray-200">
+        <ul v-if="searchInProgress" class="divide-y divide-gray-300">
           <BaseSkeleListItem v-for="n in 10" :key="n" />
         </ul>
         <!-- Real results -->
-        <ul v-else class="divide-y divide-gray-200">
+        <ul v-else class="divide-y divide-gray-300">
           <div v-for="item in masterrecords" :key="item.id" class="hover:bg-gray-50">
             <MasterRecordsListItem class="cursor-pointer" :item="item" @click.native="$emit('select', item.id)" />
           </div>

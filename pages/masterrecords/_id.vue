@@ -34,8 +34,8 @@
 import { defineComponent, onMounted, ref, useMeta, useRoute } from "@nuxtjs/composition-api";
 import { MasterRecordSchema, MasterRecordStatisticsSchema } from "@ukkidney/ukrdc-axios-ts";
 
-import BaseAlertError from "~/components/base/BaseAlertError.vue";
-import BaseAlertWarning from "~/components/base/BaseAlertWarning.vue";
+import BaseAlertError from "~/components/base/alert/BaseAlertError.vue";
+import BaseAlertWarning from "~/components/base/alert/BaseAlertWarning.vue";
 import BaseTabsNavigation from "~/components/base/BaseTabsNavigation.vue";
 import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";

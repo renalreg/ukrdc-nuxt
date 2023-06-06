@@ -81,7 +81,7 @@
               ></th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-gray-200 bg-white">
+          <tbody class="divide-y divide-gray-300 bg-white">
             <PatientRecordResultRow
               v-for="(item, index) in results"
               :key="index"
@@ -125,8 +125,8 @@ import BaseModalConfirm from "~/components/base/BaseModalConfirm.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
-import PatientRecordResultCard from "~/components/PatientRecordResultCard.vue";
-import PatientRecordResultRow from "~/components/PatientRecordResultRow.vue";
+import PatientRecordResultCard from "~/components/patientrecord/medical/PatientRecordResultCard.vue";
+import PatientRecordResultRow from "~/components/patientrecord/medical/PatientRecordResultRow.vue";
 import useDateRange from "~/composables/query/useDateRange";
 import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";

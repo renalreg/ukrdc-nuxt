@@ -17,11 +17,9 @@
       </svg>
       <div class="ml-3 flex-1 md:flex md:justify-between">
         <div class="text-yellow-700">
-          <p class="text-yellow-700">
-            {{ message }}
-          </p>
-          <slot />
+          {{ message }}
         </div>
+        <slot />
       </div>
     </div>
   </div>
@@ -34,7 +32,8 @@ export default defineComponent({
   props: {
     message: {
       type: String,
-      required: true,
+      required: false,
+      default: null,
     },
   },
 });
