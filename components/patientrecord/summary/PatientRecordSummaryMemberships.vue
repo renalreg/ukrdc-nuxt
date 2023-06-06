@@ -5,10 +5,8 @@
       :key="item.programName + index"
       class="col-span-1 flex rounded-md shadow-sm"
     >
-      <BaseCard class="w-full px-4 py-2">
-        <b>
-          {{ item.programName }}
-        </b>
+      <BaseCard class="w-full truncate px-4 py-2">
+        <b>{{ item.programName }}</b>
         <p v-if="item.fromTime">Since {{ formatDate(item.fromTime, false) }}</p>
         <div class="mt-2">
           <BaseBadge v-if="!item.toTime" class="bg-green-100 text-green-800">Active</BaseBadge>
