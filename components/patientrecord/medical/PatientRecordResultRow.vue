@@ -14,7 +14,7 @@
         :to="{ query: { order_id: item.orderId } }"
         ><IconFunnel />
       </BaseButton>
-      <div class="w-48 truncate text-gray-500">
+      <div class="w-48 flex-grow truncate text-gray-500">
         {{ item.orderId }}
       </div>
     </td>

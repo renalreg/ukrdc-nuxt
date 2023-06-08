@@ -10,16 +10,7 @@
           hint="Select an observation type..."
         />
 
-        <!-- Small data card display -->
-        <div class="lg:hidden">
-          <PatientrecordObservationCard
-            v-for="(item, index) in observations"
-            :key="`${item.observationCode}-${index}-card`"
-            :item="item"
-          />
-        </div>
-        <!-- Large table display -->
-        <BaseTable class="mb-4 hidden lg:block">
+        <BaseTable class="mb-4">
           <thead class="bg-gray-50">
             <tr>
               <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
@@ -75,7 +66,6 @@ import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
-import PatientrecordObservationCard from "~/components/patientrecord/medical/PatientRecordObservationCard.vue";
 import PatientrecordObservationRow from "~/components/patientrecord/medical/PatientRecordObservationRow.vue";
 import usePagination from "~/composables/query/usePagination";
 import useQuery from "~/composables/query/useQuery";
@@ -89,7 +79,6 @@ export default defineComponent({
     BaseTable,
     BasePaginator,
     BaseSelectSearchable,
-    PatientrecordObservationCard,
     PatientrecordObservationRow,
   },
   props: {

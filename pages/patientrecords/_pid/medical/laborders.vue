@@ -1,19 +1,22 @@
 <template>
   <div>
     <p v-if="orders.length <= 0" class="text-center">No lab orders on record</p>
-    <ul class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-      <li v-for="item in orders" :key="item.id">
-        <NuxtLink
-          :to="{
-            path: `./results`,
-            query: { order_id: item.id },
-          }"
-          class="col-span-1 flex rounded-md shadow-sm"
-        >
-          <PatientRecordLabOrderCard :item="item" class="w-full" />
-        </NuxtLink>
-      </li>
-    </ul>
+
+    <BaseTable v-else>
+      <thead class="bg-gray-50">
+        <tr>
+          <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
+            Order ID
+          </th>
+          <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
+            Collection Time
+          </th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-300 bg-white">
+        <PatientRecordLabOrderRow v-for="(item, index) in orders" :key="index" :item="item" />
+      </tbody>
+    </BaseTable>
 
     <div v-if="orders.length > 0" class="mt-4">
       <BaseCard>
@@ -29,16 +32,18 @@ import { LabOrderShortSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-
 
 import BaseCard from "~/components/base/BaseCard.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
-import PatientRecordLabOrderCard from "~/components/patientrecord/medical/PatientRecordLabOrderCard.vue";
+import BaseTable from "~/components/base/BaseTable.vue";
+import PatientRecordLabOrderRow from "~/components/patientrecord/medical/PatientRecordLabOrderRow.vue";
 import usePagination from "~/composables/query/usePagination";
 import useApi from "~/composables/useApi";
 import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
   components: {
+    PatientRecordLabOrderRow,
+    BaseTable,
     BaseCard,
     BasePaginator,
-    PatientRecordLabOrderCard,
   },
   props: {
     record: {
