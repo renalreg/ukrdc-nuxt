@@ -1,5 +1,5 @@
 <template>
-  <tr class="group">
+  <tr>
     <td class="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
       {{ item.serviceId }} ({{ item.serviceIdDescription }})
     </td>
