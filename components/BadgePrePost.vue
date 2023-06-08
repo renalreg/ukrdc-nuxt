@@ -21,6 +21,8 @@ export default defineComponent({
         return ["bg-red-100", "text-red-800"];
       } else if (props.prePost === "POST") {
         return ["bg-blue-100", "text-blue-800"];
+      } else if (props.prePost === "NA") {
+        return ["hidden"];
       } else {
         return ["bg-gray-100", "text-gray-800"];
       }
