@@ -43,17 +43,7 @@
           >
         </div>
 
-        <!-- Small data card display -->
-        <div class="lg:hidden">
-          <PatientRecordResultCard
-            v-for="(item, index) in results"
-            :key="`${index}-card`"
-            :item="item"
-            @delete="showDeleteResultItemModal"
-          />
-        </div>
-        <!-- Large table display -->
-        <BaseTable class="hidden lg:block">
+        <BaseTable>
           <thead class="bg-gray-50">
             <tr>
               <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
@@ -125,7 +115,6 @@ import BaseModalConfirm from "~/components/base/BaseModalConfirm.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
-import PatientRecordResultCard from "~/components/patientrecord/medical/PatientRecordResultCard.vue";
 import PatientRecordResultRow from "~/components/patientrecord/medical/PatientRecordResultRow.vue";
 import useDateRange from "~/composables/query/useDateRange";
 import usePagination from "~/composables/query/usePagination";
@@ -144,7 +133,6 @@ export default defineComponent({
     BaseDateRange,
     BaseSelectSearchable,
     BaseModalConfirm,
-    PatientRecordResultCard,
     PatientRecordResultRow,
   },
   props: {
