@@ -4,7 +4,7 @@
     <PatientRecordDemographics class="mb-4" :record="record" />
     <!-- Record message banners -->
     <NuxtLink :to="`/patientrecords/${record.pid}/messages`">
-      <LatestMessageAlert :message="latestMessage" :is-loading="latestMessageIsLoading" />
+      <LatestMessageAlert :message="latestMessage || undefined" :is-loading="latestMessageIsLoading" />
     </NuxtLink>
 
     <!-- Main content container-->
