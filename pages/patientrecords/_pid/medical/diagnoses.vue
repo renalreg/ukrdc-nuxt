@@ -52,10 +52,10 @@ import {
 
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+import PatientRecordCauseOfDeathListItem from "~/components/patientrecord/medical/PatientRecordCauseOfDeathListItem.vue";
 import PatientRecordDiagnosisListItem from "~/components/patientrecord/medical/PatientRecordDiagnosisListItem.vue";
 import useApi from "~/composables/useApi";
 import { formatDate } from "~/helpers/dateUtils";
-import PatientRecordCauseOfDeathListItem from "~/components/patientrecord/medical/PatientRecordCauseOfDeathListItem.vue";
 
 export default defineComponent({
   components: {
