@@ -6,16 +6,7 @@
           <h2>Diagnoses</h2>
         </BaseCardHeader>
         <ul class="divide-y divide-gray-300">
-          <li v-for="diagnosis in diagnoses" :key="diagnosis.id">
-            <div class="flex gap-4">
-              <div>
-                <h5 class="truncate">Creation Date</h5>
-                <p class="sensitive mt-2 truncate">
-                  {{ formatDate(diagnosis.creationDate, true) }}
-                </p>
-              </div>
-            </div>
-          </li>
+          <PatientRecordDiagnosisListItem v-for="diagnosis in diagnoses" :key="diagnosis.id" :item="diagnosis" />
         </ul>
       </BaseCard>
     </div>
@@ -25,16 +16,12 @@
           <h2>Renal Diagnoses</h2>
         </BaseCardHeader>
         <ul class="divide-y divide-gray-300">
-          <li v-for="renalDiagnosis in renalDiagnoses" :key="renalDiagnosis.pid">
-            <div class="flex gap-4">
-              <div>
-                <h5 class="truncate">Creation Date</h5>
-                <p class="sensitive mt-2 truncate">
-                  {{ formatDate(renalDiagnosis.creationDate, true) }}
-                </p>
-              </div>
-            </div>
-          </li>
+          <PatientRecordDiagnosisListItem
+            v-for="renalDiagnosis in renalDiagnoses"
+            :key="renalDiagnosis.pid"
+            :item="renalDiagnosis"
+            :small="true"
+          />
         </ul>
       </BaseCard>
       <BaseCard>
@@ -42,16 +29,12 @@
           <h2>Cause of Death</h2>
         </BaseCardHeader>
         <ul class="divide-y divide-gray-300">
-          <li v-for="causeOfDeath in causesOfDeath" :key="causeOfDeath.pid">
-            <div class="flex gap-4">
-              <div>
-                <h5 class="truncate">Creation Date</h5>
-                <p class="sensitive mt-2 truncate">
-                  {{ formatDate(causeOfDeath.creationDate, true) }}
-                </p>
-              </div>
-            </div>
-          </li>
+          <PatientRecordCauseOfDeathListItem
+            v-for="causeOfDeath in causesOfDeath"
+            :key="causeOfDeath.pid"
+            :item="causeOfDeath"
+            :small="true"
+          />
         </ul>
       </BaseCard>
     </div>
@@ -60,7 +43,6 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
-import { formatDate } from "~/helpers/dateUtils";
 import {
   ExtendedCauseOfDeathSchema,
   ExtendedDiagnosisSchema,
@@ -68,21 +50,18 @@ import {
   PatientRecordSchema,
 } from "@ukkidney/ukrdc-axios-ts";
 
-import useApi from "~/composables/useApi";
-import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
-import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
-import PatientRecordsGroupedList from "~/components/patientrecord/PatientRecordsGroupedList.vue";
-import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
-import MembershipStatusBadge from "~/components/MembershipStatusBadge.vue";
+import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+import PatientRecordDiagnosisListItem from "~/components/patientrecord/medical/PatientRecordDiagnosisListItem.vue";
+import useApi from "~/composables/useApi";
+import { formatDate } from "~/helpers/dateUtils";
+import PatientRecordCauseOfDeathListItem from "~/components/patientrecord/medical/PatientRecordCauseOfDeathListItem.vue";
 
 export default defineComponent({
   components: {
-    MembershipStatusBadge,
-    SendingFacilityLink,
-    PatientRecordsGroupedList,
+    PatientRecordCauseOfDeathListItem,
+    PatientRecordDiagnosisListItem,
     BaseCard,
-    BaseSkeleListItem,
     BaseCardHeader,
   },
   props: {
