@@ -48,29 +48,12 @@
           <BaseTable>
             <thead class="bg-gray-50">
               <tr>
-                <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
-                  Type
-                </th>
-                <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
-                  Value
-                </th>
-                <th
-                  scope="col"
-                  class="px-6 py-3 pl-16 text-left text-sm font-medium uppercase tracking-wider text-gray-500"
-                >
-                  Order ID
-                </th>
-                <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
-                  Observation Time
-                </th>
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500"
-                ></th>
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500"
-                ></th>
+                <th scope="col" class="px-6 py-3">Type</th>
+                <th scope="col" class="px-6 py-3">Value</th>
+                <th scope="col" class="px-6 py-3 pl-16">Order ID</th>
+                <th scope="col" class="px-6 py-3">Observation Time</th>
+                <th scope="col" class="px-6 py-3"></th>
+                <th scope="col" class="px-6 py-3"></th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-300 bg-white">

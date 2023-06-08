@@ -5,12 +5,8 @@
     <BaseTable v-else>
       <thead class="bg-gray-50">
         <tr>
-          <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
-            Order ID
-          </th>
-          <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
-            Collection Time
-          </th>
+          <th scope="col" class="px-6 py-3">Order ID</th>
+          <th scope="col" class="px-6 py-3">Collection Time</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-300 bg-white">

@@ -13,22 +13,11 @@
         <BaseTable class="mb-4">
           <thead class="bg-gray-50">
             <tr>
-              <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
-                Type
-              </th>
-              <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
-                Value
-              </th>
-              <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
-                Entered At
-              </th>
-              <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500">
-                Entered On
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500"
-              ></th>
+              <th scope="col" class="px-6 py-3">Type</th>
+              <th scope="col" class="px-6 py-3">Value</th>
+              <th scope="col" class="px-6 py-3">Entered At</th>
+              <th scope="col" class="px-6 py-3">Entered On</th>
+              <th scope="col" class="px-6 py-3"></th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-300 bg-white">
