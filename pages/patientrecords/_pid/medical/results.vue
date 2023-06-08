@@ -33,10 +33,10 @@
 
         <div class="mb-4 flex flex-grow items-center gap-2">
           <NuxtLink :to="'./laborders'">
-            <BaseButton>View Orders</BaseButton>
+            <BaseButton>View Lab Orders</BaseButton>
           </NuxtLink>
           <NuxtLink v-if="selectedOrderId" :to="{ query: { order_id: null } }">
-            <BaseButton>Show Results From All Orders</BaseButton>
+            <BaseButton>Show Results From All Lab Orders</BaseButton>
           </NuxtLink>
           <BaseButton v-if="selectedOrderId && selectedOrder" colour="red" @click="deleteOrderAlert?.show()"
             >Delete Lab Order</BaseButton
