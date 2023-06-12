@@ -39,6 +39,28 @@
               <td>{{ session.qhd20 ?? "None" }}</td>
               <td>{{ session.qhd21 ?? "None" }}</td>
               <td>{{ session.qhd31 ?? "None" }}</td>
+              <!-- Info tooltip-->
+              <td>
+                <BaseInfoTooltip>
+                  <div class="sensitive">
+                    <p><b>ID: </b>{{ session.id }}</p>
+                    <br />
+                    <div class="grid grid-cols-2">
+                      <div><b>QHD19: </b>{{ session.qhd19 || "None" }}</div>
+                      <div><b>QHD20: </b>{{ session.qhd20 || "None" }}</div>
+                      <div><b>QHD21: </b>{{ session.qhd21 || "None" }}</div>
+                      <div><b>QHD22: </b>{{ session.qhd22 || "None" }}</div>
+                      <div><b>QHD30: </b>{{ session.qhd30 || "None" }}</div>
+                      <div><b>QHD31: </b>{{ session.qhd31 || "None" }}</div>
+                      <div><b>QHD32: </b>{{ session.qhd32 || "None" }}</div>
+                      <div><b>QHD33: </b>{{ session.qhd33 || "None" }}</div>
+                    </div>
+                    <br />
+                    <p><b>Clinician: </b>{{ session.cliniciandesc ?? session.cliniciancode }}</p>
+                    <p><b>Entered by: </b>{{ session.enteredbydesc ?? session.enteredbycode }}</p>
+                  </div>
+                </BaseInfoTooltip>
+              </td>
             </tr>
           </tbody>
         </BaseTable>
@@ -65,6 +87,7 @@ import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api"
 import { DialysisSessionSchema, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseCard from "~/components/base/BaseCard.vue";
+import BaseInfoTooltip from "~/components/base/BaseInfoTooltip.vue";
 import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
@@ -76,6 +99,7 @@ import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
   components: {
+    BaseInfoTooltip,
     SendingFacilityLink,
     CodeTitle,
     BaseCard,
