@@ -23,7 +23,7 @@
     "dompurify": "^3.0.0",
     "floating-vue": "^1.0.0-beta.18",
     "luxon": "^3.2.1",
-    "marked": "^5.0.4",
+    "marked": "^5.1.0",
     "nuxt": "^2.16.3",
     "plotly.js": "^2.22.0",
     "url-join": "^5.0.0",
