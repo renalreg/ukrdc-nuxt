@@ -59,19 +59,24 @@
                   <div class="sensitive">
                     <p><b>ID: </b>{{ treatment.id }}</p>
                     <br />
-                    <p><b>From time: </b>{{ treatment.fromTime }}</p>
-                    <p><b>To time: </b>{{ treatment.toTime || "None" }}</p>
-                    <br />
-                    <p><b>Admin reason: </b>{{ treatment.admitReasonDesc || "None" }}</p>
                     <p>
-                      <b>Admin reason code: </b>{{ treatment.admitReasonCodeStd }} / {{ treatment.admitReasonCode }}
+                      <b>Admit reason code: </b>{{ treatment.admitReasonCodeStd }} / {{ treatment.admitReasonCode }}
                     </p>
-                    <br />
-                    <p><b>Discharge reason: </b>{{ treatment.dischargeReasonDesc || "None" }}</p>
                     <p>
                       <b>Discharge reason code: </b>{{ treatment.dischargeReasonCodeStd || "None" }} /
                       {{ treatment.dischargeReasonCode || "None" }}
                     </p>
+                    <br />
+                    <p>
+                      <b>Healthcare facility code: </b>{{ treatment.healthCareFacilityCodeStd || "None" }} /
+                      {{ treatment.healthCareFacilityCode || "None" }}
+                    </p>
+                    <p>
+                      <b>Discharge location code: </b>{{ treatment.dischargeLocationCodeStd || "None" }} /
+                      {{ treatment.dischargeLocationCode || "None" }}
+                    </p>
+                    <br />
+                    <p><b>QBL05: </b>{{ treatment.qbl05 || "None" }}</p>
                   </div>
                 </BaseInfoTooltip>
               </td>
