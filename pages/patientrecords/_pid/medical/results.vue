@@ -48,12 +48,12 @@
           <BaseTable>
             <thead class="bg-gray-50">
               <tr>
-                <th scope="col" class="px-6 py-3">Type</th>
-                <th scope="col" class="px-6 py-3">Value</th>
-                <th scope="col" class="px-6 py-3 pl-16">Order ID</th>
-                <th scope="col" class="px-6 py-3">Observation Time</th>
-                <th scope="col" class="px-6 py-3"></th>
-                <th scope="col" class="px-6 py-3"></th>
+                <th scope="col">Type</th>
+                <th scope="col">Value</th>
+                <th scope="col">Order ID</th>
+                <th scope="col">Observation Time</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-300 bg-white">
@@ -316,4 +316,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped lang="postcss">
+th {
+  @apply px-6 py-3;
+}
+</style>

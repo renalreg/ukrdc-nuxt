@@ -5,29 +5,29 @@
     <BaseTable class="mb-4">
       <thead class="bg-gray-50">
         <tr>
-          <th scope="col" class="px-6 py-3 text-left">Name</th>
-          <th scope="col" class="px-6 py-3 text-left">Visibility</th>
-          <th scope="col" class="px-6 py-3 text-left">Started By</th>
-          <th scope="col" class="px-6 py-3 text-left">Started</th>
-          <th scope="col" class="px-6 py-3 text-left">Finished</th>
-          <th scope="col" class="px-6 py-3 text-left">Status</th>
+          <th scope="col">Name</th>
+          <th scope="col">Visibility</th>
+          <th scope="col">Started By</th>
+          <th scope="col">Started</th>
+          <th scope="col">Finished</th>
+          <th scope="col">Status</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-300 bg-white">
         <tr v-for="task in tasks" :key="task.id">
-          <BaseTableCell class="font-medium text-gray-900">{{ task.name }}</BaseTableCell>
-          <BaseTableCell><BadgePublicPrivate :visibility="task.visibility" /></BaseTableCell>
-          <BaseTableCell>{{ task.owner }}</BaseTableCell>
-          <BaseTableCell>{{ task.started ? formatDate(task.started) : "Unknown start time" }}</BaseTableCell>
-          <BaseTableCell>{{ task.finished ? formatDate(task.finished) : "" }}</BaseTableCell>
-          <BaseTableCell>
+          <td class="truncate font-medium">{{ task.name }}</td>
+          <td><BadgePublicPrivate :visibility="task.visibility" /></td>
+          <td>{{ task.owner }}</td>
+          <td>{{ task.started ? formatDate(task.started) : "Unknown start time" }}</td>
+          <td>{{ task.finished ? formatDate(task.finished) : "" }}</td>
+          <td>
             <div class="flex gap-1">
               <BadgeTaskStatus :status="task.status" />
               <BaseInfoTooltip v-if="task.error" class="inline">
                 <p><b>Task failed with error: </b>{{ task.error }}</p>
               </BaseInfoTooltip>
             </div>
-          </BaseTableCell>
+          </td>
         </tr>
       </tbody>
     </BaseTable>
@@ -50,7 +50,6 @@ import BaseCard from "~/components/base/BaseCard.vue";
 import BaseInfoTooltip from "~/components/base/BaseInfoTooltip.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
-import BaseTableCell from "~/components/base/BaseTableCell.vue";
 import usePagination from "~/composables/query/usePagination";
 import useTasks from "~/composables/useTasks";
 import { formatDate } from "~/helpers/dateUtils";
@@ -59,7 +58,6 @@ export default defineComponent({
   components: {
     BaseCard,
     BaseTable,
-    BaseTableCell,
     BasePaginator,
     BaseInfoTooltip,
     BadgePublicPrivate,
@@ -99,3 +97,12 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped lang="postcss">
+th {
+  @apply px-6 py-3;
+}
+td {
+  @apply whitespace-nowrap px-6 py-3;
+}
+</style>

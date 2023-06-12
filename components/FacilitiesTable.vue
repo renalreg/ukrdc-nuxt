@@ -8,14 +8,14 @@ Table of facilities and their basic statistics
     <BaseTable>
       <thead class="bg-gray-50">
         <tr>
-          <th scope="col" class="px-4 py-3 text-left">
+          <th scope="col" class="text-left">
             <div class="flex items-center gap-1">
               Code
               <BaseSortIcon :active="sortBy === 'id'" :asc="isAscending['id']" @toggle="toggleSort('id')" />
             </div>
           </th>
-          <th scope="col" class="hidden px-4 py-3 text-left lg:table-cell">Name</th>
-          <th scope="col" class="px-4 py-3 text-left">
+          <th scope="col" class="hidden text-left lg:table-cell">Name</th>
+          <th scope="col" class="text-left">
             <div class="flex items-center gap-1">
               Total Records
               <BaseSortIcon
@@ -25,7 +25,7 @@ Table of facilities and their basic statistics
               />
             </div>
           </th>
-          <th scope="col" class="px-4 py-3 text-left">
+          <th scope="col" class="text-left">
             <div class="flex items-center gap-1">
               Failing Records
               <BaseSortIcon
@@ -35,13 +35,13 @@ Table of facilities and their basic statistics
               />
             </div>
           </th>
-          <th scope="col" class="px-4 py-3 text-left">
+          <th scope="col" class="text-left">
             <div class="flex items-center">
               Sending to PKB
               <BaseFilterIcon :active="filterByPkbOut" @toggle="filterByPkbOut = !filterByPkbOut" />
             </div>
           </th>
-          <th scope="col" class="px-4 py-3 text-left">
+          <th scope="col" class="text-left">
             <div class="flex items-center gap-1">
               Last Received
               <BaseSortIcon
@@ -59,12 +59,12 @@ Table of facilities and their basic statistics
       </thead>
       <tbody v-if="!facilities" class="divide-y divide-gray-300 bg-white">
         <tr v-for="n in 20" :key="n">
-          <BaseTableCell><BaseSkeleText class="h-6 w-12" /></BaseTableCell>
-          <BaseTableCell><BaseSkeleText class="h-6 w-64" /></BaseTableCell>
-          <BaseTableCell><BaseSkeleText class="h-6 w-12" /></BaseTableCell>
-          <BaseTableCell><BaseSkeleText class="h-6 w-12" /></BaseTableCell>
-          <BaseTableCell><BaseSkeleText class="h-6 w-12" /></BaseTableCell>
-          <BaseTableCell><BaseSkeleText class="h-6 w-32" /></BaseTableCell>
+          <td><BaseSkeleText class="h-6 w-12" /></td>
+          <td><BaseSkeleText class="h-6 w-64" /></td>
+          <td><BaseSkeleText class="h-6 w-12" /></td>
+          <td><BaseSkeleText class="h-6 w-12" /></td>
+          <td><BaseSkeleText class="h-6 w-12" /></td>
+          <td><BaseSkeleText class="h-6 w-32" /></td>
         </tr>
       </tbody>
       <tbody v-else class="divide-y divide-gray-300 bg-white">
@@ -74,10 +74,10 @@ Table of facilities and their basic statistics
           class="cursor-pointer hover:bg-gray-50"
           @click="$emit('select', facility.id)"
         >
-          <BaseTableCell class="font-medium text-gray-900">{{ facility.id }}</BaseTableCell>
-          <BaseTableCell class="hidden max-w-sm truncate lg:table-cell">{{ facility.description }}</BaseTableCell>
-          <BaseTableCell>{{ facility.statistics.totalPatients }}</BaseTableCell>
-          <BaseTableCell>
+          <td class="font-medium">{{ facility.id }}</td>
+          <td class="hidden max-w-sm truncate lg:table-cell">{{ facility.description }}</td>
+          <td>{{ facility.statistics.totalPatients }}</td>
+          <td>
             <div class="flex items-center">
               <IconCircle
                 class="inline"
@@ -90,14 +90,14 @@ Table of facilities and their basic statistics
               />
               <p>{{ facility.statistics.patientsReceivingMessageError }}</p>
             </div>
-          </BaseTableCell>
-          <BaseTableCell>
+          </td>
+          <td>
             <div class="flex items-center">
               <IconCircle class="inline" :class="facility.dataFlow.pkbOut ? 'text-green-600' : 'text-red-700'" />
               <p>{{ facility.dataFlow.pkbOut ? "Yes" : "No" }}</p>
             </div>
-          </BaseTableCell>
-          <BaseTableCell>
+          </td>
+          <td>
             <div class="flex items-center gap-2">
               <div>
                 {{ facility.lastMessageReceivedAt ? formatDate(facility.lastMessageReceivedAt, false) : "> Year Ago" }}
@@ -108,7 +108,7 @@ Table of facilities and their basic statistics
                 class="inline h-6 w-6 text-yellow-600"
               />
             </div>
-          </BaseTableCell>
+          </td>
         </tr>
       </tbody>
     </BaseTable>
@@ -123,7 +123,6 @@ import BaseFilterIcon from "~/components/base/BaseFilterIcon.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import BaseSortIcon from "~/components/base/BaseSortIcon.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
-import BaseTableCell from "~/components/base/BaseTableCell.vue";
 import IconExclamationTriangle from "~/components/icons/hero/24/outline/IconExclamationTriangle.vue";
 import IconCircle from "~/components/icons/IconCircle.vue";
 import SearchBar from "~/components/SearchBar.vue";
@@ -139,7 +138,6 @@ export default defineComponent({
   components: {
     IconCircle,
     BaseTable,
-    BaseTableCell,
     BaseSortIcon,
     BaseFilterIcon,
     IconExclamationTriangle,
@@ -249,3 +247,12 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped lang="postcss">
+th {
+  @apply px-4 py-3;
+}
+td {
+  @apply whitespace-nowrap px-4 py-4;
+}
+</style>

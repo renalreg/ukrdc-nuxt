@@ -1,10 +1,19 @@
 <template>
-  <tr>
-    <td class="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
-      {{ item.serviceId }} ({{ item.serviceIdDescription }})
+  <tr class="group">
+    <td class="font-medium">{{ item.serviceId }} ({{ item.serviceIdDescription }})</td>
+    <td>{{ item.value }} {{ item.valueUnits }}</td>
+    <td class="flex items-center gap-2">
+      <div class="flex-grow truncate text-gray-500">
+        {{ item.orderId }}
+      </div>
     </td>
-    <td class="whitespace-nowrap px-6 py-4 text-gray-500">{{ item.value }} {{ item.valueUnits }}</td>
-    <td class="flex items-center gap-2 whitespace-nowrap px-6 py-4">
+    <td>
+      {{ item.observationTime ? formatDate(item.observationTime) : "No Observation Time" }}
+    </td>
+    <td>
+      <BadgePrePost v-if="item.prePost" :pre-post="item.prePost" />
+    </td>
+    <td class="flex gap-2 text-gray-500">
       <BaseButton
         class="opacity-0 group-hover:opacity-100"
         :round="true"
@@ -14,17 +23,6 @@
         :to="{ query: { order_id: item.orderId } }"
         ><IconFunnel />
       </BaseButton>
-      <div class="w-48 flex-grow truncate text-gray-500">
-        {{ item.orderId }}
-      </div>
-    </td>
-    <td class="whitespace-nowrap px-6 py-4 text-gray-500">
-      {{ item.observationTime ? formatDate(item.observationTime) : "No Observation Time" }}
-    </td>
-    <td class="whitespace-nowrap px-4 py-4 text-gray-500">
-      <BadgePrePost v-if="item.prePost" :pre-post="item.prePost" />
-    </td>
-    <td class="text-gray-500">
       <BaseButton
         class="opacity-0 group-hover:opacity-100"
         :round="true"
@@ -66,3 +64,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped lang="postcss">
+td {
+  @apply whitespace-nowrap px-6 py-4;
+}
+</style>
