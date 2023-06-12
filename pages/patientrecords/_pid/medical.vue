@@ -51,6 +51,10 @@ export default defineComponent({
         href: `/patientrecords/${route.value.params.pid}/medical/treatments`,
       },
       {
+        name: "Dialysis",
+        href: `/patientrecords/${route.value.params.pid}/medical/dialysis`,
+      },
+      {
         name: "Documents",
         href: `/patientrecords/${route.value.params.pid}/medical/documents`,
       },
