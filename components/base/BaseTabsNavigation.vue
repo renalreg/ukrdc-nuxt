@@ -126,7 +126,7 @@ export default defineComponent({
 }
 
 .tab-base-mini {
-  @apply rounded-md px-3 py-2 font-medium capitalize text-gray-600;
+  @apply rounded-md px-2 py-2 font-medium capitalize text-gray-600;
 }
 
 .tab-active-mini {
