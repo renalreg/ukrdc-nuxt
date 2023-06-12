@@ -68,11 +68,11 @@ import BaseCard from "~/components/base/BaseCard.vue";
 import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
+import CodeTitle from "~/components/CodeTitle.vue";
+import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
 import usePagination from "~/composables/query/usePagination";
 import useApi from "~/composables/useApi";
 import { formatDate } from "~/helpers/dateUtils";
-import CodeTitle from "~/components/CodeTitle.vue";
-import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
 
 export default defineComponent({
   components: {
