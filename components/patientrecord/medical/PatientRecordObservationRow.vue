@@ -1,17 +1,15 @@
 <template>
   <tr>
-    <BaseTableCell class="font-medium text-gray-900"
-      >{{ item.observationCode }} ({{ item.observationDesc }})</BaseTableCell
-    >
-    <BaseTableCell>{{ item.observationValue }} {{ item.observationUnits }}</BaseTableCell>
-    <BaseTableCell>
+    <td class="font-medium text-gray-900">{{ item.observationCode }} ({{ item.observationDesc }})</td>
+    <td>{{ item.observationValue }} {{ item.observationUnits }}</td>
+    <td>
       <p v-if="item.enteredAt || item.enteredAtDescription">{{ item.enteredAt }} / {{ item.enteredAtDescription }}</p>
       <p v-else>Unknown location</p>
-    </BaseTableCell>
-    <BaseTableCell>
+    </td>
+    <td>
       {{ formatDate(item.observationTime) }}
-    </BaseTableCell>
-    <td class="whitespace-nowrap px-4 py-4 text-gray-500">
+    </td>
+    <td>
       <BadgePrePost v-if="item.prePost" :pre-post="item.prePost" />
     </td>
   </tr>
@@ -22,12 +20,10 @@ import { defineComponent } from "@nuxtjs/composition-api";
 import { ObservationSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BadgePrePost from "~/components/BadgePrePost.vue";
-import BaseTableCell from "~/components/base/BaseTableCell.vue";
 import { formatDate } from "~/helpers/dateUtils";
 
 export default defineComponent({
   components: {
-    BaseTableCell,
     BadgePrePost,
   },
   props: {
@@ -42,4 +38,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped lang="postcss">
+td {
+  @apply whitespace-nowrap px-6 py-4;
+}
+</style>

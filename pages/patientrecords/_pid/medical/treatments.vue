@@ -3,29 +3,29 @@
     <BaseLoadingContainer :loading="!treatments">
       <p v-if="treatments && treatments.length <= 0" class="text-center">No treatments on record</p>
       <div v-else-if="treatments && treatments.length > 0" class="flow-root">
-        <!--        New UI-->
+        <!-- New UI-->
         <BaseTable>
           <thead class="bg-gray-50">
             <tr>
-              <th scope="col" class="px-6 py-3">Facility Code</th>
-              <th scope="col" class="px-6 py-3">Admit Date</th>
-              <th scope="col" class="px-6 py-3">Admit Reason</th>
-              <th scope="col" class="px-6 py-3">Discharge Date</th>
-              <th scope="col" class="px-6 py-3">Discharge Reason</th>
+              <th scope="col">Facility Code</th>
+              <th scope="col">Admit Date</th>
+              <th scope="col">Admit Reason</th>
+              <th scope="col">Discharge Date</th>
+              <th scope="col">Discharge Reason</th>
               <!-- Info tooltip -->
               <th scope="col" class="px-6 py-3"></th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-300 bg-white">
             <tr v-for="treatment in treatments" :key="treatment.id">
-              <td class="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+              <td class="font-medium">
                 <SendingFacilityLink class="font-medium" :code="treatment.healthCareFacilityCode" />
               </td>
               <!-- Admission-->
-              <td class="whitespace-nowrap px-6 py-4 text-gray-500">
+              <td>
                 {{ treatment.fromTime ? formatDate(treatment.fromTime, false) : "None" }}
               </td>
-              <td class="truncate px-6 py-2 text-gray-500">
+              <td class="truncate">
                 <CodeTitle
                   v-if="treatment.admitReasonCodeStd && treatment.admitReasonCode"
                   :coding-standard="treatment.admitReasonCodeStd"
@@ -34,10 +34,10 @@
                 <p v-if="treatment.admitReasonDesc">{{ treatment.admitReasonDesc }}</p>
               </td>
               <!-- Discharge-->
-              <td class="whitespace-nowrap px-6 py-4 text-gray-500">
+              <td>
                 {{ treatment.toTime ? formatDate(treatment.toTime, false) : "None" }}
               </td>
-              <td class="truncate px-6 py-2 text-gray-500">
+              <td>
                 <CodeTitle
                   v-if="treatment.dischargeReasonCodeStd && treatment.dischargeReasonCode"
                   :coding-standard="treatment.dischargeReasonCodeStd"
@@ -59,19 +59,24 @@
                   <div class="sensitive">
                     <p><b>ID: </b>{{ treatment.id }}</p>
                     <br />
-                    <p><b>From time: </b>{{ treatment.fromTime }}</p>
-                    <p><b>To time: </b>{{ treatment.toTime || "None" }}</p>
-                    <br />
-                    <p><b>Admin reason: </b>{{ treatment.admitReasonDesc || "None" }}</p>
                     <p>
-                      <b>Admin reason code: </b>{{ treatment.admitReasonCodeStd }} / {{ treatment.admitReasonCode }}
+                      <b>Admit reason code: </b>{{ treatment.admitReasonCodeStd }} / {{ treatment.admitReasonCode }}
                     </p>
-                    <br />
-                    <p><b>Discharge reason: </b>{{ treatment.dischargeReasonDesc || "None" }}</p>
                     <p>
                       <b>Discharge reason code: </b>{{ treatment.dischargeReasonCodeStd || "None" }} /
                       {{ treatment.dischargeReasonCode || "None" }}
                     </p>
+                    <br />
+                    <p>
+                      <b>Healthcare facility code: </b>{{ treatment.healthCareFacilityCodeStd || "None" }} /
+                      {{ treatment.healthCareFacilityCode || "None" }}
+                    </p>
+                    <p>
+                      <b>Discharge location code: </b>{{ treatment.dischargeLocationCodeStd || "None" }} /
+                      {{ treatment.dischargeLocationCode || "None" }}
+                    </p>
+                    <br />
+                    <p><b>QBL05: </b>{{ treatment.qbl05 || "None" }}</p>
                   </div>
                 </BaseInfoTooltip>
               </td>
@@ -134,3 +139,12 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped lang="postcss">
+th {
+  @apply px-6 py-3;
+}
+td {
+  @apply whitespace-nowrap px-6 py-4;
+}
+</style>

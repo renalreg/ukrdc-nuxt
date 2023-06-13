@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="record && record.patient" class="mb-2 items-center md:flex">
+    <div v-if="record && record.patient" class="mb-8 items-center sm:mb-2 sm:flex">
       <div class="mb-4 flex-grow text-center sm:text-left md:mb-0">
         <span>
           <h1 class="sensitive inline capitalize">{{ forename.toLowerCase() }}</h1>
@@ -8,9 +8,9 @@
             {{ surname.toLowerCase() }}
           </h1>
         </span>
-        <PatientRecordExtractSummary :record="record" />
+        <PatientRecordExtractSummary class="justify-center sm:justify-start" :record="record" />
       </div>
-      <div class="flex">
+      <div class="flex justify-center sm:justify-start">
         <div v-if="record.masterId">
           <BaseButton :to="`/masterrecords/${record.masterId}`" class="truncate"> View Master Record </BaseButton>
         </div>

@@ -2,7 +2,7 @@
 
 <template>
   <div :class="[sticky ? 'sticky top-4 z-50' : '']">
-    <div class="sm:hidden">
+    <div :class="[eagerToCollapse ? 'lg:hidden' : 'sm:hidden']">
       <label for="tabs" class="sr-only">Select a tab</label>
       <BaseSelect id="tabs" ref="selectEl" name="tabs" :value="selectedHref" @change="switchTab">
         <option v-for="tab in tabs" :key="tab.name" :value="tab.href" :selected="tabIsActive(tab)">
@@ -10,7 +10,7 @@
         </option>
       </BaseSelect>
     </div>
-    <div class="hidden sm:block">
+    <div class="hidden" :class="[eagerToCollapse ? 'lg:block' : 'sm:block']">
       <nav :class="[mini ? 'tab-nav-mini' : 'tab-nav-primary']" aria-label="Tabs">
         <NuxtLink
           v-for="tab in tabs"
@@ -59,6 +59,11 @@ export default defineComponent({
       default: "tabs",
     },
     sticky: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    eagerToCollapse: {
       type: Boolean,
       required: false,
       default: false,
@@ -121,7 +126,7 @@ export default defineComponent({
 }
 
 .tab-base-mini {
-  @apply rounded-md px-3 py-2 font-medium capitalize text-gray-600;
+  @apply rounded-md px-2 py-2 font-medium capitalize text-gray-600;
 }
 
 .tab-active-mini {

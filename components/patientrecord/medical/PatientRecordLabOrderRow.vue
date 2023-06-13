@@ -3,10 +3,10 @@
     class="group cursor-pointer hover:bg-gray-50"
     @click="$router.push({ path: `/patientrecords/${item.pid}/medical/results`, query: { order_id: item.id } })"
   >
-    <td class="whitespace-nowrap px-6 py-4 font-medium text-gray-900">
+    <td class="font-medium">
       {{ item.id }}
     </td>
-    <td class="whitespace-nowrap px-6 py-4 text-gray-500">
+    <td>
       {{
         item.specimenCollectedTime
           ? `Collected ${formatDate(item.specimenCollectedTime, true)}`
@@ -35,3 +35,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped lang="postcss">
+td {
+  @apply whitespace-nowrap px-6 py-4;
+}
+</style>

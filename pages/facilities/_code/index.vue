@@ -73,15 +73,15 @@
         <BaseTable>
           <thead class="bg-gray-50">
             <tr>
-              <th scope="col" class="px-4 py-3 text-left">Record Type</th>
-              <th scope="col" class="hidden px-4 py-3 text-left md:table-cell">Status</th>
-              <th scope="col" class="px-4 py-3 text-left">Total Records</th>
+              <th scope="col">Record Type</th>
+              <th scope="col" class="hidden md:table-cell">Status</th>
+              <th scope="col">Total Records</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-300 bg-white">
             <tr v-for="item in feedTableItems" :key="item.key">
-              <BaseTableCell class="font-medium text-gray-900">{{ item.name }}</BaseTableCell>
-              <BaseTableCell class="hidden md:table-cell">
+              <td class="font-medium text-gray-900">{{ item.name }}</td>
+              <td class="hidden md:table-cell">
                 <div v-if="item.historic" class="flex items-center">
                   <IconCircle v-if="item.historic" class="inline text-orange-400" />
                   <p>Historic</p>
@@ -90,8 +90,8 @@
                   <IconCircle class="inline" :class="extracts[item.key] > 0 ? 'text-green-600' : 'text-red-700'" />
                   <p>{{ extracts[item.key] > 0 ? "Enabled" : "Unused" }}</p>
                 </div>
-              </BaseTableCell>
-              <BaseTableCell>{{ extracts[item.key] > 0 ? extracts[item.key] : "" }}</BaseTableCell>
+              </td>
+              <td>{{ extracts[item.key] > 0 ? extracts[item.key] : "" }}</td>
             </tr>
           </tbody>
         </BaseTable>
@@ -190,7 +190,6 @@ import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
-import BaseTableCell from "~/components/base/BaseTableCell.vue";
 import FacilityErrorsHistoryPlot from "~/components/FacilityErrorsHistoryPlot.vue";
 import IconExclamationTriangle from "~/components/icons/hero/24/outline/IconExclamationTriangle.vue";
 import IconUsers from "~/components/icons/hero/24/outline/IconUsers.vue";
@@ -207,7 +206,6 @@ export default defineComponent({
     BaseCardContent,
     BaseCardHeader,
     BaseTable,
-    BaseTableCell,
     BaseAlertError,
     IconExclamationTriangle,
     IconUsers,
@@ -290,3 +288,12 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped lang="postcss">
+th {
+  @apply px-6 py-3;
+}
+td {
+  @apply whitespace-nowrap px-6 py-4;
+}
+</style>
