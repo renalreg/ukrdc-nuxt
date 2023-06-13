@@ -6,9 +6,9 @@
           <BaseCardHeader>
             <h2>Diagnoses</h2>
           </BaseCardHeader>
-          <BaseCardContent  v-if="diagnoses && diagnoses.length <= 0" >
+          <BaseCardContent v-if="diagnoses && diagnoses.length <= 0">
             <p class="text-center">No diagnoses on record</p>
-          </BaseCardContent> 
+          </BaseCardContent>
           <ul v-else class="divide-y divide-gray-300">
             <PatientRecordDiagnosisListItem v-for="diagnosis in diagnoses" :key="diagnosis.id" :item="diagnosis" />
           </ul>
@@ -20,7 +20,7 @@
             <h2>Renal Diagnoses</h2>
           </BaseCardHeader>
           <BaseCardContent v-if="renalDiagnoses && renalDiagnoses.length <= 0">
-            <p  class="text-center">No renal diagnoses on record</p>
+            <p class="text-center">No renal diagnoses on record</p>
           </BaseCardContent>
           <ul v-else class="divide-y divide-gray-300">
             <PatientRecordDiagnosisListItem
@@ -35,7 +35,7 @@
           <BaseCardHeader>
             <h2>Cause of Death</h2>
           </BaseCardHeader>
-          <BaseCardContent  v-if="causesOfDeath && causesOfDeath.length <= 0" >
+          <BaseCardContent v-if="causesOfDeath && causesOfDeath.length <= 0">
             <p class="text-center">No cause of death on record</p>
           </BaseCardContent>
           <ul v-else class="divide-y divide-gray-300">
@@ -77,7 +77,7 @@ export default defineComponent({
     PatientRecordDiagnosisListItem,
     BaseCard,
     BaseCardHeader,
-    BaseCardContent
+    BaseCardContent,
   },
   props: {
     record: {
