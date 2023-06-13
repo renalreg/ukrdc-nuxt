@@ -17,7 +17,7 @@
     "@nuxtjs/sentry": "^7.3.0",
     "@okta/okta-auth-js": "^7.2.0",
     "@ukkidney/ukrdc-axios-ts": "^4.0.0-beta.10",
-    "@sentry/tracing": "^7.54.0",
+    "@sentry/tracing": "^7.55.0",
     "check-ie": "^2.0.1",
     "defu": "^6.1.0",
     "dompurify": "^3.0.0",
