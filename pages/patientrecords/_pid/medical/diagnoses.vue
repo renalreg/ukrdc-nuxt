@@ -6,7 +6,10 @@
           <BaseCardHeader>
             <h2>Diagnoses</h2>
           </BaseCardHeader>
-          <ul class="divide-y divide-gray-300">
+          <BaseCardContent  v-if="diagnoses && diagnoses.length <= 0" >
+            <p class="text-center">No diagnoses on record</p>
+          </BaseCardContent> 
+          <ul v-else class="divide-y divide-gray-300">
             <PatientRecordDiagnosisListItem v-for="diagnosis in diagnoses" :key="diagnosis.id" :item="diagnosis" />
           </ul>
         </BaseCard>
@@ -16,7 +19,10 @@
           <BaseCardHeader>
             <h2>Renal Diagnoses</h2>
           </BaseCardHeader>
-          <ul class="divide-y divide-gray-300">
+          <BaseCardContent v-if="renalDiagnoses && renalDiagnoses.length <= 0">
+            <p  class="text-center">No renal diagnoses on record</p>
+          </BaseCardContent>
+          <ul v-else class="divide-y divide-gray-300">
             <PatientRecordDiagnosisListItem
               v-for="renalDiagnosis in renalDiagnoses"
               :key="renalDiagnosis.pid"
@@ -29,7 +35,10 @@
           <BaseCardHeader>
             <h2>Cause of Death</h2>
           </BaseCardHeader>
-          <ul class="divide-y divide-gray-300">
+          <BaseCardContent  v-if="causesOfDeath && causesOfDeath.length <= 0" >
+            <p class="text-center">No cause of death on record</p>
+          </BaseCardContent>
+          <ul v-else class="divide-y divide-gray-300">
             <PatientRecordCauseOfDeathListItem
               v-for="causeOfDeath in causesOfDeath"
               :key="causeOfDeath.pid"
@@ -53,6 +62,7 @@ import {
 } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
 import PatientRecordCauseOfDeathListItem from "~/components/patientrecord/medical/PatientRecordCauseOfDeathListItem.vue";
@@ -67,6 +77,7 @@ export default defineComponent({
     PatientRecordDiagnosisListItem,
     BaseCard,
     BaseCardHeader,
+    BaseCardContent
   },
   props: {
     record: {
