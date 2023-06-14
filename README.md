@@ -61,9 +61,7 @@ The application version will generally follow the version of the API it is compa
 
 Under this system, the major and minor application versions should be the same as the API client version, and the patch version should iterate on it's own with any changes not dependent on API functionality.
 
-Use `npm version {version_number} --git-tag-version=false` to set the application version.
-
-See [the `npm` documentation](https://docs.npmjs.com/cli/v7/commands/npm-version) for more information.
+Use `./setversion.sh {version_number}` to set the application version. E.g. `./setversion.sh 4.0.0-rc.1`.
 
 ### Github Release Versions
 
