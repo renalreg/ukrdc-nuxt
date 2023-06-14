@@ -1,21 +1,17 @@
 <template>
   <div>
     <h1 class="mb-4">Support</h1>
-    <h3>UK Renal Registry users</h3>
     <p>
       Please use the
       <a
         class="font-medium text-indigo-600 hover:text-indigo-500"
-        href="https://renalregistry.atlassian.net/jira/software/c/projects/UI/issues"
+        href="https://renalregistry.atlassian.net/servicedesk/customer/portals"
         target="blank"
-        >Jira issue tracker</a
+        >UK Kidney Association Help Center</a
       >
       to report issues with this application.
     </p>
-    <p>Where possible, please include the configuration report shown below.</p>
-
-    <h3 class="mt-2">External users</h3>
-    <p>Support lines for external users are yet to be confirmed.</p>
+    <p>Where possible, please copy in the configuration report using the button below.</p>
 
     <h2 class="my-4">System Configuration</h2>
     <div class="mb-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
