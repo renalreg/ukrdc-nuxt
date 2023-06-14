@@ -64,29 +64,15 @@
           </span>
         </div>
       </div>
-      <div v-if="preferences" class="mb-4">
-        <h2 class="mb-4">Preferences</h2>
-        <div class="mb-4">
-          <h3 class="mb-2">Search</h3>
-          <BaseCheckbox
-            v-model="preferences.searchShowUkrdc"
-            label="Include internal UKRDC records in search results by default"
-          />
-        </div>
-        <BaseButton colour="indigo" :primary="true" @click="submitPreferences">Save</BaseButton>
-      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, useContext } from "@nuxtjs/composition-api";
-import { UserPreferences } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseButton from "~/components/base/BaseButton.vue";
-import BaseCheckbox from "~/components/base/BaseCheckbox.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
-import useApi from "~/composables/useApi";
 import useAuth from "~/composables/useAuth";
 import usePermissions from "~/composables/usePermissions";
 
@@ -94,12 +80,10 @@ export default defineComponent({
   components: {
     BaseButton,
     BaseSkeleText,
-    BaseCheckbox,
   },
   setup() {
     const { $okta } = useContext();
     const { getPermissions } = usePermissions();
-    const { systemInfoApi } = useApi();
     const { isAuthenticated } = useAuth();
 
     // User info
@@ -125,30 +109,10 @@ export default defineComponent({
       }
     }
 
-    // Preferences
-
-    const preferences = ref<UserPreferences>();
-
-    onMounted(() => {
-      systemInfoApi.getSystemUserPreferences().then((response) => {
-        preferences.value = response.data;
-      });
-    });
-
-    async function submitPreferences() {
-      if (preferences.value) {
-        await systemInfoApi.putUpdateSystemUserPreferences({
-          userPreferencesRequest: preferences.value,
-        });
-      }
-    }
-
     return {
       user,
       isAuthenticated,
       perms,
-      preferences,
-      submitPreferences,
       classesForPermissions,
     };
   },
