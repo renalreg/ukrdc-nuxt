@@ -120,54 +120,53 @@
             <thead class="bg-gray-50">
               <tr>
                 <th scope="col">Attribute</th>
-                <th scope="col">{{record.type === 9 ? "Incoming" : "Person Record"}} Value</th>
+                <th scope="col">{{ record.type === 9 ? "Incoming" : "Person Record" }} Value</th>
                 <th scope="col">Master Recoed Value</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-300 bg-white">
               <tr v-if="record.attributes.givenname">
                 <td class="font-medium">Given Name</td>
-                <td>{{record.attributes.givenname.split(":")[0]}}</td>
-                <td>{{record.attributes.givenname.split(":")[1]}}</td>
+                <td>{{ record.attributes.givenname.split(":")[0] }}</td>
+                <td>{{ record.attributes.givenname.split(":")[1] }}</td>
               </tr>
               <tr v-if="record.attributes.surname">
                 <td class="font-medium">Surname</td>
-                <td>{{record.attributes.surname.split(":")[0]}}</td>
-                <td>{{record.attributes.surname.split(":")[1]}}</td>
+                <td>{{ record.attributes.surname.split(":")[0] }}</td>
+                <td>{{ record.attributes.surname.split(":")[1] }}</td>
               </tr>
               <tr v-if="record.attributes.localid">
                 <td class="font-medium">Local ID</td>
-                <td>{{record.attributes.localid.split(":")[0]}}</td>
-                <td>{{record.attributes.localid.split(":")[1]}}</td>
+                <td>{{ record.attributes.localid.split(":")[0] }}</td>
+                <td>{{ record.attributes.localid.split(":")[1] }}</td>
               </tr>
               <tr v-if="record.attributes.sendingFacility">
                 <td class="font-medium">Sending Facility</td>
-                <td>{{record.attributes.sendingFacility.split(":")[0]}}</td>
-                <td>{{record.attributes.sendingFacility.split(":")[1]}}</td>
+                <td>{{ record.attributes.sendingFacility.split(":")[0] }}</td>
+                <td>{{ record.attributes.sendingFacility.split(":")[1] }}</td>
               </tr>
               <tr v-if="record.attributes.sendingExtract">
                 <td class="font-medium">Sending Extract</td>
-                <td>{{record.attributes.sendingExtract.split(":")[0]}}</td>
-                <td>{{record.attributes.sendingExtract.split(":")[1]}}</td>
+                <td>{{ record.attributes.sendingExtract.split(":")[0] }}</td>
+                <td>{{ record.attributes.sendingExtract.split(":")[1] }}</td>
               </tr>
               <tr v-if="record.attributes.dateOfBirth">
                 <td class="font-medium">Date of Birth</td>
-                <td>{{formatDate(record.attributes.dateOfBirth.split(":")[0], false)}}</td>
-                <td>{{formatDate(record.attributes.dateOfBirth.split(":")[1], false)}}</td>
+                <td>{{ formatDate(record.attributes.dateOfBirth.split(":")[0], false) }}</td>
+                <td>{{ formatDate(record.attributes.dateOfBirth.split(":")[1], false) }}</td>
               </tr>
               <tr v-if="record.attributes.dateOfDeath">
                 <td class="font-medium">Date of Death</td>
-                <td>{{formatDate(record.attributes.dateOfDeath.split(":")[0], false)}}</td>
-                <td>{{formatDate(record.attributes.dateOfDeath.split(":")[1], false)}}</td>
+                <td>{{ formatDate(record.attributes.dateOfDeath.split(":")[0], false) }}</td>
+                <td>{{ formatDate(record.attributes.dateOfDeath.split(":")[1], false) }}</td>
               </tr>
               <tr v-if="record.attributes.gender">
                 <td class="font-medium">Gender</td>
-                <td>{{formatGender(record.attributes.gender.split(":")[0])}}</td>
-                <td>{{formatGender(record.attributes.gender.split(":")[1])}}</td>
+                <td>{{ formatGender(record.attributes.gender.split(":")[0]) }}</td>
+                <td>{{ formatGender(record.attributes.gender.split(":")[1]) }}</td>
               </tr>
             </tbody>
           </BaseTable>
-
         </div>
       </div>
       <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -310,7 +309,7 @@ import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseItemPaginator from "~/components/base/BaseItemPaginator.vue";
 import BaseModal from "~/components/base/BaseModal.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
-import BaseTable from "~/components/base/BaseTable.vue"
+import BaseTable from "~/components/base/BaseTable.vue";
 import BaseTextArea from "~/components/base/BaseTextArea.vue";
 import IconArrowTopRightOnSquare from "~/components/icons/hero/20/solid/IconArrowTopRightOnSquare.vue";
 import IconCheckCircle from "~/components/icons/hero/20/solid/IconCheckCircle.vue";

@@ -17,9 +17,7 @@
             Check the <span class="font-bold text-indigo-600">Proposed Merge</span> below, then click
             <span class="font-bold text-yellow-600">Merge Master Records</span> if the link is valid.
           </p>
-          <p>
-            You may need to issue demographic updates before merging records.
-          </p>
+          <p>You may need to issue demographic updates before merging records.</p>
         </li>
         <li v-if="workItemAdvices.includes(6)">
           <p>
@@ -28,7 +26,9 @@
           </p>
         </li>
         <li v-if="workItemAdvices.includes(7)">
-          <p>A previous merge may have been completed but demographics on this Person record were not updated to match.</p>
+          <p>
+            A previous merge may have been completed but demographics on this Person record were not updated to match.
+          </p>
         </li>
         <li v-if="workItemAdvices.includes(9)">
           <p>
@@ -45,7 +45,9 @@
         <li v-if="workItemAdvices.includes(10)">
           <p>This Work Item is already closed. No further action to be taken.</p>
         </li>
-        <li v-if="workItemAdvices.includes(11)"><p>Related Work Items are still unresolved. See <b>Related Work Items</b> below.</p></li>
+        <li v-if="workItemAdvices.includes(11)">
+          <p>Related Work Items are still unresolved. See <b>Related Work Items</b> below.</p>
+        </li>
         <li v-if="workItemAdvices.includes(12)">
           <p>The records associated with this Work Item may have already been merged.</p>
           <p>
