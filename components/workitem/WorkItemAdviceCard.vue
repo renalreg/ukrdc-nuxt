@@ -4,7 +4,7 @@
     <BaseCardContent>
       <ul v-if="item">
         <li v-if="workItemAdvices.includes(2)">
-          <p>Related Work Items labelled UKRDC should be resolved first. See below.</p>
+          <p>Related Work Items labelled UKRDC should be resolved first. See <b>Related Work Items</b> below.</p>
         </li>
         <li v-if="workItemAdvices.includes(4)">
           <p>
@@ -18,8 +18,7 @@
             <span class="font-bold text-yellow-600">Merge Master Records</span> if the link is valid.
           </p>
           <p>
-            You may need to use PatientView, RaDaR, or DemoGraphicGenerator.exe to issue a demographic update before
-            merging records.
+            You may need to issue demographic updates before merging records.
           </p>
         </li>
         <li v-if="workItemAdvices.includes(6)">
@@ -29,13 +28,13 @@
           </p>
         </li>
         <li v-if="workItemAdvices.includes(7)">
-          <p>A previous merge may have been completed but Person record data was not correctly updated to match.</p>
+          <p>A previous merge may have been completed but demographics on this Person record were not updated to match.</p>
         </li>
         <li v-if="workItemAdvices.includes(9)">
           <p>
             See
             <a
-              href="https://confluence.ukrdc.org/display/TNG/Person+matched+by+facility%2C+extract+and+national+id+-+not+matched+by+demographics"
+              href="https://renalregistry.atlassian.net/wiki/spaces/TNG/pages/1986232419/Person+matched+by+facility+extract+and+national+id+-+not+matched+by+demographics"
               target="_blank"
             >
               documentation on Confluence
@@ -46,7 +45,7 @@
         <li v-if="workItemAdvices.includes(10)">
           <p>This Work Item is already closed. No further action to be taken.</p>
         </li>
-        <li v-if="workItemAdvices.includes(11)"><p>Related Work Items are still unresolved. See below.</p></li>
+        <li v-if="workItemAdvices.includes(11)"><p>Related Work Items are still unresolved. See <b>Related Work Items</b> below.</p></li>
         <li v-if="workItemAdvices.includes(12)">
           <p>The records associated with this Work Item may have already been merged.</p>
           <p>

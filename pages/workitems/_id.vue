@@ -106,56 +106,94 @@
 
     <!-- Work Item Trigger -->
     <div v-if="record" class="mb-8">
+      <div class="mb-8">
+        <div class="mb-4">
+          This work item was raised because demographic attributes on
+          <span class="font-medium text-red-800">{{
+            record.type === 9 ? "one of the incoming data files" : "the person record"
+          }}</span>
+          below did not match the <span class="font-medium text-blue-800">Master Record</span> it is linked to.
+        </div>
+
+        <div v-if="record.attributes">
+          <BaseTable class="sensitive">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col">Attribute</th>
+                <th scope="col">{{record.type === 9 ? "Incoming" : "Person Record"}} Value</th>
+                <th scope="col">Master Recoed Value</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-300 bg-white">
+              <tr v-if="record.attributes.givenname">
+                <td class="font-medium">Given Name</td>
+                <td>{{record.attributes.givenname.split(":")[0]}}</td>
+                <td>{{record.attributes.givenname.split(":")[1]}}</td>
+              </tr>
+              <tr v-if="record.attributes.surname">
+                <td class="font-medium">Surname</td>
+                <td>{{record.attributes.surname.split(":")[0]}}</td>
+                <td>{{record.attributes.surname.split(":")[1]}}</td>
+              </tr>
+              <tr v-if="record.attributes.localid">
+                <td class="font-medium">Local ID</td>
+                <td>{{record.attributes.localid.split(":")[0]}}</td>
+                <td>{{record.attributes.localid.split(":")[1]}}</td>
+              </tr>
+              <tr v-if="record.attributes.sendingFacility">
+                <td class="font-medium">Sending Facility</td>
+                <td>{{record.attributes.sendingFacility.split(":")[0]}}</td>
+                <td>{{record.attributes.sendingFacility.split(":")[1]}}</td>
+              </tr>
+              <tr v-if="record.attributes.sendingExtract">
+                <td class="font-medium">Sending Extract</td>
+                <td>{{record.attributes.sendingExtract.split(":")[0]}}</td>
+                <td>{{record.attributes.sendingExtract.split(":")[1]}}</td>
+              </tr>
+              <tr v-if="record.attributes.dateOfBirth">
+                <td class="font-medium">Date of Birth</td>
+                <td>{{formatDate(record.attributes.dateOfBirth.split(":")[0], false)}}</td>
+                <td>{{formatDate(record.attributes.dateOfBirth.split(":")[1], false)}}</td>
+              </tr>
+              <tr v-if="record.attributes.dateOfDeath">
+                <td class="font-medium">Date of Death</td>
+                <td>{{formatDate(record.attributes.dateOfDeath.split(":")[0], false)}}</td>
+                <td>{{formatDate(record.attributes.dateOfDeath.split(":")[1], false)}}</td>
+              </tr>
+              <tr v-if="record.attributes.gender">
+                <td class="font-medium">Gender</td>
+                <td>{{formatGender(record.attributes.gender.split(":")[0])}}</td>
+                <td>{{formatGender(record.attributes.gender.split(":")[1])}}</td>
+              </tr>
+            </tbody>
+          </BaseTable>
+
+        </div>
+      </div>
       <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div id="incomingCard">
-          <!-- Attribute toggle -->
-          <BaseTabToggle
-            v-model="showIncomingAttributes"
-            true-label="Incoming Attributes"
-            false-label="Incoming Person Record"
-            class="mb-2"
-          />
-          <!-- Type 9 incoming attribute card -->
-          <WorkItemAttributesCard
-            v-if="showIncomingAttributes"
-            :record="record.attributes"
-            label="Incoming Attributes"
-            :highlight="highlightedAttributes"
-            :full="showDestinationPersons"
-          />
           <!-- Else incoming person card -->
           <PersonRecordCard
-            v-else-if="record.incoming.person"
+            v-if="record.incoming.person"
             :record="record.incoming.person"
-            :label="`Incoming Person Record ${record.incoming.person.id}`"
+            :label="`Person Record ${record.incoming.person.id}`"
             :highlight="highlightedAttributes"
             :full="showDestinationPersons"
           />
           <!-- Missing incoming person card -->
-          <div v-else class="rounded-md bg-red-50 p-4 font-medium text-red-800">No incoming Person record</div>
+          <div v-else class="rounded-md bg-red-50 p-4 font-medium text-red-800">
+            <span v-if="record.type === 9">
+              Incoming file was rejected, so no Person record exists for this work item yet.
+              <br />
+              See Related Data Files below to identify the rejected file.
+            </span>
+            <span v-else> Person record associated with this work item is missing, and may have been deleted. </span>
+          </div>
         </div>
 
         <div id="destinationCard">
-          <!-- Destination toggle -->
-          <BaseTabToggle
-            v-model="showDestinationPersons"
-            true-label="Related Person Records"
-            false-label="Destination Master Record"
-            class="mb-2"
-          />
-          <!-- Destination person card -->
-          <PersonRecordCard
-            v-if="showDestinationPersons && record.destination.persons.length > 0"
-            :record="record.destination.persons[relatedPersonsIndex]"
-            :label="`Related Person Record ${relatedPersonsIndex + 1} of ${record.destination.persons.length}`"
-            :highlight="highlightedAttributes"
-            :full="true"
-          />
           <!-- Destination record card -->
-          <NuxtLink
-            v-else-if="record.destination.masterRecord"
-            :to="`/masterrecords/${record.destination.masterRecord.id}`"
-          >
+          <NuxtLink v-if="record.destination.masterRecord" :to="`/masterrecords/${record.destination.masterRecord.id}`">
             <MasterRecordCard
               :record="record.destination.masterRecord"
               :label="`Destination Master Record ${record.destination.masterRecord.id}`"
@@ -168,9 +206,6 @@
           </div>
         </div>
       </div>
-      <BaseCard v-if="showDestinationPersons && record.destination.persons.length > 1" class="mt-2 pl-4">
-        <BaseItemPaginator v-model="relatedPersonsIndex" :total="record.destination.persons.length" item-label="Record"
-      /></BaseCard>
     </div>
 
     <!-- Proposed Merge -->
@@ -204,6 +239,36 @@
       </div>
     </div>
 
+    <!-- Related messages card -->
+    <div v-if="messages && messages.length > 0" class="mb-8">
+      <BaseCard>
+        <BaseCardHeader>
+          <h2>Related Data Files</h2>
+          <h6>
+            Data files received around the time the work item was first raised. One of these may be responsible for the
+            work item.
+          </h6>
+        </BaseCardHeader>
+        <ul class="divide-y divide-gray-300">
+          <div v-for="item in messages" :key="item.id" :item="item" class="hover:bg-gray-50">
+            <NuxtLink :to="`/messages/${item.id}`">
+              <MessagesListItem :item="item" />
+            </NuxtLink>
+          </div>
+        </ul>
+        <BasePaginator
+          class="border-t border-gray-200 bg-white"
+          :jump-to-top="false"
+          :page="messagesPage"
+          :size="messagesSize"
+          :total="messagesTotal"
+          @next="messagesPage++"
+          @prev="messagesPage--"
+          @jump="messagesPage = $event"
+        />
+      </BaseCard>
+    </div>
+
     <!-- Related Work Items  -->
     <BaseCard v-if="workItemCollection.length > 0" class="mb-8">
       <!-- Card header -->
@@ -227,8 +292,17 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, useContext, useMeta, useRoute } from "@nuxtjs/composition-api";
-import { WorkItemExtendedSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  ref,
+  useContext,
+  useMeta,
+  useRoute,
+  watch,
+} from "@nuxtjs/composition-api";
+import { MessageSchema, WorkItemExtendedSchema, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseButton from "~/components/base/BaseButton.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
@@ -236,15 +310,15 @@ import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseItemPaginator from "~/components/base/BaseItemPaginator.vue";
 import BaseModal from "~/components/base/BaseModal.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
-import BaseTabToggle from "~/components/base/BaseTabToggle.vue";
+import BaseTable from "~/components/base/BaseTable.vue"
 import BaseTextArea from "~/components/base/BaseTextArea.vue";
 import IconArrowTopRightOnSquare from "~/components/icons/hero/20/solid/IconArrowTopRightOnSquare.vue";
 import IconCheckCircle from "~/components/icons/hero/20/solid/IconCheckCircle.vue";
 import IconPencil from "~/components/icons/hero/20/solid/IconPencil.vue";
 import MasterRecordCard from "~/components/MasterRecordCard.vue";
+import MessagesListItem from "~/components/messages/MessagesListItem.vue";
 import PersonRecordCard from "~/components/PersonRecordCard.vue";
 import WorkItemAdviceCard from "~/components/workitem/WorkItemAdviceCard.vue";
-import WorkItemAttributesCard from "~/components/workitem/WorkItemAttributesCard.vue";
 import WorkItemDetailCard from "~/components/workitem/WorkItemDetailCard.vue";
 import WorkItemRelatedErrorsList from "~/components/workitem/WorkItemRelatedErrorsList.vue";
 import WorkItemsListItem from "~/components/workitem/WorkItemsListItem.vue";
@@ -272,7 +346,7 @@ export default defineComponent({
     BaseSkeleText,
     BaseItemPaginator,
     BaseTextArea,
-    BaseTabToggle,
+    BaseTable,
     BaseModal,
     IconCheckCircle,
     IconArrowTopRightOnSquare,
@@ -281,9 +355,9 @@ export default defineComponent({
     MasterRecordCard,
     WorkItemAdviceCard,
     WorkItemDetailCard,
-    WorkItemAttributesCard,
     WorkItemRelatedErrorsList,
     WorkItemsListItem,
+    MessagesListItem,
   },
   setup() {
     // Dependencies
@@ -315,11 +389,30 @@ export default defineComponent({
     // Related persons data
     const workItemCollection = ref([] as WorkItemSchema[]);
 
+    // Related messages data
+    const messages = ref<MessageSchema[]>();
+    const messagesPage = ref(1);
+    const messagesSize = ref(5);
+    const messagesTotal = ref(0);
+
     // Related record paginator data
     const relatedRecordsIndex = ref(0);
     const relatedPersonsIndex = ref(0);
 
     // Data fetching
+
+    function updateRelatedMessages() {
+      workItemsApi
+        .getWorkitemMessages({
+          workitemId: Number(route.value.params.id),
+        })
+        .then((response) => {
+          messages.value = response.data.items;
+          messagesPage.value = response.data.page ?? 0;
+          messagesSize.value = response.data.size ?? 0;
+          messagesTotal.value = response.data.total;
+        });
+    }
 
     function getWorkItem() {
       workItemsApi
@@ -338,6 +431,8 @@ export default defineComponent({
           workItemCollection.value = response.data;
         });
 
+      updateRelatedMessages();
+
       // Apply existing comment
       customComment.value = record.value?.updateDescription || "";
 
@@ -347,6 +442,10 @@ export default defineComponent({
 
     onMounted(() => {
       getWorkItem();
+    });
+
+    watch(messagesPage, () => {
+      updateRelatedMessages();
     });
 
     // Trigger dynamic modals
@@ -484,6 +583,10 @@ export default defineComponent({
       formatGender,
       isEmptyObject,
       workItemCollection,
+      messages,
+      messagesPage,
+      messagesSize,
+      messagesTotal,
       relatedRecordsIndex,
       relatedPersonsIndex,
       customComment,
@@ -504,3 +607,12 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped lang="postcss">
+th {
+  @apply px-4 py-3;
+}
+td {
+  @apply whitespace-nowrap px-4 py-4;
+}
+</style>
