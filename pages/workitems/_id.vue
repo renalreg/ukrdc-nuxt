@@ -50,7 +50,7 @@
     </div>
 
     <!-- Info Cards -->
-    <div class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+    <div class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
       <!-- Work Item Details -->
       <WorkItemDetailCard :item="record" />
       <!-- Work Item Advice -->
@@ -107,68 +107,82 @@
     <!-- Work Item Trigger -->
     <div v-if="record" class="mb-8">
       <div class="mb-8">
-        <div class="mb-4">
+        <p>
           This work item was raised because demographic attributes on
-          <span class="font-medium text-red-800">{{
-            record.type === 9 ? "one of the incoming data files" : "the person record"
+          <span class="personrecord-label">{{
+            record.type === 9 ? "one of the incoming data files" : "the Person Record"
           }}</span>
-          below did not match the <span class="font-medium text-blue-800">Master Record</span> it is linked to.
-        </div>
-
-        <div v-if="record.attributes">
-          <BaseTable class="sensitive">
-            <thead class="bg-gray-50">
-              <tr>
-                <th scope="col">Attribute</th>
-                <th scope="col">{{ record.type === 9 ? "Incoming" : "Person Record" }} Value</th>
-                <th scope="col">Master Recoed Value</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-300 bg-white">
-              <tr v-if="record.attributes.givenname">
-                <td class="font-medium">Given Name</td>
-                <td>{{ record.attributes.givenname.split(":")[0] }}</td>
-                <td>{{ record.attributes.givenname.split(":")[1] }}</td>
-              </tr>
-              <tr v-if="record.attributes.surname">
-                <td class="font-medium">Surname</td>
-                <td>{{ record.attributes.surname.split(":")[0] }}</td>
-                <td>{{ record.attributes.surname.split(":")[1] }}</td>
-              </tr>
-              <tr v-if="record.attributes.localid">
-                <td class="font-medium">Local ID</td>
-                <td>{{ record.attributes.localid.split(":")[0] }}</td>
-                <td>{{ record.attributes.localid.split(":")[1] }}</td>
-              </tr>
-              <tr v-if="record.attributes.sendingFacility">
-                <td class="font-medium">Sending Facility</td>
-                <td>{{ record.attributes.sendingFacility.split(":")[0] }}</td>
-                <td>{{ record.attributes.sendingFacility.split(":")[1] }}</td>
-              </tr>
-              <tr v-if="record.attributes.sendingExtract">
-                <td class="font-medium">Sending Extract</td>
-                <td>{{ record.attributes.sendingExtract.split(":")[0] }}</td>
-                <td>{{ record.attributes.sendingExtract.split(":")[1] }}</td>
-              </tr>
-              <tr v-if="record.attributes.dateOfBirth">
-                <td class="font-medium">Date of Birth</td>
-                <td>{{ formatDate(record.attributes.dateOfBirth.split(":")[0], false) }}</td>
-                <td>{{ formatDate(record.attributes.dateOfBirth.split(":")[1], false) }}</td>
-              </tr>
-              <tr v-if="record.attributes.dateOfDeath">
-                <td class="font-medium">Date of Death</td>
-                <td>{{ formatDate(record.attributes.dateOfDeath.split(":")[0], false) }}</td>
-                <td>{{ formatDate(record.attributes.dateOfDeath.split(":")[1], false) }}</td>
-              </tr>
-              <tr v-if="record.attributes.gender">
-                <td class="font-medium">Gender</td>
-                <td>{{ formatGender(record.attributes.gender.split(":")[0]) }}</td>
-                <td>{{ formatGender(record.attributes.gender.split(":")[1]) }}</td>
-              </tr>
-            </tbody>
-          </BaseTable>
-        </div>
+          below did not match the <span class="masterrecord-label">Master Record</span> it is linked to.
+        </p>
+        <p v-if="record.type !== 9 && messages && messages.length > 0">
+          This may be because a <b>Related Data File</b> below updated the
+          <span class="masterrecord-label">Master Record</span>, and this update means that it no longer matches the
+          <span class="personrecord-label">Person Record</span> below.
+        </p>
       </div>
+
+      <div v-if="record.attributes" class="mb-8">
+        <p class="mb-4 font-medium">
+          Values of mismatching attributes <em>at the time this work item was first raised.</em>
+        </p>
+        <BaseTable class="sensitive">
+          <thead class="bg-gray-50">
+            <tr>
+              <th scope="col">Mismatched Attribute</th>
+              <th scope="col">{{ record.type === 9 ? "Incoming" : "Person Record" }} Value</th>
+              <th scope="col">Master Recoed Value</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-300 bg-white">
+            <tr v-if="record.attributes.givenname">
+              <td class="font-medium">Given Name</td>
+              <td>{{ record.attributes.givenname.split(":")[0] }}</td>
+              <td>{{ record.attributes.givenname.split(":")[1] }}</td>
+            </tr>
+            <tr v-if="record.attributes.surname">
+              <td class="font-medium">Surname</td>
+              <td>{{ record.attributes.surname.split(":")[0] }}</td>
+              <td>{{ record.attributes.surname.split(":")[1] }}</td>
+            </tr>
+            <tr v-if="record.attributes.localid">
+              <td class="font-medium">Local ID</td>
+              <td>{{ record.attributes.localid.split(":")[0] }}</td>
+              <td>{{ record.attributes.localid.split(":")[1] }}</td>
+            </tr>
+            <tr v-if="record.attributes.sendingFacility">
+              <td class="font-medium">Sending Facility</td>
+              <td>{{ record.attributes.sendingFacility.split(":")[0] }}</td>
+              <td>{{ record.attributes.sendingFacility.split(":")[1] }}</td>
+            </tr>
+            <tr v-if="record.attributes.sendingExtract">
+              <td class="font-medium">Sending Extract</td>
+              <td>{{ record.attributes.sendingExtract.split(":")[0] }}</td>
+              <td>{{ record.attributes.sendingExtract.split(":")[1] }}</td>
+            </tr>
+            <tr v-if="record.attributes.dateOfBirth">
+              <td class="font-medium">Date of Birth</td>
+              <td>{{ formatDate(record.attributes.dateOfBirth.split(":")[0], false) }}</td>
+              <td>{{ formatDate(record.attributes.dateOfBirth.split(":")[1], false) }}</td>
+            </tr>
+            <tr v-if="record.attributes.dateOfDeath">
+              <td class="font-medium">Date of Death</td>
+              <td>{{ formatDate(record.attributes.dateOfDeath.split(":")[0], false) }}</td>
+              <td>{{ formatDate(record.attributes.dateOfDeath.split(":")[1], false) }}</td>
+            </tr>
+            <tr v-if="record.attributes.gender">
+              <td class="font-medium">Gender</td>
+              <td>{{ formatGender(record.attributes.gender.split(":")[0]) }}</td>
+              <td>{{ formatGender(record.attributes.gender.split(":")[1]) }}</td>
+            </tr>
+          </tbody>
+        </BaseTable>
+      </div>
+
+      <div class="mb-4">
+        <p class="font-medium">Summary of currently stored record demographics.</p>
+        <p>If these now match, this work item can likely be closed with no further action.</p>
+      </div>
+
       <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div id="incomingCard">
           <!-- Else incoming person card -->
@@ -180,7 +194,7 @@
             :full="showDestinationPersons"
           />
           <!-- Missing incoming person card -->
-          <div v-else class="rounded-md bg-red-50 p-4 font-medium text-red-800">
+          <div v-else class="rounded-md bg-yellow-50 p-4 font-medium text-yellow-800">
             <span v-if="record.type === 9">
               Incoming file was rejected, so no Person record exists for this work item yet.
               <br />
@@ -613,5 +627,13 @@ th {
 }
 td {
   @apply whitespace-nowrap px-4 py-4;
+}
+
+.masterrecord-label {
+  @apply font-medium text-indigo-800;
+}
+
+.personrecord-label {
+  @apply font-medium text-yellow-700;
 }
 </style>
