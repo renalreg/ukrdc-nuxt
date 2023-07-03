@@ -1,5 +1,5 @@
 <template>
-  <div class="borderless-card border-2 border-red-500">
+  <div class="borderless-card border-2 border-yellow-500">
     <div class="flex h-24 flex-col justify-center px-4 sm:px-6">
       <span>
         <span>

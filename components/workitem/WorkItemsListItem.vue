@@ -22,7 +22,7 @@
         <p class="mt-2 truncate">{{ item.type }}: {{ item.description }}</p>
       </div>
       <!-- National ID -->
-      <div class="text-right sm:text-left">
+      <div class="hidden lg:block">
         <p v-if="item.masterRecord" class="sensitive">
           {{ item.masterRecord.nationalid.trim() }}
         </p>
@@ -35,7 +35,7 @@
         />
       </div>
       <!-- Last updated (small and up) -->
-      <div class="hidden lg:block">
+      <div>
         <p><SendingFacilityLink class="inline" :code="facility" /> via {{ extract }}</p>
         <p class="mt-2">
           {{ formatDate(item.creationDate) }}
