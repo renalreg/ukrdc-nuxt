@@ -15,6 +15,12 @@
           <dd class="sensitive">{{ formatGender(record.patient.gender) }}</dd>
         </BaseDescriptionListGridItem>
         <BaseDescriptionListGridItem>
+          <dt>Ethnicity</dt>
+          <dd class="sensitive">
+            {{ record.patient.ethnicGroupDescription || record.patient.ethnicGroupCode || "Unknown" }}
+          </dd>
+        </BaseDescriptionListGridItem>
+        <BaseDescriptionListGridItem>
           <dt>Date of Birth</dt>
           <dd class="sensitive">{{ formatDate(record.patient.birthTime, false) }}</dd>
         </BaseDescriptionListGridItem>
@@ -22,12 +28,6 @@
           <dt>Date of Death</dt>
           <dd class="sensitive">
             {{ record.patient.deathTime ? formatDate(record.patient.deathTime, false) : "N/A" }}
-          </dd>
-        </BaseDescriptionListGridItem>
-        <BaseDescriptionListGridItem>
-          <dt>Ethnicity</dt>
-          <dd class="sensitive">
-            {{ record.patient.ethnicGroupDescription || record.patient.ethnicGroupCode || "Unknown" }}
           </dd>
         </BaseDescriptionListGridItem>
       </BaseDescriptionListGrid>

@@ -10,11 +10,21 @@
               <!-- Sender -->
               <div v-if="showSender" :class="[showSenderFirst ? 'order-1' : 'order-2']">
                 <div class="flex items-center gap-2">
-                  <SendingFacilityLink class="font-medium" :code="item.sendingfacility" />
+                  <SendingFacilityLink
+                    v-if="isRealSendingFacility(item)"
+                    class="font-medium"
+                    :code="item.sendingfacility"
+                  />
+                  <p v-else class="font-medium">
+                    {{ titleText }}
+                    <span v-if="isRADAR(item)">
+                      / <SendingFacilityLink class="inline font-medium" :code="item.sendingfacility" />
+                    </span>
+                  </p>
                 </div>
                 <div class="flex items-center gap-1">
-                  <MembershipStatusBadge :item="item" />
-                  <p>via {{ item.sendingextract }}</p>
+                  <MembershipStatusBadge v-if="isMembership(item)" :item="item" />
+                  <p v-else>{{ viaText }}</p>
                 </div>
               </div>
 
@@ -108,7 +118,7 @@ import PatientRecordPeek from "~/components/patientrecord/PatientRecordPeek.vue"
 import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
 import { formatGenderCharacter } from "~/helpers/codeUtils";
 import { formatDate } from "~/helpers/dateUtils";
-import { firstMRN, firstNI } from "~/helpers/recordUtils";
+import { firstMRN, firstNI, isData, isMembership, isRADAR, isRealSendingFacility, isUKRR } from "~/helpers/recordUtils";
 
 import IconChevronDown from "../icons/hero/24/solid/IconChevronDown.vue";
 
@@ -190,7 +200,59 @@ export default defineComponent({
       }
     });
 
-    return { showDetail, formatDate, formatGenderCharacter, primaryIdentifier };
+    const viaText = computed<string>(() => {
+      // Data feeds (expand sendingextract into something more readable)
+      if (isData(props.item)) {
+        return `${props.item.sendingextract === "UKRDC" ? "RDA" : props.item.sendingextract} feed`;
+      }
+      // UKRR database
+      if (isUKRR(props.item)) {
+        return "UKRR import";
+      }
+      // Others
+      switch (props.item.sendingextract) {
+        case "PVMIG":
+          return "PV migrated";
+        case "HSMIG":
+          return "HealthShare migrated";
+      }
+      switch (props.item.sendingfacility) {
+        case "TRACING":
+          return "NHS Spine import";
+        case "NHSBT":
+          return "NHSBT import";
+      }
+      return `${props.item.sendingextract}`;
+    });
+
+    const titleText = computed<string>(() => {
+      // For RADAR records, the sending facility is an actual renal unit, rather than
+      // the membership name, so we change the title to RADAR here for consistency with
+      // other membership records. The template handles including the actual sending
+      // facility in the `via` section.
+      if (isRADAR(props.item)) {
+        return "RADAR";
+      }
+      if (isMembership(props.item)) {
+        switch (props.item.sendingfacility) {
+          case "PV":
+            return "PatientView";
+        }
+      }
+      return `${props.item.sendingfacility}`;
+    });
+
+    return {
+      showDetail,
+      formatDate,
+      formatGenderCharacter,
+      primaryIdentifier,
+      titleText,
+      viaText,
+      isRealSendingFacility,
+      isRADAR,
+      isMembership,
+    };
   },
 });
 </script>

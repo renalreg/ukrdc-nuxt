@@ -27,7 +27,7 @@
           class="mb-4"
           :options="availableServicesIds"
           :labels="availableServicesLabels"
-          hint="Select a service..."
+          hint="Select a result type..."
         />
 
         <p v-if="results && results.length <= 0" class="text-center">No results on record</p>

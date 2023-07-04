@@ -39,9 +39,13 @@ export function isTracing(record: PatientRecordSummarySchema) {
   return record.sendingfacility === "TRACING";
 }
 
+export function isRADAR(record: PatientRecordSummarySchema) {
+  return record.sendingextract === "RADAR";
+}
+
 export function isMembership(record: PatientRecordSummarySchema) {
   // UKRDC extracts are only memberships if they are from certain facilities
-  if (membershipFacilities.includes(record.sendingfacility) || record.sendingextract === "RADAR") {
+  if (membershipFacilities.includes(record.sendingfacility) || isRADAR(record)) {
     return true;
   }
   return false;
@@ -50,6 +54,11 @@ export function isMembership(record: PatientRecordSummarySchema) {
 export function isData(record: PatientRecordSummarySchema): boolean {
   // Everything else is a data record
   return !(isSurvey(record) || isUKRR(record) || isMigrated(record) || isInformational(record) || isMembership(record));
+}
+
+export function isRealSendingFacility(record: PatientRecordSummarySchema): boolean {
+  // Any record where sending facility is a real renal unit
+  return isData(record) || isUKRR(record) || isMigrated(record);
 }
 
 // General record utilities

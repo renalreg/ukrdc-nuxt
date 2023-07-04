@@ -11,6 +11,12 @@
       <p class="sensitive">{{ formatGender(record.patient.gender) }}</p>
     </div>
     <div>
+      <h5>Ethnicity</h5>
+      <p class="sensitive">
+        {{ record.patient.ethnicGroupDescription || record.patient.ethnicGroupCode || "Unknown" }}
+      </p>
+    </div>
+    <div>
       <h5>Date of Birth</h5>
       <p class="sensitive">{{ formatDate(record.patient.birthTime, false) }}</p>
     </div>
@@ -18,12 +24,6 @@
       <h5>Date of Death</h5>
       <p class="sensitive">
         {{ record.patient.deathTime ? formatDate(record.patient.deathTime, false) : "N/A" }}
-      </p>
-    </div>
-    <div>
-      <h5>Ethnicity</h5>
-      <p class="sensitive">
-        {{ record.patient.ethnicGroupDescription || record.patient.ethnicGroupCode || "Unknown" }}
       </p>
     </div>
   </BaseCard>
