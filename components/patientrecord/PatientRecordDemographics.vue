@@ -30,7 +30,6 @@
             {{ record.patient.deathTime ? formatDate(record.patient.deathTime, false) : "N/A" }}
           </dd>
         </BaseDescriptionListGridItem>
-
       </BaseDescriptionListGrid>
     </BaseCardContent>
   </BaseCard>

@@ -1,7 +1,7 @@
 <template>
   <div v-if="isData(record)" class="flex gap-1">
     <p>
-      {{ `${record.sendingextract === 'UKRDC' ? 'RDA' : record.sendingextract} data feed record from` }}
+      {{ `${record.sendingextract === "UKRDC" ? "RDA" : record.sendingextract} data feed record from` }}
     </p>
     <SendingFacilityLink class="font-medium" :code="record.sendingfacility" />
   </div>

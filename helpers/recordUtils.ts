@@ -40,7 +40,7 @@ export function isTracing(record: PatientRecordSummarySchema) {
 }
 
 export function isRADAR(record: PatientRecordSummarySchema) {
-  return record.sendingextract === "RADAR"
+  return record.sendingextract === "RADAR";
 }
 
 export function isMembership(record: PatientRecordSummarySchema) {
@@ -58,7 +58,7 @@ export function isData(record: PatientRecordSummarySchema): boolean {
 
 export function isRealSendingFacility(record: PatientRecordSummarySchema): boolean {
   // Any record where sending facility is a real renal unit
-  return (isData(record) || isUKRR(record) || isMigrated(record));
+  return isData(record) || isUKRR(record) || isMigrated(record);
 }
 
 // General record utilities

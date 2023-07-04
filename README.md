@@ -109,11 +109,23 @@ npm run eslint:check
 npm run prettier:check
 ```
 
+or
+
+```
+npm run check
+```
+
 To fix the issues, run:
 
 ```
 npm run eslint:fix
 npm run prettier:fix
+```
+
+or
+
+```
+npm run fix
 ```
 
 ### (No) Server-side rendering

@@ -118,15 +118,7 @@ import PatientRecordPeek from "~/components/patientrecord/PatientRecordPeek.vue"
 import SendingFacilityLink from "~/components/SendingFacilityLink.vue";
 import { formatGenderCharacter } from "~/helpers/codeUtils";
 import { formatDate } from "~/helpers/dateUtils";
-import {
-  firstMRN,
-  firstNI,
-  isData,
-  isMembership,
-  isRADAR,
-  isRealSendingFacility,
-  isUKRR,
-} from "~/helpers/recordUtils";
+import { firstMRN, firstNI, isData, isMembership, isRADAR, isRealSendingFacility, isUKRR } from "~/helpers/recordUtils";
 
 import IconChevronDown from "../icons/hero/24/solid/IconChevronDown.vue";
 
@@ -211,24 +203,24 @@ export default defineComponent({
     const viaText = computed<string>(() => {
       // Data feeds (expand sendingextract into something more readable)
       if (isData(props.item)) {
-        return `${props.item.sendingextract === 'UKRDC' ? 'RDA' : props.item.sendingextract} feed`
+        return `${props.item.sendingextract === "UKRDC" ? "RDA" : props.item.sendingextract} feed`;
       }
       // UKRR database
       if (isUKRR(props.item)) {
         return "UKRR import";
       }
       // Others
-      switch(props.item.sendingextract) {
-        case 'PVMIG':
-          return "PV migrated"
-        case 'HSMIG':
-          return 'HealthShare migrated'
+      switch (props.item.sendingextract) {
+        case "PVMIG":
+          return "PV migrated";
+        case "HSMIG":
+          return "HealthShare migrated";
       }
-      switch(props.item.sendingfacility) {
-        case 'TRACING':
-          return "NHS Spine import"
-        case 'NHSBT':
-          return 'NHSBT import'
+      switch (props.item.sendingfacility) {
+        case "TRACING":
+          return "NHS Spine import";
+        case "NHSBT":
+          return "NHSBT import";
       }
       return `${props.item.sendingextract}`;
     });
