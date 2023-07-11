@@ -177,7 +177,7 @@ export default defineComponent({
           .filter(
             (option) =>
               option.id.toLowerCase().includes(searchboxString.value.toLowerCase()) ||
-              option.description?.toLowerCase().includes(searchboxString.value.toLowerCase())
+              option.description?.toLowerCase().includes(searchboxString.value.toLowerCase()),
           )
           // Filter by additional filters, such as PkbOut
           .filter((option) => (filterByPkbOut.value ? option.dataFlow.pkbOut : true))
@@ -229,7 +229,7 @@ export default defineComponent({
       () => [props.includeInactive, props.includeEmpty],
       () => {
         fetchTable();
-      }
+      },
     );
 
     return {

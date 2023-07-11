@@ -119,7 +119,7 @@ export default function () {
 
       // Re-throw the error so that the component that triggered the request can handle it
       throw e;
-    }
+    },
   );
 
   let baseUrl: string;
