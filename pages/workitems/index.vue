@@ -153,7 +153,7 @@ export default defineComponent({
       ],
       () => {
         getWorkitems();
-      }
+      },
     );
 
     return {

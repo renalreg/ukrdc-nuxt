@@ -284,7 +284,7 @@ export default defineComponent({
       ],
       () => {
         fetchResults();
-      }
+      },
     );
 
     watch(selectedOrderId, () => {

@@ -202,7 +202,7 @@ export default defineComponent({
       ],
       () => {
         getMessages();
-      }
+      },
     );
 
     return {
