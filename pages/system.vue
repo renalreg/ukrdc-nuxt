@@ -113,7 +113,7 @@ export default defineComponent({
           client: clientInfo.value,
         },
         null,
-        4,
+        4
       );
     });
 

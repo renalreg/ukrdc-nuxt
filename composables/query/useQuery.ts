@@ -40,7 +40,7 @@ export default function () {
     queryKey: string,
     defaultValue: (string | null)[] = [],
     history: boolean = true,
-    resetPage: boolean = false,
+    resetPage: boolean = false
   ) {
     return computed({
       get: (): (string | null)[] => {
@@ -91,7 +91,7 @@ export default function () {
     queryKey: string,
     defaultValue: string | null = null,
     history: boolean = true,
-    resetPage: boolean = false,
+    resetPage: boolean = false
   ) {
     return computed({
       get: (): string | null => {
@@ -119,7 +119,7 @@ export default function () {
     queryKey: string,
     defaultValue: number | null = null,
     history: boolean = true,
-    resetPage: boolean = false,
+    resetPage: boolean = false
   ) {
     return computed({
       get: (): number | null => {
