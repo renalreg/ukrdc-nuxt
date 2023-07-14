@@ -198,7 +198,7 @@ export default defineComponent({
       () => props.stats,
       () => {
         fetchMultipleUKRDCIds();
-      },
+      }
     );
 
     return {

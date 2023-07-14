@@ -119,7 +119,7 @@ export default defineComponent({
       ],
       () => {
         fetchEvents();
-      },
+      }
     );
 
     return {

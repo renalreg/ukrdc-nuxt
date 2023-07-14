@@ -11,7 +11,7 @@ export default function () {
     defaultStart: string | null,
     defaultEnd: string | null,
     history: boolean = true,
-    resetPage: boolean = true,
+    resetPage: boolean = true
   ) {
     return computed({
       get: () => {
