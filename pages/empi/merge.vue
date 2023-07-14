@@ -16,10 +16,10 @@
     <div class="mb-6 block gap-2 lg:flex">
       <div class="flex-1">
         <div v-if="superseded">
-          <BaseButton class="w-full" @click="clearSuperceeded"> Change Superseded Record </BaseButton>
+          <BaseButton class="w-full" @click="clearSuperceeded"> Change Source Record </BaseButton>
           <NuxtLink :to="`/masterrecords/${superseded.id}`">
             <MasterRecordCard
-              class="mt-4"
+              class="mt-4 !border-red-500"
               :record="superseded"
               :label="`Superseded Record ${superseded.id.toString()}`"
               :highlight="highlightSections"
@@ -52,10 +52,10 @@
 
       <div class="flex-1">
         <div v-if="superseding">
-          <BaseButton class="w-full" @click="clearsuperseding"> Change Superseding Record </BaseButton>
+          <BaseButton class="w-full" @click="clearsuperseding"> Change Destination Record </BaseButton>
           <NuxtLink :to="`/masterrecords/${superseding.id}`">
             <MasterRecordCard
-              class="mt-4"
+              class="mt-4 !border-green-500"
               :record="superseding"
               :label="`Superseding Record ${superseding.id.toString()}`"
               :highlight="highlightSections"
@@ -81,17 +81,12 @@
       <div class="mb-6">
         <h2 class="mb-2">Merge Details</h2>
         <p>
-          Master Record <b>{{ supersededId }}</b> will be merged into Master Record <b>{{ supersedingId }}</b
+          Master Record <b class="text-red-700">{{ supersededId }}</b> will be replaced by Master Record <b class="text-green-600">{{ supersedingId }}</b
           >.
         </p>
         <p>
-          Demographic data on record <b>{{ supersededId }}</b> will be replaced by demographic data from record
-          <b>{{ supersedingId }}</b
-          >.
-        </p>
-        <p>
-          All Patient Records linked to Master Record <b>{{ supersededId }}</b> will be re-linked to Master Record
-          <b>{{ supersedingId }}</b
+          All Patient Records linked to Master Record <b class="text-red-700">{{ supersededId }}</b> will be re-linked to Master Record
+          <b class="text-green-600">{{ supersedingId }}</b
           >.
         </p>
       </div>
