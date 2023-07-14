@@ -1,20 +1,22 @@
 <template>
   <div>
     <!-- Modals -->
-    <BaseModal v-if="hasPermission('ukrdc:workitems:write')" ref="addCommentModal">
-      <div class="text-left">
+    <BaseModal v-if="hasPermission('ukrdc:workitems:write')" ref="updateWorkItemModal">
+      <div class="text-left mb-4">
         <div class="mb-4">Add Work Item comment</div>
         <BaseTextArea v-model="customComment" :max-length="100" rows="3"></BaseTextArea>
       </div>
 
+      <!-- Allow setting as WIP if not already closed -->
+      <BaseCheckbox v-if="record && record.status !== 3" v-model="isWIP" label="Mark as work-in-progress (WIP)"/>
+
       <div class="flex justify-end">
-        <BaseButton @click="addCommentModal?.hide()">Cancel</BaseButton>
+        <BaseButton @click="updateWorkItemModal?.hide()">Cancel</BaseButton>
         <BaseButton
-          :disabled="!customComment"
           colour="indigo"
           class="ml-2"
           type="submit"
-          @click="updateWorkItemComment()"
+          @click="updateWorkItem()"
         >
           Save
         </BaseButton>
@@ -67,10 +69,10 @@
         :primary="true"
         colour="indigo"
         class="inline-flex w-full items-center justify-center"
-        @click="addCommentModal?.show()"
+        @click="updateWorkItemModal?.show()"
       >
         <IconPencil class="-ml-1 mr-2" />
-        Comment
+        Update
       </BaseButton>
 
       <BaseButton
@@ -320,6 +322,7 @@ import { MessageSchema, WorkItemExtendedSchema, WorkItemSchema } from "@ukkidney
 import BaseButton from "~/components/base/BaseButton.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+import BaseCheckbox from "~/components/base/BaseCheckbox.vue";
 import BaseItemPaginator from "~/components/base/BaseItemPaginator.vue";
 import BaseModal from "~/components/base/BaseModal.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
@@ -361,6 +364,7 @@ export default defineComponent({
     BaseTextArea,
     BaseTable,
     BaseModal,
+    BaseCheckbox,
     IconCheckCircle,
     IconArrowTopRightOnSquare,
     IconPencil,
@@ -386,6 +390,8 @@ export default defineComponent({
     // Work item record data
     const record = ref<WorkItemExtendedSchema>();
     const customComment = ref("");
+    
+    const isWIP = ref(false)
 
     const highlightedAttributes = computed(() => {
       const attributeKeys: string[] = [];
@@ -434,6 +440,7 @@ export default defineComponent({
         })
         .then((response) => {
           record.value = response.data;
+          isWIP.value = response.data.status === 2
         });
 
       workItemsApi
@@ -481,7 +488,7 @@ export default defineComponent({
 
     const statusString = computed(() => {
       if (record.value?.status === 1) {
-        return "";
+        return "(Open)";
       } else if (record.value?.status === 2) {
         return "(WIP)";
       } else if (record.value?.status === 3) {
@@ -511,23 +518,35 @@ export default defineComponent({
     const closeMessageOverride = ref<String>();
 
     // Template refs
-    const addCommentModal = ref<ModalInterface>();
+    const updateWorkItemModal = ref<ModalInterface>();
     const closeModal = ref<ModalInterface>();
 
     // Workitem actions
-    function updateWorkItemComment() {
+    function statusToSet(): number | undefined {
+      if (record.value?.status === 2 && !isWIP.value) {
+        return 1
+      }
+      if (record.value?.status === 1 && isWIP.value) {
+        return 2
+      }
+      return record.value?.status
+    }
+
+    function updateWorkItem() {
       workItemsApi
         .putWorkitemUpdate({
           workitemId: Number(route.value.params.id),
           updateWorkItemRequest: {
             comment: customComment.value,
+            status: statusToSet()
           },
         })
         .then(() => {
           $toast.show({
             type: "success",
             title: "Success",
-            message: "Comment added",
+            message: "Work item updated. Reloading...",
+            timeout: 5,
             classTimeout: "bg-green-600",
           });
         })
@@ -548,7 +567,7 @@ export default defineComponent({
           });
         });
 
-      const el = addCommentModal.value as ModalInterface;
+      const el = updateWorkItemModal.value as ModalInterface;
       el.toggle();
     }
 
@@ -564,7 +583,7 @@ export default defineComponent({
           $toast.show({
             type: "success",
             title: "Success",
-            message: "Work Item closed",
+            message: "Work Item closed. Reloading...",
             classTimeout: "bg-green-600",
           });
         })
@@ -603,14 +622,15 @@ export default defineComponent({
       relatedRecordsIndex,
       relatedPersonsIndex,
       customComment,
+      isWIP,
       statusString,
       availableActions,
-      addCommentModal,
+      updateWorkItemModal,
       closeModal,
       closeMessageOverride,
       showIncomingAttributes,
       showDestinationPersons,
-      updateWorkItemComment,
+      updateWorkItem,
       handleCloseWorkItem,
       hasPermission,
     };
