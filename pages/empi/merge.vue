@@ -81,12 +81,13 @@
       <div class="mb-6">
         <h2 class="mb-2">Merge Details</h2>
         <p>
-          Master Record <b class="text-red-700">{{ supersededId }}</b> will be replaced by Master Record <b class="text-green-600">{{ supersedingId }}</b
+          Master Record <b class="text-red-700">{{ supersededId }}</b> will be replaced by Master Record
+          <b class="text-green-600">{{ supersedingId }}</b
           >.
         </p>
         <p>
-          All Patient Records linked to Master Record <b class="text-red-700">{{ supersededId }}</b> will be re-linked to Master Record
-          <b class="text-green-600">{{ supersedingId }}</b
+          All Patient Records linked to Master Record <b class="text-red-700">{{ supersededId }}</b> will be re-linked
+          to Master Record <b class="text-green-600">{{ supersedingId }}</b
           >.
         </p>
       </div>

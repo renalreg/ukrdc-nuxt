@@ -2,24 +2,17 @@
   <div>
     <!-- Modals -->
     <BaseModal v-if="hasPermission('ukrdc:workitems:write')" ref="updateWorkItemModal">
-      <div class="text-left mb-4">
+      <div class="mb-4 text-left">
         <div class="mb-4">Add Work Item comment</div>
         <BaseTextArea v-model="customComment" :max-length="100" rows="3"></BaseTextArea>
       </div>
 
       <!-- Allow setting as WIP if not already closed -->
-      <BaseCheckbox v-if="record && record.status !== 3" v-model="isWIP" label="Mark as work-in-progress (WIP)"/>
+      <BaseCheckbox v-if="record && record.status !== 3" v-model="isWIP" label="Mark as work-in-progress (WIP)" />
 
       <div class="flex justify-end">
         <BaseButton @click="updateWorkItemModal?.hide()">Cancel</BaseButton>
-        <BaseButton
-          colour="indigo"
-          class="ml-2"
-          type="submit"
-          @click="updateWorkItem()"
-        >
-          Save
-        </BaseButton>
+        <BaseButton colour="indigo" class="ml-2" type="submit" @click="updateWorkItem()"> Save </BaseButton>
       </div>
     </BaseModal>
 
@@ -390,8 +383,8 @@ export default defineComponent({
     // Work item record data
     const record = ref<WorkItemExtendedSchema>();
     const customComment = ref("");
-    
-    const isWIP = ref(false)
+
+    const isWIP = ref(false);
 
     const highlightedAttributes = computed(() => {
       const attributeKeys: string[] = [];
@@ -440,7 +433,7 @@ export default defineComponent({
         })
         .then((response) => {
           record.value = response.data;
-          isWIP.value = response.data.status === 2
+          isWIP.value = response.data.status === 2;
         });
 
       workItemsApi
@@ -524,12 +517,12 @@ export default defineComponent({
     // Workitem actions
     function statusToSet(): number | undefined {
       if (record.value?.status === 2 && !isWIP.value) {
-        return 1
+        return 1;
       }
       if (record.value?.status === 1 && isWIP.value) {
-        return 2
+        return 2;
       }
-      return record.value?.status
+      return record.value?.status;
     }
 
     function updateWorkItem() {
@@ -538,7 +531,7 @@ export default defineComponent({
           workitemId: Number(route.value.params.id),
           updateWorkItemRequest: {
             comment: customComment.value,
-            status: statusToSet()
+            status: statusToSet(),
           },
         })
         .then(() => {
