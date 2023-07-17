@@ -94,7 +94,12 @@ export function firstNI(record: PatientRecordSummarySchema): localNumber | null 
 }
 
 export function demographicsUpdateAllowed(record: PatientRecordSummarySchema) {
+  // Allow in-house update of PKB membership demographics
   if (record.sendingfacility === "PKB" && record.sendingextract === "UKRDC") {
+    return true;
+  }
+  // Allow in-house update of PV membership demographics now PV is shut down so no direct updates coming in
+  if (record.sendingfacility === "PV" && record.sendingextract === "UKRDC") {
     return true;
   }
   if (record.sendingextract === "PVMIG" || record.sendingextract === "HSMIG") {
