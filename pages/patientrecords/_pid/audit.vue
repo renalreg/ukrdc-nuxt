@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mb-4 flex flex-col">
-      <div class="flex flex-row gap-2 mb-4">
+      <div class="mb-4 flex flex-row gap-2">
         <BaseDateRange v-model="dateRange" class="flex-1" />
         <BaseButtonMini class="flex-none" @click="toggleOrder">
           <div v-show="orderAscending" class="flex">
@@ -54,8 +54,8 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-import {AuditEventSchema, AuditOperation, OrderBy, PatientRecordSchema} from "@ukkidney/ukrdc-axios-ts";
-import {Resource} from "@ukkidney/ukrdc-axios-ts/api";
+import { AuditEventSchema, AuditOperation, OrderBy, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
+import { Resource } from "@ukkidney/ukrdc-axios-ts/api";
 
 import AuditListItem from "~/components/AuditListItem.vue";
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
@@ -102,10 +102,10 @@ export default defineComponent({
     // Data refs
     const events = ref<AuditEventSchema[]>();
 
-    const availableResources: string[] = Object.values(Resource).sort()
-    const selectedResource = ref<Resource>()
-    const availableOperations: string[] = Object.values(AuditOperation).sort()
-    const selectedOperation = ref<AuditOperation>()
+    const availableResources: string[] = Object.values(Resource).sort();
+    const selectedResource = ref<Resource>();
+    const availableOperations: string[] = Object.values(AuditOperation).sort();
+    const selectedOperation = ref<AuditOperation>();
 
     // Data fetching
 
@@ -154,7 +154,7 @@ export default defineComponent({
       availableResources,
       selectedResource,
       availableOperations,
-      selectedOperation
+      selectedOperation,
     };
   },
 });
