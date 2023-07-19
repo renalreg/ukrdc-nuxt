@@ -87,7 +87,7 @@ import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import { formatGender } from "~/helpers/codeUtils";
 import { formatDate, nowString } from "~/helpers/dateUtils";
-import {workItemStatusTabs} from "~/helpers/workItemUtils"
+import { workItemStatusTabs } from "~/helpers/workItemUtils";
 
 export default defineComponent({
   components: {
@@ -99,7 +99,6 @@ export default defineComponent({
     MessagesListItem,
     EMPIMultipleIDItem,
     WorkItemsListItem,
-    
   },
   props: {
     record: {
@@ -142,7 +141,7 @@ export default defineComponent({
         masterRecordsApi
           .getMasterRecordWorkitems({
             recordId: props.record.id,
-            status: [currentWorkItemStatusTab.value]
+            status: [currentWorkItemStatusTab.value],
           })
           .then((response) => {
             workItems.value = response.data;
@@ -208,8 +207,8 @@ export default defineComponent({
     });
 
     watch(currentWorkItemStatusTab, () => {
-      fetchWorkItems()
-    })
+      fetchWorkItems();
+    });
 
     watch(relatedErrorsPage, () => {
       updateRelatedErrors();

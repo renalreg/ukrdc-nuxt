@@ -121,17 +121,17 @@ export default defineComponent({
     const tabs = computed<ModelTabItem[]>(() => {
       const tabs = [
         {
-          name:"metadata",
-          value: "metadata"
-        }
-      ]
+          name: "metadata",
+          value: "metadata",
+        },
+      ];
       for (const key of Object.keys(availableconnectorMessageData.value)) {
         tabs.push({
           name: key,
-          value: key
-        })
+          value: key,
+        });
       }
-      return tabs
+      return tabs;
     });
 
     watch(connectorMessage, () => {

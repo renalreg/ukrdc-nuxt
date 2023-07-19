@@ -89,15 +89,15 @@ export function collectionIsUnresolved(related: WorkItemSchema[]) {
 
 export const workItemStatusTabs: ModelTabItem[] = [
   {
-    name: 'Open',
-    value: 1
+    name: "Open",
+    value: 1,
   },
   {
-    name: 'WIP',
-    value: 2
+    name: "WIP",
+    value: 2,
   },
   {
-    name: 'Closed',
-    value: 3
-  }
-]
+    name: "Closed",
+    value: 3,
+  },
+];

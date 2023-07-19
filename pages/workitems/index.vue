@@ -75,7 +75,7 @@ import useQuery from "~/composables/query/useQuery";
 import useSortBy from "~/composables/query/useSortBy";
 import useApi from "~/composables/useApi";
 import useFacilities from "~/composables/useFacilities";
-import {workItemStatusTabs} from "~/helpers/workItemUtils"
+import { workItemStatusTabs } from "~/helpers/workItemUtils";
 
 export default defineComponent({
   components: {
@@ -170,7 +170,7 @@ export default defineComponent({
       orderBy,
       toggleOrder,
       workItemStatusTabs,
-      currentTab
+      currentTab,
     };
   },
   head: {
