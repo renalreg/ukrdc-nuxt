@@ -135,7 +135,7 @@ export default defineComponent({
     });
 
     watch(connectorMessage, () => {
-      currentTab.value = tabs.value[0].value;
+      currentTab.value = tabs.value[0].value.toString();
     });
 
     // Handle connectorMessage and metadata
