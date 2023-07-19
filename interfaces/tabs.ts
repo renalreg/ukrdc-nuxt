@@ -3,3 +3,8 @@ export interface TabItem {
   href: string;
   hasChildren?: boolean;
 }
+
+export interface ModelTabItem {
+  name: string;
+  value: string | number;
+}

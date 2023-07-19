@@ -80,6 +80,7 @@ import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGr
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import BaseTabsModel from "~/components/base/BaseTabsModel.vue";
 import { connectorMessageError } from "~/helpers/mirthUtils";
+import { ModelTabItem } from "~/interfaces/tabs";
 
 interface ConnectorMessageDataTabs {
   raw: ConnectorMessageData;
@@ -117,12 +118,24 @@ export default defineComponent({
     // Manage viewer tabs
     const currentTab = ref<string>("metadata");
 
-    const tabs = computed(() => {
-      return ["metadata"].concat(Object.keys(availableconnectorMessageData.value));
+    const tabs = computed<ModelTabItem[]>(() => {
+      const tabs = [
+        {
+          name: "metadata",
+          value: "metadata",
+        },
+      ];
+      for (const key of Object.keys(availableconnectorMessageData.value)) {
+        tabs.push({
+          name: key,
+          value: key,
+        });
+      }
+      return tabs;
     });
 
     watch(connectorMessage, () => {
-      currentTab.value = tabs.value[0];
+      currentTab.value = tabs.value[0].value.toString();
     });
 
     // Handle connectorMessage and metadata

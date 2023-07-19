@@ -1,18 +1,18 @@
 <!-- Tabs component formatted as floating buttons. 'input' event emitted on tab switch. -->
 
 <template>
-  <div>
-    <div class="sm:hidden">
+  <div :class="[sticky ? 'sticky top-4 z-50' : '']">
+    <div :class="[eagerToCollapse ? 'lg:hidden' : 'sm:hidden']">
       <label for="tabs" class="sr-only">Select a tab</label>
-      <BaseSelect id="tabs" ref="selectEl" name="tabs" :value="$route.path" @change="switchTab">
-        <option v-for="tab in tabs" :key="tab">{{ tab }}</option>
+      <BaseSelect id="tabs" ref="selectEl" name="tabs" :value="value" @change="setValue">
+        <option v-for="tab in tabs" :key="tab.value">{{ tab.name }}</option>
       </BaseSelect>
     </div>
-    <div class="hidden sm:block" :class="{ 'tab-container-primary': !mini }">
+    <div class="hidden" :class="[eagerToCollapse ? 'lg:block' : 'sm:block']">
       <nav class="flex" :class="[mini ? 'tab-nav-mini' : 'tab-nav-primary']" aria-label="Tabs">
         <button
           v-for="tab in tabs"
-          :key="tab"
+          :key="tab.value"
           role="tab"
           :class="[
             mini ? 'tab-base-mini' : 'tab-base-primary',
@@ -22,9 +22,9 @@
             { 'tab-inactive-primary': !tabIsActive(tab) && !mini },
           ]"
           :aria-selected="tabIsActive(tab)"
-          @click="switchTab(tab)"
+          @click="setValue(tab.value)"
         >
-          {{ tab }}
+          {{ tab.name }}
         </button>
       </nav>
     </div>
@@ -34,18 +34,22 @@
 <script lang="ts">
 import { defineComponent, ref } from "@nuxtjs/composition-api";
 
+import BaseSelect from "~/components/base/BaseSelect.vue";
+import { ModelTabItem } from "~/interfaces/tabs";
+
 export default defineComponent({
+  components: { BaseSelect },
   model: {
     prop: "value",
     event: "input",
   },
   props: {
     tabs: {
-      type: Array as () => string[],
+      type: Array as () => ModelTabItem[],
       required: true,
     },
     value: {
-      type: String,
+      type: [String, Number],
       required: false,
       default: "",
     },
@@ -54,30 +58,36 @@ export default defineComponent({
       required: false,
       default: false,
     },
+    sticky: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    eagerToCollapse: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   setup(props, { emit }) {
     const selectEl = ref<HTMLFormElement>();
 
-    function tabIsActive(tab: String) {
-      return props.value === tab;
+    function tabIsActive(tab: ModelTabItem) {
+      return props.value === tab.value;
     }
 
-    function switchTab(value: string) {
+    function setValue(value: any) {
       emit("input", value);
     }
 
-    return { selectEl, tabIsActive, switchTab };
+    return { selectEl, tabIsActive, setValue };
   },
 });
 </script>
 
 <style scoped lang="postcss">
-.tab-container-primary {
-  @apply border-b border-gray-200;
-}
-
 .tab-nav-primary {
-  @apply -mb-px space-x-6;
+  @apply -mb-px flex space-x-6 border-b border-gray-200;
 }
 
 .tab-base-primary {
@@ -93,15 +103,15 @@ export default defineComponent({
 }
 
 .tab-nav-mini {
-  @apply space-x-2;
+  @apply inline-flex space-x-2 rounded-lg bg-gray-100 p-1;
 }
 
 .tab-base-mini {
-  @apply rounded-md px-3 py-2 font-medium capitalize;
+  @apply rounded-md px-2 py-2 font-medium capitalize text-gray-600;
 }
 
 .tab-active-mini {
-  @apply bg-indigo-100 text-indigo-700;
+  @apply bg-white text-gray-900 shadow;
 }
 
 .tab-inactive-mini {

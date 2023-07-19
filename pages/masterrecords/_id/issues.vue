@@ -10,24 +10,26 @@
     </BaseCard>
 
     <!-- Related Work Items card -->
-    <!-- Skeleton results -->
-    <BaseCard v-if="!workItems" class="mt-4">
-      <ul class="divide-y divide-gray-300">
-        <BaseSkeleListItem v-for="n in 10" :key="n" />
-      </ul>
-    </BaseCard>
-    <!-- Real results -->
-    <BaseCard v-if="workItems && workItems.length > 0" class="mt-4">
-      <BaseCardHeader>
-        <h2>Open Work Items</h2>
+    <BaseCard class="mt-4">
+      <BaseCardHeader class="flex items-center">
+        <h2 class="flex-grow">Work Items</h2>
+        <BaseTabsModel v-model="currentWorkItemStatusTab" :tabs="workItemStatusTabs" :mini="true" />
       </BaseCardHeader>
-      <ul class="divide-y divide-gray-300">
+      <!-- Skeleton results -->
+      <ul v-if="workItemsFetchInProgress" class="divide-y divide-gray-300">
+        <BaseSkeleListItem v-for="n in 5" :key="n" />
+      </ul>
+      <!-- Real results -->
+      <ul v-else-if="workItems && workItems.length > 0" class="divide-y divide-gray-300">
         <div v-for="item in workItems" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/workitems/${item.id}`">
             <WorkItemsListItem :item="item" />
           </NuxtLink>
         </div>
       </ul>
+      <div v-else class="p-4 text-center">
+        <p>No work items on record</p>
+      </div>
     </BaseCard>
 
     <!-- Related errors card -->
@@ -77,6 +79,7 @@ import BaseCard from "~/components/base/BaseCard.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+import BaseTabsModel from "~/components/base/BaseTabsModel.vue";
 import EMPIMultipleIDItem from "~/components/EMPIMultipleIDItem.vue";
 import MessagesListItem from "~/components/messages/MessagesListItem.vue";
 import WorkItemsListItem from "~/components/workitem/WorkItemsListItem.vue";
@@ -84,16 +87,18 @@ import useApi from "~/composables/useApi";
 import usePermissions from "~/composables/usePermissions";
 import { formatGender } from "~/helpers/codeUtils";
 import { formatDate, nowString } from "~/helpers/dateUtils";
+import { workItemStatusTabs } from "~/helpers/workItemUtils";
 
 export default defineComponent({
   components: {
     BaseCard,
     BaseCardHeader,
     BasePaginator,
+    BaseSkeleListItem,
+    BaseTabsModel,
     MessagesListItem,
     EMPIMultipleIDItem,
     WorkItemsListItem,
-    BaseSkeleListItem,
   },
   props: {
     record: {
@@ -121,17 +126,28 @@ export default defineComponent({
     const ukrdcIdGroup = ref<MultipleUKRDCIDGroup>();
     const hasMultipleUKRDCIDs = ref(false);
 
+    // Work item status tab
+    const currentWorkItemStatusTab = ref<number>(1);
+
     // Data fetching
+
+    const workItemsFetchInProgress = ref(false);
 
     function fetchWorkItems() {
       // Use the record links to load related data concurrently
       if (hasPermission("ukrdc:workitems:read")) {
+        workItemsFetchInProgress.value = true;
+
         masterRecordsApi
           .getMasterRecordWorkitems({
             recordId: props.record.id,
+            status: [currentWorkItemStatusTab.value],
           })
           .then((response) => {
             workItems.value = response.data;
+          })
+          .finally(() => {
+            workItemsFetchInProgress.value = false;
           });
       }
     }
@@ -190,6 +206,10 @@ export default defineComponent({
       updateRelatedErrors();
     });
 
+    watch(currentWorkItemStatusTab, () => {
+      fetchWorkItems();
+    });
+
     watch(relatedErrorsPage, () => {
       updateRelatedErrors();
     });
@@ -203,11 +223,14 @@ export default defineComponent({
 
     return {
       workItems,
+      workItemsFetchInProgress,
       relatedErrors,
       relatedErrorsPage,
       relatedErrorsSize,
       relatedErrorsTotal,
       ukrdcIdGroup,
+      workItemStatusTabs,
+      currentWorkItemStatusTab,
       formatGender,
       formatDate,
     };

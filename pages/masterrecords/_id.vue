@@ -78,10 +78,6 @@ export default defineComponent({
         name: "Issues",
         href: `/masterrecords/${route.value.params.id}/issues`,
       },
-      ...insertIf(hasPermission("ukrdc:audit:records:read"), {
-        name: "Audit",
-        href: `/masterrecords/${route.value.params.id}/audit`,
-      }),
     ] as TabItem[];
 
     // Data refs
