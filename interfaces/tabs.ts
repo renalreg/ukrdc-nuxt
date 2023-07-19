@@ -6,5 +6,5 @@ export interface TabItem {
 
 export interface ModelTabItem {
   name: string;
-  value: any;
+  value: string | number;
 }

@@ -15,11 +15,7 @@
         hint="Select a facility..."
       />
       <div class="flex items-center">
-        <div class="flex flex-grow items-center gap-4">
-          <BaseCheckbox v-model="statuses" label="Open" :value="1" />
-          <BaseCheckbox v-model="statuses" label="WIP" :value="2" />
-          <BaseCheckbox v-model="statuses" label="Closed" :value="3" />
-        </div>
+        <div class="flex-grow"><BaseTabsModel v-model="currentTab" :tabs="workItemStatusTabs" :mini="true" /></div>
         <BaseButtonMini class="flex-shrink" @click="toggleOrder">
           <div v-show="orderAscending" class="flex">
             <p>Oldest - Newest</p>
@@ -65,11 +61,11 @@ import { OrderBy, WorkItemSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
-import BaseCheckbox from "~/components/base/BaseCheckbox.vue";
 import BaseDateRange from "~/components/base/BaseDateRange.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSelectSearchable from "~/components/base/BaseSelectSearchable.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
+import BaseTabsModel from "~/components/base/BaseTabsModel.vue";
 import IconBarsArrowDown from "~/components/icons/hero/20/solid/IconBarsArrowDown.vue";
 import IconBarsArrowUp from "~/components/icons/hero/20/solid/IconBarsArrowUp.vue";
 import WorkItemsListItem from "~/components/workitem/WorkItemsListItem.vue";
@@ -79,6 +75,7 @@ import useQuery from "~/composables/query/useQuery";
 import useSortBy from "~/composables/query/useSortBy";
 import useApi from "~/composables/useApi";
 import useFacilities from "~/composables/useFacilities";
+import {workItemStatusTabs} from "~/helpers/workItemUtils"
 
 export default defineComponent({
   components: {
@@ -86,9 +83,9 @@ export default defineComponent({
     BaseCard,
     BaseSkeleListItem,
     BasePaginator,
-    BaseCheckbox,
     BaseDateRange,
     BaseSelectSearchable,
+    BaseTabsModel,
     IconBarsArrowDown,
     IconBarsArrowUp,
     WorkItemsListItem,
@@ -102,7 +99,6 @@ export default defineComponent({
     const { workItemsApi } = useApi();
 
     // Data refs
-
     const workitems = ref<WorkItemSchema[]>();
     const statuses = arrayQuery("status", ["1"], true, true);
 
@@ -110,6 +106,9 @@ export default defineComponent({
 
     // Set initial date dateRange
     const dateRange = makeDateRange(null, null, true, true);
+
+    // Work tiem status tab
+    const currentTab = ref<number>(1);
 
     // Data fetching
 
@@ -121,9 +120,7 @@ export default defineComponent({
           page: page.value || 1,
           size: size.value,
           orderBy: orderBy.value as OrderBy,
-          status: statuses.value.map((str) => {
-            return Number(str);
-          }),
+          status: [currentTab.value],
           facility: selectedFacility.value || undefined,
           since: dateRange.value.start || undefined,
           until: dateRange.value.end || undefined,
@@ -148,6 +145,7 @@ export default defineComponent({
         page,
         selectedFacility,
         orderBy,
+        currentTab,
         () => JSON.stringify(dateRange.value), // Stringify to watch for actual value changes
         () => JSON.stringify(statuses.value), // Stringify to watch for actual value changes
       ],
@@ -171,6 +169,8 @@ export default defineComponent({
       orderAscending,
       orderBy,
       toggleOrder,
+      workItemStatusTabs,
+      currentTab
     };
   },
   head: {
