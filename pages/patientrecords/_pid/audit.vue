@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mb-4 flex flex-col">
-      <div class="flex flex-row gap-2">
+      <div class="flex flex-row gap-2 mb-4">
         <BaseDateRange v-model="dateRange" class="flex-1" />
         <BaseButtonMini class="flex-none" @click="toggleOrder">
           <div v-show="orderAscending" class="flex">
@@ -13,6 +13,18 @@
             <IconBarsArrowDown class="ml-2 h-5 w-5" />
           </div>
         </BaseButtonMini>
+      </div>
+      <div class="flex gap-4">
+        <BaseSelect>
+          <option value="" disabled selected hidden>Select a resource type</option>
+          <option>All resources</option>
+          <option v-for="resource in availableResources" :key="resource">{{ resource }}</option>
+        </BaseSelect>
+        <BaseSelect>
+          <option value="" disabled selected hidden>Select an operation</option>
+          <option>All operations</option>
+          <option v-for="operation in availableOperations" :key="operation">{{ operation }}</option>
+        </BaseSelect>
       </div>
     </div>
 
@@ -42,13 +54,15 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from "@nuxtjs/composition-api";
-import { AuditEventSchema, OrderBy, PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
+import {AuditEventSchema, AuditOperation, OrderBy, PatientRecordSchema} from "@ukkidney/ukrdc-axios-ts";
+import {Resource} from "@ukkidney/ukrdc-axios-ts/api";
 
 import AuditListItem from "~/components/AuditListItem.vue";
 import BaseButtonMini from "~/components/base/BaseButtonMini.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseDateRange from "~/components/base/BaseDateRange.vue";
 import BasePaginator from "~/components/base/BasePaginator.vue";
+import BaseSelect from "~/components/base/BaseSelect.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import IconBarsArrowDown from "~/components/icons/hero/20/solid/IconBarsArrowDown.vue";
 import IconBarsArrowUp from "~/components/icons/hero/20/solid/IconBarsArrowUp.vue";
@@ -65,6 +79,7 @@ export default defineComponent({
     BaseSkeleListItem,
     BasePaginator,
     BaseDateRange,
+    BaseSelect,
     IconBarsArrowDown,
     IconBarsArrowUp,
     AuditListItem,
@@ -86,6 +101,11 @@ export default defineComponent({
 
     // Data refs
     const events = ref<AuditEventSchema[]>();
+
+    const availableResources: string[] = Object.values(Resource).sort()
+    const selectedResource = ref<Resource>()
+    const availableOperations: string[] = Object.values(AuditOperation).sort()
+    const selectedOperation = ref<AuditOperation>()
 
     // Data fetching
 
@@ -131,6 +151,10 @@ export default defineComponent({
       orderAscending,
       orderBy,
       toggleOrder,
+      availableResources,
+      selectedResource,
+      availableOperations,
+      selectedOperation
     };
   },
 });
