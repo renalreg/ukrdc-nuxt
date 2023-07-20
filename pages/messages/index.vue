@@ -63,26 +63,30 @@
 
     <BaseCard>
       <!-- Skeleton results -->
-      <ul v-if="fetchInProgress" class="divide-y divide-gray-300">
-        <BaseSkeleListItem v-for="n in 10" :key="n" />
-      </ul>
+      <div v-if="fetchInProgress">
+        <ul v-if="fetchInProgress" class="divide-y divide-gray-300">
+          <BaseSkeleListItem v-for="n in 10" :key="n" />
+        </ul>
+      </div>
       <!-- Real results -->
-      <ul v-else class="divide-y divide-gray-300">
-        <div v-for="item in messages" :key="item.id" class="hover:bg-gray-50">
-          <NuxtLink :to="`/messages/${item.id}`">
-            <MessagesListItem :item="item" />
-          </NuxtLink>
-        </div>
-      </ul>
-      <BasePaginator
-        class="border-t border-gray-200 bg-white"
-        :page="page"
-        :size="size"
-        :total="total"
-        @next="page++"
-        @prev="page--"
-        @jump="page = $event"
-      />
+      <div v-else>
+        <ul class="divide-y divide-gray-300">
+          <li v-for="item in messages" :key="item.id" class="hover:bg-gray-50">
+            <NuxtLink :to="`/messages/${item.id}`">
+              <MessagesListItem :item="item" />
+            </NuxtLink>
+          </li>
+        </ul>
+        <BasePaginator
+          class="border-t border-gray-200 bg-white"
+          :page="page"
+          :size="size"
+          :total="total"
+          @next="page++"
+          @prev="page--"
+          @jump="page = $event"
+        />
+      </div>
     </BaseCard>
   </div>
 </template>
