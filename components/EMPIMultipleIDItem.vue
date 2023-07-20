@@ -27,7 +27,7 @@
     </div>
 
     <ul class="divide-y divide-gray-300">
-      <div
+      <li
         v-for="item in group.records"
         :key="`record-${group.groupId}-${item.masterRecord.id}`"
         class="hover:bg-gray-50"
@@ -40,7 +40,7 @@
             :details-value="item.lastUpdated ? formatDate(item.lastUpdated) : undefined"
           />
         </NuxtLink>
-      </div>
+      </li>
     </ul>
   </div>
 </template>

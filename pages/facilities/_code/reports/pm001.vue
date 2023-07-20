@@ -21,14 +21,14 @@
       <BaseCard>
         <!-- Real results -->
         <ul class="divide-y divide-gray-300">
-          <div v-for="record in records" :key="`record-${record.pid}`" class="hover:bg-gray-50">
+          <li v-for="record in records" :key="`record-${record.pid}`" class="hover:bg-gray-50">
             <PatientRecordsListItem
               :item="record"
               :show-manage-menu="false"
               :show-sender="false"
               :prefer-ni-over-mrn="true"
             />
-          </div>
+          </li>
         </ul>
 
         <BasePaginator

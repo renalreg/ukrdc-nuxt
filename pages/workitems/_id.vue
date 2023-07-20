@@ -258,11 +258,11 @@
           </h6>
         </BaseCardHeader>
         <ul class="divide-y divide-gray-300">
-          <div v-for="item in messages" :key="item.id" :item="item" class="hover:bg-gray-50">
+          <li v-for="item in messages" :key="item.id" class="hover:bg-gray-50">
             <NuxtLink :to="`/messages/${item.id}`">
               <MessagesListItem :item="item" />
             </NuxtLink>
-          </div>
+          </li>
         </ul>
         <BasePaginator
           class="border-t border-gray-200 bg-white"
@@ -286,11 +286,11 @@
       </BaseCardHeader>
       <!-- Results list -->
       <ul class="divide-y divide-gray-300">
-        <div v-for="item in workItemCollection" :key="item.id" :item="item" class="hover:bg-gray-50">
+        <li v-for="item in workItemCollection" :key="item.id" class="hover:bg-gray-50">
           <NuxtLink :to="`/workitems/${item.id}`">
             <WorkItemsListItem :item="item" />
           </NuxtLink>
-        </div>
+        </li>
       </ul>
     </BaseCard>
 
@@ -318,6 +318,7 @@ import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
 import BaseCheckbox from "~/components/base/BaseCheckbox.vue";
 import BaseItemPaginator from "~/components/base/BaseItemPaginator.vue";
 import BaseModal from "~/components/base/BaseModal.vue";
+import BasePaginator from "~/components/base/BasePaginator.vue";
 import BaseSkeleText from "~/components/base/BaseSkeleText.vue";
 import BaseTable from "~/components/base/BaseTable.vue";
 import BaseTextArea from "~/components/base/BaseTextArea.vue";
@@ -358,6 +359,7 @@ export default defineComponent({
     BaseTable,
     BaseModal,
     BaseCheckbox,
+    BasePaginator,
     IconCheckCircle,
     IconArrowTopRightOnSquare,
     IconPencil,

@@ -32,11 +32,11 @@
         </ul>
         <!-- Real results -->
         <ul class="divide-y divide-gray-300">
-          <div v-for="item in errorMessages" :key="item.id" :item="item" class="hover:bg-gray-50">
+          <li v-for="item in errorMessages" :key="item.id" :item="item" class="hover:bg-gray-50">
             <NuxtLink :to="`/messages/${item.id}`">
               <MessagesListItem :item="item" />
             </NuxtLink>
-          </div>
+          </li>
         </ul>
         <BasePaginator
           class="border-t border-gray-200 bg-white"
