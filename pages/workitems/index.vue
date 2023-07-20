@@ -31,26 +31,30 @@
 
     <BaseCard>
       <!-- Skeleton results -->
-      <ul v-if="fetchInProgress" class="divide-y divide-gray-300">
-        <BaseSkeleListItem v-for="n in 10" :key="n" />
-      </ul>
+      <div v-if="fetchInProgress">
+        <ul class="divide-y divide-gray-300">
+          <BaseSkeleListItem v-for="n in 10" :key="n" />
+        </ul>
+      </div>
       <!-- Real results -->
-      <ul v-else class="divide-y divide-gray-300">
-        <div v-for="item in workitems" :key="item.id" :item="item" class="hover:bg-gray-50">
-          <NuxtLink :to="`/workitems/${item.id}`">
-            <WorkItemsListItem :item="item" />
-          </NuxtLink>
-        </div>
-      </ul>
-      <BasePaginator
-        class="border-t border-gray-200 bg-white"
-        :page="page"
-        :size="size"
-        :total="total"
-        @next="page++"
-        @prev="page--"
-        @jump="page = $event"
-      />
+      <div v-else>
+        <ul class="divide-y divide-gray-300">
+          <div v-for="item in workitems" :key="item.id" :item="item" class="hover:bg-gray-50">
+            <NuxtLink :to="`/workitems/${item.id}`">
+              <WorkItemsListItem :item="item" />
+            </NuxtLink>
+          </div>
+        </ul>
+        <BasePaginator
+          class="border-t border-gray-200 bg-white"
+          :page="page"
+          :size="size"
+          :total="total"
+          @next="page++"
+          @prev="page--"
+          @jump="page = $event"
+        />
+      </div>
     </BaseCard>
   </div>
 </template>
