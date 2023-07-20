@@ -1,5 +1,5 @@
 <template>
-  <li>
+  <div>
     <div class="flex flex-col divide-y divide-gray-200">
       <!-- Main record info and menu button -->
       <div class="flex divide-x divide-gray-200">
@@ -105,7 +105,7 @@
     <div v-show="showDetail && showPeek" class="bg-gray-50 px-4 py-4 shadow-inner sm:px-6">
       <PatientRecordPeek :record="item" />
     </div>
-  </li>
+  </div>
 </template>
 
 <script lang="ts">

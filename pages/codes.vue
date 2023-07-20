@@ -48,11 +48,11 @@
           </ul>
           <!-- Real results -->
           <ul v-else class="divide-y divide-gray-300">
-            <div v-for="code in codes" :key="`${code.codingStandard}.${code.code}`">
+            <li v-for="code in codes" :key="`${code.codingStandard}.${code.code}`">
               <NuxtLink :to="{ path: `/codes/${code.codingStandard}.${code.code}/`, query: $route.query }">
                 <CodesListItem class="hover:bg-gray-50" :code="code" />
               </NuxtLink>
-            </div>
+            </li>
           </ul>
           <BasePaginator
             class="border-t border-gray-200 bg-white"
@@ -212,7 +212,6 @@ export default defineComponent({
       codes,
       selectedCode,
       searchboxString,
-      getCodes,
       fetchInProgress,
       page,
       total,

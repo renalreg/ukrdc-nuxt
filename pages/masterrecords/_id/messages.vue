@@ -21,11 +21,11 @@
       </ul>
       <!-- Real results -->
       <ul v-else class="divide-y divide-gray-300">
-        <div v-for="item in messages" :key="item.id" :item="item" class="hover:bg-gray-50">
+        <li v-for="item in messages" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/messages/${item.id}`">
             <MessagesListItem :show-patient-filter="false" :item="item" />
           </NuxtLink>
-        </div>
+        </li>
       </ul>
       <BasePaginator
         class="border-t border-gray-200 bg-white"

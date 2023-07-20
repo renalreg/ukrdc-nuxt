@@ -23,7 +23,7 @@
       <BaseCard>
         <!-- Real results -->
         <ul class="divide-y divide-gray-300">
-          <div v-for="group in groups" :key="`group-${group.masterRecord.id}`" class="hover:bg-gray-50">
+          <li v-for="group in groups" :key="`group-${group.masterRecord.id}`" class="hover:bg-gray-50">
             <NuxtLink :to="`/masterrecords/${group.masterRecord.id}/issues`">
               <MasterRecordsListItem
                 :item="group.masterRecord"
@@ -31,7 +31,7 @@
                 :details-value="group.workItemCount.toString()"
               />
             </NuxtLink>
-          </div>
+          </li>
         </ul>
 
         <BasePaginator

@@ -16,9 +16,9 @@ Mini (half-width) search bar and results pages used in the EMPI Merge page.
         </ul>
         <!-- Real results -->
         <ul v-else class="divide-y divide-gray-300">
-          <div v-for="item in masterrecords" :key="item.id" class="hover:bg-gray-50">
+          <li v-for="item in masterrecords" :key="item.id" class="hover:bg-gray-50">
             <MasterRecordsListItem class="cursor-pointer" :item="item" @click.native="$emit('select', item.id)" />
-          </div>
+          </li>
         </ul>
         <BasePaginator
           class="border-t border-gray-200 bg-white"

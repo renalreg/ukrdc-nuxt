@@ -22,9 +22,7 @@
                 class="inline-block flex-shrink-0 rounded-sm bg-indigo-100 px-2 py-0.5 text-sm font-medium text-indigo-800"
                 >{{ item.questions.length }} questions</span
               >
-              <genericButtonMini class="float-right" @click="surveyViewerModal?.show(item)">
-                View survey
-              </genericButtonMini>
+              <BaseButton class="float-right" @click="surveyViewerModal?.show(item)"> View survey </BaseButton>
             </div>
           </div>
         </BaseCard>
@@ -37,6 +35,7 @@
 import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { PatientRecordSchema, SurveySchema } from "@ukkidney/ukrdc-axios-ts";
 
+import BaseButton from "~/components/base/BaseButton.vue";
 import BaseCard from "~/components/base/BaseCard.vue";
 import BaseLoadingContainer from "~/components/base/BaseLoadingContainer.vue";
 import PatientRecordSurveyViewer from "~/components/patientrecord/medical/PatientRecordSurveyViewer.vue";
@@ -47,6 +46,7 @@ import { SurveyViewerModalInterface } from "~/interfaces/modal";
 export default defineComponent({
   components: {
     BaseLoadingContainer,
+    BaseButton,
     BaseCard,
     PatientRecordSurveyViewer,
   },

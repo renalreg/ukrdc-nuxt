@@ -84,7 +84,7 @@
         <h2>Linked Master Records</h2>
       </BaseCardHeader>
       <ul v-if="relatedRecords" class="divide-y divide-gray-300">
-        <div
+        <li
           v-for="item in relatedRecords"
           :key="item.id"
           class=""
@@ -96,7 +96,7 @@
           >
             <MasterRecordsListItem :item="item" />
           </NuxtLink>
-        </div>
+        </li>
       </ul>
       <ul v-else class="divide-y divide-gray-300">
         <BaseSkeleListItem v-for="n in 2" :key="n" />

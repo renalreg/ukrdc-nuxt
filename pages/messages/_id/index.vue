@@ -68,9 +68,9 @@
         <h2>Related Records</h2>
       </BaseCardHeader>
       <ul class="divide-y divide-gray-300">
-        <div v-for="item in patientRecords" :key="item.pid">
+        <li v-for="item in patientRecords" :key="item.pid">
           <PatientRecordsListItem :item="item" :show-manage-menu="false" />
-        </div>
+        </li>
       </ul>
     </BaseCard>
 
@@ -80,11 +80,11 @@
         <h2>Related Work Items</h2>
       </BaseCardHeader>
       <ul class="divide-y divide-gray-300">
-        <div v-for="item in workItems" :key="item.id" :item="item" class="hover:bg-gray-50">
+        <li v-for="item in workItems" :key="item.id" :item="item" class="hover:bg-gray-50">
           <NuxtLink :to="`/workitems/${item.id}`">
             <WorkItemsListItem :item="item" />
           </NuxtLink>
-        </div>
+        </li>
       </ul>
     </BaseCard>
 

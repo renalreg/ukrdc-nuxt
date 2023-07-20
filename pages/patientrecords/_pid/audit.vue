@@ -113,12 +113,6 @@ export default defineComponent({
     const availableOperations: string[] = Object.values(AuditOperation).sort();
     const selectedOperation = stringQuery("operation", null, true, true);
 
-    // Filtering
-
-    function setResource(value: string | null) {
-      selectedResource.value = value;
-    }
-
     // Data fetching
 
     const auditFetchInProgress = ref(false);
@@ -179,7 +173,6 @@ export default defineComponent({
       availableOperations,
       selectedOperation,
       auditFetchInProgress,
-      setResource,
     };
   },
 });
