@@ -116,7 +116,7 @@ export default defineComponent({
     // Filtering
 
     function setResource(value: string | null) {
-      selectedResource.value = value
+      selectedResource.value = value;
     }
 
     // Data fetching
@@ -134,8 +134,8 @@ export default defineComponent({
           orderBy: orderBy.value as OrderBy,
           since: dateRange.value.start || undefined,
           until: dateRange.value.end || undefined,
-          ...(selectedResource.value) && {resource: selectedResource.value as Resource},
-          ...(selectedOperation.value) && {operation: selectedOperation.value as AuditOperation},
+          ...(selectedResource.value && { resource: selectedResource.value as Resource }),
+          ...(selectedOperation.value && { operation: selectedOperation.value as AuditOperation }),
         })
         .then((response) => {
           events.value = response.data.items;
@@ -179,7 +179,7 @@ export default defineComponent({
       availableOperations,
       selectedOperation,
       auditFetchInProgress,
-      setResource
+      setResource,
     };
   },
 });
