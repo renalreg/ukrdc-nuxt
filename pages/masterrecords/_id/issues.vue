@@ -1,9 +1,5 @@
 <template>
   <div>
-    <div v-if="stats && stats.errors == 0 && stats.workitems == 0 && stats.ukrdcids == 1" class="text-center">
-      <p>No issues on record</p>
-    </div>
-
     <!-- Multiple UKRDC IDs -->
     <BaseCard v-if="ukrdcIdGroup" class="mb-4">
       <EMPIMultipleIDItem :group="ukrdcIdGroup" heading="Multiple UKRDC IDs" />
