@@ -34,6 +34,13 @@
           {{ item.onsetTime ? formatDate(item.onsetTime, false) : "Unknown" }}
         </p>
       </div>
+      <!-- Comments-->
+      <div v-if="item.comments" class="col-span-3" :class="[{ 'lg:col-span-5': !small }]">
+        <h5>Comments</h5>
+        <p class="sensitive mt-2" :class="[{ 'lg:truncate': !small }]">
+          {{ item.comments || "None" }}
+        </p>
+      </div>
     </div>
   </li>
 </template>
