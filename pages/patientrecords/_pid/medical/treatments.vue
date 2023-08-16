@@ -7,7 +7,7 @@
         <BaseTable>
           <thead class="bg-gray-50">
             <tr>
-              <th scope="col">Facility Code</th>
+              <th scope="col">Facility / QBL05</th>
               <th scope="col">Admit Date</th>
               <th scope="col">Admit Reason</th>
               <th scope="col">Discharge Date</th>
@@ -19,7 +19,8 @@
           <tbody class="divide-y divide-gray-300 bg-white">
             <tr v-for="treatment in treatments" :key="treatment.id">
               <td class="font-medium">
-                <SendingFacilityLink class="font-medium" :code="treatment.healthCareFacilityCode" />
+                <SendingFacilityLink class="inline font-medium" :code="treatment.healthCareFacilityCode" />
+                <span class="inline" v-if="treatment.qbl05">/ {{ treatment.qbl05 }}</span>
               </td>
               <!-- Admission-->
               <td>
@@ -75,8 +76,6 @@
                       <b>Discharge location code: </b>{{ treatment.dischargeLocationCodeStd || "None" }} /
                       {{ treatment.dischargeLocationCode || "None" }}
                     </p>
-                    <br />
-                    <p><b>QBL05: </b>{{ treatment.qbl05 || "None" }}</p>
                   </div>
                 </BaseInfoTooltip>
               </td>

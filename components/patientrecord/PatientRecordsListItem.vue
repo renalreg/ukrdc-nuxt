@@ -39,7 +39,7 @@
                     {{ item.patient?.gender ? formatGenderCharacter(item.patient?.gender) : "?" }}
                   </h5>
                 </span>
-                <p class="sensitive mt-2 flex items-center">
+                <p class="sensitive mt-2 flex items-center" :class="[{ 'text-red-700': item.patient?.deathTime }]">
                   {{ item.patient?.birthTime ? formatDate(item.patient?.birthTime, false) : "Unknown date of birth" }}
                   {{ item.patient?.deathTime ? ` – ${formatDate(item.patient?.deathTime, false)}` : "" }}
                 </p>
