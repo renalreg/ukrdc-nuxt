@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeMount, useContext, useRoute, useRouter } from "@nuxtjs/composition-api";
+import { defineComponent, onBeforeMount, onMounted, useContext, useRoute, useRouter } from "@nuxtjs/composition-api";
 
 import useAuth from "~/composables/useAuth";
 
@@ -41,6 +41,25 @@ export default defineComponent({
         // If we're signed in and no originalUri exists
         // Redirect to home
         router.replace({ path: "/" });
+      }
+    });
+
+    onMounted(() => {
+      // Sometimes the onBeforeMount fails to redirect, possibly a race condition?
+      // Use this to ensure we redirect properly if authenticated by the time the page is mounted
+
+      if (isAuthenticated.value) {
+        // If an originalUri was stored before navigating to this page, keep using it
+        const originalUri = $okta.getOriginalUri();
+
+        if (originalUri) {
+          // If we're signed in and an originalUri somehow exists
+          router.replace({ path: originalUri });
+        } else {
+          // If we're signed in and no originalUri exists
+          // Redirect to home
+          router.replace({ path: "/" });
+        }
       }
     });
   },
