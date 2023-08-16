@@ -1,7 +1,47 @@
 <template>
   <div>
     <!-- Demographics header-->
-    <PatientRecordDemographics class="mb-4" :record="record" />
+    <BaseCard class="mb-4">
+      <BaseCardContent>
+        <BaseDescriptionListGrid>
+          <BaseDescriptionListGridItem>
+            <dt>Names</dt>
+            <dd>
+              <p v-for="item in record.patient?.names || []" :key="item.given + item.family" class="sensitive">
+                {{ item.given }} {{ item.family }}
+              </p>
+            </dd>
+          </BaseDescriptionListGridItem>
+          <BaseDescriptionListGridItem>
+            <dt>Gender</dt>
+            <dd class="sensitive flex items-center gap-2">
+              <div>{{ formatGender(record.patient.gender) }}</div>
+              <PatientRecordMatchBadge v-if="genderMatches !== null" :verified="genderMatches" />
+            </dd>
+          </BaseDescriptionListGridItem>
+          <BaseDescriptionListGridItem>
+            <dt>Ethnicity</dt>
+            <dd class="sensitive">
+              {{ record.patient.ethnicGroupDescription || record.patient.ethnicGroupCode || "Unknown" }}
+            </dd>
+          </BaseDescriptionListGridItem>
+          <BaseDescriptionListGridItem>
+            <dt>Date of Birth</dt>
+            <dd class="sensitive flex items-center gap-2">
+              <div>{{ formatDate(record.patient.birthTime, false) }}</div>
+              <PatientRecordMatchBadge v-if="birthTimeMatches !== null" :verified="birthTimeMatches" />
+            </dd>
+          </BaseDescriptionListGridItem>
+          <BaseDescriptionListGridItem>
+            <dt>Date of Death</dt>
+            <dd class="sensitive flex items-center gap-2">
+              <div>{{ record.patient.deathTime ? formatDate(record.patient.deathTime, false) : "N/A" }}</div>
+              <PatientRecordMatchBadge v-if="deathTimeMatches !== null" :verified="deathTimeMatches" />
+            </dd>
+          </BaseDescriptionListGridItem>
+        </BaseDescriptionListGrid>
+      </BaseCardContent>
+    </BaseCard>
     <!-- Record message banners -->
     <NuxtLink :to="`/patientrecords/${record.pid}/messages`">
       <LatestMessageAlert :message="latestMessage || undefined" :is-loading="latestMessageIsLoading" />
@@ -59,14 +99,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
+import { computed, defineComponent, onMounted, ref } from "@nuxtjs/composition-api";
 import { MinimalMessageSchema, PatientRecordSchema, PatientRecordSummarySchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseCard from "~/components/base/BaseCard.vue";
+import BaseCardContent from "~/components/base/BaseCardContent.vue";
 import BaseCardHeader from "~/components/base/BaseCardHeader.vue";
+import BaseDescriptionListGrid from "~/components/base/BaseDescriptionListGrid.vue";
+import BaseDescriptionListGridItem from "~/components/base/BaseDescriptionListGridItem.vue";
 import BaseSkeleListItem from "~/components/base/BaseSkeleListItem.vue";
 import LatestMessageAlert from "~/components/messages/AlertFileLatest.vue";
-import PatientRecordDemographics from "~/components/patientrecord/PatientRecordDemographics.vue";
+import PatientRecordMatchBadge from "~/components/patientrecord/PatientRecordMatchBadge.vue";
 import PatientRecordsGroupedList from "~/components/patientrecord/PatientRecordsGroupedList.vue";
 import PatientRecordSummaryAddresses from "~/components/patientrecord/summary/PatientRecordSummaryAddresses.vue";
 import PatientRecordSummaryFamilyDoctor from "~/components/patientrecord/summary/PatientRecordSummaryFamilyDoctor.vue";
@@ -81,6 +124,10 @@ import { isEmptyObject } from "~/helpers/objectUtils";
 
 export default defineComponent({
   components: {
+    PatientRecordMatchBadge,
+    BaseCardContent,
+    BaseDescriptionListGrid,
+    BaseDescriptionListGridItem,
     PatientRecordSummaryFamilyDoctor,
     PatientRecordSummaryMemberships,
     PatientRecordSummaryAddresses,
@@ -92,7 +139,6 @@ export default defineComponent({
     BaseSkeleListItem,
     PatientRecordsGroupedList,
     LatestMessageAlert,
-    PatientRecordDemographics,
   },
   props: {
     record: {
@@ -145,6 +191,51 @@ export default defineComponent({
       fetchRecordData();
     });
 
+    // Demographic comparisons
+
+    const genderMatches = computed<Boolean | null>(() => {
+      if (related.value) {
+        for (const relatedRecord of related.value) {
+          // If a gender code is present on the related record,
+          // and the gender code is not unspecified,
+          // and does not match the current record
+          if (
+            relatedRecord.patient?.gender &&
+            relatedRecord.patient?.gender !== "9" &&
+            relatedRecord.patient?.gender !== props.record.patient?.gender
+          ) {
+            return false;
+          }
+        }
+        return true;
+      }
+      return null;
+    });
+
+    const birthTimeMatches = computed<Boolean | null>(() => {
+      if (related.value) {
+        for (const relatedRecord of related.value) {
+          if (relatedRecord.patient?.birthTime !== props.record.patient?.birthTime) {
+            return false;
+          }
+        }
+        return true;
+      }
+      return null;
+    });
+
+    const deathTimeMatches = computed<Boolean | null>(() => {
+      if (related.value) {
+        for (const relatedRecord of related.value) {
+          if (relatedRecord.patient?.deathTime !== props.record.patient?.deathTime) {
+            return false;
+          }
+        }
+        return true;
+      }
+      return null;
+    });
+
     return {
       related,
       latestMessage,
@@ -153,6 +244,9 @@ export default defineComponent({
       formatDate,
       formatGender,
       isEmptyObject,
+      genderMatches,
+      birthTimeMatches,
+      deathTimeMatches,
     };
   },
 });
