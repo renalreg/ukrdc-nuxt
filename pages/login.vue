@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeMount, onMounted, useContext, useRoute, useRouter } from "@nuxtjs/composition-api";
+import { defineComponent, onBeforeMount, useContext, useRoute, useRouter } from "@nuxtjs/composition-api";
 
 import useAuth from "~/composables/useAuth";
 
@@ -19,7 +19,7 @@ export default defineComponent({
     const router = useRouter();
     const route = useRoute();
 
-    onBeforeMount(() => {
+    onBeforeMount(async () => {
       // If an originalUri was stored before navigating to this page, keep using it
       let originalUri = $okta.getOriginalUri();
       // Original URI should never be the login page (otherwise you just get stuck here)
@@ -30,10 +30,10 @@ export default defineComponent({
       if ($okta.isLoginRedirect()) {
         // If we're in the middle of a sign-in flow
         // Fetch tokens and redirect back to originalUri
-        $okta.handleLoginRedirect();
+        await $okta.handleRedirect();
       } else if (!isAuthenticated.value) {
         // Start sign-in flow
-        $okta.signInAuto(originalUri || "/");
+        await $okta.signInAuto(originalUri || "/");
       } else if (originalUri) {
         // If we're signed in and an originalUri somehow exists
         router.replace({ path: originalUri });
@@ -41,25 +41,6 @@ export default defineComponent({
         // If we're signed in and no originalUri exists
         // Redirect to home
         router.replace({ path: "/" });
-      }
-    });
-
-    onMounted(() => {
-      // Sometimes the onBeforeMount fails to redirect, possibly a race condition?
-      // Use this to ensure we redirect properly if authenticated by the time the page is mounted
-
-      if (isAuthenticated.value) {
-        // If an originalUri was stored before navigating to this page, keep using it
-        const originalUri = $okta.getOriginalUri();
-
-        if (originalUri) {
-          // If we're signed in and an originalUri somehow exists
-          router.replace({ path: originalUri });
-        } else {
-          // If we're signed in and no originalUri exists
-          // Redirect to home
-          router.replace({ path: "/" });
-        }
       }
     });
   },
