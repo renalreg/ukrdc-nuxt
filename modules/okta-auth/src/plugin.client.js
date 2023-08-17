@@ -108,18 +108,6 @@ const oktaPlugin = (_ctx, inject) => {
     next();
   });
 
-  // Handle onAuthExpired
-  if (configOptions.authExpiredRedirectUri) {
-    oktaAuth.authStateManager.subscribe((authState) => {
-      if (!authState.isAuthenticated) {
-        // Store the current route
-        oktaAuth.setOriginalUri(router.currentRoute.fullPath);
-        // Redirect to the authExpiredRedirectUri
-        _ctx.redirect(configOptions.authExpiredRedirectUri);
-      }
-    });
-  }
-
   // Start the auth background service
   oktaAuth.start();
 
