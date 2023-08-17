@@ -20,7 +20,7 @@
             <tr v-for="treatment in treatments" :key="treatment.id">
               <td class="font-medium">
                 <SendingFacilityLink class="inline font-medium" :code="treatment.healthCareFacilityCode" />
-                <span class="inline" v-if="treatment.qbl05">/ {{ treatment.qbl05 }}</span>
+                <span v-if="treatment.qbl05" class="inline">/ {{ treatment.qbl05 }}</span>
               </td>
               <!-- Admission-->
               <td>
