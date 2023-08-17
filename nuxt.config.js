@@ -111,7 +111,6 @@ export default {
     defaultProtectRoutes: true,
     redirectUri: "/login",
     postLogoutRedirectUri: "/login",
-    authExpiredRedirectUri: "/login",
     responseType: "code",
     pkce: true,
     scopes: ["openid", "profile", "email", "offline_access"],
