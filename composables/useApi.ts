@@ -45,7 +45,12 @@ export default function () {
   });
 
   // Request interceptor to handle API base paths and authentication
-  apiInstance.interceptors.request.use((config) => {
+  apiInstance.interceptors.request.use(async (config) => {
+    // If auth has expired, reauthenticate before proceeding with the API request
+    if (!$okta.isAuthenticated) {
+      await $okta.signInAuto();
+    }
+
     // Add the authorization header to each request
     const token = $okta.getAccessToken();
     if (config.headers === undefined) {
