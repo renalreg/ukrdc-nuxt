@@ -184,6 +184,10 @@ export default defineComponent({
       // Wait 1 second before refreshing.
       // Some operations like new memberships or deleted records can take a while to propagate,
       // so we wait a second to give the server a chance to catch up.
+
+      // Reset the related records array to display placeholders
+      related.value = undefined
+      // Wait a second, then reload the data
       setTimeout(fetchRecordData, 1000);
     }
 
