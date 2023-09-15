@@ -5,10 +5,12 @@
     <NuxtChild v-if="facility && extracts" :facility="facility" :extracts="extracts" />
 
     <BaseAlertInfo>
-      The data displayed on this page have yet to be fully verified and may be subject to change or correction.
-      <br />
-      They should be used for the purposes of improving data quality and accuracy, and should not be used to form the
-      basis of clinical decisions.
+      <div class="text-blue-700">
+        The data displayed on this page have yet to be fully verified and may be subject to change or correction.
+        <br />
+        They should be used for the purposes of improving data quality and accuracy, and should not be used to form the
+        basis of clinical decisions.
+      </div>
     </BaseAlertInfo>
   </div>
 </template>
