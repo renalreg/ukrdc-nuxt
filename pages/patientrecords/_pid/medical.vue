@@ -3,7 +3,9 @@
     <NuxtLink :to="`/patientrecords/${record.pid}/`">
       <BaseAlertWarning v-if="!recordProbablyContainsData" class="mb-4">
         <div>
-          <p class="text-yellow-700">You are currently viewing {{ recordDescription }}, which may not contain medical data.</p>
+          <p class="text-yellow-700">
+            You are currently viewing {{ recordDescription }}, which may not contain medical data.
+          </p>
           <p class="text-yellow-700">Click to check Related Records for available data feed records.</p>
         </div>
       </BaseAlertWarning>
@@ -14,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { computed,defineComponent, onMounted, useRoute, useRouter } from "@nuxtjs/composition-api";
+import { computed, defineComponent, onMounted, useRoute, useRouter } from "@nuxtjs/composition-api";
 import { PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
 import BaseAlertWarning from "~/components/base/alert/BaseAlertWarning.vue";
@@ -25,7 +27,7 @@ import { TabItem } from "~/interfaces/tabs";
 export default defineComponent({
   components: {
     BaseTabsNavigation,
-    BaseAlertWarning
+    BaseAlertWarning,
   },
   props: {
     record: {
@@ -41,19 +43,19 @@ export default defineComponent({
     // Record type checks
 
     const recordProbablyContainsData = computed<boolean>(() => {
-      return !(isInformational(props.record) || isMembership(props.record))
-    })
+      return !(isInformational(props.record) || isMembership(props.record));
+    });
 
     const recordDescription = computed<string>(() => {
       if (isInformational(props.record)) {
-        return `an informational ${props.record.sendingfacility} record`
+        return `an informational ${props.record.sendingfacility} record`;
       } else if (isMembership(props.record)) {
-        const membershipType = props.record.sendingextract === 'RADAR' ? 'RADAR' : props.record.sendingfacility
-        return `a ${membershipType} membership record`
+        const membershipType = props.record.sendingextract === "RADAR" ? "RADAR" : props.record.sendingfacility;
+        return `a ${membershipType} membership record`;
       } else {
-        return `a ${props.record.sendingextract} record sent by ${props.record.sendingfacility}`
+        return `a ${props.record.sendingextract} record sent by ${props.record.sendingfacility}`;
       }
-    })
+    });
 
     // Navigation
 

@@ -186,7 +186,7 @@ export default defineComponent({
       // so we wait a second to give the server a chance to catch up.
 
       // Reset the related records array to display placeholders
-      related.value = undefined
+      related.value = undefined;
       // Wait a second, then reload the data
       setTimeout(fetchRecordData, 1000);
     }

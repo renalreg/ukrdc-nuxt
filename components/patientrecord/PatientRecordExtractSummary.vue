@@ -1,5 +1,5 @@
 <template>
-  <div class="font-medium text-lg text-gray-600">
+  <div class="text-lg font-medium text-gray-600">
     <div v-if="isData(record)" class="flex gap-1">
       <p>
         {{ `${record.sendingextract === "UKRDC" ? "RDA" : record.sendingextract} data feed record from` }}
