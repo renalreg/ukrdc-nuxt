@@ -1,6 +1,13 @@
 <template>
   <div>
-    <BaseAlertWarning v-if="!recordProbablyContainsData" class="mb-4" :message="`You are currently viewing ${recordDescription} which may not contain medical data.`" />
+    <NuxtLink :to="`/patientrecords/${record.pid}/`">
+      <BaseAlertWarning v-if="!recordProbablyContainsData" class="mb-4">
+        <div>
+          <p class="text-yellow-700">You are currently viewing {{ recordDescription }}, which may not contain medical data.</p>
+          <p class="text-yellow-700">Click to check Related Records for available data feed records.</p>
+        </div>
+      </BaseAlertWarning>
+    </NuxtLink>
     <BaseTabsNavigation id="medical-tabs" class="mb-6" :tabs="tabs" :mini="true" :eager-to-collapse="true" />
     <NuxtChild v-if="record" :record="record" />
   </div>

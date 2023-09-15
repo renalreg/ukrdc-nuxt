@@ -16,7 +16,7 @@
         />
       </svg>
       <div class="ml-3 flex-1 md:flex md:justify-between">
-        <div class="text-yellow-700">
+        <div v-if="message" class="text-yellow-700">
           {{ message }}
         </div>
         <slot />
