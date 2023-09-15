@@ -141,6 +141,14 @@ export default defineComponent({
           });
         })
         .finally(() => {
+          // Notify of task started
+          $toast.show({
+            type: "info",
+            title: "Creating Membership",
+            message: "This might take a few seconds",
+            timeout: 5,
+            classTimeout: "bg-blue-600",
+          });
           emit("refresh");
           closeMenu();
         });

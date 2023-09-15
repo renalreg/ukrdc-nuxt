@@ -1,20 +1,33 @@
 <template>
   <div>
-    <BaseTabsNavigation id="stats-tabs" class="mb-6" :tabs="tabs" :mini="true" :eager-to-collapse="true" />
+    <NuxtLink :to="`/patientrecords/${record.pid}/`">
+      <BaseAlertWarning v-if="!recordProbablyContainsData" class="mb-4">
+        <div>
+          <p class="text-yellow-700">
+            You are currently viewing {{ recordDescription }}, which may not contain medical data.
+          </p>
+          <p class="text-yellow-700">Click to check Related Records for available data feed records.</p>
+        </div>
+      </BaseAlertWarning>
+    </NuxtLink>
+    <BaseTabsNavigation id="medical-tabs" class="mb-6" :tabs="tabs" :mini="true" :eager-to-collapse="true" />
     <NuxtChild v-if="record" :record="record" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, useRoute, useRouter } from "@nuxtjs/composition-api";
+import { computed, defineComponent, onMounted, useRoute, useRouter } from "@nuxtjs/composition-api";
 import { PatientRecordSchema } from "@ukkidney/ukrdc-axios-ts";
 
+import BaseAlertWarning from "~/components/base/alert/BaseAlertWarning.vue";
 import BaseTabsNavigation from "~/components/base/BaseTabsNavigation.vue";
+import { isInformational, isMembership } from "~/helpers/recordUtils";
 import { TabItem } from "~/interfaces/tabs";
 
 export default defineComponent({
   components: {
     BaseTabsNavigation,
+    BaseAlertWarning,
   },
   props: {
     record: {
@@ -23,9 +36,26 @@ export default defineComponent({
     },
   },
 
-  setup() {
+  setup(props) {
     const route = useRoute();
     const router = useRouter();
+
+    // Record type checks
+
+    const recordProbablyContainsData = computed<boolean>(() => {
+      return !(isInformational(props.record) || isMembership(props.record));
+    });
+
+    const recordDescription = computed<string>(() => {
+      if (isInformational(props.record)) {
+        return `an informational ${props.record.sendingfacility} record`;
+      } else if (isMembership(props.record)) {
+        const membershipType = props.record.sendingextract === "RADAR" ? "RADAR" : props.record.sendingfacility;
+        return `a ${membershipType} membership record`;
+      } else {
+        return `a ${props.record.sendingextract} record sent by ${props.record.sendingfacility}`;
+      }
+    });
 
     // Navigation
 
@@ -72,6 +102,8 @@ export default defineComponent({
     });
 
     return {
+      recordProbablyContainsData,
+      recordDescription,
       tabs,
     };
   },
