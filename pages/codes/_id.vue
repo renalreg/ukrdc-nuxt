@@ -67,6 +67,23 @@
         </ul>
       </div>
     </div>
+
+    <!-- PKB Attributes  -->
+    <div v-if="code.pkbReferenceRange || code.pkbComment">
+      <div class="border-b border-t bg-gray-50 py-1 pl-4 sm:pl-6">
+        <h4>PKB Attributes</h4>
+      </div>
+      <div class="px-4 py-4 sm:px-6">
+        <div>
+          <h5 class="inline">Reference range:</h5>
+          <p class="inline">{{ code.pkbReferenceRange }}</p>
+        </div>
+        <div class="mt-2">
+          <h5>Comment:</h5>
+          <p class="whitespace-pre-wrap">{{ code.pkbComment }}</p>
+        </div>
+      </div>
+    </div>
   </div>
   <div v-else></div>
 </template>
