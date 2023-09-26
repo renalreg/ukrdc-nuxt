@@ -73,7 +73,7 @@
       <div class="border-b border-t bg-gray-50 py-1 pl-4 sm:pl-6">
         <h4>PKB Attributes</h4>
       </div>
-      <div class="py-4 px-4 sm:px-6">
+      <div class="px-4 py-4 sm:px-6">
         <div>
           <h5 class="inline">Reference range:</h5>
           <p class="inline">{{ code.pkbReferenceRange }}</p>
