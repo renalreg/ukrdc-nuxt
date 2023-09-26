@@ -32,7 +32,7 @@ Admin (permission ukrdc:facilities:*) dashboard with overview of all facilities.
             <BaseSkeleText v-else class="h-8 w-24" />
           </div>
         </div>
-        <BaseCardFooter>Work Items currently open or WIP</BaseCardFooter>
+        <BaseCardFooter>Work Items currently open and uninvestigated</BaseCardFooter>
       </BaseCard>
 
       <BaseCard>
