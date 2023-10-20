@@ -152,7 +152,7 @@ export default defineComponent({
       return props.options.filter(
         (option, index) =>
           option.toLowerCase().startsWith(search.value.toLowerCase()) ||
-          props.labels[index]?.toLowerCase().startsWith(search.value.toLowerCase())
+          props.labels[index]?.toLowerCase().startsWith(search.value.toLowerCase()),
       );
     });
 

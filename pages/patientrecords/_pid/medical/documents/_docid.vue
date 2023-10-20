@@ -153,7 +153,7 @@ export default defineComponent({
           {
             method: "GET",
             responseType: "blob",
-          }
+          },
         )
         .then((response) => {
           const blob = new Blob([response.data]);
