@@ -78,7 +78,7 @@ export default defineComponent({
         return [];
       }
       const center: Pages = [current - 2, current - 1, current, current + 1, current + 2];
-      const filteredCenter = center.filter((p) => p > 1 && p < total);
+      const filteredCenter = center.filter((p) => Number(p) > 1 && Number(p) < total);
 
       const includeThreeLeft = current === 5;
       const includeThreeRight = current === total - 4;
