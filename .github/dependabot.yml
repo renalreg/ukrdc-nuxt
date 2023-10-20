@@ -15,6 +15,12 @@ updates:
     # Note: Security updates will still come through.
     - dependency-name: "*"
       update-types: ["version-update:semver-patch"]
+    # Ignore webpack updates; Nuxt 2 only supports webpack <5
+    - dependency-name: "webpack"
+      versions: [">=5.0"]
+    # Ignore v-calendar 3.x updates; Nuxt 2 only supports v-calendar 2.x
+    - dependency-name: "v-calendar"
+      versions: [">=3.0"]
 
   - package-ecosystem: "docker"
     directory: "/"
