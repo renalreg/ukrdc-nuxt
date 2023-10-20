@@ -139,7 +139,7 @@ export default defineComponent({
       () => route.value.params.id, // Watch the computed (reactive) value of params.id
       () => {
         getCode();
-      }
+      },
     );
 
     // External code links

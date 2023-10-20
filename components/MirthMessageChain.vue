@@ -54,7 +54,7 @@ export default defineComponent({
         }
         for (const index in currentChain) {
           currentChain[index].sort((a: ConnectorMessageModel, b: ConnectorMessageModel) =>
-            a.orderId > b.orderId ? 1 : -1
+            a.orderId > b.orderId ? 1 : -1,
           );
         }
       }

@@ -53,6 +53,9 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    transpile: [
+      "marked", // See https://github.com/markedjs/marked/issues/2265#issuecomment-1754764288
+    ],
     postcss: {
       postcssOptions: {
         plugins: {

@@ -2,7 +2,7 @@
   <ul>
     <li
       v-for="(info, index) in [record.patient.familydoctor.gpInfo, record.patient.familydoctor.gpPracticeInfo].filter(
-        (x) => x
+        (x) => x,
       )"
       :key="`gp-info-${index}`"
       class="col-span-1"
