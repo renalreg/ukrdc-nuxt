@@ -29,7 +29,7 @@
     "plotly.js": "^2.26.0",
     "url-join": "^5.0.0",
     "v-calendar": "^2.4.1",
-    "xml-formatter": "^3.5.0"
+    "xml-formatter": "^3.6.0"
   },
   "devDependencies": {
     "@nuxt/types": "^2.17.0",
