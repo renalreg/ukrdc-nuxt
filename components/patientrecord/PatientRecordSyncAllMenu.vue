@@ -52,6 +52,11 @@ export default defineComponent({
 
     // Sync functionality
     function exportAllToPKB() {
+      // Do nothing if sync is already in progress
+      if (syncInProgress.value) {
+        return;
+      }
+
       syncInProgress.value = true;
       for (const record of props.records) {
         const itemKey = `${record.sendingfacility}/${record.sendingextract}`;
@@ -59,10 +64,10 @@ export default defineComponent({
           .then(() => {
             $toast.show({
               type: "success",
-              title: `Sync ${itemKey} Finished`,
-              message: `Export of ${itemKey} completed successfully`,
+              title: `Started Syncing ${itemKey} to PKB`,
+              message: `This may take a few minutes depending on the size of the record.`,
               timeout: 10,
-              classTimeout: "bg-blue-600",
+              classTimeout: "hidden",
             });
           })
           .catch((e) => {
@@ -75,7 +80,11 @@ export default defineComponent({
             });
           })
           .finally(() => {
-            syncInProgress.value = false;
+            // Note: Uncomment this line if you want to re-enable the Sync All button after
+            // already clicking it once.
+            // We found that some users repeatedly clicked it, adding load to the system, so
+            // as a minor discouragement, that now requires reloading the page.
+            // syncInProgress.value = false;
           });
       }
     }
