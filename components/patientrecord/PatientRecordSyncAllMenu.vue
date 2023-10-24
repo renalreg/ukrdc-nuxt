@@ -54,9 +54,9 @@ export default defineComponent({
     function exportAllToPKB() {
       // Do nothing if sync is already in progress
       if (syncInProgress.value) {
-        return
+        return;
       }
-      
+
       syncInProgress.value = true;
       for (const record of props.records) {
         const itemKey = `${record.sendingfacility}/${record.sendingextract}`;
