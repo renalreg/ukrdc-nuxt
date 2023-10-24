@@ -75,7 +75,6 @@
         <PatientRecordManageMenu
           v-if="showManageMenu"
           class="flex flex-grow-0 items-center"
-          :show-pv-sync="showPvSync"
           :show-radar-sync="showRadarSync"
           :show-pkb-sync="showPkbSync"
           :item="item"
@@ -161,11 +160,6 @@ export default defineComponent({
       default: true,
     },
     preferNiOverMrn: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    showPvSync: {
       type: Boolean,
       required: false,
       default: false,

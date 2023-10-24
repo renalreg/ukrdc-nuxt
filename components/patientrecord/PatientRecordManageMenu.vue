@@ -12,11 +12,10 @@
 
       <BaseMenu class="right-0 top-0 z-10 mx-2 my-2" :show="showMenu">
         <BaseMenuItem @click="copyPID"> Copy PID </BaseMenuItem>
-        <div v-if="hasPermission('ukrdc:records:export') && (showPvSync || showRadarSync || showPkbSync)">
+        <div v-if="hasPermission('ukrdc:records:export') && (showRadarSync || showPkbSync)">
           <BaseMenuDivider />
-          <BaseMenuItem v-if="showPvSync" @click="exportPVandCloseMenu"> Sync Record to PatientView </BaseMenuItem>
-          <BaseMenuItem v-if="showRadarSync" @click="exportRADARandCloseMenu"> Sync Record to RADAR </BaseMenuItem>
           <BaseMenuItem v-if="showPkbSync" @click="exportPKBandCloseMenu"> Sync Record to PKB </BaseMenuItem>
+          <BaseMenuItem v-if="showRadarSync" @click="exportRADARandCloseMenu"> Sync Record to RADAR </BaseMenuItem>
         </div>
         <div v-if="hasPermission('ukrdc:records:write')">
           <BaseMenuDivider />
@@ -68,11 +67,6 @@ export default defineComponent({
       type: Object as () => PatientRecordSummarySchema,
       required: true,
     },
-    showPvSync: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
     showRadarSync: {
       type: Boolean,
       required: false,
@@ -87,7 +81,7 @@ export default defineComponent({
   setup(props) {
     const { $toast } = useContext();
     const { hasPermission } = usePermissions();
-    const { exportPV, exportRADAR, exportPKB } = useRecordExport();
+    const { exportRADAR, exportPKB } = useRecordExport();
 
     const deleteModal = ref<ModalInterface>();
 
@@ -127,10 +121,10 @@ export default defineComponent({
       // Notify of task finished
       $toast.show({
         type: "success",
-        title: "Sync Finished",
-        message: "Sync completed successfully",
+        title: "Sync Started",
+        message: "This may take a few minutes depending on the size of the record.",
         timeout: 10,
-        classTimeout: "bg-blue-600",
+        classTimeout: "hidden",
       });
     }
 
@@ -143,19 +137,6 @@ export default defineComponent({
         timeout: 10,
         classTimeout: "bg-red-600",
       });
-    }
-
-    function exportPVandCloseMenu() {
-      exportPV(props.item)
-        .then(() => {
-          showExportSuccessToast();
-        })
-        .catch((e) => {
-          showExportErrorToast(e);
-        })
-        .finally(() => {
-          closeMenu();
-        });
     }
 
     function exportRADARandCloseMenu() {
@@ -192,7 +173,6 @@ export default defineComponent({
       copyPID,
       showDeleteModal,
       hasPermission,
-      exportPVandCloseMenu,
       exportRADARandCloseMenu,
       exportPKBandCloseMenu,
     };
