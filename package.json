@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@nuxtjs/composition-api": "^0.33.1",
-    "@nuxtjs/sentry": "^7.5.0",
+    "@nuxtjs/sentry": "^8.0.2",
     "@okta/okta-auth-js": "^7.4.0",
     "@ukkidney/ukrdc-axios-ts": "^4.3.2",
     "@sentry/tracing": "^7.80.1",
