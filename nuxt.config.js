@@ -88,9 +88,11 @@ export default {
           authToken: process.env.SENTRY_AUTH_TOKEN,
           org: process.env.SENTRY_ORG,
           project: process.env.SENTRY_PROJECT,
-          // Attach commits to the release (requires that the build triggered within a git repository).
-          setCommits: {
-            auto: true,
+          release: {
+            // Attach commits to the release (requires that the build triggered within a git repository).
+            setCommits: {
+              auto: true,
+            },
           },
         }
       : false,
