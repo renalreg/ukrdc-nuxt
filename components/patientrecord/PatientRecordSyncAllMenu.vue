@@ -6,7 +6,12 @@
       <p>Depending on the size of the records, this may take up to an hour.</p>
     </BaseModalSuccess>
 
-    <BaseModalSuccess ref="startSyncFailureModal" title="Failure Syncing to PKB" confirm-label="Go back to records" :danger="true">
+    <BaseModalSuccess
+      ref="startSyncFailureModal"
+      title="Failure Syncing to PKB"
+      confirm-label="Go back to records"
+      :danger="true"
+    >
       <p>
         Please use the
         <a
