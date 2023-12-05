@@ -1,5 +1,7 @@
 # ukrdc-nuxt
 
+**Please note, we've upgraded to Nuxt 3. Development is continuing at https://github.com/renalreg/ukrdc-nuxt-3**
+
 ## Developer Installation
 
 ### Prerequisites
